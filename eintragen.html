@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gebäude eintragen auf hausentscheider.de — sechs Felder aus Ihrer Jahresabrechnung. Anonym möglich. Ihr Objekt erscheint im Vergleich.">
+  <title>Objekt eintragen — hausentscheider</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { font-size:16px; scroll-behavior:smooth; overflow-x:hidden; }
+    body {
+      font-family:'Inter',-apple-system,sans-serif;
+      font-size:16px; font-weight:400; line-height:1.7;
+      color:#1a1a1a; background:#fff;
+    }
+    :root {
+      --petrol:       #1a5c5a;
+      --petrol-light: #7ab8b5;
+      --petrol-dark:  #1a3535;
+      --signal:       #CFF77F;
+      --border:       #e0dedd;
+      --bg-light:     #f5f4f2;
+      --text-primary: #1a1a1a;
+      --text-secondary:#5a5956;
+      --text-tertiary:#8a8680;
+      --max-width:    720px;
+      --radius:       8px;
+    }
+    h1,h2 { font-family:'Playfair Display',Georgia,serif; font-weight:400; line-height:1.3; }
+    h1 { font-size:24px; }
+    h2 { font-size:18px; }
+    a  { color:var(--petrol); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    .container { max-width:var(--max-width); margin:0 auto; padding:0 2rem; }
+    .label { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--petrol); display:block; }
+
+    /* NAV */
+    .nav { position:sticky; top:0; z-index:100; background:#fff; border-bottom:0.5px solid var(--border); }
+    .nav__inner {
+      max-width:var(--max-width); margin:0 auto; padding:0 2rem;
+      height:52px; display:flex; align-items:center; justify-content:space-between;
+    }
+    .nav__back { font-size:13px; color:var(--text-secondary); }
+    .nav__back:hover { color:var(--petrol); text-decoration:none; }
+
+    /* HEADER */
+    .page-header { padding:2rem 0 1.5rem; border-bottom:0.5px solid var(--border); }
+    .page-header__label { margin-bottom:0.625rem; }
+    .page-header__sub { font-size:14px; color:var(--text-secondary); max-width:520px; line-height:1.7; margin-top:0.5rem; }
+
+    /* VERSPRECHEN-LEISTE */
+    .versprechen {
+      display:flex; gap:1.5rem; flex-wrap:wrap;
+      padding:1rem 0; border-bottom:0.5px solid var(--border);
+      margin-bottom:2rem;
+    }
+    .versprechen__item { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-secondary); }
+    .versprechen__dot { width:6px; height:6px; border-radius:50%; background:var(--signal); flex-shrink:0; }
+
+    /* FORMULAR */
+    .form-section { margin-bottom:2rem; }
+    .form-section__title {
+      font-size:13px; font-weight:500; color:var(--text-primary);
+      margin-bottom:1rem; padding-bottom:0.5rem;
+      border-bottom:0.5px solid var(--border);
+      display:flex; align-items:center; gap:8px;
+    }
+    .form-section__nr {
+      width:22px; height:22px; border-radius:50%;
+      background:var(--petrol-dark); color:var(--petrol-light);
+      font-size:11px; display:flex; align-items:center;
+      justify-content:center; flex-shrink:0;
+    }
+
+    .field { margin-bottom:1.125rem; }
+    .field__label {
+      font-size:12px; font-weight:500; color:var(--text-primary);
+      margin-bottom:5px; display:block;
+    }
+    .field__hint { font-size:11px; color:var(--text-tertiary); margin-bottom:5px; display:block; }
+    .field__row { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; align-items:start; }
+
+    input[type=text], input[type=email], input[type=number],
+    select, textarea {
+      font-family:'Inter',sans-serif; font-size:14px;
+      padding:0.55rem 0.875rem;
+      border:0.5px solid var(--border); border-radius:4px;
+      background:#fff; color:var(--text-primary);
+      width:100%; outline:none; transition:border-color 0.2s;
+      appearance:none; -webkit-appearance:none;
+    }
+    input:focus, select:focus, textarea:focus { border-color:var(--petrol); }
+    select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a8680' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 0.875rem center; padding-right:2rem; }
+    textarea { min-height:80px; resize:vertical; }
+
+    /* ANONYM-HINWEIS */
+    .anonym-box {
+      background:var(--bg-light);
+      border:0.5px solid var(--border);
+      border-radius:var(--radius);
+      padding:0.875rem 1rem;
+      font-size:12px; color:var(--text-secondary);
+      line-height:1.6; margin-bottom:1.5rem;
+    }
+    .anonym-box strong { color:var(--text-primary); font-weight:500; }
+
+    /* SUBMIT */
+    /* Kostenrechner */
+    .kosten-calc { background:var(--bg-light,#f5f4f2); border:0.5px solid var(--border,#e0dedd); border-radius:6px; padding:1rem 1.25rem; margin-top:1rem; }
+    .kosten-calc__row { display:flex; justify-content:space-between; align-items:center; padding:0.375rem 0; border-bottom:0.5px solid var(--border,#e0dedd); font-size:13px; }
+    .kosten-calc__row:last-child { border-bottom:none; font-weight:600; color:var(--petrol,#1a5c5a); }
+    .kosten-calc__label { color:var(--text-secondary,#5a5956); }
+    .kosten-calc__val { font-weight:500; }
+    /* Entscheidungsstand */
+    .status-item { display:grid; grid-template-columns:1fr auto; gap:0.75rem; align-items:center; margin-bottom:0.625rem; }
+    .status-item input[type=text] { margin:0; }
+    .status-item select { margin:0; min-width:160px; }
+    .status-remove { background:none; border:none; color:var(--text-tertiary); cursor:pointer; font-size:18px; padding:0 4px; line-height:1; }
+    .status-remove:hover { color:var(--red,#c85a5a); }
+    .btn-add { display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--petrol); background:none; border:0.5px solid var(--petrol); border-radius:4px; padding:0.35rem 0.75rem; cursor:pointer; font-family:'Inter',sans-serif; margin-top:0.5rem; transition:all 0.15s; }
+    .btn-add:hover { background:rgba(26,92,90,0.06); }
+    .submit-area { margin-top:1.5rem; }
+    .btn-submit {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:0.75rem 2rem;
+      background:var(--signal); color:var(--petrol-dark);
+      font-family:'Inter',sans-serif; font-size:14px; font-weight:500;
+      border-radius:4px; border:none; cursor:pointer;
+      transition:opacity 0.2s; text-decoration:none;
+    }
+    .btn-submit:hover { opacity:0.88; }
+    .submit-note { font-size:12px; color:var(--text-tertiary); margin-top:0.75rem; line-height:1.5; }
+
+    /* FOOTER */
+    .footer { border-top:0.5px solid var(--border); padding:1.25rem 0; margin-top:3rem; }
+    .footer__inner {
+      display:flex; justify-content:space-between; align-items:center;
+      flex-wrap:wrap; gap:0.5rem; font-size:12px; color:var(--text-tertiary);
+    }
+    .footer__inner a { color:var(--text-tertiary); }
+    .footer__inner a:hover { color:var(--petrol); }
+
+    @media (max-width:600px) {
+      .field__row { grid-template-columns:1fr; }
+      .container  { padding:0 1.25rem; }
+      .versprechen { gap:0.875rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__back">← Zurück zur Startseite</a>
+      <a href="index.html">
+        <svg width="148" height="22" viewBox="0 0 148 22" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="17" font-family="Georgia,serif" font-size="17" fill="#1a1a1a">haus</text>
+          <text x="46" y="17" font-family="Georgia,serif" font-size="17" fill="#1a1a1a">entscheider</text>
+          <line x1="0" y1="20" x2="43" y2="20" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="container">
+      <span class="label page-header__label">Objekt eintragen</span>
+      <h1>Ihr Gebäude in fünf Minuten.</h1>
+      <p class="page-header__sub">
+        Nur Zahlen aus Ihrer Jahresabrechnung. Keine Anmeldung, kein Konto.
+        Ihr Objekt erscheint anschließend in der Vergleichsliste —
+        und Sie erhalten Zugang zum Netzwerk.
+      </p>
+    </div>
+  </div>
+
+  <!-- FORMULAR -->
+  <div style="padding:2rem 0 1rem;">
+    <div class="container">
+
+      <!-- Versprechen -->
+      <div class="versprechen">
+        <div class="versprechen__item"><span class="versprechen__dot"></span>Anonym möglich</div>
+        <div class="versprechen__item"><span class="versprechen__dot"></span>Keine Weitergabe an Dritte</div>
+        <div class="versprechen__item"><span class="versprechen__dot"></span>5 Minuten</div>
+        <div class="versprechen__item"><span class="versprechen__dot"></span>Kein Konto nötig</div>
+      </div>
+
+      <form
+        name="objekt-eintragen" method="POST"
+        data-netlify="true" netlify-honeypot="bot-field"
+        action="/danke"
+      >
+        <input type="hidden" name="form-name" value="objekt-eintragen">
+        <p style="display:none;"><input name="bot-field"></p>
+
+        <!-- 1. Kontakt -->
+        <div class="form-section">
+          <p class="form-section__title">
+            <span class="form-section__nr">1</span>
+            Ihr Kontakt — damit ich antworten kann
+          </p>
+          <div class="field__row">
+            <div class="field">
+              <label class="field__label" for="name">Name</label>
+              <span class="field__hint">Oder Alias — anonym ist möglich</span>
+              <input type="text" id="name" name="name" placeholder="Ihr Name oder Alias">
+            </div>
+            <div class="field">
+              <label class="field__label" for="email">E-Mail *</label>
+              <span class="field__hint">Für Rückfragen und Netzwerk-Verbindung</span>
+              <input type="email" id="email" name="email" placeholder="ihre@email.de" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Gebäude -->
+        <div class="form-section">
+          <p class="form-section__title">
+            <span class="form-section__nr">2</span>
+            Ihr Gebäude — Grunddaten
+          </p>
+          <div class="field__row">
+            <div class="field">
+              <label class="field__label" for="baujahr">Baujahr Gebäude *</label>
+              <span class="field__hint">Steht im Energieausweis oder Kaufvertrag</span>
+              <input type="number" id="baujahr" name="baujahr" placeholder="z.B. 1965" min="1850" max="2025" required>
+            </div>
+            <div class="field">
+              <label class="field__label" for="flaeche">Beheizte Wohnfläche (m²) *</label>
+              <span class="field__hint">Aus der Heizkostenabrechnung</span>
+              <input type="number" id="flaeche" name="flaeche" placeholder="z.B. 480" min="20" required>
+            </div>
+          </div>
+          <div class="field__row">
+            <div class="field">
+              <label class="field__label" for="typ">Eigentumsform *</label>
+              <select id="typ" name="typ" required>
+                <option value="">Bitte wählen</option>
+                <option>WEG (Wohnungseigentümergemeinschaft)</option>
+                <option>Einzeleigentümer — Mehrfamilienhaus</option>
+                <option>Einzeleigentümer — Einfamilienhaus / Doppelhaus</option>
+                <option>Bruchteilseigentum</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field__label" for="wohnungen">Anzahl Wohnungen</label>
+              <input type="number" id="wohnungen" name="wohnungen" placeholder="z.B. 14" min="1">
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="stadt">Stadt / Region *</label>
+            <span class="field__hint">Stadtname genügt — kein Straßenname nötig</span>
+            <input type="text" id="stadt" name="stadt" placeholder="z.B. Erfurt" required>
+          </div>
+        </div>
+
+        <!-- 3. Heizsystem -->
+        <div class="form-section">
+          <p class="form-section__title">
+            <span class="form-section__nr">3</span>
+            Heizsystem — was Sie heute haben
+          </p>
+          <div class="field__row">
+            <div class="field">
+              <label class="field__label" for="heizung">Heizsystem *</label>
+              <select id="heizung" name="heizung" required>
+                <option value="">Bitte wählen</option>
+                <option>Gas-Brennwert (zentral)</option>
+                <option>Gas-Einzelheizungen</option>
+                <option>Fernwärme</option>
+                <option>Öl-Heizung</option>
+                <option>Wärmepumpe (Luft)</option>
+                <option>Wärmepumpe (Erdreich)</option>
+                <option>Pellets / Biomasse</option>
+                <option>Sonstiges</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field__label" for="heizung_bj">Baujahr Heizanlage</label>
+              <span class="field__hint">Steht auf dem Gerät oder in Wartungsunterlagen</span>
+              <input type="number" id="heizung_bj" name="heizung_bj" placeholder="z.B. 2002" min="1970" max="2025">
+            </div>
+          </div>
+        </div>
+
+              <div class="field">
+                <label class="field__label" for="heizlast">Heizlast (kW)</label>
+                <span class="field__hint">Aus Heizlastberechnung oder Kessel-Typenschild — optional, aber hilfreich</span>
+                <input type="number" id="heizlast" name="heizlast" placeholder="z.B. 62" min="5" max="500">
+              </div>
+
+        <!-- 4. Kosten & Verbrauch -->
+        <div class="form-section">
+          <p class="form-section__title">
+            <span class="form-section__nr">4</span>
+            Kosten & Verbrauch — aus Ihrer letzten Jahresabrechnung
+          </p>
+          <div class="field__row">
+            <div class="field">
+              <label class="field__label" for="heizkosten">Heizkosten gesamt / Jahr (€)</label>
+              <span class="field__hint">Brennstoff + Betriebskosten + Warmwasser</span>
+              <input type="number" id="heizkosten" name="heizkosten" placeholder="z.B. 13500" min="0">
+            </div>
+            <div class="field">
+              <label class="field__label" for="verbrauch">Verbrauch (kWh/Jahr)</label>
+              <span class="field__hint">Aus der Heizkostenabrechnung</span>
+              <input type="number" id="verbrauch" name="verbrauch" placeholder="z.B. 97600" min="0">
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="abrechnungsjahr">Abrechnungsjahr</label>
+            <input type="number" id="abrechnungsjahr" name="abrechnungsjahr" placeholder="z.B. 2024" min="2020" max="2026" style="max-width:160px;">
+          </div>
+        </div>
+
+        <!-- 5. Entscheidungsstand -->
+        <div class="form-section">
+          <p class="form-section__title">
+            <span class="form-section__nr">5</span>
+            Entscheidungsstand — wo stehen Sie?
+          </p>
+          <div class="field">
+            <label class="field__label" for="befreiungsantrag">Befreiungsantrag (falls Fernwärmesatzung)</label>
+            <select id="befreiungsantrag" name="befreiungsantrag">
+              <option value="">— nicht relevant —</option>
+              <option value="nicht_gestellt">Noch nicht gestellt</option>
+              <option value="vorbereitung">In Vorbereitung</option>
+              <option value="gestellt">Gestellt</option>
+              <option value="bewilligt">Bewilligt</option>
+              <option value="abgelehnt">Abgelehnt</option>
+            </select>
+            <label class="field__label" for="phase" style="margin-top:1rem;">Aktuelle Phase *</label>
+            <select id="phase" name="phase" required>
+              <option value="">Bitte wählen</option>
+              <option>Analyse — erste Bestandsaufnahme</option>
+              <option>Prüfung — Angebote einholen / vergleichen</option>
+              <option>Entschieden — Umsetzung geplant</option>
+              <option>Umgesetzt — neue Anlage in Betrieb</option>
+              <option>Noch keine Beschäftigung mit dem Thema</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field__label" for="besonderheit">Besondere Situation oder Frage</label>
+            <span class="field__hint">Fernwärmesatzung? Denkmalschutz? Unklare Förderlage? Kurz beschreiben.</span>
+            <textarea id="besonderheit" name="besonderheit" placeholder="z.B. Wir haben eine Fernwärmesatzung von 2008 und wissen nicht, ob wir eine Befreiung bekommen können..."></textarea>
+          </div>
+        </div>
+
+        <!-- Anonym-Hinweis -->
+        <div class="anonym-box">
+          <strong>Anonymität:</strong> Wenn Sie anonym bleiben möchten, tragen Sie keinen Klarnamen ein.
+          Stadtname und Gebäudedaten werden veröffentlicht — keine Adresse, kein Name.
+          Ihre E-Mail wird nur für den direkten Kontakt verwendet und nicht veröffentlicht.
+        </div>
+
+        <!-- Submit -->
+        <!-- 5. Entscheidung & Investition -->
+        <div class="form-section">
+          <p class="form-section__title">
+            <span class="form-section__nr">5</span>
+            Entscheidung & Investition — optional, aber wertvoll
+          </p>
+          <div class="field">
+            <label class="field__label" for="fernwaerme_satzung">Fernwärmesatzung bekannt?</label>
+            <span class="field__hint">Gilt für viele Erfurter Innenstadtgebäude — oft unbekannt</span>
+            <select id="fernwaerme_satzung" name="fernwaerme_satzung">
+              <option value="">— bitte wählen —</option>
+              <option value="ja">Ja, Gebäude liegt im Satzungsgebiet</option>
+              <option value="nein">Nein, kein Anschlusszwang</option>
+              <option value="unbekannt">Unbekannt / noch nicht geprüft</option>
+            </select>
+          </div>
+          <div class="field__row">
+            <div class="field">
+              <label class="field__label" for="angebote_eingeholt">Angebote eingeholt?</label>
+              <select id="angebote_eingeholt" name="angebote_eingeholt">
+                <option value="">— bitte wählen —</option>
+                <option value="keine">Noch keine</option>
+                <option value="1">1 Angebot</option>
+                <option value="2">2 Angebote</option>
+                <option value="3+">3 oder mehr</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field__label" for="investitionsrahmen">Investitionsbereitschaft WEG (€)</label>
+              <span class="field__hint">Grober Eigenanteil nach Förderung</span>
+              <input type="number" id="investitionsrahmen" name="investitionsrahmen" placeholder="z.B. 55000" min="0">
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="besonderheit">Besondere Situation oder Frage</label>
+            <span class="field__hint">Fernwärmesatzung? Denkmalschutz? Unklare Förderlage? Kurz beschreiben.</span>
+            <textarea id="besonderheit" name="besonderheit" placeholder="z.B. Wir haben eine Fernwärmesatzung von 2008 und wissen nicht, ob wir eine Befreiung bekommen können..."></textarea>
+          </div>
+        </div>
+
+        <!-- SEKTION 4b: Aktuelle Kosten -->
+        <div class="form-section">
+          <p class="form-section__title">
+            <span class="form-section__nr">4b</span>
+            Aktuelle Kosten — aus der Jahresabrechnung
+          </p>
+          <p style="font-size:13px;color:var(--text-tertiary);margin-bottom:1rem;">Tragen Sie die Werte aus Ihrer letzten Heizkostenabrechnung ein. €/m²/Jahr und €/m²/Monat werden automatisch berechnet.</p>
+          <div class="field__row">
+            <div class="field">
+              <label class="field__label" for="k_brennstoff">Brennstoffkosten Gas (€/Jahr)</label>
+              <input type="number" id="k_brennstoff" name="k_brennstoff" placeholder="z.B. 7425" min="0" oninput="calcKosten()">
+            </div>
+            <div class="field">
+              <label class="field__label" for="k_betrieb">Heizbetriebskosten (€/Jahr)</label>
+              <input type="number" id="k_betrieb" name="k_betrieb" placeholder="z.B. 1232" min="0" oninput="calcKosten()">
+            </div>
+          </div>
+          <div class="field__row">
+            <div class="field">
+              <label class="field__label" for="k_ww">Warmwasser — Energie (€/Jahr)</label>
+              <input type="number" id="k_ww" name="k_ww" placeholder="z.B. 2972" min="0" oninput="calcKosten()">
+            </div>
+            <div class="field">
+              <label class="field__label" for="k_co2">CO₂-Steuer (€/Jahr)</label>
+              <input type="number" id="k_co2" name="k_co2" placeholder="z.B. 591" min="0" oninput="calcKosten()">
+            </div>
+          </div>
+          <div class="field__row">
+            <div class="field">
+              <label class="field__label" for="k_wasser">Betriebskosten Wasser etc. (€/Jahr)</label>
+              <input type="number" id="k_wasser" name="k_wasser" placeholder="z.B. 2437" min="0" oninput="calcKosten()">
+            </div>
+          </div>
+          <!-- Live-Berechnung -->
+          <div class="kosten-calc" id="kosten-calc" style="display:none;">
+            <div class="kosten-calc__row"><span class="kosten-calc__label">Gesamtkosten / Jahr</span><span class="kosten-calc__val" id="k-gesamt">—</span></div>
+            <div class="kosten-calc__row"><span class="kosten-calc__label">Kosten / m² / Jahr</span><span class="kosten-calc__val" id="k-m2-jahr">—</span></div>
+            <div class="kosten-calc__row"><span class="kosten-calc__label">Kosten / m² / Monat</span><span class="kosten-calc__val" id="k-m2-mon">—</span></div>
+          </div>
+        </div>
+
+        <!-- SEKTION 6: Entscheidungsstand -->
+        <div class="form-section">
+          <p class="form-section__title">
+            <span class="form-section__nr">6</span>
+            Entscheidungsstand — Was bekannt ist &amp; was noch offen
+          </p>
+          <p style="font-size:13px;color:var(--text-tertiary);margin-bottom:1rem;">Tragen Sie ein was Sie bereits wissen, was in Arbeit ist und was noch fehlt. Z.B. "Heizlastberechnung beauftragt" oder "Fernwärme-Angebot ausstehend".</p>
+
+          <div id="status-liste">
+            <div class="status-item">
+              <input type="text" name="status_punkt[]" placeholder="z.B. Heizlastberechnung beauftragt">
+              <select name="status_zustand[]">
+                <option value="handlungsbedarf">⚠ Handlungsbedarf</option>
+                <option value="vorbereitung" selected>→ In Vorbereitung</option>
+                <option value="erledigt">✓ Erledigt</option>
+              </select>
+              <button type="button" class="status-remove" onclick="this.closest('.status-item').remove()">×</button>
+            </div>
+          </div>
+          <button type="button" class="btn-add" onclick="addStatusItem()">+ Weiterer Punkt</button>
+        </div>
+
+        <!-- SEKTION 7: Nächste Schritte -->
+        <div class="form-section">
+          <p class="form-section__title">
+            <span class="form-section__nr">7</span>
+            Nächste Schritte — Was konkret geplant ist
+          </p>
+          <p style="font-size:13px;color:var(--text-tertiary);margin-bottom:1rem;">Ein geplanter Schritt pro Zeile. Z.B. "Befreiungsantrag stellen" oder "Eigentümerversammlung einberufen".</p>
+          <div id="schritte-liste">
+            <div class="status-item" style="grid-template-columns:1fr auto;">
+              <input type="text" name="naechster_schritt[]" placeholder="z.B. Befreiungsantrag beim Umweltamt stellen">
+              <button type="button" class="status-remove" onclick="this.closest('.status-item').remove()">×</button>
+            </div>
+          </div>
+          <button type="button" class="btn-add" onclick="addSchrittItem()">+ Weiterer Schritt</button>
+        </div>
+
+        <div class="submit-area">
+          <button type="submit" class="btn-submit">
+            Objekt eintragen →
+          </button>
+          <p class="submit-note">
+            Nach dem Absenden melde ich mich persönlich — in der Regel innerhalb weniger Tage.
+            Ihr Objekt erscheint in der Vergleichsliste sobald es aufbereitet ist.<br>
+            Direktkontakt: <a href="/cdn-cgi/l/email-protection#7c18151d10131b3c141d090f1912080f1f14191518190e521819"><span class="__cf_email__" data-cfemail="15717c74797a72557d746066707b6166767d707c7170673b7170">[email&#160;protected]</span></a>
+          </p>
+        </div>
+
+      </form>
+      <script>
+        function calcKosten() {
+          const vals = ['k_brennstoff','k_betrieb','k_ww','k_co2','k_wasser']
+            .map(id => parseFloat(document.getElementById(id).value) || 0);
+          const gesamt = vals.reduce((a,b) => a+b, 0);
+          if (gesamt === 0) { document.getElementById('kosten-calc').style.display='none'; return; }
+          // Fläche aus Sektion 2
+          const flaeche = parseFloat(document.getElementById('flaeche').value) || 0;
+          document.getElementById('kosten-calc').style.display = 'block';
+          document.getElementById('k-gesamt').textContent = gesamt.toLocaleString('de-DE') + ' €';
+          if (flaeche > 0) {
+            document.getElementById('k-m2-jahr').textContent = (gesamt/flaeche).toFixed(2).replace('.',',') + ' €';
+            document.getElementById('k-m2-mon').textContent = (gesamt/12/flaeche).toFixed(2).replace('.',',') + ' €';
+          } else {
+            document.getElementById('k-m2-jahr').textContent = '— (Fläche eingeben)';
+            document.getElementById('k-m2-mon').textContent = '— (Fläche eingeben)';
+          }
+        }
+        function addStatusItem() {
+          const liste = document.getElementById('status-liste');
+          const div = document.createElement('div');
+          div.className = 'status-item';
+          div.innerHTML = '<input type="text" name="status_punkt[]" placeholder="z.B. Fernwärme-Angebot einholen"><select name="status_zustand[]"><option value="handlungsbedarf">⚠ Handlungsbedarf</option><option value="vorbereitung" selected>→ In Vorbereitung</option><option value="erledigt">✓ Erledigt</option></select><button type="button" class="status-remove" onclick="this.closest(\'.status-item\').remove()">×</button>';
+          liste.appendChild(div);
+        }
+        function addSchrittItem() {
+          const liste = document.getElementById('schritte-liste');
+          const div = document.createElement('div');
+          div.className = 'status-item';
+          div.style.gridTemplateColumns = '1fr auto';
+          div.innerHTML = '<input type="text" name="naechster_schritt[]" placeholder="z.B. Förderantrag vorbereiten"><button type="button" class="status-remove" onclick="this.closest(\'.status-item\').remove()">×</button>';
+          liste.appendChild(div);
+        }
+      </script>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <span>
+          <a href="index.html">hausentscheider.de</a>
+          &nbsp;·&nbsp; Daniel Schöberl &nbsp;·&nbsp; Erfurt / München
+        </span>
+        <span>
+          <a href="/cdn-cgi/l/email-protection#52363b333e3d35123a332721373c

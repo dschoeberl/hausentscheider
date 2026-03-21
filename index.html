@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hausentscheider.de — Unabhängige Stimme für Eigentümerinnen und Eigentümer in der kommunalen Wärmewende. Sachliche Analyse, methodisch fundiert, aus der Mitte der Stadt Erfurt.">
+  <title>Hausentscheider — Unabhängige Stimme für Eigentümer in der Wärmewende</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 16px; font-weight: 400; line-height: 1.7;
+      color: #1a1a1a; background: #ffffff; overflow-x: hidden;
+    }
+    :root {
+      --petrol:        #1a5c5a;
+      --petrol-light:  #7ab8b5;
+      --petrol-dark:   #1a3535;
+      --signal:        #CFF77F;
+      --signal-dark:   #a8d45a;
+      --stone-gray:    #8a8680;
+      --border:        #e0dedd;
+      --bg-light:      #f5f4f2;
+      --text-primary:  #1a1a1a;
+      --text-secondary:#5a5956;
+      --text-tertiary: #8a8680;
+      --white:         #ffffff;
+      --max-width:     900px;
+      --radius:        8px;
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; font-weight: 400; line-height: 1.3; color: var(--text-primary); }
+    h1 { font-size: 32px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 18px; }
+    p { margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
+    a { color: var(--petrol); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol); font-family: 'Inter', sans-serif; display: block; }
+    .label--muted { color: var(--text-tertiary); }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; overflow-x: hidden; }
+    .section { padding: 3rem 0; border-bottom: 0.5px solid var(--border); overflow-x: hidden; }
+    .section:last-of-type { border-bottom: none; }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 0.5px solid var(--border); }
+    .nav__inner { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .nav__logo { text-decoration: none; display: inline-flex; align-items: center; }
+    .nav__logo:hover { text-decoration: none; opacity: 0.85; }
+    .nav__logo svg { display: block; }
+    .nav__links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+    .nav__links a { font-size: 13px; color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+    .nav__links a:hover { color: var(--petrol); }
+    .nav__dropdown { position: relative; }
+    .nav__dropdown-toggle { font-size: 13px; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 4px; background: none; border: none; font-family: 'Inter', sans-serif; padding: 0; }
+    .nav__dropdown-toggle:hover { color: var(--petrol); }
+    .nav__dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 0; background: var(--white); border: 0.5px solid var(--border); border-radius: var(--radius); min-width: 160px; padding: 0.5rem 0; }
+    .nav__dropdown:hover .nav__dropdown-menu { display: block; }
+    .nav__dropdown-menu a { display: flex; align-items: center; gap: 6px; padding: 0.5rem 1rem; font-size: 13px; color: var(--text-secondary); }
+    .nav__dropdown-menu a:hover { color: var(--petrol); background: var(--bg-light); text-decoration: none; }
+    .nav__city-badge { font-size: 10px; background: var(--petrol); color: white; padding: 1px 6px; border-radius: 10px; font-family: 'Inter', sans-serif; }
+
+    /* HERO */
+    .hero { position: relative; min-height: 540px; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; }
+    .hero__bg { position: absolute; inset: 0; background-image: url('images/erfurt-panorama.png'); background-size: cover; background-position: center 30%; background-repeat: no-repeat; z-index: 0; }
+    .hero__bg::after { content: ''; position: absolute; inset: 0; background: rgba(26, 53, 53, 0.68); }
+    .hero__skyline { position: absolute; bottom: 0; left: 0; width: 100%; opacity: 0.3; z-index: 1; }
+    .hero::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--petrol); z-index: 3; }
+    .hero__content { position: relative; z-index: 2; padding: 2.5rem 2.5rem; max-width: var(--max-width); margin: 0 auto; width: 100%; }
+    .hero__eyebrow { font-size: 11px; letter-spacing: 2px; color: var(--petrol-light); text-transform: uppercase; margin-bottom: 0.75rem; font-family: 'Inter', sans-serif; }
+    .hero__headline { font-family: 'Playfair Display', Georgia, serif; font-size: 30px; font-weight: 400; color: #ffffff; line-height: 1.3; max-width: 620px; margin-bottom: 1rem; }
+    .hero__sub { font-size: 15px; color: #a8d4d2; line-height: 1.7; max-width: 560px; margin-bottom: 1.75rem; font-family: 'Inter', sans-serif; }
+    .hero__buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    /* BUTTONS */
+    .btn { display: inline-block; padding: 0.6rem 1.5rem; font-family: 'Inter', sans-serif; font-size: 13px; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; text-decoration: none; border: none; }
+    .btn:hover { opacity: 0.85; text-decoration: none; }
+    .btn--primary  { background: var(--petrol); color: white; }
+    .btn--secondary { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.5); }
+    .btn--outline  { background: transparent; color: var(--petrol); border: 1px solid var(--petrol); }
+    .btn--cta      { background: var(--petrol); color: white; font-size: 14px; padding: 0.75rem 2rem; }
+    .btn--signal   { background: var(--signal); color: var(--petrol-dark); font-weight: 500; border: none; white-space: nowrap; flex-shrink: 0; }
+    .btn--signal:hover { opacity: 0.9; text-decoration: none; }
+    .btn--whatsapp { background: #25D366; color: white; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; padding: 0.6rem 1.25rem; }
+
+    /* DREI KERNAUSSAGEN */
+    .kernaussagen { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 0.5px solid var(--border); }
+    .kernaussage { padding: 1.75rem 2rem; border-right: 0.5px solid var(--border); }
+    .kernaussage:last-child { border-right: none; }
+    .kernaussage__line { width: 32px; height: 3px; background: var(--petrol); margin-bottom: 1rem; }
+    .kernaussage__title { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; font-weight: 500; color: var(--text-primary); margin-bottom: 0.5rem; }
+    .kernaussage__text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+    .kernaussage__cta { margin-top: 1rem; }
+
+    /* ARTIKEL-KARTEN */
+    .artikel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; padding: 2.5rem 0; }
+    .artikel-karte { border-top: 2px solid var(--border); padding-top: 1rem; transition: border-top-color 0.2s ease; }
+    .artikel-karte:hover { border-top-color: var(--petrol); }
+    .artikel-karte__meta { font-size: 11px; color: var(--text-tertiary); margin-bottom: 0.5rem; font-family: 'Inter', sans-serif; }
+    .artikel-karte__titel { font-family: 'Playfair Display', Georgia, serif; font-size: 17px; font-weight: 400; color: var(--text-primary); line-height: 1.4; margin-bottom: 0.75rem; }
+    .artikel-karte__teaser { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; }
+    .artikel-karte__link { font-size: 12px; color: var(--petrol); font-family: 'Inter', sans-serif; }
+    .artikel-karte__link:hover { text-decoration: underline; }
+
+    /* OBJEKTE */
+    .objekte-section { padding: 3rem 0; border-bottom: 0.5px solid var(--border); }
+    .objekte-intro { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.5rem; }
+
+    /* Heizsystem-Pills */
+    .hs-pill { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 9px; border-radius: 4px; white-space: nowrap; }
+    .hs-gas  { background: #f5ede0; color: #6b4c28; border: 0.5px solid #dfc9a8; }
+    .hs-wp   { background: #e0f0ee; color: #1a4f4d; border: 0.5px solid #8ec8c4; }
+    .hs-fw   { background: #f5ede0; color: #6b4c28; border: 0.5px dashed #c8a878; }
+
+    /* Objekt 001 Karte */
+    .objekt001 { border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.25rem; }
+    .objekt001__header { background: var(--petrol-dark); padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
+    .objekt001__nr { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol-light); font-family: 'Inter', sans-serif; margin-bottom: 5px; }
+    .objekt001__name { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; font-weight: 400; color: #ffffff; margin-bottom: 3px; }
+    .objekt001__sub { font-size: 12px; color: #7ab8b5; }
+    .objekt001__badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; background: rgba(200,160,96,0.2); color: #f0c878; border: 0.5px solid rgba(200,160,96,0.4); white-space: nowrap; flex-shrink: 0; }
+    .objekt001__badge-dot { width: 5px; height: 5px; border-radius: 50%; background: #c8a460; }
+    .objekt001__kz { display: grid; grid-template-columns: repeat(4, 1fr); background: #132828; border-bottom: 0.5px solid rgba(122,184,181,0.15); }
+    .kz { padding: 0.875rem 1.25rem; border-right: 0.5px solid rgba(122,184,181,0.15); }
+    .kz:last-child { border-right: none; }
+    .kz__lbl { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 5px; }
+    .kz__val { font-size: 19px; font-weight: 500; color: #ffffff; line-height: 1.2; }
+    .kz__unit { font-size: 11px; font-weight: 400; color: #7ab8b5; margin-left: 2px; }
+    .kz__note { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 3px; line-height: 1.4; }
+    .objekt001__status { padding: 0.875rem 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 2rem; border-bottom: 0.5px solid var(--border); }
+    .st-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-secondary); }
+    .st-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .st-warn { background: #c8a460; }
+    .st-ok   { background: #5aaa88; }
+    .st-open { background: #8ab8d4; }
+    .objekt001__footer { padding: 0.75rem 1.5rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .objekt001__footer-link { font-size: 12px; color: var(--petrol); font-weight: 500; }
+    .objekt001__footer-link:hover { text-decoration: underline; }
+
+    /* Gebäudebild im Header */
+    .objekt001__media { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+    .objekt001__img { width: 96px; height: 96px; border-radius: 6px; overflow: hidden; flex-shrink: 0; }
+    .objekt001__img img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+
+    /* Profil Button */
+    .profil-btn { display: flex; flex-direction: column; align-items: center; gap: 6px; text-decoration: none; flex-shrink: 0; }
+    .profil-btn:hover .profil-btn__circle { background: var(--signal); transform: scale(1.07); }
+    .profil-btn:hover .profil-btn__label  { color: var(--signal); }
+    .profil-btn__circle { width: 52px; height: 52px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; transition: background 0.2s, transform 0.2s; }
+    .profil-btn__label { font-size: 10px; color: rgba(255,255,255,0.7); font-family: 'Inter', sans-serif; letter-spacing: 0.5px; white-space: nowrap; transition: color 0.2s; }
+
+    /* Einladungs-Slot */
+    .objekt-slot { border: 1.5px solid var(--signal); border-radius: var(--radius); padding: 1.5rem; display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.25rem; flex-wrap: wrap; background: var(--petrol-dark); }
+    .objekt-slot__plus { width: 32px; height: 32px; border-radius: 50%; background: var(--signal); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--petrol-dark); flex-shrink: 0; font-weight: 500; line-height: 1; }
+    .objekt-slot__body { flex: 1; min-width: 180px; }
+    .objekt-slot__title { font-size: 14px; font-weight: 500; color: #ffffff; margin-bottom: 3px; }
+    .objekt-slot__sub { font-size: 12px; color: var(--petrol-light); line-height: 1.5; }
+
+    /* Brückenbauer */
+    .brueckenbauer { border: 0.5px solid var(--border); border-left: 3px solid var(--petrol); border-radius: var(--radius); padding: 1rem 1.25rem; display: flex; align-items: center; gap: 1rem; background: var(--bg-light); flex-wrap: wrap; }
+    .brueckenbauer__text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; flex: 1; }
+    .brueckenbauer__link { font-size: 12px; color: var(--petrol); font-weight: 500; white-space: nowrap; }
+
+    /* SKYLINE */
+    .sh { transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); transform-origin: bottom center; }
+
+    /* ÜBER HAUSENTSCHEIDER — DARK */
+    .section--dark { background: #1a3535; border-bottom: none; }
+    .section--dark .label { color: var(--petrol-light); }
+    .section--dark h2 { color: #ffffff; }
+    .section--dark p { color: #c8e0df; }
+    .section--dark .ueber__zitat { border-left-color: var(--petrol-light); }
+    .section--dark .ueber__zitat p { color: #ffffff; }
+    .section--dark .leistung { border-left-color: var(--petrol-light); }
+    .section--dark .leistung__titel { color: #ffffff; }
+    .section--dark .leistung__text { color: #c8e0df; }
+    .section--dark .label--muted { color: #7ab8b5; }
+    .ueber-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; padding: 2.5rem 0; align-items: start; }
+    .ueber__zitat { border-left: 3px solid var(--petrol); padding-left: 1.25rem; margin-top: 1.5rem; }
+    .ueber__zitat p { font-family: 'Playfair Display', Georgia, serif; font-size: 17px; font-style: italic; color: var(--text-primary); line-height: 1.5; margin: 0; }
+    .leistung { border-left: 3px solid var(--petrol); padding-left: 1rem; }
+    .leistung__titel { font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 0.25rem; }
+    .leistung__text { font-size: 13px; color: var(--text-secondary); margin: 0; }
+
+    /* ANSATZ — KOMPETENZFELDER */
+    .ansatz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; padding: 2.5rem 0; }
+    .kompetenz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; background: var(--petrol-dark); padding: 1.25rem; border-radius: var(--radius); }
+    .kompetenz-tag { font-size: 12px; color: #e8f4f3; padding: 0.6rem 0.875rem; border: 1px solid rgba(122,184,181,0.25); border-radius: 4px; font-family: 'Inter', sans-serif; cursor: default; position: relative; transition: all 0.2s ease; font-weight: 400; text-align: center; display: flex; align-items: center; justify-content: center; min-height: 44px; }
+    .kompetenz-tag:nth-child(1)  { background: rgba(26, 92, 90, 0.45); }
+    .kompetenz-tag:nth-child(2)  { background: rgba(42, 100, 80, 0.45); }
+    .kompetenz-tag:nth-child(3)  { background: rgba(30, 80, 110, 0.45); }
+    .kompetenz-tag:nth-child(4)  { background: rgba(60, 90, 70, 0.45); }
+    .kompetenz-tag:nth-child(5)  { background: rgba(20, 75, 95, 0.45); }
+    .kompetenz-tag:nth-child(6)  { background: rgba(50, 85, 60, 0.45); }
+    .kompetenz-tag:nth-child(7)  { background: rgba(35, 70, 105, 0.45); }
+    .kompetenz-tag:nth-child(8)  { background: rgba(55, 95, 75, 0.45); }
+    .kompetenz-tag:nth-child(9)  { background: rgba(25, 85, 85, 0.45); }
+    .kompetenz-tag:nth-child(10) { background: rgba(45, 78, 100, 0.45); }
+    .kompetenz-tag:nth-child(11) { background: rgba(38, 88, 68, 0.45); }
+    .kompetenz-tag:hover { background: #c8e6e4 !important; border-color: #1a5c5a; color: #1a3535; font-weight: 600; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .kompetenz-tag:hover .kompetenz-tooltip { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .kompetenz-tooltip { opacity: 0; pointer-events: none; transform: translateY(4px); transition: opacity 0.2s, transform 0.2s; position: absolute; bottom: calc(100% + 8px); left: 50%; translate: -50% 0; background: #0f2525; color: #e8f4f3; font-size: 12px; font-weight: 400; line-height: 1.55; padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid rgba(122,184,181,0.3); width: 220px; z-index: 10; box-shadow: 0 4px 16px rgba(0,0,0,0.4); text-align: left; }
+    .kompetenz-tooltip::after { content: ''; position: absolute; top: 100%; left: 50%; translate: -50% 0; border: 6px solid transparent; border-top-color: #0f2525; }
+    .kompetenz-tag--wide { grid-column: span 2; }
+
+    /* RADAR DIAGRAM */
+    .radar-wrap { position: relative; }
+    .radar-label { font-size: 10px; font-family: 'Inter', sans-serif; fill: #7ab8b5; }
+
+    /* AUTOR */
+    .autor { display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: start; padding: 2.5rem 0; }
+    .autor__avatar { width: 96px; height: 96px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+    .autor__avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    .autor__label { font-size: 11px; letter-spacing: 2px; color: var(--petrol); text-transform: uppercase; margin-bottom: 0.4rem; font-family: 'Inter', sans-serif; }
+    .autor__name { font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 400; margin-bottom: 0.4rem; }
+    .autor__rolle { font-size: 13px; color: var(--text-secondary); margin-bottom: 0.75rem; }
+    .autor__bio { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+    .autor__institute { font-size: 12px; color: var(--text-tertiary); margin-top: 0.25rem; }
+
+    /* PARTNER */
+    .partner__liste { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; margin-top: 1.25rem; }
+    .partner__item { padding: 0.5rem 1.25rem; border: 0.5px solid var(--border); border-radius: 4px; font-size: 13px; color: var(--text-secondary); font-family: 'Inter', sans-serif; display: flex; align-items: center; }
+    .partner__item--offen { border-style: dashed; font-style: italic; color: var(--text-tertiary); }
+
+    /* WEGWEISER */
+    .wegweiser-kategorie { margin-bottom: 2.5rem; }
+    .wegweiser-kategorie__titel { font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 0.5px solid var(--border); text-transform: uppercase; letter-spacing: 1px; font-family: 'Inter', sans-serif; }
+    .wegweiser-karte { border: 0.5px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 0.75rem; transition: border-color 0.2s; }
+    .wegweiser-karte:hover { border-color: var(--petrol); }
+    .wegweiser-karte__quelle { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 0.375rem; font-family: 'Inter', sans-serif; }
+    .wegweiser-karte__titel { font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 0.375rem; }
+    .wegweiser-karte__einordnung { font-size: 12px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.75rem; border-left: 2px solid var(--petrol-light); padding-left: 0.75rem; font-style: italic; }
+    .wegweiser-karte__links { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .wegweiser-karte__link { font-size: 12px; color: var(--petrol); }
+    .wegweiser-karte__link--mein { font-size: 12px; color: var(--petrol); font-weight: 500; background: rgba(26,92,90,0.08); padding: 2px 8px; border-radius: 3px; }
+
+    /* WEGWEISER GRID */
+    .wegweiser-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2rem; padding: 2rem 0; }
+
+    /* CTA */
+    .cta { background: var(--bg-light); padding: 3rem 0; }
+    .cta__inner { max-width: 540px; }
+    .cta__headline { font-family: 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 400; margin-bottom: 0.75rem; }
+    .cta__text { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.25rem; }
+    .cta__email { font-size: 13px; color: var(--text-tertiary); margin-top: 1rem; }
+    .cta__email a { color: var(--petrol); }
+    .form { display: flex; flex-direction: column; gap: 0.75rem; max-width: 420px; }
+    .form input, .form textarea { font-family: 'Inter', sans-serif; font-size: 14px; padding: 0.6rem 0.875rem; border: 0.5px solid var(--border); border-radius: 4px; background: var(--white); color: var(--text-primary); outline: none; transition: border-color 0.2s; width: 100%; }
+    .form input:focus, .form textarea:focus { border-color: var(--petrol); }
+    .form textarea { min-height: 100px; resize: vertical; }
+
+    /* PREISSPIEGEL */
+    .preisspiegel { display: grid; grid-template-columns: repeat(4, 1fr); border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.75rem; background: var(--petrol-dark); }
+    .preis { padding: 0.875rem 1.125rem; border-right: 0.5px solid rgba(122,184,181,0.2); position: relative; }
+    .preis:last-child { border-right: none; }
+    .preis--fossil { border-top: 2px solid rgba(122,184,181,0.3); }
+    .preis--clean  { border-top: 2px solid var(--signal); }
+    .preis__lbl { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--petrol-light); margin-bottom: 5px; }
+    .preis__val { font-size: 17px; font-weight: 500; color: #ffffff; }
+    .preis__unit { font-size: 11px; font-weight: 400; color: var(--petrol-light); margin-left: 2px; }
+    .preis__eff  { font-size: 11px; color: #5a9896; margin-top: 3px; line-height: 1.4; }
+    .preis--clean .preis__val { color: var(--signal); }
+    .preis__zeitraum { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; color: #5a9896; margin-top: 4px; }
+    .preis__zeitraum-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--signal); flex-shrink: 0; }
+
+    /* FOOTER */
+    .footer { border-top: 0.5px solid var(--border); padding: 1.5rem 0; }
+    .footer__inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .footer__left, .footer__right { font-size: 12px; color: var(--text-tertiary); }
+    .footer__right a { color: var(--text-tertiary); }
+    .footer__right a:hover { color: var(--petrol); }
+    .footer__whatsapp { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #25D366; font-weight: 500; }
+    .footer__whatsapp:hover { text-decoration: none; opacity: 0.85; }
+
+    /* RESPONSIVE */
+    @media (max-width: 680px) {
+      h1, .hero__headline     { font-size: 22px; }
+      .nav__links             { display: none; }
+      .kernaussagen           { grid-template-columns: 1fr; }
+      .kernaussage            { border-right: none; border-bottom: 0.5px solid var(--border); }
+      .kernaussage:last-child { border-bottom: none; }
+      .artikel-grid           { grid-template-columns: 1fr; gap: 1.5rem; }
+      .ueber-grid             { grid-template-columns: 1fr; gap: 1.5rem; }
+      .ansatz-grid            { grid-template-columns: 1fr; }
+      .kompetenz-grid         { grid-template-columns: 1fr; }
+      .kompetenz-tag--wide    { grid-column: span 1; }
+      .footer__inner          { flex-direction: column; align-items: flex-start; }
+      .objekt001__kz          { grid-template-columns: 1fr 1fr; }
+      .objekt001__status      { grid-template-columns: 1fr; }
+      .preisspiegel           { grid-template-columns: 1fr 1fr; }
+      .objekt-slot            { flex-direction: column; align-items: flex-start; }
+      .brueckenbauer          { flex-direction: column; align-items: flex-start; }
+      .container              { padding: 0 1.25rem; }
+      .hero__content          { padding: 2rem 1.25rem; }
+      .kernaussage            { padding: 1.25rem 1.25rem; }
+      .wegweiser-grid         { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="hausentscheider — Startseite">
+        <svg width="180" height="28" viewBox="0 0 180 28" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">haus</text>
+          <text x="58" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">entscheider</text>
+          <line x1="0" y1="26" x2="56" y2="26" stroke="#1a5c5a" stroke-width="2" stroke-linecap="square"/>
+        </svg>
+      </a>
+      <nav aria-label="Hauptnavigation">
+        <ul class="nav__links">
+          <li><a href="#ansatz">Ansatz</a></li>
+          <li><a href="#objekte">Objekte</a></li>
+          <li><a href="wegweiser.html">Wegweiser</a></li>
+          <li class="nav__dropdown">
+            <button class="nav__dropdown-toggle" aria-haspopup="true">Städte ▾</button>
+            <div class="nav__dropdown-menu" role="menu">
+              <a href="#erfurt" role="menuitem">Erfurt <span class="nav__city-badge">aktuell</span></a>
+            </div>
+          </li>
+          <li><a href="#ueber">Über Hausentscheider</a></li>
+          <li><a href="#kontakt">Dialog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Einführung">
+    <div class="hero__bg"></div>
+    <svg class="hero__skyline" viewBox="0 0 900 180" preserveAspectRatio="none" aria-hidden="true">
+      <rect x="0"   y="100" width="900" height="80"  fill="#0a1f1f"/>
+      <rect x="30"  y="80"  width="40"  height="100" fill="#0a1f1f"/>
+      <rect x="80"  y="60"  width="30"  height="120" fill="#0a1f1f"/>
+      <polygon points="95,60 110,30 125,60"           fill="#0a1f1f"/>
+      <rect x="130" y="90"  width="50"  height="90"  fill="#0a1f1f"/>
+      <rect x="200" y="50"  width="25"  height="130" fill="#0a1f1f"/>
+      <polygon points="200,50 212,20 225,50"          fill="#0a1f1f"/>
+      <rect x="240" y="75"  width="60"  height="105" fill="#0a1f1f"/>
+      <rect x="320" y="40"  width="35"  height="140" fill="#0a1f1f"/>
+      <polygon points="320,40 337,10 355,40"          fill="#0a1f1f"/>
+      <rect x="370" y="85"  width="45"  height="95"  fill="#0a1f1f"/>
+      <rect x="430" y="65"  width="30"  height="115" fill="#0a1f1f"/>
+      <rect x="475" y="95"  width="55"  height="85"  fill="#0a1f1f"/>
+      <rect x="545" y="55"  width="40"  height="125" fill="#0a1f1f"/>
+      <polygon points="545,55 565,25 585,55"          fill="#0a1f1f"/>
+      <rect x="600" y="80"  width="35"  height="100" fill="#0a1f1f"/>
+      <rect x="650" y="70"  width="50"  height="110" fill="#0a1f1f"/>
+      <rect x="715" y="85"  width="30"  height="95"  fill="#0a1f1f"/>
+      <rect x="760" y="60"  width="45"  height="120" fill="#0a1f1f"/>
+      <polygon points="775,60 782,35 790,60"          fill="#0a1f1f"/>
+      <rect x="820" y="90"  width="80"  height="90"  fill="#0a1f1f"/>
+    </svg>
+    <div class="hero__content">
+      <p class="hero__eyebrow">Erfurt · Kommunale Wärmeplanung · Eigentümerperspektive</p>
+      <h1 class="hero__headline">
+        Die Wärmewende entscheidet sich nicht im Rathaus.<br>
+        Sie entscheidet sich in Ihrem Gebäude.
+      </h1>
+      <p class="hero__sub">
+        Energieberater wollen beraten. Stadtwerke wollen liefern. Handwerker wollen bauen.
+        Hausentscheider will nur eines: dass Sie die richtige Entscheidung treffen.
+        Unabhängig. Aus der Mitte Erfurts. Das erste Portal, das Gebäude vergleicht — nicht Preise.
+      </p>
+      <div class="hero__buttons">
+        <a href="#aktuell" class="btn btn--primary">Ersten Artikel lesen</a>
+        <a href="#ueber" class="btn btn--secondary">Über Hausentscheider</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DREI KERNAUSSAGEN -->
+  <div class="kernaussagen">
+    <div class="kernaussage">
+      <div class="kernaussage__line"></div>
+      <p class="kernaussage__title">Die Lücke</p>
+      <p class="kernaussage__text">
+        Energieberater, Stadtwerke, Hausverwaltungen — sie alle haben ein Interesse.
+        Nur keines, das ausschließlich Ihres ist. Eigentümer tragen die volle Verantwortung
+        für Investitionen mit 20–30 Jahren Zeithorizont — oft ohne unabhängige Begleitung.
+        Hausentscheider schließt diese Lücke.
+      </p>
+    </div>
+    <div class="kernaussage">
+      <div class="kernaussage__line"></div>
+      <p class="kernaussage__title">Der Wegweiser</p>
+      <p class="kernaussage__text">
+        Fernwärmesatzung? Förderprogramme? Kommunaler Wärmeplan?
+        Der Wegweiser sammelt die wichtigsten offiziellen Quellen für Erfurt —
+        mit unabhängiger Einordnung, damit Sie nicht bei Null anfangen müssen.
+      </p>
+      <p class="kernaussage__cta">
+        <a href="wegweiser.html" style="font-size:13px;color:var(--petrol);font-weight:500;">Zum Wegweiser →</a>
+      </p>
+    </div>
+    <div class="kernaussage">
+      <div class="kernaussage__line"></div>
+      <p class="kernaussage__title">Die Stimme</p>
+      <p class="kernaussage__text">
+        Hausentscheider ist kein Ratgeber-Portal. Es ist ein Netzwerk von Eigentümern,
+        die ihre Perspektive teilen — und gemeinsam besser entscheiden.
+        Werden Sie Teil davon.
+      </p>
+      <p class="kernaussage__cta" style="margin-top:1rem;">
+        <a href="#" class="btn--whatsapp btn" style="font-size:12px;padding:0.4rem 0.875rem;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp Kanal beitreten
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <!-- AKTUELL -->
+  <section class="section container" id="aktuell">
+    <span class="label" style="margin-bottom:1.5rem;">Aktuell</span>
+    <div class="artikel-grid">
+      <div class="artikel-karte">
+        <p class="artikel-karte__meta">Kommentar · März 2026</p>
+        <h3 class="artikel-karte__titel">Ein Jahr kommunale Wärmeplanung in Erfurt — Zwischen Anspruch und Wirklichkeit</h3>
+        <p class="artikel-karte__teaser">95 Prozent der Erfurter Fernwärme basiert auf Erdgas. Eine Satzung aus 2006 legt Anschlusspflichten fest, die kaum jemand kennt. Was bedeutet das für Eigentümerinnen und Eigentümer in der Innenstadt?</p>
+        <a href="dokumente/gastkommentar-waermewende-erfurt-2026.pdf" class="artikel-karte__link" target="_blank">Artikel lesen (PDF) →</a>
+      </div>
+      <div class="artikel-karte">
+        <p class="artikel-karte__meta">Forschung · 2025 · eco2050 Institut für Nachhaltigkeit</p>
+        <h3 class="artikel-karte__titel">Future Readiness in der Wärmewende — Vom Ziel zur Fähigkeit</h3>
+        <p class="artikel-karte__teaser">Der Bewertungsrahmen für kommunale Wärmepläne. Entwickelt auf Basis von vier Experteninterviews mit zentralen Akteuren der deutschen Wärmewende.</p>
+        <a href="dokumente/future-readiness-in-der-waermewende-executive-summary.pdf" class="artikel-karte__link" target="_blank">Executive Summary lesen (PDF) →</a>
+      </div>
+      <div class="artikel-karte">
+        <p class="artikel-karte__meta">Praxisfall · Erfurt · März 2026</p>
+        <h3 class="artikel-karte__titel">Eine Eigentümergemeinschaft in der Wärmewende — Ein Praxisfall aus der Erfurter Altstadt</h3>
+        <p class="artikel-karte__teaser">14 Wohnungen, eine 30 Jahre alte Gasheizung, eine Fernwärmesatzung aus 2006 die niemand kannte — und zwei echte Angebote für den Umstieg. Wie eine WEG ihre Entscheidung vorbereitet.</p>
+        <a href="objekte/theaterstrasse-4.html" class="artikel-karte__link">Zum Objekt-Steckbrief →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- OBJEKTE -->
+  <section class="objekte-section container" id="objekte">
+    <div class="objekte-intro">
+      <div>
+        <span class="label" style="margin-bottom:0.5rem;">Objekte</span>
+        <h2 style="font-size:22px;margin:0;">Gebäude, die ihre Entscheidungen transparent machen.</h2>
+      </div>
+    </div>
+    <p style="font-size:14px;color:var(--text-secondary);max-width:620px;margin-bottom:1rem;line-height:1.7;">
+      Muster werden nur sichtbar, wenn Daten geteilt werden.
+      Jedes dokumentierte Objekt trägt zur gemeinsamen Grundlage bei —
+      für bessere Entscheidungen aller Eigentümer.
+    </p>
+
+    <!-- Objekt 001 -->
+    <div class="objekt001">
+      <div class="objekt001__header">
+        <div>
+          <p class="objekt001__nr">Objekt 001 · Erfurt Innenstadt · Dokumentiert seit 2024</p>
+          <p class="objekt001__name">Mehrfamilienhaus · Altstadt Erfurt</p>
+          <p class="objekt001__sub">Altbau 1900 · Saniert 2010 · 14 Wohnungen · 784 m²&thinsp;·&thinsp;WEG· Gas-Heizung</p>
+        </div>
+        <div class="objekt001__media">
+          <div class="objekt001__img">
+            <img src="images/theaterstrasse-4.jpg" alt="Theaterstraße 4, Erfurt">
+          </div>
+          <a href="objekte/theaterstrasse-4.html" class="profil-btn">
+            <div class="profil-btn__circle">
+              <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 10L12 1L23 10" stroke="#1a3535" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3 8.5V20a1 1 0 001 1h5v-5h6v5h5a1 1 0 001-1V8.5" stroke="#1a3535" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="profil-btn__label">Vollständiges Profil</span>
+          </a>
+        </div>
+      </div>
+      <div class="objekt001__kz">
+        <div class="kz">
+          <p class="kz__lbl">Energieklasse</p>
+          <p class="kz__val">D</p>
+          <p class="kz__note">124 kWh/m²a · Altbau 1900</p>
+        </div>
+        <div class="kz">
+          <p class="kz__lbl">Heizkosten IST · Gas</p>
+          <p class="kz__val">1,17<span class="kz__unit">€/m²/Mon.</span></p>
+          <p class="kz__note">13,27 €/m²/Jahr · 11.000 € gesamt</p>
+        </div>
+        <div class="kz">
+          <p class="kz__lbl">Gasverbrauch</p>
+          <p class="kz__val">129<span class="kz__unit">kWh/m²</span></p>
+          <p class="kz__note">101.240 kWh/Jahr gesamt</p>
+        </div>
+        <div class="kz" style="background:rgba(207,247,127,0.08);border-left:2px solid #CFF77F;">
+          <p class="kz__lbl" style="color:#CFF77F;">Ziel · Planung WP</p>
+          <p class="kz__val" style="color:#CFF77F;font-size:24px;">0,91<span class="kz__unit" style="color:#a8d45a;">€/m²/Mon.</span></p>
+          <p class="kz__note" style="color:#a8d45a;">10,92 €/m²/Jahr · −38% vs. IST</p>
+        </div>
+      </div>
+      <div class="objekt001__status">
+        <div class="st-item"><span class="st-dot st-warn"></span>Fernwärmesatzung seit 2006</div>
+        <div class="st-item"><span class="st-dot st-ok"></span>WP-fähig · Heizlast 62 kW</div>
+        <div class="st-item"><span class="st-dot st-warn"></span>Heizung Bj. 1998 · Ersatzteile abgekündigt</div>
+        <div class="st-item"><span class="st-dot st-ok"></span>2 Angebote eingeholt</div>
+        <div class="st-item"><span class="st-dot st-open"></span>Befreiungsantrag in Vorbereitung</div>
+        <div class="st-item"><span class="st-dot st-open"></span>Fernwärme-Angebot ausstehend</div>
+      </div>
+      <div class="objekt001__footer">
+        <a href="objekte/theaterstrasse-4.html" class="objekt001__footer-link">Vollständiges Profil ansehen →</a>
+        <span style="font-size:11px;color:var(--text-tertiary);">Daten aus Heizkostenabrechnung 2023/2024 · Investitionsplan Nov. 2025</span>
+      </div>
+    </div>
+
+    <!-- Slot -->
+    <div class="objekt-slot">
+      <div class="objekt-slot__plus">+</div>
+      <div class="objekt-slot__body">
+        <p class="objekt-slot__title">Ihr Gebäude als nächstes Objekt</p>
+        <p class="objekt-slot__sub">Jede Größe · WEG oder Einzeleigentümer · anonym möglich · nur Zahlen aus Ihrer Jahresabrechnung · 5 Minuten</p>
+      </div>
+      <a href="eintragen.html" class="btn btn--signal">Jetzt eintragen →</a>
+    </div>
+  </section>
+
+  <!-- SKYLINE / VERGLEICH -->
+  <section style="padding:4rem 0 3.5rem;background:#ffffff;border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);">
+    <div class="container" style="text-align:center;">
+      <span class="label" style="margin-bottom:0.75rem;display:block;text-align:center;">Netzwerk</span>
+      <h2 style="font-size:26px;margin-bottom:0.625rem;">Alle Objekte im Vergleich</h2>
+      <p style="font-size:14px;color:var(--text-secondary);max-width:480px;margin:0 auto 2.5rem;line-height:1.7;">
+        Energieklasse · Heizsystem · Kosten pro m²/Monat · Abweichung vom Durchschnitt.
+        Je mehr Eigentümer mitmachen, desto klarer das Bild.
+      </p>
+      <div style="margin:0 auto 2.5rem;max-width:700px;" id="skyline-wrap">
+        <style>
+          #skyline-wrap:hover .sh { transform: translateY(-5px); }
+          #skyline-wrap:hover .sh:nth-child(1)  { transform: translateY(-3px);  transition-delay: 0.00s; }
+          #skyline-wrap:hover .sh:nth-child(2)  { transform: translateY(-5px);  transition-delay: 0.04s; }
+          #skyline-wrap:hover .sh:nth-child(3)  { transform: translateY(-6px);  transition-delay: 0.08s; }
+          #skyline-wrap:hover .sh:nth-child(4)  { transform: translateY(-9px);  transition-delay: 0.12s; }
+          #skyline-wrap:hover .sh:nth-child(5)  { transform: translateY(-11px); transition-delay: 0.16s; }
+          #skyline-wrap:hover .sh:nth-child(6)  { transform: translateY(-8px);  transition-delay: 0.20s; }
+          #skyline-wrap:hover .sh:nth-child(7)  { transform: translateY(-6px);  transition-delay: 0.24s; }
+          #skyline-wrap:hover .sh:nth-child(8)  { transform: translateY(-7px);  transition-delay: 0.28s; }
+          #skyline-wrap:hover .sh:nth-child(9)  { transform: translateY(-4px);  transition-delay: 0.32s; }
+          #skyline-wrap:hover .sh:nth-child(10) { transform: translateY(-5px);  transition-delay: 0.36s; }
+        </style>
+        <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;overflow:visible;">
+          <line x1="0" y1="185" x2="700" y2="185" stroke="#e0dedd" stroke-width="1"/>
+          <path d="M62,148 Q75,140 88,140 Q105,124 122,140 Q130,140 138,130 Q158,110 178,130 Q194,130 210,95 Q245,62 280,95 Q290,105 300,105 Q330,78 360,105 Q369,122 378,122 Q400,100 422,122 Q430,135 438,135 Q456,116 474,135 Q482,135 490,128 Q512,108 534,128 Q542,150 550,150 Q565,136 580,150 Q589,140 598,140 Q616,122 634,140" fill="none" stroke="#e0dedd" stroke-width="0.8" stroke-dasharray="4 3"/>
+          <g class="sh"><polygon points="48,185 48,148 62,135 76,148 76,185" fill="none" stroke="#7ab8b5" stroke-width="1.5" stroke-linejoin="round"/><rect x="55" y="163" width="14" height="22" fill="none" stroke="#7ab8b5" stroke-width="1.2"/></g>
+          <g class="sh"><polygon points="88,185 88,140 105,124 122,140 122,185" fill="none" stroke="#1a5c5a" stroke-width="1.5" stroke-linejoin="round"/><rect x="95" y="158" width="20" height="27" fill="none" stroke="#1a5c5a" stroke-width="1.2"/></g>
+          <g class="sh"><polygon points="138,185 138,130 158,110 178,130 178,185" fill="none" stroke="#7ab8b5" stroke-width="1.5" stroke-linejoin="round"/><rect x="147" y="160" width="22" height="25" fill="none" stroke="#7ab8b5" stroke-width="1.2"/></g>
+          <g class="sh"><polygon points="210,185 210,95 245,62 280,95 280,185" fill="rgba(207,247,127,0.07)" stroke="#CFF77F" stroke-width="2" stroke-linejoin="round"/><rect x="225" y="145" width="30" height="40" fill="rgba(207,247,127,0.07)" stroke="#CFF77F" stroke-width="1.5"/></g>
+          <g class="sh"><polygon points="300,185 300,105 330,78 360,105 360,185" fill="rgba(26,92,90,0.06)" stroke="#1a5c5a" stroke-width="1.8" stroke-linejoin="round"/><rect x="314" y="148" width="32" height="37" fill="none" stroke="#1a5c5a" stroke-width="1.4"/></g>
+          <g class="sh"><polygon points="378,185 378,122 400,100 422,122 422,185" fill="none" stroke="#1a5c5a" stroke-width="1.5" stroke-linejoin="round"/><rect x="388" y="155" width="24" height="30" fill="none" stroke="#1a5c5a" stroke-width="1.2"/></g>
+          <g class="sh"><polygon points="438,185 438,135 456,116 474,135 474,185" fill="none" stroke="#7ab8b5" stroke-width="1.4" stroke-linejoin="round"/><rect x="447" y="162" width="18" height="23" fill="none" stroke="#7ab8b5" stroke-width="1.2"/></g>
+          <g class="sh"><polygon points="490,185 490,128 512,108 534,128 534,185" fill="none" stroke="#1a5c5a" stroke-width="1.5" stroke-linejoin="round"/><rect x="500" y="157" width="24" height="28" fill="none" stroke="#1a5c5a" stroke-width="1.2"/></g>
+          <g class="sh"><polygon points="550,185 550,150 565,136 580,150 580,185" fill="none" stroke="#7ab8b5" stroke-width="1.4" stroke-linejoin="round"/><rect x="558" y="167" width="14" height="18" fill="none" stroke="#7ab8b5" stroke-width="1.2"/></g>
+          <g class="sh"><polygon points="598,185 598,140 616,122 634,140 634,185" fill="none" stroke="#1a5c5a" stroke-width="1.5" stroke-linejoin="round"/><rect x="607" y="162" width="18" height="23" fill="none" stroke="#1a5c5a" stroke-width="1.2"/></g>
+        </svg>
+      </div>
+      <a href="objekte/index.html" style="display:inline-block;background:var(--petrol-dark);color:#ffffff;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;padding:0.7rem 2rem;border-radius:4px;text-decoration:none;transition:opacity 0.2s;">Zur Vergleichsliste →</a>
+    </div>
+  </section>
+
+  <!-- ÜBER HAUSENTSCHEIDER -->
+  <section class="section section--dark" id="ueber">
+    <div class="container">
+      <div style="margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:0.5px solid rgba(122,184,181,0.25);">
+        <svg width="520" height="54" viewBox="0 0 520 54" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="42" font-family="Georgia, serif" font-size="44" font-weight="400" fill="#ffffff">haus</text>
+          <text x="108" y="42" font-family="Georgia, serif" font-size="44" font-weight="400" fill="#ffffff">entscheider</text>
+          <line x1="0" y1="50" x2="104" y2="50" stroke="#7ab8b5" stroke-width="3.5" stroke-linecap="square"/>
+        </svg>
+      </div>
+      <div class="ueber-grid">
+        <div>
+          <span class="label" style="margin-bottom:1rem;">Über Hausentscheider</span>
+          <h2 style="margin-bottom:1.25rem;">Eine unabhängige Stimme für Eigentümer in der Wärmewende</h2>
+          <p style="font-size:15px;color:#c8e0df;">
+            Hausentscheider ist eine unabhängige Initiative, die kommunale Wärmepläne
+            aus Eigentümerperspektive systematisch begleitet und bewertet.
+          </p>
+          <p style="font-size:15px;color:#c8e0df;">
+            Sie entstand aus der Erkenntnis, dass Eigentümerinnen und Eigentümer
+            die eigentlichen Hausentscheider der Wärmewende sind — und dass sie
+            eine sachliche, methodisch fundierte Stimme verdienen, die weder
+            Lobbyinteressen noch Versorgern verpflichtet ist.
+          </p>
+          <p style="font-size:15px;color:#c8e0df;">
+            Hausentscheider beginnt in Erfurt. Die Vision ist größer: eine Plattform,
+            die Eigentümer in deutschen Städten bei langfristigen
+            Investitionsentscheidungen begleitet — mit Transparenz,
+            Vergleichbarkeit und Dialog auf Augenhöhe.
+          </p>
+          <div class="ueber__zitat">
+            <p>„Die Energiewende schafft Gewinner und Verlierer. Auf welcher Seite Sie stehen, hängt von einer einzigen Frage ab: Haben Sie die richtigen Informationen — oder haben andere sie für Sie beantwortet?"</p>
+          </div>
+        </div>
+        <div>
+          <span class="label label--muted" style="margin-bottom:1rem;">Was Hausentscheider leistet</span>
+          <div style="display:flex;flex-direction:column;gap:1.25rem;">
+            <div class="leistung">
+              <p class="leistung__titel">Analyse kommunaler Wärmepläne</p>
+              <p class="leistung__text">Kommunale Wärmepläne werden aus Eigentümerperspektive eingeordnet und bewertet — methodisch fundiert, auf Basis des Future Readiness Index.</p>
+            </div>
+            <div class="leistung">
+              <p class="leistung__titel">Gebäudevergleich & Objektdaten</p>
+              <p class="leistung__text">Was im Einzelfall unsichtbar bleibt, wird im Netzwerk zum Muster. Hausentscheider ist das erste Portal, das Gebäude vergleichbar macht — nicht Preise.</p>
+            </div>
+            <div class="leistung">
+              <p class="leistung__titel">Objektvergleich & Monitoring</p>
+              <p class="leistung__text">Gebäudedaten werden systematisch erfasst und verglichen. Eine neue Datenbasis für bessere Entscheidungen — aus echten Abrechnungen.</p>
+            </div>
+            <div class="leistung">
+              <p class="leistung__titel">Dialog auf Augenhöhe</p>
+              <p class="leistung__text">Hausentscheider schafft Raum für Austausch zwischen Eigentümern, Kommunen, Planern und Experten — unabhängig, sachlich, ohne Interessenkonflikt.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANSATZ -->
+  <section class="section" id="ansatz">
+    <div class="container">
+      <div class="ansatz-grid">
+        <div>
+          <span class="label" style="margin-bottom:1rem;">Der Ansatz</span>
+          <h2 style="margin-bottom:1.25rem;">Future Readiness — Vom Ziel zur Fähigkeit</h2>
+          <p style="font-size:15px;color:var(--text-secondary);">Der Future Readiness Index fragt nicht, ob eine Kommune plant — sondern ob sie wirklich zukunftsfähig entscheidet.</p>
+          <p style="font-size:15px;color:var(--text-secondary);">Entwickelt im Rahmen eines Forschungsprojekts mit dem eco2050 Institut für Nachhaltigkeit, basiert der Ansatz auf vier Experteninterviews mit zentralen Akteuren der deutschen Wärmewende sowie einer umfassenden Systemanalyse.</p>
+          <p style="font-size:15px;color:var(--text-secondary);">Zukunftsfähigkeit wird dabei als Muskel verstanden — nicht als Zustand. Er muss trainiert, erprobt und kontinuierlich weiterentwickelt werden.</p>
+          <a href="dokumente/future-readiness-in-der-waermewende-executive-summary.pdf" class="btn btn--outline" style="margin-top:1.25rem;display:inline-block;" target="_blank">Executive Summary lesen →</a>
+        </div>
+        <div>
+          <!-- Radar Diagramm mit Hover-Labels -->
+          <span class="label label--muted" style="margin-bottom:0.25rem;">11 Kompetenzfelder — Bewertungsrahmen für Kommunen &amp; Städte</span>
+          <p style="font-size:12px;color:var(--text-tertiary);margin-bottom:0.875rem;">Beispiel: Fiktive Mittelstadt · Fahren Sie über die Felder für Details</p>
+          <div class="radar-wrap" style="position:relative;">
+            <svg id="radar-svg" viewBox="0 0 340 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+              <defs>
+                <style>
+                  .radar-axis { stroke: rgba(26,92,90,0.2); stroke-width: 0.5; }
+                  .radar-ring { stroke: rgba(26,92,90,0.15); stroke-width: 0.5; fill: none; }
+                  .radar-area { fill: rgba(26,92,90,0.15); stroke: #1a5c5a; stroke-width: 1.5; }
+                  .radar-area-potential { fill: rgba(207,247,127,0.08); stroke: #CFF77F; stroke-width: 1; stroke-dasharray: 4 3; }
+                  .radar-dot { fill: #1a5c5a; }
+                  .radar-lbl { font-family: 'Inter', sans-serif; font-size: 9px; fill: #5a5956; cursor: pointer; }
+                  .radar-lbl-hit { fill: transparent; cursor: pointer; }
+                  .radar-lbl:hover { fill: #1a5c5a; font-weight: 600; }
+                </style>
+              </defs>
+              <g id="radar-chart" transform="translate(170,160)"></g>
+            </svg>
+            <!-- Hover Tooltip für Radar-Labels -->
+            <div id="radar-tooltip" style="display:none;position:absolute;background:#0f2525;color:#e8f4f3;font-size:12px;line-height:1.55;padding:0.75rem 1rem;border-radius:6px;border:1px solid rgba(122,184,181,0.3);width:220px;z-index:20;box-shadow:0 4px 16px rgba(0,0,0,0.4);pointer-events:none;"></div>
+          </div>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.5rem;">
+            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-tertiary);">
+              <span style="width:16px;height:2px;background:#1a5c5a;display:inline-block;"></span>Ist-Zustand
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-tertiary);">
+              <span style="width:16px;height:2px;background:#CFF77F;display:inline-block;border-top:2px dashed #CFF77F;"></span>Potenzial
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section container" id="autor">
+    <div class="autor">
+      <div class="autor__avatar">
+        <img src="images/daniel-schoeberl.jpg" alt="Daniel Schöberl">
+      </div>
+      <div>
+        <p class="autor__label">Über den Autor</p>
+        <h3 class="autor__name">Daniel Schöberl</h3>
+        <p class="autor__rolle">Transformationsforscher · Organisationsarchitekt · Wohnungseigentümer in Erfurt</p>
+        <p class="autor__bio">
+          Daniel Schöberl wurde in Erfurt geboren, ist Wohnungseigentümer in der Erfurter Innenstadt
+          und forscht zu den gelingenden Faktoren der Transformation der Energiewende.
+          Als Beiratsmitglied einer Eigentümergemeinschaft in der Erfurter Altstadt ist er
+          selbst direkt betroffen von den Entscheidungen, über die er forscht und schreibt.
+        </p>
+        <p class="autor__bio">
+          Berufsbegleitend entwickelt er am eco2050 Institut für Nachhaltigkeit den Future Readiness Index.
+          Als Organisationsarchitekt begleitet er Organisationen in Phasen struktureller Veränderung —
+          dort, wo Systeme neu aufgebaut oder grundlegend neu ausgerichtet werden müssen.
+        </p>
+        <p class="autor__institute">Forschungsprojekt betreut von Dr. Dina Barbian · eco2050 Institut für Nachhaltigkeit · im Dialog mit der FH Erfurt</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNER -->
+  <section class="section container">
+    <span class="label label--muted">Im Dialog mit</span>
+    <div class="partner__liste">
+      <div class="partner__item">
+        <img src="images/eco2050-logo.png" alt="eco2050 Institut für Nachhaltigkeit" style="height:36px;width:auto;display:block;">
+      </div>
+      <div class="partner__item">
+        <img src="images/fh-erfurt-logo.png" alt="Fachhochschule Erfurt" style="height:32px;width:auto;display:block;">
+      </div>
+      <div class="partner__item partner__item--offen">Weitere Partner · in Gespräch</div>
+    </div>
+  </section>
+
+  <!-- KONTAKT -->
+  <section class="cta" id="kontakt">
+    <div class="container">
+      <div class="cta__inner">
+        <span class="label" style="margin-bottom:0.75rem;">Dialog</span>
+        <h2 class="cta__headline">Eigentümer, Forscher, Kommunen — kommen Sie ins Gespräch.</h2>
+        <p class="cta__text">
+          Sind Sie Eigentümer und stehen vor einer Entscheidung? Beirat einer WEG und suchen Orientierung?
+          Oder möchten Sie als Kommune, Forschungseinrichtung oder Organisation mit Hausentscheider kooperieren?
+          Schreiben Sie mir — ich antworte persönlich.
+        </p>
+        <form class="form" name="kontakt" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/danke">
+          <input type="hidden" name="form-name" value="kontakt">
+          <p style="display:none;"><input name="bot-field"></p>
+          <input type="text" name="name" placeholder="Ihr Name" required autocomplete="name">
+          <input type="email" name="email" placeholder="Ihre E-Mail-Adresse" required autocomplete="email">
+          <textarea name="nachricht" placeholder="Ihre Nachricht — z.B. Ihre Stadt, Ihr Gebäude, Ihre Frage..." required></textarea>
+          <button type="submit" class="btn btn--cta" style="align-self:flex-start;">Nachricht senden →</button>
+        </form>
+        <p class="cta__email">Oder direkt per E-Mail: <a href="/cdn-cgi/l/email-protection#ef8b868e838088af878e9a9c8a819b9c8c878a868b8a9dc18b8a"><span class="__cf_email__" data-cfemail="0a6e636b66656d4a626b7f796f647e7969626f636e6f78246e6f">[email&#160;protected]</span></a></p>
+        <p style="font-size:12px;color:var(--text-tertiary);margin-top:0.5rem;">Ihre Angaben werden ausschließlich zur Beantwortung Ihrer Nachricht verwendet und nicht weitergegeben.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__left">
+          <a href="/" style="text-decoration:none;display:inline-flex;align-items:center;vertical-align:middle;">
+            <svg width="130" height="20" viewBox="0 0 130 20" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+              <text x="0" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">haus</text>
+              <text x="42" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">entscheider</text>
+              <line x1="0" y1="18" x2="40" y2="18" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+            </svg>
+          </a>
+          &nbsp;·&nbsp;Daniel Schöberl&nbsp;·&nbsp;Erfurt / München
+        </div>
+        <div class="footer__right" style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+          <a href="#" class="footer__whatsapp">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp Kanal
+          </a>
+          <a href="/cdn-cgi/l/email-protection#bedad7dfd2d1d9fed6dfcbcddbd0cacdddd6dbd7dadbcc90dadb" style="color:var(--text-tertiary);font-size:12px;"><span class="__cf_email__" data-cfemail="91f5f8f0fdfef6d1f9f0e4e2f4ffe5e2f2f9f4f8f5f4e3bff5f4">[email&#160;protected]</span></a>
+          &nbsp;·&nbsp;
+          <a href="#impressum" style="color:var(--text-tertiary);font-size:12px;">Impressum</a>
+          &nbsp;·&nbsp;
+          <a href="#impressum" style="color:var(--text-tertiary);font-size:12px;">Datenschutz</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- IMPRESSUM -->
+  <section id="impressum" style="padding:3rem 0;border-top:0.5px solid var(--border);background:var(--bg-light);">
+    <div class="container">
+      <span class="label label--muted" style="margin-bottom:1rem;">Impressum</span>
+      <h2 style="font-size:18px;margin-bottom:1.25rem;">Angaben gemäß § 5 TMG</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:640px;">
+        <div>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
+            <strong style="color:var(--text-primary);font-weight:500;">Daniel Schöberl</strong><br>
+            Grasmückenweg 7 B<br>80937 München<br>Deutschland
+          </p>
+        </div>
+        <div>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
+            <strong style="color:var(--text-primary);font-weight:500;">Kontakt</strong><br>
+            E-Mail: <a href="/cdn-cgi/l/email-protection#3e5a575f5251597e565f4b4d5b504a4d5d565b575a5b4c105a5b"><span class="__cf_email__" data-cfemail="412528202d2e260129203432242f3532222924282524336f2524">[email&#160;protected]</span></a>
+          </p>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem;max-width:640px;">
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+          <strong style="color:var(--text-primary);font-weight:500;">Verantwortlich für den Inhalt gemäß § 55 Abs. 2 RStV</strong><br>
+          Daniel Schöberl, Anschrift wie oben.
+        </p>
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-top:1rem;">
+          <strong style="color:var(--text-primary);font-weight:500;">Haftungshinweis</strong><br>
+          Die Inhalte dieser Website wurden mit größtmöglicher Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte wird jedoch keine Gewähr übernommen.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Animated Radar Chart
+    (function() {
+      const labels = [
+        'Nachhaltigkeit', 'Ressourcen', 'Anpassung', 'Resilienz',
+        'Soziale Kraft', 'Umsetzung', 'Digital', 'Innovation',
+        'Wirtsch. Fairness', 'Netzwerk', 'Integrität'
+      ];
+      const tooltips = [
+        'Entscheidungen treffen, die nicht nur heute funktionieren — sondern auch für kommende Generationen fair und tragfähig sind.',
+        'Wissen, was wirklich wichtig ist — und Geld, Personal und Zeit gezielt dort einsetzen, wo sie am meisten bewirken.',
+        'Offen bleiben für Neues. Wenn sich die Lage ändert, umdenken können — statt stur an alten Plänen festzuhalten.',
+        'Auch in schwierigen Zeiten verlässlich funktionieren — Ausfälle vermeiden und die Wärmeversorgung stabil halten.',
+        'Die Menschen mitnehmen. Bürgerinnen und Bürger informieren, einbeziehen und ihre Sorgen ernst nehmen.',
+        'Pläne nicht nur machen — sondern auch wirklich umsetzen. Schritt für Schritt, mit klaren Zielen und Kontrolle.',
+        'Moderne Technik und Daten sinnvoll nutzen — um besser zu planen, transparenter zu informieren und schneller zu entscheiden.',
+        'Mut haben, neue Wege auszuprobieren — auch wenn sie ungewohnt sind. Wer nie etwas wagt, kommt nicht voran.',
+        'Dafür sorgen, dass die Wärmewende für alle bezahlbar bleibt — nicht nur für diejenigen, die es sich leisten können.',
+        'Mit anderen zusammenarbeiten — Städte, Bund, Verbände und Unternehmen gemeinsam an einem Strang ziehen lassen.',
+        'Klar sagen, was nicht geht. Wer alles gleichzeitig will, erreicht nichts — bewusste Entscheidungen brauchen auch klare Grenzen.'
+      ];
+      const ist = [0.65, 0.55, 0.45, 0.72, 0.38, 0.50, 0.30, 0.42, 0.60, 0.55, 0.68];
+      const pot = [0.85, 0.78, 0.80, 0.88, 0.72, 0.82, 0.70, 0.75, 0.80, 0.78, 0.85];
+
+      const n = labels.length;
+      const R = 110;
+      const cx = 0, cy = 0;
+
+      function polar(i, r) {
+        const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+        return { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) };
+      }
+
+      function toPath(values) {
+        return values.map((v, i) => {
+          const p = polar(i, v * R);
+          return (i === 0 ? 'M' : 'L') + p.x.toFixed(1) + ',' + p.y.toFixed(1);
+        }).join(' ') + ' Z';
+      }
+
+      const g = document.getElementById('radar-chart');
+      if (!g) return;
+
+      // Rings
+      [0.25, 0.5, 0.75, 1.0].forEach(r => {
+        const pts = Array.from({length: n}, (_, i) => polar(i, r * R));
+        const el = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        el.setAttribute('points', pts.map(p => p.x.toFixed(1) + ',' + p.y.toFixed(1)).join(' '));
+        el.setAttribute('class', 'radar-ring');
+        g.appendChild(el);
+      });
+
+      // Axes
+      for (let i = 0; i < n; i++) {
+        const p = polar(i, R);
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', cx); line.setAttribute('y1', cy);
+        line.setAttribute('x2', p.x.toFixed(1)); line.setAttribute('y2', p.y.toFixed(1));
+        line.setAttribute('class', 'radar-axis');
+        g.appendChild(line);
+      }
+
+      // Potential area
+      const potPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      potPath.setAttribute('d', toPath(pot));
+      potPath.setAttribute('class', 'radar-area-potential');
+      g.appendChild(potPath);
+
+      // IST area - animated
+      const istPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      istPath.setAttribute('d', toPath(Array(n).fill(0)));
+      istPath.setAttribute('class', 'radar-area');
+      g.appendChild(istPath);
+
+      // Dots
+      ist.forEach((v, i) => {
+        const p = polar(i, v * R);
+        const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        dot.setAttribute('cx', p.x.toFixed(1));
+        dot.setAttribute('cy', p.y.toFixed(1));
+        dot.setAttribute('r', '3');
+        dot.setAttribute('class', 'radar-dot');
+        dot.style.opacity = '0';
+        g.appendChild(dot);
+        setTimeout(() => { dot.style.transition = 'opacity 0.3s'; dot.style.opacity = '1'; }, 800 + i * 50);
+      });
+
+      // Labels
+      labels.forEach((lbl, i) => {
+        const p = polar(i, R + 18);
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', p.x.toFixed(1));
+        text.setAttribute('y', p.y.toFixed(1));
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('dominant-baseline', 'middle');
+        text.setAttribute('class', 'radar-lbl');
+        text.textContent = lbl;
+        text.style.cursor = 'pointer';
+        g.appendChild(text);
+
+        // Invisible hit area for easier hover
+        const hit = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        const bbox_w = lbl.length * 5.5;
+        hit.setAttribute('x', (p.x - bbox_w/2).toFixed(1));
+        hit.setAttribute('y', (p.y - 8).toFixed(1));
+        hit.setAttribute('width', bbox_w.toFixed(1));
+        hit.setAttribute('height', '16');
+        hit.setAttribute('fill', 'transparent');
+        hit.setAttribute('style', 'cursor:pointer;');
+        g.appendChild(hit);
+
+        // Hover events — show tooltip
+        [text, hit].forEach(el => {
+          el.addEventListener('mouseenter', (e) => {
+            text.style.fill = '#1a5c5a';
+            text.style.fontWeight = '700';
+            const tip = document.getElementById('radar-tooltip');
+            if (tip) {
+              tip.textContent = tooltips[i];
+              tip.style.display = 'block';
+            }
+          });
+          el.addEventListener('mouseleave', () => {
+            text.style.fill = '';
+            text.style.fontWeight = '';
+            const tip = document.getElementById('radar-tooltip');
+            if (tip) tip.style.display = 'none';
+          });
+        });
+      });
+
+      // Animate IST
+      let start = null;
+      function animate(ts) {
+        if (!start) start = ts;
+        const progress = Math.min((ts - start) / 1200, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const animated = ist.map(v => v * eased);
+        istPath.setAttribute('d', toPath(animated));
+        if (progress < 1) requestAnimationFrame(animate);
+      }
+      requestAnimationFrame(animate);
+
+      // Tooltip positioning on mousemove over radar wrap
+      const radarWrap = document.querySelector('.radar-wrap');
+      if (radarWrap) {
+        radarWrap.addEventListener('mousemove', (e) => {
+          const tip = document.getElementById('radar-tooltip');
+          if (tip && tip.style.display !== 'none') {
+            const rect = radarWrap.getBoundingClientRect();
+            let x = e.clientX - rect.left + 12;
+            let y = e.clientY - rect.top - 40;
+            if (x + 230 > rect.width) x = e.clientX - rect.left - 235;
+            if (y < 0) y = 10;
+            tip.style.left = x + 'px';
+            tip.style.top = y + 'px';
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Objekte im Vergleich — hausentscheider</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    /* ── KONTRAST-SYSTEM ──────────────────────────────────────────
+       #ffffff  Weiß       → #1a1a1a, #5a5956, #7ab8b5
+       #1a3535  Petrol-D   → #CFF77F (labels), #fff (zahlen), rgba(255,255,255,.65) sub
+       #f0efed  Grau       → #1a1a1a, #5a5956
+       #CFF77F  Signal     → #1a1a1a (alles — maximaler Kontrast)
+       #0f1f1d  Bühne      → #ffffff, rgba(255,255,255,.7)
+       #060d0c  Footer     → rgba(122,184,181,.7)
+       --petrol-light #7ab8b5 = der bläuliche Teal-Ton
+    ──────────────────────────────────────────────────────────── */
+    :root {
+      --petrol:       #1a5c5a;
+      --petrol-dark:  #1a3535;
+      --petrol-light: #7ab8b5;
+      --buehne:       #0f1f1d;
+      --signal:       #CFF77F;
+      --signal-dim:   rgba(207,247,127,0.12);
+      --white:        #ffffff;
+      --gray-bg:      #f0efed;
+      --gray-border:  #d0cecc;
+      --border-light: #e8e6e4;
+      --text-main:    #1a1a1a;
+      --text-sub:     #5a5956;
+      --text-muted:   #8a8680;
+      --red:          #c85a5a;
+      --green:        #2a7a5a;
+      --max-w:        960px;
+    }
+
+    body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text-main); background: var(--buehne); }
+    a { text-decoration: none; }
+
+    /* ══ ZONE WEISS ══════════════════════════════════════════════ */
+    .zone-white { background: var(--white); }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--border-light); }
+    .nav__inner { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; height: 52px; display: flex; align-items: center; justify-content: space-between; }
+    .nav__back { font-size: 13px; color: var(--text-muted); }
+    .nav__back:hover { color: var(--petrol); }
+
+    /* PAGE HEADER */
+    .page-header { padding: 2rem 0 1.5rem; }
+    .page-header__inner { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
+    .page-header__label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--petrol); display: block; margin-bottom: 0.5rem; }
+    .page-header__h1 { font-family: 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 400; color: var(--text-main); margin-bottom: 0.75rem; }
+    .page-header__sub { font-size: 14px; color: var(--text-sub); line-height: 1.7; max-width: 580px; }
+
+    /* PREISSTAND-SCHIENE — Schwarz auf Weiß, Punkt bleibt */
+    .preis-schiene { padding: 0.875rem 0 0.75rem; }
+    .preis-schiene__inner { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; gap: 0.625rem; font-size: 13px; color: var(--text-main); font-weight: 500; }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--petrol-light); flex-shrink: 0; animation: blink 2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+    .schiene-sep { color: var(--gray-border); }
+
+    /* PREISTAFELN — Petrol-Dark, Signal-Gelb Labels, weiße Zahlen, lesbare Sub-Texte */
+    .tafeln-wrap { padding: 0 0 0.75rem; }
+    .tafeln { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.625rem; max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
+    .tafel { background: var(--petrol-dark); border-radius: 4px; padding: 0.875rem 1rem 0.75rem; }
+    .tafel__lbl { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--signal); margin-bottom: 0.4rem; font-weight: 600; }
+    .tafel__preis-row { display: flex; align-items: baseline; gap: 5px; margin-bottom: 6px; }
+    .tafel__preis { font-size: 28px; font-weight: 600; color: var(--white); line-height: 1; font-variant-numeric: tabular-nums; }
+    .tafel__unit { font-size: 12px; color: rgba(255,255,255,0.5); }
+    .tafel__sub  { font-size: 11px; color: rgba(255,255,255,0.65); line-height: 1.4; }
+
+    /* SCHIEBEREGLER — Signal-Gelb */
+    .slider-wrap { padding: 0 0 1.75rem; }
+    .slider-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
+    .slider-card { background: var(--signal); border-radius: 4px; padding: 1rem 1.25rem 0.875rem; }
+    .slider-card__header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.75rem; }
+    .slider-card__title { font-size: 13px; font-weight: 600; color: var(--text-main); }
+    .slider-card__val { font-size: 26px; font-weight: 700; color: var(--text-main); font-variant-numeric: tabular-nums; line-height: 1; }
+    .slider-card__unit { font-size: 11px; color: var(--text-sub); margin-left: 2px; }
+    input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 3px; border-radius: 2px; outline: none; cursor: pointer; background: linear-gradient(to right, var(--text-main) 0%, var(--text-main) var(--pct,12%), rgba(0,0,0,0.2) var(--pct,12%), rgba(0,0,0,0.2) 100%); }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--text-main); border: 3px solid var(--signal); box-shadow: 0 1px 5px rgba(0,0,0,0.2); cursor: pointer; }
+    input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--text-main); border: 3px solid var(--signal); cursor: pointer; }
+    .slider-range-labels { display: flex; justify-content: space-between; font-size: 10px; color: rgba(0,0,0,0.45); margin-top: 5px; }
+    .slider-card__hint { font-size: 11px; color: rgba(0,0,0,0.5); margin-top: 0.5rem; font-style: italic; min-height: 1.4em; }
+
+    /* ══ ZONE DUNKEL ════════════════════════════════════════════ */
+    .zone-dark { background: var(--buehne); padding: 1.5rem 0 2.5rem; }
+
+    .schock-val { font-size: 13px; font-weight: 600; line-height: 1.2; }
+    .schock-val--up   { color: #c85a5a; }
+    .schock-val--down { color: #3a8a50; }
+    .schock-bar { height: 4px; border-radius: 2px; margin-top: 4px; max-width: 80px; transition: width 0.4s ease; }
+    .schock-bar--up   { background: #c85a5a; }
+    .schock-bar--down { background: #3a8a50; }
+    .filter-bar { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+    .filter-btn { font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 500; padding: 0.35rem 0.875rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+    .filter-btn:hover { border-color: rgba(255,255,255,0.5); color: rgba(255,255,255,0.9); }
+    .filter-btn.active { background: var(--white); color: var(--text-main); border-color: var(--white); }
+    .filter-sep { color: rgba(255,255,255,0.2); font-size: 12px; }
+    .sort-hint { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem 0.75rem; }
+    .sort-hint__inner { font-size: 12px; color: rgba(255,255,255,0.65); display: flex; align-items: center; gap: 0.5rem; }
+    .sort-hint__inner b { color: var(--white); font-weight: 600; }
+
+    /* TABELLE */
+    .tbl-outer { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
+    .tbl { background: var(--white); border-radius: 4px; overflow: hidden; box-shadow: 0 8px 48px rgba(0,0,0,0.45); }
+
+    /* Spalten: # · Objekt · Klasse · €/Mon · €/Jahr · vs.Ø · Prognose[gelb] · proj.€/Mon[gelb] */
+    .tbl-cols { grid-template-columns: 22px 40px 1.6fr 0.5fr 0.9fr 0.9fr 0.8fr 0.8fr 0.9fr 1fr; }
+
+    /* Header */
+    .tbl-head { display: grid; background: var(--petrol-dark); border: 2px solid rgba(207,247,127,0.4); border-radius: 4px 4px 0 0; }
+    .tbl-head-cell { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--signal); font-weight: 600; padding: 0.7rem 0.75rem; }
+    /* Signal-Gelb Header für Prognose-Spalten */
+    .tbl-head-cell--signal { background: rgba(207,247,127,0.15); border-left: 1px solid rgba(207,247,127,0.2); }
+
+    /* Zeilen */
+    .obj-row { display: grid; align-items: center; border-bottom: 1.5px solid var(--gray-border); transition: background 0.1s; }
+    .obj-row:last-child { border-bottom: none; }
+    .obj-row:nth-child(odd)  { background: var(--white); }
+    .obj-row:nth-child(even) { background: #f7f6f4; }
+    .obj-row:hover { background: #eef6f5 !important; }
+    .obj-row--real { border-left: 3px solid var(--petrol); }
+    .obj-row--real:hover { background: #e4f0ee !important; }
+    .obj-row--link { cursor: pointer; }
+
+    /* Zellen */
+    .cell { padding: 0.8rem 0.75rem; }
+    /* Signal-Gelb Zellen für Prognose */
+    .cell--signal { background: var(--signal-dim); border-left: 1px solid rgba(207,247,127,0.2); }
+
+    .rank-nr { font-size: 12px; color: var(--text-muted); font-family: 'Playfair Display', Georgia, serif; }
+    .rank-nr--1 { color: var(--petrol); font-size: 14px; font-weight: 500; }
+
+    .obj-titel { font-size: 13px; font-weight: 500; color: var(--text-main); display: flex; align-items: center; gap: 5px; flex-wrap: wrap; line-height: 1.3; }
+    .obj-satzung { font-size: 11px; color: #c8a460; }
+    .obj-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+    .hs-tag { font-size: 10px; color: var(--text-muted); }
+
+    /* Klasse — schwarz */
+    .klasse { font-size: 16px; font-weight: 500; font-family: 'Playfair Display', Georgia, serif; color: var(--text-main); }
+
+    .kosten-val { font-size: 14px; font-weight: 600; color: var(--text-main); font-variant-numeric: tabular-nums; }
+    .kosten-val--gut { color: var(--green); }
+    .kosten-sub { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+
+    .vs-val { font-size: 12px; font-weight: 600; }
+    .vs-plus { color: var(--red); } .vs-minus { color: var(--green); } .vs-neutral { color: var(--text-muted); }
+
+    .prog-val { font-size: 12px; font-weight: 600; }
+    .proj-val { font-size: 14px; font-weight: 600; color: var(--text-main); font-variant-numeric: tabular-nums; }
+    .proj-val--up   { color: #a84040; }
+    .proj-val--down { color: var(--green); }
+    .proj-val--same { color: var(--text-muted); }
+
+    .tbl-note { background: #f0efed; border-top: 1.5px solid var(--gray-border); padding: 0.625rem 1.25rem; font-size: 10px; color: var(--text-muted); line-height: 1.7; }
+
+    /* EINLADUNG — Weiß, Button Signal-Gelb */
+    .einladung-wrap { max-width: var(--max-w); margin: 0 auto; padding: 1.5rem 2rem 0; }
+    .einladung-box { background: var(--white); border-radius: 4px; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; box-shadow: 0 2px 16px rgba(0,0,0,0.2); }
+    .einladung-plus { width: 26px; height: 26px; border-radius: 50%; background: var(--border-light); display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--text-sub); flex-shrink: 0; }
+    .einladung-titel { font-size: 14px; font-weight: 600; color: var(--text-main); }
+    .einladung-sub { font-size: 12px; color: var(--text-muted); }
+    .btn-eintragen { display: inline-block; padding: 0.5rem 1.25rem; background: var(--signal); color: var(--text-main); font-size: 13px; font-weight: 600; border-radius: 3px; transition: opacity 0.2s; white-space: nowrap; }
+    .btn-eintragen:hover { opacity: 0.85; }
+
+    /* FOOTER */
+    .footer { border-top: 0.5px solid rgba(122,184,181,0.1); padding: 1.5rem 0; background: #060d0c; }
+    .footer__inner { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; font-size: 13px; color: rgba(122,184,181,0.7); }
+    .footer__inner a { color: rgba(122,184,181,0.7); }
+    .footer__inner a:hover { color: var(--white); }
+
+    @media (max-width: 760px) {
+      .tafeln, .slider-grid { grid-template-columns: 1fr 1fr; }
+      .tbl-cols { grid-template-columns: 20px 36px 1fr 36px 70px 70px 80px; }
+      .tbl-head-cell:nth-child(n+6), .obj-row .cell:nth-child(n+6) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ ZONE WEISS ════════════════════════════════════════════════ -->
+<div class="zone-white">
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__back">← Zurück zur Startseite</a>
+      <a href="../index.html">
+        <svg width="148" height="22" viewBox="0 0 148 22" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="17" font-family="Georgia,serif" font-size="17" fill="#1a1a1a">haus</text>
+          <text x="46" y="17" font-family="Georgia,serif" font-size="17" fill="#1a1a1a">entscheider</text>
+          <line x1="0" y1="20" x2="43" y2="20" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header__inner">
+      <span class="page-header__label">Objekte</span>
+      <h1 class="page-header__h1">Gebäude im Vergleich</h1>
+      <p class="page-header__sub">
+        Dokumentierte Objekte — mit echten Zahlen und dem Ziel,
+        gemeinsam Muster zu erkennen, die im Einzelfall unsichtbar bleiben.
+      </p>
+    </div>
+  </div>
+
+  <!-- PREISSTAND-SCHIENE — Schwarz, Punkt bleibt -->
+  <div class="preis-schiene">
+    <div class="preis-schiene__inner">
+      <span class="live-dot"></span>
+      <span>Preisstand</span>
+      <span class="schiene-sep">·</span>
+      <span>März 2026</span>
+      <span class="schiene-sep">·</span>
+      <span>wird monatlich aktualisiert</span>
+    </div>
+  </div>
+
+  <!-- PREISTAFELN -->
+  <div class="tafeln-wrap">
+    <div class="tafeln">
+      <div class="tafel">
+        <div class="tafel__lbl">Gas Ø</div>
+        <div class="tafel__preis-row">
+          <span class="tafel__preis">9,98</span>
+          <span class="tafel__unit">ct/kWh</span>
+        </div>
+        <div class="tafel__sub">eff. Wärme: 10,0 ct/kWh</div>
+      </div>
+      <div class="tafel">
+        <div class="tafel__lbl">Fernwärme Ø</div>
+        <div class="tafel__preis-row">
+          <span class="tafel__preis">26</span>
+          <span class="tafel__unit">ct/kWh</span>
+        </div>
+        <div class="tafel__sub">Spanne 14–39 ct · Erfurt</div>
+      </div>
+      <div class="tafel">
+        <div class="tafel__lbl">Heizöl Ø</div>
+        <div class="tafel__preis-row">
+          <span class="tafel__preis">12,4</span>
+          <span class="tafel__unit">ct/kWh</span>
+        </div>
+        <div class="tafel__sub">+60% seit Feb. 2026</div>
+      </div>
+      <div class="tafel">
+        <div class="tafel__lbl">Wärmestrom WP Ø</div>
+        <div class="tafel__preis-row">
+          <span class="tafel__preis">32</span>
+          <span class="tafel__unit">ct/kWh</span>
+        </div>
+        <div class="tafel__sub">eff. Wärme JAZ 3,8: 8,4 ct</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCHIEBEREGLER — Signal-Gelb -->
+  <div class="slider-wrap">
+    <div class="slider-grid">
+      <div class="slider-card">
+        <div class="slider-card__header">
+          <span class="slider-card__title">Gaspreis-Szenario in 5 Jahren</span>
+          <span>
+            <span class="slider-card__val" id="gas-display">10,0</span>
+            <span class="slider-card__unit">ct/kWh</span>
+          </span>
+        </div>
+        <input type="range" id="gas-slider" min="8" max="25" step="0.5" value="10"
+          oninput="onSlider()" style="--pct:11.8%">
+        <div class="slider-range-labels">
+          <span>8 ct günstig</span>
+          <span>heute ~10 ct</span>
+          <span>25 ct Krise</span>
+        </div>
+        <p class="slider-card__hint" id="gas-hint">Irankonflikt: Gaspreise könnten stark steigen.</p>
+      </div>
+      <div class="slider-card">
+        <div class="slider-card__header">
+          <span class="slider-card__title">Wärmestrompreis in 5 Jahren</span>
+          <span>
+            <span class="slider-card__val" id="strom-display">32</span>
+            <span class="slider-card__unit">ct/kWh</span>
+          </span>
+        </div>
+        <input type="range" id="strom-slider" min="20" max="50" step="1" value="32"
+          oninput="onSlider()" style="--pct:40%">
+        <div class="slider-range-labels">
+          <span>20 ct günstig</span>
+          <span>heute ~32 ct</span>
+          <span>50 ct hoch</span>
+        </div>
+        <p class="slider-card__hint" id="strom-hint">Sinkender Strompreis stärkt WP-Vorteil.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- Ende Zone Weiß -->
+
+<!-- ══ ZONE DUNKEL ═══════════════════════════════════════════════ -->
+<div class="zone-dark">
+
+  <div class="filter-bar" style="justify-content:center;flex-direction:column;align-items:center;gap:0.75rem;">
+    <span style="font-size:12px;color:rgba(255,255,255,0.55);">Filter — Gebäude eingrenzen:</span>
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center;">
+    <button class="filter-btn active" onclick="setFilter('alle',this)">Alle</button>
+    <button class="filter-btn" onclick="setFilter('bestand',this)">Bestand</button>
+    <button class="filter-btn" onclick="setFilter('neubau',this)">Neubau</button>
+    <span class="filter-sep">·</span>
+    <button class="filter-btn" onclick="setFilter('wp',this)">WP</button>
+    <button class="filter-btn" onclick="setFilter('gas',this)">Gas</button>
+    <button class="filter-btn" onclick="setFilter('fw',this)">Fernwärme</button>
+    <button class="filter-btn" onclick="setFilter('oel',this)">Öl</button>
+    </div>
+  </div>
+
+  <div class="sort-hint">
+    <div class="sort-hint__inner">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.5" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/><path d="M6 5v3M6 3.5V4" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round"/></svg>
+      Sortiert nach <b>€/m²/Monat (projiziert)</b> — Ranking ändert sich live mit den Reglern ·
+      <span style="color:rgba(207,247,127,0.7);font-size:11px;">Gelbe Spalten = Szenario</span>
+    </div>
+  </div>
+
+  <div class="tbl-outer">
+    <div class="tbl">
+      <!-- HEADER -->
+      <div class="tbl-head tbl-cols">
+        <div class="tbl-head-cell">#</div>
+        <div class="tbl-head-cell"></div>
+        <div class="tbl-head-cell">Objekt</div>
+        <div class="tbl-head-cell">Klasse</div>
+        <div class="tbl-head-cell">€/m²/Mon.</div>
+        <div class="tbl-head-cell">€/m²/Jahr</div>
+        <div class="tbl-head-cell">vs. Ø</div>
+        <div class="tbl-head-cell tbl-head-cell--signal">Prognose</div>
+        <div class="tbl-head-cell tbl-head-cell--signal">€/m²/Mon. proj.</div>
+        <div class="tbl-head-cell tbl-head-cell--signal">△ €/Jahr</div>
+      </div>
+      <div id="tbl-body"></div>
+      <div class="tbl-note">
+        €/m²/Mon. = IST-Wert (Basis-Energiepreise). Prognose = prozentuale Veränderung beim Schieberegler-Szenario. €/m²/Mon. proj. = konkreter Monatspreis im Szenario. Gelbe Spalten reagieren auf die Regler. vs. Ø = Abweichung vom Heizsystem-Durchschnitt.
+      </div>
+    </div>
+  </div>
+
+  <!-- EINLADUNG — Weiß, Button Signal-Gelb -->
+  <div class="einladung-wrap">
+    <div class="einladung-box">
+      <div class="einladung-plus">+</div>
+      <div style="flex:1;min-width:180px;">
+        <p class="einladung-titel">Ihr Gebäude in die Liste</p>
+        <p class="einladung-sub">Jede Größe · WEG oder Einzeleigentümer · anonym möglich · 5 Minuten</p>
+      </div>
+      <a href="../eintragen.html" class="btn-eintragen">Jetzt eintragen →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <span><a href="../index.html">hausentscheider.de</a> &nbsp;·&nbsp; Daniel Schöberl &nbsp;·&nbsp; Erfurt / München</span>
+    <span><a href="/cdn-cgi/l/email-protection#9df9f4fcf1f2faddf5fce8eef8f3e9eefef5f8f4f9f8efb3f9f8"><span class="__cf_email__" data-cfemail="086c616964676f4860697d7b6d667c7b6b606d616c6d7a266c6d">[email&#160;protected]</span></a> &nbsp;·&nbsp; <a href="../index.html#impressum">Impressum</a></span>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const OBJ = [
+  { id:'obj001', real:true,  link:'theaterstrasse-4.html',
+    name:'WEG Altstadt Erfurt', satzung:true, bj:1900,
+    sub:'Bj. 1900 · 14 WE · 784 m² · Innenstadt',
+    typ:'gas', hs:'Gas-Brennwert', klasse:'D',
+    basis:1.49, wp:0.91, jaz:3.8, ea:55000, flaeche:784 },
+  { id:'obj002', real:false, link:null,
+    name:'MFH · Erfurt Nordstadt', satzung:false, bj:1962,
+    sub:'Bj. 1962 · 8 WE · ~480 m²',
+    typ:'gas', hs:'Gas-Einzel', klasse:'F',
+    basis:1.78, wp:1.05, jaz:3.5, ea:42000, flaeche:480 },
+  { id:'obj003', real:false, link:null,
+    name:'ETW · Leipzig Innenstadt', satzung:false, bj:1920,
+    sub:'Bj. 1920 · 1/12 WE · 67 m²',
+    typ:'fw', hs:'Fernwärme', klasse:'E',
+    basis:2.41, wp:null, jaz:null, ea:null, flaeche:67 },
+  { id:'obj004', real:false, link:null,
+    name:'WEG · Erfurt Löbervorstadt', satzung:false, bj:1958,
+    sub:'Bj. 1958 · 6 WE · ~390 m²',
+    typ:'gas', hs:'Gas-Brennwert', klasse:'E',
+    basis:1.65, wp:0.98, jaz:3.6, ea:36000, flaeche:390 },
+  { id:'obj005', real:false, link:null,
+    name:'Doppelhaus · Jena Weststadt', satzung:false, bj:1930,
+    sub:'Bj. 1930 · 2 WE · ~210 m²',
+    typ:'oel', hs:'Heizöl', klasse:'E',
+    basis:1.96, wp:1.10, jaz:3.4, ea:22000, flaeche:210 },
+  { id:'obj006', real:false, link:null,
+    name:'WEG · Erfurt Daberstedt', satzung:false, bj:1972,
+    sub:'Bj. 1972 · 10 WE · ~620 m²',
+    typ:'wechsel', hs:'Gas → WP Q3 2026', klasse:'D',
+    basis:1.52, wp:0.92, jaz:3.7, ea:48000, flaeche:620 },
+  { id:'obj007', real:false, link:null,
+    name:'ETW · Weimar Innenstadt', satzung:false, bj:1895,
+    sub:'Bj. 1895 · saniert 2019 · 82 m²',
+    typ:'wp', hs:'WP seit 2024', klasse:'C',
+    basis:0.78, wp:0.78, vorher:1.63, jaz:4.1, ea:0, flaeche:82 },
+  { id:'obj008', real:false, link:null,
+    name:'EFH · Erfurt Südost', satzung:false, bj:1985,
+    sub:'Bj. 1985 · 1 WE · ~145 m²',
+    typ:'gas', hs:'Gas-Brennwert', klasse:'D',
+    basis:1.38, wp:0.88, jaz:3.9, ea:18000, flaeche:145 },
+  { id:'obj009', real:false, link:null,
+    name:'WEG · Gera Innenstadt', satzung:false, bj:1910,
+    sub:'Bj. 1910 · 12 WE · ~760 m²',
+    typ:'fw', hs:'Fernwärme', klasse:'D',
+    basis:2.85, wp:1.02, jaz:3.6, ea:62000, flaeche:760 },
+  { id:'obj010', real:false, link:null,
+    name:'Neubau WEG · Erfurt Nord', satzung:false, bj:2020,
+    sub:'Bj. 2020 · 16 WE · ~1.100 m²',
+    typ:'wp', hs:'WP (Neubau)', klasse:'A',
+    basis:0.62, wp:0.62, jaz:4.5, ea:0, flaeche:1100 },
+];
+
+const AVG = { gas:1.56, fw:2.63, oel:1.96, wp:0.70, wechsel:1.52 };
+
+// Basis-Preise (stabil — Preistafeln ändern sich nie)
+const GAS_BASIS   = 10.0;
+const STROM_BASIS = 32;
+
+function calcK(obj, g, s) {
+  if (obj.typ==='wp')      return obj.basis * (s / STROM_BASIS);
+  if (obj.typ==='gas')     return obj.basis * (g / GAS_BASIS);
+  if (obj.typ==='oel')     return obj.basis * (1 + (g - GAS_BASIS) * 0.055);
+  if (obj.typ==='fw')      return obj.basis * (1 + (g - GAS_BASIS) * 0.025);
+  if (obj.typ==='wechsel') return obj.basis * (g / GAS_BASIS);
+  return obj.basis;
+}
+
+function getVs(k, obj, g) {
+  const avg = obj.typ==='gas'     ? AVG.gas * (g / GAS_BASIS)
+            : obj.typ==='fw'      ? AVG.fw  * (1 + (g - GAS_BASIS) * 0.025)
+            : obj.typ==='oel'     ? AVG.oel * (1 + (g - GAS_BASIS) * 0.055)
+            : obj.typ==='wechsel' ? AVG.wechsel * (g / GAS_BASIS)
+            : AVG.wp;
+  return (k - avg) / avg * 100;
+}
+
+let gasCt = GAS_BASIS, stromCt = STROM_BASIS;
+
+var activeFilter = 'alle';
+
+function setFilter(f, btn) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  render();
+}
+
+function getFiltered() {
+  if (activeFilter === 'alle') return OBJ;
+  if (activeFilter === 'bestand') return OBJ.filter(o => o.bj < 2000);
+  if (activeFilter === 'neubau')  return OBJ.filter(o => o.bj >= 2000);
+  if (activeFilter === 'wp')      return OBJ.filter(o => o.typ === 'wp');
+  if (activeFilter === 'gas')     return OBJ.filter(o => o.typ === 'gas' || o.typ === 'wechsel');
+  if (activeFilter === 'fw')      return OBJ.filter(o => o.typ === 'fw');
+  if (activeFilter === 'oel')     return OBJ.filter(o => o.typ === 'oel');
+  return OBJ;
+}
+
+function hsIcon(typ) {
+      var icons = {
+        'wp':      '<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#e8f5e0" stroke="#3a8a30" stroke-width="1.2"/><circle cx="16" cy="16" r="9" fill="none" stroke="#3a8a30" stroke-width="1"/><ellipse cx="16" cy="16" rx="4.5" ry="9" fill="none" stroke="#3a8a30" stroke-width="0.8" opacity="0.7"/><line x1="7" y1="16" x2="25" y2="16" stroke="#3a8a30" stroke-width="0.8" opacity="0.7"/><line x1="8" y1="11" x2="24" y2="11" stroke="#3a8a30" stroke-width="0.6" opacity="0.4"/><line x1="8" y1="21" x2="24" y2="21" stroke="#3a8a30" stroke-width="0.6" opacity="0.4"/></svg>',
+        'gas':     '<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#fef3e0" stroke="#e08010" stroke-width="1.2"/><path d="M16,5 C14,10 8,13 8,19 C8,25 11,28 16,28 C21,28 24,25 24,19 C24,13 18,10 16,5Z" fill="#e08010"/><path d="M16,14 C15,17 13,18 13,21 C13,24 14,25 16,25 C18,25 19,24 19,21 C19,18 17,17 16,14Z" fill="#fef3e0" opacity="0.6"/></svg>',
+        'fw':      '<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#fdeee8" stroke="#c03818" stroke-width="1.2"/><rect x="5" y="13" width="22" height="6" fill="#c03818" opacity="0.85"/><ellipse cx="5" cy="16" rx="3" ry="5" fill="#e05830" stroke="#c03818" stroke-width="0.8"/><ellipse cx="27" cy="16" rx="3" ry="5" fill="#a02810" stroke="#c03818" stroke-width="0.8"/><rect x="5" y="13" width="22" height="2" fill="#ffffff" opacity="0.15"/></svg>',
+        'oel':     '<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#ebebeb" stroke="#4a4a4a" stroke-width="1.2"/><path d="M16,6 C16,6 8,16 8,20 C8,26 11,28 16,28 C21,28 24,26 24,20 C24,16 16,6 16,6Z" fill="#4a4a4a" opacity="0.85"/></svg>',
+        'wechsel': '<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#f0f0f0" stroke="#888880" stroke-width="1.2"/><path d="M16,5 C14,9 10,11 10,16 C10,19 11,21 12,22Z" fill="#e08010" opacity="0.9"/><circle cx="19" cy="16" r="7" fill="none" stroke="#3a8a30" stroke-width="1"/><ellipse cx="19" cy="16" rx="3.5" ry="7" fill="none" stroke="#3a8a30" stroke-width="0.8" opacity="0.7"/><line x1="12" y1="16" x2="26" y2="16" stroke="#3a8a30" stroke-width="0.7" opacity="0.7"/></svg>'
+      };
+      return icons[typ] || icons['gas'];
+    }
+
+function render() {
+  const body = document.getElementById('tbl-body');
+  if (!body) return;
+
+  // IST-Kosten immer bei Basis-Preisen — stabil
+  const liste = getFiltered().map(o => {
+    const kIst  = calcK(o, GAS_BASIS, STROM_BASIS);   // IST — immer stabil
+    const kProj = calcK(o, gasCt, stromCt);            // Projektion — ändert sich
+    const vs    = getVs(kIst, o, GAS_BASIS);
+    const prog  = kIst > 0 ? (kProj - kIst) / kIst * 100 : 0;
+    return { ...o, kIst, kProj, vs, prog };
+  }).sort((a, b) => a.kProj - b.kProj);
+
+  body.innerHTML = '';
+
+  const maxDelta = Math.max(...liste.map(o => Math.abs((o.kProj - o.kIst) * 12 * (o.flaeche||100))));
+
+  liste.forEach((obj, idx) => {
+    const rank    = idx + 1;
+    const monIst  = obj.kIst.toFixed(2).replace('.', ',');
+    const jahrIst = (obj.kIst * 12).toFixed(2).replace('.', ',');
+    const monProj = obj.kProj.toFixed(2).replace('.', ',');
+
+    // VS Ø
+    const vsAbs = Math.round(Math.abs(obj.vs));
+    const vsCls = obj.vs > 10 ? 'vs-plus' : obj.vs < -10 ? 'vs-minus' : 'vs-neutral';
+    const vsTxt = obj.vs > 10  ? `+${vsAbs}% über Ø`
+                : obj.vs < -10 ? `−${vsAbs}% unter Ø`
+                : `≈ Ø`;
+
+    // Prognose %
+    const progAbs = Math.round(Math.abs(obj.prog));
+    let progTxt = 'stabil', progColor = 'var(--text-muted)';
+    if (Math.abs(obj.prog) >= 1) {
+      progTxt   = obj.prog > 0 ? `+${progAbs}%` : `−${progAbs}%`;
+      progColor = obj.prog > 20 ? 'var(--red)'
+                : obj.prog > 5  ? '#b8943a'
+                : obj.prog < -5 ? 'var(--green)'
+                : 'var(--text-muted)';
+    }
+
+    // Projizierter Monatspreis — Farbe zeigt Richtung
+    const projClass = obj.kProj > obj.kIst * 1.01 ? 'proj-val--up'
+                    : obj.kProj < obj.kIst * 0.99 ? 'proj-val--down'
+                    : 'proj-val--same';
+
+    // Kosten IST
+    const isWP = obj.typ === 'wp';
+    const monHTML  = `<div class="kosten-val${isWP?' kosten-val--gut':''}">${monIst} €</div>`;
+    const jahrHTML = `<div class="kosten-val${isWP?' kosten-val--gut':''}">${jahrIst} €</div>`;
+
+    const kCls = {A:'',B:'',C:'',D:'',E:'',F:''}[obj.klasse] || '';
+
+    // Schock-Spalte
+    const deltaJahr = Math.round((obj.kProj - obj.kIst) * 12 * (obj.flaeche || 100));
+    const deltaAbs  = Math.abs(deltaJahr);
+    const barPct    = maxDelta > 0 ? Math.round((deltaAbs / maxDelta) * 100) : 0;
+    const isUp      = deltaJahr > 0;
+    const schockSign = isUp ? '+' : '−';
+    const schockCls  = isUp ? 'schock-val--up' : 'schock-val--down';
+    const barCls     = isUp ? 'schock-bar--up' : 'schock-bar--down';
+    const schockHTML = deltaAbs < 50 ? '<span style="font-size:11px;color:var(--text-muted)">stabil</span>' :
+      `<span class="schock-val ${schockCls}">${schockSign}${deltaAbs.toLocaleString('de-DE')} €</span>
+       <div class="schock-bar ${barCls}" style="width:${barPct}%"></div>`;
+
+    const row = document.createElement('div');
+    row.className = ['obj-row tbl-cols', obj.real ? 'obj-row--real' : '', obj.link ? 'obj-row--link' : ''].join(' ');
+    if (obj.link) row.onclick = () => window.location.href = obj.link;
+
+    row.innerHTML = `
+      <div class="cell"><span class="rank-nr ${rank===1?'rank-nr--1':''}">${rank}</span></div>
+      <div class="cell" style="display:flex;align-items:center;justify-content:center;">${hsIcon(obj.typ)}</div>
+      <div class="cell">
+        <div class="obj-titel">
+          ${obj.name}
+          ${obj.satzung ? `<span class="obj-satzung" title="Fernwärmesatzung">⚠</span>` : ''}
+        </div>
+        <div class="obj-sub">
+          <span>${obj.sub}</span>
+          <span class="hs-tag">${obj.hs}</span>
+          ${obj.link ? `<a href="${obj.link}" style="font-size:11px;color:var(--petrol);font-weight:500;" onclick="event.stopPropagation()">Profil →</a>` : ''}
+        </div>
+      </div>
+      <div class="cell"><span class="klasse">${obj.klasse}</span></div>
+      <div class="cell">${monHTML}</div>
+      <div class="cell">${jahrHTML}</div>
+      <div class="cell"><span class="vs-val ${vsCls}">${vsTxt}</span></div>
+      <div class="cell cell--signal"><span class="prog-val" style="color:${progColor};">${progTxt}</span></div>
+      <div class="cell cell--signal"><span class="proj-val ${projClass}">${monProj} €</span></div>
+      <div class="cell cell--signal">${schockHTML}</div>
+    `;
+    body.appendChild(row);
+  });
+}
+
+function onSlider() {
+  gasCt   = parseFloat(document.getElementById('gas-slider').value);
+  stromCt = parseFloat(document.getElementById('strom-slider').value);
+
+  // Nur Schieberegler-Anzeige — Preistafeln bleiben stabil
+  const gPct = ((gasCt - 8) / 17 * 100).toFixed(1);
+  document.getElementById('gas-slider').style.setProperty('--pct', gPct + '%');
+  document.getElementById('gas-display').textContent = gasCt.toFixed(1);
+
+  const sPct = ((stromCt - 20) / 30 * 100).toFixed(1);
+  document.getElementById('strom-slider').style.setProperty('--pct', sPct + '%');
+  document.getElementById('strom-display').textContent = stromCt;
+
+  document.getElementById('gas-hint').textContent =
+    gasCt >= 20 ? 'Krisenpreis: Amortisation WP halbiert sich.' :
+    gasCt >= 14 ? 'Starker Anstieg: Gas-Gebäude fallen im Ranking.' :
+    gasCt <= 9  ? 'Niedriger Preis — WP-Vorteil schrumpft.' :
+                  'Irankonflikt: Gaspreise könnten stark steigen.';
+
+  document.getElementById('strom-hint').textContent =
+    stromCt <= 25 ? 'Günstiger Strom — WP besonders rentabel.' :
+    stromCt >= 42 ? 'Hoher Strompreis schwächt WP-Vorteil.' :
+                    'Sinkender Strompreis stärkt WP-Vorteil.';
+
+  render();
+}
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="eco2050 icon">
+  <defs><clipPath id="c"><circle cx="256" cy="256" r="220"/></clipPath></defs>
+  <circle cx="256" cy="256" r="220" fill="#A7A9AD"/>
+  <g clip-path="url(#c)">
+    <rect x="176" y="128" width="160" height="74" fill="#C1CA0F"/>
+    <rect x="176" y="217" width="160" height="74" fill="#C1CA0F"/>
+    <rect x="176" y="306" width="160" height="74" fill="#C1CA0F"/>
+    <rect x="96" y="36" width="14" height="440" fill="#FFFFFF"/>
+    <rect x="402" y="36" width="14" height="440" fill="#FFFFFF"/>
+    <rect x="36" y="110" width="440" height="14" fill="#FFFFFF"/>
+    <rect x="36" y="199" width="440" height="14" fill="#FFFFFF"/>
+    <rect x="36" y="288" width="440" height="14" fill="#FFFFFF"/>
+    <rect x="36" y="377" width="440" height="14" fill="#FFFFFF"/>
+  </g>
+</svg>

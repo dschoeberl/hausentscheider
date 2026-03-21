@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Wegweiser für Hausentscheider — offizielle Quellen zur Wärmewende in Erfurt, eingeordnet aus Eigentümerperspektive.">
+  <title>Wegweiser — hausentscheider</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    :root {
+      --petrol:       #1a5c5a;
+      --petrol-dark:  #1a3535;
+      --petrol-light: #7ab8b5;
+      --signal:       #CFF77F;
+      --white:        #ffffff;
+      --off-white:    #f5f4f2;
+      --border:       #e0dedd;
+      --text-main:    #1a1a1a;
+      --text-sub:     #5a5956;
+      --text-muted:   #8a8680;
+      --max-w:        860px;
+      --radius:       6px;
+    }
+    body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text-main); background: var(--white); }
+    a { color: var(--petrol); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 0.5px solid var(--border); }
+    .nav__inner { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; height: 52px; display: flex; align-items: center; justify-content: space-between; }
+    .nav__back { font-size: 13px; color: var(--text-muted); }
+    .nav__back:hover { color: var(--petrol); }
+    .nav__links { display: flex; gap: 2rem; list-style: none; }
+    .nav__links a { font-size: 13px; color: var(--text-sub); }
+    .nav__links a:hover { color: var(--petrol); text-decoration: none; }
+
+    /* HERO */
+    .hero {
+      position: relative; min-height: 340px;
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero__bg {
+      position: absolute; inset: 0;
+      background-image: url('images/erfurt-panorama.png');
+      background-size: cover; background-position: center 30%;
+    }
+    .hero__overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(26,53,53,0.55) 0%, rgba(26,53,53,0.82) 100%);
+    }
+    .hero__content { position: relative; z-index: 1; width: 100%; padding: 0 0 2.5rem; }
+    .hero__inner { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
+    .hero__label { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--petrol-light); display: block; margin-bottom: 0.5rem; }
+    .hero__h1 { font-family: 'Playfair Display', Georgia, serif; font-size: 36px; font-weight: 400; color: #fff; line-height: 1.2; margin-bottom: 0.875rem; }
+    .hero__sub { font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.7; max-width: 560px; }
+
+    /* MAIN CONTENT */
+    .main { max-width: var(--max-w); margin: 0 auto; padding: 3rem 2rem 4rem; }
+
+    /* INTRO */
+    .intro { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 0.5px solid var(--border); }
+    .intro__text { font-size: 15px; color: var(--text-sub); line-height: 1.8; max-width: 620px; }
+
+    /* KATEGORIEN */
+    .kategorie { margin-bottom: 3rem; }
+
+    .kategorie__header {
+      display: flex; align-items: baseline; gap: 1rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--petrol);
+    }
+    .kategorie__titel {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 20px; font-weight: 400;
+      color: var(--petrol);
+    }
+    .kategorie__count {
+      font-size: 11px; color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    /* KARTEN */
+    .karte {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 0.875rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: var(--white);
+    }
+    .karte:hover { border-color: var(--petrol); box-shadow: 0 2px 12px rgba(26,92,90,0.08); }
+    .karte:last-child { margin-bottom: 0; }
+
+    .karte__quelle {
+      font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 0.375rem;
+    }
+    .karte__titel {
+      font-size: 15px; font-weight: 500; color: var(--text-main);
+      margin-bottom: 0.625rem; line-height: 1.4;
+    }
+    .karte__einordnung {
+      font-size: 13px; color: var(--text-sub); line-height: 1.7;
+      margin-bottom: 0.875rem;
+      border-left: 2.5px solid var(--petrol-light);
+      padding-left: 0.875rem;
+      font-style: italic;
+    }
+    .karte__links { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+    .karte__link {
+      font-size: 13px; color: var(--petrol); font-weight: 500;
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    .karte__link:hover { text-decoration: underline; }
+    .karte__link--mein {
+      font-size: 12px; color: var(--petrol); font-weight: 500;
+      background: rgba(26,92,90,0.07); padding: 3px 10px;
+      border-radius: 3px; border: 0.5px solid rgba(26,92,90,0.2);
+    }
+    .karte__link--mein:hover { background: rgba(26,92,90,0.12); text-decoration: none; }
+
+    /* HINWEIS */
+    .hinweis {
+      background: var(--off-white); border-radius: var(--radius);
+      padding: 1.25rem 1.5rem; margin-top: 3rem;
+      border-left: 3px solid var(--petrol-light);
+    }
+    .hinweis__text { font-size: 13px; color: var(--text-sub); line-height: 1.7; }
+    .hinweis__text strong { color: var(--text-main); }
+
+    /* FOOTER */
+    .footer { border-top: 0.5px solid var(--border); padding: 1.5rem 0; background: var(--white); }
+    .footer__inner { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; font-size: 12px; color: var(--text-muted); }
+    .footer__inner a { color: var(--text-muted); }
+    .footer__inner a:hover { color: var(--petrol); }
+
+    @media (max-width: 600px) {
+      .hero__h1 { font-size: 26px; }
+      .main { padding: 2rem 1.25rem 3rem; }
+      .nav__links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__back">← Startseite</a>
+    <a href="index.html">
+      <svg width="148" height="22" viewBox="0 0 148 22" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="17" font-family="Georgia,serif" font-size="17" fill="#1a1a1a">haus</text>
+        <text x="46" y="17" font-family="Georgia,serif" font-size="17" fill="#1a1a1a">entscheider</text>
+        <line x1="0" y1="20" x2="43" y2="20" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+      </svg>
+    </a>
+    <ul class="nav__links">
+      <li><a href="index.html#ansatz">Ansatz</a></li>
+      <li><a href="objekte/index.html">Objekte</a></li>
+      <li><a href="wegweiser.html" style="color:var(--petrol);font-weight:500;">Wegweiser</a></li>
+      <li><a href="index.html#dialog">Dialog</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero__bg"></div>
+  <div class="hero__overlay"></div>
+  <div class="hero__content">
+    <div class="hero__inner">
+      <span class="hero__label">Orientierung</span>
+      <h1 class="hero__h1">Wegweiser</h1>
+      <p class="hero__sub">
+        Was sagt die Stadt? Was sagen die Stadtwerke? Was sagt die Forschung?
+        Offizielle Quellen — eingeordnet aus Eigentümerperspektive.
+        Damit Sie nicht bei Null anfangen müssen.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <div class="intro">
+    <p class="intro__text">
+      Wer als Eigentümer entscheiden muss, ist auf Informationen angewiesen — aus sehr unterschiedlichen Quellen,
+      mit sehr unterschiedlichen Interessen. Dieser Wegweiser sammelt die wichtigsten offiziellen Dokumente
+      und Quellen für Erfurt und ordnet sie ein: Was steht drin, was fehlt, was ist aus Eigentümersicht wichtig.
+    </p>
+  </div>
+
+  <!-- ── 1. KOMMUNALE PLANUNG ERFURT ─────────────────────── -->
+  <div class="kategorie">
+    <div class="kategorie__header">
+      <h2 class="kategorie__titel">Kommunale Planung Erfurt</h2>
+      <span class="kategorie__count">2 Quellen</span>
+    </div>
+
+    <div class="karte">
+      <p class="karte__quelle">Stadt Erfurt · laufend aktualisiert</p>
+      <p class="karte__titel">Kommunale Wärmeplanung Erfurt</p>
+      <p class="karte__einordnung">Der offizielle Stand der Wärmeplanung — inkl. Präsentationen der Bürgerveranstaltung vom 23. September 2025. Der Plan muss bis 30. Juni 2026 vorliegen. Für Eigentümer relevant: Welche Gebiete sind als Fernwärme- oder Wasserstoffgebiet ausgewiesen?</p>
+      <div class="karte__links">
+        <a href="https://www.erfurt.de/ef/de/leben/oekoumwelt/kommunale_waermeplanung/index.html" class="karte__link" target="_blank">Zur Seite →</a>
+        <a href="dokumente/gastkommentar-waermewende-erfurt-2026.pdf" class="karte__link--mein" target="_blank">Meine Einschätzung →</a>
+      </div>
+    </div>
+
+    <div class="karte">
+      <p class="karte__quelle">SWE Energie GmbH · Februar 2026</p>
+      <p class="karte__titel">SWE Journal — Wärmewende Sonderausgabe</p>
+      <p class="karte__einordnung">Die offizielle Perspektive der Stadtwerke — gut aufbereitet, informativ. Was fehlt: die Eigentümerperspektive und die Frage nach dem Anschlusszwang. Lesenswert trotzdem — um zu verstehen, wie die Stadtwerke die Lage kommunizieren.</p>
+      <div class="karte__links">
+        <a href="dokumente/SWE_Energiejournal.pdf" class="karte__link" target="_blank">PDF lesen →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 2. FERNWÄRME ERFURT ──────────────────────────────── -->
+  <div class="kategorie">
+    <div class="kategorie__header">
+      <h2 class="kategorie__titel">Fernwärme Erfurt</h2>
+      <span class="kategorie__count">2 Quellen</span>
+    </div>
+
+    <div class="karte">
+      <p class="karte__quelle">Stadtwerke Erfurt · aktuell</p>
+      <p class="karte__titel">Fernwärme — Produkte &amp; Leistungen</p>
+      <p class="karte__einordnung">Die offizielle Quelle der Stadtwerke — was sie anbieten, was es kostet, und was sie (noch) nicht transparent kommunizieren. Besonders relevant: Preistransparenz, Mustervertrag, Vertragslaufzeit. 95% der Erfurter Fernwärme basiert auf Erdgas.</p>
+      <div class="karte__links">
+        <a href="https://www.stadtwerke-erfurt.de" class="karte__link" target="_blank">Zur Seite →</a>
+      </div>
+    </div>
+
+    <div class="karte">
+      <p class="karte__quelle">TEAG Thüringer Energie · aktuell</p>
+      <p class="karte__titel">Wärmelösungen für Thüringen</p>
+      <p class="karte__einordnung">Der regionale Energieversorger mit Alternativen zur Stadtwerke-Fernwärme — Wärmepumpen, Sanierungsberatung, Energieratgeber. Interessant als zweite Meinung neben den Stadtwerken.</p>
+      <div class="karte__links">
+        <a href="https://mein-zuhause.teag.de" class="karte__link" target="_blank">Zur Seite →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 3. HEIZUNG & TECHNIK ────────────────────────────── -->
+  <div class="kategorie">
+    <div class="kategorie__header">
+      <h2 class="kategorie__titel">Heizung &amp; Technik</h2>
+      <span class="kategorie__count">1 Quelle</span>
+    </div>
+
+    <div class="karte">
+      <p class="karte__quelle">Fraunhofer ISE · 2025</p>
+      <p class="karte__titel">Wärmepumpen in Bestandsgebäuden — Forschungsergebnisse</p>
+      <p class="karte__einordnung">CO₂-Emissionen von Wärmepumpen 64% niedriger als Gasheizungen. Auch in Altbauten effizient — JAZ zwischen 2,6 und 5,4. Wichtige unabhängige Grundlage für die Entscheidung — jenseits von Hersteller- und Handwerkeraussagen.</p>
+      <div class="karte__links">
+        <a href="https://www.ise.fraunhofer.de" class="karte__link" target="_blank">Zur Quelle →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 4. FÖRDERUNG & FINANZIERUNG ────────────────────── -->
+  <div class="kategorie">
+    <div class="kategorie__header">
+      <h2 class="kategorie__titel">Förderung &amp; Finanzierung</h2>
+      <span class="kategorie__count">1 Quelle</span>
+    </div>
+
+    <div class="karte">
+      <p class="karte__quelle">BAFA · aktuell</p>
+      <p class="karte__titel">Bundesförderung Effiziente Gebäude (BEG)</p>
+      <p class="karte__einordnung">Bis zu 70% Förderung für WEGs möglich: 30% Wärmepumpen-Bonus + 30% Klima-Bonus bei Gasabkehr. Wichtig: Antrag vor Auftragsvergabe stellen. Für WEGs mit mehreren Einheiten besonders attraktiv — absolute Fördersummen sind hoch.</p>
+      <div class="karte__links">
+        <a href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/effiziente_gebaeude_node.html" class="karte__link" target="_blank">Zum Förderprogramm →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HINWEIS -->
+  <div class="hinweis">
+    <p class="hinweis__text">
+      <strong>Dieser Wegweiser wächst.</strong> Alle Quellen werden laufend überprüft und kommentiert —
+      aus der Perspektive eines Eigentümers, der selbst mitten in der Entscheidung steckt.
+      Haben Sie eine Quelle die hier fehlen sollte?
+      <a href="mailto:dialog@hausentscheider.de" style="color:var(--petrol);font-weight:500;">Schreiben Sie mir →</a>
+    </p>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <span><a href="index.html">hausentscheider.de</a> &nbsp;·&nbsp; Daniel Schöberl &nbsp;·&nbsp; Erfurt / München</span>
+    <span><a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a> &nbsp;·&nbsp; <a href="index.html#impressum">Impressum</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
