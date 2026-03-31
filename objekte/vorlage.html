@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════════╗
+  ║  HAUSENTSCHEIDER — OBJEKT-VORLAGE                        ║
+  ║  Anleitung:                                              ║
+  ║  1. Datei kopieren → umbenennen (z.B. musterstrasse-5.html) ║
+  ║  2. Alle [PLATZHALTER] ersetzen (Strg+H im Editor)       ║
+  ║  3. JS-Variablen unten anpassen (Abschnitt "GEBÄUDEDATEN") ║
+  ║  4. Bild in /images/ ablegen, Pfad unten anpassen        ║
+  ║  5. Fertig → in objekte/index.html eintragen             ║
+  ╚══════════════════════════════════════════════════════════╝
+
+  PLATZHALTER-ÜBERSICHT:
+  [OBJEKT_NR]         z.B. 002
+  [STADT_BEZIRK]      z.B. Erfurt Nordstadt
+  [JAHR_SEIT]         z.B. 2025
+  [OBJEKTNAME]        z.B. Mehrfamilienhaus · Nordstadt Erfurt
+  [OBJEKTSUB]         z.B. Altbau 1920 · Saniert 2005 · 8 Wohnungen · 450 m² · WEG · Gas-Heizung
+  [BILD_DATEI]        z.B. musterstrasse-5.jpg
+  [BILD_ALT]          z.B. Mehrfamilienhaus Musterstraße 5, Erfurt
+  [ENERGIEKLASSE]     z.B. D
+  [ENERGIEKLASSE_SUB] z.B. 140 kWh/m²a · Altbau 1920
+  [HEIZKOSTEN_MON]    z.B. 1,25
+  [HEIZKOSTEN_SUB]    z.B. 15,00 €/m²/Jahr · 6.750 € gesamt
+  [VERBRAUCH]         z.B. 140
+  [VERBRAUCH_SUB]     z.B. 63.000 kWh/Jahr gesamt
+  [CO2_VAL]           z.B. 11.088
+  [CO2_SUB]           z.B. 200,9 g/kWh · Gas · sinkt mit WP −64%
+  [KONTEXT_TEXT]      z.B. "Die Gasheizung läuft seit 1995. Das Gebäude liegt..."
+  [ABRECHNUNGSJAHR]   z.B. 2023/2024
+  [FLAECHE_TEXT]      z.B. 450 m² beheizte Fläche
+  [DATEINAME]         z.B. musterstrasse-5 (ohne .html, für Links)
+-->
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Objektprofil [OBJEKTNAME] — hausentscheider.de">
+  <title>Objekt [OBJEKT_NR] · [OBJEKTNAME] — hausentscheider</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; overflow-x: hidden; }
+    body { font-family: 'Inter', -apple-system, sans-serif; font-size: 16px; font-weight: 400; line-height: 1.7; color: #1a1a1a; background: #ffffff; overflow-x: hidden; }
+    :root {
+      --petrol: #1a5c5a; --petrol-light: #7ab8b5; --petrol-dark: #1a3535;
+      --signal: #CFF77F; --border: #e0dedd; --bg-light: #f5f4f2;
+      --text-primary: #1a1a1a; --text-secondary: #5a5956; --text-tertiary: #8a8680;
+      --max-width: 860px; --radius: 8px;
+    }
+    h1, h2 { font-family: 'Playfair Display', Georgia, serif; font-weight: 400; line-height: 1.3; }
+    h1 { font-size: 24px; } h2 { font-size: 20px; }
+    p { margin-bottom: 1rem; } p:last-child { margin-bottom: 0; }
+    a { color: var(--petrol); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; }
+    .label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol); display: block; }
+    .section { padding: 2.5rem 0; border-bottom: 0.5px solid var(--border); }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 0.5px solid var(--border); }
+    .nav__inner { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; height: 52px; display: flex; align-items: center; justify-content: space-between; }
+    .nav__back { font-size: 13px; color: var(--text-secondary); }
+    .nav__back:hover { color: var(--petrol); text-decoration: none; }
+
+    /* HEADER */
+    .profil-header { background: var(--petrol-dark); overflow: hidden; }
+    .profil-header__body { display: grid; grid-template-columns: 260px 1fr; min-height: 220px; max-width: var(--max-width); margin: 0 auto; }
+    .profil-header__bild { background: #132828; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .profil-header__bild img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .profil-header__meta { padding: 1.75rem 2rem; display: flex; flex-direction: column; justify-content: space-between; }
+    .profil-header__nr { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol-light); margin-bottom: 0.5rem; }
+    .profil-header__h1 { font-family: 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 0.375rem; }
+    .profil-header__sub { font-size: 13px; color: #7ab8b5; margin-bottom: 1rem; }
+
+    .hs { display: inline-block; font-size: 10px; font-weight: 500; padding: 1px 7px; border-radius: 4px; white-space: nowrap; }
+    .hs-gas { background: #f5ede0; color: #6b4c28; border: 0.5px solid #dfc9a8; }
+    .hs-wp  { background: #e0f0ee; color: #1a4f4d; border: 0.5px solid #8ec8c4; }
+    .hs-fw  { background: #f5ede0; color: #6b4c28; border: 0.5px dashed #c8a878; }
+
+    /* KENNZAHLEN */
+    .kz-grid { display: grid; grid-template-columns: repeat(4,1fr); background: #132828; border-top: 0.5px solid rgba(122,184,181,0.15); max-width: var(--max-width); margin: 0 auto; }
+    .kz { padding: 0.875rem 1.25rem; border-right: 0.5px solid rgba(122,184,181,0.15); }
+    .kz:last-child { border-right: none; }
+    .kz__lbl { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--petrol-light); margin-bottom: 5px; }
+    .kz__val { font-size: 22px; font-weight: 500; color: #ffffff; line-height: 1.2; }
+    .kz__unit { font-size: 12px; font-weight: 400; color: var(--petrol-light); margin-left: 2px; }
+    .kz__note { font-size: 11px; color: #ffffff; margin-top: 4px; line-height: 1.4; opacity: 0.75; }
+
+    /* STATUS */
+    .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 2.5rem; margin-top: 1rem; }
+    .st { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-secondary); }
+    .st-icon { width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px; }
+    .st-warn { color: #c8a460; } .st-ok { color: #5aaa88; } .st-open { color: #8ab8d4; }
+    .dot-legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.25rem; padding-top: 1rem; border-top: 0.5px solid var(--border); }
+    .dot-legend__item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-tertiary); }
+    .dot-legend__icon { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* INVESTITIONSVERGLEICH */
+    .invest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.25rem; }
+    .invest-karte { border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
+    .invest-karte--wp { border-color: var(--petrol); }
+    .invest-karte__header { padding: 0.75rem 1rem; display: flex; align-items: center; gap: 8px; }
+    .invest-karte__titel { font-size: 13px; font-weight: 500; }
+    .invest-zeile { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; border-bottom: 0.5px solid var(--border); font-size: 13px; flex: 1; }
+    .invest-zeile:last-child { border-bottom: none; }
+    .invest-zeile--highlight { background: rgba(26,92,90,0.04); }
+    .invest-val { font-weight: 500; }
+    .invest-val--gut  { color: #3a7a5a; font-weight: 600; }
+    .invest-val--warn { color: #c85a5a; font-weight: 600; }
+    .invest-empfehlung { margin-top: 0.75rem; padding: 0.75rem 1rem; background: rgba(26,92,90,0.06); border-left: 3px solid var(--petrol); border-radius: 0 var(--radius) var(--radius) 0; font-size: 13px; color: var(--text-secondary); }
+    .invest-empfehlung strong { color: var(--text-primary); }
+
+    /* AMORTISATIONSRECHNER */
+    .rechner { background: var(--petrol-dark); border-radius: var(--radius); overflow: hidden; margin-top: 1.5rem; }
+    .rechner__header { padding: 1rem 1.5rem; border-bottom: 0.5px solid rgba(122,184,181,0.2); }
+    .rechner__titel { font-size: 14px; font-weight: 500; color: #ffffff; margin-bottom: 3px; }
+    .rechner__sub { font-size: 12px; color: #ffffff; }
+    .rechner__body { padding: 1.25rem 1.5rem; }
+    .rechner__slider-row { display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: center; margin-bottom: 1rem; }
+    .rechner__label { font-size: 12px; color: var(--signal); margin-bottom: 6px; }
+    input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; background: linear-gradient(to right, var(--signal) 0%, var(--signal) var(--pct,11%), rgba(122,184,181,0.3) var(--pct,11%), rgba(122,184,181,0.3) 100%); border-radius: 2px; outline: none; cursor: pointer; }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--signal); border: 2px solid var(--petrol-dark); cursor: pointer; }
+    .slider-labels { display: flex; justify-content: space-between; font-size: 10px; color: #5a9896; margin-top: 3px; }
+    .rechner__val-display { text-align: center; min-width: 80px; }
+    .rechner__val { font-size: 24px; font-weight: 500; color: var(--signal); font-family: 'Playfair Display', Georgia, serif; }
+    .rechner__val-unit { font-size: 11px; color: rgba(255,255,255,0.6); }
+    .rechner__ergebnis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 0.5px solid rgba(122,184,181,0.2); }
+    .rechner__erg-item { padding: 0.875rem 1rem; border-right: 0.5px solid rgba(122,184,181,0.15); }
+    .rechner__erg-item:last-child { border-right: none; }
+    .rechner__erg-lbl { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #ffffff; margin-bottom: 4px; }
+    .rechner__erg-val { font-size: 18px; font-weight: 500; color: #ffffff; }
+    .rechner__erg-val--signal { color: var(--signal); }
+    .rechner__erg-sub { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 2px; }
+
+    /* NEXT STEPS */
+    .next-list { display: flex; flex-direction: column; gap: 0.625rem; margin-top: 1rem; }
+    .next-item { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 13px; color: var(--text-secondary); line-height: 1.6; padding: 0.5rem 0; border-bottom: 0.5px solid var(--border); }
+    .next-item:last-child { border-bottom: none; }
+    .next-item strong { color: var(--text-primary); font-weight: 500; }
+    .next-arrow { font-size: 11px; color: var(--petrol); flex-shrink: 0; margin-top: 3px; }
+
+    /* CTA */
+    .cta-profil { background: var(--petrol-dark); padding: 2.5rem 0; }
+    .cta-profil__inner { max-width: 500px; }
+    .cta-profil__label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol-light); margin-bottom: 0.75rem; display: block; }
+    .cta-profil__h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 400; color: #fff; margin-bottom: 0.875rem; line-height: 1.4; }
+    .cta-profil__text { font-size: 14px; color: #c8e0df; line-height: 1.7; margin-bottom: 1.5rem; }
+    .form { display: flex; flex-direction: column; gap: 0.75rem; max-width: 400px; }
+    .form input, .form textarea { font-family: 'Inter', sans-serif; font-size: 14px; padding: 0.6rem 0.875rem; border: 0.5px solid rgba(122,184,181,0.3); border-radius: 4px; background: rgba(255,255,255,0.07); color: #fff; outline: none; width: 100%; transition: border-color 0.2s; }
+    .form input::placeholder, .form textarea::placeholder { color: #5a9896; }
+    .form input:focus, .form textarea:focus { border-color: var(--petrol-light); }
+    .form textarea { min-height: 90px; resize: vertical; }
+    .btn-cta { display: inline-block; padding: 0.65rem 1.75rem; background: var(--signal); color: var(--petrol-dark); font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; border-radius: 4px; border: none; cursor: pointer; align-self: flex-start; transition: opacity 0.2s; }
+    .btn-cta:hover { opacity: 0.85; text-decoration: none; }
+
+    /* FOOTER */
+    .profil-footer { border-top: 0.5px solid var(--border); padding: 1.25rem 0; }
+    .profil-footer__inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; font-size: 12px; color: var(--text-tertiary); }
+    .profil-footer__inner a { color: var(--text-tertiary); }
+    .profil-footer__inner a:hover { color: var(--petrol); }
+
+    /* RESPONSIVE */
+    @media (max-width: 680px) {
+      .profil-header__body { grid-template-columns: 1fr; }
+      .profil-header__bild { height: 160px; }
+      .kz-grid { grid-template-columns: 1fr 1fr; }
+      .status-grid { grid-template-columns: 1fr; }
+      .container { padding: 0 1.25rem; }
+      .invest-grid { grid-template-columns: 1fr; }
+      .rechner__ergebnis { grid-template-columns: 1fr 1fr; }
+      .rechner__slider-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__back">← Zurück zur Übersicht</a>
+      <a href="../index.html">
+        <svg width="148" height="22" viewBox="0 0 148 22" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="17" font-family="Georgia,serif" font-size="17" fill="#1a1a1a">haus</text>
+          <text x="46" y="17" font-family="Georgia,serif" font-size="17" fill="#1a1a1a">entscheider</text>
+          <line x1="0" y1="20" x2="43" y2="20" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- PROFIL-HEADER -->
+  <!-- ANPASSEN: Bild, Objekt-Nr., Name, Adresse, Baujahr, Wohnungen, Fläche, Heizsystem -->
+  <div class="profil-header">
+    <div class="profil-header__body">
+      <div class="profil-header__bild">
+        <!-- ANPASSEN: Bild in /images/ ablegen -->
+        <img src="../images/[BILD_DATEI]" alt="[BILD_ALT]">
+      </div>
+      <div class="profil-header__meta">
+        <div>
+          <p class="profil-header__nr">Objekt [OBJEKT_NR] · [STADT_BEZIRK] · Dokumentiert seit [JAHR_SEIT]</p>
+          <h1 class="profil-header__h1">[OBJEKTNAME]</h1>
+          <p class="profil-header__sub">[OBJEKTSUB]</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- KENNZAHLEN — ANPASSEN: 4 Werte aus der Abrechnung -->
+    <div class="kz-grid">
+      <div class="kz">
+        <p class="kz__lbl">Energieklasse</p>
+        <p class="kz__val">[ENERGIEKLASSE]</p>
+        <p class="kz__note">[ENERGIEKLASSE_SUB]</p>
+      </div>
+      <div class="kz">
+        <p class="kz__lbl">Heizkosten IST · Gas</p>
+        <p class="kz__val">[HEIZKOSTEN_MON]<span class="kz__unit">€/m²/Mon.</span></p>
+        <p class="kz__note">[HEIZKOSTEN_SUB]</p>
+      </div>
+      <div class="kz">
+        <p class="kz__lbl">Gasverbrauch</p>
+        <p class="kz__val">[VERBRAUCH]<span class="kz__unit">kWh/m²</span></p>
+        <p class="kz__note">[VERBRAUCH_SUB]</p>
+      </div>
+      <div class="kz">
+        <p class="kz__lbl">CO₂-Ausstoß/Jahr</p>
+        <p class="kz__val">[CO2_VAL]<span class="kz__unit">kg</span></p>
+        <p class="kz__note">[CO2_SUB]</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENTSCHEIDUNGSSTAND -->
+  <!-- ANPASSEN: Status-Punkte anpassen — st-warn (Handlungsbedarf), st-ok (Erledigt), st-open (In Vorbereitung) -->
+  <section class="section container">
+    <span class="label" style="margin-bottom:0.75rem;">Entscheidungsstand</span>
+    <h2 style="margin-bottom:0.625rem;">Was bekannt ist — und was noch offen</h2>
+    <p style="font-size:14px;color:var(--text-secondary);max-width:560px;">
+      [KONTEXT_TEXT]
+    </p>
+
+    <div class="status-grid">
+      <!-- ANPASSEN: Zeilen kopieren / entfernen nach Bedarf -->
+      <div class="st">
+        <svg class="st-icon st-warn" viewBox="0 0 20 20" fill="none"><path d="M10 3L18 17H2L10 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 8v4M10 14v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        [STATUS_WARN_1]
+      </div>
+      <div class="st">
+        <svg class="st-icon st-ok" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 10.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        [STATUS_OK_1]
+      </div>
+      <div class="st">
+        <svg class="st-icon st-warn" viewBox="0 0 20 20" fill="none"><path d="M10 3L18 17H2L10 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 8v4M10 14v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        [STATUS_WARN_2]
+      </div>
+      <div class="st">
+        <svg class="st-icon st-ok" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 10.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        [STATUS_OK_2]
+      </div>
+      <div class="st">
+        <svg class="st-icon st-open" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M10 7v3.5l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        [STATUS_OFFEN_1]
+      </div>
+      <div class="st">
+        <svg class="st-icon st-open" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M10 7v3.5l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        [STATUS_OFFEN_2]
+      </div>
+    </div>
+
+    <div class="dot-legend">
+      <div class="dot-legend__item">
+        <svg class="dot-legend__icon st-warn" viewBox="0 0 20 20" fill="none"><path d="M10 3L18 17H2L10 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 8v3M10 13v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Handlungsbedarf
+      </div>
+      <div class="dot-legend__item">
+        <svg class="dot-legend__icon st-ok" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 10.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Erledigt
+      </div>
+      <div class="dot-legend__item">
+        <svg class="dot-legend__icon st-open" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M10 7v3.5l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        In Vorbereitung
+      </div>
+    </div>
+  </section>
+
+  <!-- AKTUELLE KOSTEN -->
+  <!-- ANPASSEN: Alle Kostenwerte aus der Jahresabrechnung -->
+  <section class="section container">
+    <span class="label" style="margin-bottom:0.75rem;">Aktuelle Kosten</span>
+    <h2 style="margin-bottom:0.375rem;">Was das Gebäude heute kostet</h2>
+    <p style="font-size:13px;color:var(--text-tertiary);margin-bottom:1.25rem;">
+      Abrechnungsjahr [ABRECHNUNGSJAHR] · [FLAECHE_TEXT]
+    </p>
+
+    <div style="border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;max-width:560px;">
+      <div style="background:var(--petrol-dark);padding:0.75rem 1rem;display:flex;align-items:center;gap:8px;">
+        <span style="width:8px;height:8px;border-radius:50%;background:#CFF77F;flex-shrink:0;"></span>
+        <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--petrol-light);">Gesamtgebäude</p>
+      </div>
+      <div>
+        <!-- ANPASSEN: Kostenwerte eintragen -->
+        <div style="display:flex;justify-content:space-between;padding:0.5rem 1rem;border-bottom:0.5px solid var(--border);font-size:13px;"><span style="color:var(--text-secondary);">Brennstoffkosten Gas (pro Jahr)</span><span style="font-weight:500;">[K_BRENNSTOFF] €</span></div>
+        <div style="display:flex;justify-content:space-between;padding:0.5rem 1rem;border-bottom:0.5px solid var(--border);font-size:13px;"><span style="color:var(--text-secondary);">Heizbetriebskosten (pro Jahr)</span><span style="font-weight:500;">[K_BETRIEB] €</span></div>
+        <div style="display:flex;justify-content:space-between;padding:0.5rem 1rem;border-bottom:0.5px solid var(--border);font-size:13px;"><span style="color:var(--text-secondary);">Warmwasser — Energie (pro Jahr)</span><span style="font-weight:500;">[K_WW] €</span></div>
+        <div style="display:flex;justify-content:space-between;padding:0.5rem 1rem;border-bottom:0.5px solid var(--border);font-size:13px;"><span style="color:var(--text-secondary);">CO₂-Steuer (pro Jahr)</span><span style="font-weight:500;">[K_CO2] €</span></div>
+        <div style="display:flex;justify-content:space-between;padding:0.5rem 1rem;border-bottom:0.5px solid var(--border);font-size:13px;"><span style="color:var(--text-secondary);">Betriebskosten Wasser etc. (pro Jahr)</span><span style="font-weight:500;">[K_WASSER] €</span></div>
+        <div style="display:flex;justify-content:space-between;padding:0.625rem 1rem;border-bottom:0.5px solid var(--border);font-size:13px;background:var(--bg-light);"><span style="font-weight:500;color:var(--text-primary);">Gesamtkosten / Jahr</span><span style="font-weight:600;color:var(--text-primary);">[K_GESAMT] €</span></div>
+        <div style="display:flex;justify-content:space-between;padding:0.625rem 1rem;border-bottom:0.5px solid var(--border);font-size:13px;background:var(--bg-light);"><span style="font-weight:500;color:var(--text-primary);">Kosten / m² / Jahr</span><span style="font-weight:600;color:var(--text-primary);">[K_M2_JAHR] €</span></div>
+        <div style="display:flex;justify-content:space-between;padding:0.625rem 1rem;font-size:13px;background:var(--bg-light);"><span style="font-weight:500;color:var(--text-primary);">Kosten / m² / Monat</span><span style="font-weight:600;color:var(--petrol);">[K_M2_MON] €</span></div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--text-tertiary);margin-top:0.875rem;">Gasverbrauch [ABRECHNUNGSJAHR]: [GESAMT_KWH] kWh · Gaspreis effektiv: [GAS_CT] ct/kWh</p>
+  </section>
+
+  <!-- INVESTITIONSVERGLEICH -->
+  <!-- ANPASSEN: JS-Variablen unten im Script-Block anpassen -->
+  <section class="section container">
+    <span class="label" style="margin-bottom:0.75rem;">Investitionsvergleich</span>
+    <h2 style="margin-bottom:0.375rem;">Drei Optionen — ehrlich verglichen</h2>
+    <p style="font-size:14px;color:var(--text-secondary);max-width:580px;margin-bottom:1.5rem;">
+      Investitionskosten sind nur die halbe Wahrheit. Passen Sie die Werte an Ihre Situation an — Amortisation wird live berechnet.
+    </p>
+
+    <!-- EINGABE-PANEL -->
+    <div style="background:var(--bg-light);border:0.5px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem;">
+      <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--petrol);margin-bottom:0.25rem;">Rechner — Werte anpassen</p>
+      <p style="font-size:12px;color:var(--text-tertiary);margin-bottom:1rem;">Fläche: [FLAECHE] m² · [WOHNEINHEITEN] Wohneinheiten · Gasverbrauch: [GESAMT_KWH] kWh/Jahr (aus Profil)</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.875rem;">
+        <div>
+          <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">WP-Investition brutto (€)</label>
+          <input type="number" id="inp-wp-invest" value="[WP_INVEST_BRUTTO]" min="10000" max="500000" style="width:100%;font-size:14px;font-weight:500;padding:0.4rem 0.6rem;border:0.5px solid var(--border);border-radius:4px;font-family:'Inter',sans-serif;color:var(--text-primary);" oninput="calcInvest()">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">WP-Förderung (%)</label>
+          <input type="number" id="inp-wp-foerd" value="[WP_FOERDERUNG_PCT]" min="0" max="70" style="width:100%;font-size:14px;font-weight:500;padding:0.4rem 0.6rem;border:0.5px solid var(--border);border-radius:4px;font-family:'Inter',sans-serif;color:var(--text-primary);" oninput="calcInvest()">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">Verfügbare Rücklage (€)</label>
+          <input type="number" id="inp-ruecklage" value="[RUECKLAGE]" min="0" max="500000" style="width:100%;font-size:14px;font-weight:500;padding:0.4rem 0.6rem;border:0.5px solid var(--border);border-radius:4px;font-family:'Inter',sans-serif;color:var(--text-primary);" oninput="calcInvest()">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">Gas-Investition brutto (€)</label>
+          <input type="number" id="inp-gas-invest" value="[GAS_INVEST_BRUTTO]" min="5000" max="100000" style="width:100%;font-size:14px;font-weight:500;padding:0.4rem 0.6rem;border:0.5px solid var(--border);border-radius:4px;font-family:'Inter',sans-serif;color:var(--text-primary);" oninput="calcInvest()">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">FW-Investition brutto (€)</label>
+          <input type="number" id="inp-fw-invest" value="[FW_INVEST_BRUTTO]" min="1000" max="100000" style="width:100%;font-size:14px;font-weight:500;padding:0.4rem 0.6rem;border:0.5px solid var(--border);border-radius:4px;font-family:'Inter',sans-serif;color:var(--text-primary);" oninput="calcInvest()">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">JAZ Wärmepumpe <span id="jaz-display" style="color:var(--petrol);font-weight:600;">3,8</span></label>
+          <input type="range" id="inp-jaz" min="2.5" max="5.0" step="0.1" value="3.8" oninput="document.getElementById('jaz-display').textContent=parseFloat(this.value).toFixed(1);calcInvest()" style="width:100%;margin-top:6px;accent-color:var(--petrol);">
+          <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-tertiary);margin-top:2px;"><span>2,5 unsaniert</span><span>5,0 Neubau</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DREI KARTEN -->
+    <div class="invest-grid">
+      <!-- Option A: Wärmepumpe -->
+      <div class="invest-karte invest-karte--wp">
+        <div class="invest-karte__header" style="background:var(--petrol-dark);">
+          <div>
+            <p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--petrol-light);margin-bottom:3px;">Option A · Empfohlen</p>
+            <p class="invest-karte__titel" style="color:#fff;">Wärmepumpe <span class="hs" style="background:rgba(207,247,127,0.2);color:#CFF77F;border-color:rgba(207,247,127,0.4);">Luft-Wasser-WP</span></p>
+          </div>
+        </div>
+        <div class="invest-zeile"><span style="color:var(--text-secondary);">Brutto-Investition</span><span class="invest-val" id="wp-invest">—</span></div>
+        <div class="invest-zeile"><span style="color:var(--text-secondary);" id="wp-foerd-lbl">BEG-Förderung</span><span class="invest-val invest-val--gut" id="wp-foerd-val">—</span></div>
+        <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">Eigenanteil WEG</span><span class="invest-val" id="wp-eigenanteil">—</span></div>
+        <div class="invest-zeile"><span style="color:var(--text-secondary);">Betrieb/Jahr</span><span class="invest-val invest-val--gut" id="wp-betrieb">—</span></div>
+        <div class="invest-zeile"><span style="color:var(--text-secondary);">€/m²/Monat</span><span class="invest-val invest-val--gut" id="wp-mon">—</span></div>
+      </div>
+
+      <!-- Option B: Gas -->
+      <div class="invest-karte">
+        <div class="invest-karte__header" style="background:#2d1e0e;">
+          <div>
+            <p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#c8a460;margin-bottom:3px;">Option B · Kurzfristig</p>
+            <p class="invest-karte__titel" style="color:#fff;">Neue Gasheizung <span class="hs" style="background:rgba(200,160,96,0.2);color:#f0c878;border-color:rgba(200,160,96,0.4);">Gas-Heizung</span></p>
+          </div>
+        </div>
+        <div class="invest-zeile"><span style="color:var(--text-secondary);">Brutto-Investition</span><span class="invest-val" id="gas-invest-anzeige">—</span></div>
+        <div class="invest-zeile"><span style="color:var(--text-secondary);">BEG-Förderung</span><span class="invest-val" style="color:var(--text-tertiary);">keine</span></div>
+        <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">Eigenanteil WEG</span><span class="invest-val" id="gas-eigenanteil">—</span></div>
+        <div class="invest-zeile"><span style="color:var(--text-secondary);">Betrieb/Jahr</span><span class="invest-val invest-val--warn" id="gas-betrieb">—</span></div>
+        <div class="invest-zeile"><span style="color:var(--text-secondary);">€/m²/Monat</span><span class="invest-val invest-val--warn" id="gas-mon">—</span></div>
+      </div>
+
+      <!-- Option C: Fernwärme -->
+      <div class="invest-karte">
+        <div class="invest-karte__header" style="background:#2a1a10;">
+          <div>
+            <p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#c8a460;margin-bottom:3px;">Option C</p>
+            <p class="invest-karte__titel" style="color:#fff;">Fernwärme <span class="hs" style="background:rgba(200,160,96,0.2);color:#f0c878;border-color:rgba(200,160,96,0.4);">Fernwärme</span></p>
+          </div>
+        </div>
+        <div class="invest-zeile"><span style="color:var(--text-secondary);">Brutto-Investition</span><span class="invest-val" id="fw-invest-anzeige">—</span></div>
+        <div class="invest-zeile"><span style="color:var(--text-secondary);">BEG-Förderung</span><span class="invest-val" style="color:var(--text-tertiary);">keine</span></div>
+        <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">Eigenanteil WEG</span><span class="invest-val" id="fw-eigenanteil">—</span></div>
+        <div class="invest-zeile"><span style="color:var(--text-secondary);">Betrieb/Jahr</span><span class="invest-val invest-val--warn" id="fw-betrieb">—</span></div>
+        <div class="invest-zeile"><span style="color:var(--text-secondary);">€/m²/Monat</span><span class="invest-val invest-val--warn" id="fw-mon">—</span></div>
+      </div>
+    </div>
+
+    <!-- AMORTISATIONSRECHNER -->
+    <div class="rechner">
+      <div class="rechner__header">
+        <p class="rechner__titel">Amortisationsrechner — Was wäre wenn?</p>
+        <p class="rechner__sub">Ab welchem Gaspreis rechnet sich die Wärmepumpe wann?</p>
+      </div>
+      <div class="rechner__body">
+        <div class="rechner__slider-row">
+          <div>
+            <p class="rechner__label">Gaspreis-Szenario in 5 Jahren (ct/kWh)</p>
+            <input type="range" id="obj-slider" min="8" max="25" step="0.5" value="10" oninput="updateRechner(this.value)" style="--pct:11%">
+            <div class="slider-labels"><span>8 ct</span><span>heute: 10 ct</span><span>25 ct (Krise)</span></div>
+          </div>
+          <div class="rechner__val-display">
+            <div class="rechner__val" id="rechner-val">10,0</div>
+            <div class="rechner__val-unit">ct/kWh</div>
+          </div>
+        </div>
+      </div>
+      <div class="rechner__ergebnis">
+        <div class="rechner__erg-item">
+          <p class="rechner__erg-lbl">Gaskosten/Jahr</p>
+          <p class="rechner__erg-val" id="r-gaskosten">—</p>
+          <p class="rechner__erg-sub">bei diesem Szenario</p>
+        </div>
+        <div class="rechner__erg-item">
+          <p class="rechner__erg-lbl">Ersparnis WP/Jahr</p>
+          <p class="rechner__erg-val rechner__erg-val--signal" id="r-ersparnis">—</p>
+          <p class="rechner__erg-sub">vs. Gas-Szenario</p>
+        </div>
+        <div class="rechner__erg-item">
+          <p class="rechner__erg-lbl">Amortisation</p>
+          <p class="rechner__erg-val" id="r-amort">—</p>
+          <p class="rechner__erg-sub">Jahre (Eigenanteil)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NÄCHSTE SCHRITTE -->
+  <!-- ANPASSEN: Konkrete nächste Schritte des Eigentümers -->
+  <section class="section container">
+    <span class="label" style="margin-bottom:0.75rem;">Nächste Schritte</span>
+    <h2 style="margin-bottom:0.625rem;">Was als nächstes passiert</h2>
+    <div class="next-list">
+      <div class="next-item">
+        <span class="next-arrow">→</span>
+        <span><strong>[SCHRITT_1_TITEL]</strong> — [SCHRITT_1_TEXT]</span>
+      </div>
+      <div class="next-item">
+        <span class="next-arrow">→</span>
+        <span><strong>[SCHRITT_2_TITEL]</strong> — [SCHRITT_2_TEXT]</span>
+      </div>
+      <div class="next-item">
+        <span class="next-arrow">→</span>
+        <span><strong>[SCHRITT_3_TITEL]</strong> — [SCHRITT_3_TEXT]</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-profil">
+    <div class="container">
+      <div class="cta-profil__inner">
+        <span class="cta-profil__label">Ihr Gebäude</span>
+        <h2 class="cta-profil__h2">Ähnliche Situation? Tragen Sie Ihr Gebäude ein.</h2>
+        <p class="cta-profil__text">Muster werden nur sichtbar, wenn Daten geteilt werden. Jedes dokumentierte Objekt stärkt die gemeinsame Grundlage.</p>
+        <a href="../eintragen.html" class="btn-cta">Objekt eintragen →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="profil-footer">
+    <div class="container">
+      <div class="profil-footer__inner">
+        <span>
+          <a href="../index.html">hausentscheider.de</a>
+          &nbsp;·&nbsp; Daniel Schöberl &nbsp;·&nbsp; Erfurt / München
+        </span>
+        <span>
+          <a href="../datenschutz.html">Datenschutz</a>
+          &nbsp;·&nbsp;
+          <a href="../index.html#impressum">Impressum</a>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ══════════════════════════════════════════════════
+    // GEBÄUDEDATEN — HIER ANPASSEN
+    // ══════════════════════════════════════════════════
+    const G = {
+      flaeche:      [FLAECHE],          // m² beheizte Fläche
+      wohneinheiten:[WOHNEINHEITEN],     // Anzahl Wohneinheiten
+      gasverbrauch: [GESAMT_KWH],        // kWh/Jahr Gasverbrauch
+      gaspreis_ct:  [GAS_CT],            // aktueller Gaspreis ct/kWh
+      strom_ct:     32,                  // Strompreis ct/kWh (aktuell)
+      wp_betrieb_basis: null,            // wird berechnet
+      fw_ap_ct:     20,                  // Fernwärme Arbeitspreis ct/kWh
+      fw_lp:        40,                  // Fernwärme Leistungspreis €/kW/Jahr
+      fw_heizlast:  [FW_HEIZLAST],       // kW Heizlast (aus Energiegutachten)
+    };
+    // ══════════════════════════════════════════════════
+
+    function fmt(n) { return Math.round(n).toLocaleString('de-DE') + ' €'; }
+    function fmtDec(n) { return n.toFixed(2).replace('.', ',') + ' €'; }
+
+    function calcInvest() {
+      const wpInvest  = parseFloat(document.getElementById('inp-wp-invest').value)  || 0;
+      const wpFoerd   = parseFloat(document.getElementById('inp-wp-foerd').value)   || 0;
+      const ruecklage = parseFloat(document.getElementById('inp-ruecklage').value)  || 0;
+      const gasInvest = parseFloat(document.getElementById('inp-gas-invest').value) || 0;
+      const fwInvest  = parseFloat(document.getElementById('inp-fw-invest').value)  || 0;
+      const jaz       = parseFloat(document.getElementById('inp-jaz').value)        || 3.8;
+
+      // WP
+      const wpFoerdBetrag = wpInvest * (wpFoerd / 100);
+      const wpEigenanteil = wpInvest - wpFoerdBetrag;
+      const wpSonderumlage = Math.max(0, wpEigenanteil - ruecklage);
+      const wpBetrieb = (G.gasverbrauch / jaz) * (G.strom_ct / 100);
+      const wpMon = wpBetrieb / 12 / G.flaeche;
+
+      document.getElementById('wp-invest').textContent      = fmt(wpInvest);
+      document.getElementById('wp-foerd-lbl').textContent   = 'BEG-Förderung (' + wpFoerd + '%)';
+      document.getElementById('wp-foerd-val').textContent   = '–' + fmt(wpFoerdBetrag);
+      document.getElementById('wp-eigenanteil').textContent = fmt(wpEigenanteil);
+      document.getElementById('wp-betrieb').textContent     = fmt(wpBetrieb);
+      document.getElementById('wp-mon').textContent         = fmtDec(wpMon);
+      G.wp_betrieb_basis = wpBetrieb;
+
+      // Gas
+      const gasBetrieb = G.gasverbrauch * (G.gaspreis_ct / 100);
+      const gasMon = gasBetrieb / 12 / G.flaeche;
+      document.getElementById('gas-invest-anzeige').textContent = fmt(gasInvest);
+      document.getElementById('gas-eigenanteil').textContent    = fmt(gasInvest);
+      document.getElementById('gas-betrieb').textContent        = fmt(gasBetrieb);
+      document.getElementById('gas-mon').textContent            = fmtDec(gasMon);
+
+      // Fernwärme
+      const fwBetrieb = (G.gasverbrauch * G.fw_ap_ct / 100) + (G.fw_heizlast * G.fw_lp);
+      const fwMon = fwBetrieb / 12 / G.flaeche;
+      document.getElementById('fw-invest-anzeige').textContent = fmt(fwInvest);
+      document.getElementById('fw-eigenanteil').textContent    = fmt(fwInvest);
+      document.getElementById('fw-betrieb').textContent        = fmt(fwBetrieb);
+      document.getElementById('fw-mon').textContent            = fmtDec(fwMon);
+
+      updateRechner(document.getElementById('obj-slider').value);
+    }
+
+    function updateRechner(val) {
+      val = parseFloat(val);
+      const pct = ((val - 8) / (25 - 8) * 100).toFixed(1);
+      document.getElementById('obj-slider').style.setProperty('--pct', pct + '%');
+      document.getElementById('rechner-val').textContent = val.toFixed(1).replace('.', ',');
+
+      const gaskosten = G.gasverbrauch * (val / 100);
+      const wpBetrieb = G.wp_betrieb_basis || (G.gasverbrauch / 3.8 * G.strom_ct / 100);
+      const ersparnis = gaskosten - wpBetrieb;
+      const wpEigen   = parseFloat(document.getElementById('inp-wp-invest').value || 0)
+                        * (1 - parseFloat(document.getElementById('inp-wp-foerd').value || 0) / 100);
+      const amort     = ersparnis > 0 ? (wpEigen / ersparnis).toFixed(1) : '—';
+
+      document.getElementById('r-gaskosten').textContent = fmt(gaskosten);
+      document.getElementById('r-ersparnis').textContent = ersparnis > 0 ? fmt(ersparnis) : '0 €';
+      document.getElementById('r-amort').textContent     = amort !== '—' ? amort + ' J.' : '—';
+    }
+
+    // Initialisierung
+    calcInvest();
+  </script>
+</body>
+</html>
