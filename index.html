@@ -277,9 +277,25 @@
     .footer__whatsapp:hover { text-decoration: none; opacity: 0.85; }
 
     /* RESPONSIVE */
+    /* HAMBURGER BUTTON */
+    .nav__hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 8px; gap: 5px; flex-shrink: 0; }
+    .nav__hamburger span { display: block; width: 22px; height: 1.5px; background: var(--text-primary); transition: all 0.25s ease; transform-origin: center; }
+    .nav__hamburger.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav__hamburger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__hamburger.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* MOBILE MENU */
+    .nav__mobile-menu { display: none; background: var(--white); border-top: 0.5px solid var(--border); padding: 0.5rem 1.25rem 1rem; }
+    .nav__mobile-menu.is-open { display: block; }
+    .nav__mobile-menu ul { list-style: none; display: flex; flex-direction: column; }
+    .nav__mobile-menu li a { display: block; padding: 0.875rem 0; font-size: 15px; color: var(--text-secondary); text-decoration: none; border-bottom: 0.5px solid var(--border); font-family: 'Inter', sans-serif; transition: color 0.2s; }
+    .nav__mobile-menu li:last-child a { border-bottom: none; }
+    .nav__mobile-menu li a:hover { color: var(--petrol); }
+
     @media (max-width: 680px) {
       h1, .hero__headline     { font-size: 22px; }
       .nav__links             { display: none; }
+      .nav__hamburger         { display: flex; }
       .kernaussagen           { grid-template-columns: 1fr; }
       .kernaussage            { border-right: none; border-bottom: 0.5px solid var(--border); }
       .kernaussage:last-child { border-bottom: none; }
@@ -328,6 +344,21 @@
           <li><a href="#kontakt">Dialog</a></li>
         </ul>
       </nav>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Menü öffnen" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div class="nav__mobile-menu" id="nav-mobile-menu">
+      <ul>
+        <li><a href="#ansatz">Ansatz</a></li>
+        <li><a href="#objekte">Objekte</a></li>
+        <li><a href="wegweiser.html">Wegweiser</a></li>
+        <li><a href="#erfurt">Städte — Erfurt</a></li>
+        <li><a href="#ueber">Über Hausentscheider</a></li>
+        <li><a href="#kontakt">Dialog</a></li>
+      </ul>
     </div>
   </header>
 
@@ -946,6 +977,29 @@
           }
         });
       }
+    })();
+  </script>
+
+  <script>
+    // Hamburger Menu
+    (function() {
+      const btn  = document.getElementById('nav-hamburger');
+      const menu = document.getElementById('nav-mobile-menu');
+      if (!btn || !menu) return;
+      btn.addEventListener('click', function() {
+        const isOpen = menu.classList.toggle('is-open');
+        btn.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', isOpen);
+        btn.setAttribute('aria-label', isOpen ? 'Menü schließen' : 'Menü öffnen');
+      });
+      menu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          menu.classList.remove('is-open');
+          btn.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.setAttribute('aria-label', 'Menü öffnen');
+        });
+      });
     })();
   </script>
 </body>
