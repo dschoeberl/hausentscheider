@@ -115,11 +115,11 @@
     .kosten-calc__label { color:var(--text-secondary,#5a5956); }
     .kosten-calc__val { font-weight:500; }
     /* Entscheidungsstand */
-    .status-item { display:grid; grid-template-columns:1fr auto; gap:0.75rem; align-items:center; margin-bottom:0.625rem; }
-    .status-item input[type=text] { margin:0; }
-    .status-item select { margin:0; min-width:160px; }
-    .status-remove { background:none; border:none; color:var(--text-tertiary); cursor:pointer; font-size:18px; padding:0 4px; line-height:1; }
-    .status-remove:hover { color:var(--red,#c85a5a); }
+    .status-item { display:flex; gap:0.75rem; align-items:center; margin-bottom:0.625rem; }
+    .status-item input[type=text] { margin:0; flex:1; }
+    .status-item select { margin:0; min-width:160px; flex-shrink:0; }
+    .schritt-item { margin-bottom:0.5rem; }
+    .schritt-item input[type=text] { margin:0; width:100%; }
     .btn-add { display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--petrol); background:none; border:0.5px solid var(--petrol); border-radius:4px; padding:0.35rem 0.75rem; cursor:pointer; font-family:'Inter',sans-serif; margin-top:0.5rem; transition:all 0.15s; }
     .btn-add:hover { background:rgba(26,92,90,0.06); }
     .submit-area { margin-top:1.5rem; }
@@ -396,8 +396,8 @@
             </div>
             <div class="field">
               <label class="field__label" for="investitionsrahmen">Investitionsbereitschaft WEG (€)</label>
-              <span class="field__hint">Grober Eigenanteil nach Förderung</span>
               <input type="number" id="investitionsrahmen" name="investitionsrahmen" placeholder="z.B. 55000" min="0">
+              <span class="field__hint">Grober Eigenanteil nach Förderung</span>
             </div>
           </div>
           <div class="field">
@@ -464,7 +464,6 @@
                 <option value="vorbereitung" selected>→ In Vorbereitung</option>
                 <option value="erledigt">✓ Erledigt</option>
               </select>
-              <button type="button" class="status-remove" onclick="this.closest('.status-item').remove()">×</button>
             </div>
           </div>
           <button type="button" class="btn-add" onclick="addStatusItem()">+ Weiterer Punkt</button>
@@ -478,9 +477,8 @@
           </p>
           <p style="font-size:13px;color:var(--text-tertiary);margin-bottom:1rem;">Ein geplanter Schritt pro Zeile. Z.B. "Befreiungsantrag stellen" oder "Eigentümerversammlung einberufen".</p>
           <div id="schritte-liste">
-            <div class="status-item" style="grid-template-columns:1fr auto;">
+            <div class="schritt-item">
               <input type="text" name="naechster_schritt[]" placeholder="z.B. Befreiungsantrag beim Umweltamt stellen">
-              <button type="button" class="status-remove" onclick="this.closest('.status-item').remove()">×</button>
             </div>
           </div>
           <button type="button" class="btn-add" onclick="addSchrittItem()">+ Weiterer Schritt</button>
@@ -531,15 +529,14 @@
           const liste = document.getElementById('status-liste');
           const div = document.createElement('div');
           div.className = 'status-item';
-          div.innerHTML = '<input type="text" name="status_punkt[]" placeholder="z.B. Fernwärme-Angebot einholen"><select name="status_zustand[]"><option value="handlungsbedarf">⚠ Handlungsbedarf</option><option value="vorbereitung" selected>→ In Vorbereitung</option><option value="erledigt">✓ Erledigt</option></select><button type="button" class="status-remove" onclick="this.closest(\'.status-item\').remove()">×</button>';
+          div.innerHTML = '<input type="text" name="status_punkt[]" placeholder="z.B. Fernwärme-Angebot einholen"><select name="status_zustand[]"><option value="handlungsbedarf">⚠ Handlungsbedarf</option><option value="vorbereitung" selected>→ In Vorbereitung</option><option value="erledigt">✓ Erledigt</option></select>';
           liste.appendChild(div);
         }
         function addSchrittItem() {
           const liste = document.getElementById('schritte-liste');
           const div = document.createElement('div');
-          div.className = 'status-item';
-          div.style.gridTemplateColumns = '1fr auto';
-          div.innerHTML = '<input type="text" name="naechster_schritt[]" placeholder="z.B. Förderantrag vorbereiten"><button type="button" class="status-remove" onclick="this.closest(\'.status-item\').remove()">×</button>';
+          div.className = 'schritt-item';
+          div.innerHTML = '<input type="text" name="naechster_schritt[]" placeholder="z.B. Förderantrag vorbereiten">';
           liste.appendChild(div);
         }
       </script>
