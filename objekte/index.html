@@ -111,8 +111,24 @@
     .tbl-outer { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
     .tbl { background: var(--white); border-radius: 4px; overflow: hidden; box-shadow: 0 8px 48px rgba(0,0,0,0.45); }
 
-    /* Spalten: # · Objekt · Klasse · €/Mon · €/Jahr · vs.Ø · Prognose[gelb] · proj.€/Mon[gelb] */
-    .tbl-cols { grid-template-columns: 22px 40px 1.6fr 0.5fr 0.9fr 0.9fr 0.8fr 0.8fr 0.9fr 1fr; }
+    /* Spalten: # · Pill · Objekt · €/Mon · vs.Ø · Prognose[gelb] · proj.€/Mon[gelb] · △€/Jahr[gelb] */
+    .tbl-cols { grid-template-columns: 22px 70px 1.8fr 0.9fr 0.9fr 0.9fr 0.9fr 1fr; }
+
+    /* HEIZSYSTEM PILLS */
+    .hs-pill { display:inline-flex; align-items:center; justify-content:center; font-size:9px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; border-radius:3px; padding:3px 7px; white-space:nowrap; }
+    .hs-pill--gas     { background:#fef3e0; color:#b06010; border:1px solid #e09040; }
+    .hs-pill--fw      { background:#fdeee8; color:#a03010; border:1px dashed #d06040; }
+    .hs-pill--wp      { background:#e6f4f0; color:#1a7a5a; border:1px solid #5ab890; }
+    .hs-pill--oel     { background:#eeeeee; color:#555555; border:1px solid #aaaaaa; }
+    .hs-pill--wechsel { background:#fdf8e8; color:#7a5a10; border:1px solid #c8a040; }
+    .hs-pill--hyb     { background:linear-gradient(90deg,#fef3e0 50%,#e6f4f0 50%); color:#666; border:1px solid #c0b080; }
+
+    /* PROFIL-BUTTON (in Objekt-Zelle, Option A) */
+    .profil-btn-tbl { display:inline-flex; flex-direction:column; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; background:var(--petrol-dark); color:var(--white); border:none; cursor:pointer; flex-shrink:0; transition:background 0.15s; text-decoration:none; gap:1px; }
+    .profil-btn-tbl:hover { background:var(--signal); }
+    .profil-btn-tbl:hover svg path { fill:var(--text-main); }
+    .profil-btn-lbl { font-size:7px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:rgba(255,255,255,0.8); line-height:1; }
+    .profil-btn-tbl:hover .profil-btn-lbl { color:var(--text-main); }
 
     /* Header */
     .tbl-head { display: grid; background: var(--petrol-dark); border: 2px solid rgba(207,247,127,0.4); border-radius: 4px 4px 0 0; }
@@ -178,8 +194,8 @@
 
     @media (max-width: 760px) {
       .tafeln, .slider-grid { grid-template-columns: 1fr 1fr; }
-      .tbl-cols { grid-template-columns: 20px 36px 1fr 36px 70px 70px 80px; }
-      .tbl-head-cell:nth-child(n+6), .obj-row .cell:nth-child(n+6) { display: none; }
+      .tbl-cols { grid-template-columns: 20px 60px 1fr 70px; }
+      .tbl-head-cell:nth-child(n+5), .obj-row .cell:nth-child(n+5) { display: none; }
     }
   </style>
 </head>
@@ -220,7 +236,7 @@
       <span class="live-dot"></span>
       <span>Preisstand</span>
       <span class="schiene-sep">·</span>
-      <span>März 2026</span>
+      <span id="preis-stand-datum">März 2026</span>
       <span class="schiene-sep">·</span>
       <span>wird monatlich aktualisiert</span>
     </div>
@@ -232,7 +248,7 @@
       <div class="tafel">
         <div class="tafel__lbl">Gas Ø</div>
         <div class="tafel__preis-row">
-          <span class="tafel__preis">9,98</span>
+          <span class="tafel__preis" id="tafel-gas-preis">9,98</span>
           <span class="tafel__unit">ct/kWh</span>
         </div>
         <div class="tafel__sub">eff. Wärme: 10,0 ct/kWh</div>
@@ -240,7 +256,7 @@
       <div class="tafel">
         <div class="tafel__lbl">Fernwärme Ø</div>
         <div class="tafel__preis-row">
-          <span class="tafel__preis">26</span>
+          <span class="tafel__preis" id="tafel-fw-preis">26</span>
           <span class="tafel__unit">ct/kWh</span>
         </div>
         <div class="tafel__sub">Spanne 14–39 ct · Erfurt</div>
@@ -248,7 +264,7 @@
       <div class="tafel">
         <div class="tafel__lbl">Heizöl Ø</div>
         <div class="tafel__preis-row">
-          <span class="tafel__preis">12,4</span>
+          <span class="tafel__preis" id="tafel-oel-preis">12,4</span>
           <span class="tafel__unit">ct/kWh</span>
         </div>
         <div class="tafel__sub">+60% seit Feb. 2026</div>
@@ -256,7 +272,7 @@
       <div class="tafel">
         <div class="tafel__lbl">Wärmestrom WP Ø</div>
         <div class="tafel__preis-row">
-          <span class="tafel__preis">32</span>
+          <span class="tafel__preis" id="tafel-strom-preis">32</span>
           <span class="tafel__unit">ct/kWh</span>
         </div>
         <div class="tafel__sub">eff. Wärme JAZ 3,8: 8,4 ct</div>
@@ -338,9 +354,7 @@
         <div class="tbl-head-cell">#</div>
         <div class="tbl-head-cell"></div>
         <div class="tbl-head-cell">Objekt</div>
-        <div class="tbl-head-cell">Klasse</div>
         <div class="tbl-head-cell">€/m²/Mon.</div>
-        <div class="tbl-head-cell">€/m²/Jahr</div>
         <div class="tbl-head-cell">vs. Ø</div>
         <div class="tbl-head-cell tbl-head-cell--signal">Prognose</div>
         <div class="tbl-head-cell tbl-head-cell--signal">€/m²/Mon. proj.</div>
@@ -429,11 +443,18 @@ const OBJ = [
     basis:0.62, wp:0.62, jaz:4.5, ea:0, flaeche:1100 },
 ];
 
-const AVG = { gas:1.56, fw:2.63, oel:1.96, wp:0.70, wechsel:1.52 };
+// ── PREISSTAND (monatlich hier anpassen) ─────────────────────────
+const PREISSTAND = 'März 2026';
+const GAS_CT     = 10.0;   // ct/kWh Gas eff. Wärme
+const FW_CT      = 26;     // ct/kWh Fernwärme Ø Erfurt
+const OEL_CT     = 12.4;   // ct/kWh Heizöl Ø
+const STROM_CT   = 32;     // ct/kWh Wärmestrom WP
+// ─────────────────────────────────────────────────────────────────
 
-// Basis-Preise (stabil — Preistafeln ändern sich nie)
-const GAS_BASIS   = 10.0;
-const STROM_BASIS = 32;
+const GAS_BASIS   = GAS_CT;
+const STROM_BASIS = STROM_CT;
+
+const AVG = { gas:1.56, fw:2.63, oel:1.96, wp:0.70, wechsel:1.52, hyb:1.20 };
 
 function calcK(obj, g, s) {
   if (obj.typ==='wp')      return obj.basis * (s / STROM_BASIS);
@@ -441,6 +462,7 @@ function calcK(obj, g, s) {
   if (obj.typ==='oel')     return obj.basis * (1 + (g - GAS_BASIS) * 0.055);
   if (obj.typ==='fw')      return obj.basis * (1 + (g - GAS_BASIS) * 0.025);
   if (obj.typ==='wechsel') return obj.basis * (g / GAS_BASIS);
+  if (obj.typ==='hyb')     return obj.basis * (0.5 * g / GAS_BASIS + 0.5 * s / STROM_BASIS);
   return obj.basis;
 }
 
@@ -449,6 +471,7 @@ function getVs(k, obj, g) {
             : obj.typ==='fw'      ? AVG.fw  * (1 + (g - GAS_BASIS) * 0.025)
             : obj.typ==='oel'     ? AVG.oel * (1 + (g - GAS_BASIS) * 0.055)
             : obj.typ==='wechsel' ? AVG.wechsel * (g / GAS_BASIS)
+            : obj.typ==='hyb'    ? AVG.hyb
             : AVG.wp;
   return (k - avg) / avg * 100;
 }
@@ -475,16 +498,18 @@ function getFiltered() {
   return OBJ;
 }
 
-function hsIcon(typ) {
-      var icons = {
-        'wp':      '<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#e8f5e0" stroke="#3a8a30" stroke-width="1.2"/><circle cx="16" cy="16" r="9" fill="none" stroke="#3a8a30" stroke-width="1"/><ellipse cx="16" cy="16" rx="4.5" ry="9" fill="none" stroke="#3a8a30" stroke-width="0.8" opacity="0.7"/><line x1="7" y1="16" x2="25" y2="16" stroke="#3a8a30" stroke-width="0.8" opacity="0.7"/><line x1="8" y1="11" x2="24" y2="11" stroke="#3a8a30" stroke-width="0.6" opacity="0.4"/><line x1="8" y1="21" x2="24" y2="21" stroke="#3a8a30" stroke-width="0.6" opacity="0.4"/></svg>',
-        'gas':     '<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#fef3e0" stroke="#e08010" stroke-width="1.2"/><path d="M16,5 C14,10 8,13 8,19 C8,25 11,28 16,28 C21,28 24,25 24,19 C24,13 18,10 16,5Z" fill="#e08010"/><path d="M16,14 C15,17 13,18 13,21 C13,24 14,25 16,25 C18,25 19,24 19,21 C19,18 17,17 16,14Z" fill="#fef3e0" opacity="0.6"/></svg>',
-        'fw':      '<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#fdeee8" stroke="#c03818" stroke-width="1.2"/><rect x="5" y="13" width="22" height="6" fill="#c03818" opacity="0.85"/><ellipse cx="5" cy="16" rx="3" ry="5" fill="#e05830" stroke="#c03818" stroke-width="0.8"/><ellipse cx="27" cy="16" rx="3" ry="5" fill="#a02810" stroke="#c03818" stroke-width="0.8"/><rect x="5" y="13" width="22" height="2" fill="#ffffff" opacity="0.15"/></svg>',
-        'oel':     '<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#ebebeb" stroke="#4a4a4a" stroke-width="1.2"/><path d="M16,6 C16,6 8,16 8,20 C8,26 11,28 16,28 C21,28 24,26 24,20 C24,16 16,6 16,6Z" fill="#4a4a4a" opacity="0.85"/></svg>',
-        'wechsel': '<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#f0f0f0" stroke="#888880" stroke-width="1.2"/><path d="M16,5 C14,9 10,11 10,16 C10,19 11,21 12,22Z" fill="#e08010" opacity="0.9"/><circle cx="19" cy="16" r="7" fill="none" stroke="#3a8a30" stroke-width="1"/><ellipse cx="19" cy="16" rx="3.5" ry="7" fill="none" stroke="#3a8a30" stroke-width="0.8" opacity="0.7"/><line x1="12" y1="16" x2="26" y2="16" stroke="#3a8a30" stroke-width="0.7" opacity="0.7"/></svg>'
-      };
-      return icons[typ] || icons['gas'];
-    }
+function hsPill(typ) {
+  const conf = {
+    'gas':     ['GAS',    'hs-pill--gas'],
+    'fw':      ['FW',     'hs-pill--fw'],
+    'wp':      ['WP',     'hs-pill--wp'],
+    'oel':     ['ÖL',     'hs-pill--oel'],
+    'wechsel': ['→WP',    'hs-pill--wechsel'],
+    'hyb':     ['GAS+WP', 'hs-pill--hyb'],
+  };
+  const [label, cls] = conf[typ] || conf['gas'];
+  return `<span class="hs-pill ${cls}">${label}</span>`;
+}
 
 function render() {
   const body = document.getElementById('tbl-body');
@@ -506,7 +531,6 @@ function render() {
   liste.forEach((obj, idx) => {
     const rank    = idx + 1;
     const monIst  = obj.kIst.toFixed(2).replace('.', ',');
-    const jahrIst = (obj.kIst * 12).toFixed(2).replace('.', ',');
     const monProj = obj.kProj.toFixed(2).replace('.', ',');
 
     // VS Ø
@@ -535,9 +559,6 @@ function render() {
     // Kosten IST
     const isWP = obj.typ === 'wp';
     const monHTML  = `<div class="kosten-val${isWP?' kosten-val--gut':''}">${monIst} €</div>`;
-    const jahrHTML = `<div class="kosten-val${isWP?' kosten-val--gut':''}">${jahrIst} €</div>`;
-
-    const kCls = {A:'',B:'',C:'',D:'',E:'',F:''}[obj.klasse] || '';
 
     // Schock-Spalte
     const deltaJahr = Math.round((obj.kProj - obj.kIst) * 12 * (obj.flaeche || 100));
@@ -557,21 +578,21 @@ function render() {
 
     row.innerHTML = `
       <div class="cell"><span class="rank-nr ${rank===1?'rank-nr--1':''}">${rank}</span></div>
-      <div class="cell" style="display:flex;align-items:center;justify-content:center;">${hsIcon(obj.typ)}</div>
-      <div class="cell">
-        <div class="obj-titel">
-          ${obj.name}
-          ${obj.satzung ? `<span class="obj-satzung" title="Fernwärmesatzung">⚠</span>` : ''}
+      <div class="cell" style="display:flex;align-items:center;justify-content:center;">${hsPill(obj.typ)}</div>
+      <div class="cell" style="display:flex;align-items:center;gap:8px;">
+        <div style="flex:1;min-width:0;">
+          <div class="obj-titel">
+            ${obj.name}
+            ${obj.satzung ? `<span class="obj-satzung" title="Fernwärmesatzung">⚠</span>` : ''}
+          </div>
+          <div class="obj-sub">
+            <span>${obj.sub}</span>
+            <span class="hs-tag">${obj.hs}</span>
+          </div>
         </div>
-        <div class="obj-sub">
-          <span>${obj.sub}</span>
-          <span class="hs-tag">${obj.hs}</span>
-          ${obj.link ? `<a href="${obj.link}" style="font-size:11px;color:var(--petrol);font-weight:500;" onclick="event.stopPropagation()">Profil →</a>` : ''}
-        </div>
+        ${obj.link ? `<a href="${obj.link}" class="profil-btn-tbl" title="Objektprofil" onclick="event.stopPropagation()"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2L2 6.5V12h3.5V9h3v3H12V6.5L7 2Z" fill="rgba(255,255,255,0.9)"/></svg><span class="profil-btn-lbl">Profil</span></a>` : '<div style="width:34px;flex-shrink:0;"></div>'}
       </div>
-      <div class="cell"><span class="klasse">${obj.klasse}</span></div>
       <div class="cell">${monHTML}</div>
-      <div class="cell">${jahrHTML}</div>
       <div class="cell"><span class="vs-val ${vsCls}">${vsTxt}</span></div>
       <div class="cell cell--signal"><span class="prog-val" style="color:${progColor};">${progTxt}</span></div>
       <div class="cell cell--signal"><span class="proj-val ${projClass}">${monProj} €</span></div>
@@ -607,6 +628,13 @@ function onSlider() {
 
   render();
 }
+
+// Preistafeln + Datum aus zentralen Konstanten befüllen
+document.getElementById('preis-stand-datum').textContent  = PREISSTAND;
+document.getElementById('tafel-gas-preis').textContent    = GAS_CT.toFixed(2).replace('.', ',');
+document.getElementById('tafel-fw-preis').textContent     = FW_CT;
+document.getElementById('tafel-oel-preis').textContent    = OEL_CT.toString().replace('.', ',');
+document.getElementById('tafel-strom-preis').textContent  = STROM_CT;
 
 render();
 </script>
