@@ -236,9 +236,11 @@
       <span class="live-dot"></span>
       <span>Preisstand</span>
       <span class="schiene-sep">·</span>
-      <span id="preis-stand-datum">März 2026</span>
+      <span id="preis-stand-datum">April 2026</span>
       <span class="schiene-sep">·</span>
       <span>wird monatlich aktualisiert</span>
+      <span class="schiene-sep">·</span>
+      <a href="../preishistorie.html" style="font-size:13px;color:var(--petrol);font-weight:500;">Verlauf →</a>
     </div>
   </div>
 
@@ -251,7 +253,7 @@
           <span class="tafel__preis" id="tafel-gas-preis">9,98</span>
           <span class="tafel__unit">ct/kWh</span>
         </div>
-        <div class="tafel__sub">eff. Wärme: 10,0 ct/kWh</div>
+        <div class="tafel__sub">eff. Wärme: ~10,5 ct/kWh</div>
       </div>
       <div class="tafel">
         <div class="tafel__lbl">Fernwärme Ø</div>
@@ -267,7 +269,7 @@
           <span class="tafel__preis" id="tafel-oel-preis">12,4</span>
           <span class="tafel__unit">ct/kWh</span>
         </div>
-        <div class="tafel__sub">+60% seit Feb. 2026</div>
+        <div class="tafel__sub">+46% seit Jan. 2026 · Iran-Krise</div>
       </div>
       <div class="tafel">
         <div class="tafel__lbl">Wärmestrom WP Ø</div>
@@ -275,7 +277,7 @@
           <span class="tafel__preis" id="tafel-strom-preis">32</span>
           <span class="tafel__unit">ct/kWh</span>
         </div>
-        <div class="tafel__sub">eff. Wärme JAZ 3,8: 8,4 ct</div>
+        <div class="tafel__sub">eff. Wärme JAZ 3,8: 7,1 ct</div>
       </div>
     </div>
   </div>
@@ -444,11 +446,11 @@ const OBJ = [
 ];
 
 // ── PREISSTAND (monatlich hier anpassen) ─────────────────────────
-const PREISSTAND = 'März 2026';
-const GAS_CT     = 10.0;   // ct/kWh Gas eff. Wärme
+const PREISSTAND = 'April 2026';
+const GAS_CT     = 10.5;   // ct/kWh Gas eff. Wärme
 const FW_CT      = 26;     // ct/kWh Fernwärme Ø Erfurt
-const OEL_CT     = 12.4;   // ct/kWh Heizöl Ø
-const STROM_CT   = 32;     // ct/kWh Wärmestrom WP
+const OEL_CT     = 15.3;   // ct/kWh Heizöl Ø (Iran-Krise)
+const STROM_CT   = 27;     // ct/kWh Wärmestrom WP
 // ─────────────────────────────────────────────────────────────────
 
 const GAS_BASIS   = GAS_CT;
