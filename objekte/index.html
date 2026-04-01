@@ -138,13 +138,12 @@
     .hs-pill--oel     { background:#eeeeee; color:#555555; border:1px solid #aaaaaa; }
     .hs-pill--wechsel { background:#fdf8e8; color:#7a5a10; border:1px solid #c8a040; }
     .hs-pill--hyb     { background:linear-gradient(90deg,#fef3e0 50%,#e6f4f0 50%); color:#666; border:1px solid #c0b080; }
+    .hs-pill--pellets { background:#f0ece0; color:#6a5020; border:1px solid #b09050; }
 
     /* PROFIL-BUTTON (in Objekt-Zelle, Option A) */
-    .profil-btn-tbl { display:inline-flex; flex-direction:column; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; background:var(--petrol-dark); color:var(--white); border:none; cursor:pointer; flex-shrink:0; transition:background 0.15s; text-decoration:none; gap:1px; }
+    .profil-btn-tbl { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:var(--petrol-dark); border:none; cursor:pointer; flex-shrink:0; transition:background 0.15s; text-decoration:none; }
     .profil-btn-tbl:hover { background:var(--signal); }
     .profil-btn-tbl:hover svg path { fill:var(--text-main); }
-    .profil-btn-lbl { font-size:7px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:rgba(255,255,255,0.8); line-height:1; }
-    .profil-btn-tbl:hover .profil-btn-lbl { color:var(--text-main); }
 
     /* Header */
     .tbl-head { display: grid; background: var(--petrol-dark); border: 2px solid rgba(207,247,127,0.4); border-radius: 4px 4px 0 0; }
@@ -158,7 +157,7 @@
     .obj-row:nth-child(odd)  { background: var(--white); }
     .obj-row:nth-child(even) { background: #f7f6f4; }
     .obj-row:hover { background: #eef6f5 !important; }
-    .obj-row--real { border-left: 3px solid var(--petrol); }
+    .obj-row--real { box-shadow: inset 3px 0 0 var(--petrol); }
     .obj-row--real:hover { background: #e4f0ee !important; }
     .obj-row--link { cursor: pointer; }
 
@@ -441,22 +440,22 @@ const OBJ = [
   { id:'obj002', real:false, link:null,
     name:'MFH · Erfurt Nordstadt', satzung:false, bj:1962,
     sub:'Bj. 1962 · 8 WE · ~480 m²',
-    typ:'gas', hs:'Gas-Einzel', klasse:'F',
+    typ:'gas', hs:'Gas-Brennwert (zentral)', klasse:'F',
     basis:1.78, wp:1.05, jaz:3.5, ea:42000, flaeche:480 },
   { id:'obj003', real:false, link:null,
-    name:'ETW · Leipzig Innenstadt', satzung:false, bj:1920,
-    sub:'Bj. 1920 · 1/12 WE · 67 m²',
-    typ:'fw', hs:'Fernwärme', klasse:'E',
-    basis:2.41, wp:null, jaz:null, ea:null, flaeche:67 },
+    name:'ETW · Erfurt Johannesvorstadt', satzung:false, bj:1920,
+    sub:'Bj. 1920 · 1/12 WE · 68 m²',
+    typ:'fw', hs:'Fernwärme (SWE)', klasse:'E',
+    basis:2.41, wp:null, jaz:null, ea:null, flaeche:68 },
   { id:'obj004', real:false, link:null,
-    name:'WEG · Erfurt Löbervorstadt', satzung:false, bj:1958,
-    sub:'Bj. 1958 · 6 WE · ~390 m²',
-    typ:'gas', hs:'Gas-Brennwert', klasse:'E',
-    basis:1.65, wp:0.98, jaz:3.6, ea:36000, flaeche:390 },
+    name:'EFH · Erfurt-Schmira', satzung:false, bj:1978,
+    sub:'Bj. 1978 · 1 WE · ~180 m²',
+    typ:'pellets', hs:'Pelletheizung', klasse:'E',
+    basis:1.35, wp:0.90, jaz:3.7, ea:16000, flaeche:180 },
   { id:'obj005', real:false, link:null,
-    name:'Doppelhaus · Jena Weststadt', satzung:false, bj:1930,
+    name:'Doppelhaus · Erfurt Gispersleben', satzung:false, bj:1930,
     sub:'Bj. 1930 · 2 WE · ~210 m²',
-    typ:'oel', hs:'Heizöl', klasse:'E',
+    typ:'oel', hs:'Öl-Heizung', klasse:'E',
     basis:1.96, wp:1.10, jaz:3.4, ea:22000, flaeche:210 },
   { id:'obj006', real:false, link:null,
     name:'WEG · Erfurt Daberstedt', satzung:false, bj:1972,
@@ -469,15 +468,15 @@ const OBJ = [
     typ:'wp', hs:'WP seit 2024', klasse:'C',
     basis:0.78, wp:0.78, vorher:1.63, jaz:4.1, ea:0, flaeche:82 },
   { id:'obj008', real:false, link:null,
-    name:'EFH · Erfurt Südost', satzung:false, bj:1985,
-    sub:'Bj. 1985 · 1 WE · ~145 m²',
-    typ:'gas', hs:'Gas-Brennwert', klasse:'D',
-    basis:1.38, wp:0.88, jaz:3.9, ea:18000, flaeche:145 },
+    name:'MFH · Erfurt Südost', satzung:false, bj:1958,
+    sub:'Bj. 1958 · 6 WE · ~340 m²',
+    typ:'gas', hs:'Gas-Etagenheizungen (dezentral)', klasse:'F',
+    basis:2.05, wp:1.08, jaz:3.5, ea:38000, flaeche:340 },
   { id:'obj009', real:false, link:null,
-    name:'WEG · Gera Innenstadt', satzung:false, bj:1910,
-    sub:'Bj. 1910 · 12 WE · ~760 m²',
-    typ:'fw', hs:'Fernwärme', klasse:'D',
-    basis:2.85, wp:1.02, jaz:3.6, ea:62000, flaeche:760 },
+    name:'WEG · Erfurt Rieth', satzung:true, bj:1978,
+    sub:'Bj. 1978 · 18 WE · ~1.100 m² · Plattenbau',
+    typ:'fw', hs:'Fernwärme (SWE)', klasse:'D',
+    basis:2.85, wp:1.02, jaz:3.6, ea:85000, flaeche:1100 },
   { id:'obj010', real:false, link:null,
     name:'Neubau WEG · Erfurt Nord', satzung:false, bj:2020,
     sub:'Bj. 2020 · 16 WE · ~1.100 m²',
@@ -501,7 +500,7 @@ const STROM_TREND  = { dir:'down', txt:'−1 ggü. März' };
 const GAS_BASIS   = GAS_CT;
 const STROM_BASIS = STROM_CT;
 
-const AVG = { gas:1.56, fw:2.63, oel:1.96, wp:0.70, wechsel:1.52, hyb:1.20 };
+const AVG = { gas:1.56, fw:2.63, oel:1.96, wp:0.70, wechsel:1.52, hyb:1.20, pellets:1.35 };
 
 function calcK(obj, g, s) {
   if (obj.typ==='wp')      return obj.basis * (s / STROM_BASIS);
@@ -510,6 +509,7 @@ function calcK(obj, g, s) {
   if (obj.typ==='fw')      return obj.basis * (1 + (g - GAS_BASIS) * 0.025);
   if (obj.typ==='wechsel') return obj.basis * (g / GAS_BASIS);
   if (obj.typ==='hyb')     return obj.basis * (0.5 * g / GAS_BASIS + 0.5 * s / STROM_BASIS);
+  if (obj.typ==='pellets') return obj.basis * (1 + (g - GAS_BASIS) * 0.015);
   return obj.basis;
 }
 
@@ -518,7 +518,8 @@ function getVs(k, obj, g) {
             : obj.typ==='fw'      ? AVG.fw  * (1 + (g - GAS_BASIS) * 0.025)
             : obj.typ==='oel'     ? AVG.oel * (1 + (g - GAS_BASIS) * 0.055)
             : obj.typ==='wechsel' ? AVG.wechsel * (g / GAS_BASIS)
-            : obj.typ==='hyb'    ? AVG.hyb
+            : obj.typ==='hyb'     ? AVG.hyb
+            : obj.typ==='pellets' ? AVG.pellets
             : AVG.wp;
   return (k - avg) / avg * 100;
 }
@@ -551,8 +552,9 @@ function hsPill(typ) {
     'fw':      ['FW',     'hs-pill--fw'],
     'wp':      ['WP',     'hs-pill--wp'],
     'oel':     ['ÖL',     'hs-pill--oel'],
-    'wechsel': ['→WP',    'hs-pill--wechsel'],
-    'hyb':     ['GAS+WP', 'hs-pill--hyb'],
+    'wechsel': ['→WP',     'hs-pill--wechsel'],
+    'hyb':     ['GAS+WP',  'hs-pill--hyb'],
+    'pellets': ['PELLETS', 'hs-pill--pellets'],
   };
   const [label, cls] = conf[typ] || conf['gas'];
   return `<span class="hs-pill ${cls}">${label}</span>`;
@@ -637,7 +639,7 @@ function render() {
             <span class="hs-tag">${obj.hs}</span>
           </div>
         </div>
-        ${obj.link ? `<a href="${obj.link}" class="profil-btn-tbl" title="Objektprofil" onclick="event.stopPropagation()"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2L2 6.5V12h3.5V9h3v3H12V6.5L7 2Z" fill="rgba(255,255,255,0.9)"/></svg><span class="profil-btn-lbl">Profil</span></a>` : '<div style="width:34px;flex-shrink:0;"></div>'}
+        ${obj.link ? `<a href="${obj.link}" class="profil-btn-tbl" title="Zum Objektprofil" onclick="event.stopPropagation()"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2L2 6.5V12h3.5V9h3v3H12V6.5L7 2Z" fill="rgba(255,255,255,0.9)"/></svg></a>` : '<div style="width:32px;flex-shrink:0;"></div>'}
       </div>
       <div class="cell">${monHTML}</div>
       <div class="cell"><span class="vs-val ${vsCls}">${vsTxt}</span></div>
