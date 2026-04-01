@@ -65,6 +65,22 @@
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
     .schiene-sep { color: var(--gray-border); }
 
+    /* TREND IN PREISTAFELN */
+    .tafel__trend { font-size:11px; font-weight:600; margin-top:5px; }
+    .tafel__trend--up   { color:#f8c080; }
+    .tafel__trend--down { color:#90d4a8; }
+    .tafel__trend--neu  { color:rgba(255,255,255,0.35); font-weight:400; font-style:italic; }
+
+    /* PREISHISTORIE BANNER */
+    .hist-banner { padding: 0 0 0.875rem; }
+    .hist-banner__inner { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
+    .hist-banner__box { background: var(--signal); border-radius: 4px; padding: 0.75rem 1.25rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .hist-banner__text { flex: 1; min-width: 180px; }
+    .hist-banner__label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol-dark); font-weight: 700; display: block; margin-bottom: 2px; }
+    .hist-banner__sub { font-size: 13px; color: var(--petrol-dark); opacity: 0.75; }
+    .hist-banner__link { font-size: 13px; font-weight: 600; color: var(--petrol-dark); white-space: nowrap; display: flex; align-items: center; gap: 5px; }
+    .hist-banner__link:hover { opacity: 0.7; }
+
     /* PREISTAFELN — Petrol-Dark, Signal-Gelb Labels, weiße Zahlen, lesbare Sub-Texte */
     .tafeln-wrap { padding: 0 0 0.75rem; }
     .tafeln { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.625rem; max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
@@ -239,8 +255,6 @@
       <span id="preis-stand-datum">April 2026</span>
       <span class="schiene-sep">·</span>
       <span>wird monatlich aktualisiert</span>
-      <span class="schiene-sep">·</span>
-      <a href="../preishistorie.html" style="font-size:13px;color:var(--petrol);font-weight:500;">Verlauf →</a>
     </div>
   </div>
 
@@ -254,6 +268,7 @@
           <span class="tafel__unit">ct/kWh</span>
         </div>
         <div class="tafel__sub">eff. Wärme: ~10,5 ct/kWh</div>
+        <div class="tafel__trend" id="tafel-gas-trend"></div>
       </div>
       <div class="tafel">
         <div class="tafel__lbl">Fernwärme Ø</div>
@@ -262,6 +277,7 @@
           <span class="tafel__unit">ct/kWh</span>
         </div>
         <div class="tafel__sub">Spanne 14–39 ct · Erfurt</div>
+        <div class="tafel__trend" id="tafel-fw-trend"></div>
       </div>
       <div class="tafel">
         <div class="tafel__lbl">Heizöl Ø</div>
@@ -270,6 +286,7 @@
           <span class="tafel__unit">ct/kWh</span>
         </div>
         <div class="tafel__sub">+46% seit Jan. 2026 · Iran-Krise</div>
+        <div class="tafel__trend" id="tafel-oel-trend"></div>
       </div>
       <div class="tafel">
         <div class="tafel__lbl">Wärmestrom WP Ø</div>
@@ -278,6 +295,29 @@
           <span class="tafel__unit">ct/kWh</span>
         </div>
         <div class="tafel__sub">eff. Wärme JAZ 3,8: 7,1 ct</div>
+        <div class="tafel__trend" id="tafel-strom-trend"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREISHISTORIE BANNER -->
+  <div class="hist-banner">
+    <div class="hist-banner__inner">
+      <div class="hist-banner__box">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" flex-shrink="0">
+          <polyline points="2,15 7,8 11,12 18,4" stroke="#1a3535" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="7" cy="8" r="1.5" fill="#1a3535"/>
+          <circle cx="11" cy="12" r="1.5" fill="#1a3535"/>
+          <circle cx="18" cy="4" r="1.5" fill="#1a3535"/>
+        </svg>
+        <div class="hist-banner__text">
+          <span class="hist-banner__label">Energiepreise im Verlauf</span>
+          <span class="hist-banner__sub">Monatlich dokumentiert mit Marktkontext — seit Januar 2026</span>
+        </div>
+        <a href="../preishistorie.html" class="hist-banner__link">
+          Zur Preishistorie
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="#1a3535" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
     </div>
   </div>
@@ -451,6 +491,11 @@ const GAS_CT     = 10.5;   // ct/kWh Gas eff. Wärme
 const FW_CT      = 26;     // ct/kWh Fernwärme Ø Erfurt
 const OEL_CT     = 15.3;   // ct/kWh Heizöl Ø (Iran-Krise)
 const STROM_CT   = 27;     // ct/kWh Wärmestrom WP
+// Trends ggü. Vormonat: 'up', 'down', 'neu' (= stabil/kein Vormonat)
+const GAS_TREND    = { dir:'up',   txt:'+0,5 ggü. März' };
+const FW_TREND     = { dir:'neu',  txt:'stabil' };
+const OEL_TREND    = { dir:'down', txt:'−0,7 ggü. März' };
+const STROM_TREND  = { dir:'down', txt:'−1 ggü. März' };
 // ─────────────────────────────────────────────────────────────────
 
 const GAS_BASIS   = GAS_CT;
@@ -633,10 +678,22 @@ function onSlider() {
 
 // Preistafeln + Datum aus zentralen Konstanten befüllen
 document.getElementById('preis-stand-datum').textContent  = PREISSTAND;
-document.getElementById('tafel-gas-preis').textContent    = GAS_CT.toFixed(2).replace('.', ',');
+document.getElementById('tafel-gas-preis').textContent    = GAS_CT.toFixed(1).replace('.', ',');
 document.getElementById('tafel-fw-preis').textContent     = FW_CT;
 document.getElementById('tafel-oel-preis').textContent    = OEL_CT.toString().replace('.', ',');
 document.getElementById('tafel-strom-preis').textContent  = STROM_CT;
+
+// Trend-Pfeile befüllen
+function setTrend(id, t) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = (t.dir==='up' ? '↑ ' : t.dir==='down' ? '↓ ' : '') + t.txt;
+  el.className   = 'tafel__trend tafel__trend--' + (t.dir==='neu' ? 'neu' : t.dir);
+}
+setTrend('tafel-gas-trend',   GAS_TREND);
+setTrend('tafel-fw-trend',    FW_TREND);
+setTrend('tafel-oel-trend',   OEL_TREND);
+setTrend('tafel-strom-trend', STROM_TREND);
 
 render();
 </script>
