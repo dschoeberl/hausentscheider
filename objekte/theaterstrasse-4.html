@@ -512,11 +512,11 @@
         <div class="rechner__slider-row">
           <div>
             <p class="rechner__label">Gaspreis-Szenario in 5 Jahren (ct/kWh)</p>
-            <input type="range" id="obj-slider" min="8" max="25" step="0.5" value="10"
-              oninput="updateRechner(this.value)" style="--pct:11%">
+            <input type="range" id="obj-slider" min="8" max="25" step="0.5" value="10.5"
+              oninput="updateRechner(this.value)" style="--pct:14.7%">
             <div class="slider-labels">
               <span>8 ct</span>
-              <span>heute: 10 ct</span>
+              <span>heute: ~10,5 ct</span>
               <span>25 ct (Krise)</span>
             </div>
           </div>
@@ -640,9 +640,9 @@
     const FLAECHE   = 784;       // m²
     const VERBRAUCH = 101240;    // kWh/Jahr Gas
     const WE        = 14;        // Wohneinheiten
-    // Feste Energiepreise März 2026
-    const GAS_CT    = 10.0;      // ct/kWh
-    const STROM_CT  = 32.0;      // ct/kWh
+    // Feste Energiepreise April 2026
+    const GAS_CT    = 10.5;      // ct/kWh
+    const STROM_CT  = 27.0;      // ct/kWh
     const FW_CT     = 26.0;      // ct/kWh eff.
 
     function amortFarbe(j) {
