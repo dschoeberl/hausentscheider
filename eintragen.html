@@ -272,7 +272,7 @@
               <select id="heizung" name="heizung" required>
                 <option value="">Bitte wählen</option>
                 <option>Gas-Brennwert (zentral)</option>
-                <option>Gas-Einzelheizungen</option>
+                <option>Gas-Etagenheizungen (dezentral)</option>
                 <option>Fernwärme</option>
                 <option>Öl-Heizung</option>
                 <option>Wärmepumpe (Luft)</option>
@@ -286,6 +286,12 @@
               <input type="number" id="heizung_bj" name="heizung_bj" placeholder="z.B. 2002" min="1970" max="2025">
               <span class="field__hint">Steht auf dem Gerät oder in Wartungsunterlagen</span>
             </div>
+          </div>
+          <div style="margin-top:0.75rem;">
+            <label style="display:inline-flex;align-items:center;gap:0.5rem;font-size:13px;color:var(--text-secondary);cursor:pointer;">
+              <input type="checkbox" name="zusatz_kaminofen" value="ja" style="width:auto;margin:0;accent-color:var(--petrol);">
+              Kaminofen / Zusatzheizung vorhanden (Holz, Pelletsofen o.ä.)
+            </label>
           </div>
         </div>
 
