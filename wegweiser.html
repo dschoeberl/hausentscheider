@@ -187,7 +187,7 @@
     .section-sub { font-size:14px; color:var(--text-sub); margin-bottom:2rem; }
 
     .quellen-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
-    .quellen-gruppe__titel { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.875rem; padding-bottom:0.5rem; border-bottom:0.5px solid var(--border); }
+    .quellen-gruppe__titel { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--petrol); margin-bottom:0.875rem; padding-bottom:0.5rem; border-bottom:1px solid var(--petrol); opacity:0.85; }
     .quellen-liste { list-style:none; }
     .quellen-item { display:flex; gap:0.625rem; padding:0.5rem 0; border-bottom:0.5px solid rgba(0,0,0,0.04); align-items:baseline; }
     .quellen-item:last-child { border-bottom:none; }
@@ -281,9 +281,9 @@
         <text x="5" y="50" font-size="9" font-family="Inter, -apple-system, sans-serif"
               fill="rgba(255,255,255,0.38)" letter-spacing="0.3">Stadtwerke SWE</text>
         <text x="5" y="91" font-size="9" font-family="Inter, -apple-system, sans-serif"
-              fill="rgba(255,255,255,0.22)" letter-spacing="0.3">Stadt Erfurt (EF)</text>
+              fill="rgba(255,255,255,0.22)" letter-spacing="0.3">Stadt Erfurt</text>
         <text x="5" y="136" font-size="9" font-family="Inter, -apple-system, sans-serif"
-              fill="rgba(255,255,255,0.13)" letter-spacing="0.3">Medien</text>
+              fill="rgba(255,255,255,0.28)" letter-spacing="0.3">Medien</text>
         <text x="5" y="176" font-size="9" font-family="Inter, -apple-system, sans-serif"
               fill="rgba(255,255,255,0.11)" letter-spacing="0.3">Lokale Wirtschaft</text>
         <text x="5" y="216" font-size="9" font-family="Inter, -apple-system, sans-serif"
@@ -382,12 +382,25 @@
             fill="none" stroke="rgba(93,202,165,0.38)" stroke-width="1.1"
             stroke-linecap="round" stroke-linejoin="round"/>
 
-          <!-- EIGENTÜMER — #1D9E75, 1.8px, dasharray 6 4, 2 kleine Pulse -->
+          <!-- EIGENTÜMER — #1D9E75, 1.8px, dasharray 6 4 -->
+          <!-- Organischer Impuls: langsamer Aufbau, schneller Abfall, leichte Bewegung drumherum -->
           <path
-            d="M 0 252 L 168 252
-               L 171 244 L 175 256 L 179 252
-               L 428 252
-               L 431 245 L 435 252
+            d="M 0 252
+               L 72 252 L 75 254 L 80 250 L 86 253 L 95 252
+               L 148 252
+               L 152 255
+               L 157 248
+               L 163 238
+               L 170 210
+               L 177 175
+               L 183 149
+               L 191 185
+               L 197 228
+               L 201 250
+               L 204 256
+               L 209 252
+               L 218 250 L 226 254 L 238 252
+               L 395 252 L 398 254 L 406 251 L 415 252
                L 695 252"
             fill="none" stroke="#1D9E75" stroke-width="1.8"
             stroke-dasharray="6 4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -445,7 +458,7 @@
       </div>
       <div class="legende__item">
         <div class="legende__dot"></div>
-        Externe Stimme
+        Prägende Stimme
       </div>
     </div>
 
@@ -588,18 +601,72 @@
 
 <script>
 // ─────────────────────────────────────────────────────────
-// ZONE 2 — Fragen & Stimmen aus daten/wegweiser.json
+// ZONE 2 — Fragen & Stimmen (Daten inline)
 // ─────────────────────────────────────────────────────────
-(async function() {
-  let data;
-  try {
-    const res = await fetch('daten/wegweiser.json');
-    data = await res.json();
-  } catch(e) {
-    document.getElementById('fragenListe').innerHTML =
-      '<p style="color:var(--text-muted);font-size:13px;">Daten konnten nicht geladen werden.</p>';
-    return;
-  }
+(function() {
+  const data = {
+    "whatsappUrl": "#",
+    "fragen": [
+      {
+        "frage": "Werden die Energiepreise weiter steigen?",
+        "stimmen": [
+          { "name": "Stadtwerke Erfurt", "type": "extern", "aussage": "Fernwärme bietet Planungssicherheit durch regulierte Preisanpassungen — anders als volatile Rohstoffmärkte.", "einordnung": "Reguliert heißt nicht günstig. Der Fernwärmepreis in Erfurt ist seit 2021 um über 60% gestiegen — auf Basis eines Gaspreisindex, der direkt den Weltmarkt abbildet.", "linkLabel": "SWE Journal →", "url": "dokumente/SWE_Energiejournal.pdf" },
+          { "name": "Stadt Erfurt", "type": "silent" },
+          { "name": "Hausentscheider", "type": "he", "einordnung": "Die Preishistorie zeigt: Gas stieg 2022 um 180%, Fernwärme folgte mit einem Jahr Verzögerung. Eigentümer mit Gasheizung und Eigentümer mit Fernwärme zahlten beide mehr — nur zu unterschiedlichen Zeitpunkten.", "linkLabel": "Zur Preishistorie →", "url": "preishistorie.html" },
+          { "name": "Fraunhofer ISE", "type": "extern", "aussage": "Wärmepumpen entkoppeln Heizkosten zunehmend von Gaspreisentwicklungen — bei steigendem Anteil erneuerbarer Energien sinkt der Strompreis langfristig.", "einordnung": "Das ist der einzige Weg, sich strukturell aus der Gaspreisabhängigkeit zu lösen.", "linkLabel": "Zur Studie →", "url": "https://www.ise.fraunhofer.de" }
+        ]
+      },
+      {
+        "frage": "Ist Gas noch eine Option für die Zukunft?",
+        "stimmen": [
+          { "name": "Stadtwerke Erfurt", "type": "extern", "aussage": "95% unserer Fernwärme basiert aktuell noch auf Erdgas — wir arbeiten an der Transformation zu grünen Quellen bis 2040.", "einordnung": "Bis 2040 sind 16 Jahre. In dieser Zeit zahlen Eigentümer, die jetzt anschließen, Gaspreise — mit dem Versprechen, dass es irgendwann grüner wird.", "linkLabel": "SWE Journal →", "url": "dokumente/SWE_Energiejournal.pdf" },
+          { "name": "Lokale Handwerker", "type": "extern", "aussage": "Moderne Gas-Brennwertanlagen sind effizient, gut verfügbar und können später mit Wasserstoff betrieben werden.", "einordnung": "Wasserstoff für Gebäudeheizung gilt unter Experten als unwirtschaftlich im Massenmaßstab. Das Handwerk empfiehlt, was es einbauen kann." },
+          { "name": "Hausentscheider", "type": "he", "einordnung": "Gas ist eine Option — aber eine mit Risiko. Wer heute neu einbaut, rechnet mit 20 Jahren Nutzungsdauer. In diesem Zeitraum könnte Gas durch CO₂-Bepreisung erheblich teurer werden." }
+        ]
+      },
+      {
+        "frage": "Was ist langfristig am krisensichersten?",
+        "stimmen": [
+          { "name": "Fraunhofer ISE", "type": "extern", "aussage": "Wärmepumpen in Kombination mit PV-Anlage bieten die höchste Unabhängigkeit von externen Energieträgern und deren Preisschwankungen.", "einordnung": "Unabhängige Studie, kein Anbieterinteresse. Die Kombination WP + PV ist das, was rechnet — wenn das Gebäude dafür geeignet ist.", "linkLabel": "Zur Studie →", "url": "https://www.ise.fraunhofer.de" },
+          { "name": "Stadt Erfurt", "type": "silent" },
+          { "name": "Hausentscheider", "type": "he", "einordnung": "Krisensicherheit hat zwei Dimensionen: Technologie und Abhängigkeit. Fernwärme macht abhängig von einem Anbieter ohne Alternative. Eigene Anlage macht unabhängig — auf Kosten höherer Erstinvestition.", "linkLabel": "Zum Objektvergleich →", "url": "objekte/index.html" }
+        ]
+      },
+      {
+        "frage": "Wie wirtschaftlich ist Fernwärme wirklich?",
+        "stimmen": [
+          { "name": "Stadtwerke Erfurt", "type": "extern", "aussage": "Fernwärme ist wartungsarm, hat keine Heizraumkosten und bietet volle Versorgungssicherheit ohne Eigeninvestition in die Anlage.", "einordnung": "Was fehlt: Der Wärmepreis liegt in Erfurt bei ca. 26 ct/kWh (April 2026). Eine Wärmepumpe kommt auf 10–14 ct/kWh. Über 20 Jahre macht das Zehntausende Euro Unterschied.", "linkLabel": "Aktueller Preisvergleich →", "url": "objekte/index.html" },
+          { "name": "Hausentscheider", "type": "he", "einordnung": "Der Vergleich muss die Gesamtkosten einbeziehen: Anschlussbeitrag, monatlicher Grundpreis, Arbeitspreis — über die gesamte Vertragslaufzeit.", "linkLabel": "Zum Amortisationsrechner →", "url": "objekte/vorlage.html" }
+        ]
+      },
+      {
+        "frage": "Ist die kommunale Wärmeplanung gut für Erfurt?",
+        "stimmen": [
+          { "name": "Stadt Erfurt", "type": "extern", "aussage": "Die kommunale Wärmeplanung schafft Investitionssicherheit für alle Akteure und ermöglicht eine koordinierte Transformation zur Klimaneutralität bis 2045.", "einordnung": "Der Plan erscheint bis Juni 2026 — aber Eigentümer müssen jetzt entscheiden. Das Vakuum zwischen Plan und Entscheidungsdruck tragen allein die Eigentümer.", "linkLabel": "Zur Wärmeplanung →", "url": "https://www.erfurt.de/ef/de/leben/oekoumwelt/kommunale_waermeplanung/index.html" },
+          { "name": "Hausentscheider", "type": "he", "einordnung": "Gut für Erfurt heißt nicht automatisch gut für jeden Eigentümer. Wer in einem geplanten Fernwärmegebiet liegt, hat weniger Wahlfreiheit. Wer außerhalb liegt, trägt das Risiko allein." }
+        ]
+      },
+      {
+        "frage": "Womit tue ich wirklich was für die Umwelt?",
+        "stimmen": [
+          { "name": "Fraunhofer ISE", "type": "extern", "aussage": "Wärmepumpen haben heute schon einen CO₂-Vorteil von 64% gegenüber Gasheizungen — dieser Vorteil wächst mit steigendem Anteil erneuerbarer Energien im Stromnetz.", "einordnung": "Keine Marketingaussage. Das ist Messung aus echten Betriebsdaten.", "linkLabel": "Zur Studie →", "url": "https://www.ise.fraunhofer.de" },
+          { "name": "Stadtwerke Erfurt", "type": "extern", "aussage": "Fernwärme wird schrittweise dekarbonisiert — durch Abwärme, Geothermie und grünen Strom bis 2040.", "einordnung": "Schrittweise Dekarbonisierung bedeutet: Eigentümer heizen noch jahrelang mit Gas — aber mit besserem Gewissen wegen Zukunftsversprechen." }
+        ]
+      },
+      {
+        "frage": "Was amortisiert sich am schnellsten?",
+        "stimmen": [
+          { "name": "Hausentscheider", "type": "he", "einordnung": "Das hängt von Gebäudetyp, Ausgangsenergieträger und Förderquote ab. Der Amortisationsrechner zeigt es für Ihr konkretes Gebäude — kein Pauschalwert hilft hier.", "linkLabel": "Zum Rechner →", "url": "objekte/vorlage.html" }
+        ]
+      },
+      {
+        "frage": "Wer hilft mir — wen kann ich fragen?",
+        "stimmen": [
+          { "name": "Hausentscheider", "type": "he", "einordnung": "Unabhängige Energieberater (gefördert über BAFA), die Verbraucherzentrale Thüringen und der direkte Austausch mit anderen Eigentümern in Erfurt — alles ohne Verkaufsinteresse.", "linkLabel": "WhatsApp-Gruppe →", "url": "#" }
+        ]
+      }
+    ]
+  };
 
   const fragen = data.fragen || [];
 
