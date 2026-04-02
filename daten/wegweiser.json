@@ -1,0 +1,178 @@
+{
+  "whatsappUrl": "#",
+
+  "fragen": [
+    {
+      "frage": "Werden die Energiepreise weiter steigen?",
+      "stimmen": [
+        {
+          "name": "Stadtwerke Erfurt",
+          "type": "extern",
+          "aussage": "Fernwärme bietet Planungssicherheit durch regulierte Preisanpassungen — anders als volatile Rohstoffmärkte.",
+          "einordnung": "Reguliert heißt nicht günstig. Der Fernwärmepreis in Erfurt ist seit 2021 um über 60% gestiegen — auf Basis eines Gaspreisindex, der direkt den Weltmarkt abbildet.",
+          "linkLabel": "SWE Journal →",
+          "url": "dokumente/SWE_Energiejournal.pdf"
+        },
+        {
+          "name": "Stadt Erfurt",
+          "type": "silent"
+        },
+        {
+          "name": "Hausentscheider",
+          "type": "he",
+          "einordnung": "Die Preishistorie zeigt: Gas stieg 2022 um 180%, Fernwärme folgte mit einem Jahr Verzögerung. Eigentümer mit Gasheizung und Eigentümer mit Fernwärme zahlten beide mehr — nur zu unterschiedlichen Zeitpunkten.",
+          "linkLabel": "Zur Preishistorie →",
+          "url": "preishistorie.html"
+        },
+        {
+          "name": "Fraunhofer ISE",
+          "type": "extern",
+          "aussage": "Wärmepumpen entkoppeln Heizkosten zunehmend von Gaspreisentwicklungen — bei steigendem Anteil erneuerbarer Energien sinkt der Strompreis langfristig.",
+          "einordnung": "Das ist der einzige Weg, sich strukturell aus der Gaspreisabhängigkeit zu lösen. Kein Anbieter mit Eigeninteresse sagt das so klar.",
+          "linkLabel": "Zur Studie →",
+          "url": "https://www.ise.fraunhofer.de"
+        }
+      ]
+    },
+    {
+      "frage": "Ist Gas noch eine Option für die Zukunft?",
+      "stimmen": [
+        {
+          "name": "Stadtwerke Erfurt",
+          "type": "extern",
+          "aussage": "95% unserer Fernwärme basiert aktuell noch auf Erdgas — wir arbeiten an der Transformation zu grünen Quellen bis 2040.",
+          "einordnung": "Bis 2040 sind 16 Jahre. In dieser Zeit zahlen Eigentümer, die jetzt an Fernwärme anschließen, Gaspreise — mit dem Versprechen, dass es irgendwann grüner wird.",
+          "linkLabel": "SWE Journal →",
+          "url": "dokumente/SWE_Energiejournal.pdf"
+        },
+        {
+          "name": "Lokale Handwerker",
+          "type": "extern",
+          "aussage": "Moderne Gas-Brennwertanlagen sind effizient, gut verfügbar und können später mit Wasserstoff betrieben werden.",
+          "einordnung": "Wasserstoff für Gebäudeheizung gilt unter Experten als unwirtschaftlich und unrealistisch im Massenmaßstab. Das Handwerk empfiehlt, was es einbauen kann."
+        },
+        {
+          "name": "Hausentscheider",
+          "type": "he",
+          "einordnung": "Gas ist eine Option — aber eine mit Risiko. Wer heute neu einbaut, rechnet mit einer Nutzungsdauer von 20 Jahren. In diesem Zeitraum könnte Gas durch CO₂-Bepreisung erheblich teurer werden."
+        }
+      ]
+    },
+    {
+      "frage": "Was ist langfristig am krisensichersten?",
+      "stimmen": [
+        {
+          "name": "Fraunhofer ISE",
+          "type": "extern",
+          "aussage": "Wärmepumpen in Kombination mit PV-Anlage bieten die höchste Unabhängigkeit von externen Energieträgern und deren Preisschwankungen.",
+          "einordnung": "Unabhängige Studie, kein Anbieterinteresse. Die Kombination WP + PV ist das, was rechnet — wenn das Gebäude dafür geeignet ist.",
+          "linkLabel": "Zur Studie →",
+          "url": "https://www.ise.fraunhofer.de"
+        },
+        {
+          "name": "Stadt Erfurt",
+          "type": "silent"
+        },
+        {
+          "name": "Hausentscheider",
+          "type": "he",
+          "einordnung": "Krisensicherheit hat zwei Dimensionen: Technologie und Abhängigkeit. Fernwärme macht abhängig von einem Anbieter ohne Alternative. Eigene Anlage macht unabhängig — auf Kosten höherer Erstinvestition.",
+          "linkLabel": "Zum Objektvergleich →",
+          "url": "objekte/index.html"
+        }
+      ]
+    },
+    {
+      "frage": "Wie wirtschaftlich ist Fernwärme wirklich?",
+      "stimmen": [
+        {
+          "name": "Stadtwerke Erfurt",
+          "type": "extern",
+          "aussage": "Fernwärme ist wartungsarm, hat keine Heizraumkosten und bietet volle Versorgungssicherheit ohne Eigeninvestition in die Anlage.",
+          "einordnung": "Was verschwiegen wird: Der Wärmepreis liegt in Erfurt bei ca. 26 ct/kWh (April 2026). Eine Wärmepumpe kommt auf 10–14 ct/kWh. Über 20 Jahre macht das Zehntausende Euro Unterschied.",
+          "linkLabel": "Aktueller Preisvergleich →",
+          "url": "objekte/index.html"
+        },
+        {
+          "name": "Hausentscheider",
+          "type": "he",
+          "einordnung": "Der Vergleich muss die Gesamtkosten einbeziehen: Anschlussbeitrag, monatlicher Grundpreis, Arbeitspreis — über die gesamte Vertragslaufzeit. Rechner nutzen.",
+          "linkLabel": "Zum Amortisationsrechner →",
+          "url": "objekte/vorlage.html"
+        }
+      ]
+    },
+    {
+      "frage": "Ist die kommunale Wärmeplanung gut für Erfurt?",
+      "stimmen": [
+        {
+          "name": "Stadt Erfurt",
+          "type": "extern",
+          "aussage": "Die kommunale Wärmeplanung schafft Investitionssicherheit für alle Akteure und ermöglicht eine koordinierte Transformation zur Klimaneutralität bis 2045.",
+          "einordnung": "Der Plan erscheint bis Juni 2026 — aber Eigentümer müssen jetzt entscheiden. Das Vakuum zwischen Plan und Entscheidungsdruck tragen allein die Eigentümer.",
+          "linkLabel": "Zur Wärmeplanung →",
+          "url": "https://www.erfurt.de/ef/de/leben/oekoumwelt/kommunale_waermeplanung/index.html"
+        },
+        {
+          "name": "Hausentscheider",
+          "type": "he",
+          "einordnung": "Gut für Erfurt heißt nicht automatisch gut für jeden Eigentümer. Wer in einem geplanten Fernwärmegebiet liegt, hat weniger Wahlfreiheit. Wer außerhalb liegt, trägt das Risiko allein."
+        }
+      ]
+    },
+    {
+      "frage": "Womit tue ich wirklich was für die Umwelt?",
+      "stimmen": [
+        {
+          "name": "Fraunhofer ISE",
+          "type": "extern",
+          "aussage": "Wärmepumpen haben heute schon einen CO₂-Vorteil von 64% gegenüber Gasheizungen — bei weiter steigendem Anteil erneuerbarer Energien im Stromnetz wächst dieser Vorteil.",
+          "einordnung": "Keine Marketingaussage. Das ist Messung aus echten Betriebsdaten. Für Umweltbewusste ist das die klarste Antwort.",
+          "linkLabel": "Zur Studie →",
+          "url": "https://www.ise.fraunhofer.de"
+        },
+        {
+          "name": "Stadtwerke Erfurt",
+          "type": "extern",
+          "aussage": "Fernwärme wird schrittweise dekarbonisiert — durch Abwärme, Geothermie und grünen Strom bis 2040.",
+          "einordnung": "Schrittweise Dekarbonisierung bedeutet: Eigentümer heizen noch jahrelang mit Gas — aber mit besserem Gewissen wegen Zukunftsversprechen."
+        }
+      ]
+    },
+    {
+      "frage": "Was amortisiert sich am schnellsten?",
+      "stimmen": [
+        {
+          "name": "Hausentscheider",
+          "type": "he",
+          "einordnung": "Das hängt von Gebäudetyp, Ausgangsenergieträger und Förderquote ab. Der Amortisationsrechner zeigt es für Ihr konkretes Gebäude — kein Pauschalwert hilft hier.",
+          "linkLabel": "Zum Rechner →",
+          "url": "objekte/vorlage.html"
+        }
+      ]
+    },
+    {
+      "frage": "Wer hilft mir — wen kann ich fragen?",
+      "stimmen": [
+        {
+          "name": "Hausentscheider",
+          "type": "he",
+          "einordnung": "Unabhängige Energieberater (gefördert über BAFA), die Verbraucherzentrale Thüringen und der direkte Austausch mit anderen Eigentümern in Erfurt — alles ohne Verkaufsinteresse.",
+          "linkLabel": "WhatsApp-Gruppe →",
+          "url": "#whatsapp"
+        }
+      ]
+    }
+  ],
+
+  "links": [
+    { "kategorie": "Kommunale Planung", "titel": "Wärmeplanung Erfurt", "url": "https://www.erfurt.de/ef/de/leben/oekoumwelt/kommunale_waermeplanung/index.html", "quelle": "Stadt Erfurt" },
+    { "kategorie": "Kommunale Planung", "titel": "Eigentümer-Einschätzung 2026", "url": "dokumente/gastkommentar-waermewende-erfurt-2026.pdf", "quelle": "hausentscheider.de" },
+    { "kategorie": "Fernwärme & Versorger", "titel": "Stadtwerke Erfurt — Fernwärme", "url": "https://www.stadtwerke-erfurt.de", "quelle": "SWE" },
+    { "kategorie": "Fernwärme & Versorger", "titel": "TEAG — Wärmelösungen Thüringen", "url": "https://mein-zuhause.teag.de", "quelle": "TEAG" },
+    { "kategorie": "Förderung & Finanzierung", "titel": "BAFA — Bundesförderung BEG", "url": "https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/effiziente_gebaeude_node.html", "quelle": "BAFA" },
+    { "kategorie": "Förderung & Finanzierung", "titel": "KfW — Energieeffizient Sanieren", "url": "https://www.kfw.de", "quelle": "KfW" },
+    { "kategorie": "Technik & Forschung", "titel": "Fraunhofer ISE — Wärmepumpen im Bestand", "url": "https://www.ise.fraunhofer.de", "quelle": "Fraunhofer ISE" },
+    { "kategorie": "Technik & Forschung", "titel": "Future Readiness Wärmewende", "url": "dokumente/future-readiness-in-der-waermewende-executive-summary.pdf", "quelle": "Executive Summary" }
+  ]
+}
