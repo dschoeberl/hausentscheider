@@ -358,8 +358,8 @@
         <div>
           <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">JAZ Wärmepumpe <span id="jaz-display" style="color:var(--petrol);font-weight:600;">3,8</span></label>
           <input type="range" id="inp-jaz" min="2.5" max="5.0" step="0.1" value="3.8"
-            oninput="document.getElementById('jaz-display').textContent=parseFloat(this.value).toFixed(1);calcInvest()"
-            style="width:100%;margin-top:6px;accent-color:var(--petrol);">
+            oninput="document.getElementById('jaz-display').textContent=parseFloat(this.value).toFixed(1);updateSliderGrad(this);calcInvest()"
+            style="width:100%;margin-top:6px;">
           <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-tertiary);margin-top:2px;"><span>2,5 unsaniert</span><span>5,0 Neubau</span></div>
         </div>
       </div>
@@ -394,8 +394,8 @@
               Sommerleistung Mai–Sep (% der Heizlast) &nbsp;<span id="fw-sommer-display" style="color:var(--petrol);font-weight:600;">20%</span>
             </label>
             <input type="range" id="inp-fw-sommer" min="0" max="50" step="5" value="20"
-              oninput="document.getElementById('fw-sommer-display').textContent=this.value+'%';calcInvest()"
-              style="width:100%;max-width:400px;accent-color:var(--petrol);">
+              oninput="document.getElementById('fw-sommer-display').textContent=this.value+'%';updateSliderGrad(this);calcInvest()"
+              style="width:100%;max-width:400px;">
             <div style="display:flex;justify-content:space-between;max-width:400px;font-size:9px;color:var(--text-tertiary);margin-top:2px;">
               <span>0% — kein Verbrauch</span><span>50% — halbe Last</span>
             </div>
@@ -406,10 +406,10 @@
 
       <!-- Energiepreise fest -->
       <div style="margin-top:1rem;padding-top:0.875rem;border-top:0.5px solid var(--border);display:flex;gap:1.5rem;flex-wrap:wrap;">
-        <span style="font-size:11px;color:var(--text-tertiary);">Energiepreise April 2026 (fix):</span>
-        <span style="font-size:11px;color:var(--text-secondary);">⚡ Strom <strong>27 ct/kWh</strong></span>
-        <span style="font-size:11px;color:var(--text-secondary);">🔥 Gas <strong>10,5 ct/kWh</strong></span>
-        <span style="font-size:11px;color:var(--text-secondary);">🌡 Fernwärme <strong>26 ct/kWh</strong> eff.</span>
+        <span style="font-size:11px;color:var(--text-tertiary);">Energiepreise <span id="preis-stand">April 2026</span>:</span>
+        <span style="font-size:11px;color:var(--text-secondary);">⚡ Strom <strong id="bar-strom">27 ct/kWh</strong></span>
+        <span style="font-size:11px;color:var(--text-secondary);">🔥 Gas <strong id="preisbar-gas">10,5 ct/kWh</strong></span>
+        <span style="font-size:11px;color:var(--text-secondary);">🌡 Fernwärme <strong id="bar-fw">26 ct/kWh</strong> eff.</span>
       </div>
     </div>
 
@@ -433,7 +433,7 @@
             <div style="font-size:10px;color:var(--text-tertiary);padding-left:0;" id="wp-sonderumlage-sub">aus Rücklage gedeckt</div>
           </div>
           <div class="invest-zeile" style="background:#f0f8f0;flex-direction:column;align-items:flex-start;gap:2px;min-height:48px;">
-            <span style="color:var(--text-secondary);font-size:11px;">⚡ Strom 32 ct · JAZ <span id="jaz-karte">3,8</span></span>
+            <span style="color:var(--text-secondary);font-size:11px;">⚡ Strom <span id="wp-strom-display">27</span> ct · JAZ <span id="jaz-karte">3,8</span></span>
             <span style="color:#3a7a5a;font-size:11px;font-weight:500;">eff. <span id="wp-eff-ct">8,4 ct/kWh</span></span>
           </div>
           <div class="invest-zeile"><span style="color:var(--text-secondary);">Betrieb/Jahr</span><span class="invest-val invest-val--gut" id="wp-betrieb">8.500 €</span></div>
@@ -459,8 +459,8 @@
             <div style="font-size:10px;color:var(--text-tertiary);" id="gas-sonderumlage-sub">25.000 € ÷ 14 WE</div>
           </div>
           <div class="invest-zeile" style="background:#fdf5e8;flex-direction:column;align-items:flex-start;gap:2px;min-height:48px;">
-            <span style="color:var(--text-secondary);font-size:11px;">🔥 Gas 10 ct/kWh</span>
-            <span style="color:#8a6030;font-size:11px;font-weight:500;">eff. 10 ct/kWh</span>
+            <span style="color:var(--text-secondary);font-size:11px;">🔥 Gas <span id="gas-preis-display">10,5</span> ct/kWh</span>
+            <span style="color:#8a6030;font-size:11px;font-weight:500;">eff. <span id="gas-eff-display">10,5</span> ct/kWh</span>
           </div>
           <div class="invest-zeile"><span style="color:var(--text-secondary);">Betrieb/Jahr</span><span class="invest-val invest-val--warn" id="gas-betrieb">14.000 €</span></div>
           <div class="invest-zeile"><span style="color:var(--text-secondary);">€/m²/Monat</span><span class="invest-val invest-val--warn" id="gas-mon">1,49 €</span></div>
@@ -641,8 +641,8 @@
     const VERBRAUCH = 101240;    // kWh/Jahr Gas
     const WE        = 14;        // Wohneinheiten
     // Feste Energiepreise April 2026
-    const GAS_CT    = 10.5;      // ct/kWh
-    const STROM_CT  = 27.0;      // ct/kWh
+    let GAS_CT    = 10.5;      // ct/kWh — wird aus daten/preise.json geladen
+    let STROM_CT  = 27.0;      // ct/kWh — wird aus daten/preise.json geladen
     const FW_CT     = 26.0;      // ct/kWh eff.
 
     function amortFarbe(j) {
@@ -661,7 +661,12 @@
       const effStrom = (STROM_CT / jaz).toFixed(1);
       document.getElementById('wp-eff-ct').textContent = effStrom + ' ct/kWh';
       const jazKarte = document.getElementById('jaz-karte');
-      if (jazKarte) jazKarte.textContent = jaz.toFixed(1);
+      if (jazKarte) jazKarte.textContent = jaz.toFixed(1).replace('.',',');
+      set('wp-strom-display', STROM_CT.toFixed(0));
+
+      const gasCt = GAS_CT.toFixed(1).replace('.',',');
+      set('gas-preis-display', gasCt);
+      set('gas-eff-display', gasCt);
 
       // ── WP ──────────────────────────────────────────────
       const wpFoerdBetrag = Math.round(wpInvest * wpFoerd / 100);
@@ -869,15 +874,37 @@
       }
     }
 
-    // Initialisierung beim Laden
-    document.addEventListener("DOMContentLoaded", function() {
-      calcInvest();
-      updateRechner(10);
-    });
-    if (document.readyState !== "loading") {
-      calcInvest();
-      updateRechner(10);
+    function updateSliderGrad(el) {
+      const pct = ((el.value - el.min) / (el.max - el.min) * 100).toFixed(1);
+      el.style.setProperty('--pct', pct + '%');
     }
+
+    function initPage() {
+      calcInvest();
+      updateRechner(document.getElementById('obj-slider').value);
+      updateSliderGrad(document.getElementById('inp-fw-sommer'));
+      updateSliderGrad(document.getElementById('inp-jaz'));
+    }
+
+    // Sofort mit Standardwerten initialisieren
+    initPage();
+
+    // Preise aus zentraler Datenbank nachladen und neu berechnen
+    fetch('../daten/preise.json')
+      .then(r => r.json())
+      .then(p => {
+        STROM_CT = p.strom_ct;
+        GAS_CT   = p.gas_ct;
+        set('preis-stand', p.stand);
+        set('bar-strom', p.strom_ct.toFixed(1).replace('.',',') + ' ct/kWh');
+        set('preisbar-gas',   p.gas_ct.toFixed(1).replace('.',',') + ' ct/kWh');
+        const apEl = document.getElementById('inp-fw-ap');
+        if (apEl) apEl.value = p.fw_ap_ct;
+        const lpEl = document.getElementById('inp-fw-lp');
+        if (lpEl) lpEl.value = p.fw_lp;
+        initPage();
+      })
+      .catch(() => {}); // Fallback: Standardwerte bleiben
   </script>
 </body>
 </html>
