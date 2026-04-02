@@ -3,234 +3,236 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Wegweiser — Wer spricht in der Wärmewende Erfurt, wer erzeugt Resonanz, was ist für Eigentümer wirklich relevant. Offizielle Quellen, eingeordnet aus Eigentümerperspektive.">
+  <meta name="description" content="Wegweiser — Wer spricht in der Wärmewende Erfurt, wer erzeugt Resonanz, was ist für Eigentümer wirklich relevant.">
   <title>Wegweiser — hausentscheider</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
     html { font-size:16px; scroll-behavior:smooth; }
     :root {
-      --petrol:        #1a5c5a;
-      --petrol-dark:   #1a3535;
-      --petrol-light:  #7ab8b5;
-      --petrol-bright: #4db8a8;   /* petrol for dark backgrounds */
-      --signal:        #CFF77F;
-      --white:         #ffffff;
-      --off-white:     #f5f4f2;
-      --border:        #e0dedd;
-      --text-main:     #1a1a1a;
-      --text-sub:      #5a5956;
-      --text-muted:    #8a8680;
-      --max-w:         860px;
-      --radius:        6px;
-      /* seismograph */
-      --feld-bg:       #0b1717;
-      --actor-col:     rgba(180,175,168,0.55);
+      --petrol:       #1D9E75;
+      --petrol-dark:  #0d5c42;
+      --petrol-mid:   #4db8a8;
+      --white:        #ffffff;
+      --off-white:    #f5f4f0;
+      --border:       #d8d6ce;
+      --text-main:    #1a1a1a;
+      --text-sub:     #5a5956;
+      --text-muted:   #888780;
+      --max-w:        860px;
+      --radius:       6px;
     }
     body { font-family:'Inter',-apple-system,sans-serif; color:var(--text-main); background:var(--white); }
     a { color:var(--petrol); text-decoration:none; }
     a:hover { text-decoration:underline; }
 
-    /* ── NAV ─────────────────────────────────────────────── */
+    /* ── NAV ─────────────────────────────────────────── */
     .nav { position:sticky; top:0; z-index:100; background:rgba(255,255,255,0.96); backdrop-filter:blur(8px); border-bottom:0.5px solid var(--border); }
     .nav__inner { max-width:var(--max-w); margin:0 auto; padding:0 2rem; height:52px; display:flex; align-items:center; justify-content:space-between; }
     .nav__back { font-size:13px; color:var(--text-muted); }
     .nav__back:hover { color:var(--petrol); text-decoration:none; }
     .nav__links { display:flex; gap:2rem; list-style:none; }
     .nav__links a { font-size:13px; color:var(--text-sub); }
-    .nav__links a:hover { color:var(--petrol); text-decoration:none; }
-    .nav__links a.active { color:var(--petrol); font-weight:500; }
+    .nav__links a:hover,
+    .nav__links a.active { color:var(--petrol); text-decoration:none; font-weight:500; }
 
-    /* ── FELD (SEISMOGRAPH HERO) ─────────────────────────── */
-    .feld {
-      position:relative;
-      min-height:100svh;
-      background:var(--feld-bg);
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      overflow:hidden;
+    /* ── ZONE 1: STIMMFELD ───────────────────────────── */
+    .stimmfeld {
+      background: #0d1a14;
+      position: relative;
+      overflow: hidden;
     }
-    .feld__eyebrow {
-      position:absolute; top:2rem; left:2rem;
-      font-size:10px; letter-spacing:2.5px; text-transform:uppercase;
-      color:var(--petrol-light); opacity:0.6;
+    .stimmfeld__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 2rem 1.5rem 1.5rem;
     }
-    .feld__svg-wrap { width:100%; padding:0 1.5rem; }
-    .feld__svg { width:100%; height:auto; display:block; }
+    .stimmfeld__label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: rgba(255,255,255,0.55);
+      display: block;
+      margin-bottom: 1.25rem;
+      font-family: 'Inter', sans-serif;
+    }
+    .stimmfeld__svg-wrap { width: 100%; }
 
-    /* Reveal overlay */
-    .feld__reveal {
-      position:absolute; bottom:16%; left:0; right:0;
-      display:flex; flex-direction:column; align-items:center; gap:0.5rem;
-      text-align:center;
-      opacity:0; transition:opacity 1.4s ease;
-      pointer-events:none;
+    /* Scroll cue */
+    .stimmfeld__scroll {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 1.25rem 0 1.5rem;
+      text-decoration: none;
+      cursor: pointer;
     }
-    .feld__reveal.visible { opacity:1; }
-    .feld__reveal-row {
-      display:flex; align-items:center; gap:1rem;
+    .stimmfeld__scroll span {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.22);
     }
-    .feld__dash {
-      width:38px; height:2px;
-      background:repeating-linear-gradient(90deg, var(--petrol-bright) 0, var(--petrol-bright) 7px, transparent 7px, transparent 12px);
-    }
-    .feld__reveal-main {
-      font-size:13px; font-weight:500; letter-spacing:0.3px;
-      color:var(--petrol-bright);
-    }
-    .feld__reveal-sub {
-      font-family:'Playfair Display',Georgia,serif;
-      font-size:15px; font-style:italic;
-      color:rgba(255,255,255,0.45);
-    }
-
-    /* Mobile legend (actor names below SVG on small screens) */
-    .feld__legend {
-      display:none;
-      padding:1rem 1.5rem 0;
-      gap:0.5rem 1.25rem;
-      flex-wrap:wrap;
-    }
-    .feld__legend-item { font-size:11px; color:var(--actor-col); display:flex; align-items:center; gap:5px; }
-    .feld__legend-item--eigent { color:var(--petrol-bright); font-weight:500; }
-    .feld__legend-dot { width:18px; height:2px; background:var(--actor-col); border-radius:1px; }
-    .feld__legend-dot--eigent { background:var(--petrol-bright); background:repeating-linear-gradient(90deg,var(--petrol-bright) 0,var(--petrol-bright) 5px,transparent 5px,transparent 9px); }
-
-    /* Scroll arrow */
-    .feld__scroll {
-      position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
-      display:flex; flex-direction:column; align-items:center; gap:6px;
-      text-decoration:none;
-      opacity:0; transition:opacity 0.8s ease;
-    }
-    .feld__scroll.visible { opacity:1; }
-    .feld__scroll span { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.25); }
-    .feld__arrow {
-      width:18px; height:18px;
-      border-right:1.5px solid rgba(255,255,255,0.25);
-      border-bottom:1.5px solid rgba(255,255,255,0.25);
-      transform:rotate(45deg);
-      animation:arrowBounce 2.2s ease infinite;
+    .stimmfeld__scroll-arrow {
+      width: 16px; height: 16px;
+      border-right: 1px solid rgba(255,255,255,0.22);
+      border-bottom: 1px solid rgba(255,255,255,0.22);
+      transform: rotate(45deg);
+      animation: arrowBounce 2.4s ease-in-out infinite;
     }
     @keyframes arrowBounce {
-      0%,100% { transform:rotate(45deg) translate(0,0); opacity:0.25; }
-      50%      { transform:rotate(45deg) translate(3px,3px); opacity:0.65; }
+      0%,100% { transform:rotate(45deg) translate(0,0); opacity:0.22; }
+      50%      { transform:rotate(45deg) translate(3px,3px); opacity:0.55; }
     }
 
-    /* ── STIMMENFELD ──────────────────────────────────────── */
-    .stimmen { background:var(--off-white); padding:4rem 0; border-bottom:0.5px solid var(--border); }
-    .stimmen__inner { max-width:var(--max-w); margin:0 auto; padding:0 2rem; }
-    .section-label { font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--petrol); display:block; margin-bottom:0.625rem; }
-    .section-h2 { font-family:'Playfair Display',Georgia,serif; font-size:24px; font-weight:400; color:var(--text-main); line-height:1.3; margin-bottom:0.625rem; }
-    .section-sub { font-size:14px; color:var(--text-sub); line-height:1.75; max-width:580px; margin-bottom:2.25rem; }
-
-    .akteure { display:flex; flex-direction:column; }
-    .akteur {
-      display:grid; grid-template-columns:140px 1fr 130px;
-      gap:1rem; align-items:center;
-      padding:0.7rem 0; border-bottom:0.5px solid rgba(0,0,0,0.06);
-    }
-    .akteur:last-child { border-bottom:none; }
-    .akteur__name { font-size:13px; color:var(--text-sub); }
-    .akteur--eigent .akteur__name { color:var(--petrol); font-weight:500; }
-    .akteur__bar-bg { height:5px; background:rgba(0,0,0,0.07); border-radius:3px; overflow:hidden; }
-    .akteur__bar { height:100%; background:var(--text-muted); border-radius:3px; opacity:0.45; }
-    .akteur--eigent .akteur__bar { background:var(--petrol); opacity:1; }
-    .akteur__res { font-size:11px; color:var(--text-muted); text-align:right; display:flex; align-items:center; justify-content:flex-end; gap:5px; }
-    .akteur__resdot { width:6px; height:6px; border-radius:50%; background:var(--text-muted); opacity:0.3; flex-shrink:0; }
-    .akteur--eigent .akteur__res { color:var(--petrol); font-weight:500; }
-    .akteur--eigent .akteur__resdot { background:var(--petrol); opacity:1; }
-
-    .konzepte { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-top:2.25rem; }
-    .konzept {
-      background:var(--white); border-radius:var(--radius);
-      padding:1.25rem 1.5rem; border:0.5px solid var(--border);
-    }
-    .konzept--res { border-top:2px solid var(--petrol); }
-    .konzept--vak { border-top:2px solid var(--border); }
-    .konzept__icon { font-size:20px; margin-bottom:0.5rem; line-height:1; }
-    .konzept__titel { font-size:13px; font-weight:500; color:var(--text-main); margin-bottom:0.375rem; }
-    .konzept__text { font-size:13px; color:var(--text-sub); line-height:1.65; }
-
-    /* ── FEED ─────────────────────────────────────────────── */
-    .feed { max-width:var(--max-w); margin:0 auto; padding:3.5rem 2rem 3rem; }
-
-    /* Link-Karte */
-    .karte {
-      border:0.5px solid var(--border); border-radius:var(--radius);
-      padding:1.25rem 1.5rem; margin-bottom:0.875rem;
-      transition:border-color 0.2s, box-shadow 0.2s;
-    }
-    .karte:hover { border-color:rgba(26,92,90,0.3); box-shadow:0 2px 14px rgba(26,92,90,0.07); }
-    .karte__meta { display:flex; align-items:center; gap:0.75rem; margin-bottom:0.375rem; }
-    .karte__stimme { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-muted); }
-    .karte__datum { font-size:11px; color:var(--text-muted); }
-    .karte__titel { font-size:15px; font-weight:500; color:var(--text-main); line-height:1.4; margin-bottom:0.875rem; }
-    .karte__einordnung {
-      font-size:13px; color:var(--text-sub); line-height:1.72;
-      margin-bottom:1rem;
-      padding-left:0.875rem;
-      border-left:2px solid var(--petrol);
-    }
-    .karte__einordnung::before {
-      content:'Einordnung';
-      display:block; font-size:9.5px; letter-spacing:1.5px; text-transform:uppercase;
-      color:var(--petrol); margin-bottom:0.3rem; font-style:normal;
-    }
-    .karte__action { font-size:13px; color:var(--petrol); font-weight:500; display:inline-flex; align-items:center; gap:4px; }
-    .karte__action:hover { text-decoration:underline; }
-    .karte__action--doc { background:rgba(26,92,90,0.07); padding:3px 10px; border-radius:3px; border:0.5px solid rgba(26,92,90,0.2); }
-    .karte__action--doc:hover { background:rgba(26,92,90,0.13); text-decoration:none; }
-
-    /* Impuls-Karte */
-    .impuls {
-      background:var(--petrol-dark); border-radius:var(--radius);
-      padding:1.5rem 1.75rem; margin-bottom:0.875rem;
-    }
-    .impuls__zitat {
-      font-family:'Playfair Display',Georgia,serif;
-      font-size:17px; font-weight:400; font-style:italic;
-      color:rgba(255,255,255,0.9); line-height:1.6;
-    }
-    .impuls__attr {
-      margin-top:0.75rem; font-size:11px; letter-spacing:1px; text-transform:uppercase;
-      color:var(--petrol-light);
+    /* Puls icon animation */
+    #pulsIcon { animation: pulsFloat 3s ease-in-out infinite; }
+    @keyframes pulsFloat {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
     }
 
-    /* ── QUELLEN / LINK-BODEN ─────────────────────────────── */
-    .quellen { background:var(--off-white); border-top:0.5px solid var(--border); padding:3.5rem 0 4rem; }
+    /* Blink dot */
+    #blinkDot { animation: blinkGlow 1.8s ease-in-out infinite; }
+    @keyframes blinkGlow {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0.1; }
+    }
+
+    /* ── ZONE 2: FRAGEN & STIMMEN ────────────────────── */
+    .fragen { background:var(--off-white); border-top:0.5px solid var(--border); padding:3.5rem 0 4rem; }
+    .fragen__inner { max-width:var(--max-w); margin:0 auto; padding:0 2rem; }
+
+    .mission { margin-bottom:2rem; }
+    .mission h2 { font-family:'Playfair Display',Georgia,serif; font-size:22px; font-weight:400; color:var(--text-main); line-height:1.35; margin-bottom:0.625rem; }
+    .mission p { font-size:14px; color:var(--text-sub); line-height:1.75; max-width:580px; }
+
+    .legende { display:flex; gap:1.5rem; flex-wrap:wrap; margin-bottom:2rem; }
+    .legende__item { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-muted); }
+    .legende__dot { width:8px; height:8px; border-radius:50%; background:var(--text-muted); flex-shrink:0; }
+    .legende__dot--he { background:var(--petrol); }
+
+    /* Accordion */
+    .frage-item { background:var(--white); border:0.5px solid var(--border); border-radius:var(--radius); margin-bottom:0.625rem; overflow:hidden; }
+    .frage-item__btn {
+      width:100%; text-align:left; background:none; border:none; cursor:pointer;
+      padding:1rem 1.25rem; display:flex; align-items:center; justify-content:space-between; gap:1rem;
+      font-family:'Inter',-apple-system,sans-serif;
+    }
+    .frage-item__btn:hover { background:rgba(0,0,0,0.02); }
+    .frage-item__btn:focus-visible { outline:2px solid var(--petrol); outline-offset:-2px; }
+    .frage-item__left { display:flex; align-items:center; gap:0.875rem; min-width:0; }
+    .frage-item__dots { display:flex; gap:3px; flex-shrink:0; }
+    .frage-item__dot { width:7px; height:7px; border-radius:50%; background:var(--border); }
+    .frage-item__dot--he { background:var(--petrol); }
+    .frage-item__dot--extern { background:var(--text-muted); }
+    .frage-item__text { font-size:14px; font-weight:500; color:var(--text-main); line-height:1.4; }
+    .frage-item__count { font-size:11px; color:var(--text-muted); flex-shrink:0; }
+    .frage-item__chevron { width:16px; height:16px; flex-shrink:0; color:var(--text-muted); transition:transform 0.2s; }
+    .frage-item--open .frage-item__chevron { transform:rotate(180deg); }
+
+    /* Cards horizontal scroll */
+    .frage-item__body { display:none; padding:0 1.25rem 1.25rem; position:relative; }
+    .frage-item--open .frage-item__body { display:block; }
+    .frage-item__scroll {
+      display:flex; gap:0.75rem; overflow-x:auto; padding-bottom:4px;
+      -webkit-overflow-scrolling:touch; scroll-snap-type:x mandatory;
+    }
+    .frage-item__scroll:focus { outline:2px solid var(--petrol); }
+    /* Fade-out rechts als Hinweis */
+    .frage-item__scroll-wrap { position:relative; }
+    .frage-item__scroll-wrap::after {
+      content:''; position:absolute; top:0; right:0; bottom:4px; width:48px;
+      background:linear-gradient(to right, transparent, var(--white));
+      pointer-events:none;
+    }
+
+    /* Stimmen-Cards */
+    .stimme-card {
+      flex:0 0 220px; border-radius:var(--radius); padding:1rem;
+      border:0.5px solid var(--border); background:var(--white);
+      scroll-snap-align:start; display:flex; flex-direction:column; gap:0.625rem;
+    }
+    .stimme-card__name { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-muted); }
+    .stimme-card__aussage { font-size:13px; color:var(--text-main); line-height:1.6; flex:1; }
+    .stimme-card__einordnung {
+      font-size:12px; color:var(--text-sub); line-height:1.6;
+      border-left:2px solid var(--petrol); padding-left:0.625rem;
+    }
+    .stimme-card__link { font-size:12px; color:var(--petrol); font-weight:500; margin-top:auto; }
+    .stimme-card__link:hover { text-decoration:underline; }
+
+    /* Card: hausentscheider */
+    .stimme-card--he {
+      background:#E1F5EE; border-color:var(--petrol);
+    }
+    .stimme-card--he .stimme-card__name { color:var(--petrol); }
+
+    /* Card: silent */
+    .stimme-card--silent {
+      background:rgba(0,0,0,0.03);
+    }
+    .stimme-card--silent .stimme-card__aussage {
+      font-style:italic; color:var(--text-muted); font-size:12px;
+    }
+
+    /* ── ZONE 3: QUELLEN ─────────────────────────────── */
+    .quellen { background:var(--white); border-top:0.5px solid var(--border); padding:3.5rem 0 4rem; }
     .quellen__inner { max-width:var(--max-w); margin:0 auto; padding:0 2rem; }
-    .quellen-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:0.25rem; }
+    .section-label { font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--petrol); display:block; margin-bottom:0.5rem; }
+    .section-h2 { font-family:'Playfair Display',Georgia,serif; font-size:23px; font-weight:400; color:var(--text-main); margin-bottom:0.5rem; }
+    .section-sub { font-size:14px; color:var(--text-sub); margin-bottom:2rem; }
+
+    .quellen-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
     .quellen-gruppe__titel { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.875rem; padding-bottom:0.5rem; border-bottom:0.5px solid var(--border); }
     .quellen-liste { list-style:none; }
-    .quellen-item { display:flex; gap:0.625rem; padding:0.55rem 0; border-bottom:0.5px solid rgba(0,0,0,0.04); align-items:baseline; }
+    .quellen-item { display:flex; gap:0.625rem; padding:0.5rem 0; border-bottom:0.5px solid rgba(0,0,0,0.04); align-items:baseline; }
     .quellen-item:last-child { border-bottom:none; }
     .quellen-item__dot { width:5px; height:5px; border-radius:50%; background:var(--petrol); flex-shrink:0; margin-top:5px; }
-    .quellen-item__body { min-width:0; }
-    .quellen-item__body a { font-size:14px; color:var(--text-main); font-weight:400; }
-    .quellen-item__body a:hover { color:var(--petrol); text-decoration:none; }
+    .quellen-item a { font-size:14px; color:var(--text-main); }
+    .quellen-item a:hover { color:var(--petrol); text-decoration:none; }
     .quellen-item__note { font-size:11px; color:var(--text-muted); margin-top:1px; }
 
-    /* ── FOOTER ───────────────────────────────────────────── */
-    .footer { border-top:0.5px solid var(--border); padding:1.5rem 0; background:var(--white); }
+    /* WhatsApp CTA */
+    .wa-cta {
+      margin-top: 2.5rem;
+      background: var(--petrol);
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .wa-cta__text h3 { font-family:'Playfair Display',Georgia,serif; font-size:18px; font-weight:400; color:#fff; margin-bottom:0.25rem; }
+    .wa-cta__text p { font-size:13px; color:rgba(255,255,255,0.75); }
+    .wa-cta__btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #fff; color: var(--petrol);
+      font-size: 13px; font-weight: 600;
+      padding: 0.6rem 1.25rem;
+      border-radius: 4px;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .wa-cta__btn:hover { background:rgba(255,255,255,0.9); text-decoration:none; }
+
+    /* ── FOOTER ──────────────────────────────────────── */
+    .footer { border-top:0.5px solid var(--border); padding:1.5rem 0; }
     .footer__inner { max-width:var(--max-w); margin:0 auto; padding:0 2rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; font-size:12px; color:var(--text-muted); }
     .footer__inner a { color:var(--text-muted); }
     .footer__inner a:hover { color:var(--petrol); }
 
-    /* ── RESPONSIVE ───────────────────────────────────────── */
+    /* ── RESPONSIVE ──────────────────────────────────── */
     @media (max-width:640px) {
-      .feld__legend { display:flex; }
-      .feld__reveal { bottom:22%; }
-      .akteur { grid-template-columns:110px 1fr; }
-      .akteur__res { display:none; }
-      .konzepte { grid-template-columns:1fr; }
-      .quellen-grid { grid-template-columns:1fr; gap:1.5rem; }
       .nav__links { display:none; }
-      .impuls__zitat { font-size:15px; }
-      .section-h2 { font-size:21px; }
+      .quellen-grid { grid-template-columns:1fr; gap:1.5rem; }
+      .wa-cta { flex-direction:column; }
     }
   </style>
 </head>
@@ -244,7 +246,7 @@
       <svg width="148" height="22" viewBox="0 0 148 22" xmlns="http://www.w3.org/2000/svg">
         <text x="0" y="17" font-family="Georgia,serif" font-size="17" fill="#1a1a1a">haus</text>
         <text x="46" y="17" font-family="Georgia,serif" font-size="17" fill="#1a1a1a">entscheider</text>
-        <line x1="0" y1="20" x2="43" y2="20" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+        <line x1="0" y1="20" x2="43" y2="20" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="square"/>
       </svg>
     </a>
     <ul class="nav__links">
@@ -256,145 +258,232 @@
   </div>
 </header>
 
-<!-- ═══════════════════════════════════════════════════════
-     AKT 1 — SEISMOGRAPH
-     ═══════════════════════════════════════════════════════ -->
-<section class="feld" id="feld">
+<!-- ═══════════════════════════════════════════════════
+     ZONE 1 — STIMMFELD
+     ═══════════════════════════════════════════════════ -->
+<section class="stimmfeld">
+  <div class="stimmfeld__inner">
+    <span class="stimmfeld__label">Stimmenfeld · Erfurt 2026</span>
 
-  <div class="feld__eyebrow">Stimmenfeld · Erfurt 2026</div>
+    <div class="stimmfeld__svg-wrap">
+      <!--
+        viewBox 0 0 820 330  (120px Label-Bereich links + 700px Linien-Bereich)
+        Alle Linien-Pfade via <g transform="translate(120,0)"> nach rechts versetzt
+        Labels: x=5, y=lineCenter+4, in Linienfarbe
+        Crossings SW×Stadt: Zone A x≈85+120, Zone B x≈322+120, Zone C x≈552+120
+        Puls-icon + Blink-dot innerhalb der translate-Gruppe
+        Bottom text: x=470 (Mitte des Linien-Bereichs: 120+700/2)
+      -->
+      <svg viewBox="0 0 820 330" width="100%" preserveAspectRatio="xMidYMid meet"
+           xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 
-  <!-- SVG canvas — paths injected by JS -->
-  <div class="feld__svg-wrap">
-    <svg id="seismo" class="feld__svg" viewBox="0 0 900 370"
-         preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-    </svg>
+        <!-- LABELS LINKER RAND -->
+        <text x="5" y="50" font-size="9" font-family="Inter, -apple-system, sans-serif"
+              fill="rgba(255,255,255,0.38)" letter-spacing="0.3">Stadtwerke SWE</text>
+        <text x="5" y="91" font-size="9" font-family="Inter, -apple-system, sans-serif"
+              fill="rgba(255,255,255,0.22)" letter-spacing="0.3">Stadt Erfurt (EF)</text>
+        <text x="5" y="136" font-size="9" font-family="Inter, -apple-system, sans-serif"
+              fill="rgba(255,255,255,0.13)" letter-spacing="0.3">Medien</text>
+        <text x="5" y="176" font-size="9" font-family="Inter, -apple-system, sans-serif"
+              fill="rgba(255,255,255,0.11)" letter-spacing="0.3">Lokale Wirtschaft</text>
+        <text x="5" y="216" font-size="9" font-family="Inter, -apple-system, sans-serif"
+              fill="rgba(93,202,165,0.38)" letter-spacing="0.3">Forschung</text>
+        <text x="5" y="256" font-size="9" font-family="Inter, -apple-system, sans-serif"
+              fill="#1D9E75" letter-spacing="0.3" font-weight="500">Eigentümer</text>
+
+        <!-- ALLE LINIEN — um 120px nach rechts verschoben -->
+        <g transform="translate(120,0)">
+
+          <!-- STADTWERKE — rgba(255,255,255,0.38), 1.8px, 10 spikes -->
+          <path
+            d="M 0 46 L 22 46
+               L 24 28 L 28 60 L 32 46
+               L 52 46
+               L 55 15 L 59 65 L 63 46
+               L 80 46
+               L 82 25 L 86 95 L 90 46
+               L 132 46
+               L 135 10 L 140 72 L 144 46
+               L 220 46
+               L 223 20 L 227 58 L 231 46
+               L 315 46
+               L 318 12 L 322 98 L 326 46
+               L 395 46
+               L 398 18 L 403 58 L 407 46
+               L 478 46
+               L 481 22 L 485 46
+               L 545 46
+               L 548 18 L 552 100 L 556 46
+               L 618 46
+               L 621 34 L 625 46
+               L 700 46"
+            fill="none" stroke="rgba(255,255,255,0.38)" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- STADT ERFURT — rgba(255,255,255,0.22), 1.5px, 10 spikes, first spike later -->
+          <path
+            d="M 0 87 L 45 87
+               L 48 108 L 52 87
+               L 72 87
+               L 75 40 L 79 102 L 83 87
+               L 120 87
+               L 123 68 L 127 87
+               L 185 87
+               L 188 95 L 192 87
+               L 245 87
+               L 248 72 L 252 87
+               L 318 87
+               L 321 38 L 325 104 L 329 87
+               L 378 87
+               L 381 75 L 385 87
+               L 455 87
+               L 458 98 L 462 87
+               L 548 87
+               L 551 36 L 555 106 L 559 87
+               L 610 87
+               L 613 80 L 617 87
+               L 700 87"
+            fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- MEDIEN — rgba(255,255,255,0.13), 1.2px, 4 spikes -->
+          <path
+            d="M 0 132 L 78 132
+               L 81 110 L 86 148 L 90 132
+               L 228 132
+               L 231 114 L 236 142 L 240 132
+               L 395 132
+               L 398 106 L 403 150 L 407 132
+               L 555 132
+               L 558 118 L 562 132
+               L 700 132"
+            fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1.2"
+            stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- LOKALE WIRTSCHAFT — rgba(255,255,255,0.11), 1.1px, 3 spikes -->
+          <path
+            d="M 0 172 L 112 172
+               L 115 156 L 119 182 L 123 172
+               L 335 172
+               L 338 160 L 342 172
+               L 560 172
+               L 563 154 L 568 185 L 572 172
+               L 700 172"
+            fill="none" stroke="rgba(255,255,255,0.11)" stroke-width="1.1"
+            stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- FORSCHUNG — rgba(93,202,165,0.38), 1.1px, 2 winzige Ausschläge -->
+          <path
+            d="M 0 212 L 188 212
+               L 191 204 L 195 216 L 199 212
+               L 462 212
+               L 465 206 L 469 212
+               L 700 212"
+            fill="none" stroke="rgba(93,202,165,0.38)" stroke-width="1.1"
+            stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- EIGENTÜMER — #1D9E75, 1.8px, dasharray 6 4, 2 kleine Pulse -->
+          <path
+            d="M 0 252 L 168 252
+               L 171 244 L 175 256 L 179 252
+               L 428 252
+               L 431 245 L 435 252
+               L 695 252"
+            fill="none" stroke="#1D9E75" stroke-width="1.8"
+            stroke-dasharray="6 4" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- PULS-ICON — schwebt über Eigentümer-Linie, animiert -->
+          <g id="pulsIcon">
+            <path
+              d="M 322 240 L 335 240 L 339 232 L 345 220 L 351 232 L 355 240 L 368 240"
+              fill="none" stroke="#1D9E75" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+
+          <!-- BLINK DOT — rechtes Ende Eigentümer-Linie -->
+          <circle id="blinkDot" cx="698" cy="252" r="2.5" fill="#1D9E75"/>
+
+        </g><!-- /translate(120,0) -->
+
+        <!-- BESCHRIFTUNG UNTEN — zentriert im Linien-Bereich (x=120…820, Mitte=470) -->
+        <text x="470" y="275"
+              text-anchor="middle" fill="#9FE1CB"
+              font-size="11" font-family="Inter, -apple-system, sans-serif"
+              letter-spacing="0.3">— Das ist Ihre Stimme. —</text>
+
+        <text x="470" y="290"
+              text-anchor="middle" fill="#5DCAA5"
+              font-size="10" font-family="Inter, -apple-system, sans-serif"
+              font-style="italic">Sie muss lauter werden.</text>
+
+      </svg>
+    </div><!-- /svg-wrap -->
+
+    <a href="#fragen" class="stimmfeld__scroll">
+      <span>Fragen &amp; Stimmen</span>
+      <div class="stimmfeld__scroll-arrow"></div>
+    </a>
   </div>
-
-  <!-- Mobile legend (SVG labels too small at 375px) -->
-  <div class="feld__legend" id="feldLegend">
-    <div class="feld__legend-item"><div class="feld__legend-dot"></div>Stadtwerke</div>
-    <div class="feld__legend-item"><div class="feld__legend-dot"></div>Stadt</div>
-    <div class="feld__legend-item"><div class="feld__legend-dot"></div>Handwerk</div>
-    <div class="feld__legend-item"><div class="feld__legend-dot"></div>Forschung</div>
-    <div class="feld__legend-item feld__legend-item--eigent">
-      <div class="feld__legend-dot feld__legend-dot--eigent"></div>Eigentümer
-    </div>
-  </div>
-
-  <!-- Reveal text -->
-  <div class="feld__reveal" id="feldReveal">
-    <div class="feld__reveal-row">
-      <div class="feld__dash"></div>
-      <span class="feld__reveal-main">Das ist Ihre Stimme.</span>
-      <div class="feld__dash"></div>
-    </div>
-    <div class="feld__reveal-sub">Fast keine. Das gesamte finanzielle Risiko.</div>
-  </div>
-
-  <!-- Scroll cue -->
-  <a href="#stimmen" class="feld__scroll" id="feldScroll">
-    <span>Mehr erfahren</span>
-    <div class="feld__arrow"></div>
-  </a>
-
 </section>
 
-<!-- ═══════════════════════════════════════════════════════
-     AKT 2 — STIMMENFELD
-     ═══════════════════════════════════════════════════════ -->
-<section class="stimmen" id="stimmen">
-  <div class="stimmen__inner">
-    <span class="section-label">Das Stimmenfeld</span>
-    <h2 class="section-h2">Lautstärke ist nicht Wirkung.</h2>
-    <p class="section-sub">
-      Viele Akteure sprechen über die Wärmewende — mit unterschiedlichen Interessen und
-      versteckten Verbindungen. Die lautesten Stimmen erzeugen beim Eigentümer oft vor allem
-      Verunsicherung. Resonanz entsteht, wenn eine Aussage die echte Entscheidungssituation trifft.
-    </p>
+<!-- ═══════════════════════════════════════════════════
+     ZONE 2 — FRAGEN & STIMMEN
+     ═══════════════════════════════════════════════════ -->
+<section class="fragen" id="fragen">
+  <div class="fragen__inner">
 
-    <div class="akteure">
-      <div class="akteur">
-        <span class="akteur__name">Stadtwerke (SWE)</span>
-        <div class="akteur__bar-bg"><div class="akteur__bar" style="width:88%"></div></div>
-        <div class="akteur__res"><div class="akteur__resdot"></div>niedrige Resonanz</div>
+    <div class="mission">
+      <span class="section-label">Fragen &amp; Stimmen</span>
+      <h2>Wer spricht über die Wärmewende — und wer wird nicht gehört?</h2>
+      <p>Viele Stimmen prägen die Debatte. Oben stehen die Fragen mit den meisten Stimmen — unten wird sichtbar, wo Antworten fehlen. Bleiben Sie am Puls. Werden Sie lauter. Kommen Sie mit an den Entscheidungstisch.</p>
+    </div>
+
+    <div class="legende">
+      <div class="legende__item">
+        <div class="legende__dot legende__dot--he"></div>
+        Stimme der Eigentümer
       </div>
-      <div class="akteur">
-        <span class="akteur__name">Stadt Erfurt</span>
-        <div class="akteur__bar-bg"><div class="akteur__bar" style="width:58%"></div></div>
-        <div class="akteur__res"><div class="akteur__resdot"></div>niedrige Resonanz</div>
-      </div>
-      <div class="akteur">
-        <span class="akteur__name">Handwerk &amp; Medien</span>
-        <div class="akteur__bar-bg"><div class="akteur__bar" style="width:72%"></div></div>
-        <div class="akteur__res"><div class="akteur__resdot" style="opacity:0.55"></div>mittlere Resonanz</div>
-      </div>
-      <div class="akteur">
-        <span class="akteur__name">Forschung</span>
-        <div class="akteur__bar-bg"><div class="akteur__bar" style="width:26%"></div></div>
-        <div class="akteur__res"><div class="akteur__resdot" style="opacity:0.65"></div>hohe Resonanz</div>
-      </div>
-      <div class="akteur akteur--eigent">
-        <span class="akteur__name">Eigentümer</span>
-        <div class="akteur__bar-bg"><div class="akteur__bar" style="width:5%"></div></div>
-        <div class="akteur__res"><div class="akteur__resdot"></div>maximale Resonanz</div>
+      <div class="legende__item">
+        <div class="legende__dot"></div>
+        Externe Stimme
       </div>
     </div>
 
-    <div class="konzepte">
-      <div class="konzept konzept--res">
-        <div class="konzept__icon">🧲</div>
-        <div class="konzept__titel">Resonanz</div>
-        <div class="konzept__text">Wenn eine Aussage die echte Entscheidungssituation des Eigentümers trifft. Konkrete Zahlen, Fristen, unabhängige Einschätzungen, echte Gespräche.</div>
-      </div>
-      <div class="konzept konzept--vak">
-        <div class="konzept__icon">○</div>
-        <div class="konzept__titel">Vakuum</div>
-        <div class="konzept__text">Gut gemeint — aber am Eigentümer vorbei. Strategische Ziele für 2045. Allgemeine Klimakommunikation ohne lokalen Bezug und ohne konkreten Handlungsbedarf.</div>
-      </div>
-    </div>
+    <div id="fragenListe"></div>
+
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════
-     AKT 2 — FEED
-     ═══════════════════════════════════════════════════════ -->
-<main class="feed" id="feed">
-  <span class="section-label">Einordnung &amp; Impulse</span>
-  <h2 class="section-h2" style="margin-bottom:1.75rem;">Was gesagt wird — und was das bedeutet.</h2>
-  <div id="feedCards"></div>
-</main>
-
-<!-- ═══════════════════════════════════════════════════════
-     AKT 3 — LINK-BODEN
-     ═══════════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════
+     ZONE 3 — QUELLEN & LINKS
+     ═══════════════════════════════════════════════════ -->
 <section class="quellen" id="quellen">
   <div class="quellen__inner">
     <span class="section-label">Quellen &amp; Links</span>
     <h2 class="section-h2">Der Boden des Wegweisers.</h2>
-    <p class="section-sub" style="margin-bottom:2rem;">Direkte Links zu allen relevanten Quellen — immer auffindbar, laufend ergänzt.</p>
+    <p class="section-sub">Direkte Links zu allen relevanten Quellen — laufend ergänzt.</p>
 
     <div class="quellen-grid">
-
       <div>
         <div class="quellen-gruppe__titel">Kommunale Planung</div>
         <ul class="quellen-liste">
           <li class="quellen-item">
             <div class="quellen-item__dot"></div>
-            <div class="quellen-item__body">
+            <div>
               <a href="https://www.erfurt.de/ef/de/leben/oekoumwelt/kommunale_waermeplanung/index.html" target="_blank">Kommunale Wärmeplanung Erfurt</a>
               <div class="quellen-item__note">Stadt Erfurt · Pflichtvorlage bis Juni 2026</div>
             </div>
           </li>
           <li class="quellen-item">
             <div class="quellen-item__dot"></div>
-            <div class="quellen-item__body">
+            <div>
               <a href="dokumente/gastkommentar-waermewende-erfurt-2026.pdf" target="_blank">Eigentümer-Einschätzung Wärmewende</a>
               <div class="quellen-item__note">hausentscheider.de · 2026 · PDF</div>
             </div>
           </li>
           <li class="quellen-item">
             <div class="quellen-item__dot"></div>
-            <div class="quellen-item__body">
+            <div>
               <a href="dokumente/future-readiness-in-der-waermewende-executive-summary.pdf" target="_blank">Future Readiness Wärmewende</a>
               <div class="quellen-item__note">Executive Summary · PDF</div>
             </div>
@@ -407,21 +496,21 @@
         <ul class="quellen-liste">
           <li class="quellen-item">
             <div class="quellen-item__dot"></div>
-            <div class="quellen-item__body">
+            <div>
               <a href="https://www.stadtwerke-erfurt.de" target="_blank">Stadtwerke Erfurt — Fernwärme</a>
               <div class="quellen-item__note">Produkte, Preise, Mustervertrag</div>
             </div>
           </li>
           <li class="quellen-item">
             <div class="quellen-item__dot"></div>
-            <div class="quellen-item__body">
+            <div>
               <a href="https://mein-zuhause.teag.de" target="_blank">TEAG — Wärmelösungen Thüringen</a>
               <div class="quellen-item__note">Alternative zur SWE · Wärmepumpen, Sanierung</div>
             </div>
           </li>
           <li class="quellen-item">
             <div class="quellen-item__dot"></div>
-            <div class="quellen-item__body">
+            <div>
               <a href="dokumente/SWE_Energiejournal.pdf" target="_blank">SWE Energiejournal — Wärmewende</a>
               <div class="quellen-item__note">Sonderausgabe · Februar 2026 · PDF</div>
             </div>
@@ -434,14 +523,14 @@
         <ul class="quellen-liste">
           <li class="quellen-item">
             <div class="quellen-item__dot"></div>
-            <div class="quellen-item__body">
+            <div>
               <a href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/effiziente_gebaeude_node.html" target="_blank">BAFA — Bundesförderung BEG</a>
               <div class="quellen-item__note">bis 70% Förderung für WEG möglich</div>
             </div>
           </li>
           <li class="quellen-item">
             <div class="quellen-item__dot"></div>
-            <div class="quellen-item__body">
+            <div>
               <a href="https://www.kfw.de" target="_blank">KfW — Energieeffizient Sanieren</a>
               <div class="quellen-item__note">Kredite &amp; Zuschüsse</div>
             </div>
@@ -454,22 +543,37 @@
         <ul class="quellen-liste">
           <li class="quellen-item">
             <div class="quellen-item__dot"></div>
-            <div class="quellen-item__body">
+            <div>
               <a href="https://www.ise.fraunhofer.de" target="_blank">Fraunhofer ISE — Wärmepumpen im Bestand</a>
               <div class="quellen-item__note">Unabhängige Studie · JAZ 2,6–5,4</div>
             </div>
           </li>
           <li class="quellen-item">
             <div class="quellen-item__dot"></div>
-            <div class="quellen-item__body">
-              <a href="https://www.ise.fraunhofer.de/de/forschungsthemen/solarenergie/photovoltaik/solarrechner.html" target="_blank">Solarrechner Thüringen</a>
+            <div>
+              <a href="https://www.ise.fraunhofer.de" target="_blank">Solarrechner Thüringen</a>
               <div class="quellen-item__note">Einstrahlquote je Gebäude und Adresse</div>
             </div>
           </li>
         </ul>
       </div>
-
     </div>
+
+    <!-- WhatsApp CTA -->
+    <div class="wa-cta">
+      <div class="wa-cta__text">
+        <h3>Ihre Stimme fehlt noch — werden Sie lauter.</h3>
+        <p>Eigentümer in Erfurt, die gemeinsam informierter entscheiden.</p>
+      </div>
+      <a href="#" class="wa-cta__btn" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 1C4.134 1 1 4.134 1 8c0 1.26.326 2.443.895 3.47L1 15l3.617-.873A7 7 0 1 0 8 1z" fill="#1D9E75" stroke="#1D9E75" stroke-width="0.5"/>
+          <path d="M5.5 6c0-.276.224-.5.5-.5h.5c.276 0 .5.224.5.5l.25 1.5c0 .2-.1.388-.268.486L6.5 8.5s.5 1 2 1.5l.482-.468A.5.5 0 0 1 9.5 9.5l1.5.25c.276 0 .5.224.5.5v.5c0 .276-.224.5-.5.5C6.91 11.25 5.5 8.09 5.5 6z" fill="white"/>
+        </svg>
+        WhatsApp-Gruppe beitreten
+      </a>
+    </div>
+
   </div>
 </section>
 
@@ -481,218 +585,102 @@
   </div>
 </footer>
 
-<!-- ═══════════════════════════════════════════════════════
-     SCRIPTS
-     ═══════════════════════════════════════════════════════ -->
+
 <script>
 // ─────────────────────────────────────────────────────────
-// SEISMOGRAPH — Deterministic path generation + animation
+// ZONE 2 — Fragen & Stimmen aus daten/wegweiser.json
 // ─────────────────────────────────────────────────────────
-(function buildSeismo() {
-
-  // Linear Congruential Generator (deterministic, same seed = same visual)
-  function makeLCG(seed) {
-    let s = seed >>> 0;
-    return function() {
-      s = ((s * 1664525) + 1013904223) >>> 0;
-      return s / 4294967296;
-    };
+(async function() {
+  let data;
+  try {
+    const res = await fetch('daten/wegweiser.json');
+    data = await res.json();
+  } catch(e) {
+    document.getElementById('fragenListe').innerHTML =
+      '<p style="color:var(--text-muted);font-size:13px;">Daten konnten nicht geladen werden.</p>';
+    return;
   }
 
-  // Generate smooth SVG path (quadratic bezier midpoint chain)
-  function genPath(baseY, amp, steps, seed, xStart, xEnd) {
-    const rand = makeLCG(seed);
-    const w = xEnd - xStart;
-    const pts = [];
+  const fragen = data.fragen || [];
 
-    for (let i = 0; i <= steps; i++) {
-      const r1 = rand() * 2 - 1;
-      const r2 = rand() * 2 - 1;
-      const r3 = rand() * 2 - 1;
-      // 3-sample average = smoother noise
-      const n = (r1 * 0.5 + r2 * 0.3 + r3 * 0.2);
-      pts.push({ x: xStart + (i / steps) * w, y: baseY + n * amp });
-    }
+  // Stabile Sortierung: absteigend nach stimmen.length, Gleichstand = JSON-Reihenfolge
+  const sorted = fragen
+    .map((f, i) => ({ ...f, _idx: i }))
+    .sort((a, b) => (b.stimmen.length - a.stimmen.length) || (a._idx - b._idx));
 
-    let d = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
-    for (let i = 0; i < pts.length - 1; i++) {
-      const mx = ((pts[i].x + pts[i+1].x) / 2).toFixed(1);
-      const my = ((pts[i].y + pts[i+1].y) / 2).toFixed(1);
-      d += ` Q ${pts[i].x.toFixed(1)} ${pts[i].y.toFixed(1)} ${mx} ${my}`;
-    }
-    d += ` L ${pts[pts.length-1].x.toFixed(1)} ${pts[pts.length-1].y.toFixed(1)}`;
-    return d;
+  function dotClass(type) {
+    if (type === 'he')     return 'frage-item__dot frage-item__dot--he';
+    if (type === 'extern') return 'frage-item__dot frage-item__dot--extern';
+    return 'frage-item__dot'; // silent
   }
 
-  const SVG_NS = 'http://www.w3.org/2000/svg';
-  const svg = document.getElementById('seismo');
-
-  const ACTORS = [
-    { id:'swe',     label:'Stadtwerke',   baseY: 50, amp:44, steps:70, seed:1001, delay:0.3,  dur:2.2 },
-    { id:'stadt',   label:'Stadt',        baseY:118, amp:21, steps:58, seed:2002, delay:0.7,  dur:2.2 },
-    { id:'hw',      label:'Handwerk',     baseY:183, amp:30, steps:65, seed:3003, delay:1.1,  dur:2.2 },
-    { id:'forsch',  label:'Forschung',    baseY:246, amp:11, steps:52, seed:4004, delay:1.5,  dur:2.2 },
-    { id:'eigent',  label:'Eigentümer',   baseY:318, amp: 4, steps:42, seed:5005, delay:2.2,  dur:0,   eigent:true },
-  ];
-
-  // Subtle baseline guides
-  ACTORS.forEach(a => {
-    const g = document.createElementNS(SVG_NS, 'line');
-    g.setAttribute('x1','28'); g.setAttribute('x2','858');
-    g.setAttribute('y1', a.baseY); g.setAttribute('y2', a.baseY);
-    g.setAttribute('stroke','rgba(255,255,255,0.04)');
-    g.setAttribute('stroke-width','0.5');
-    svg.appendChild(g);
-  });
-
-  const REVEAL_TOTAL = 2.2 + 2.2 + 1.0; // last actor delay + fade + buffer
-
-  ACTORS.forEach(actor => {
-    const pathD = genPath(actor.baseY, actor.amp, actor.steps, actor.seed, 30, 850);
-
-    const path = document.createElementNS(SVG_NS, 'path');
-    path.setAttribute('d', pathD);
-    path.setAttribute('fill', 'none');
-    path.setAttribute('stroke-linecap', 'round');
-    path.setAttribute('stroke-linejoin', 'round');
-
-    if (actor.eigent) {
-      // Eigentümer: dashed, petrol-bright, fade in (no draw-in — appears quietly)
-      path.setAttribute('stroke', '#4db8a8');
-      path.setAttribute('stroke-width', '2');
-      path.setAttribute('stroke-dasharray', '8 5');
-      path.style.opacity = '0';
-      path.style.transition = `opacity 1.2s ease ${actor.delay}s`;
-    } else {
-      path.setAttribute('stroke', 'rgba(175,170,163,0.5)');
-      path.setAttribute('stroke-width', '1.5');
-      // Draw-in via dashoffset
-      path.style.transition = `stroke-dashoffset ${actor.dur}s cubic-bezier(0.4,0,0.2,1) ${actor.delay}s`;
+  function renderCard(s) {
+    if (s.type === 'he') {
+      return `<div class="stimme-card stimme-card--he" tabindex="0">
+        <div class="stimme-card__name">hausentscheider</div>
+        ${s.einordnung ? `<div class="stimme-card__aussage">${s.einordnung}</div>` : ''}
+        ${s.url && s.linkLabel ? `<a class="stimme-card__link" href="${s.url}">${s.linkLabel}</a>` : ''}
+      </div>`;
     }
-
-    path.setAttribute('id', 'p-' + actor.id);
-    svg.appendChild(path);
-
-    // Set dashoffset AFTER appending (so getTotalLength works)
-    if (!actor.eigent) {
-      const len = path.getTotalLength();
-      path.setAttribute('stroke-dasharray', len);
-      path.setAttribute('stroke-dashoffset', len);
+    if (s.type === 'silent') {
+      return `<div class="stimme-card stimme-card--silent" tabindex="0">
+        <div class="stimme-card__name">${s.name}</div>
+        <div class="stimme-card__aussage">Keine offizielle Antwort bekannt.</div>
+      </div>`;
     }
+    // extern
+    return `<div class="stimme-card" tabindex="0">
+      <div class="stimme-card__name">${s.name}</div>
+      ${s.aussage ? `<div class="stimme-card__aussage">${s.aussage}</div>` : ''}
+      ${s.einordnung ? `<div class="stimme-card__einordnung">${s.einordnung}</div>` : ''}
+      ${s.url && s.linkLabel ? `<a class="stimme-card__link" href="${s.url}" target="_blank" rel="noopener">${s.linkLabel}</a>` : ''}
+    </div>`;
+  }
 
-    // Actor label at right end of line
-    const lbl = document.createElementNS(SVG_NS, 'text');
-    lbl.setAttribute('x', '870');
-    lbl.setAttribute('y', actor.baseY + 4);
-    lbl.setAttribute('font-family', 'Inter, sans-serif');
-    lbl.setAttribute('font-size', '12');
-    lbl.setAttribute('text-anchor', 'end');
-    lbl.setAttribute('fill', actor.eigent ? '#4db8a8' : 'rgba(175,170,163,0.4)');
-    if (actor.eigent) lbl.setAttribute('font-weight', '500');
-    lbl.style.opacity = '0';
-    const lblDelay = actor.eigent ? actor.delay + 1.2 : actor.delay + actor.dur;
-    lbl.style.transition = `opacity 0.6s ease ${lblDelay}s`;
-    lbl.textContent = actor.label;
-    svg.appendChild(lbl);
+  function renderFrage(f) {
+    const dots = f.stimmen.map(s => `<span class="${dotClass(s.type)}"></span>`).join('');
+    const count = f.stimmen.length === 1 ? '1 Stimme' : `${f.stimmen.length} Stimmen`;
+    const cards = f.stimmen.map(renderCard).join('');
 
-    // Trigger animations on next frame
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        if (actor.eigent) {
-          path.style.opacity = '1';
-        } else {
-          path.setAttribute('stroke-dashoffset', '0');
-        }
-        lbl.style.opacity = '1';
-      });
+    return `<div class="frage-item">
+      <button class="frage-item__btn" aria-expanded="false">
+        <div class="frage-item__left">
+          <div class="frage-item__dots">${dots}</div>
+          <span class="frage-item__text">${f.frage}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;flex-shrink:0;">
+          <span class="frage-item__count">${count}</span>
+          <svg class="frage-item__chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 6l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </button>
+      <div class="frage-item__body">
+        <div class="frage-item__scroll-wrap">
+          <div class="frage-item__scroll" tabindex="0" role="region" aria-label="Stimmen zur Frage">${cards}</div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  document.getElementById('fragenListe').innerHTML = sorted.map(renderFrage).join('');
+
+  // Accordion — mehrere gleichzeitig offen erlaubt
+  document.querySelectorAll('.frage-item__btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.frage-item');
+      const open = item.classList.toggle('frage-item--open');
+      btn.setAttribute('aria-expanded', open);
     });
   });
 
-  // Reveal text + scroll cue after eigentümer line appears
-  const totalDelay = (2.2 + 1.2 + 0.6) * 1000; // eigent delay + fade + label fade
-  setTimeout(() => {
-    document.getElementById('feldReveal').classList.add('visible');
-    document.getElementById('feldScroll').classList.add('visible');
-  }, totalDelay);
-
-})();
-
-// ─────────────────────────────────────────────────────────
-// FEED — Render cards from data
-// ─────────────────────────────────────────────────────────
-const FEED = [
-  {
-    typ: 'impuls',
-    satz: '95% der Erfurter Fernwärme basiert auf Erdgas. Das Wort „Risiko" kommt im SWE Energiejournal kein einziges Mal vor.',
-    datum: 'März 2026'
-  },
-  {
-    typ: 'link',
-    stimme: 'SWE Energie GmbH',
-    titel: 'SWE Journal — Wärmewende Sonderausgabe',
-    url: 'dokumente/SWE_Energiejournal.pdf',
-    extern: false,
-    datum: 'Februar 2026',
-    einordnung: 'Die offizielle Perspektive der Stadtwerke — gut aufbereitet, informativ. Was fehlt: die Eigentümerperspektive und die Frage nach dem Anschlusszwang. 95% Erdgas-Anteil: einmal erwähnt, im Anhang, ohne Kommentar zu den Konsequenzen für Eigentümer.'
-  },
-  {
-    typ: 'link',
-    stimme: 'Stadt Erfurt',
-    titel: 'Kommunale Wärmeplanung Erfurt',
-    url: 'https://www.erfurt.de/ef/de/leben/oekoumwelt/kommunale_waermeplanung/index.html',
-    extern: true,
-    datum: 'bis Juni 2026',
-    einordnung: 'Pflichtaufgabe — welche Straßenzüge als Fernwärmegebiet ausgewiesen werden, bestimmt Ihren Handlungsspielraum für die nächsten Jahrzehnte. Die Karte liegt noch nicht vor. Eigentümer entscheiden trotzdem schon heute.'
-  },
-  {
-    typ: 'impuls',
-    satz: 'Die Stadt plant bis 2045. Eigentümer müssen bis 2026 entscheiden. Das ist kein Planungsproblem — das ist ein Kommunikationsproblem.',
-    datum: 'April 2026'
-  },
-  {
-    typ: 'link',
-    stimme: 'Fraunhofer ISE',
-    titel: 'Wärmepumpen in Bestandsgebäuden — Forschungsergebnisse',
-    url: 'https://www.ise.fraunhofer.de',
-    extern: true,
-    datum: '2025',
-    einordnung: 'CO₂-Emissionen 64% niedriger als Gasheizungen. JAZ zwischen 2,6 und 5,4 — auch in Altbauten funktionieren Wärmepumpen. Keine Hersteller-, kein Handwerkerinteresse. Das ist die Grundlage, auf der eine Entscheidung stehen sollte.'
-  },
-  {
-    typ: 'link',
-    stimme: 'BAFA',
-    titel: 'Bundesförderung Effiziente Gebäude (BEG)',
-    url: 'https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/effiziente_gebaeude_node.html',
-    extern: true,
-    datum: 'aktuell',
-    einordnung: 'Bis zu 70% Förderung für WEGs: 30% Wärmepumpen-Bonus + 30% Klima-Bonus bei Gasabkehr + 10% Einkommens-Bonus. Wichtig: Antrag vor Auftragsvergabe. Für Gemeinschaften mit mehreren Einheiten sind die absoluten Fördersummen erheblich.'
-  },
-];
-
-(function renderFeed() {
-  const c = document.getElementById('feedCards');
-  let html = '';
-  FEED.forEach(e => {
-    if (e.typ === 'link') {
-      const linkLabel = e.extern ? 'Zur Quelle →' : 'PDF lesen →';
-      const linkClass = e.extern ? 'karte__action' : 'karte__action karte__action--doc';
-      html += `<div class="karte">
-        <div class="karte__meta">
-          <span class="karte__stimme">${e.stimme}</span>
-          <span class="karte__datum">${e.datum}</span>
-        </div>
-        <p class="karte__titel">${e.titel}</p>
-        ${e.einordnung ? `<div class="karte__einordnung">${e.einordnung}</div>` : ''}
-        <a href="${e.url}" class="${linkClass}" target="_blank">${linkLabel}</a>
-      </div>`;
-    } else if (e.typ === 'impuls') {
-      html += `<div class="impuls">
-        <div class="impuls__zitat">„${e.satz}"</div>
-        <div class="impuls__attr">hausentscheider.de &nbsp;·&nbsp; ${e.datum}</div>
-      </div>`;
-    }
+  // Pfeiltasten für horizontales Scrollen per Tastatur
+  document.querySelectorAll('.frage-item__scroll').forEach(el => {
+    el.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); el.scrollBy({ left: 230, behavior: 'smooth' }); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); el.scrollBy({ left: -230, behavior: 'smooth' }); }
+    });
   });
-  c.innerHTML = html;
 })();
 </script>
 
