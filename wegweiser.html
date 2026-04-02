@@ -89,17 +89,25 @@
     }
 
     /* Puls icon animation */
-    #pulsIcon { animation: pulsFloat 3s ease-in-out infinite; }
-    @keyframes pulsFloat {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-8px); }
+    /* Eigentümer-Linie: sanftes Glow-Atmen */
+    #eigentLinie {
+      animation: eigentAtem 3.5s ease-in-out infinite;
+    }
+    @keyframes eigentAtem {
+      0%, 100% {
+        opacity: 0.65;
+        filter: drop-shadow(0 0 0px rgba(29,158,117,0));
+      }
+      50% {
+        opacity: 1;
+        filter: drop-shadow(0 0 5px rgba(29,158,117,0.7));
+      }
     }
 
-    /* Blink dot */
-    #blinkDot { animation: blinkGlow 1.8s ease-in-out infinite; }
+    #blinkDot { animation: blinkGlow 3.5s ease-in-out infinite; }
     @keyframes blinkGlow {
-      0%,100% { opacity: 1; }
-      50%      { opacity: 0.1; }
+      0%, 100% { opacity: 0.5; }
+      50%       { opacity: 1; }
     }
 
     /* ── ZONE 2: FRAGEN & STIMMEN ────────────────────── */
@@ -404,8 +412,9 @@
                L 432 252 L 440 249 L 453 255 L 465 251 L 478 253 L 495 252
                L 515 252 L 522 249 L 535 255 L 548 251 L 562 253 L 578 252
                L 615 252 L 625 249 L 640 255 L 655 251 L 675 253 L 695 252"
-            fill="none" stroke="#1D9E75" stroke-width="1.8"
-            stroke-dasharray="6 4" stroke-linecap="round" stroke-linejoin="round"/>
+            id="eigentLinie"
+            fill="none" stroke="#1D9E75" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round"/>
 
           <!-- BLINK DOT — rechtes Ende Eigentümer-Linie -->
           <circle id="blinkDot" cx="698" cy="252" r="2.5" fill="#1D9E75"/>
