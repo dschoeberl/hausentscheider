@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "nr": "001",
+    "ort_bezirk": "Erfurt Innenstadt",
+    "seit": "2024",
+    "name": "Mehrfamilienhaus · Altstadt Erfurt",
+    "sub": "Altbau 1900 · Saniert 2010 · 14 Wohnungen · 784 m² · WEG · Gas-Heizung",
+    "bild": "theaterstrasse-4.jpg",
+    "bild_alt": "Mehrfamilienhaus Theaterstraße 4, Erfurt Altstadt — Gründerzeitbau von 1900",
+    "heizung_badge": "Gas-Heizung",
+    "page_title": "Objekt 001 · Theaterstraße 4, Erfurt",
+    "page_desc": "Objektprofil Theaterstraße 4, Erfurt — WEG 14 Wohnungen, Altbau 1900. Entscheidungsstand Heizungserneuerung.",
+    "referenz": true
+  },
+  "gebaeude": {
+    "flaeche": 784,
+    "we": 14,
+    "waermebedarf_kwh": 101240,
+    "heizlast_kw": 62,
+    "heizlast_geschaetzt": false,
+    "energieklasse": "D",
+    "energieklasse_sub": "124 kWh/m²a · Altbau 1900",
+    "heizkosten_mon_text": "1,17",
+    "heizkosten_sub": "13,27 €/m²/Jahr · 11.000 € gesamt",
+    "verbrauch_kwh_m2": 126,
+    "verbrauch_sub": "101.240 kWh/Jahr gesamt",
+    "co2_kg": 17706,
+    "co2_sub": "200,9 g/kWh · Gas · sinkt mit WP −64%",
+    "abrechnungsjahr": "2023/2024",
+    "abrechnungsquelle": "DOMO-THERM Heizkostenabrechnung",
+    "kontext": "Die Gasheizung läuft seit 1998. Ersatzteile sind teilweise abgekündigt. Das Gebäude liegt im Fernwärmesatzungsgebiet der Stadt Erfurt seit 2006."
+  },
+  "kosten_ist": {
+    "brennstoff_gas_eur": 7425,
+    "heizbetrieb_eur": 1232,
+    "warmwasser_eur": 2972,
+    "co2_steuer_eur": 591,
+    "betriebskosten_wasser_eur": 2437,
+    "gesamt_eur": 11000,
+    "pro_m2_jahr_eur": 14.03,
+    "pro_m2_monat_eur": 1.17,
+    "gaspreis_effektiv_ct": 10.0,
+    "co2_mieter_pct": 85,
+    "co2_mieter_eur": 502,
+    "co2_vermieter_eur": 89
+  },
+  "status": [
+    { "typ": "warn", "text": "Fernwärmesatzung seit 2006 · Anschlusszwang" },
+    { "typ": "ok",   "text": "WP-fähig · Heizlast 62 kW · 2 Außengeräte" },
+    { "typ": "warn", "text": "Heizung Bj. 1998 · Ersatzteile abgekündigt" },
+    { "typ": "ok",   "text": "2 Angebote für Wärmepumpe eingeholt" },
+    { "typ": "ok",   "text": "Energiecheck Verbraucherzentrale Nov. 2024" },
+    { "typ": "ok",   "text": "Investitionsplan erstellt · Nov. 2025" },
+    { "typ": "open", "text": "Befreiungsantrag Umweltamt in Vorbereitung" },
+    { "typ": "open", "text": "Fernwärme-Angebot SWE ausstehend" }
+  ],
+  "rechner": {
+    "wp_invest": 132000,
+    "wp_foerd_pct": 58,
+    "ruecklage": 55000,
+    "gas_invest": 25000,
+    "fw_invest": 13650,
+    "jaz": 3.8,
+    "fw_ap_ct": 20.0,
+    "fw_lp_eur_kw": 39.99,
+    "fw_fix_eur": 200,
+    "fw_sommer_pct": 20,
+    "fw_ap_hint": "SWE Erfurt: ~20 ct",
+    "fw_lp_hint": "Aus SWE-Angebot · 62 kW",
+    "fw_fix_hint": "Messpreis + Zähler",
+    "amort_basis_gas_ct": 10.0
+  }
+}
