@@ -520,9 +520,153 @@
     </div>
 
     <div class="invest-empfehlung" id="invest-empfehlung">
-      <strong>Einordnung:</strong> Gas ist kurzfristig günstig in der Investition, aber CO₂-abhängig — die Betriebskosten steigen mit dem Gaspreis und der CO₂-Steuer (gesetzlich bis 2030 auf ~100 €/Tonne). Die Wärmepumpe hat die höchste Investition, aber die niedrigsten Betriebskosten, 58% Förderung und −64% CO₂.
-      <br><br>
-      <strong>Warum Fernwärme teurer ist als der Arbeitspreis vermuten lässt:</strong> Fernwärme hat zwei Preiskomponenten — den Arbeitspreis (ct/kWh, variabel) und den Leistungspreis (€/kW/Jahr, fix). Der Leistungspreis fällt das ganze Jahr für die volle Anschlussleistung an. Für ein Gebäude mit 62 kW Anschlussleistung bedeutet das ~2.479 € bei voller Jahresauslastung. In der Berechnung hier wird ein saisonales Monatsprofil hinterlegt: Winter (Jan–Apr, Okt–Dez) mit voller Last, Sommer (Mai–Sep) mit reduzierter Last — da in diesen Monaten nur Warmwasser aufbereitet wird. Der effektive Jahresfaktor liegt damit bei ~75% der Nennleistung, was realistischer ist als ein Fixwert über 12 Monate. Den Sommerfaktor können Sie im Rechner anpassen wenn Sie Ihr konkretes Verbrauchsprofil kennen. Diese Preise stehen im Preisblatt des Versorgers — fragen Sie immer nach dem vollständigen Preisblatt, nicht nur nach dem Arbeitspreis.
+
+      <!-- ── BLOCK 1: Optionsvergleich ── -->
+      <p style="margin-bottom:0.625rem;">
+        Die Unterschiede zwischen den Optionen entstehen vor allem durch Leistungspreise, CO₂-Kosten und Effizienz —
+        nicht allein durch den Anschaffungspreis.
+      </p>
+      <details>
+        <summary style="font-size:13px;font-weight:500;color:var(--petrol);cursor:pointer;">
+          Mehr verstehen
+        </summary>
+        <div style="margin-top:0.75rem;display:flex;flex-direction:column;gap:0.875rem;font-size:13px;color:var(--text-secondary);line-height:1.6;">
+          <p>
+            🔥 <strong>Gas</strong> ist kurzfristig oft die günstigste Investition — aber die Betriebskosten sind
+            direkt abhängig von Gaspreis und CO₂-Steuer, die gesetzlich bis 2030 auf ~100 €/Tonne steigt.
+          </p>
+          <p>
+            ⚡ <strong>Wärmepumpe</strong> hat die höchste Investition, aber die niedrigsten Betriebskosten,
+            58% Bundesförderung und −64% CO₂-Ausstoß. Der entscheidende Hebel ist die JAZ:
+            je effizienter die Anlage, desto günstiger der effektive Wärmepreis.
+          </p>
+          <div>
+            <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--petrol);margin-bottom:0.375rem;">Einflussfaktoren im Rechner</p>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;">
+              <li><strong>CO₂-Preis (€/t)</strong> → erhöht die Gaskosten additiv — gesetzlicher Preispfad bis 2030+</li>
+              <li><strong>JAZ</strong> → bestimmt den effektiven Stromverbrauch der Wärmepumpe</li>
+            </ul>
+          </div>
+          <div style="padding:0.5rem 0.75rem;background:rgba(26,92,90,0.06);border-radius:4px;">
+            💡 Passe CO₂-Preis und JAZ oben an und beobachte, wie sich Gas- und WP-Kosten verändern.
+          </div>
+        </div>
+      </details>
+
+      <!-- ── Trennlinie ── -->
+      <div style="border-top:0.5px solid rgba(26,92,90,0.15);margin:1rem 0;"></div>
+
+      <!-- ── BLOCK 2: Fernwärme ── -->
+      <p style="margin-bottom:0.625rem;">
+        Fernwärme kann trotz moderater Arbeitspreise insgesamt teurer werden, weil Leistungspreis
+        und Heizlast stark ins Gewicht fallen.
+      </p>
+      <details>
+        <summary style="font-size:13px;font-weight:500;color:var(--petrol);cursor:pointer;">
+          Mehr verstehen
+        </summary>
+        <div style="margin-top:0.75rem;display:flex;flex-direction:column;gap:0.875rem;font-size:13px;color:var(--text-secondary);line-height:1.6;">
+          <p>
+            Fernwärme hat zwei Preiskomponenten: den <strong>Arbeitspreis</strong> (ct/kWh, variabel)
+            und den <strong>Leistungspreis</strong> (€/kW/Jahr, fix). Der Leistungspreis fällt das ganze Jahr
+            für die volle Anschlussleistung an — bei 62 kW und 39,99 €/kW sind das ~2.479 € allein für die
+            Bereitstellung.
+          </p>
+          <p>
+            In der Berechnung wird ein saisonales Monatsprofil hinterlegt: Winter (Jan–Apr, Okt–Dez) mit voller
+            Last, Sommer (Mai–Sep) mit reduzierter Last — da in diesen Monaten nur Warmwasser aufbereitet wird.
+            Den Sommerfaktor können Sie im Rechner anpassen, wenn Sie Ihr konkretes Verbrauchsprofil kennen.
+          </p>
+          <div>
+            <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--petrol);margin-bottom:0.375rem;">Einflussfaktoren im Rechner</p>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;">
+              <li><strong>Heizlast (kW)</strong> → bestimmt die jährliche Leistungspauschale</li>
+              <li><strong>Sommerleistung (%)</strong> → reduziert die Arbeitspreis-Last in der warmen Jahreszeit</li>
+            </ul>
+          </div>
+          <div style="padding:0.5rem 0.75rem;background:rgba(26,92,90,0.06);border-radius:4px;">
+            💡 Fragen Sie immer nach dem vollständigen Preisblatt — nicht nur nach dem Arbeitspreis.
+          </div>
+        </div>
+      </details>
+
+      <!-- ── Trennlinie ── -->
+      <div style="border-top:0.5px solid rgba(26,92,90,0.15);margin:1rem 0;"></div>
+
+      <!-- ── BLOCK 3: Heizlast ── -->
+      <p style="margin-bottom:0.625rem;">
+        Die Heizlast bestimmt, wie viel Leistung ein Gebäude an kalten Tagen benötigt —
+        und beeinflusst insbesondere die Kosten bei Fernwärme.
+      </p>
+      <details>
+        <summary style="font-size:13px;font-weight:500;color:var(--petrol);cursor:pointer;">
+          Mehr verstehen
+        </summary>
+        <div style="margin-top:0.75rem;display:flex;flex-direction:column;gap:0.875rem;font-size:13px;color:var(--text-secondary);line-height:1.6;">
+          <p>
+            Die Heizlast lässt sich überschlägig aus der Wohnfläche abschätzen:
+          </p>
+          <div style="padding:0.5rem 0.75rem;background:rgba(26,92,90,0.06);border-radius:4px;font-family:monospace;font-size:12px;">
+            Heizlast (kW) ≈ Fläche (m²) × spezifische Heizlast (W/m²) ÷ 1000
+          </div>
+          <div>
+            <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--petrol);margin-bottom:0.375rem;">Orientierungswerte</p>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;">
+              <li><strong>Unsaniert</strong> — 80–120 W/m²</li>
+              <li><strong>Teilsaniert</strong> — 50–80 W/m²</li>
+              <li><strong>Gut saniert</strong> — 30–50 W/m²</li>
+            </ul>
+          </div>
+          <p>
+            <strong>Beispiel:</strong> 100 m² × 100 W/m² = 10.000 W → 10 kW
+          </p>
+          <p>
+            Die Heizlast wirkt sich besonders bei Fernwärme direkt auf den Leistungspreis aus
+            und damit auf die jährlichen Fixkosten des Anschlusses.
+          </p>
+          <div style="padding:0.5rem 0.75rem;background:rgba(26,92,90,0.06);border-radius:4px;">
+            💡 Diese Überschlagsrechnung ersetzt keine fachliche Heizlastberechnung nach DIN EN 12831.
+          </div>
+        </div>
+      </details>
+
+      <!-- ── Trennlinie ── -->
+      <div style="border-top:0.5px solid rgba(26,92,90,0.15);margin:1rem 0;"></div>
+
+      <!-- ── BLOCK 4: Betriebskosten ── -->
+      <p style="margin-bottom:0.625rem;">
+        Die Betriebskosten pro Jahr zeigen die laufenden energieträgerbezogenen Kosten des Systems.
+      </p>
+      <details>
+        <summary style="font-size:13px;font-weight:500;color:var(--petrol);cursor:pointer;">
+          Mehr verstehen
+        </summary>
+        <div style="margin-top:0.75rem;display:flex;flex-direction:column;gap:0.875rem;font-size:13px;color:var(--text-secondary);line-height:1.6;">
+          <div>
+            <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--petrol);margin-bottom:0.375rem;">Enthalten im Modell</p>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;">
+              <li>→ Arbeitspreis / Verbrauchskosten</li>
+              <li>→ Grundpreis</li>
+              <li>→ Bei Fernwärme zusätzlich der Leistungspreis</li>
+              <li>→ Bei Gas der CO₂-Kostenanteil (über den Regler anpassbar)</li>
+            </ul>
+          </div>
+          <div>
+            <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--petrol);margin-bottom:0.375rem;">Nicht enthalten</p>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;">
+              <li>— Wartung und Inspektion</li>
+              <li>— Schornsteinfeger</li>
+              <li>— Reparaturen und Verschleißteile</li>
+              <li>— Sonstige Nebenkosten</li>
+            </ul>
+          </div>
+          <div style="padding:0.5rem 0.75rem;background:rgba(26,92,90,0.06);border-radius:4px;">
+            💡 Die tatsächlichen Gesamtbetriebskosten liegen durch Wartung und Nebenkosten
+            je nach System um 500–2.000 € höher.
+          </div>
+        </div>
+      </details>
+
     </div>
 
     <!-- AMORTISATIONSRECHNER -->
