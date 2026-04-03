@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(pandoc --track-changes=all \"D:\\\\Dateiübertragung 23.09.2025\\\\Daniel\\\\Initiative Eigentümer Zukunft\\\\Website Stadien\\\\hausentscheider_wegweiser_brief_v17.docx\" -t plain)"
     ]
   }
 }
