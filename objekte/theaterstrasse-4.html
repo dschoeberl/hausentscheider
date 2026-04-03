@@ -402,6 +402,29 @@
             <p style="font-size:10px;color:var(--text-tertiary);margin-top:4px;">Monatsprofil: Jan–Apr + Okt–Dez = 100% · Mai–Sep = Sommerwert · realistische Jahresschätzung</p>
           </div>
         </div>
+        <!-- Heizlast -->
+        <div style="margin-top:0.625rem;">
+          <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">Heizlast (kW)</label>
+          <input type="number" id="inp-fw-heizlast" value="62" min="10" max="200" step="1"
+            style="width:100%;max-width:160px;font-size:14px;font-weight:500;padding:0.4rem 0.6rem;border:0.5px solid var(--border);border-radius:4px;font-family:'Inter',sans-serif;color:var(--text-primary);"
+            oninput="calcInvest()">
+          <span style="font-size:10px;color:var(--text-tertiary);">Anschlussleistung für Leistungspreis</span>
+        </div>
+      </div>
+
+      <!-- CO₂-Preis -->
+      <div style="margin-top:1rem;padding-top:0.875rem;border-top:0.5px solid var(--border);">
+        <p style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--petrol);margin-bottom:0.5rem;">CO₂-Preis (wirkt nur auf Gas)</p>
+        <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:6px;">
+          CO₂-Preis (€/t) &nbsp;<span id="co2-display" style="color:var(--petrol);font-weight:600;">55 €/t</span>
+        </label>
+        <input type="range" id="inp-co2" min="30" max="130" step="5" value="55"
+          oninput="document.getElementById('co2-display').textContent=this.value+' €/t';updateSliderGrad(this);calcInvest()"
+          style="width:100%;max-width:400px;">
+        <div style="display:flex;justify-content:space-between;max-width:400px;font-size:9px;color:var(--text-tertiary);margin-top:2px;">
+          <span>30 € (2023)</span><span>55 € (2026)</span><span>130 € (2030+)</span>
+        </div>
+        <p style="font-size:10px;color:var(--text-tertiary);margin-top:4px;">BEHG-Preispfad · CO₂-Faktor Gas: 0,201 kg/kWh (UBA)</p>
       </div>
 
       <!-- Energiepreise fest -->
@@ -451,7 +474,7 @@
           </div>
         </div>
         <div style="flex:1;">
-          <div class="invest-zeile"><span style="color:var(--text-secondary);">Brutto-Investition</span><span class="invest-val">~25.000 €</span></div>
+          <div class="invest-zeile"><span style="color:var(--text-secondary);">Brutto-Investition</span><span class="invest-val" id="gas-invest-display">25.000 €</span></div>
           <div class="invest-zeile"><span style="color:var(--text-secondary);">BEG-Förderung</span><span class="invest-val" style="color:var(--text-tertiary);">keine</span></div>
           <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">Eigenanteil WEG</span><span class="invest-val" id="gas-eigenanteil">25.000 €</span></div>
           <div class="invest-zeile" style="flex-direction:column;align-items:flex-start;gap:2px;">
@@ -477,7 +500,7 @@
           </div>
         </div>
         <div style="flex:1;">
-          <div class="invest-zeile"><span style="color:var(--text-secondary);">Brutto-Investition</span><span class="invest-val">~13.650 €</span></div>
+          <div class="invest-zeile"><span style="color:var(--text-secondary);">Brutto-Investition</span><span class="invest-val" id="fw-invest-display">13.650 €</span></div>
           <div class="invest-zeile"><span style="color:var(--text-secondary);">BEG-Förderung</span><span class="invest-val" style="color:var(--text-tertiary);">keine</span></div>
           <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">Eigenanteil WEG</span><span class="invest-val" id="fw-eigenanteil">~13.650 €</span></div>
           <div class="invest-zeile" style="flex-direction:column;align-items:flex-start;gap:2px;">
@@ -643,6 +666,7 @@
     // Feste Energiepreise April 2026
     let GAS_CT    = 10.5;      // ct/kWh — wird aus daten/preise.json geladen
     let STROM_CT  = 27.0;      // ct/kWh — wird aus daten/preise.json geladen
+    let CO2_PREIS = 55.0;      // €/t — wird aus daten/preise.json geladen
     const FW_CT     = 26.0;      // ct/kWh eff.
 
     function amortFarbe(j) {
@@ -679,10 +703,14 @@
       const wpMon         = wpBetrieb / 12 / FLAECHE;
 
       // ── GAS ─────────────────────────────────────────────
-      const gasSondBetrag = Math.max(0, gasInvest - ruecklage);
-      const gasSondProWE  = gasSondBetrag / WE;
-      const gasBetrieb    = Math.round(VERBRAUCH * GAS_CT / 100);
-      const gasMon        = gasBetrieb / 12 / FLAECHE;
+      const gasSondBetrag  = Math.max(0, gasInvest - ruecklage);
+      const gasSondProWE   = gasSondBetrag / WE;
+      const CO2_FAKTOR_GAS = 0.201; // kg CO₂/kWh Gas (UBA)
+      const co2Preis       = parseFloat(document.getElementById('inp-co2').value) || CO2_PREIS;
+      const gasEnergie     = Math.round(VERBRAUCH * GAS_CT / 100);
+      const gasCO2Kosten   = Math.round(VERBRAUCH * CO2_FAKTOR_GAS * co2Preis / 1000);
+      const gasBetrieb     = gasEnergie + gasCO2Kosten;
+      const gasMon         = gasBetrieb / 12 / FLAECHE;
 
       // ── FERNWÄRME — echte Preisstruktur mit Saisonkurve ─
       const fwSondBetrag  = Math.max(0, fwInvest - ruecklage);
@@ -691,7 +719,7 @@
       const fwLP     = parseFloat(document.getElementById('inp-fw-lp').value)     || 39.99;
       const fwFix    = parseFloat(document.getElementById('inp-fw-fix').value)    || 200;
       const fwSommer = parseFloat(document.getElementById('inp-fw-sommer').value) || 20; // % Sommerleistung
-      const HEIZLAST = 62; // kW — aus Profil
+      const HEIZLAST = parseFloat(document.getElementById('inp-fw-heizlast').value) || 62;
 
       // Monatsprofil: Jan=1.0, Feb=1.0, Mär=0.8, Apr=0.5,
       //               Mai–Sep = Sommerfaktor, Okt=0.5, Nov=0.8, Dez=1.0
@@ -741,6 +769,7 @@
       setCol('wp-amort', amortWPGasText, amortWPGasColor);
 
       // Gas Karte
+      set('gas-invest-display', fmt(gasInvest) + ' €');
       set('gas-eigenanteil', fmt(gasInvest) + ' €');
       sondUpdate('gas-sonderumlage','gas-sonderumlage-sub', gasSondBetrag, gasSondProWE, gasInvest);
       set('gas-betrieb',    fmt(gasBetrieb) + ' €');
@@ -748,6 +777,7 @@
       setCol('gas-amort', amortWPGasText, amortWPGasColor);
 
       // FW Karte
+      set('fw-invest-display', fmt(fwInvest) + ' €');
       set('fw-eigenanteil', fmt(fwInvest) + ' €');
       sondUpdate('fw-sonderumlage','fw-sonderumlage-sub', fwSondBetrag, fwSondProWE, fwInvest);
       const fwApEl = document.getElementById('fw-ap-karte');
@@ -880,10 +910,12 @@
     }
 
     function initPage() {
-      calcInvest();
-      updateRechner(document.getElementById('obj-slider').value);
+      // Slider-Gradienten VOR calcInvest() setzen
       updateSliderGrad(document.getElementById('inp-fw-sommer'));
       updateSliderGrad(document.getElementById('inp-jaz'));
+      updateSliderGrad(document.getElementById('inp-co2'));
+      calcInvest();
+      updateRechner(document.getElementById('obj-slider').value);
     }
 
     // Sofort mit Standardwerten initialisieren
@@ -893,8 +925,14 @@
     fetch('../daten/preise.json')
       .then(r => r.json())
       .then(p => {
-        STROM_CT = p.strom_ct;
-        GAS_CT   = p.gas_ct;
+        STROM_CT  = p.strom_ct;
+        GAS_CT    = p.gas_ct;
+        if (p.co2_preis) {
+          CO2_PREIS = p.co2_preis;
+          const co2El = document.getElementById('inp-co2');
+          if (co2El) { co2El.value = CO2_PREIS; }
+          set('co2-display', CO2_PREIS.toFixed(0) + ' €/t');
+        }
         set('preis-stand', p.stand);
         set('bar-strom', p.strom_ct.toFixed(1).replace('.',',') + ' ct/kWh');
         set('preisbar-gas',   p.gas_ct.toFixed(1).replace('.',',') + ' ct/kWh');
