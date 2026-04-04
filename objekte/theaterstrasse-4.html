@@ -902,9 +902,14 @@
 const wpFoerd = isNaN(wpFoerdRaw) ? 58 : wpFoerdRaw;
       const ruecklageRaw = parseFloat(document.getElementById('inp-ruecklage').value);
 const ruecklage = isNaN(ruecklageRaw) ? 55000 : ruecklageRaw;
-      const gasInvest = parseFloat(document.getElementById('inp-gas-invest').value) || 25000;
-      const fwInvest  = parseFloat(document.getElementById('inp-fw-invest').value)  || 13650;
-      const jaz       = parseFloat(document.getElementById('inp-jaz').value)        || 3.8;
+      const gasInvestRaw = parseFloat(document.getElementById('inp-gas-invest').value);
+const gasInvest = isNaN(gasInvestRaw) ? 25000 : gasInvestRaw;
+
+const fwInvestRaw = parseFloat(document.getElementById('inp-fw-invest').value);
+const fwInvest = isNaN(fwInvestRaw) ? 13650 : fwInvestRaw;
+
+const jazRaw = parseFloat(document.getElementById('inp-jaz').value);
+const jaz = isNaN(jazRaw) ? 3.8 : jazRaw;
 
       const effStrom = (STROM_CT / jaz).toFixed(1);
       document.getElementById('wp-eff-ct').textContent = effStrom + ' ct/kWh';
