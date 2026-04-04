@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Objekt erhalten — hausentscheider</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 16px; font-weight: 400; line-height: 1.7;
+      color: #1a1a1a; background: #ffffff;
+      display: flex; flex-direction: column;
+    }
+    :root {
+      --petrol:       #1a5c5a;
+      --petrol-light: #7ab8b5;
+      --petrol-dark:  #1a3535;
+      --border:       #e0dedd;
+      --bg-light:     #f5f4f2;
+      --text-secondary: #5a5956;
+      --text-tertiary:  #8a8680;
+    }
+    a { color: var(--petrol); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .nav {
+      border-bottom: 0.5px solid var(--border);
+      background: #fff;
+    }
+    .nav__inner {
+      max-width: 860px; margin: 0 auto; padding: 0 2rem;
+      height: 52px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav__back { font-size: 13px; color: var(--text-secondary); }
+    .nav__back:hover { color: var(--petrol); text-decoration: none; }
+
+    .main {
+      flex: 1;
+      display: flex; align-items: center; justify-content: center;
+      padding: 3rem 2rem;
+    }
+    .card {
+      max-width: 560px; width: 100%; text-align: center;
+    }
+
+    .check {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #e0f0ee; border: 0.5px solid #8ec8c4;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+    .check svg { display: block; }
+
+    .card__label {
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--petrol); margin-bottom: 0.625rem; display: block;
+    }
+    .card__h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 24px; font-weight: 400; line-height: 1.3;
+      color: #1a1a1a; margin-bottom: 0.875rem;
+    }
+    .card__text {
+      font-size: 14px; color: var(--text-secondary);
+      line-height: 1.7; margin-bottom: 2rem;
+    }
+
+    .card__links {
+      display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-block; padding: 0.55rem 1.375rem;
+      font-family: 'Inter', sans-serif; font-size: 13px;
+      border-radius: 4px; cursor: pointer; text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.85; text-decoration: none; }
+    .btn--petrol  { background: var(--petrol); color: #fff; }
+    .btn--outline { background: transparent; color: var(--petrol); border: 0.5px solid var(--petrol); }
+
+    .footer {
+      border-top: 0.5px solid var(--border); padding: 1.25rem 0;
+    }
+    .footer__inner {
+      max-width: 860px; margin: 0 auto; padding: 0 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 0.5rem;
+      font-size: 12px; color: var(--text-tertiary);
+    }
+    .footer__inner a { color: var(--text-tertiary); }
+    .footer__inner a:hover { color: var(--petrol); }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__back">← Zurück zur Startseite</a>
+      <a href="index.html">
+        <svg width="148" height="22" viewBox="0 0 148 22" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="17" font-family="Georgia,serif" font-size="17" fill="#1a1a1a">haus</text>
+          <text x="46" y="17" font-family="Georgia,serif" font-size="17" fill="#1a1a1a">entscheider</text>
+          <line x1="0" y1="20" x2="43" y2="20" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="card">
+
+      <div class="check">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 12.5l5 5 9-9" stroke="#1a5c5a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <span class="card__label">Objekt erhalten</span>
+      <h1 class="card__h1">Ich melde mich bei Ihnen.</h1>
+      <p class="card__text">
+        Ihre Angaben sind erfolgreich eingegangen. Ich prüfe die Daten persönlich —
+        und melde mich in der Regel innerhalb weniger Tage.
+        Nach Prüfung und Aufbereitung wird Ihr Objekt auf hausentscheider.de unter
+        <strong>Gebäude im Vergleich</strong> veröffentlicht.
+        Falls Sie noch etwas ergänzen möchten, schreiben Sie direkt an
+        <a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a>.
+      </p>
+
+      <div class="card__links">
+        <a href="index.html" class="btn btn--petrol">Zurück zur Startseite</a>
+        <a href="objekte/index.html" class="btn btn--outline">Objekte ansehen</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <span>
+        <a href="index.html">hausentscheider.de</a>
+        &nbsp;·&nbsp; Daniel Schöberl &nbsp;·&nbsp; Erfurt / München
+      </span>
+      <span>
+        <a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a>
+      </span>
+    </div>
+  </footer>
+
+</body>
+</html>
