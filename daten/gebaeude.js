@@ -106,6 +106,102 @@ var GEBAEUDE_DB = {
       co2Preis:    55         // €/t
     }
 
+  },
+
+  "efh-erfurt-tiefthal": {
+
+    // ── Identifikation ──────────────────────────────────
+    id:               "efh-erfurt-tiefthal",
+    slug:             "efh-erfurt-tiefthal",
+    objektNummer:     "002",
+    metaTitle:        "Objekt 002 · EFH Erfurt Tiefthal",
+    metaDescription:  "Objektprofil EFH Erfurt Tiefthal — Einfamilienhaus 1994, 130 m², Gas-Brennwert. Frühe Orientierung Heizungserneuerung.",
+
+    // ── Kopfbereich ─────────────────────────────────────
+    titel:            "Einfamilienhaus · Erfurt Tiefthal",
+    subtitle:         "Baujahr 1994 · 2 Wohneinheiten · 130 m² · Einzeleigentümer · Gas-Brennwert",
+    bild:             "efh-erfurt-tiefthal.jpg",
+    bildAlt:          "Einfamilienhaus in Erfurt Tiefthal — Baujahr 1994",
+
+    // ── Standort & Gebäude ──────────────────────────────
+    standort:         "Erfurt Tiefthal",
+    baujahr:          1994,
+    sanierung:        null,
+    wohnungen:        2,
+    wohnflaeche:      130,           // m²
+    eigentumsform:    "Einzeleigentümer",
+
+    // ── Heizsystem ──────────────────────────────────────
+    heizsystem:       "Gas-Brennwert",
+    heizanlageBaujahr: 2016,
+    heizlastKw:       13,
+    zusatzKaminofen:  true,
+
+    // ── Energiekennwerte ────────────────────────────────
+    energieklasse:           "E",
+    energieverbrauchKwhM2a:  174,     // kWh/m²a (22663 / 130)
+    gasverbrauchJahr:        22663,   // kWh/Jahr Gesamtverbrauch
+
+    // ── Heizkosten Ist ──────────────────────────────────
+    heizkostenGesamtJahr:    2700,    // €
+    heizkostenM2Jahr:        20.77,   // €/m²/Jahr (2700 / 130)
+    heizkostenM2Monat:       1.73,    // €/m²/Monat (2700 / 130 / 12)
+
+    // ── CO₂ ─────────────────────────────────────────────
+    co2KgJahr:        4555,           // 22663 × 0.201
+
+    // ── Kostenblock (Jahresabrechnung) ──────────────────
+    kostenblock: {
+      brennstoffkostenGas:     2269,
+      heizbetriebskosten:      0,
+      warmwasserEnergie:        0,
+      co2Steuer:                210,
+      betriebskostenWasser:     295
+    },
+
+    // ── Abrechnungskontext ──────────────────────────────
+    abrechnungsjahr:    "2025",
+    abrechnungsquelle:  "Eigene Abrechnung",
+    gaspreisEffektivCt: 10.0,
+    co2MieterPct:       0,
+    co2MieterEur:       0,
+    co2VermieterEur:    0,
+
+    // ── Entscheidungsstand ──────────────────────────────
+    entscheidungsstandText: "Gas-Brennwertheizung seit 2016 in Betrieb. Zusätzlich ein Kaminofen vorhanden. Noch in früher Orientierungsphase — Fördermöglichkeiten und Alternative zum Gas sind offen. Offene Frage: Ist für Tiefthal ein Fernwärmeanschluss geplant?",
+
+    statusItems: [
+      { typ: "ok",   text: "Gas-Brennwertheizung seit 2016 in Betrieb" },
+      { typ: "ok",   text: "Zusatzheizung durch Kaminofen vorhanden" },
+      { typ: "warn", text: "Frühe Orientierung — noch keine Angebote eingeholt" },
+      { typ: "open", text: "Fördermöglichkeiten noch nicht geprüft" },
+      { typ: "open", text: "Offene Frage: Fernwärmeplanung für Tiefthal?" }
+    ],
+
+    naechsteSchritte: [
+      { aktiv: true,  text: "Fördermöglichkeiten prüfen — BEG-Förderung, KfW, BAFA-Zuschüsse für Einzeleigentümer klären." },
+      { aktiv: false, text: "Kommunale Wärmeplanung abfragen — Ist für Tiefthal ein Fernwärmeanschluss vorgesehen?" },
+      { aktiv: false, text: "Energieberatung einholen — Verbraucherzentrale oder BAFA-geförderte Beratung als Einstieg." },
+      { aktiv: false, text: "Heizlastberechnung beauftragen — Grundlage für Vergleich der Optionen und Förderanträge." }
+    ],
+
+    // ── Rechner-Defaults (Startwerte für Eingabefelder) ─
+    // Neutrale Initialwerte für ein EFH, keine bestätigten Angebote
+    rechnerDefaults: {
+      wpInvest:    35000,
+      wpFoerd:     50,        // %
+      ruecklage:   0,
+      gasInvest:   12000,
+      fwInvest:    8000,
+      jaz:         3.5,
+      fwAp:        20.0,      // ct/kWh
+      fwLp:        39.99,     // €/kW/Jahr
+      fwFix:       200,       // €/Jahr
+      fwSommer:    20,        // % Sommerleistung
+      fwHeizlast:  13,        // kW
+      co2Preis:    55         // €/t
+    }
+
   }
 
 };

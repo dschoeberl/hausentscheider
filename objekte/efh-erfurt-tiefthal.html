@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Objektprofil EFH Erfurt Tiefthal — Einfamilienhaus 1994, 130 m², Gas-Brennwert. Frühe Orientierung Heizungserneuerung. hausentscheider.de">
+  <title>Objekt 002 · EFH Erfurt Tiefthal — hausentscheider</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; overflow-x: hidden; }
+    body { font-family: 'Inter', -apple-system, sans-serif; font-size: 16px; font-weight: 400; line-height: 1.7; color: #1a1a1a; background: #ffffff; overflow-x: hidden; }
+    :root {
+      --petrol: #1a5c5a; --petrol-light: #7ab8b5; --petrol-dark: #1a3535;
+      --signal: #CFF77F; --border: #e0dedd; --bg-light: #f5f4f2;
+      --text-primary: #1a1a1a; --text-secondary: #5a5956; --text-tertiary: #8a8680;
+      --max-width: 860px; --radius: 8px;
+    }
+    h1, h2 { font-family: 'Playfair Display', Georgia, serif; font-weight: 400; line-height: 1.3; }
+    h1 { font-size: 24px; } h2 { font-size: 20px; }
+    p { margin-bottom: 1rem; } p:last-child { margin-bottom: 0; }
+    a { color: var(--petrol); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; }
+    .label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol); display: block; }
+    .section { padding: 2.5rem 0; border-bottom: 0.5px solid var(--border); }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 0.5px solid var(--border); }
+    .nav__inner { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; height: 52px; display: flex; align-items: center; justify-content: space-between; }
+    .nav__back { font-size: 13px; color: var(--text-secondary); }
+    .nav__back:hover { color: var(--petrol); text-decoration: none; }
+
+    /* HEADER */
+    .profil-header { background: var(--petrol-dark); overflow: hidden; }
+    .profil-header__body { display: grid; grid-template-columns: 260px 1fr; min-height: 220px; max-width: var(--max-width); margin: 0 auto; }
+    .profil-header__bild { background: #132828; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .profil-header__bild img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .profil-header__meta { padding: 1.75rem 2rem; display: flex; flex-direction: column; justify-content: space-between; }
+    .profil-header__nr { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol-light); margin-bottom: 0.5rem; }
+    .profil-header__h1 { font-family: 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 0.375rem; }
+    .profil-header__sub { font-size: 13px; color: #7ab8b5; margin-bottom: 1rem; }
+    .profil-header__badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; background: rgba(200,160,96,0.2); color: #f0c878; border: 0.5px solid rgba(200,160,96,0.4); align-self: flex-start; }
+    .ph-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: #c8a460; }
+
+    .hs { display: inline-block; font-size: 10px; font-weight: 500; padding: 1px 7px; border-radius: 4px; white-space: nowrap; }
+    .hs-gas { background: #f5ede0; color: #6b4c28; border: 0.5px solid #dfc9a8; }
+    .hs-wp  { background: #e0f0ee; color: #1a4f4d; border: 0.5px solid #8ec8c4; }
+    .hs-fw  { background: #f5ede0; color: #6b4c28; border: 0.5px dashed #c8a878; }
+
+    /* KENNZAHLEN */
+    .kz-grid { display: grid; grid-template-columns: repeat(4,1fr); background: #132828; border-top: 0.5px solid rgba(122,184,181,0.15); max-width: var(--max-width); margin: 0 auto; }
+    .kz { padding: 0.875rem 1.25rem; border-right: 0.5px solid rgba(122,184,181,0.15); }
+    .kz:last-child { border-right: none; }
+    .kz__lbl { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--petrol-light); margin-bottom: 5px; }
+    .kz__val { font-size: 22px; font-weight: 500; color: #ffffff; line-height: 1.2; }
+    .kz__unit { font-size: 12px; font-weight: 400; color: var(--petrol-light); margin-left: 2px; }
+    .kz__note { font-size: 11px; color: #ffffff; margin-top: 4px; line-height: 1.4; opacity: 0.75; }
+    .kz__signal { color: var(--signal) !important; }
+
+    /* STATUS */
+    .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 2.5rem; margin-top: 1rem; }
+    .st { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-secondary); }
+    .st-icon { width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px; }
+    .st-warn { color: #c8a460; } .st-ok { color: #5aaa88; } .st-open { color: #8ab8d4; }
+    .dot-legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.25rem; padding-top: 1rem; border-top: 0.5px solid var(--border); }
+    .dot-legend__item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-tertiary); }
+    .dot-legend__icon { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* INVESTITIONSVERGLEICH */
+    .invest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.25rem; }
+    .invest-karte { border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .invest-karte--wp { border-color: var(--petrol); }
+    .invest-karte__header { padding: 0.75rem 1rem; display: flex; align-items: center; gap: 8px; }
+    .invest-karte__header--gas { background: #f5ede0; }
+    .invest-karte__header--wp { background: var(--petrol-dark); }
+    .invest-karte__header--fw { background: #f0ede8; }
+    .invest-karte__titel { font-size: 13px; font-weight: 500; }
+    .invest-karte__header--wp .invest-karte__titel { color: #ffffff; }
+    .invest-karte__header--wp .hs { background: rgba(207,247,127,0.2); color: var(--signal); border-color: rgba(207,247,127,0.4); }
+    .invest-zeile { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; border-bottom: 0.5px solid var(--border); font-size: 13px; }
+    .invest-zeile:last-child { border-bottom: none; }
+    .invest-zeile--total { background: var(--bg-light); font-weight: 500; }
+    .invest-zeile--total-dark { background: #132828; }
+    .invest-zeile--total-dark span { color: #ffffff; }
+    .invest-zeile--total-dark span:last-child { color: var(--signal); font-weight: 600; }
+    .invest-zeile--highlight { background: rgba(26,92,90,0.04); }
+    .invest-val { font-weight: 500; }
+    .invest-val--gut { color: #3a7a5a; font-weight: 600; }
+    .invest-val--warn { color: #c85a5a; font-weight: 600; }
+    .invest-empfehlung { margin-top: 0.75rem; padding: 0.75rem 1rem; background: rgba(26,92,90,0.06); border-left: 3px solid var(--petrol); border-radius: 0 var(--radius) var(--radius) 0; font-size: 13px; color: var(--text-secondary); }
+    .invest-empfehlung strong { color: var(--text-primary); }
+
+    /* AMORTISATIONSRECHNER */
+    .rechner { background: var(--petrol-dark); border-radius: var(--radius); overflow: hidden; margin-top: 1.5rem; }
+    .rechner__header { padding: 1rem 1.5rem; border-bottom: 0.5px solid rgba(122,184,181,0.2); }
+    .rechner__titel { font-size: 14px; font-weight: 500; color: #ffffff; margin-bottom: 3px; }
+    .rechner__sub { font-size: 12px; color: #ffffff; }
+    .rechner__body { padding: 1.25rem 1.5rem; }
+    .rechner__slider-row { display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: center; margin-bottom: 1rem; }
+    .rechner__label { font-size: 12px; color: var(--signal); margin-bottom: 6px; }
+    input[type=range] {
+      -webkit-appearance: none; appearance: none; width: 100%; height: 4px;
+      background: linear-gradient(to right, var(--signal) 0%, var(--signal) var(--pct,18%), rgba(122,184,181,0.3) var(--pct,18%), rgba(122,184,181,0.3) 100%);
+      border-radius: 2px; outline: none; cursor: pointer;
+    }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--signal); border: 2px solid var(--petrol-dark); cursor: pointer; }
+    input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--signal); border: 2px solid var(--petrol-dark); cursor: pointer; }
+    .slider-labels { display: flex; justify-content: space-between; font-size: 10px; color: #5a9896; margin-top: 3px; }
+    .rechner__val-display { text-align: center; min-width: 80px; }
+    .rechner__val { font-size: 24px; font-weight: 500; color: var(--signal); font-family: 'Playfair Display', Georgia, serif; }
+    .rechner__val-unit { font-size: 11px; color: rgba(255,255,255,0.6); }
+    .rechner__ergebnis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 0.5px solid rgba(122,184,181,0.2); }
+    .rechner__erg-item { padding: 0.875rem 1rem; border-right: 0.5px solid rgba(122,184,181,0.15); }
+    .rechner__erg-item:last-child { border-right: none; }
+    .rechner__erg-lbl { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #ffffff; margin-bottom: 4px; }
+    .rechner__erg-val { font-size: 18px; font-weight: 500; color: #ffffff; }
+    .rechner__erg-val--signal { color: #4a9bb8; }
+    .rechner__erg-val--warn { color: var(--signal); }
+    .rechner__erg-sub { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 2px; }
+    .rechner__hinweis { padding: 0.75rem 1.5rem; font-size: 12px; color: #ffffff; font-style: italic; border-top: 0.5px solid rgba(122,184,181,0.1); }
+
+    /* NEXT STEPS */
+    .next-list { display: flex; flex-direction: column; gap: 0.625rem; margin-top: 1rem; }
+    .next-item { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 13px; color: var(--text-secondary); line-height: 1.6; padding: 0.5rem 0; border-bottom: 0.5px solid var(--border); }
+    .next-item:last-child { border-bottom: none; }
+    .next-item strong { color: var(--text-primary); font-weight: 500; }
+    .next-arrow { font-size: 11px; color: var(--petrol); flex-shrink: 0; margin-top: 3px; }
+    .next-arrow--on { color: var(--petrol-dark); font-weight: 500; }
+
+    /* CTA */
+    .cta-profil { background: var(--petrol-dark); padding: 2.5rem 0; }
+    .cta-profil__inner { max-width: 500px; }
+    .cta-profil__label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol-light); margin-bottom: 0.75rem; display: block; }
+    .cta-profil__h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 400; color: #fff; margin-bottom: 0.875rem; line-height: 1.4; }
+    .cta-profil__text { font-size: 14px; color: #c8e0df; line-height: 1.7; margin-bottom: 1.5rem; }
+    .form { display: flex; flex-direction: column; gap: 0.75rem; max-width: 400px; }
+    .form input, .form textarea { font-family: 'Inter', sans-serif; font-size: 14px; padding: 0.6rem 0.875rem; border: 0.5px solid rgba(122,184,181,0.3); border-radius: 4px; background: rgba(255,255,255,0.07); color: #fff; outline: none; width: 100%; transition: border-color 0.2s; }
+    .form input::placeholder, .form textarea::placeholder { color: #5a9896; }
+    .form input:focus, .form textarea:focus { border-color: var(--petrol-light); }
+    .form textarea { min-height: 90px; resize: vertical; }
+    .btn-cta { display: inline-block; padding: 0.65rem 1.75rem; background: var(--signal); color: var(--petrol-dark); font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; border-radius: 4px; border: none; cursor: pointer; align-self: flex-start; transition: opacity 0.2s; }
+    .btn-cta:hover { opacity: 0.85; text-decoration: none; }
+
+    /* FOOTER */
+    .profil-footer { border-top: 0.5px solid var(--border); padding: 1.25rem 0; }
+    .profil-footer__inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; font-size: 12px; color: var(--text-tertiary); }
+    .profil-footer__inner a { color: var(--text-tertiary); }
+    .profil-footer__inner a:hover { color: var(--petrol); }
+
+    /* RESPONSIVE */
+    @media (max-width: 680px) {
+      .profil-header__body { grid-template-columns: 1fr; }
+      .profil-header__bild { height: 160px; }
+      .kz-grid { grid-template-columns: 1fr 1fr; }
+      .status-grid { grid-template-columns: 1fr; }
+      .container { padding: 0 1.25rem; }
+      .invest-grid { grid-template-columns: 1fr; }
+      .rechner__ergebnis { grid-template-columns: 1fr 1fr; }
+      .rechner__slider-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__back">&larr; Zur&uuml;ck zur &Uuml;bersicht</a>
+      <a href="../index.html">
+        <svg width="148" height="22" viewBox="0 0 148 22" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="17" font-family="Georgia,serif" font-size="17" fill="#1a1a1a">haus</text>
+          <text x="46" y="17" font-family="Georgia,serif" font-size="17" fill="#1a1a1a">entscheider</text>
+          <line x1="0" y1="20" x2="43" y2="20" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- PROFIL-HEADER -->
+  <div class="profil-header">
+    <div class="profil-header__body">
+      <div class="profil-header__bild">
+        <img src="../images/efh-erfurt-tiefthal.jpg" alt="Einfamilienhaus in Erfurt Tiefthal — Baujahr 1994">
+      </div>
+      <div class="profil-header__meta">
+        <div>
+          <p class="profil-header__nr">Objekt 002 &middot; Erfurt Tiefthal &middot; Dokumentiert seit 2025</p>
+          <h1 class="profil-header__h1">Einfamilienhaus &middot; Erfurt Tiefthal</h1>
+          <p class="profil-header__sub">Baujahr 1994 &middot; 2 Wohneinheiten &middot; 130 m&sup2; &middot; Einzeleigent&uuml;mer &middot; Gas-Brennwert</p>
+        </div>
+        <div class="profil-header__badge"><span class="ph-badge-dot"></span> Fr&uuml;he Orientierung</div>
+      </div>
+    </div>
+
+    <!-- KENNZAHLEN -->
+    <div class="kz-grid">
+      <div class="kz">
+        <p class="kz__lbl">Energieklasse</p>
+        <p class="kz__val">E</p>
+        <p class="kz__note">174 kWh/m&sup2;a &middot; Baujahr 1994</p>
+      </div>
+      <div class="kz">
+        <p class="kz__lbl">Heizkosten IST &middot; Gas</p>
+        <p class="kz__val">1,73<span class="kz__unit">&euro;/m&sup2;/Mon.</span></p>
+        <p class="kz__note">20,77 &euro;/m&sup2;/Jahr &middot; 2.700 &euro; gesamt</p>
+      </div>
+      <div class="kz">
+        <p class="kz__lbl">Gasverbrauch</p>
+        <p class="kz__val">174<span class="kz__unit">kWh/m&sup2;</span></p>
+        <p class="kz__note">22.663 kWh/Jahr gesamt</p>
+      </div>
+      <div class="kz">
+        <p class="kz__lbl">CO&sub2;-Aussto&szlig;/Jahr</p>
+        <p class="kz__val">4.555<span class="kz__unit">kg</span></p>
+        <p class="kz__note">201 g/kWh &middot; Gas &middot; sinkt mit WP</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENTSCHEIDUNGSSTAND -->
+  <section class="section container">
+    <span class="label" style="margin-bottom:0.75rem;">Entscheidungsstand</span>
+    <h2 style="margin-bottom:0.625rem;">Was bekannt ist — und was noch offen</h2>
+    <p style="font-size:14px;color:var(--text-secondary);max-width:560px;">
+      Gas-Brennwertheizung seit 2016 in Betrieb. Zusätzlich ein Kaminofen vorhanden.
+      Noch in früher Orientierungsphase — Fördermöglichkeiten und Alternative zum Gas sind offen.
+      Offene Frage: Ist für Tiefthal ein Fernwärmeanschluss geplant?
+    </p>
+
+    <div class="status-grid">
+      <div class="st">
+        <svg class="st-icon st-ok" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 10.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Gas-Brennwertheizung seit 2016 in Betrieb
+      </div>
+      <div class="st">
+        <svg class="st-icon st-ok" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 10.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Zusatzheizung durch Kaminofen vorhanden
+      </div>
+      <div class="st">
+        <svg class="st-icon st-warn" viewBox="0 0 20 20" fill="none"><path d="M10 3L18 17H2L10 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 8v4M10 14v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Frühe Orientierung — noch keine Angebote eingeholt
+      </div>
+      <div class="st">
+        <svg class="st-icon st-open" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M10 7v3.5l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Fördermöglichkeiten noch nicht geprüft
+      </div>
+      <div class="st">
+        <svg class="st-icon st-open" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M10 7v3.5l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Offene Frage: Fernwärmeplanung für Tiefthal?
+      </div>
+    </div>
+
+    <div class="dot-legend">
+      <div class="dot-legend__item">
+        <svg class="dot-legend__icon st-warn" viewBox="0 0 20 20" fill="none"><path d="M10 3L18 17H2L10 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 8v3M10 13v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Handlungsbedarf
+      </div>
+      <div class="dot-legend__item">
+        <svg class="dot-legend__icon st-ok" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 10.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Erledigt
+      </div>
+      <div class="dot-legend__item">
+        <svg class="dot-legend__icon st-open" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M10 7v3.5l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        In Vorbereitung
+      </div>
+    </div>
+  </section>
+
+  <!-- AKTUELLE KOSTEN -->
+  <section class="section container">
+    <span class="label" style="margin-bottom:0.75rem;">Aktuelle Kosten</span>
+    <h2 style="margin-bottom:0.375rem;">Was das Gebäude heute kostet</h2>
+    <p style="font-size:13px;color:var(--text-tertiary);margin-bottom:1.25rem;">
+      Abrechnungsjahr 2025 &middot; Quelle: Eigene Abrechnung &middot; 130 m&sup2; beheizte Fläche
+    </p>
+
+    <div style="border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;max-width:560px;">
+      <div style="background:var(--petrol-dark);padding:0.75rem 1rem;display:flex;align-items:center;gap:8px;">
+        <span style="width:8px;height:8px;border-radius:50%;background:#CFF77F;flex-shrink:0;"></span>
+        <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--petrol-light);">Gesamtgebäude</p>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;padding:0.5rem 1rem;border-bottom:0.5px solid var(--border);font-size:13px;"><span style="color:var(--text-secondary);">Brennstoffkosten Gas (pro Jahr)</span><span style="font-weight:500;">2.269 &euro;</span></div>
+        <div style="display:flex;justify-content:space-between;padding:0.5rem 1rem;border-bottom:0.5px solid var(--border);font-size:13px;"><span style="color:var(--text-secondary);">CO&sub2;-Steuer (pro Jahr)</span><span style="font-weight:500;">210 &euro;</span></div>
+        <div style="display:flex;justify-content:space-between;padding:0.5rem 1rem;border-bottom:0.5px solid var(--border);font-size:13px;"><span style="color:var(--text-secondary);">Betriebskosten Wasser etc. (pro Jahr)</span><span style="font-weight:500;">295 &euro;</span></div>
+        <div style="display:flex;justify-content:space-between;padding:0.625rem 1rem;border-bottom:0.5px solid var(--border);font-size:13px;background:var(--bg-light);"><span style="font-weight:500;color:var(--text-primary);">Gesamtkosten / Jahr</span><span style="font-weight:600;color:var(--text-primary);">2.700 &euro;</span></div>
+        <div style="display:flex;justify-content:space-between;padding:0.625rem 1rem;border-bottom:0.5px solid var(--border);font-size:13px;background:var(--bg-light);"><span style="font-weight:500;color:var(--text-primary);">Kosten / m&sup2; / Jahr</span><span style="font-weight:600;color:var(--text-primary);">20,77 &euro;</span></div>
+        <div style="display:flex;justify-content:space-between;padding:0.625rem 1rem;font-size:13px;background:var(--bg-light);"><span style="font-weight:500;color:var(--text-primary);">Kosten / m&sup2; / Monat</span><span style="font-weight:600;color:var(--petrol);">1,73 &euro;</span></div>
+      </div>
+    </div>
+
+    <div style="margin-top:0.875rem;display:flex;gap:1.5rem;flex-wrap:wrap;">
+      <p style="font-size:12px;color:var(--text-tertiary);">Gasverbrauch 2025: 22.663 kWh &middot; Gaspreis effektiv: ~10 ct/kWh</p>
+      <p style="font-size:12px;color:var(--text-tertiary);">Zusatzheizung: Kaminofen vorhanden (Verbrauch nicht erfasst)</p>
+    </div>
+  </section>
+
+  <!-- INVESTITIONSVERGLEICH -->
+  <section class="section container">
+    <span class="label" style="margin-bottom:0.75rem;">Investitionsvergleich</span>
+    <h2 style="margin-bottom:0.375rem;">Drei Optionen — ehrlich verglichen</h2>
+    <p style="font-size:14px;color:var(--text-secondary);max-width:580px;margin-bottom:1.5rem;">
+      Investitionskosten sind nur die halbe Wahrheit. Passen Sie die Werte an Ihre Situation an — Amortisation wird live berechnet.
+    </p>
+
+    <!-- EINGABE-PANEL -->
+    <div style="background:var(--bg-light);border:0.5px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1.25rem;">
+      <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--petrol);margin-bottom:0.25rem;font-family:'Inter',sans-serif;">Rechner — Werte anpassen</p>
+      <p style="font-size:12px;color:var(--text-tertiary);margin-bottom:0.75rem;">Fläche: 130 m&sup2; &middot; 2 Wohneinheiten &middot; Gasverbrauch: 22.663 kWh/Jahr (aus Profil)</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.625rem;">
+
+        <div>
+          <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">WP-Investition brutto (&euro;)</label>
+          <input type="number" id="inp-wp-invest" value="35000" min="10000" max="500000"
+            style="width:100%;font-size:14px;font-weight:500;padding:0.4rem 0.6rem;border:0.5px solid var(--border);border-radius:4px;font-family:'Inter',sans-serif;color:var(--text-primary);"
+            oninput="calcInvest()">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">WP-Förderung (%)</label>
+          <input type="number" id="inp-wp-foerd" value="50" min="0" max="70"
+            style="width:100%;font-size:14px;font-weight:500;padding:0.4rem 0.6rem;border:0.5px solid var(--border);border-radius:4px;font-family:'Inter',sans-serif;color:var(--text-primary);"
+            oninput="calcInvest()">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">Verfügbare Rücklage (&euro;)</label>
+          <input type="number" id="inp-ruecklage" value="0" min="0" max="500000"
+            style="width:100%;font-size:14px;font-weight:500;padding:0.4rem 0.6rem;border:0.5px solid var(--border);border-radius:4px;font-family:'Inter',sans-serif;color:var(--text-primary);"
+            oninput="calcInvest()">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">Gas-Investition brutto (&euro;)</label>
+          <input type="number" id="inp-gas-invest" value="12000" min="5000" max="100000"
+            style="width:100%;font-size:14px;font-weight:500;padding:0.4rem 0.6rem;border:0.5px solid var(--border);border-radius:4px;font-family:'Inter',sans-serif;color:var(--text-primary);"
+            oninput="calcInvest()">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">FW-Investition brutto (&euro;)</label>
+          <input type="number" id="inp-fw-invest" value="8000" min="1000" max="100000"
+            style="width:100%;font-size:14px;font-weight:500;padding:0.4rem 0.6rem;border:0.5px solid var(--border);border-radius:4px;font-family:'Inter',sans-serif;color:var(--text-primary);"
+            oninput="calcInvest()">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">JAZ Wärmepumpe <span id="jaz-display" style="color:var(--petrol);font-weight:600;">3,5</span></label>
+          <input type="range" id="inp-jaz" min="2.5" max="5.0" step="0.1" value="3.5"
+            oninput="document.getElementById('jaz-display').textContent=parseFloat(this.value).toFixed(1);updateSliderGrad(this);calcInvest()"
+            style="width:100%;margin-top:6px;">
+          <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-tertiary);margin-top:2px;"><span>2,5 unsaniert</span><span>5,0 Neubau</span></div>
+        </div>
+      </div>
+
+      <!-- Fernwärme Preisstruktur -->
+      <div style="margin-top:0.75rem;padding-top:0.625rem;border-top:0.5px solid var(--border);">
+        <p style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--petrol);margin-bottom:0.5rem;">Fernwärme — Preisstruktur</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.875rem;">
+          <div>
+            <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">Arbeitspreis (ct/kWh)</label>
+            <input type="number" id="inp-fw-ap" value="20" min="5" max="50" step="0.5"
+              style="width:100%;font-size:14px;font-weight:500;padding:0.4rem 0.6rem;border:0.5px solid var(--border);border-radius:4px;font-family:'Inter',sans-serif;color:var(--text-primary);"
+              oninput="calcInvest()">
+            <span style="font-size:10px;color:var(--text-tertiary);">Standardwert — kein konkretes Angebot</span>
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">Leistungspreis (&euro;/kW/Jahr)</label>
+            <input type="number" id="inp-fw-lp" value="39.99" min="10" max="100" step="0.5"
+              style="width:100%;font-size:14px;font-weight:500;padding:0.4rem 0.6rem;border:0.5px solid var(--border);border-radius:4px;font-family:'Inter',sans-serif;color:var(--text-primary);"
+              oninput="calcInvest()">
+            <span style="font-size:10px;color:var(--text-tertiary);">Standardwert &middot; 13 kW</span>
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">Fixkosten/Jahr (&euro;)</label>
+            <input type="number" id="inp-fw-fix" value="200" min="0" max="500"
+              style="width:100%;font-size:14px;font-weight:500;padding:0.4rem 0.6rem;border:0.5px solid var(--border);border-radius:4px;font-family:'Inter',sans-serif;color:var(--text-primary);"
+              oninput="calcInvest()">
+            <span style="font-size:10px;color:var(--text-tertiary);">Messpreis + Zähler</span>
+          </div>
+          <div style="grid-column:span 3;">
+            <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">
+              Sommerleistung Mai–Sep (% der Heizlast) &nbsp;<span id="fw-sommer-display" style="color:var(--petrol);font-weight:600;">20%</span>
+            </label>
+            <input type="range" id="inp-fw-sommer" min="0" max="50" step="5" value="20"
+              oninput="document.getElementById('fw-sommer-display').textContent=this.value+'%';updateSliderGrad(this);calcInvest()"
+              style="width:100%;max-width:400px;">
+            <div style="display:flex;justify-content:space-between;max-width:400px;font-size:9px;color:var(--text-tertiary);margin-top:2px;">
+              <span>0% — kein Verbrauch</span><span>50% — halbe Last</span>
+            </div>
+          </div>
+        </div>
+        <!-- Heizlast -->
+        <div style="margin-top:0.375rem;">
+          <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">Heizlast (kW)</label>
+          <input type="number" id="inp-fw-heizlast" value="13" min="5" max="200" step="1"
+            style="width:100%;max-width:160px;font-size:14px;font-weight:500;padding:0.4rem 0.6rem;border:0.5px solid var(--border);border-radius:4px;font-family:'Inter',sans-serif;color:var(--text-primary);"
+            oninput="calcInvest()">
+          <span style="font-size:10px;color:var(--text-tertiary);">Anschlussleistung für Leistungspreis</span>
+        </div>
+      </div>
+
+      <!-- CO2-Preis -->
+      <div style="margin-top:0.75rem;padding-top:0.625rem;border-top:0.5px solid var(--border);">
+        <p style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--petrol);margin-bottom:0.5rem;">CO&sub2;-Preis (wirkt nur auf Gas)</p>
+        <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:6px;">
+          CO&sub2;-Preis (&euro;/t) &nbsp;<span id="co2-display" style="color:var(--petrol);font-weight:600;">55 &euro;/t</span>
+        </label>
+        <input type="range" id="inp-co2" min="30" max="130" step="5" value="55"
+          oninput="document.getElementById('co2-display').textContent=this.value+' €/t';updateSliderGrad(this);calcInvest()"
+          style="width:100%;max-width:400px;">
+        <div style="display:flex;justify-content:space-between;max-width:400px;font-size:9px;color:var(--text-tertiary);margin-top:2px;">
+          <span>30 &euro; (2023)</span><span>55 &euro; (2026)</span><span>130 &euro; (2030+)</span>
+        </div>
+        <p style="font-size:10px;color:var(--text-tertiary);margin-top:4px;">BEHG-Preispfad &middot; CO&sub2;-Faktor Gas: 0,201 kg/kWh (UBA)</p>
+      </div>
+
+      <!-- Energiepreise fest -->
+      <div style="margin-top:0.625rem;padding-top:0.625rem;border-top:0.5px solid var(--border);display:flex;gap:1.5rem;flex-wrap:wrap;">
+        <span style="font-size:11px;color:var(--text-tertiary);">Energiepreise <span id="preis-stand">April 2026</span>:</span>
+        <span style="font-size:11px;color:var(--text-secondary);">&#9889; Strom <strong id="bar-strom">27 ct/kWh</strong></span>
+        <span style="font-size:11px;color:var(--text-secondary);">&#128293; Gas <strong id="preisbar-gas">10,5 ct/kWh</strong></span>
+        <span style="font-size:11px;color:var(--text-secondary);">&#127777; Fernwärme <strong id="bar-fw">26 ct/kWh</strong> eff.</span>
+      </div>
+    </div>
+
+    <!-- DREI KARTEN -->
+    <div class="invest-grid" id="invest-grid">
+
+      <!-- Option A: Wärmepumpe -->
+      <div class="invest-karte invest-karte--wp" style="display:flex;flex-direction:column;">
+        <div class="invest-karte__header invest-karte__header--wp">
+          <div>
+            <p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--petrol-light);margin-bottom:3px;">Option A &middot; Empfohlen</p>
+            <p class="invest-karte__titel">Wärmepumpe <span class="hs" style="background:rgba(207,247,127,0.2);color:#CFF77F;border-color:rgba(207,247,127,0.4);">Luft-Wasser-WP</span></p>
+          </div>
+        </div>
+        <div style="flex:1;">
+          <div class="invest-zeile"><span style="color:var(--text-secondary);">Brutto-Investition</span><span class="invest-val" id="wp-invest">35.000 &euro;</span></div>
+          <div class="invest-zeile"><span style="color:var(--text-secondary);" id="wp-foerd-lbl">BEG-Förderung (50%)</span><span class="invest-val invest-val--gut" id="wp-foerd-val">&ndash;17.500 &euro;</span></div>
+          <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">offener Restbetrag</span><span class="invest-val" id="wp-eigenanteil">17.500 &euro;</span></div>
+          <div class="invest-zeile" style="flex-direction:column;align-items:flex-start;gap:2px;">
+            <div style="display:flex;justify-content:space-between;width:100%;"><span style="color:var(--text-secondary);">Sonderumlage/WE</span><span class="invest-val" id="wp-sonderumlage">8.750 &euro;</span></div>
+            <div style="font-size:10px;color:var(--text-tertiary);padding-left:0;" id="wp-sonderumlage-sub">17.500 &euro; &divide; 2 WE</div>
+          </div>
+          <div class="invest-zeile" style="background:#f0f8f0;flex-direction:column;align-items:flex-start;gap:2px;min-height:48px;">
+            <span style="color:var(--text-secondary);font-size:11px;">&#9889; Strom <span id="wp-strom-display">27</span> ct &middot; JAZ <span id="jaz-karte">3,5</span></span>
+            <span style="color:#3a7a5a;font-size:11px;font-weight:500;">eff. <span id="wp-eff-ct">7,7 ct/kWh</span></span>
+          </div>
+          <div class="invest-zeile"><span style="color:var(--text-secondary);">Betrieb/Jahr</span><span class="invest-val invest-val--gut" id="wp-betrieb">1.750 &euro;</span></div>
+          <div class="invest-zeile"><span style="color:var(--text-secondary);">&euro;/m&sup2;/Monat</span><span class="invest-val invest-val--gut" id="wp-mon">1,12 &euro;</span></div>
+        </div>
+      </div>
+
+      <!-- Option B: Gas -->
+      <div class="invest-karte" style="display:flex;flex-direction:column;">
+        <div class="invest-karte__header invest-karte__header--wp" style="background:#2d1e0e;">
+          <div>
+            <p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#c8a460;margin-bottom:3px;">Option B &middot; Kurzfristig</p>
+            <p class="invest-karte__titel" style="color:#ffffff;">Neue Gasheizung <span class="hs" style="background:rgba(200,160,96,0.2);color:#f0c878;border-color:rgba(200,160,96,0.4);">Gas-Heizung</span></p>
+          </div>
+        </div>
+        <div style="flex:1;">
+          <div class="invest-zeile"><span style="color:var(--text-secondary);">Brutto-Investition</span><span class="invest-val" id="gas-invest-display">12.000 &euro;</span></div>
+          <div class="invest-zeile"><span style="color:var(--text-secondary);">BEG-Förderung</span><span class="invest-val" style="color:var(--text-tertiary);">keine</span></div>
+          <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">offener Restbetrag</span><span class="invest-val" id="gas-eigenanteil">12.000 &euro;</span></div>
+          <div class="invest-zeile" style="flex-direction:column;align-items:flex-start;gap:2px;">
+            <div style="display:flex;justify-content:space-between;width:100%;"><span style="color:var(--text-secondary);">Sonderumlage/WE</span><span class="invest-val" id="gas-sonderumlage">6.000 &euro;</span></div>
+            <div style="font-size:10px;color:var(--text-tertiary);" id="gas-sonderumlage-sub">12.000 &euro; &divide; 2 WE</div>
+          </div>
+          <div class="invest-zeile" style="background:#fdf5e8;flex-direction:column;align-items:flex-start;gap:2px;min-height:48px;">
+            <span style="color:var(--text-secondary);font-size:11px;">&#128293; Gas <span id="gas-preis-display">10,5</span> ct/kWh</span>
+            <span style="color:#8a6030;font-size:11px;font-weight:500;">eff. <span id="gas-eff-display">10,5</span> ct/kWh</span>
+          </div>
+          <div class="invest-zeile"><span style="color:var(--text-secondary);">Betrieb/Jahr</span><span class="invest-val invest-val--warn" id="gas-betrieb">2.700 &euro;</span></div>
+          <div class="invest-zeile"><span style="color:var(--text-secondary);">&euro;/m&sup2;/Monat</span><span class="invest-val invest-val--warn" id="gas-mon">1,73 &euro;</span></div>
+        </div>
+      </div>
+
+      <!-- Option C: Fernwärme -->
+      <div class="invest-karte" style="display:flex;flex-direction:column;">
+        <div class="invest-karte__header invest-karte__header--wp" style="background:#2a1a10;">
+          <div>
+            <p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#c8a460;margin-bottom:3px;">Option C &middot; Falls verfügbar</p>
+            <p class="invest-karte__titel" style="color:#ffffff;">Fernwärme <span class="hs" style="background:rgba(200,160,96,0.2);color:#f0c878;border-color:rgba(200,160,96,0.4);">Fernwärme</span></p>
+          </div>
+        </div>
+        <div style="flex:1;">
+          <div class="invest-zeile"><span style="color:var(--text-secondary);">Brutto-Investition</span><span class="invest-val" id="fw-invest-display">8.000 &euro;</span></div>
+          <div class="invest-zeile"><span style="color:var(--text-secondary);">BEG-Förderung</span><span class="invest-val" style="color:var(--text-tertiary);">keine</span></div>
+          <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">offener Restbetrag</span><span class="invest-val" id="fw-eigenanteil">8.000 &euro;</span></div>
+          <div class="invest-zeile" style="flex-direction:column;align-items:flex-start;gap:2px;">
+            <div style="display:flex;justify-content:space-between;width:100%;"><span style="color:var(--text-secondary);">Sonderumlage/WE</span><span class="invest-val" id="fw-sonderumlage">4.000 &euro;</span></div>
+            <div style="font-size:10px;color:var(--text-tertiary);" id="fw-sonderumlage-sub">8.000 &euro; &divide; 2 WE</div>
+          </div>
+          <div class="invest-zeile" style="background:#fdf5e8;flex-direction:column;align-items:flex-start;gap:2px;min-height:48px;">
+            <span style="color:var(--text-secondary);font-size:11px;">&#127777; FW: AP <span id="fw-ap-karte">20</span> ct &middot; LP <span id="fw-lp-karte">39,99</span> &euro;/kW</span>
+            <span style="color:#8a6030;font-size:11px;font-weight:500;">eff. <span id="fw-eff-karte">~23</span> ct/kWh</span>
+          </div>
+          <div class="invest-zeile"><span style="color:var(--text-secondary);">Betrieb/Jahr</span><span class="invest-val invest-val--warn" id="fw-betrieb">~5.200 &euro;</span></div>
+          <div class="invest-zeile"><span style="color:var(--text-secondary);">&euro;/m&sup2;/Monat</span><span class="invest-val invest-val--warn" id="fw-mon">3,33 &euro;</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- AMORTISATIONSRECHNER -->
+    <div class="rechner">
+      <div class="rechner__header">
+        <p class="rechner__titel">Amortisationsrechner — Was wäre wenn?</p>
+        <p class="rechner__sub">Verschieben Sie den Regler: Ab welchem Gaspreis rechnet sich die Wärmepumpe wann?</p>
+      </div>
+      <div class="rechner__body">
+        <div class="rechner__slider-row">
+          <div>
+            <p class="rechner__label">Gaspreis-Szenario in 5 Jahren (ct/kWh)</p>
+            <input type="range" id="obj-slider" min="8" max="25" step="0.5" value="10.5"
+              oninput="updateRechner(this.value)" style="--pct:14.7%">
+            <div class="slider-labels">
+              <span>8 ct</span>
+              <span>heute: ~10,5 ct</span>
+              <span>25 ct (Krise)</span>
+            </div>
+          </div>
+          <div class="rechner__val-display">
+            <div class="rechner__val" id="rechner-val">10,0</div>
+            <div class="rechner__val-unit">ct/kWh</div>
+          </div>
+        </div>
+
+        <!-- BALKEN-VISUALISIERUNG -->
+        <div style="margin-bottom:1rem;">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:#5a9896;margin-bottom:6px;">
+            <span>Gas (projiziert)</span>
+            <span id="bar-gas-label">2.700 &euro;/Jahr</span>
+          </div>
+          <div style="background:rgba(122,184,181,0.15);border-radius:3px;height:28px;position:relative;overflow:hidden;">
+            <div id="bar-gas" style="height:100%;background:rgba(200,90,90,0.5);border-radius:3px;transition:width 0.4s ease;width:100%;display:flex;align-items:center;padding-left:10px;">
+              <span id="bar-gas-inner" style="font-size:11px;color:#fff;font-weight:500;white-space:nowrap;">2.700 &euro;</span>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:#5a9896;margin-top:8px;margin-bottom:6px;">
+            <span>Wärmepumpe (stabil)</span>
+            <span id="bar-wp-label">1.750 &euro;/Jahr</span>
+          </div>
+          <div style="background:rgba(122,184,181,0.15);border-radius:3px;height:28px;position:relative;overflow:hidden;">
+            <div id="bar-wp" style="height:100%;background:#4a9bb8;border-radius:3px;transition:width 0.4s ease;display:flex;align-items:center;padding-left:10px;">
+              <span id="bar-wp-inner" style="font-size:11px;color:#ffffff;font-weight:500;">1.750 &euro;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rechner__ergebnis">
+        <div class="rechner__erg-item">
+          <p class="rechner__erg-lbl">Gaskosten/Jahr</p>
+          <p class="rechner__erg-val" id="r-gaskosten">2.700 &euro;</p>
+          <p class="rechner__erg-sub">bei diesem Szenario</p>
+        </div>
+        <div class="rechner__erg-item">
+          <p class="rechner__erg-lbl">Ersparnis WP/Jahr</p>
+          <p class="rechner__erg-val rechner__erg-val--signal" id="r-ersparnis">950 &euro;</p>
+          <p class="rechner__erg-sub">vs. Gas-Szenario</p>
+        </div>
+        <div class="rechner__erg-item">
+          <p class="rechner__erg-lbl">Amortisation</p>
+          <p class="rechner__erg-val" id="r-amort">~18 Jahre</p>
+          <p class="rechner__erg-sub" id="r-amort-sub">17.500 &euro; offener Restbetrag</p>
+        </div>
+      </div>
+      <p class="rechner__hinweis" id="r-hinweis">Bei 10 ct/kWh: ~18 Jahre. Steigt der Gaspreis, verkürzt sich das deutlich.</p>
+    </div>
+  </section>
+
+  <!-- NÄCHSTE SCHRITTE -->
+  <section class="section container">
+    <span class="label" style="margin-bottom:0.75rem;">Nächste Schritte</span>
+    <h2 style="margin-bottom:1rem;">Was konkret geplant ist</h2>
+    <div class="next-list">
+      <div class="next-item">
+        <span class="next-arrow next-arrow--on">&rarr;</span>
+        <span><strong>Fördermöglichkeiten prüfen</strong> — BEG-Förderung, KfW, BAFA-Zuschüsse für Einzeleigentümer klären.</span>
+      </div>
+      <div class="next-item">
+        <span class="next-arrow">&rarr;</span>
+        <span><strong>Kommunale Wärmeplanung abfragen</strong> — Ist für Tiefthal ein Fernwärmeanschluss vorgesehen?</span>
+      </div>
+      <div class="next-item">
+        <span class="next-arrow">&rarr;</span>
+        <span><strong>Energieberatung einholen</strong> — Verbraucherzentrale oder BAFA-geförderte Beratung als Einstieg.</span>
+      </div>
+      <div class="next-item">
+        <span class="next-arrow">&rarr;</span>
+        <span><strong>Heizlastberechnung beauftragen</strong> — Grundlage für Vergleich der Optionen und Förderanträge.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-profil">
+    <div class="container">
+      <div class="cta-profil__inner">
+        <span class="cta-profil__label">Begleiten Sie diesen Prozess</span>
+        <h2 class="cta-profil__h2">Entscheidungen wie diese verdienen Begleitung — nicht erst wenn sie getroffen sind.</h2>
+        <p class="cta-profil__text">
+          Dieses Profil wird laufend aktualisiert — sobald Fördermöglichkeiten geprüft sind,
+          die Energieberatung stattgefunden hat und erste Angebote vorliegen.
+          Wer ähnliche Fragen hat, muss diesen Weg nicht alleine gehen.
+        </p>
+        <form name="profil-kontakt-efh-tiefthal" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/danke" class="form">
+          <input type="hidden" name="form-name" value="profil-kontakt-efh-tiefthal">
+          <p style="display:none;"><input name="bot-field"></p>
+          <input type="text" name="name" placeholder="Ihr Name" required autocomplete="name">
+          <input type="email" name="email" placeholder="Ihre E-Mail-Adresse" required autocomplete="email">
+          <textarea name="nachricht" placeholder="Ihre Nachricht — Ihr Gebäude, Ihre Situation, Ihre Frage..."></textarea>
+          <button type="submit" class="btn-cta">Nachricht senden &rarr;</button>
+        </form>
+        <p style="font-size:12px;color:#7ab8b5;margin-top:0.75rem;">
+          Oder direkt: <a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="profil-footer">
+    <div class="container">
+      <div class="profil-footer__inner">
+        <span><a href="../index.html">hausentscheider.de</a> &nbsp;&middot;&nbsp; Daniel Schöberl &nbsp;&middot;&nbsp; Erfurt / München</span>
+        <span>Stand April 2026 &middot; wird aktualisiert &nbsp;&middot;&nbsp; <a href="../index.html#impressum">Impressum</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Gemeinsame Gebäudedatenbasis -->
+  <script src="../daten/gebaeude.js"></script>
+  <script>
+    // ── INVESTITIONSRECHNER ─────────────────────────────
+    // Gebäudedaten aus gemeinsamer Datenbasis laden
+    const G         = GEBAEUDE_DB['efh-erfurt-tiefthal'];
+    const RD        = G.rechnerDefaults;
+    const FLAECHE   = G.wohnflaeche;        // m²
+    const VERBRAUCH = G.gasverbrauchJahr;    // kWh/Jahr Gas
+    const WE        = G.wohnungen;           // Wohneinheiten
+    // Feste Energiepreise April 2026
+    let GAS_CT    = 10.5;      // ct/kWh — wird aus daten/preise.json geladen
+    let STROM_CT  = 27.0;      // ct/kWh — wird aus daten/preise.json geladen
+    let CO2_PREIS = 55.0;      // €/t — wird aus daten/preise.json geladen
+    const FW_CT     = 26.0;      // ct/kWh eff.
+
+    function amortFarbe(j) {
+      return j <= 6 ? '#CFF77F' : j <= 10 ? '#c8a460' : '#ffffff';
+    }
+
+    function calcInvest() {
+      // Eingaben
+      const wpInvest  = parseFloat(document.getElementById('inp-wp-invest').value)  || RD.wpInvest;
+      const wpFoerdRaw = parseFloat(document.getElementById('inp-wp-foerd').value);
+      const wpFoerd = isNaN(wpFoerdRaw) ? RD.wpFoerd : wpFoerdRaw;
+      const ruecklageRaw = parseFloat(document.getElementById('inp-ruecklage').value);
+      const ruecklage = isNaN(ruecklageRaw) ? RD.ruecklage : ruecklageRaw;
+      const gasInvest = parseFloat(document.getElementById('inp-gas-invest').value) || RD.gasInvest;
+      const fwInvest  = parseFloat(document.getElementById('inp-fw-invest').value)  || RD.fwInvest;
+      const jaz       = parseFloat(document.getElementById('inp-jaz').value)        || RD.jaz;
+
+      const effStrom = (STROM_CT / jaz).toFixed(1);
+      document.getElementById('wp-eff-ct').textContent = effStrom + ' ct/kWh';
+      const jazKarte = document.getElementById('jaz-karte');
+      if (jazKarte) jazKarte.textContent = jaz.toFixed(1).replace('.',',');
+      set('wp-strom-display', STROM_CT.toFixed(0));
+
+      const gasCt = GAS_CT.toFixed(1).replace('.',',');
+      set('gas-preis-display', gasCt);
+      set('gas-eff-display', gasCt);
+
+      // ── WP ──────────────────────────────────────────────
+      const wpFoerdBetrag    = Math.round(wpInvest * wpFoerd / 100);
+      const wpRestinvestition = wpInvest - wpFoerdBetrag;
+      const wpRuecklageUsed  = Math.min(ruecklage, wpRestinvestition);
+      const wpEigenanteil    = Math.max(0, wpRestinvestition - wpRuecklageUsed);
+      const wpSondProWE      = wpEigenanteil / WE;
+      // Betrieb: kWh Wärme ÷ JAZ × Strompreis
+      const wpStromkWh    = VERBRAUCH / jaz;
+      const wpBetrieb     = Math.round(wpStromkWh * STROM_CT / 100);
+      const wpMon         = wpBetrieb / 12 / FLAECHE;
+
+      // ── GAS ─────────────────────────────────────────────
+      const gasRuecklageUsed = Math.min(ruecklage, gasInvest);
+      const gasEigenanteil   = Math.max(0, gasInvest - gasRuecklageUsed);
+      const gasSondProWE     = gasEigenanteil / WE;
+      const CO2_FAKTOR_GAS = 0.201; // kg CO₂/kWh Gas (UBA)
+      const co2Preis       = parseFloat(document.getElementById('inp-co2').value) || RD.co2Preis;
+      const gasEnergie     = Math.round(VERBRAUCH * GAS_CT / 100);
+      const gasCO2Kosten   = Math.round(VERBRAUCH * CO2_FAKTOR_GAS * co2Preis / 1000);
+      const gasBetrieb     = gasEnergie + gasCO2Kosten;
+      const gasMon         = gasBetrieb / 12 / FLAECHE;
+
+      // ── FERNWÄRME — echte Preisstruktur mit Saisonkurve ─
+      const fwRuecklageUsed = Math.min(ruecklage, fwInvest);
+      const fwEigenanteil   = Math.max(0, fwInvest - fwRuecklageUsed);
+      const fwSondProWE     = fwEigenanteil / WE;
+      const fwAP     = parseFloat(document.getElementById('inp-fw-ap').value)     || RD.fwAp;
+      const fwLP     = parseFloat(document.getElementById('inp-fw-lp').value)     || RD.fwLp;
+      const fwFix    = parseFloat(document.getElementById('inp-fw-fix').value)    || RD.fwFix;
+      const fwSommer = parseFloat(document.getElementById('inp-fw-sommer').value) || RD.fwSommer;
+      const HEIZLAST = parseFloat(document.getElementById('inp-fw-heizlast').value) || RD.fwHeizlast;
+
+      const sf = fwSommer / 100;
+      const monatsfaktoren = [1.0, 1.0, 0.8, 0.5, sf, sf, sf, sf, sf, 0.5, 0.8, 1.0];
+      const jahresfaktor   = monatsfaktoren.reduce((a,b) => a+b, 0) / 12;
+
+      const fwLeistung = HEIZLAST * fwLP * jahresfaktor;
+      const fwBetrieb  = Math.round(VERBRAUCH * fwAP / 100 + fwLeistung + fwFix);
+      const fwMon      = fwBetrieb / 12 / FLAECHE;
+      const fwEffektiv = (fwBetrieb / VERBRAUCH * 100).toFixed(1);
+
+      // ── AMORTISATIONEN ───────────────────────────────────
+      const ersparnisGas  = gasBetrieb - wpBetrieb;
+      let amortWPGasText  = '—', amortWPGasColor = '#8a8680';
+      if (ersparnisGas > 0) {
+        const a = Math.round(wpEigenanteil / ersparnisGas * 10) / 10;
+        amortWPGasText  = `~${a} J.`;
+        amortWPGasColor = amortFarbe(a);
+      }
+
+      // ── DOM UPDATE ───────────────────────────────────────
+      const fmt    = (n) => Math.round(n).toLocaleString('de-DE');
+      const fmtD   = (n) => n.toFixed(2).replace('.', ',');
+
+      // WP Karte
+      set('wp-invest',      fmt(wpInvest) + ' €');
+      set('wp-foerd-lbl',   `BEG-Förderung (${Math.round(wpFoerd)}%)`);
+      set('wp-foerd-val',   '–' + fmt(wpFoerdBetrag) + ' €');
+      set('wp-eigenanteil', fmt(wpEigenanteil) + ' €');
+      sondUpdate('wp-sonderumlage','wp-sonderumlage-sub', wpEigenanteil, wpSondProWE);
+      set('wp-betrieb',     fmt(wpBetrieb) + ' €');
+      set('wp-mon',         fmtD(wpMon) + ' €');
+
+      // Gas Karte
+      set('gas-invest-display', fmt(gasInvest) + ' €');
+      set('gas-eigenanteil', fmt(gasEigenanteil) + ' €');
+      sondUpdate('gas-sonderumlage','gas-sonderumlage-sub', gasEigenanteil, gasSondProWE);
+      set('gas-betrieb',    fmt(gasBetrieb) + ' €');
+      set('gas-mon',        fmtD(gasMon) + ' €');
+
+      // FW Karte
+      set('fw-invest-display', fmt(fwInvest) + ' €');
+      set('fw-eigenanteil', fmt(fwEigenanteil) + ' €');
+      sondUpdate('fw-sonderumlage','fw-sonderumlage-sub', fwEigenanteil, fwSondProWE);
+      const fwApEl = document.getElementById('fw-ap-karte');
+      const fwLpEl = document.getElementById('fw-lp-karte');
+      const fwEffEl = document.getElementById('fw-eff-karte');
+      if (fwApEl) fwApEl.textContent = fwAP.toFixed(0);
+      if (fwLpEl) fwLpEl.textContent = fwLP.toFixed(2).replace('.',',');
+      if (fwEffEl) fwEffEl.textContent = '~' + fwEffektiv;
+      set('fw-betrieb',     fmt(fwBetrieb) + ' €');
+      set('fw-mon',         fmtD(fwMon) + ' €');
+
+      // Sync Amortrechner
+      window._wpEigenanteil = wpEigenanteil;
+      window._gasBetrieb    = gasBetrieb;
+      window._wpBetrieb     = wpBetrieb;
+
+      const objSlider = document.getElementById('obj-slider');
+      if (objSlider) updateRechner(objSlider.value);
+    }
+
+    function set(id, txt) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = txt;
+    }
+    function setCol(id, txt, col) {
+      const el = document.getElementById(id);
+      if (el) { el.textContent = txt; el.style.color = col; }
+    }
+    function sondUpdate(idVal, idSub, eigenanteil, proWE) {
+      const fmt = (n) => Math.round(n).toLocaleString('de-DE');
+      const el = document.getElementById(idVal);
+      const sub = document.getElementById(idSub);
+      if (eigenanteil > 0) {
+        if (el) el.textContent = fmt(proWE) + ' €';
+        if (sub) sub.textContent = fmt(eigenanteil) + ' € ÷ ' + WE + ' WE';
+      } else {
+        if (el) el.textContent = 'aus Rücklage';
+        if (sub) sub.textContent = 'Rücklage deckt offenen Restbetrag';
+      }
+    }
+
+    function updateRechner(val) {
+      const gaspreis = parseFloat(val);
+
+      // Dynamische Werte aus Gebäudeprofil, Fallback aus Datenbasis
+      const eigenanteil    = window._wpEigenanteil || RD.ruecklage || RD.wpInvest * (1 - RD.wpFoerd / 100);
+      const wpBetrieb      = window._wpBetrieb    || 1750;
+      const gasBetriebBasis = window._gasBetrieb   || G.heizkostenGesamtJahr;
+      const basisGas       = GAS_CT || 10.0;
+      const maxKosten      = gasBetriebBasis * (25 / basisGas);
+
+      // Slider-Gradient
+      const slider = document.getElementById('obj-slider');
+      const min = parseFloat(slider.min);
+      const max = parseFloat(slider.max);
+      const pct = ((gaspreis - min) / (max - min) * 100).toFixed(1);
+      slider.style.setProperty('--pct', pct + '%');
+      slider.style.background = `linear-gradient(to right, var(--signal) 0%, var(--signal) ${pct}%, rgba(122,184,181,0.3) ${pct}%, rgba(122,184,181,0.3) 100%)`;
+
+      // Gaspreis-Anzeige
+      document.getElementById('rechner-val').textContent = gaspreis.toFixed(1);
+
+      // Gaskosten aus Profil-Basis skalieren
+      const gaskosten = Math.round(gasBetriebBasis * (gaspreis / basisGas) / 100) * 100;
+      const ersparnis = gaskosten - wpBetrieb;
+      const amort     = ersparnis > 0 ? Math.round(eigenanteil / ersparnis * 10) / 10 : null;
+
+      // Balken
+      const maxVal = Math.max(gaskosten, maxKosten * 0.6);
+      const gasPct = Math.min((gaskosten / maxVal) * 100, 100).toFixed(1);
+      const wpPct  = Math.min((wpBetrieb  / maxVal) * 100, 100).toFixed(1);
+
+      document.getElementById('bar-gas').style.width = gasPct + '%';
+      document.getElementById('bar-wp').style.width  = wpPct  + '%';
+      document.getElementById('bar-gas-label').textContent = gaskosten.toLocaleString('de-DE') + ' €/Jahr';
+      document.getElementById('bar-gas-inner').textContent = gaskosten.toLocaleString('de-DE') + ' €';
+      const wpLbl = document.getElementById('bar-wp-label');
+      const wpInner = document.getElementById('bar-wp-inner');
+      if (wpLbl) wpLbl.textContent = wpBetrieb.toLocaleString('de-DE') + ' €/Jahr';
+      if (wpInner) wpInner.textContent = wpBetrieb.toLocaleString('de-DE') + ' €';
+
+      const intensity = Math.min((gaspreis - 8) / 17, 1);
+      const r = Math.round(180 + intensity * 40);
+      const g = Math.round(90  - intensity * 40);
+      document.getElementById('bar-gas').style.background = `rgba(${r},${g},70,0.55)`;
+
+      // Ergebnis-Felder
+      document.getElementById('r-gaskosten').textContent = gaskosten.toLocaleString('de-DE') + ' €';
+      document.getElementById('r-ersparnis').textContent = Math.max(0, ersparnis).toLocaleString('de-DE') + ' €';
+
+      const amortEl    = document.getElementById('r-amort');
+      const amortSubEl = document.getElementById('r-amort-sub');
+      const hinweisEl  = document.getElementById('r-hinweis');
+      const eigenFmt   = eigenanteil.toLocaleString('de-DE');
+
+      if (!amort || ersparnis <= 0) {
+        amortEl.textContent    = 'nicht rentabel';
+        amortEl.className      = 'rechner__erg-val';
+        amortSubEl.textContent = 'WP teurer als Gas';
+        hinweisEl.textContent  = `Bei ${gaspreis.toFixed(1)} ct/kWh rechnet sich die WP nicht — Gas bleibt günstiger.`;
+        hinweisEl.style.color  = 'rgba(255,255,255,0.6)';
+      } else if (amort <= 6) {
+        amortEl.textContent    = `~${amort} Jahre`;
+        amortEl.className      = 'rechner__erg-val rechner__erg-val--warn';
+        amortSubEl.textContent = `${eigenFmt} € offener Restbetrag`;
+        hinweisEl.textContent  = `Bei ${gaspreis.toFixed(1)} ct/kWh: Amortisation in nur ${amort} Jahren — steigende Gaspreise verkürzen die Amortisationszeit erheblich.`;
+        hinweisEl.style.color  = 'var(--signal)';
+      } else if (amort <= 12) {
+        amortEl.textContent    = `~${amort} Jahre`;
+        amortEl.className      = 'rechner__erg-val rechner__erg-val--warn';
+        amortSubEl.textContent = `${eigenFmt} € offener Restbetrag`;
+        hinweisEl.textContent  = `Bei ${gaspreis.toFixed(1)} ct/kWh: ~${amort} Jahre — höhere Gaspreise verbessern die Wirtschaftlichkeit der Wärmepumpe.`;
+        hinweisEl.style.color  = '#ffffff';
+      } else {
+        amortEl.textContent    = `~${amort} Jahre`;
+        amortEl.className      = 'rechner__erg-val';
+        amortSubEl.textContent = `${eigenFmt} € offener Restbetrag`;
+        hinweisEl.textContent  = `Bei ${gaspreis.toFixed(1)} ct/kWh: ~${amort} Jahre. Je höher der Gaspreis, desto schneller nähert sich die Wärmepumpe wirtschaftlich an.`;
+        hinweisEl.style.color  = '#ffffff';
+      }
+    }
+
+    function updateSliderGrad(el) {
+      const pct = ((el.value - el.min) / (el.max - el.min) * 100).toFixed(1);
+      el.style.setProperty('--pct', pct + '%');
+    }
+
+    function initPage() {
+      // Rechner-Startwerte aus Gebäudedatenbasis setzen
+      if (RD) {
+        document.getElementById('inp-wp-invest').value   = RD.wpInvest;
+        document.getElementById('inp-wp-foerd').value     = RD.wpFoerd;
+        document.getElementById('inp-ruecklage').value    = RD.ruecklage;
+        document.getElementById('inp-gas-invest').value   = RD.gasInvest;
+        document.getElementById('inp-fw-invest').value    = RD.fwInvest;
+        document.getElementById('inp-jaz').value          = RD.jaz;
+        document.getElementById('inp-fw-ap').value        = RD.fwAp;
+        document.getElementById('inp-fw-lp').value        = RD.fwLp;
+        document.getElementById('inp-fw-fix').value       = RD.fwFix;
+        document.getElementById('inp-fw-sommer').value    = RD.fwSommer;
+        document.getElementById('inp-fw-heizlast').value  = RD.fwHeizlast;
+        document.getElementById('inp-co2').value          = RD.co2Preis;
+        // Slider-Displays synchronisieren
+        document.getElementById('jaz-display').textContent       = RD.jaz.toFixed(1);
+        document.getElementById('fw-sommer-display').textContent = RD.fwSommer + '%';
+        document.getElementById('co2-display').textContent       = RD.co2Preis + ' €/t';
+      }
+      // Slider-Gradienten VOR calcInvest() setzen
+      updateSliderGrad(document.getElementById('inp-fw-sommer'));
+      updateSliderGrad(document.getElementById('inp-jaz'));
+      updateSliderGrad(document.getElementById('inp-co2'));
+      calcInvest();
+      updateRechner(document.getElementById('obj-slider').value);
+    }
+
+    // Sofort mit Standardwerten initialisieren
+    initPage();
+
+    // Preise aus zentraler Datenbank nachladen und neu berechnen
+    fetch('../daten/preise.json')
+      .then(r => r.json())
+      .then(p => {
+        STROM_CT  = p.strom_ct;
+        GAS_CT    = p.gas_ct;
+        if (p.co2_preis) {
+          CO2_PREIS = p.co2_preis;
+          const co2El = document.getElementById('inp-co2');
+          if (co2El) { co2El.value = CO2_PREIS; }
+          set('co2-display', CO2_PREIS.toFixed(0) + ' €/t');
+        }
+        set('preis-stand', p.stand);
+        set('bar-strom', p.strom_ct.toFixed(1).replace('.',',') + ' ct/kWh');
+        set('preisbar-gas',   p.gas_ct.toFixed(1).replace('.',',') + ' ct/kWh');
+        const apEl = document.getElementById('inp-fw-ap');
+        if (apEl) apEl.value = p.fw_ap_ct;
+        const lpEl = document.getElementById('inp-fw-lp');
+        if (lpEl) lpEl.value = p.fw_lp;
+        initPage();
+      })
+      .catch(() => {}); // Fallback: Standardwerte bleiben
+  </script>
+</body>
+</html>
