@@ -194,14 +194,14 @@
       <form
         name="objekt-eintragen" method="POST"
         data-netlify="true"
+        data-netlify-honeypot="bot-field"
         enctype="multipart/form-data"
-        action="/objekt-eingetragen.html" 
+        action="/objekt-eingetragen.html"
       >
         <input type="hidden" name="form-name" value="objekt-eintragen">
         <input type="hidden" name="subject" value="Neuer Objekt-Eintrag">
-        <input type="text" name="testfeld" value="Testwert">
-
-        <input type="hidden" name="status_zustand" id="status_zustand_value">
+        <!-- Honeypot gegen Spam-Bots -->
+        <p style="display:none"><label>Nicht ausfüllen: <input name="bot-field"></label></p>
 
         <!-- 1. Kontakt -->
         <div class="form-section">
@@ -246,10 +246,10 @@
               <label class="field__label" for="typ">Eigentumsform *</label>
               <select id="typ" name="typ" required>
                 <option value="">Bitte wählen</option>
-                <option>WEG (Wohnungseigentümergemeinschaft)</option>
-                <option>Einzeleigentümer — Mehrfamilienhaus</option>
-                <option>Einzeleigentümer — Einfamilienhaus / Doppelhaus</option>
-                <option>Bruchteilseigentum</option>
+                <option value="weg">WEG (Wohnungseigentümergemeinschaft)</option>
+                <option value="einzeleigentuemer_mfh">Einzeleigentümer — Mehrfamilienhaus</option>
+                <option value="einzeleigentuemer_efh">Einzeleigentümer — Einfamilienhaus / Doppelhaus</option>
+                <option value="bruchteilseigentum">Bruchteilseigentum</option>
               </select>
             </div>
             <div class="field">
@@ -275,14 +275,14 @@
               <label class="field__label" for="heizung">Heizsystem *</label>
               <select id="heizung" name="heizung" required>
                 <option value="">Bitte wählen</option>
-                <option>Gas-Brennwert (zentral)</option>
-                <option>Gas-Etagenheizungen (dezentral)</option>
-                <option>Fernwärme</option>
-                <option>Öl-Heizung</option>
-                <option>Wärmepumpe (Luft)</option>
-                <option>Wärmepumpe (Erdreich)</option>
-                <option>Pellets / Biomasse</option>
-                <option>Sonstiges</option>
+                <option value="gas_brennwert">Gas-Brennwert (zentral)</option>
+                <option value="gas_etage">Gas-Etagenheizungen (dezentral)</option>
+                <option value="fernwaerme">Fernwärme</option>
+                <option value="oel">Öl-Heizung</option>
+                <option value="wp_luft">Wärmepumpe (Luft)</option>
+                <option value="wp_erde">Wärmepumpe (Erdreich)</option>
+                <option value="pellets">Pellets / Biomasse</option>
+                <option value="sonstiges">Sonstiges</option>
               </select>
             </div>
             <div class="field">
@@ -404,9 +404,9 @@
             </div>
           </div>
           <div class="field">
-            <label class="field__label" for="besonderheit">Besondere Situation oder Frage</label>
+            <label class="field__label" for="besonderheit_investition">Besondere Situation oder Frage</label>
             <span class="field__hint">Fernwärmesatzung? Denkmalschutz? Unklare Förderlage? Kurz beschreiben.</span>
-            <textarea id="besonderheit" name="besonderheit" placeholder="z.B. Wir haben eine Fernwärmesatzung von 2008 und wissen nicht, ob wir eine Befreiung bekommen können..."></textarea>
+            <textarea id="besonderheit_investition" name="besonderheit_investition" placeholder="z.B. Wir haben eine Fernwärmesatzung von 2008 und wissen nicht, ob wir eine Befreiung bekommen können..."></textarea>
           </div>
         </div>
 
@@ -535,7 +535,6 @@
           div.className = 'status-item';
           div.innerHTML = '<input type="text" name="status_punkt[]" placeholder="z.B. Fernwärme-Angebot einholen"><select name="status_zustand[]"><option value="handlungsbedarf">⚠ Handlungsbedarf</option><option value="vorbereitung" selected>→ In Vorbereitung</option><option value="erledigt">✓ Erledigt</option></select>';
           liste.appendChild(div);
-          document.getElementById("status_zustand_value").value = "vorbereitung";
         }
         function addSchrittItem() {
           const liste = document.getElementById('schritte-liste');
