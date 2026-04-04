@@ -450,7 +450,7 @@
         <div style="flex:1;">
           <div class="invest-zeile"><span style="color:var(--text-secondary);">Brutto-Investition</span><span class="invest-val" id="wp-invest">132.000 €</span></div>
           <div class="invest-zeile"><span style="color:var(--text-secondary);" id="wp-foerd-lbl">BEG-Förderung (58%)</span><span class="invest-val invest-val--gut" id="wp-foerd-val">–77.000 €</span></div>
-          <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">Eigenanteil WEG</span><span class="invest-val" id="wp-eigenanteil">55.000 €</span></div>
+          <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">Offener Restbetrag</span><span class="invest-val" id="wp-eigenanteil">55.000 €</span></div>
           <div class="invest-zeile" style="flex-direction:column;align-items:flex-start;gap:2px;">
             <div style="display:flex;justify-content:space-between;width:100%;"><span style="color:var(--text-secondary);">Sonderumlage/WE</span><span class="invest-val" id="wp-sonderumlage">0 €</span></div>
             <div style="font-size:10px;color:var(--text-tertiary);padding-left:0;" id="wp-sonderumlage-sub">aus Rücklage gedeckt</div>
@@ -476,7 +476,7 @@
         <div style="flex:1;">
           <div class="invest-zeile"><span style="color:var(--text-secondary);">Brutto-Investition</span><span class="invest-val" id="gas-invest-display">25.000 €</span></div>
           <div class="invest-zeile"><span style="color:var(--text-secondary);">BEG-Förderung</span><span class="invest-val" style="color:var(--text-tertiary);">keine</span></div>
-          <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">Eigenanteil WEG</span><span class="invest-val" id="gas-eigenanteil">25.000 €</span></div>
+          <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">Offener Restbetrag</span><span class="invest-val" id="gas-eigenanteil">25.000 €</span></div>
           <div class="invest-zeile" style="flex-direction:column;align-items:flex-start;gap:2px;">
             <div style="display:flex;justify-content:space-between;width:100%;"><span style="color:var(--text-secondary);">Sonderumlage/WE</span><span class="invest-val" id="gas-sonderumlage">1.786 €</span></div>
             <div style="font-size:10px;color:var(--text-tertiary);" id="gas-sonderumlage-sub">25.000 € ÷ 14 WE</div>
@@ -502,7 +502,7 @@
         <div style="flex:1;">
           <div class="invest-zeile"><span style="color:var(--text-secondary);">Brutto-Investition</span><span class="invest-val" id="fw-invest-display">13.650 €</span></div>
           <div class="invest-zeile"><span style="color:var(--text-secondary);">BEG-Förderung</span><span class="invest-val" style="color:var(--text-tertiary);">keine</span></div>
-          <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">Eigenanteil WEG</span><span class="invest-val" id="fw-eigenanteil">~13.650 €</span></div>
+          <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">Offener Restbetrag</span><span class="invest-val" id="fw-eigenanteil">~13.650 €</span></div>
           <div class="invest-zeile" style="flex-direction:column;align-items:flex-start;gap:2px;">
             <div style="display:flex;justify-content:space-between;width:100%;"><span style="color:var(--text-secondary);">Sonderumlage/WE</span><span class="invest-val" id="fw-sonderumlage">975 €</span></div>
             <div style="font-size:10px;color:var(--text-tertiary);" id="fw-sonderumlage-sub">13.650 € ÷ 14 WE</div>
@@ -1044,7 +1044,7 @@ const wpFoerd = isNaN(wpFoerdRaw) ? 58 : wpFoerdRaw;
         if (sub) sub.textContent = fmt(eigenanteil) + ' € ÷ ' + WE + ' WE';
       } else {
         if (el) el.textContent = 'aus Rücklage';
-        if (sub) sub.textContent = 'Rücklage deckt Eigenanteil';
+        if (sub) sub.textContent = 'Rücklage deckt Restbetrag';
       }
     }
 
