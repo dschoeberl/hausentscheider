@@ -201,6 +201,8 @@
         <input type="hidden" name="subject" value="Neuer Objekt-Eintrag">
         <input type="text" name="testfeld" value="Testwert">
 
+        <input type="hidden" name="status_zustand" id="status_zustand_value">
+
         <!-- 1. Kontakt -->
         <div class="form-section">
           <p class="form-section__title">
@@ -346,11 +348,11 @@
             <label class="field__label" for="phase" style="margin-top:1rem;">Aktuelle Phase *</label>
             <select id="phase" name="phase" required>
               <option value="">Bitte wählen</option>
-              <option>Analyse — erste Bestandsaufnahme</option>
-              <option>Prüfung — Angebote einholen / vergleichen</option>
-              <option>Entschieden — Umsetzung geplant</option>
-              <option>Umgesetzt — neue Anlage in Betrieb</option>
-              <option>Noch keine Beschäftigung mit dem Thema</option>
+              <option value="analyse">Analyse — erste Bestandsaufnahme</option>
+              <option value="pruefung">Prüfung — Angebote einholen / vergleichen</option>
+              <option value="entscheidung">Entscheidung — Umsetzung geplant</option>
+              <option value="umgesetzt">Umgesetzt — neue Anlage in Betrieb</option>
+              <option value="keine_beschaeftigung">Noch keine Beschäftigung mit dem Thema</option>
             </select>
           </div>
           <div class="field">
@@ -461,6 +463,7 @@
             <div class="status-item">
               <input type="text" name="status_punkt[]" placeholder="z.B. Heizlastberechnung beauftragt">
               <select name="status_zustand[]">
+                <option value="">Bitte wählen</option>
                 <option value="handlungsbedarf">⚠ Handlungsbedarf</option>
                 <option value="vorbereitung" selected>→ In Vorbereitung</option>
                 <option value="erledigt">✓ Erledigt</option>
@@ -532,6 +535,7 @@
           div.className = 'status-item';
           div.innerHTML = '<input type="text" name="status_punkt[]" placeholder="z.B. Fernwärme-Angebot einholen"><select name="status_zustand[]"><option value="handlungsbedarf">⚠ Handlungsbedarf</option><option value="vorbereitung" selected>→ In Vorbereitung</option><option value="erledigt">✓ Erledigt</option></select>';
           liste.appendChild(div);
+          document.getElementById("status_zustand_value").value = "vorbereitung";
         }
         function addSchrittItem() {
           const liste = document.getElementById('schritte-liste');
