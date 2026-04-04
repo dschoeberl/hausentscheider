@@ -450,7 +450,7 @@
         <div style="flex:1;">
           <div class="invest-zeile"><span style="color:var(--text-secondary);">Brutto-Investition</span><span class="invest-val" id="wp-invest">132.000 €</span></div>
           <div class="invest-zeile"><span style="color:var(--text-secondary);" id="wp-foerd-lbl">BEG-Förderung (58%)</span><span class="invest-val invest-val--gut" id="wp-foerd-val">–77.000 €</span></div>
-          <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">Eigenanteil WEG</span><span class="invest-val" id="wp-eigenanteil">55.000 €</span></div>
+          <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">offener Restbetrag</span><span class="invest-val" id="wp-eigenanteil">55.000 €</span></div>
           <div class="invest-zeile" style="flex-direction:column;align-items:flex-start;gap:2px;">
             <div style="display:flex;justify-content:space-between;width:100%;"><span style="color:var(--text-secondary);">Sonderumlage/WE</span><span class="invest-val" id="wp-sonderumlage">0 €</span></div>
             <div style="font-size:10px;color:var(--text-tertiary);padding-left:0;" id="wp-sonderumlage-sub">aus Rücklage gedeckt</div>
@@ -476,7 +476,7 @@
         <div style="flex:1;">
           <div class="invest-zeile"><span style="color:var(--text-secondary);">Brutto-Investition</span><span class="invest-val" id="gas-invest-display">25.000 €</span></div>
           <div class="invest-zeile"><span style="color:var(--text-secondary);">BEG-Förderung</span><span class="invest-val" style="color:var(--text-tertiary);">keine</span></div>
-          <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">Eigenanteil WEG</span><span class="invest-val" id="gas-eigenanteil">25.000 €</span></div>
+          <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">offener Restbetrag</span><span class="invest-val" id="gas-eigenanteil">25.000 €</span></div>
           <div class="invest-zeile" style="flex-direction:column;align-items:flex-start;gap:2px;">
             <div style="display:flex;justify-content:space-between;width:100%;"><span style="color:var(--text-secondary);">Sonderumlage/WE</span><span class="invest-val" id="gas-sonderumlage">1.786 €</span></div>
             <div style="font-size:10px;color:var(--text-tertiary);" id="gas-sonderumlage-sub">25.000 € ÷ 14 WE</div>
@@ -502,7 +502,7 @@
         <div style="flex:1;">
           <div class="invest-zeile"><span style="color:var(--text-secondary);">Brutto-Investition</span><span class="invest-val" id="fw-invest-display">13.650 €</span></div>
           <div class="invest-zeile"><span style="color:var(--text-secondary);">BEG-Förderung</span><span class="invest-val" style="color:var(--text-tertiary);">keine</span></div>
-          <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">Eigenanteil WEG</span><span class="invest-val" id="fw-eigenanteil">~13.650 €</span></div>
+          <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">offener Restbetrag</span><span class="invest-val" id="fw-eigenanteil">~13.650 €</span></div>
           <div class="invest-zeile" style="flex-direction:column;align-items:flex-start;gap:2px;">
             <div style="display:flex;justify-content:space-between;width:100%;"><span style="color:var(--text-secondary);">Sonderumlage/WE</span><span class="invest-val" id="fw-sonderumlage">975 €</span></div>
             <div style="font-size:10px;color:var(--text-tertiary);" id="fw-sonderumlage-sub">13.650 € ÷ 14 WE</div>
@@ -879,12 +879,16 @@
     </div>
   </footer>
 
+  <!-- Gemeinsame Gebäudedatenbasis -->
+  <script src="../daten/gebaeude.js"></script>
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // ── INVESTITIONSRECHNER ─────────────────────────────
-    // Feste Werte aus Profil
-    const FLAECHE   = 784;       // m²
-    const VERBRAUCH = 101240;    // kWh/Jahr Gas
-    const WE        = 14;        // Wohneinheiten
+    // Gebäudedaten aus gemeinsamer Datenbasis laden
+    const G         = GEBAEUDE_DB['theaterstrasse-4'];
+    const RD        = G.rechnerDefaults;
+    const FLAECHE   = G.wohnflaeche;        // m²
+    const VERBRAUCH = G.gasverbrauchJahr;    // kWh/Jahr Gas
+    const WE        = G.wohnungen;           // Wohneinheiten
     // Feste Energiepreise April 2026
     let GAS_CT    = 10.5;      // ct/kWh — wird aus daten/preise.json geladen
     let STROM_CT  = 27.0;      // ct/kWh — wird aus daten/preise.json geladen
@@ -897,14 +901,14 @@
 
     function calcInvest() {
       // Eingaben
-      const wpInvest  = parseFloat(document.getElementById('inp-wp-invest').value)  || 132000;
+      const wpInvest  = parseFloat(document.getElementById('inp-wp-invest').value)  || RD.wpInvest;
       const wpFoerdRaw = parseFloat(document.getElementById('inp-wp-foerd').value);
-const wpFoerd = isNaN(wpFoerdRaw) ? 58 : wpFoerdRaw;
+      const wpFoerd = isNaN(wpFoerdRaw) ? RD.wpFoerd : wpFoerdRaw;
       const ruecklageRaw = parseFloat(document.getElementById('inp-ruecklage').value);
-const ruecklage = isNaN(ruecklageRaw) ? 55000 : ruecklageRaw;
-      const gasInvest = parseFloat(document.getElementById('inp-gas-invest').value) || 25000;
-      const fwInvest  = parseFloat(document.getElementById('inp-fw-invest').value)  || 13650;
-      const jaz       = parseFloat(document.getElementById('inp-jaz').value)        || 3.8;
+      const ruecklage = isNaN(ruecklageRaw) ? RD.ruecklage : ruecklageRaw;
+      const gasInvest = parseFloat(document.getElementById('inp-gas-invest').value) || RD.gasInvest;
+      const fwInvest  = parseFloat(document.getElementById('inp-fw-invest').value)  || RD.fwInvest;
+      const jaz       = parseFloat(document.getElementById('inp-jaz').value)        || RD.jaz;
 
       const effStrom = (STROM_CT / jaz).toFixed(1);
       document.getElementById('wp-eff-ct').textContent = effStrom + ' ct/kWh';
@@ -932,7 +936,7 @@ const ruecklage = isNaN(ruecklageRaw) ? 55000 : ruecklageRaw;
       const gasEigenanteil   = Math.max(0, gasInvest - gasRuecklageUsed);
       const gasSondProWE     = gasEigenanteil / WE;
       const CO2_FAKTOR_GAS = 0.201; // kg CO₂/kWh Gas (UBA)
-      const co2Preis       = parseFloat(document.getElementById('inp-co2').value) || CO2_PREIS;
+      const co2Preis       = parseFloat(document.getElementById('inp-co2').value) || RD.co2Preis;
       const gasEnergie     = Math.round(VERBRAUCH * GAS_CT / 100);
       const gasCO2Kosten   = Math.round(VERBRAUCH * CO2_FAKTOR_GAS * co2Preis / 1000);
       const gasBetrieb     = gasEnergie + gasCO2Kosten;
@@ -942,11 +946,11 @@ const ruecklage = isNaN(ruecklageRaw) ? 55000 : ruecklageRaw;
       const fwRuecklageUsed = Math.min(ruecklage, fwInvest);
       const fwEigenanteil   = Math.max(0, fwInvest - fwRuecklageUsed);
       const fwSondProWE     = fwEigenanteil / WE;
-      const fwAP     = parseFloat(document.getElementById('inp-fw-ap').value)     || 20;
-      const fwLP     = parseFloat(document.getElementById('inp-fw-lp').value)     || 39.99;
-      const fwFix    = parseFloat(document.getElementById('inp-fw-fix').value)    || 200;
-      const fwSommer = parseFloat(document.getElementById('inp-fw-sommer').value) || 20; // % Sommerleistung
-      const HEIZLAST = parseFloat(document.getElementById('inp-fw-heizlast').value) || 62;
+      const fwAP     = parseFloat(document.getElementById('inp-fw-ap').value)     || RD.fwAp;
+      const fwLP     = parseFloat(document.getElementById('inp-fw-lp').value)     || RD.fwLp;
+      const fwFix    = parseFloat(document.getElementById('inp-fw-fix').value)    || RD.fwFix;
+      const fwSommer = parseFloat(document.getElementById('inp-fw-sommer').value) || RD.fwSommer;
+      const HEIZLAST = parseFloat(document.getElementById('inp-fw-heizlast').value) || RD.fwHeizlast;
 
       // Monatsprofil: Jan=1.0, Feb=1.0, Mär=0.8, Apr=0.5,
       //               Mai–Sep = Sommerfaktor, Okt=0.5, Nov=0.8, Dez=1.0
@@ -1053,10 +1057,10 @@ const ruecklage = isNaN(ruecklageRaw) ? 55000 : ruecklageRaw;
     function updateRechner(val) {
       const gaspreis = parseFloat(val);
 
-      // Dynamische Werte aus Gebäudeprofil (oben), Fallback für Erstinitialisierung
-      const eigenanteil    = window._wpEigenanteil || 55000;
+      // Dynamische Werte aus Gebäudeprofil (oben), Fallback aus Datenbasis
+      const eigenanteil    = window._wpEigenanteil || RD.ruecklage;
       const wpBetrieb      = window._wpBetrieb    || 8500;
-      const gasBetriebBasis = window._gasBetrieb   || 11000;
+      const gasBetriebBasis = window._gasBetrieb   || G.heizkostenGesamtJahr;
       const basisGas       = GAS_CT || 10.0;
       const maxKosten      = gasBetriebBasis * (25 / basisGas);
 
@@ -1148,6 +1152,25 @@ const ruecklage = isNaN(ruecklageRaw) ? 55000 : ruecklageRaw;
     }
 
     function initPage() {
+      // Rechner-Startwerte aus Gebäudedatenbasis setzen
+      if (RD) {
+        document.getElementById('inp-wp-invest').value   = RD.wpInvest;
+        document.getElementById('inp-wp-foerd').value     = RD.wpFoerd;
+        document.getElementById('inp-ruecklage').value    = RD.ruecklage;
+        document.getElementById('inp-gas-invest').value   = RD.gasInvest;
+        document.getElementById('inp-fw-invest').value    = RD.fwInvest;
+        document.getElementById('inp-jaz').value          = RD.jaz;
+        document.getElementById('inp-fw-ap').value        = RD.fwAp;
+        document.getElementById('inp-fw-lp').value        = RD.fwLp;
+        document.getElementById('inp-fw-fix').value       = RD.fwFix;
+        document.getElementById('inp-fw-sommer').value    = RD.fwSommer;
+        document.getElementById('inp-fw-heizlast').value  = RD.fwHeizlast;
+        document.getElementById('inp-co2').value          = RD.co2Preis;
+        // Slider-Displays synchronisieren
+        document.getElementById('jaz-display').textContent       = RD.jaz.toFixed(1);
+        document.getElementById('fw-sommer-display').textContent = RD.fwSommer + '%';
+        document.getElementById('co2-display').textContent       = RD.co2Preis + ' €/t';
+      }
       // Slider-Gradienten VOR calcInvest() setzen
       updateSliderGrad(document.getElementById('inp-fw-sommer'));
       updateSliderGrad(document.getElementById('inp-jaz'));
