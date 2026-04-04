@@ -898,7 +898,8 @@
     function calcInvest() {
       // Eingaben
       const wpInvest  = parseFloat(document.getElementById('inp-wp-invest').value)  || 132000;
-      const wpFoerd   = parseFloat(document.getElementById('inp-wp-foerd').value)   || 58;
+      const wpFoerdRaw = parseFloat(document.getElementById('inp-wp-foerd').value);
+const wpFoerd = isNaN(wpFoerdRaw) ? 58 : wpFoerdRaw;
       const ruecklage = parseFloat(document.getElementById('inp-ruecklage').value)  || 55000;
       const gasInvest = parseFloat(document.getElementById('inp-gas-invest').value) || 25000;
       const fwInvest  = parseFloat(document.getElementById('inp-fw-invest').value)  || 13650;
