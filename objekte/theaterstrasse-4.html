@@ -915,18 +915,20 @@
       set('gas-eff-display', gasCt);
 
       // ── WP ──────────────────────────────────────────────
-      const wpFoerdBetrag = Math.round(wpInvest * wpFoerd / 100);
-      const wpEigenanteil = wpInvest - wpFoerdBetrag;
-      const wpSondBetrag  = Math.max(0, wpEigenanteil - ruecklage);
-      const wpSondProWE   = wpSondBetrag / WE;
+      const wpFoerdBetrag    = Math.round(wpInvest * wpFoerd / 100);
+      const wpRestinvestition = wpInvest - wpFoerdBetrag;
+      const wpRuecklageUsed  = Math.min(ruecklage, wpRestinvestition);
+      const wpEigenanteil    = Math.max(0, wpRestinvestition - wpRuecklageUsed);
+      const wpSondProWE      = wpEigenanteil / WE;
       // Betrieb: kWh Wärme ÷ JAZ × Strompreis
       const wpStromkWh    = VERBRAUCH / jaz;
       const wpBetrieb     = Math.round(wpStromkWh * STROM_CT / 100);
       const wpMon         = wpBetrieb / 12 / FLAECHE;
 
       // ── GAS ─────────────────────────────────────────────
-      const gasSondBetrag  = Math.max(0, gasInvest - ruecklage);
-      const gasSondProWE   = gasSondBetrag / WE;
+      const gasRuecklageUsed = Math.min(ruecklage, gasInvest);
+      const gasEigenanteil   = Math.max(0, gasInvest - gasRuecklageUsed);
+      const gasSondProWE     = gasEigenanteil / WE;
       const CO2_FAKTOR_GAS = 0.201; // kg CO₂/kWh Gas (UBA)
       const co2Preis       = parseFloat(document.getElementById('inp-co2').value) || CO2_PREIS;
       const gasEnergie     = Math.round(VERBRAUCH * GAS_CT / 100);
@@ -935,8 +937,9 @@
       const gasMon         = gasBetrieb / 12 / FLAECHE;
 
       // ── FERNWÄRME — echte Preisstruktur mit Saisonkurve ─
-      const fwSondBetrag  = Math.max(0, fwInvest - ruecklage);
-      const fwSondProWE   = fwSondBetrag / WE;
+      const fwRuecklageUsed = Math.min(ruecklage, fwInvest);
+      const fwEigenanteil   = Math.max(0, fwInvest - fwRuecklageUsed);
+      const fwSondProWE     = fwEigenanteil / WE;
       const fwAP     = parseFloat(document.getElementById('inp-fw-ap').value)     || 20;
       const fwLP     = parseFloat(document.getElementById('inp-fw-lp').value)     || 39.99;
       const fwFix    = parseFloat(document.getElementById('inp-fw-fix').value)    || 200;
@@ -985,23 +988,23 @@
       set('wp-foerd-lbl',   `BEG-Förderung (${Math.round(wpFoerd)}%)`);
       set('wp-foerd-val',   '–' + fmt(wpFoerdBetrag) + ' €');
       set('wp-eigenanteil', fmt(wpEigenanteil) + ' €');
-      sondUpdate('wp-sonderumlage','wp-sonderumlage-sub', wpSondBetrag, wpSondProWE, wpEigenanteil);
+      sondUpdate('wp-sonderumlage','wp-sonderumlage-sub', wpEigenanteil, wpSondProWE);
       set('wp-betrieb',     fmt(wpBetrieb) + ' €');
       set('wp-mon',         fmtD(wpMon) + ' €');
       setCol('wp-amort', amortWPGasText, amortWPGasColor);
 
       // Gas Karte
       set('gas-invest-display', fmt(gasInvest) + ' €');
-      set('gas-eigenanteil', fmt(gasInvest) + ' €');
-      sondUpdate('gas-sonderumlage','gas-sonderumlage-sub', gasSondBetrag, gasSondProWE, gasInvest);
+      set('gas-eigenanteil', fmt(gasEigenanteil) + ' €');
+      sondUpdate('gas-sonderumlage','gas-sonderumlage-sub', gasEigenanteil, gasSondProWE);
       set('gas-betrieb',    fmt(gasBetrieb) + ' €');
       set('gas-mon',        fmtD(gasMon) + ' €');
       setCol('gas-amort', amortWPGasText, amortWPGasColor);
 
       // FW Karte
       set('fw-invest-display', fmt(fwInvest) + ' €');
-      set('fw-eigenanteil', fmt(fwInvest) + ' €');
-      sondUpdate('fw-sonderumlage','fw-sonderumlage-sub', fwSondBetrag, fwSondProWE, fwInvest);
+      set('fw-eigenanteil', fmt(fwEigenanteil) + ' €');
+      sondUpdate('fw-sonderumlage','fw-sonderumlage-sub', fwEigenanteil, fwSondProWE);
       const fwApEl = document.getElementById('fw-ap-karte');
       const fwLpEl = document.getElementById('fw-lp-karte');
       const fwEffEl = document.getElementById('fw-eff-karte');
@@ -1031,14 +1034,13 @@
       const el = document.getElementById(id);
       if (el) { el.textContent = txt; el.style.color = col; }
     }
-    function sondUpdate(idVal, idSub, betrag, proWE, invest) {
-      const WE = 14;
+    function sondUpdate(idVal, idSub, eigenanteil, proWE) {
       const fmt = (n) => Math.round(n).toLocaleString('de-DE');
       const el = document.getElementById(idVal);
       const sub = document.getElementById(idSub);
-      if (betrag > 0) {
+      if (eigenanteil > 0) {
         if (el) el.textContent = fmt(proWE) + ' €';
-        if (sub) sub.textContent = fmt(invest) + ' € − Rücklage ÷ ' + WE + ' WE';
+        if (sub) sub.textContent = fmt(eigenanteil) + ' € ÷ ' + WE + ' WE';
       } else {
         if (el) el.textContent = 'aus Rücklage';
         if (sub) sub.textContent = 'Rücklage deckt Eigenanteil';
