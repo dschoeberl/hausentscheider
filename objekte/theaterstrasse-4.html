@@ -900,7 +900,8 @@
       const wpInvest  = parseFloat(document.getElementById('inp-wp-invest').value)  || 132000;
       const wpFoerdRaw = parseFloat(document.getElementById('inp-wp-foerd').value);
 const wpFoerd = isNaN(wpFoerdRaw) ? 58 : wpFoerdRaw;
-      const ruecklage = parseFloat(document.getElementById('inp-ruecklage').value)  || 55000;
+      const ruecklageRaw = parseFloat(document.getElementById('inp-ruecklage').value);
+const ruecklage = isNaN(ruecklageRaw) ? 55000 : ruecklageRaw;
       const gasInvest = parseFloat(document.getElementById('inp-gas-invest').value) || 25000;
       const fwInvest  = parseFloat(document.getElementById('inp-fw-invest').value)  || 13650;
       const jaz       = parseFloat(document.getElementById('inp-jaz').value)        || 3.8;
