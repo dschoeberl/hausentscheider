@@ -741,11 +741,11 @@
           </div>
           <div style="display:flex;justify-content:space-between;font-size:11px;color:#5a9896;margin-top:8px;margin-bottom:6px;">
             <span>Wärmepumpe (stabil)</span>
-            <span>8.500 €/Jahr</span>
+            <span id="bar-wp-label">8.500 €/Jahr</span>
           </div>
           <div style="background:rgba(122,184,181,0.15);border-radius:3px;height:28px;position:relative;overflow:hidden;">
             <div id="bar-wp" style="height:100%;background:#4a9bb8;border-radius:3px;transition:width 0.4s ease;display:flex;align-items:center;padding-left:10px;">
-              <span style="font-size:11px;color:#ffffff;font-weight:500;">8.500 €</span>
+              <span id="bar-wp-inner" style="font-size:11px;color:#ffffff;font-weight:500;">8.500 €</span>
             </div>
           </div>
         </div>
@@ -770,6 +770,49 @@
       </div>
       <p class="rechner__hinweis" id="r-hinweis">Bei 10 ct/kWh: ~22 Jahre. Steigt der Gaspreis, verkürzt sich das deutlich.</p>
     </div>
+
+    <!-- Block: Erläuterung Amortisationsrechner -->
+    <div style="margin-top:1.5rem;padding:1rem 1.25rem;background:rgba(26,92,90,0.04);border-radius:6px;border-top:0.5px solid rgba(26,92,90,0.15);">
+      <p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--petrol);margin-bottom:0.75rem;">Erläuterung zum Amortisationsrechner</p>
+
+      <!-- 01 -->
+      <p style="margin-bottom:0.625rem;display:flex;align-items:baseline;gap:0.625rem;">
+        <span style="font-size:10px;color:var(--text-tertiary);flex-shrink:0;">01</span>
+        <span>Der <strong>Gaspreis</strong> ist der zentrale Hebel für die Wirtschaftlichkeit der Wärmepumpe.</span>
+      </p>
+
+      <!-- Trennlinie -->
+      <div style="border-top:0.5px solid rgba(26,92,90,0.15);margin:0.625rem 0;"></div>
+
+      <!-- 02 -->
+      <p style="margin-bottom:0.625rem;display:flex;align-items:baseline;gap:0.625rem;">
+        <span style="font-size:10px;color:var(--text-tertiary);flex-shrink:0;">02</span>
+        <span>Der Rechner nutzt die <strong>aktuellen Werte aus dem Gebäudeprofil</strong>.</span>
+      </p>
+
+      <!-- Trennlinie -->
+      <div style="border-top:0.5px solid rgba(26,92,90,0.15);margin:0.625rem 0;"></div>
+
+      <!-- 03 -->
+      <p style="margin-bottom:0.625rem;display:flex;align-items:baseline;gap:0.625rem;">
+        <span style="font-size:10px;color:var(--text-tertiary);flex-shrink:0;">03</span>
+        <span>Die <strong>Amortisation</strong> zeigt, wann sich die Investition durch geringere Betriebskosten ausgleicht.</span>
+      </p>
+
+      <details>
+        <summary style="font-size:13px;font-weight:500;color:var(--petrol);cursor:pointer;">
+          Mehr erfahren
+        </summary>
+        <div style="margin-top:0.5rem;display:flex;flex-direction:column;gap:0.875rem;font-size:13px;color:var(--text-secondary);line-height:1.6;background:#ffffff;padding:0.75rem;border-radius:4px;border-top:0.5px solid rgba(26,92,90,0.15);">
+          <p>Der Amortisationsrechner basiert auf den aktuellen Eingaben aus dem Gebäudeprofil oben — Investition, Förderung, Eigenanteil und Betriebskosten fließen direkt ein.</p>
+          <p>Mit dem Gaspreis-Regler lassen sich Szenarien simulieren: Was passiert, wenn der Gaspreis in den nächsten Jahren steigt?</p>
+          <div style="padding:0.5rem 0.75rem;background:rgba(26,92,90,0.06);border-radius:4px;">
+            Die Ergebnisse dienen der Orientierung — nicht als exakte Prognose. Reale Entwicklungen hängen von vielen Faktoren ab.
+          </div>
+        </div>
+      </details>
+    </div>
+
   </section>
 
   <!-- NÄCHSTE SCHRITTE -->
@@ -974,6 +1017,10 @@
       window._wpEigenanteil = wpEigenanteil;
       window._gasBetrieb    = gasBetrieb;
       window._wpBetrieb     = wpBetrieb;
+
+      // Amortrechner mit aktuellen Profilwerten synchronisieren
+      const objSlider = document.getElementById('obj-slider');
+      if (objSlider) updateRechner(objSlider.value);
     }
 
     function set(id, txt) {
@@ -998,14 +1045,16 @@
       }
     }
 
-    const EIGENANTEIL = 55000;
-    const WP_BETRIEB  = 8500;
-    const BASIS_KOSTEN = 11000;  // Gesamtkosten 2023 aus DOMO-THERM Abrechnung
-    const BASIS_GAS    = 10.0;
-    const MAX_KOSTEN   = BASIS_KOSTEN * (25 / BASIS_GAS);
-
+    <!-- Block: Amortrechner-Konstanten (Fallback, überschrieben durch calcInvest) -->
     function updateRechner(val) {
       const gaspreis = parseFloat(val);
+
+      // Dynamische Werte aus Gebäudeprofil (oben), Fallback für Erstinitialisierung
+      const eigenanteil    = window._wpEigenanteil || 55000;
+      const wpBetrieb      = window._wpBetrieb    || 8500;
+      const gasBetriebBasis = window._gasBetrieb   || 11000;
+      const basisGas       = GAS_CT || 10.0;
+      const maxKosten      = gasBetriebBasis * (25 / basisGas);
 
       // Slider-Gradient
       const slider = document.getElementById('obj-slider');
@@ -1018,20 +1067,25 @@
       // Gaspreis-Anzeige
       document.getElementById('rechner-val').textContent = gaspreis.toFixed(1);
 
-      // Gaskosten aus Basis skalieren
-      const gaskosten = Math.round(BASIS_KOSTEN * (gaspreis / BASIS_GAS) / 100) * 100;
-      const ersparnis = gaskosten - WP_BETRIEB;
-      const amort     = ersparnis > 0 ? Math.round(EIGENANTEIL / ersparnis * 10) / 10 : null;
+      // Gaskosten aus Profil-Basis skalieren
+      const gaskosten = Math.round(gasBetriebBasis * (gaspreis / basisGas) / 100) * 100;
+      const ersparnis = gaskosten - wpBetrieb;
+      const amort     = ersparnis > 0 ? Math.round(eigenanteil / ersparnis * 10) / 10 : null;
 
       // Balken
-      const maxVal = Math.max(gaskosten, MAX_KOSTEN * 0.6);
+      const maxVal = Math.max(gaskosten, maxKosten * 0.6);
       const gasPct = Math.min((gaskosten / maxVal) * 100, 100).toFixed(1);
-      const wpPct  = Math.min((WP_BETRIEB  / maxVal) * 100, 100).toFixed(1);
+      const wpPct  = Math.min((wpBetrieb  / maxVal) * 100, 100).toFixed(1);
 
       document.getElementById('bar-gas').style.width = gasPct + '%';
       document.getElementById('bar-wp').style.width  = wpPct  + '%';
       document.getElementById('bar-gas-label').textContent = gaskosten.toLocaleString('de-DE') + ' €/Jahr';
       document.getElementById('bar-gas-inner').textContent = gaskosten.toLocaleString('de-DE') + ' €';
+      // WP-Balken dynamisch aktualisieren
+      const wpLbl = document.getElementById('bar-wp-label');
+      const wpInner = document.getElementById('bar-wp-inner');
+      if (wpLbl) wpLbl.textContent = wpBetrieb.toLocaleString('de-DE') + ' €/Jahr';
+      if (wpInner) wpInner.textContent = wpBetrieb.toLocaleString('de-DE') + ' €';
 
       const intensity = Math.min((gaspreis - 8) / 17, 1);
       const r = Math.round(180 + intensity * 40);
@@ -1045,6 +1099,7 @@
       const amortEl    = document.getElementById('r-amort');
       const amortSubEl = document.getElementById('r-amort-sub');
       const hinweisEl  = document.getElementById('r-hinweis');
+      const eigenFmt   = eigenanteil.toLocaleString('de-DE');
 
       if (!amort || ersparnis <= 0) {
         amortEl.textContent    = 'nicht rentabel';
@@ -1055,20 +1110,20 @@
       } else if (amort <= 6) {
         amortEl.textContent    = `~${amort} Jahre`;
         amortEl.className      = 'rechner__erg-val rechner__erg-val--warn';
-        amortSubEl.textContent = 'sehr schnell rentabel';
-        hinweisEl.textContent  = `Bei ${gaspreis.toFixed(1)} ct/kWh amortisiert sich die WP in nur ${amort} Jahren — klare Entscheidung.`;
+        amortSubEl.textContent = `${eigenFmt} € Eigenanteil`;
+        hinweisEl.textContent  = `Bei ${gaspreis.toFixed(1)} ct/kWh: Amortisation in nur ${amort} Jahren — steigende Gaspreise verkürzen die Amortisationszeit erheblich.`;
         hinweisEl.style.color  = 'var(--signal)';
       } else if (amort <= 12) {
         amortEl.textContent    = `~${amort} Jahre`;
         amortEl.className      = 'rechner__erg-val rechner__erg-val--warn';
-        amortSubEl.textContent = `${EIGENANTEIL.toLocaleString('de-DE')} € Eigenanteil`;
-        hinweisEl.textContent  = `Bei ${gaspreis.toFixed(1)} ct/kWh: Amortisation ~${amort} Jahre — sinnvolle Investition.`;
+        amortSubEl.textContent = `${eigenFmt} € Eigenanteil`;
+        hinweisEl.textContent  = `Bei ${gaspreis.toFixed(1)} ct/kWh: ~${amort} Jahre — höhere Gaspreise verbessern die Wirtschaftlichkeit der Wärmepumpe.`;
         hinweisEl.style.color  = '#ffffff';
       } else {
         amortEl.textContent    = `~${amort} Jahre`;
         amortEl.className      = 'rechner__erg-val';
-        amortSubEl.textContent = 'langfristige Investition';
-        hinweisEl.textContent  = `Bei ${gaspreis.toFixed(1)} ct/kWh: ${amort} Jahre. Steigt der Gaspreis, verkürzt sich das deutlich.`;
+        amortSubEl.textContent = `${eigenFmt} € Eigenanteil`;
+        hinweisEl.textContent  = `Bei ${gaspreis.toFixed(1)} ct/kWh: ~${amort} Jahre. Je höher der Gaspreis, desto schneller nähert sich die Wärmepumpe wirtschaftlich an.`;
         hinweisEl.style.color  = '#ffffff';
       }
 
