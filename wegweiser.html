@@ -118,11 +118,6 @@
     .mission h2 { font-family:'Playfair Display',Georgia,serif; font-size:22px; font-weight:400; color:var(--text-main); line-height:1.35; margin-bottom:0.625rem; }
     .mission p { font-size:14px; color:var(--text-sub); line-height:1.75; max-width:580px; }
 
-    .legende { display:flex; gap:1.5rem; flex-wrap:wrap; margin-bottom:2rem; }
-    .legende__item { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-muted); }
-    .legende__dot { width:8px; height:8px; border-radius:50%; background:var(--text-muted); flex-shrink:0; }
-    .legende__dot--he { background:var(--petrol); }
-
     /* Accordion */
     .frage-item { background:var(--white); border:0.5px solid var(--border); border-radius:var(--radius); margin-bottom:0.625rem; overflow:hidden; }
     .frage-item__btn {
@@ -130,13 +125,14 @@
       padding:1rem 1.25rem; display:flex; align-items:center; justify-content:space-between; gap:1rem;
       font-family:'Inter',-apple-system,sans-serif;
     }
-    .frage-item__btn:hover { background:rgba(0,0,0,0.02); }
+    .frage-item__btn { transition:background 0.2s; }
+    .frage-item__btn:hover { background:rgba(23,100,106,0.04); }
+    .frage-item--open .frage-item__btn {
+      background:rgba(23,100,106,0.06);
+      box-shadow:inset 3px 0 0 var(--petrol);
+    }
     .frage-item__btn:focus-visible { outline:2px solid var(--petrol); outline-offset:-2px; }
-    .frage-item__left { display:flex; align-items:center; gap:0.875rem; min-width:0; }
-    .frage-item__dots { display:flex; gap:3px; flex-shrink:0; }
-    .frage-item__dot { width:7px; height:7px; border-radius:50%; background:var(--border); }
-    .frage-item__dot--he { background:var(--petrol); }
-    .frage-item__dot--extern { background:var(--text-muted); }
+    .frage-item__left { display:flex; align-items:center; min-width:0; }
     .frage-item__text { font-size:14px; font-weight:500; color:var(--text-main); line-height:1.4; }
     .frage-item__count { font-size:11px; color:var(--text-muted); flex-shrink:0; }
     .frage-item__chevron { width:16px; height:16px; flex-shrink:0; color:var(--text-muted); transition:transform 0.2s; }
@@ -420,17 +416,6 @@
       <span class="section-label">Fragen &amp; Stimmen</span>
       <h2>Wer spricht über die Wärmewende — und wer wird nicht gehört?</h2>
       <p>Viele Stimmen prägen die Debatte. Oben stehen die Fragen mit den meisten Stimmen — unten wird sichtbar, wo Antworten fehlen. Bleiben Sie am Puls. Werden Sie lauter. Kommen Sie mit an den Entscheidungstisch.</p>
-    </div>
-
-    <div class="legende">
-      <div class="legende__item">
-        <div class="legende__dot legende__dot--he"></div>
-        Stimme der Eigentümer
-      </div>
-      <div class="legende__item">
-        <div class="legende__dot"></div>
-        Prägende Stimme
-      </div>
     </div>
 
     <div id="fragenListe"><div class="frage-item">
@@ -869,12 +854,6 @@
     .map((f, i) => ({ ...f, _idx: i }))
     .sort((a, b) => (b.stimmen.length - a.stimmen.length) || (a._idx - b._idx));
 
-  function dotClass(type) {
-    if (type === 'he')     return 'frage-item__dot frage-item__dot--he';
-    if (type === 'extern') return 'frage-item__dot frage-item__dot--extern';
-    return 'frage-item__dot'; // silent
-  }
-
   function renderCard(s) {
     if (s.type === 'he') {
       return `<div class="stimme-card stimme-card--he" tabindex="0">
@@ -899,14 +878,12 @@
   }
 
   function renderFrage(f) {
-    const dots = f.stimmen.map(s => `<span class="${dotClass(s.type)}"></span>`).join('');
     const count = f.stimmen.length === 1 ? '1 Stimme' : `${f.stimmen.length} Stimmen`;
     const cards = f.stimmen.map(renderCard).join('');
 
     return `<div class="frage-item">
       <button class="frage-item__btn" aria-expanded="false">
         <div class="frage-item__left">
-          <div class="frage-item__dots">${dots}</div>
           <span class="frage-item__text">${f.frage}</span>
         </div>
         <div style="display:flex;align-items:center;gap:0.75rem;flex-shrink:0;">
