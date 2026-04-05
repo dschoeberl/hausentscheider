@@ -81,7 +81,7 @@
     .btn:hover { opacity: 0.85; text-decoration: none; }
     .btn--primary  { background: var(--petrol); color: white; }
     .btn--secondary { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.5); }
-    .btn--outline  { background: transparent; color: var(--petrol); border: 1px solid var(--petrol); }
+    .btn--outline  { background: transparent; color: var(--kontext); border: 1px solid var(--kontext); }
     .btn--cta      { background: var(--petrol); color: white; font-size: 14px; padding: 0.75rem 2rem; }
     .btn--signal   { background: var(--signal); color: var(--petrol-dark); font-weight: 500; border: none; white-space: nowrap; flex-shrink: 0; }
     .btn--signal:hover { opacity: 0.9; text-decoration: none; }
@@ -106,8 +106,11 @@
     .artikel-karte__link { font-size: 12px; color: var(--petrol); font-family: 'Inter', sans-serif; }
     .artikel-karte__link:hover { text-decoration: underline; }
 
+    /* AKTUELL-SECTION */
+    .aktuell-section { background: var(--bg-light); padding: 3rem 0; }
+
     /* OBJEKTE */
-    .objekte-section { padding: 3rem 0; border-bottom: 0.5px solid var(--border); }
+    .objekte-section { margin-top: 1.5rem; padding: 3rem 0; border-bottom: 0.5px solid var(--border); }
     .objekte-intro { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.5rem; }
 
     /* Heizsystem-Pills */
@@ -441,26 +444,28 @@
   </div>
 
   <!-- AKTUELL -->
-  <section class="section container" id="aktuell">
-    <span class="label" style="margin-bottom:1.5rem;">Aktuell</span>
-    <div class="artikel-grid">
-      <div class="artikel-karte">
-        <p class="artikel-karte__meta">Kommentar · März 2026</p>
-        <h3 class="artikel-karte__titel">Ein Jahr kommunale Wärmeplanung in Erfurt — Zwischen Anspruch und Wirklichkeit</h3>
-        <p class="artikel-karte__teaser">95 Prozent der Erfurter Fernwärme basiert auf Erdgas. Eine Satzung aus 2006 legt Anschlusspflichten fest, die kaum jemand kennt. Was bedeutet das für Eigentümerinnen und Eigentümer in der Innenstadt?</p>
-        <a href="dokumente/gastkommentar-waermewende-erfurt-2026.pdf" class="artikel-karte__link" target="_blank">Artikel lesen (PDF) →</a>
-      </div>
-      <div class="artikel-karte">
-        <p class="artikel-karte__meta">Forschung · 2025 · eco2050 Institut für Nachhaltigkeit</p>
-        <h3 class="artikel-karte__titel">Future Readiness in der Wärmewende — Vom Ziel zur Fähigkeit</h3>
-        <p class="artikel-karte__teaser">Der Bewertungsrahmen für kommunale Wärmepläne. Entwickelt auf Basis von vier Experteninterviews mit zentralen Akteuren der deutschen Wärmewende.</p>
-        <a href="dokumente/future-readiness-in-der-waermewende-executive-summary.pdf" class="artikel-karte__link" target="_blank">Executive Summary lesen (PDF) →</a>
-      </div>
-      <div class="artikel-karte">
-        <p class="artikel-karte__meta">Warum Hausentscheider · März 2026</p>
-        <h3 class="artikel-karte__titel">Ich muss diese Entscheidung selbst treffen. Genau deshalb gibt es Hausentscheider.</h3>
-        <p class="artikel-karte__teaser">Ich sitze selbst mit am Tisch. Warum Forschung, Erfahrung und persönliche Verantwortung zusammenkommen — und was daraus entstanden ist.</p>
-        <a href="dokumente/deshalb-gibt-es-hausentscheider.pdf" target="_blank" class="artikel-karte__link">Artikel lesen (PDF) →</a>
+  <section class="aktuell-section" id="aktuell">
+    <div class="container">
+      <span class="label" style="margin-bottom:1.5rem;">Aktuell</span>
+      <div class="artikel-grid">
+        <div class="artikel-karte">
+          <p class="artikel-karte__meta">Kommentar · März 2026</p>
+          <h3 class="artikel-karte__titel">Ein Jahr kommunale Wärmeplanung in Erfurt — Zwischen Anspruch und Wirklichkeit</h3>
+          <p class="artikel-karte__teaser">95 Prozent der Erfurter Fernwärme basiert auf Erdgas. Eine Satzung aus 2006 legt Anschlusspflichten fest, die kaum jemand kennt. Was bedeutet das für Eigentümerinnen und Eigentümer in der Innenstadt?</p>
+          <a href="dokumente/gastkommentar-waermewende-erfurt-2026.pdf" class="artikel-karte__link" target="_blank">Artikel lesen (PDF) →</a>
+        </div>
+        <div class="artikel-karte">
+          <p class="artikel-karte__meta">Forschung · 2025 · eco2050 Institut für Nachhaltigkeit</p>
+          <h3 class="artikel-karte__titel">Future Readiness in der Wärmewende — Vom Ziel zur Fähigkeit</h3>
+          <p class="artikel-karte__teaser">Der Bewertungsrahmen für kommunale Wärmepläne. Entwickelt auf Basis von vier Experteninterviews mit zentralen Akteuren der deutschen Wärmewende.</p>
+          <a href="dokumente/future-readiness-in-der-waermewende-executive-summary.pdf" class="artikel-karte__link" target="_blank">Executive Summary lesen (PDF) →</a>
+        </div>
+        <div class="artikel-karte">
+          <p class="artikel-karte__meta">Warum Hausentscheider · März 2026</p>
+          <h3 class="artikel-karte__titel">Ich muss diese Entscheidung selbst treffen. Genau deshalb gibt es Hausentscheider.</h3>
+          <p class="artikel-karte__teaser">Ich sitze selbst mit am Tisch. Warum Forschung, Erfahrung und persönliche Verantwortung zusammenkommen — und was daraus entstanden ist.</p>
+          <a href="dokumente/deshalb-gibt-es-hausentscheider.pdf" target="_blank" class="artikel-karte__link">Artikel lesen (PDF) →</a>
+        </div>
       </div>
     </div>
   </section>
