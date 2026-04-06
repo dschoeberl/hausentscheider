@@ -119,7 +119,7 @@
     .mission p { font-size:14px; color:var(--text-sub); line-height:1.75; max-width:580px; }
 
     /* Accordion */
-    .frage-item { background:var(--white); border:0.5px solid var(--border); border-radius:var(--radius); margin-bottom:0.625rem; overflow:hidden; }
+    .frage-item { background:var(--white); border:0.5px solid #E5E7EB; border-radius:var(--radius); margin-bottom:0.625rem; overflow:hidden; }
     .frage-item__btn {
       width:100%; text-align:left; background:none; border:none; cursor:pointer;
       padding:1rem 1.25rem; display:flex; align-items:center; justify-content:space-between; gap:1rem;
@@ -128,12 +128,14 @@
     .frage-item__btn { transition:background 0.2s; }
     .frage-item__btn:hover { background:rgba(23,100,106,0.04); }
     .frage-item--open .frage-item__btn {
-      background:rgba(23,100,106,0.06);
-      box-shadow:inset 3px 0 0 var(--petrol);
+      background:#F3F4F6;
+      border-bottom:0.5px solid #D1D5DB;
+      box-shadow:inset 3px 0 0 #16A34A;
     }
     .frage-item__btn:focus-visible { outline:2px solid var(--petrol); outline-offset:-2px; }
-    .frage-item__left { display:flex; align-items:center; min-width:0; }
-    .frage-item__text { font-size:14px; font-weight:500; color:var(--text-main); line-height:1.4; }
+    .frage-item__left { display:flex; align-items:center; min-width:0; gap:8px; }
+    .frage-item__num { font-size:14px; font-weight:600; color:#16A34A; flex-shrink:0; }
+    .frage-item__text { font-size:14px; font-weight:500; color:#111827; line-height:1.4; }
     .frage-item__count { font-size:11px; color:var(--text-muted); flex-shrink:0; }
     .frage-item__chevron { width:16px; height:16px; flex-shrink:0; color:var(--text-muted); transition:transform 0.2s; }
     .frage-item--open .frage-item__chevron { transform:rotate(180deg); }
@@ -141,6 +143,7 @@
     /* Cards horizontal scroll */
     .frage-item__body { display:none; padding:0 1.25rem 1.25rem; position:relative; }
     .frage-item--open .frage-item__body { display:block; }
+    .frage-item__stimmen-intro { font-size:12px; color:#6B7280; margin:0.75rem 0 0.625rem; }
     .frage-item__scroll {
       display:flex; gap:0.75rem; overflow-x:auto; padding-bottom:4px;
       -webkit-overflow-scrolling:touch; scroll-snap-type:x mandatory;
@@ -154,14 +157,14 @@
       pointer-events:none;
     }
 
-    /* Stimmen-Cards */
+    /* Stimmen-Cards (extern) */
     .stimme-card {
       flex:0 0 220px; border-radius:var(--radius); padding:1rem;
-      border:0.5px solid var(--border); background:var(--white);
+      border:1px solid #E5E7EB; background:#FFFFFF;
       scroll-snap-align:start; display:flex; flex-direction:column; gap:0.625rem;
     }
     .stimme-card__name { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-muted); }
-    .stimme-card__aussage { font-size:13px; color:var(--text-main); line-height:1.6; flex:1; }
+    .stimme-card__aussage { font-size:13px; color:#1F2937; line-height:1.6; flex:1; }
     .stimme-card__einordnung {
       font-size:12px; color:var(--text-sub); line-height:1.6;
       border-left:2px solid var(--petrol); padding-left:0.625rem;
@@ -169,19 +172,42 @@
     .stimme-card__link { font-size:12px; color:var(--petrol); font-weight:500; margin-top:auto; }
     .stimme-card__link:hover { text-decoration:underline; }
 
-    /* Card: hausentscheider */
-    .stimme-card--he {
-      background:#E1F5EE; border-color:var(--petrol);
-    }
-    .stimme-card--he .stimme-card__name { color:var(--petrol); }
-
     /* Card: silent */
     .stimme-card--silent {
       background:rgba(0,0,0,0.03);
     }
     .stimme-card--silent .stimme-card__aussage {
-      font-style:italic; color:var(--text-muted); font-size:12px;
+      font-style:italic; color:#6B7280; font-size:12px;
     }
+    .stimme-card--silent .stimme-card__sub {
+      font-style:italic; color:#6B7280; font-size:11px;
+    }
+
+    /* Hausentscheider-Box (eigenständiger Block, KEINE Karte) */
+    .hausentscheider-box {
+      background:#7e9696;
+      color:#ffffff;
+      padding:16px;
+      border-radius:6px;
+      margin-top:16px;
+      border:1px solid rgba(255,255,255,0.18);
+    }
+    .hausentscheider-box__label {
+      font-size:9px; letter-spacing:2px; text-transform:uppercase;
+      color:rgba(255,255,255,0.9); margin-bottom:8px;
+    }
+    .hausentscheider-box__kern {
+      font-size:14px; font-weight:600; color:#ffffff; line-height:1.5; margin-bottom:6px;
+    }
+    .hausentscheider-box__text {
+      font-size:13px; color:rgba(255,255,255,0.85); line-height:1.5;
+    }
+    .hausentscheider-box__link {
+      display:inline-block; margin-top:8px;
+      font-size:12px; font-weight:500; color:#ffffff;
+      text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.4);
+    }
+    .hausentscheider-box__link:hover { border-bottom-color:#ffffff; text-decoration:none; }
 
     /* ── ZONE 3: QUELLEN ─────────────────────────────── */
     .quellen { background:var(--white); border-top:0.5px solid var(--border); padding:3.5rem 0 4rem; }
@@ -854,21 +880,14 @@
     .map((f, i) => ({ ...f, _idx: i }))
     .sort((a, b) => (b.stimmen.length - a.stimmen.length) || (a._idx - b._idx));
 
-  function renderCard(s) {
-    if (s.type === 'he') {
-      return `<div class="stimme-card stimme-card--he" tabindex="0">
-        <div class="stimme-card__name">hausentscheider</div>
-        ${s.einordnung ? `<div class="stimme-card__aussage">${s.einordnung}</div>` : ''}
-        ${s.url && s.linkLabel ? `<a class="stimme-card__link" href="${s.url}">${s.linkLabel}</a>` : ''}
-      </div>`;
-    }
+  function renderExternCard(s) {
     if (s.type === 'silent') {
       return `<div class="stimme-card stimme-card--silent" tabindex="0">
         <div class="stimme-card__name">${s.name}</div>
-        <div class="stimme-card__aussage">Keine offizielle Antwort bekannt.</div>
+        <div class="stimme-card__aussage">Keine offizielle Antwort vorhanden</div>
+        <div class="stimme-card__sub">Hier fehlt aktuell eine Position</div>
       </div>`;
     }
-    // extern
     return `<div class="stimme-card" tabindex="0">
       <div class="stimme-card__name">${s.name}</div>
       ${s.aussage ? `<div class="stimme-card__aussage">${s.aussage}</div>` : ''}
@@ -877,13 +896,26 @@
     </div>`;
   }
 
-  function renderFrage(f) {
+  function renderHausentscheiderBox(s) {
+    if (!s) return '';
+    return `<div class="hausentscheider-box">
+      <div class="hausentscheider-box__label">Einordnung Hausentscheider</div>
+      ${s.einordnung ? `<div class="hausentscheider-box__kern">${s.einordnung}</div>` : ''}
+      ${s.url && s.linkLabel ? `<a class="hausentscheider-box__link" href="${s.url}">${s.linkLabel}</a>` : ''}
+    </div>`;
+  }
+
+  function renderFrage(f, nummer) {
+    const externStimmen = f.stimmen.filter(s => s.type !== 'he');
+    const heStimme = f.stimmen.find(s => s.type === 'he');
     const count = f.stimmen.length === 1 ? '1 Stimme' : `${f.stimmen.length} Stimmen`;
-    const cards = f.stimmen.map(renderCard).join('');
+    const cards = externStimmen.map(renderExternCard).join('');
+    const heBlock = renderHausentscheiderBox(heStimme);
 
     return `<div class="frage-item">
       <button class="frage-item__btn" aria-expanded="false">
         <div class="frage-item__left">
+          <span class="frage-item__num">${nummer}.</span>
           <span class="frage-item__text">${f.frage}</span>
         </div>
         <div style="display:flex;align-items:center;gap:0.75rem;flex-shrink:0;">
@@ -894,14 +926,16 @@
         </div>
       </button>
       <div class="frage-item__body">
+        <div class="frage-item__stimmen-intro">So wird die Entwicklung aktuell eingeschätzt:</div>
         <div class="frage-item__scroll-wrap">
           <div class="frage-item__scroll" tabindex="0" role="region" aria-label="Stimmen zur Frage">${cards}</div>
         </div>
+        ${heBlock}
       </div>
     </div>`;
   }
 
-  document.getElementById('fragenListe').innerHTML = sorted.map(renderFrage).join('');
+  document.getElementById('fragenListe').innerHTML = sorted.map((f, i) => renderFrage(f, i + 1)).join('');
 
   // Accordion — mehrere gleichzeitig offen erlaubt
   document.querySelectorAll('.frage-item__btn').forEach(btn => {
