@@ -201,6 +201,15 @@
     .btn-eintragen { display: inline-block; padding: 0.5rem 1.25rem; background: var(--signal); color: var(--text-main); font-size: 13px; font-weight: 600; border-radius: 3px; transition: opacity 0.2s; white-space: nowrap; }
     .btn-eintragen:hover { opacity: 0.85; }
 
+    /* TEMPORÄRER EINTRAG (Mini-Rechner) */
+    .obj-row--temp { background: rgba(207,247,127,0.40) !important; box-shadow: inset 4px 0 0 var(--signal), inset 0 2px 0 var(--signal), inset 0 -2px 0 var(--signal); }
+    .obj-row--temp:hover { background: rgba(207,247,127,0.55) !important; }
+    .hs-pill--andere { background:#f0efed; color:var(--text-sub); border:1px solid var(--gray-border); }
+    .hs-pill--temp { outline: 1.5px dashed var(--signal); outline-offset: 1px; }
+    .temp-badge { display: inline-block; background: var(--signal); color: var(--text-main); font-size: 10px; font-weight: 700; letter-spacing: 1.5px; padding: 3px 8px; border-radius: 3px; text-transform: uppercase; margin-bottom: 3px; }
+    .obj-titel__temp-sub { font-size: 10px; font-style: italic; color: var(--text-muted); font-weight: 400; margin-top: 2px; line-height: 1.4; }
+    .obj-row--temp .cell { background: transparent; }
+
     /* FOOTER */
     .footer { border-top: 0.5px solid rgba(122,184,181,0.1); padding: 1.5rem 0; background: #060d0c; }
     .footer__inner { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; font-size: 13px; color: rgba(122,184,181,0.7); }
@@ -632,6 +641,9 @@ function render() {
 
     const row = document.createElement('div');
     row.className = ['obj-row tbl-cols', obj.real ? 'obj-row--real' : '', obj.link ? 'obj-row--link' : ''].join(' ');
+    row.dataset.kist = obj.kIst.toFixed(4);
+    row.dataset.kproj = obj.kProj.toFixed(4);
+    row.dataset.typ = obj.typ;
     if (obj.link) row.onclick = () => window.location.href = obj.link;
 
     row.innerHTML = `
@@ -712,6 +724,132 @@ document.getElementById('strom-slider').value  = STROM_CT;
 document.getElementById('gas-heute-lbl').textContent   = 'heute ' + GAS_CT.toFixed(1).replace('.', ',') + ' ct';
 document.getElementById('strom-heute-lbl').textContent = 'heute ' + STROM_CT + ' ct';
 onSlider(); // setzt --pct, Anzeige und ruft render() auf
+</script>
+<script>
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const flaeche = parseFloat(params.get('flaeche'));
+  const kosten  = parseFloat(params.get('kosten'));
+  const heizung = params.get('heizung');
+  const VALID = ['gas','fernwaerme','oel','waermepumpe','pellets','andere'];
+  if (!isFinite(flaeche) || flaeche <= 0) return;
+  if (!isFinite(kosten)  || kosten  <= 0) return;
+  if (!VALID.includes(heizung)) return;
+
+  const TYP_MAP  = { gas:'gas', fernwaerme:'fw', oel:'oel', waermepumpe:'wp', pellets:'pellets', andere:'andere' };
+  const PILL_MAP = {
+    gas:     ['GAS',     'hs-pill--gas'],
+    fw:      ['FW',      'hs-pill--fw'],
+    oel:     ['ÖL',      'hs-pill--oel'],
+    wp:      ['WP',      'hs-pill--wp'],
+    pellets: ['PELLETS', 'hs-pill--pellets'],
+    andere:  ['ANDERE',  'hs-pill--andere']
+  };
+  const userTyp  = TYP_MAP[heizung];
+  const userKist = kosten / flaeche / 12;
+  let didScroll = false;
+
+  function renderTemp() {
+    const body = document.getElementById('tbl-body');
+    if (!body) return;
+    const existing = body.querySelector('.obj-row--temp');
+    if (existing) existing.remove();
+
+    const rows = Array.from(body.querySelectorAll('.obj-row'));
+    if (rows.length === 0) return;
+
+    let before = 0;
+    const kIsts = [];
+    const kIstsByTyp = {};
+    rows.forEach(function(r){
+      const kProj = parseFloat(r.dataset.kproj);
+      const kIst  = parseFloat(r.dataset.kist);
+      const typ   = r.dataset.typ;
+      if (isFinite(kProj) && kProj < userKist) before++;
+      if (isFinite(kIst)) {
+        kIsts.push(kIst);
+        (kIstsByTyp[typ] = kIstsByTyp[typ] || []).push(kIst);
+      }
+    });
+    const rank  = before + 1;
+    const total = rows.length + 1;
+
+    let ref = null;
+    let isFallback = false;
+    const sameTyp = (userTyp !== 'andere') ? (kIstsByTyp[userTyp] || []) : [];
+    if (sameTyp.length >= 2) {
+      ref = sameTyp.reduce(function(a,b){return a+b;}, 0) / sameTyp.length;
+    } else if (kIsts.length > 0) {
+      const all = kIsts.concat([userKist]);
+      ref = all.reduce(function(a,b){return a+b;}, 0) / all.length;
+      isFallback = true;
+    }
+
+    let vsHtml = '<span class="vs-val vs-neutral" style="font-size:11px;">—</span>';
+    if (ref !== null && ref > 0) {
+      const vs = (userKist - ref) / ref * 100;
+      const vsAbs = Math.round(Math.abs(vs));
+      const vsCls = vs > 10 ? 'vs-plus' : vs < -10 ? 'vs-minus' : 'vs-neutral';
+      const vsTxt = vs > 10 ? '+' + vsAbs + '% über Ø'
+                  : vs < -10 ? '−' + vsAbs + '% unter Ø'
+                  : '≈ Ø';
+      vsHtml = '<span class="vs-val ' + vsCls + '">' + vsTxt + '</span>' +
+               (isFallback ? '<div style="font-size:9px;color:var(--text-muted);margin-top:2px;">(alle)</div>' : '');
+    }
+
+    const pill = PILL_MAP[userTyp] || PILL_MAP['andere'];
+    const pillHtml = '<span class="hs-pill ' + pill[1] + ' hs-pill--temp">' + pill[0] + '</span>';
+
+    const monIst = userKist.toFixed(2).replace('.', ',');
+    const platzText = total <= 3 ? 'Platz ' + rank : 'Platz ' + rank + ' von ' + total;
+    const emptyCell = '<span style="color:var(--text-muted);font-size:11px;">—</span>';
+
+    const row = document.createElement('div');
+    row.className = 'obj-row obj-row--temp tbl-cols';
+    row.innerHTML =
+      '<div class="cell"><span class="rank-nr">' + rank + '</span></div>' +
+      '<div class="cell" style="display:flex;align-items:center;justify-content:center;">' + pillHtml + '</div>' +
+      '<div class="cell" style="display:flex;align-items:center;gap:8px;">' +
+        '<div style="flex:1;min-width:0;">' +
+          '<span class="temp-badge">IHR GEBÄUDE</span>' +
+          '<div class="obj-titel__temp-sub">anonym · nur für diese Sitzung sichtbar · ' + platzText + '</div>' +
+        '</div>' +
+        '<div style="width:32px;flex-shrink:0;"></div>' +
+      '</div>' +
+      '<div class="cell"><div class="kosten-val">' + monIst + ' €</div></div>' +
+      '<div class="cell">' + vsHtml + '</div>' +
+      '<div class="cell">' + emptyCell + '</div>' +
+      '<div class="cell">' + emptyCell + '</div>' +
+      '<div class="cell">' + emptyCell + '</div>';
+
+    let anchor = null;
+    for (let i = 0; i < rows.length; i++) {
+      const kp = parseFloat(rows[i].dataset.kproj);
+      if (isFinite(kp) && kp > userKist) { anchor = rows[i]; break; }
+    }
+    if (anchor) body.insertBefore(row, anchor);
+    else body.appendChild(row);
+
+    body.querySelectorAll('.obj-row').forEach(function(r, idx){
+      const rankEl = r.querySelector('.rank-nr');
+      if (rankEl) {
+        rankEl.textContent = idx + 1;
+        rankEl.classList.toggle('rank-nr--1', idx === 0);
+      }
+    });
+
+    if (!didScroll) {
+      didScroll = true;
+      row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  const _origRender = window.render;
+  if (typeof _origRender === 'function') {
+    window.render = function(){ _origRender.apply(this, arguments); renderTemp(); };
+  }
+  renderTemp();
+})();
 </script>
 </body>
 </html>
