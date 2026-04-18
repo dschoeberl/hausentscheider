@@ -305,6 +305,7 @@
     .rechner__label { display: block; font-size: 12px; color: var(--text-secondary); margin-bottom: 0.35rem; font-family: 'Inter', sans-serif; letter-spacing: 0.5px; }
     .rechner__input-wrap { position: relative; }
     .rechner__input { width: 100%; padding: 0.6rem 2.2rem 0.6rem 0.75rem; font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text-primary); background: var(--white); border: 1px solid var(--border); border-radius: 4px; }
+    select.rechner__input { padding-right: 0.75rem; background-image: none; }
     .rechner__input:focus { outline: none; border-color: var(--petrol); }
     .rechner__input--error { border-color: #c0392b; }
     .rechner__suffix { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); font-size: 13px; color: var(--text-tertiary); pointer-events: none; }
@@ -475,6 +476,18 @@
             </div>
           </div>
           <div class="rechner__feld">
+            <label class="rechner__label" for="rechner-heizung">Heizungsart</label>
+            <select class="rechner__input" id="rechner-heizung" name="heizung" required>
+              <option value="" disabled selected>Bitte wählen</option>
+              <option value="gas">Gas</option>
+              <option value="fernwaerme">Fernwärme</option>
+              <option value="oel">Öl</option>
+              <option value="waermepumpe">Wärmepumpe</option>
+              <option value="pellets">Pellets</option>
+              <option value="andere">Andere / unbekannt</option>
+            </select>
+          </div>
+          <div class="rechner__feld">
             <label class="rechner__label" for="rechner-kosten">Jahresheizkosten</label>
             <div class="rechner__input-wrap">
               <input class="rechner__input" type="number" id="rechner-kosten" name="kosten" min="1" step="1" placeholder="z.B. 2400" required>
@@ -485,7 +498,7 @@
         <button type="submit" class="btn btn--signal rechner__btn">Ihre Position zeigen →</button>
       </form>
       <p class="rechner__hinweis">Anonym. Ihre Werte werden nicht gespeichert. Nur für diese Sitzung sichtbar.</p>
-      <p class="rechner__fehler" id="rechner-fehler" role="alert" aria-live="polite" hidden>Bitte tragen Sie für beide Felder eine positive Zahl ein.</p>
+      <p class="rechner__fehler" id="rechner-fehler" role="alert" aria-live="polite" hidden>Bitte füllen Sie alle drei Felder aus. Wohnfläche und Jahreskosten als positive Zahlen, Heizungsart aus der Liste wählen.</p>
     </div>
   </section>
   <script>
@@ -494,18 +507,21 @@
       if (!form) return;
       const flaeche = document.getElementById('rechner-flaeche');
       const kosten = document.getElementById('rechner-kosten');
+      const heizung = document.getElementById('rechner-heizung');
       const fehler = document.getElementById('rechner-fehler');
       form.addEventListener('submit', function(e){
         e.preventDefault();
-        [flaeche, kosten].forEach(function(el){ el.classList.remove('rechner__input--error'); });
+        [flaeche, kosten, heizung].forEach(function(el){ el.classList.remove('rechner__input--error'); });
         const vF = parseFloat(flaeche.value);
         const vK = parseFloat(kosten.value);
+        const vH = heizung.value;
         let valid = true;
         if (!isFinite(vF) || vF <= 0) { flaeche.classList.add('rechner__input--error'); valid = false; }
         if (!isFinite(vK) || vK <= 0) { kosten.classList.add('rechner__input--error'); valid = false; }
+        if (!vH) { heizung.classList.add('rechner__input--error'); valid = false; }
         if (!valid) { fehler.hidden = false; return; }
         fehler.hidden = true;
-        window.location.href = 'objekte/index.html?flaeche=' + encodeURIComponent(vF) + '&kosten=' + encodeURIComponent(vK);
+        window.location.href = 'objekte/index.html?flaeche=' + encodeURIComponent(vF) + '&kosten=' + encodeURIComponent(vK) + '&heizung=' + encodeURIComponent(vH);
       });
     })();
   </script>
