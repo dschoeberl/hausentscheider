@@ -295,6 +295,23 @@
     .nav__mobile-menu li:last-child a { border-bottom: none; }
     .nav__mobile-menu li a:hover { color: var(--petrol); }
 
+    /* MINI-RECHNER */
+    .rechner { background: var(--bg-light); border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); padding: 2.5rem 0; }
+    .rechner__titel { font-family: 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 400; color: var(--text-primary); margin-bottom: 0.5rem; }
+    .rechner__intro { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; max-width: 640px; }
+    .rechner__form { display: flex; flex-direction: column; align-items: flex-start; }
+    .rechner__felder { display: flex; gap: 1rem; width: 100%; align-items: flex-start; flex-wrap: wrap; }
+    .rechner__feld { flex: 1; min-width: 180px; }
+    .rechner__label { display: block; font-size: 12px; color: var(--text-secondary); margin-bottom: 0.35rem; font-family: 'Inter', sans-serif; letter-spacing: 0.5px; }
+    .rechner__input-wrap { position: relative; }
+    .rechner__input { width: 100%; padding: 0.6rem 2.2rem 0.6rem 0.75rem; font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text-primary); background: var(--white); border: 1px solid var(--border); border-radius: 4px; }
+    .rechner__input:focus { outline: none; border-color: var(--petrol); }
+    .rechner__input--error { border-color: #c0392b; }
+    .rechner__suffix { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); font-size: 13px; color: var(--text-tertiary); pointer-events: none; }
+    .rechner__btn { margin-top: 1rem; align-self: flex-end; }
+    .rechner__hinweis { font-size: 12px; color: var(--text-tertiary); margin-top: 0.75rem; }
+    .rechner__fehler { font-size: 12px; color: #c0392b; margin-top: 0.5rem; }
+
     @media (max-width: 680px) {
       h1, .hero__headline     { font-size: 22px; }
       .nav__links             { display: none; }
@@ -317,6 +334,8 @@
       .hero__content          { padding: 2rem 1.25rem; }
       .kernaussage            { padding: 1.25rem 1.25rem; }
       .wegweiser-grid         { grid-template-columns: 1fr; }
+      .rechner__felder        { flex-direction: column; align-items: stretch; }
+      .rechner__btn           { align-self: stretch; }
     }
   </style>
 </head>
@@ -440,6 +459,56 @@
       </p>
     </div>
   </div>
+
+  <!-- MINI-RECHNER -->
+  <section class="rechner" aria-label="Mini-Rechner">
+    <div class="container rechner__inner">
+      <h2 class="rechner__titel">Wo stehen Sie?</h2>
+      <p class="rechner__intro">Zwei Zahlen aus Ihrer Heizkostenabrechnung — und Sie sehen Ihre Position im Vergleich zu anderen Gebäuden.</p>
+      <form class="rechner__form" id="rechner-form" novalidate>
+        <div class="rechner__felder">
+          <div class="rechner__feld">
+            <label class="rechner__label" for="rechner-flaeche">Wohnfläche</label>
+            <div class="rechner__input-wrap">
+              <input class="rechner__input" type="number" id="rechner-flaeche" name="flaeche" min="1" step="1" placeholder="z.B. 100" required>
+              <span class="rechner__suffix">m²</span>
+            </div>
+          </div>
+          <div class="rechner__feld">
+            <label class="rechner__label" for="rechner-kosten">Jahresheizkosten</label>
+            <div class="rechner__input-wrap">
+              <input class="rechner__input" type="number" id="rechner-kosten" name="kosten" min="1" step="1" placeholder="z.B. 2400" required>
+              <span class="rechner__suffix">€</span>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn--signal rechner__btn">Ihre Position zeigen →</button>
+      </form>
+      <p class="rechner__hinweis">Anonym. Ihre Werte werden nicht gespeichert. Nur für diese Sitzung sichtbar.</p>
+      <p class="rechner__fehler" id="rechner-fehler" role="alert" aria-live="polite" hidden>Bitte tragen Sie für beide Felder eine positive Zahl ein.</p>
+    </div>
+  </section>
+  <script>
+    (function(){
+      const form = document.getElementById('rechner-form');
+      if (!form) return;
+      const flaeche = document.getElementById('rechner-flaeche');
+      const kosten = document.getElementById('rechner-kosten');
+      const fehler = document.getElementById('rechner-fehler');
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        [flaeche, kosten].forEach(function(el){ el.classList.remove('rechner__input--error'); });
+        const vF = parseFloat(flaeche.value);
+        const vK = parseFloat(kosten.value);
+        let valid = true;
+        if (!isFinite(vF) || vF <= 0) { flaeche.classList.add('rechner__input--error'); valid = false; }
+        if (!isFinite(vK) || vK <= 0) { kosten.classList.add('rechner__input--error'); valid = false; }
+        if (!valid) { fehler.hidden = false; return; }
+        fehler.hidden = true;
+        window.location.href = 'objekte/index.html?flaeche=' + encodeURIComponent(vF) + '&kosten=' + encodeURIComponent(vK);
+      });
+    })();
+  </script>
 
   <!-- AKTUELL -->
   <section class="aktuell-section" id="aktuell">
