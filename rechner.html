@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Der Entscheider — Investitionsrechner für Ihre Heizungsentscheidung. Wirtschaftlichkeit, persönliche Gewichtung und Zukunftsfähigkeit in einer belastbaren Grundlage.">
+  <title>Der Entscheider — hausentscheider</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 16px; font-weight: 400; line-height: 1.7;
+      color: #1a1a1a; background: #ffffff; overflow-x: hidden;
+    }
+    :root {
+      --petrol:        #1a5c5a;
+      --petrol-light:  #7ab8b5;
+      --petrol-dark:   #1a3535;
+      --signal:        #CFF77F;
+      --signal-dark:   #a8d45a;
+      --stone-gray:    #8a8680;
+      --context-edge:  #9AAFAF;
+      --border:        #e0dedd;
+      --bg-light:      #f5f4f2;
+      --text-primary:  #1a1a1a;
+      --text-secondary:#5a5956;
+      --text-tertiary: #8a8680;
+      --white:         #ffffff;
+      --max-width:     900px;
+      --radius:        8px;
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; font-weight: 400; line-height: 1.3; color: var(--text-primary); }
+    h1 { font-size: 32px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 18px; }
+    p { margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
+    a { color: var(--petrol); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; overflow-x: hidden; }
+
+    /* NAV — übernommen aus index.html für Konsistenz */
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 0.5px solid var(--border); }
+    .nav__inner { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .nav__logo { text-decoration: none; display: inline-flex; align-items: center; }
+    .nav__logo:hover { text-decoration: none; opacity: 0.85; }
+    .nav__logo svg { display: block; }
+    .nav__links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+    .nav__links a { font-size: 13px; color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+    .nav__links a:hover { color: var(--petrol); }
+    .nav__dropdown { position: relative; }
+    .nav__dropdown-toggle { font-size: 13px; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 4px; background: none; border: none; font-family: 'Inter', sans-serif; padding: 0; }
+    .nav__dropdown-toggle:hover { color: var(--petrol); }
+    .nav__dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 0; background: var(--white); border: 0.5px solid var(--border); border-radius: var(--radius); min-width: 160px; padding: 0.5rem 0; }
+    .nav__dropdown:hover .nav__dropdown-menu { display: block; }
+    .nav__dropdown-menu a { display: flex; align-items: center; gap: 6px; padding: 0.5rem 1rem; font-size: 13px; color: var(--text-secondary); }
+    .nav__dropdown-menu a:hover { color: var(--petrol); background: var(--bg-light); text-decoration: none; }
+    .nav__city-badge { font-size: 10px; background: var(--petrol); color: white; padding: 1px 6px; border-radius: 10px; font-family: 'Inter', sans-serif; }
+
+    .nav__hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 8px; gap: 5px; flex-shrink: 0; }
+    .nav__hamburger span { display: block; width: 22px; height: 1.5px; background: var(--text-primary); transition: all 0.25s ease; transform-origin: center; }
+    .nav__hamburger.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav__hamburger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__hamburger.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .nav__mobile-menu { display: none; background: var(--white); border-top: 0.5px solid var(--border); padding: 0.5rem 1.25rem 1rem; }
+    .nav__mobile-menu.is-open { display: block; }
+    .nav__mobile-menu ul { list-style: none; display: flex; flex-direction: column; }
+    .nav__mobile-menu li a { display: block; padding: 0.875rem 0; font-size: 15px; color: var(--text-secondary); text-decoration: none; border-bottom: 0.5px solid var(--border); font-family: 'Inter', sans-serif; transition: color 0.2s; }
+    .nav__mobile-menu li:last-child a { border-bottom: none; }
+    .nav__mobile-menu li a:hover { color: var(--petrol); }
+
+    /* HERO — hell, ruhig; Werkzeug, nicht Bühne */
+    .hero { background: var(--bg-light); border-bottom: 0.5px solid var(--border); }
+    .hero__inner { max-width: var(--max-width); margin: 0 auto; padding: 3.5rem 2rem 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .hero__headline { font-family: 'Playfair Display', Georgia, serif; font-size: 38px; font-weight: 400; color: var(--text-primary); line-height: 1.15; margin-bottom: 0.5rem; }
+    .hero__underline { width: 120px; height: 2px; background: var(--petrol); margin-bottom: 1.75rem; }
+    .hero__statement { max-width: 560px; }
+    .hero__statement p { font-size: 15px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 1rem; }
+    .hero__statement p:last-child { margin-bottom: 0; }
+    .hero__statement p:first-child { font-size: 16px; color: var(--text-primary); }
+
+    /* Cover-Platzhalter: reduzierte SVG-Skizze auf Petrol-Dark */
+    .hero__cover { height: 400px; background: var(--petrol-dark); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .hero__cover svg { width: 70%; height: auto; opacity: 0.55; }
+
+    /* FORM-SECTION */
+    .form-section { padding: 3.5rem 0 4rem; }
+    .form-section__intro { max-width: 620px; margin-bottom: 2.5rem; }
+    .form-section__label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol); font-family: 'Inter', sans-serif; display: block; margin-bottom: 0.625rem; }
+    .form-section__titel { font-family: 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 400; color: var(--text-primary); line-height: 1.35; margin-bottom: 0.625rem; }
+    .form-section__text { font-size: 14px; color: var(--text-secondary); line-height: 1.75; }
+
+    .rechner-form { display: flex; flex-direction: column; gap: 3rem; }
+
+    fieldset.fs { border: none; padding: 0; margin: 0; }
+    fieldset.fs + fieldset.fs { border-top: 0.5px solid var(--border); padding-top: 3rem; }
+    .fs__legend { display: block; font-family: 'Playfair Display', Georgia, serif; font-size: 18px; font-weight: 500; color: var(--text-primary); margin-bottom: 0.375rem; padding: 0; }
+    .fs__hint { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.75rem; max-width: 620px; }
+
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; }
+    .grid--full { grid-template-columns: 1fr; }
+
+    .field { display: flex; flex-direction: column; gap: 0.5rem; }
+    .field--full { grid-column: 1 / -1; }
+    .field__label { font-size: 13px; font-weight: 500; color: var(--text-primary); font-family: 'Inter', sans-serif; display: inline-flex; align-items: center; gap: 0.375rem; }
+    .field__label-info-slot { /* Hook für spätere Info-Toggles */ }
+    .field__input-wrap { position: relative; display: flex; align-items: center; }
+    .field__input,
+    .field__select {
+      width: 100%;
+      padding: 0.625rem 0.875rem;
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 14px;
+      color: var(--text-primary);
+      background: var(--white);
+      border: 0.5px solid var(--border);
+      border-radius: 4px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .field__select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' fill='none' stroke='%235a5956' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'/></svg>"); background-repeat: no-repeat; background-position: right 0.75rem center; padding-right: 2rem; }
+    .field__input:hover,
+    .field__select:hover { border-color: var(--petrol-light); }
+    .field__input:focus-visible,
+    .field__select:focus-visible { outline: none; border-color: var(--petrol); box-shadow: 0 0 0 2px rgba(26,92,90,0.18); }
+    .field__input::placeholder { color: var(--text-tertiary); }
+    .field__suffix { position: absolute; right: 0.875rem; font-size: 13px; color: var(--text-tertiary); pointer-events: none; }
+    .field__input--with-suffix { padding-right: 2.25rem; }
+
+    /* Radio-Pills */
+    .pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .pill { position: relative; }
+    .pill input { position: absolute; opacity: 0; pointer-events: none; }
+    .pill__label {
+      display: inline-block;
+      padding: 0.5rem 0.9rem;
+      font-size: 13px;
+      color: var(--text-secondary);
+      background: var(--white);
+      border: 0.5px solid var(--border);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.2;
+    }
+    .pill__label:hover { border-color: var(--petrol-light); color: var(--text-primary); }
+    .pill input:checked + .pill__label { border-color: var(--petrol); color: var(--petrol); background: rgba(26,92,90,0.06); }
+    .pill input:focus-visible + .pill__label { outline: 2px solid var(--petrol); outline-offset: 2px; }
+
+    /* Details: optionale Präzisierungen */
+    .details-optional { border: 0.5px solid var(--border); border-left: 3px solid var(--context-edge); border-radius: var(--radius); background: var(--white); overflow: hidden; }
+    .details-optional > summary { list-style: none; cursor: pointer; padding: 1.125rem 1.25rem; display: flex; align-items: flex-start; gap: 0.875rem; background: var(--bg-light); transition: background 0.15s; }
+    .details-optional > summary::-webkit-details-marker { display: none; }
+    .details-optional > summary:hover { background: #ebeae6; }
+    .details-optional[open] > summary { border-bottom: 0.5px solid var(--border); }
+    .details-optional__chevron { flex-shrink: 0; width: 14px; height: 14px; margin-top: 4px; color: var(--petrol); transition: transform 0.2s; }
+    .details-optional[open] .details-optional__chevron { transform: rotate(180deg); }
+    .details-optional__summary-text { display: flex; flex-direction: column; gap: 0.25rem; }
+    .details-optional__summary-title { font-family: 'Playfair Display', Georgia, serif; font-size: 17px; font-weight: 500; color: var(--petrol); line-height: 1.3; }
+    .details-optional__summary-sub { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .details-optional__body { padding: 1.5rem 1.25rem 1.75rem; }
+
+    /* FOOTER — übernommen aus index.html */
+    .footer { border-top: 0.5px solid var(--border); padding: 1.5rem 0; }
+    .footer__inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .footer__left, .footer__right { font-size: 12px; color: var(--text-tertiary); }
+    .footer__right a { color: var(--text-tertiary); }
+    .footer__right a:hover { color: var(--petrol); }
+    .footer__whatsapp { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #25D366; font-weight: 500; }
+    .footer__whatsapp:hover { text-decoration: none; opacity: 0.85; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      h1 { font-size: 26px; }
+      .nav__links { display: none; }
+      .nav__hamburger { display: flex; }
+      .hero__inner { grid-template-columns: 1fr; padding: 2.5rem 1.5rem 2.5rem; gap: 2rem; }
+      .hero__headline { font-size: 30px; }
+      .hero__cover { max-width: 85vw; height: 260px; margin-left: auto; margin-right: auto; order: 2; }
+      .hero__text { order: 1; }
+      .container { padding: 0 1.5rem; }
+      .form-section { padding: 2.5rem 0 3rem; }
+      .grid { grid-template-columns: 1fr; gap: 1.25rem; }
+      fieldset.fs + fieldset.fs { padding-top: 2.25rem; }
+      .footer__inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo" aria-label="hausentscheider — Startseite">
+        <svg width="180" height="28" viewBox="0 0 180 28" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">haus</text>
+          <text x="58" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">entscheider</text>
+          <line x1="0" y1="26" x2="56" y2="26" stroke="#1a5c5a" stroke-width="2" stroke-linecap="square"/>
+        </svg>
+      </a>
+      <nav aria-label="Hauptnavigation">
+        <ul class="nav__links">
+          <li><a href="index.html#ansatz">Ansatz</a></li>
+          <li><a href="index.html#objekte">Objekte</a></li>
+          <li><a href="wegweiser.html">Wegweiser</a></li>
+          <li class="nav__dropdown">
+            <button class="nav__dropdown-toggle" aria-haspopup="true">Städte ▾</button>
+            <div class="nav__dropdown-menu" role="menu">
+              <a href="index.html#erfurt" role="menuitem">Erfurt <span class="nav__city-badge">aktuell</span></a>
+            </div>
+          </li>
+          <li><a href="index.html#ueber">Über Hausentscheider</a></li>
+          <li><a href="index.html#kontakt">Dialog</a></li>
+        </ul>
+      </nav>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Menü öffnen" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div class="nav__mobile-menu" id="nav-mobile-menu">
+      <ul>
+        <li><a href="index.html#ansatz">Ansatz</a></li>
+        <li><a href="index.html#objekte">Objekte</a></li>
+        <li><a href="wegweiser.html">Wegweiser</a></li>
+        <li><a href="index.html#erfurt">Städte — Erfurt</a></li>
+        <li><a href="index.html#ueber">Über Hausentscheider</a></li>
+        <li><a href="index.html#kontakt">Dialog</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Einführung Der Entscheider">
+    <div class="hero__inner">
+      <div class="hero__text">
+        <h1 class="hero__headline">Der Entscheider</h1>
+        <div class="hero__underline" aria-hidden="true"></div>
+        <div class="hero__statement">
+          <p>Investitionsrechner für Ihre Heizungsentscheidung — damit sich Ihre Investition lohnt, nach den Maßstäben, die Ihnen wichtig sind.</p>
+          <p>Die Wirtschaftlichkeitsrechnung gibt es an vielen Stellen. Hier rechnet sie korrekt — und steht dann nicht allein. Sie wird ergänzt um Ihre persönliche Gewichtung der Entscheidung und um eine wissenschaftlich fundierte Bewertung der Zukunftsfähigkeit jeder Option.</p>
+          <p>Drei Sichten auf dieselbe Frage. Keine einzelne gibt eine Antwort — alle drei zusammen machen die Entscheidung sichtbar.</p>
+          <p>Kein Ersatz für eine Ingenieursplanung. Aber eine belastbare Grundlage, bevor Sie eine in Auftrag geben.</p>
+        </div>
+      </div>
+      <figure class="hero__cover" aria-hidden="true">
+        <!-- Platzhalter: reduzierte SVG-Skizze (Schreibtischlinien + Kaffeetasse von oben). Wird später durch echtes Bild ersetzt. -->
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#7ab8b5" stroke-width="1.5" stroke-linecap="round">
+          <line x1="20"  y1="70"  x2="180" y2="70"/>
+          <line x1="20"  y1="110" x2="140" y2="110"/>
+          <line x1="20"  y1="130" x2="100" y2="130"/>
+          <circle cx="150" cy="140" r="18"/>
+          <circle cx="150" cy="140" r="11" stroke-width="1"/>
+          <path d="M168 138 q10 0 10 8 q0 8 -10 8" stroke-width="1.25"/>
+        </svg>
+      </figure>
+    </div>
+  </section>
+
+  <!-- EINGABEBLOCK -->
+  <section class="form-section" aria-label="Eingaben">
+    <div class="container">
+      <div class="form-section__intro">
+        <span class="form-section__label">Ihre Eingaben</span>
+        <h2 class="form-section__titel">Damit der Rechner für Ihr Gebäude rechnet</h2>
+        <p class="form-section__text">Die sechs Pflichtfelder reichen für eine belastbare Grundlage. Wer mehr weiß, kann in den optionalen Feldern präzisieren — muss aber nicht.</p>
+      </div>
+
+      <form class="rechner-form" id="rechner-form" novalidate>
+
+        <!-- 4.1 Pflicht: Angaben zu Ihrem Gebäude -->
+        <fieldset class="fs">
+          <legend class="fs__legend">Angaben zu Ihrem Gebäude</legend>
+          <p class="fs__hint">Die Werte aus Ihrer Heizkostenabrechnung und dem Kaufvertrag oder Grundbuch. Wenn eine Zahl fehlt, schätzen Sie plausibel.</p>
+          <!-- leitfrage-slot -->
+
+          <div class="grid">
+
+            <div class="field">
+              <label class="field__label" for="wohnflaeche">Wohnfläche<span class="field__label-info-slot"></span></label>
+              <div class="field__input-wrap">
+                <input class="field__input field__input--with-suffix" type="number" id="wohnflaeche" name="wohnflaeche" min="1" step="1" placeholder="z.B. 120" aria-required="true" required>
+                <span class="field__suffix">m²</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="heizkosten">Jahresheizkosten<span class="field__label-info-slot"></span></label>
+              <div class="field__input-wrap">
+                <input class="field__input field__input--with-suffix" type="number" id="heizkosten" name="heizkosten" min="0" step="1" placeholder="z.B. 2400" aria-required="true" required>
+                <span class="field__suffix">€</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="heizungsart">Aktuelle Heizungsart<span class="field__label-info-slot"></span></label>
+              <select class="field__select" id="heizungsart" name="heizungsart" aria-required="true" required>
+                <option value="" disabled selected>Bitte wählen</option>
+                <option value="gas">Gas</option>
+                <option value="fernwaerme">Fernwärme</option>
+                <option value="oel">Öl</option>
+                <option value="waermepumpe">Wärmepumpe</option>
+                <option value="pellets">Pellets</option>
+                <option value="andere">Andere / unbekannt</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="baujahr">Baujahr des Gebäudes<span class="field__label-info-slot"></span></label>
+              <input class="field__input" type="number" id="baujahr" name="baujahr" min="1800" max="2026" step="1" placeholder="z.B. 1962" aria-required="true" required>
+            </div>
+
+            <div class="field field--full">
+              <span class="field__label" id="sanierungsstand-label">Sanierungsstand<span class="field__label-info-slot"></span></span>
+              <div class="pills" role="radiogroup" aria-labelledby="sanierungsstand-label" aria-required="true">
+                <label class="pill">
+                  <input type="radio" name="sanierungsstand" value="unsaniert" required>
+                  <span class="pill__label">unsaniert</span>
+                </label>
+                <label class="pill">
+                  <input type="radio" name="sanierungsstand" value="teilsaniert" required>
+                  <span class="pill__label">teilsaniert</span>
+                </label>
+                <label class="pill">
+                  <input type="radio" name="sanierungsstand" value="saniert" required>
+                  <span class="pill__label">saniert</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="wohneinheiten">Anzahl Wohneinheiten<span class="field__label-info-slot"></span></label>
+              <input class="field__input" type="number" id="wohneinheiten" name="wohneinheiten" min="1" step="1" placeholder="z.B. 1" aria-required="true" required>
+            </div>
+
+          </div>
+        </fieldset>
+
+        <!-- 4.2 Optional: Genauer rechnen -->
+        <fieldset class="fs">
+          <details class="details-optional">
+            <summary>
+              <svg class="details-optional__chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="details-optional__summary-text">
+                <span class="details-optional__summary-title">Genauer rechnen (optional)</span>
+                <span class="details-optional__summary-sub">Wenn Sie diese Werte kennen, wird die Berechnung präziser. Wenn nicht, arbeitet der Rechner mit plausiblen Standardwerten.</span>
+              </span>
+            </summary>
+            <div class="details-optional__body">
+              <!-- leitfrage-slot -->
+              <div class="grid">
+
+                <div class="field">
+                  <label class="field__label" for="jahresverbrauch">Jahresverbrauch<span class="field__label-info-slot"></span></label>
+                  <div class="field__input-wrap">
+                    <input class="field__input field__input--with-suffix" type="number" id="jahresverbrauch" name="jahresverbrauch" min="0" step="1" placeholder="z.B. 18000">
+                    <span class="field__suffix">kWh</span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="field__label" for="warmwasseranteil">Warmwasseranteil am Gesamtverbrauch<span class="field__label-info-slot"></span></label>
+                  <div class="field__input-wrap">
+                    <input class="field__input field__input--with-suffix" type="number" id="warmwasseranteil" name="warmwasseranteil" min="0" max="100" step="1" placeholder="z.B. 20">
+                    <span class="field__suffix">%</span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="field__label" for="heizlast">Geschätzte Heizlast<span class="field__label-info-slot"></span></label>
+                  <div class="field__input-wrap">
+                    <input class="field__input field__input--with-suffix" type="number" id="heizlast" name="heizlast" min="0" step="0.1" placeholder="z.B. 9">
+                    <span class="field__suffix">kW</span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="field__label" for="vorlauftemperatur">Vorlauftemperatur der Heizung<span class="field__label-info-slot"></span></label>
+                  <div class="field__input-wrap">
+                    <input class="field__input field__input--with-suffix" type="number" id="vorlauftemperatur" name="vorlauftemperatur" min="0" max="120" step="1" placeholder="z.B. 55">
+                    <span class="field__suffix">°C</span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="field__label" for="dachform">Dachform<span class="field__label-info-slot"></span></label>
+                  <select class="field__select" id="dachform" name="dachform">
+                    <option value="" disabled selected>Bitte wählen</option>
+                    <option value="satteldach">Satteldach</option>
+                    <option value="walmdach">Walmdach</option>
+                    <option value="flachdach">Flachdach</option>
+                    <option value="pultdach">Pultdach</option>
+                    <option value="andere">Andere</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label class="field__label" for="dachausrichtung">Dachausrichtung<span class="field__label-info-slot"></span></label>
+                  <select class="field__select" id="dachausrichtung" name="dachausrichtung">
+                    <option value="" disabled selected>Bitte wählen</option>
+                    <option value="sued">Süd</option>
+                    <option value="suedost">Südost</option>
+                    <option value="suedwest">Südwest</option>
+                    <option value="ost">Ost</option>
+                    <option value="west">West</option>
+                    <option value="nord">Nord</option>
+                    <option value="unbekannt">unbekannt</option>
+                  </select>
+                </div>
+
+                <div class="field field--full">
+                  <span class="field__label" id="fernwaerme-label">Liegt das Gebäude im Fernwärme-Satzungsgebiet?<span class="field__label-info-slot"></span></span>
+                  <div class="pills" role="radiogroup" aria-labelledby="fernwaerme-label">
+                    <label class="pill">
+                      <input type="radio" name="fernwaerme-satzung" value="ja">
+                      <span class="pill__label">ja</span>
+                    </label>
+                    <label class="pill">
+                      <input type="radio" name="fernwaerme-satzung" value="nein">
+                      <span class="pill__label">nein</span>
+                    </label>
+                    <label class="pill">
+                      <input type="radio" name="fernwaerme-satzung" value="weiss-nicht">
+                      <span class="pill__label">weiß nicht</span>
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </details>
+        </fieldset>
+
+        <!-- 4.3 Kontext Ihrer Entscheidung -->
+        <fieldset class="fs">
+          <legend class="fs__legend">Kontext Ihrer Entscheidung</legend>
+          <p class="fs__hint">Diese Angaben bestimmen, wie der Rechner Ergebnisse gewichtet — und welche Optionen sinnvoll in den Vergleich gehören.</p>
+          <!-- leitfrage-slot -->
+
+          <div class="grid grid--full">
+
+            <div class="field">
+              <span class="field__label" id="zeithorizont-label">Wie lange planen Sie mit dem Gebäude?<span class="field__label-info-slot"></span></span>
+              <div class="pills" role="radiogroup" aria-labelledby="zeithorizont-label" aria-required="true">
+                <label class="pill">
+                  <input type="radio" name="zeithorizont" value="unter-5" required>
+                  <span class="pill__label">unter 5 Jahre</span>
+                </label>
+                <label class="pill">
+                  <input type="radio" name="zeithorizont" value="10" required>
+                  <span class="pill__label">10 Jahre</span>
+                </label>
+                <label class="pill">
+                  <input type="radio" name="zeithorizont" value="20" required>
+                  <span class="pill__label">20 Jahre</span>
+                </label>
+                <label class="pill">
+                  <input type="radio" name="zeithorizont" value="30plus" required>
+                  <span class="pill__label">30+ Jahre</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="field">
+              <span class="field__label" id="nutzungsart-label">Nutzungsart<span class="field__label-info-slot"></span></span>
+              <div class="pills" role="radiogroup" aria-labelledby="nutzungsart-label" aria-required="true">
+                <label class="pill">
+                  <input type="radio" name="nutzungsart" value="selbstnutzung" required>
+                  <span class="pill__label">Selbstnutzung</span>
+                </label>
+                <label class="pill">
+                  <input type="radio" name="nutzungsart" value="vermietung" required>
+                  <span class="pill__label">Vermietung</span>
+                </label>
+                <label class="pill">
+                  <input type="radio" name="nutzungsart" value="mischnutzung" required>
+                  <span class="pill__label">Mischnutzung</span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </fieldset>
+
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__left">
+          <a href="index.html" style="text-decoration:none;display:inline-flex;align-items:center;vertical-align:middle;">
+            <svg width="130" height="20" viewBox="0 0 130 20" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+              <text x="0" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">haus</text>
+              <text x="42" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">entscheider</text>
+              <line x1="0" y1="18" x2="40" y2="18" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+            </svg>
+          </a>
+          &nbsp;·&nbsp;Daniel Schöberl&nbsp;·&nbsp;Erfurt / München
+        </div>
+        <div class="footer__right" style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+          <a href="#" class="footer__whatsapp">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp Kanal
+          </a>
+          <a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a>
+          &nbsp;·&nbsp;
+          <a href="index.html#impressum" style="color:var(--text-tertiary);font-size:12px;">Impressum</a>
+          &nbsp;·&nbsp;
+          <a href="datenschutz.html" style="color:var(--text-tertiary);font-size:12px;">Datenschutz</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Hamburger Menu (aus index.html übernommen)
+    (function() {
+      const btn  = document.getElementById('nav-hamburger');
+      const menu = document.getElementById('nav-mobile-menu');
+      if (!btn || !menu) return;
+      btn.addEventListener('click', function() {
+        const isOpen = menu.classList.toggle('is-open');
+        btn.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', isOpen);
+        btn.setAttribute('aria-label', isOpen ? 'Menü schließen' : 'Menü öffnen');
+      });
+      menu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          menu.classList.remove('is-open');
+          btn.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.setAttribute('aria-label', 'Menü öffnen');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
