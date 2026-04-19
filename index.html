@@ -68,7 +68,6 @@
     .hero { position: relative; min-height: 540px; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; }
     .hero__bg { position: absolute; inset: 0; background-image: url('images/erfurt-panorama.png'); background-size: cover; background-position: center 30%; background-repeat: no-repeat; z-index: 0; }
     .hero__bg::after { content: ''; position: absolute; inset: 0; background: rgba(26, 53, 53, 0.68); }
-    .hero__skyline { position: absolute; bottom: 0; left: 0; width: 100%; opacity: 0.3; z-index: 1; }
     .hero::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--petrol); z-index: 3; }
     .hero__content { position: relative; z-index: 2; padding: 2.5rem 2.5rem; max-width: var(--max-width); margin: 0 auto; width: 100%; }
     .hero__eyebrow { font-size: 11px; letter-spacing: 2px; color: var(--petrol-light); text-transform: uppercase; margin-bottom: 0.75rem; font-family: 'Inter', sans-serif; }
@@ -188,6 +187,17 @@
     .leistung { border-left: 3px solid var(--petrol); padding-left: 1rem; }
     .leistung__titel { font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 0.25rem; }
     .leistung__text { font-size: 13px; color: var(--text-secondary); margin: 0; }
+
+    /* ENTSCHEIDER — EINSTIEG */
+    #entscheider { background: var(--bg-light); }
+    .entscheider-grid { display: grid; grid-template-columns: 55fr 45fr; gap: 3rem; align-items: center; padding: 1.5rem 0; }
+    .entscheider__headline { font-family: 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 400; color: var(--text-primary); line-height: 1.2; margin-bottom: 0.5rem; }
+    .entscheider__underline { width: 120px; height: 2px; background: var(--petrol); margin-bottom: 1.5rem; }
+    .entscheider__sub { max-width: 520px; margin-bottom: 1.75rem; }
+    .entscheider__sub p { font-size: 15px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 1rem; }
+    .entscheider__sub p:last-child { margin-bottom: 0; }
+    .entscheider__cover { height: 300px; background: var(--petrol-dark); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .entscheider__cover svg { width: 62%; height: auto; opacity: 0.55; }
 
     /* ANSATZ — KOMPETENZFELDER */
     .ansatz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; padding: 2.5rem 0; }
@@ -323,6 +333,9 @@
       .artikel-grid           { grid-template-columns: 1fr; gap: 1.5rem; }
       .ueber-grid             { grid-template-columns: 1fr; gap: 1.5rem; }
       .ansatz-grid            { grid-template-columns: 1fr; }
+      .entscheider-grid       { grid-template-columns: 1fr; gap: 1.75rem; padding: 0.5rem 0; }
+      .entscheider__cover     { height: 220px; max-width: 85vw; margin-left: auto; margin-right: auto; order: 2; }
+      .entscheider__cover svg { width: 65%; }
       .kompetenz-grid         { grid-template-columns: 1fr; }
       .kompetenz-tag--wide    { grid-column: span 1; }
       .footer__inner          { flex-direction: column; align-items: flex-start; }
@@ -388,29 +401,6 @@
   <!-- HERO -->
   <section class="hero" aria-label="Einführung">
     <div class="hero__bg"></div>
-    <svg class="hero__skyline" viewBox="0 0 900 180" preserveAspectRatio="none" aria-hidden="true">
-      <rect x="0"   y="100" width="900" height="80"  fill="#0a1f1f"/>
-      <rect x="30"  y="80"  width="40"  height="100" fill="#0a1f1f"/>
-      <rect x="80"  y="60"  width="30"  height="120" fill="#0a1f1f"/>
-      <polygon points="95,60 110,30 125,60"           fill="#0a1f1f"/>
-      <rect x="130" y="90"  width="50"  height="90"  fill="#0a1f1f"/>
-      <rect x="200" y="50"  width="25"  height="130" fill="#0a1f1f"/>
-      <polygon points="200,50 212,20 225,50"          fill="#0a1f1f"/>
-      <rect x="240" y="75"  width="60"  height="105" fill="#0a1f1f"/>
-      <rect x="320" y="40"  width="35"  height="140" fill="#0a1f1f"/>
-      <polygon points="320,40 337,10 355,40"          fill="#0a1f1f"/>
-      <rect x="370" y="85"  width="45"  height="95"  fill="#0a1f1f"/>
-      <rect x="430" y="65"  width="30"  height="115" fill="#0a1f1f"/>
-      <rect x="475" y="95"  width="55"  height="85"  fill="#0a1f1f"/>
-      <rect x="545" y="55"  width="40"  height="125" fill="#0a1f1f"/>
-      <polygon points="545,55 565,25 585,55"          fill="#0a1f1f"/>
-      <rect x="600" y="80"  width="35"  height="100" fill="#0a1f1f"/>
-      <rect x="650" y="70"  width="50"  height="110" fill="#0a1f1f"/>
-      <rect x="715" y="85"  width="30"  height="95"  fill="#0a1f1f"/>
-      <rect x="760" y="60"  width="45"  height="120" fill="#0a1f1f"/>
-      <polygon points="775,60 782,35 790,60"          fill="#0a1f1f"/>
-      <rect x="820" y="90"  width="80"  height="90"  fill="#0a1f1f"/>
-    </svg>
     <div class="hero__content">
       <p class="hero__eyebrow">Erfurt · Kommunale Wärmeplanung · Eigentümerperspektive</p>
       <h1 class="hero__headline">
@@ -728,6 +718,34 @@
     </div>
   </div>
 </section>
+
+  <!-- DER ENTSCHEIDER — EINSTIEG -->
+  <section class="section" id="entscheider">
+    <div class="container">
+      <div class="entscheider-grid">
+        <div class="entscheider__text">
+          <h2 class="entscheider__headline">Der Entscheider</h2>
+          <div class="entscheider__underline" aria-hidden="true"></div>
+          <div class="entscheider__sub">
+            <p>Investitionsrechner für Ihre Heizungsentscheidung.</p>
+            <p>Wirtschaftlichkeit, persönliche Gewichtung und Zukunftsfähigkeit auf einer Seite. Keine einzelne Sicht gibt eine Antwort — alle drei zusammen machen die Entscheidung sichtbar.</p>
+          </div>
+          <a href="rechner.html" class="btn btn--signal">Zum Entscheider →</a>
+        </div>
+        <figure class="entscheider__cover" aria-hidden="true">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#7ab8b5" stroke-width="1.5" stroke-linecap="round">
+            <line x1="20"  y1="70"  x2="180" y2="70"/>
+            <line x1="20"  y1="110" x2="140" y2="110"/>
+            <line x1="20"  y1="130" x2="100" y2="130"/>
+            <circle cx="150" cy="140" r="18"/>
+            <circle cx="150" cy="140" r="11" stroke-width="1"/>
+            <path d="M168 138 q10 0 10 8 q0 8 -10 8" stroke-width="1.25"/>
+          </svg>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <!-- ANSATZ -->
   <section class="section" id="ansatz">
     <div class="container">
