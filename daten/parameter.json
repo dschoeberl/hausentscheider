@@ -1,0 +1,852 @@
+{
+  "version": "2.0",
+  "stand": "2026-05-02",
+  "quelle": "v2.1_neutral_OUTPUT.xlsx",
+  "tabs": [
+    "Start",
+    "Parameter",
+    "Quellen",
+    "Begriffe",
+    "Preishistorie",
+    "Eingaben",
+    "Dashboard",
+    "Visualisierungen",
+    "Rechenlogik",
+    "Fernwaerme-Logik",
+    "PV-Verstaerker",
+    "CO2-Aufteilung",
+    "Wertwirkung",
+    "Investor-KPIs",
+    "Vermieter-Sicht",
+    "Sanierungspfad",
+    "Szenarienvergleich",
+    "Panel 2 - Radar",
+    "Panel 3 - FRI",
+    "Erlaeuterungen",
+    "Plausibilitaetscheck",
+    "Farbschema"
+  ],
+  "anzahl_defined_names": 154,
+  "block1_energiepreise": {
+    "PreisGas": {
+      "label": "Gas (Effektivpreis netto, Bestandstarif)",
+      "default": 8.57,
+      "min": 6.5,
+      "max": 25,
+      "einheit": "ct/kWh",
+      "quelle": "Q-GAS-25",
+      "steigerung": 0.03,
+      "steigerung_min": 0,
+      "steigerung_max": 0.08,
+      "steigerung_quelle": "Q-PFAD-01",
+      "kontext": "Gas (Effektivpreis netto, alle Komponenten)"
+    },
+    "PreisFW": {
+      "label": "Fernwaerme (Erfurt-Effektivpreis netto)",
+      "default": 17.5,
+      "min": 10,
+      "max": 25,
+      "einheit": "ct/kWh",
+      "quelle": "Q-FW-01",
+      "steigerung": 0.04,
+      "steigerung_min": 0,
+      "steigerung_max": 0.08,
+      "steigerung_quelle": "Q-PFAD-02",
+      "kontext": "Fernwärme (Effektivpreis netto inkl. Leistungspreis)"
+    },
+    "PreisWP": {
+      "label": "Waermestrom (WP-Sondertarif)",
+      "default": 25,
+      "min": 20,
+      "max": 50,
+      "einheit": "ct/kWh",
+      "quelle": "Q-STROM-01",
+      "steigerung": 0.025,
+      "steigerung_min": -0.01,
+      "steigerung_max": 0.06,
+      "steigerung_quelle": "Q-PFAD-03",
+      "kontext": "Wärmestrom (WP-Sondertarif)"
+    },
+    "PreisOel": {
+      "label": "Heizoel (Bestand)",
+      "default": 10.5,
+      "min": 8,
+      "max": 20,
+      "einheit": "ct/kWh",
+      "quelle": "Q-OEL-01",
+      "steigerung": 0.03,
+      "steigerung_min": 0,
+      "steigerung_max": 0.08,
+      "steigerung_quelle": "Q-PFAD-04",
+      "kontext": "Heizöl (Bestand)"
+    },
+    "PreisPellets": {
+      "label": "Pellets (Jahresdurchschnittspreis)",
+      "default": 7,
+      "min": 5.5,
+      "max": 10,
+      "einheit": "ct/kWh",
+      "quelle": "Q-PEL-PRICE",
+      "steigerung": 0.025,
+      "steigerung_min": 0,
+      "steigerung_max": 0.06,
+      "steigerung_quelle": "Q-PFAD-05",
+      "kontext": "Pellets (Jahresdurchschnittspreis)"
+    }
+  },
+  "block2_rahmen": {
+    "BonusGrund_default": {
+      "label": "BAFA Grundfoerderung WP/Hybrid/Pellets/FW",
+      "default": 0.3,
+      "min": 0,
+      "max": 0.45,
+      "einheit": "%",
+      "quelle": "Q-BAFA-01"
+    },
+    "BonusKlima_default": {
+      "label": "BAFA Klima-Geschwindigkeitsbonus",
+      "default": 0.2,
+      "min": 0,
+      "max": 0.3,
+      "einheit": "%",
+      "quelle": "Q-BAFA-02"
+    },
+    "BonusEink_default": {
+      "label": "BAFA Einkommensbonus",
+      "default": 0.3,
+      "min": 0,
+      "max": 0.3,
+      "einheit": "%",
+      "quelle": "Q-BAFA-03"
+    },
+    "BonusEff_default": {
+      "label": "BAFA Effizienzbonus",
+      "default": 0.05,
+      "min": 0,
+      "max": 0.05,
+      "einheit": "%",
+      "quelle": "Q-BAFA-04"
+    },
+    "FoerderDeckel": {
+      "label": "BAFA Foerderdeckel relativ",
+      "default": 0.7,
+      "min": null,
+      "max": null,
+      "einheit": "%",
+      "quelle": "Q-BAFA-05"
+    },
+    "FoerderDeckelAbs": {
+      "label": "BAFA Foerderdeckel absolut",
+      "default": 21000,
+      "min": null,
+      "max": null,
+      "einheit": "€",
+      "quelle": "Q-BAFA-06"
+    },
+    "BGB559_alt": {
+      "label": "Hinweisreferenz - operativ siehe Block 6 BGB559Korr",
+      "default": 0.08,
+      "min": 0,
+      "max": 0.1,
+      "einheit": "%",
+      "quelle": "Q-BGB-01"
+    },
+    "Kalkzins": {
+      "label": "Kalkulationszins (VDI 2067)",
+      "default": 0.03,
+      "min": 0.01,
+      "max": 0.06,
+      "einheit": "%",
+      "quelle": "Q-EZB-01"
+    },
+    "Zeitraum": {
+      "label": "Betrachtungszeitraum (Jahre)",
+      "default": 25,
+      "min": 10,
+      "max": 30,
+      "einheit": "Jahre",
+      "quelle": "Q-VDI-01"
+    },
+    "CO2Pfad": {
+      "label": "CO2-Preis-Pfad (niedrig/mittel/hoch/Custom)",
+      "default": "mittel",
+      "min": null,
+      "max": null,
+      "einheit": null,
+      "quelle": "Q-CO2-01"
+    },
+    "CO2PreisCustom_def": {
+      "label": "CO2-Preis Custom (EUR/Tonne)",
+      "default": 55,
+      "min": 30,
+      "max": 300,
+      "einheit": "€/t",
+      "quelle": "Q-CO2-02"
+    },
+    "Gruengas": {
+      "label": "Gruengasquote im Gasmix",
+      "default": 0.03,
+      "min": 0,
+      "max": 0.5,
+      "einheit": "%",
+      "quelle": "Q-GAS-GRUEN"
+    },
+    "Biomethan": {
+      "label": "Biomethan-Aufschlag (ct/kWh)",
+      "default": 3,
+      "min": 0,
+      "max": 8,
+      "einheit": "ct/kWh",
+      "quelle": "Q-GAS-BIO"
+    }
+  },
+  "block3_technik": {
+    "JAZ": {
+      "label": "JAZ Waermepumpe (Bestand teilsaniert)",
+      "default": 3.8,
+      "min": 2.8,
+      "max": 4.5,
+      "einheit": "—",
+      "quelle": "Q-JAZ-01"
+    },
+    "HybridAnteilWP": {
+      "label": "Hybrid-Anteil WP",
+      "default": 0.7,
+      "min": 0.4,
+      "max": 0.95,
+      "einheit": "%",
+      "quelle": "Q-HYBR-01"
+    },
+    "WGGasBW": {
+      "label": "Wirkungsgrad Gas-Brennwert",
+      "default": 0.96,
+      "min": 0.85,
+      "max": 0.98,
+      "einheit": "—",
+      "quelle": "Q-WG-01"
+    },
+    "WGPellets": {
+      "label": "Wirkungsgrad Pellets",
+      "default": 0.9,
+      "min": 0.8,
+      "max": 0.93,
+      "einheit": "—",
+      "quelle": "Q-WG-02"
+    },
+    "WartGas": {
+      "label": "Wartung Gas-Brennwert",
+      "default": 0.025,
+      "min": 0.015,
+      "max": 0.035,
+      "einheit": "%",
+      "quelle": "Q-WART-01"
+    },
+    "WartHybrid": {
+      "label": "Wartung Hybrid",
+      "default": 0.03,
+      "min": 0.025,
+      "max": 0.04,
+      "einheit": "%",
+      "quelle": "Q-WART-02"
+    },
+    "WartWP": {
+      "label": "Wartung Waermepumpe",
+      "default": 0.02,
+      "min": 0.01,
+      "max": 0.03,
+      "einheit": "%",
+      "quelle": "Q-WART-03"
+    },
+    "WartFW": {
+      "label": "Wartung Fernwaerme",
+      "default": 0.015,
+      "min": 0.01,
+      "max": 0.02,
+      "einheit": "%",
+      "quelle": "Q-WART-04"
+    },
+    "WartPellets": {
+      "label": "Wartung Pellets",
+      "default": 0.035,
+      "min": 0.025,
+      "max": 0.045,
+      "einheit": "%",
+      "quelle": "Q-WART-05"
+    },
+    "GdWUntergrenze": {
+      "label": "GdW-Soll Erhaltungsruecklage Untergrenze",
+      "default": 13,
+      "min": 11,
+      "max": 15,
+      "einheit": "€/m²·a",
+      "quelle": "Q-GDW-01"
+    },
+    "GdWObergrenze": {
+      "label": "GdW-Soll Erhaltungsruecklage Obergrenze",
+      "default": 17,
+      "min": 15,
+      "max": 25,
+      "einheit": "€/m²·a",
+      "quelle": "Q-GDW-02"
+    },
+    "WPSchallVoll": {
+      "label": "WP-Schallpegel Volllast",
+      "default": 56,
+      "min": 50,
+      "max": 65,
+      "einheit": "dB(A)",
+      "quelle": "Q-SCHALL-01"
+    },
+    "WPSchallNacht": {
+      "label": "WP-Schallpegel Nachtmodus",
+      "default": 44,
+      "min": 38,
+      "max": 50,
+      "einheit": "dB(A)",
+      "quelle": "Q-SCHALL-02"
+    },
+    "TALaermNacht": {
+      "label": "TA-Laerm Nachtgrenzwert Mischgebiet",
+      "default": 45,
+      "min": 35,
+      "max": 50,
+      "einheit": "dB(A)",
+      "quelle": "Q-TALAERM-01"
+    }
+  },
+  "block4_plausi": {
+    "PelletsMaxWE": {
+      "label": "Pellets - max. WE fuer MFH-Sondermarkt",
+      "default": 6,
+      "min": 2,
+      "max": 12,
+      "einheit": "WE",
+      "quelle": "Q-PEL-PLAUS"
+    },
+    "PelletsInnenstadtAus": {
+      "label": "Pellets - Innenstadt-Filter aus",
+      "default": "ja",
+      "min": null,
+      "max": null,
+      "einheit": null,
+      "quelle": "Q-PEL-PLAUS"
+    },
+    "OelInvestZulaessig": {
+      "label": "Oel als Investitionsoption zulaessig",
+      "default": "nein",
+      "min": null,
+      "max": null,
+      "einheit": null,
+      "quelle": "Q-OEL-PLAUS"
+    },
+    "SanRedMax": {
+      "label": "Sanierungsregler max. Reduktion",
+      "default": -0.5,
+      "min": -0.7,
+      "max": -0.2,
+      "einheit": "%",
+      "quelle": "Q-SAN-01"
+    }
+  },
+  "block5_gebaeudedefaults": {
+    "EFH": {
+      "Wohnflaeche": 140,
+      "WE": 1,
+      "Verbrauch": 18000,
+      "Heizlast": 12,
+      "Ruecklagen": 8,
+      "Reparaturen": 1500,
+      "InvestGas": 12000,
+      "InvestWP": 28000,
+      "InvestFW": 18000,
+      "InvestPellets": 32000,
+      "InvestHybrid": 24000,
+      "VorauSchall": 2000,
+      "VorauFW": 5000,
+      "Nutzungsart": "Selbstnutzung",
+      "FWSatzung": "nein",
+      "Verkehrswert": 500000,
+      "KaltMiete": 0,
+      "PV_kWp": 8,
+      "MieterstromAnteil": 0
+    },
+    "MFH": {
+      "Wohnflaeche": 950,
+      "WE": 14,
+      "Verbrauch": 95000,
+      "Heizlast": 65,
+      "Ruecklagen": 12,
+      "Reparaturen": 8000,
+      "InvestGas": 60000,
+      "InvestWP": 180000,
+      "InvestFW": 90000,
+      "InvestPellets": 220000,
+      "InvestHybrid": 140000,
+      "VorauSchall": 8000,
+      "VorauFW": 15000,
+      "Nutzungsart": "WEG-Mischnutzung",
+      "FWSatzung": "ja",
+      "Verkehrswert": 1800000,
+      "KaltMiete": 8.5,
+      "PV_kWp": 35,
+      "MieterstromAnteil": 0.5
+    },
+    "_meta": {
+      "Wohnflaeche": {
+        "label": "Wohnfläche",
+        "einheit": "m²",
+        "dn_efh": "EFH_Wohnflaeche",
+        "dn_mfh": "MFH_Wohnflaeche"
+      },
+      "WE": {
+        "label": "Wohneinheiten",
+        "einheit": "WE",
+        "dn_efh": "EFH_WE",
+        "dn_mfh": "MFH_WE"
+      },
+      "Verbrauch": {
+        "label": "Verbrauch",
+        "einheit": "kWh/a",
+        "dn_efh": "EFH_Verbrauch",
+        "dn_mfh": "MFH_Verbrauch"
+      },
+      "Heizlast": {
+        "label": "Heizlast",
+        "einheit": "kW",
+        "dn_efh": "EFH_Heizlast",
+        "dn_mfh": "MFH_Heizlast"
+      },
+      "Ruecklagen": {
+        "label": "Rücklagen",
+        "einheit": "€/m²·a",
+        "dn_efh": "EFH_Ruecklagen",
+        "dn_mfh": "MFH_Ruecklagen"
+      },
+      "Reparaturen": {
+        "label": "Reparaturen",
+        "einheit": "€/a",
+        "dn_efh": "EFH_Reparaturen",
+        "dn_mfh": "MFH_Reparaturen"
+      },
+      "InvestGas": {
+        "label": "Invest Gas",
+        "einheit": "€",
+        "dn_efh": "EFH_InvestGas",
+        "dn_mfh": "MFH_InvestGas"
+      },
+      "InvestWP": {
+        "label": "Invest WP",
+        "einheit": "€",
+        "dn_efh": "EFH_InvestWP",
+        "dn_mfh": "MFH_InvestWP"
+      },
+      "InvestFW": {
+        "label": "Invest FW",
+        "einheit": "€",
+        "dn_efh": "EFH_InvestFW",
+        "dn_mfh": "MFH_InvestFW"
+      },
+      "InvestPellets": {
+        "label": "Invest Pellets",
+        "einheit": "€",
+        "dn_efh": "EFH_InvestPellets",
+        "dn_mfh": "MFH_InvestPellets"
+      },
+      "InvestHybrid": {
+        "label": "Invest Hybrid",
+        "einheit": "€",
+        "dn_efh": "EFH_InvestHybrid",
+        "dn_mfh": "MFH_InvestHybrid"
+      },
+      "VorauSchall": {
+        "label": "Voraussetzung Schallschutz",
+        "einheit": "€",
+        "dn_efh": "EFH_VorauSchall",
+        "dn_mfh": "MFH_VorauSchall"
+      },
+      "VorauFW": {
+        "label": "Voraussetzung FW-Anschluss",
+        "einheit": "€",
+        "dn_efh": "EFH_VorauFW",
+        "dn_mfh": "MFH_VorauFW"
+      },
+      "Nutzungsart": {
+        "label": "Nutzungsart",
+        "einheit": "–",
+        "dn_efh": "EFH_Nutzungsart",
+        "dn_mfh": "MFH_Nutzungsart"
+      },
+      "FWSatzung": {
+        "label": "FW-Satzung",
+        "einheit": "–",
+        "dn_efh": "EFH_FWSatzung",
+        "dn_mfh": "MFH_FWSatzung"
+      },
+      "Verkehrswert": {
+        "label": "Verkehrswert",
+        "einheit": "€",
+        "dn_efh": "EFH_Verkehrswert",
+        "dn_mfh": "MFH_Verkehrswert"
+      },
+      "KaltMiete": {
+        "label": "Kaltmiete",
+        "einheit": "€/m²",
+        "dn_efh": "EFH_KaltMiete",
+        "dn_mfh": "MFH_KaltMiete"
+      },
+      "PV_kWp": {
+        "label": "PV kWp",
+        "einheit": "kWp",
+        "dn_efh": "EFH_PV_kWp",
+        "dn_mfh": "MFH_PV_kWp"
+      },
+      "MieterstromAnteil": {
+        "label": "Mieterstrom-Anteil",
+        "einheit": "Anteil",
+        "dn_efh": "EFH_MieterstromAnteil",
+        "dn_mfh": "MFH_MieterstromAnteil"
+      }
+    }
+  },
+  "block6_vermieter": {
+    "BGB559Korr": {
+      "label": "Paragraf 559 BGB Modernisierungsumlage (gesetzlich seit 2019)",
+      "default": 0.08,
+      "min": 0.05,
+      "max": 0.08,
+      "einheit": "%/a auf Modernisierungs-€",
+      "quelle": "Q-BGB-559"
+    },
+    "Hf559": {
+      "label": "Paragraf 559 Haertefall-Abschlag",
+      "default": 0.1,
+      "min": 0,
+      "max": 0.3,
+      "einheit": "% von Modernisierungsumlage",
+      "quelle": "Q-BGB-HF"
+    },
+    "Dauer559": {
+      "label": "Paragraf 559 Wirkungsdauer (Jahre)",
+      "default": 12,
+      "min": 8,
+      "max": 18,
+      "einheit": "Jahre",
+      "quelle": "Q-BGB-DAUER"
+    },
+    "MietspiegelEff": {
+      "label": "Mietspiegel-Effekt pro Klassen-Sprung",
+      "default": 0.3,
+      "min": 0.1,
+      "max": 0.6,
+      "einheit": "€/m² Kaltmiete",
+      "quelle": "Q-MIETSPIEGEL"
+    },
+    "AfA7b": {
+      "label": "Paragraf 7b EStG Sonder-AfA",
+      "default": 0.05,
+      "min": 0,
+      "max": 0.05,
+      "einheit": "% p.a. × 4 Jahre",
+      "quelle": "Q-AFA-7B"
+    },
+    "AfA7bDauer": {
+      "label": "Paragraf 7b EStG Anwendungsdauer",
+      "default": 4,
+      "min": 0,
+      "max": 4,
+      "einheit": "Jahre",
+      "quelle": "Q-AFA-7B-DAUER"
+    },
+    "KfWZuschuss": {
+      "label": "KfW-Tilgungszuschuss EH 55",
+      "default": 0.2,
+      "min": 0,
+      "max": 0.45,
+      "einheit": "% von Modernisierung",
+      "quelle": "Q-KFW-261"
+    },
+    "MarktDC": {
+      "label": "Marktwert-Premium D->C",
+      "default": 0.08,
+      "min": 0.05,
+      "max": 0.12,
+      "einheit": "% von Verkehrswert",
+      "quelle": "Q-IMMO-DC"
+    },
+    "MarktDB": {
+      "label": "Marktwert-Premium D->B",
+      "default": 0.14,
+      "min": 0.1,
+      "max": 0.2,
+      "einheit": "% von Verkehrswert",
+      "quelle": "Q-IMMO-DB"
+    },
+    "EPBDAbschlag": {
+      "label": "EPBD-Verkehrswert-Abschlag (Klasse F-H)",
+      "default": 0.07,
+      "min": 0.03,
+      "max": 0.15,
+      "einheit": "% Abschlag",
+      "quelle": "Q-EPBD"
+    },
+    "MietausfQ": {
+      "label": "Mietausfall durch Heizkostenanstieg",
+      "default": 0.03,
+      "min": 0.01,
+      "max": 0.08,
+      "einheit": "% Mietausfall p.a.",
+      "quelle": "Q-MIETAUSF"
+    },
+    "BauMM": {
+      "label": "Bauprozess-Mietminderung",
+      "default": 0.1,
+      "min": 0.05,
+      "max": 0.2,
+      "einheit": "% Minderung × 6 Mon.",
+      "quelle": "Q-BAU-MM"
+    },
+    "KaltMiete": {
+      "label": "Mittlere Kaltmiete (Beispiel-MFH)",
+      "default": 8.5,
+      "min": 5.5,
+      "max": 14,
+      "einheit": "€/m²·Monat",
+      "quelle": "Q-MIETE-MITTEL"
+    },
+    "Verkehrswert": {
+      "label": "Verkehrswert Beispiel-MFH (Schaetzung)",
+      "default": 1800000,
+      "min": 200000,
+      "max": 6000000,
+      "einheit": "€",
+      "quelle": "Q-VW"
+    },
+    "KlassenSprung": {
+      "label": "Effizienzklassen-Sprung-Annahme",
+      "default": 1,
+      "min": 0,
+      "max": 3,
+      "einheit": "Klassen",
+      "quelle": "Q-KLASSE"
+    },
+    "Wirksam_VM": {
+      "label": "Wirksam Vermieter-Bilanz (intern, dynamisch aus Nutzungsart)",
+      "default": null,
+      "min": null,
+      "max": null,
+      "einheit": "—",
+      "quelle": "intern"
+    }
+  },
+  "block7_lebensdauer": {
+    "L_GasBW": {
+      "label": "Gas-Brennwert",
+      "default": 18,
+      "min": 15,
+      "max": 25,
+      "einheit": "Jahre",
+      "quelle": "Q-VDI-2067"
+    },
+    "L_Hybrid": {
+      "label": "Hybrid (Gas+WP)",
+      "default": 18,
+      "min": 15,
+      "max": 22,
+      "einheit": "Jahre",
+      "quelle": "Q-VDI-2067"
+    },
+    "L_WP": {
+      "label": "Waermepumpe",
+      "default": 18,
+      "min": 15,
+      "max": 25,
+      "einheit": "Jahre",
+      "quelle": "Q-VDI-2067"
+    },
+    "L_FW": {
+      "label": "Fernwaerme",
+      "default": 25,
+      "min": 20,
+      "max": 30,
+      "einheit": "Jahre",
+      "quelle": "Q-VDI-2067"
+    },
+    "L_Pellets": {
+      "label": "Pellets",
+      "default": 20,
+      "min": 15,
+      "max": 25,
+      "einheit": "Jahre",
+      "quelle": "Q-VDI-2067"
+    },
+    "L_Oel": {
+      "label": "Oel (Bestand)",
+      "default": 20,
+      "min": 15,
+      "max": 25,
+      "einheit": "Jahre",
+      "quelle": "Q-VDI-2067"
+    }
+  },
+  "stand_und_pflege": {
+    "letzte_aktualisierung": "2026-05-01",
+    "naechste_pruefung": "2026-06-01",
+    "bearbeiter": "Daniel Schöberl"
+  },
+  "_defined_names_index": {
+    "AfA7b": "Parameter!$C$93",
+    "AfA7bDauer": "Parameter!$C$94",
+    "Aktuell_Fernwaerme": "Preishistorie!$C$7",
+    "Aktuell_Gas": "Preishistorie!$B$7",
+    "Aktuell_Heizoel": "Preishistorie!$D$7",
+    "Aktuell_Pellets": "Preishistorie!$F$7",
+    "Aktuell_Stand": "Preishistorie!$A$7",
+    "Aktuell_WPStrom": "Preishistorie!$E$7",
+    "AnschlussAnpassen": "Eingaben!$C$74",
+    "AufschlagProSprung": "Wertwirkung!$C$9",
+    "BGB559Korr": "Parameter!$C$89",
+    "BauMM": "Parameter!$C$100",
+    "Baujahr": "Eingaben!$C$10",
+    "BaujahrHeizung": "Eingaben!$C$19",
+    "Biomethan": "Eingaben!$C$79",
+    "BonusEff": "Eingaben!$C$56",
+    "BonusEink": "Eingaben!$C$55",
+    "BonusGrund": "Eingaben!$C$53",
+    "BonusKlima": "Eingaben!$C$54",
+    "CO2Pfad": "Parameter!$C$39",
+    "CO2Preis": "Eingaben!$C$70",
+    "CO2PreisCustom": "Eingaben!$C$67",
+    "Dauer559": "Parameter!$C$91",
+    "EFH_FWSatzung": "Parameter!$E$138",
+    "EFH_Heizlast": "Parameter!$E$127",
+    "EFH_InvestFW": "Parameter!$E$132",
+    "EFH_InvestGas": "Parameter!$E$130",
+    "EFH_InvestHybrid": "Parameter!$E$134",
+    "EFH_InvestPellets": "Parameter!$E$133",
+    "EFH_InvestWP": "Parameter!$E$131",
+    "EFH_KaltMiete": "Parameter!$E$140",
+    "EFH_MieterstromAnteil": "Parameter!$E$142",
+    "EFH_Nutzungsart": "Parameter!$E$137",
+    "EFH_PV_kWp": "Parameter!$E$141",
+    "EFH_Reparaturen": "Parameter!$E$129",
+    "EFH_Ruecklagen": "Parameter!$E$128",
+    "EFH_Verbrauch": "Parameter!$E$126",
+    "EFH_Verkehrswert": "Parameter!$E$139",
+    "EFH_VorauFW": "Parameter!$E$136",
+    "EFH_VorauSchall": "Parameter!$E$135",
+    "EFH_WE": "Parameter!$E$125",
+    "EFH_Wohnflaeche": "Parameter!$E$124",
+    "EPBDAbschlag": "Parameter!$C$98",
+    "EigenerPreisAktuell": "Eingaben!$C$37",
+    "ErsatzinvestStandard": "Eingaben!$C$21",
+    "FWArbeitspreis": "Eingaben!$C$90",
+    "FWJahresfaktor": "Eingaben!$C$93",
+    "FWLeistungspreis": "Eingaben!$C$91",
+    "FWMesspreis": "Eingaben!$C$92",
+    "FWSatzung": "Eingaben!$C$15",
+    "FWVertragsAufschlag": "Eingaben!$C$68",
+    "FoerderDeckel": "Parameter!$C$32",
+    "FoerderMax": "Eingaben!$C$58",
+    "Gebaeudetyp": "Eingaben!$C$5",
+    "Gruengas": "Parameter!$C$41",
+    "HeizlastFaktor_saniert": "Parameter!$D$151",
+    "HeizlastFaktor_teilsaniert": "Parameter!$D$150",
+    "HeizlastFaktor_unsaniert": "Parameter!$D$149",
+    "HeizlastKW": "Eingaben!$C$14",
+    "HeizungAktuell": "Eingaben!$C$12",
+    "Hf559": "Parameter!$C$90",
+    "HybridAnteilWP": "Parameter!$C$50",
+    "InvFW": "Eingaben!$E$45",
+    "InvGas": "Eingaben!$E$42",
+    "InvHybrid": "Eingaben!$E$43",
+    "InvPellets": "Eingaben!$E$46",
+    "InvWP": "Eingaben!$E$44",
+    "JAZ": "Parameter!$C$49",
+    "JaehrlReparaturen": "Eingaben!$C$24",
+    "JaehrlSanierungsInvest": "Eingaben!$C$25",
+    "JaehrlZufuehrung": "'Investor-KPIs'!$C$40",
+    "JaehrlZufuehrungRuecklage": "Eingaben!$C$18",
+    "Kalkzins": "Parameter!$C$36",
+    "KaltMiete": "Parameter!$C$101",
+    "KfWZuschuss": "Parameter!$C$95",
+    "KlasseAktuell": "Wertwirkung!$C$7",
+    "KlassenSprung": "Parameter!$C$103",
+    "L_FW": "Parameter!$C$115",
+    "L_GasBW": "Parameter!$C$112",
+    "L_Hybrid": "Parameter!$C$113",
+    "L_Oel": "Parameter!$C$117",
+    "L_Pellets": "Parameter!$C$116",
+    "L_WP": "Parameter!$C$114",
+    "Lage": "Eingaben!$C$26",
+    "LebensdauerHeizung": "Eingaben!$C$20",
+    "LetzteSanierung": "Eingaben!$C$22",
+    "MFH_FWSatzung": "Parameter!$F$138",
+    "MFH_Heizlast": "Parameter!$F$127",
+    "MFH_InvestFW": "Parameter!$F$132",
+    "MFH_InvestGas": "Parameter!$F$130",
+    "MFH_InvestHybrid": "Parameter!$F$134",
+    "MFH_InvestPellets": "Parameter!$F$133",
+    "MFH_InvestWP": "Parameter!$F$131",
+    "MFH_KaltMiete": "Parameter!$F$140",
+    "MFH_MieterstromAnteil": "Parameter!$F$142",
+    "MFH_Nutzungsart": "Parameter!$F$137",
+    "MFH_PV_kWp": "Parameter!$F$141",
+    "MFH_Reparaturen": "Parameter!$F$129",
+    "MFH_Ruecklagen": "Parameter!$F$128",
+    "MFH_Verbrauch": "Parameter!$F$126",
+    "MFH_Verkehrswert": "Parameter!$F$139",
+    "MFH_VorauFW": "Parameter!$F$136",
+    "MFH_VorauSchall": "Parameter!$F$135",
+    "MFH_WE": "Parameter!$F$125",
+    "MFH_Wohnflaeche": "Parameter!$F$124",
+    "ManuelleFoerdersumme": "Eingaben!$C$61",
+    "ManuelleQuote": "Eingaben!$C$60",
+    "MarktDB": "Parameter!$C$97",
+    "MarktDC": "Parameter!$C$96",
+    "Marktwert": "Wertwirkung!$C$8",
+    "MietausfQ": "Parameter!$C$99",
+    "MietspiegelEff": "Parameter!$C$92",
+    "Nutzungsart": "Eingaben!$C$16",
+    "PVAktiv": "Eingaben!$F$5",
+    "PVEigen": "'PV-Verstaerker'!$C$12",
+    "PVEinspeise": "'PV-Verstaerker'!$C$14",
+    "PVErtragSpez": "'PV-Verstaerker'!$C$10",
+    "PVFoerderung": "'PV-Verstaerker'!$C$16",
+    "PVInvKWp": "'PV-Verstaerker'!$C$11",
+    "PVKWp": "'PV-Verstaerker'!$C$9",
+    "PVMieterstromAnteil": "'PV-Verstaerker'!$C$15",
+    "PVMieterstromPreis": "'PV-Verstaerker'!$C$13",
+    "PVWartung": "'PV-Verstaerker'!$C$18",
+    "PVZeitraum": "'PV-Verstaerker'!$C$17",
+    "PelletsInnenstadtAus": "Parameter!$C$73",
+    "PelletsMaxWE": "Parameter!$C$72",
+    "Pellets_Plausibel": "Dashboard!$C$52",
+    "PreisFW": "Parameter!$C$11",
+    "PreisGas": "Parameter!$C$8",
+    "PreisOel": "Parameter!$C$17",
+    "PreisPellets": "Parameter!$C$20",
+    "PreisWP": "Parameter!$C$14",
+    "Ruecklage": "Eingaben!$C$17",
+    "Sanierung": "Eingaben!$C$71",
+    "SanierungsHorizont": "Eingaben!$C$23",
+    "Sanierungsstand": "Eingaben!$C$11",
+    "Sommerlast": "Eingaben!$C$73",
+    "SteigFW": "Parameter!$C$12",
+    "SteigGas": "Parameter!$C$9",
+    "SteigOel": "Parameter!$C$18",
+    "SteigPellets": "Parameter!$C$21",
+    "SteigWP": "Parameter!$C$15",
+    "VerbrauchIst": "Eingaben!$C$13",
+    "Verkehrswert": "Parameter!$C$102",
+    "WWAnteil": "Eingaben!$C$77",
+    "WartFW": "Parameter!$C$57",
+    "WartGas": "Parameter!$C$54",
+    "WartHybrid": "Parameter!$C$55",
+    "WartPellets": "Parameter!$C$58",
+    "WartWP": "Parameter!$C$56",
+    "Wirksam_VM": "Parameter!$C$104",
+    "Wohneinheiten": "Eingaben!$C$9",
+    "Wohnflaeche": "Eingaben!$C$8",
+    "Zeitraum": "Parameter!$C$37"
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "version": "1.0",
+  "stand": "2026-05-02",
+  "aktueller_monat": "2026-05",
+  "spalten_einheit": {
+    "gas": "ct/kWh brutto Verbraucher-Durchschnitt",
+    "fernwaerme": "ct/kWh Erfurt-Effektivpreis (tarifbasiert, nicht monatsvolatil)",
+    "heizoel": "ct/kWh brutto Verbraucher-Durchschnitt",
+    "wp_strom": "ct/kWh brutto Verbraucher-Durchschnitt",
+    "pellets": "ct/kWh brutto Verbraucher-Durchschnitt"
+  },
+  "monate": {
+    "2026-05": {
+      "label": "Mai 2026",
+      "aktuell": true,
+      "gas": 10.5,
+      "fernwaerme": 17.5,
+      "heizoel": 13.5,
+      "wp_strom": 26,
+      "pellets": 7.5,
+      "einheit": "ct/kWh",
+      "kontext": "Heizöl normalisiert sich nach Iran-Krise (135 €/100l). WP-Strom Trend nach unten. Pellets stabil bei 376 €/t. Fernwärme als Erfurt-Effektivpreis (siehe Methodik)."
+    },
+    "2026-04": {
+      "label": "April 2026",
+      "aktuell": false,
+      "gas": 10.5,
+      "fernwaerme": 17.5,
+      "heizoel": 15.3,
+      "wp_strom": 27,
+      "pellets": 7.5,
+      "einheit": "ct/kWh",
+      "kontext": "Heizöl leicht unter Märzhoch — US-Vermittlungssignale beruhigen Ölmarkt. WP-Strom günstigster Stand. CO₂-Abgabe 65 €/Tonne."
+    },
+    "2026-03": {
+      "label": "März 2026",
+      "aktuell": false,
+      "gas": 10,
+      "fernwaerme": 17.5,
+      "heizoel": 16,
+      "wp_strom": 28,
+      "pellets": 7.6,
+      "einheit": "ct/kWh",
+      "kontext": "Iran-Krise: Blockade Hormus, ~20% globaler Ölhandel betroffen. Heizöl Dreijahreshoch."
+    },
+    "2026-02": {
+      "label": "Februar 2026",
+      "aktuell": false,
+      "gas": 9.9,
+      "fernwaerme": 17.5,
+      "heizoel": 10.8,
+      "wp_strom": 29,
+      "pellets": 7.7,
+      "einheit": "ct/kWh",
+      "kontext": "Gas/Strom stabil. Heizöl beginnt nervös zu werden — Brent ~72 USD/Barrel."
+    },
+    "2026-01": {
+      "label": "Januar 2026",
+      "aktuell": false,
+      "gas": 9.9,
+      "fernwaerme": 17.5,
+      "heizoel": 10.5,
+      "wp_strom": 30,
+      "pellets": 7.8,
+      "einheit": "ct/kWh",
+      "kontext": "Startpunkt der Aufzeichnung. Gasspeicherumlage abgeschafft, Netzentgelte sinken durch staatliche Zuschüsse 6,5 Mrd. €."
+    }
+  },
+  "methodik": [
+    "Methodische Trennung — drei Wert-Klassen:",
+    "1. Block 1 'Energiepreise & Pfade' (Tab Parameter) = LANGFRISTIGE Modellannahmen für 25-Jahres-Berechnung.",
+    "2. Tab Preishistorie (hier) = AKTUELLER Marktstand pro Monat.",
+    "3. Fernwärme: SONDERFALL — tarifbasiert, NICHT monatsvolatil. Erfurt: 17,5 ct/kWh Effektivpreis Gebäudeebene (real belegt durch Techem-Abrechnung Beispiel-MFH 2023/24, Vorab-Analyse FW Erfurt April 2026). Bundesweit: AGFW-Median 15,7 ct/kWh.",
+    "Fernwärme-Preis-Methodik (Quelle: Vorab-Analyse FW Erfurt 04/2026):",
+    "• Arbeitspreis Preisblatt SWE Q1/2026: 11,76 ct/kWh brutto",
+    "• Leistungspreis SWE Q1/2026: 73,64 €/kW·a brutto",
+    "• Tarifmischpreis (AP + LP, ohne Nebenkosten): ~13,8 ct/kWh",
+    "• Reale Gebäudeabrechnung Erfurt (Techem 2023/24): 17,5 ct/kWh",
+    "• Saisonale Spannweite: Winter ~16, Sommer ~22,7 ct/kWh"
+  ],
+  "update_workflow": [
+    "Update-Workflow monatlich:",
+    "1. BDEW Heizkostenmonitor / Verivox / Finanztip prüfen (Gas, Strom).",
+    "2. TECSON Heizölpreisindex aufnehmen (Tagespreis als Monats-Snapshot).",
+    "3. DEPV Pelletspreis (Monatsdurchschnitt €/t → ct/kWh umrechnen).",
+    "4. Fernwärme-Effektivpreis aus tarifbasierter Methodik aktualisieren (sofern SWE-Anpassung).",
+    "5. Neue Zeile oben in Tabelle einfügen, alte Werte als Historie behalten, Kontext-Text füllen."
+  ],
+  "quelle": "v2.1_neutral_OUTPUT.xlsx"
+}
