@@ -7,8 +7,12 @@
   <title>Der Entscheider — hausentscheider</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    /* =========================================================
+       Grundlage — Farbsystem, Typografie, Container
+       Übernommen aus index.html / objekte/index.html.
+       ========================================================= */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { font-size: 16px; scroll-behavior: smooth; overflow-x: hidden; }
     body {
@@ -24,13 +28,16 @@
       --signal-dark:   #a8d45a;
       --stone-gray:    #8a8680;
       --context-edge:  #9AAFAF;
+      --kontext-blau:  #7e9696;
       --border:        #e0dedd;
       --bg-light:      #f5f4f2;
+      --bg-warn:       #fff8e6;
       --text-primary:  #1a1a1a;
       --text-secondary:#5a5956;
       --text-tertiary: #8a8680;
       --white:         #ffffff;
       --max-width:     900px;
+      --max-width-wide:1100px;
       --radius:        8px;
     }
     h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; font-weight: 400; line-height: 1.3; color: var(--text-primary); }
@@ -42,8 +49,11 @@
     a { color: var(--petrol); text-decoration: none; }
     a:hover { text-decoration: underline; }
     .container { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; overflow-x: hidden; }
+    .container--wide { max-width: var(--max-width-wide); }
 
-    /* NAV — übernommen aus index.html für Konsistenz */
+    /* =========================================================
+       NAV — übernommen aus index.html
+       ========================================================= */
     .nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 0.5px solid var(--border); }
     .nav__inner { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; }
     .nav__logo { text-decoration: none; display: inline-flex; align-items: center; }
@@ -60,7 +70,6 @@
     .nav__dropdown-menu a { display: flex; align-items: center; gap: 6px; padding: 0.5rem 1rem; font-size: 13px; color: var(--text-secondary); }
     .nav__dropdown-menu a:hover { color: var(--petrol); background: var(--bg-light); text-decoration: none; }
     .nav__city-badge { font-size: 10px; background: var(--petrol); color: white; padding: 1px 6px; border-radius: 10px; font-family: 'Inter', sans-serif; }
-
     .nav__hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 8px; gap: 5px; flex-shrink: 0; }
     .nav__hamburger span { display: block; width: 22px; height: 1.5px; background: var(--text-primary); transition: all 0.25s ease; transform-origin: center; }
     .nav__hamburger.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
@@ -73,126 +82,740 @@
     .nav__mobile-menu li:last-child a { border-bottom: none; }
     .nav__mobile-menu li a:hover { color: var(--petrol); }
 
-    /* HERO — hell, ruhig; Werkzeug, nicht Bühne */
+    /* =========================================================
+       Phase-Switch — JS-State steuert Sichtbarkeit
+       [hidden] mit !important verhindert, dass spätere
+       Layout-Regeln (.calculating { display: flex }, etc.)
+       das hidden-Attribut versehentlich überschreiben.
+       ========================================================= */
+    [hidden] { display: none !important; }
+    .phase { display: none; }
+    .phase--active { display: block; }
+
+    /* =========================================================
+       Phase 1 — Hero
+       Layout aus existing rechner.html, Inhalt nach Spec §6.
+       ========================================================= */
     .hero { background: var(--bg-light); border-bottom: 0.5px solid var(--border); }
     .hero__inner { max-width: var(--max-width); margin: 0 auto; padding: 3.5rem 2rem 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
     .hero__headline { font-family: 'Playfair Display', Georgia, serif; font-size: 38px; font-weight: 400; color: var(--text-primary); line-height: 1.15; margin-bottom: 0.5rem; }
-    .hero__underline { width: 120px; height: 2px; background: var(--petrol); margin-bottom: 1.75rem; }
-    .hero__statement { max-width: 560px; }
-    .hero__statement p { font-size: 15px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 1rem; }
-    .hero__statement p:last-child { margin-bottom: 0; }
+    .hero__subtitle { font-style: italic; font-size: 15px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.25rem; }
+    .hero__underline { width: 120px; height: 2px; background: var(--petrol); margin-bottom: 1.5rem; }
+    .hero__statement p { font-size: 15px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 0.875rem; }
     .hero__statement p:first-child { font-size: 16px; color: var(--text-primary); }
-
-    /* Cover-Platzhalter: reduzierte SVG-Skizze auf Petrol-Dark */
+    .hero__cta-row { margin-top: 1.75rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
     .hero__cover { height: 400px; background: var(--petrol-dark); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; overflow: hidden; }
     .hero__cover svg { width: 70%; height: auto; opacity: 0.55; }
 
-    /* FORM-SECTION */
-    .form-section { padding: 3.5rem 0 4rem; }
-    .form-section__intro { max-width: 620px; margin-bottom: 2.5rem; }
-    .form-section__label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol); font-family: 'Inter', sans-serif; display: block; margin-bottom: 0.625rem; }
-    .form-section__titel { font-family: 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 400; color: var(--text-primary); line-height: 1.35; margin-bottom: 0.625rem; }
-    .form-section__text { font-size: 14px; color: var(--text-secondary); line-height: 1.75; }
+    /* CTA-Button (Hero + überall in Wizard/Ergebnis) */
+    .btn { display: inline-block; padding: 0.7rem 1.6rem; font-family: 'Inter', sans-serif; font-size: 14px; border-radius: 4px; cursor: pointer; transition: opacity 0.2s, background 0.2s, border-color 0.2s; text-decoration: none; border: none; line-height: 1.2; }
+    .btn:hover { opacity: 0.9; text-decoration: none; }
+    .btn--primary  { background: var(--petrol); color: white; }
+    .btn--secondary { background: transparent; color: var(--petrol); border: 1px solid var(--petrol); }
+    .btn--ghost    { background: transparent; color: var(--text-secondary); border: 0.5px solid var(--border); }
+    .btn--ghost:hover { border-color: var(--petrol); color: var(--petrol); opacity: 1; }
+    .btn--small    { font-size: 13px; padding: 0.5rem 1rem; }
+    .btn:disabled  { opacity: 0.4; cursor: not-allowed; }
 
-    .rechner-form { display: flex; flex-direction: column; gap: 3rem; }
-
-    fieldset.fs { border: none; padding: 0; margin: 0; }
-    fieldset.fs + fieldset.fs { border-top: 0.5px solid var(--border); padding-top: 3rem; }
-    .fs__legend { display: block; font-family: 'Playfair Display', Georgia, serif; font-size: 18px; font-weight: 500; color: var(--text-primary); margin-bottom: 0.375rem; padding: 0; }
-    .fs__hint { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.75rem; max-width: 620px; }
-
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; }
-    .grid--full { grid-template-columns: 1fr; }
-
-    .field { display: flex; flex-direction: column; gap: 0.5rem; }
-    .field--full { grid-column: 1 / -1; }
-    .field__label { font-size: 13px; font-weight: 500; color: var(--text-primary); font-family: 'Inter', sans-serif; display: inline-flex; align-items: center; gap: 0.375rem; }
-    .field__label-info-slot { /* Hook für spätere Info-Toggles */ }
-    .field__input-wrap { position: relative; display: flex; align-items: center; }
-    .field__input,
-    .field__select {
-      width: 100%;
-      padding: 0.625rem 0.875rem;
-      font-family: 'Inter', -apple-system, sans-serif;
+    /* URL-Parameter-Banner (Variante A+) */
+    .url-banner {
+      margin-top: 1.5rem;
+      padding: 1rem 1.25rem;
+      background: var(--white);
+      border: 0.5px solid var(--petrol);
+      border-left: 3px solid var(--petrol);
+      border-radius: var(--radius);
       font-size: 14px;
-      color: var(--text-primary);
-      background: var(--white);
-      border: 0.5px solid var(--border);
-      border-radius: 4px;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
-    .field__select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' fill='none' stroke='%235a5956' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'/></svg>"); background-repeat: no-repeat; background-position: right 0.75rem center; padding-right: 2rem; }
-    .field__input:hover,
-    .field__select:hover { border-color: var(--petrol-light); }
-    .field__input:focus-visible,
-    .field__select:focus-visible { outline: none; border-color: var(--petrol); box-shadow: 0 0 0 2px rgba(26,92,90,0.18); }
-    .field__input::placeholder { color: var(--text-tertiary); }
-    .field__suffix { position: absolute; right: 0.875rem; font-size: 13px; color: var(--text-tertiary); pointer-events: none; }
-    .field__input--with-suffix { padding-right: 2.25rem; }
+    .url-banner p { margin-bottom: 0.75rem; color: var(--text-primary); }
+    .url-banner__actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 
-    /* Radio-Pills */
-    .pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .pill { position: relative; }
-    .pill input { position: absolute; opacity: 0; pointer-events: none; }
-    .pill__label {
-      display: inline-block;
-      padding: 0.5rem 0.9rem;
-      font-size: 13px;
-      color: var(--text-secondary);
-      background: var(--white);
-      border: 0.5px solid var(--border);
-      border-radius: 999px;
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    /* =========================================================
+       Phase 2 — Wizard
+       ========================================================= */
+    .wizard { padding: 3rem 0 4rem; min-height: calc(100vh - 56px); }
+    .wizard-progress { display: flex; gap: 0; max-width: 600px; margin: 0 auto 2.5rem; border-bottom: 0.5px solid var(--border); }
+    .wizard-progress__step {
+      flex: 1; padding: 0.75rem 0.5rem; text-align: center;
+      font-size: 12px; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--text-tertiary); border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
       font-family: 'Inter', sans-serif;
-      line-height: 1.2;
     }
-    .pill__label:hover { border-color: var(--petrol-light); color: var(--text-primary); }
-    .pill input:checked + .pill__label { border-color: var(--petrol); color: var(--petrol); background: rgba(26,92,90,0.06); }
-    .pill input:focus-visible + .pill__label { outline: 2px solid var(--petrol); outline-offset: 2px; }
+    .wizard-progress__step--active { color: var(--petrol); border-bottom-color: var(--petrol); }
+    .wizard-progress__step--done { color: var(--text-secondary); }
 
-    /* Details: optionale Präzisierungen */
-    .details-optional { border: 0.5px solid var(--border); border-left: 3px solid var(--context-edge); border-radius: var(--radius); background: var(--white); overflow: hidden; }
-    .details-optional > summary { list-style: none; cursor: pointer; padding: 1.125rem 1.25rem; display: flex; align-items: flex-start; gap: 0.875rem; background: var(--bg-light); transition: background 0.15s; }
-    .details-optional > summary::-webkit-details-marker { display: none; }
-    .details-optional > summary:hover { background: #ebeae6; }
-    .details-optional[open] > summary { border-bottom: 0.5px solid var(--border); }
-    .details-optional__chevron { flex-shrink: 0; width: 14px; height: 14px; margin-top: 4px; color: var(--petrol); transition: transform 0.2s; }
-    .details-optional[open] .details-optional__chevron { transform: rotate(180deg); }
-    .details-optional__summary-text { display: flex; flex-direction: column; gap: 0.25rem; }
-    .details-optional__summary-title { font-family: 'Playfair Display', Georgia, serif; font-size: 17px; font-weight: 500; color: var(--petrol); line-height: 1.3; }
-    .details-optional__summary-sub { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
-    .details-optional__body { padding: 1.5rem 1.25rem 1.75rem; }
+    .wizard-step { max-width: 600px; margin: 0 auto; }
+    .wizard-step h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 22px; margin-bottom: 0.5rem; }
+    .wizard-step__intro { font-size: 14px; color: var(--text-secondary); margin-bottom: 2rem; }
 
-    /* FOOTER — übernommen aus index.html */
+    .wizard-field { margin-bottom: 1.75rem; }
+    .wizard-field__label {
+      display: block; font-size: 13px; font-weight: 500; color: var(--text-primary);
+      margin-bottom: 0.5rem; font-family: 'Inter', sans-serif;
+    }
+    .wizard-field__hint {
+      font-size: 12px; color: var(--text-tertiary); margin-top: 0.4rem; line-height: 1.5;
+    }
+    .wizard-input,
+    .wizard-select {
+      width: 100%; padding: 0.7rem 0.875rem;
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 14px; color: var(--text-primary);
+      background: var(--white);
+      border: 0.5px solid var(--border); border-radius: 4px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .wizard-select { appearance: none; -webkit-appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' fill='none' stroke='%235a5956' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+      background-repeat: no-repeat; background-position: right 0.75rem center; padding-right: 2rem; }
+    .wizard-input:focus, .wizard-select:focus { outline: none; border-color: var(--petrol); box-shadow: 0 0 0 2px rgba(26,92,90,0.18); }
+
+    .wizard-input--inline { display: inline-block; width: auto; min-width: 110px; }
+
+    /* Segmented Control / Pill-Group für Toggles */
+    .seg { display: inline-flex; border: 0.5px solid var(--border); border-radius: 999px; padding: 3px; background: var(--white); flex-wrap: wrap; gap: 2px; }
+    .seg__btn {
+      font-family: 'Inter', sans-serif; font-size: 13px;
+      padding: 0.5rem 1rem; border: none; background: transparent;
+      color: var(--text-secondary); cursor: pointer; border-radius: 999px;
+      transition: background 0.12s, color 0.12s;
+    }
+    .seg__btn:hover { color: var(--text-primary); background: rgba(26,92,90,0.06); }
+    .seg__btn--active { background: var(--petrol); color: var(--white); }
+    /* Aktiver Button bleibt im Hover lesbar — heller Petrol-Hintergrund + weißer Text */
+    .seg__btn--active:hover { background: var(--petrol); color: var(--white); }
+    .seg__btn--disabled { color: var(--text-tertiary); cursor: not-allowed; opacity: 0.55; text-decoration: line-through; }
+    .seg__btn--disabled:hover { color: var(--text-tertiary); background: transparent; }
+
+    /* Slider-Reihen */
+    .wizard-slider { display: flex; flex-direction: column; gap: 0.4rem; }
+    .wizard-slider__row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+    .wizard-slider__value { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--petrol); font-weight: 500; }
+    input[type="range"] { width: 100%; accent-color: var(--petrol); height: 28px; }
+    @media (pointer: coarse) { input[type="range"] { height: 44px; } }
+
+    /* Hint-Boxen (FW-Satzung, Heizlast-Hilfsregel, Markt-Hinweis)
+       Default-Variante = Kontext-Blau mit weißem Text. Pattern für
+       kontextuelle Erklärungen (nicht für Errors / Warnungen). */
+    .hint {
+      padding: 0.875rem 1rem 0.875rem 2.4rem;
+      font-size: 13px; line-height: 1.6; color: var(--white);
+      background: var(--kontext-blau);
+      border-radius: 4px;
+      margin-top: 0.75rem;
+      position: relative;
+    }
+    .hint::before {
+      content: 'ⓘ';
+      position: absolute; left: 0.875rem; top: 0.75rem;
+      font-size: 14px; color: var(--white); opacity: 0.85;
+    }
+    .hint strong { color: var(--white); font-weight: 600; }
+    /* Reservierte Variante für künftige Errors / echte Warnungen — nicht in C1 verwendet */
+    .hint--warn { background: var(--bg-warn); color: var(--text-primary); border-left: 3px solid var(--signal-dark); padding-left: 1rem; }
+    .hint--warn::before { color: var(--signal-dark); }
+    .hint--warn strong { color: var(--text-primary); }
+
+    /* Aktivierungs-Statement: Signal-Gelb-Variante mit Petrol-Dark-Text */
+    .hint--signal {
+      background: var(--signal); color: var(--petrol-dark);
+      border-left: 3px solid var(--petrol);
+      padding-left: 2.4rem;
+    }
+    .hint--signal::before { color: var(--petrol-dark); content: '★'; opacity: 1; }
+    .hint--signal strong { color: var(--petrol-dark); }
+
+    /* Persona-Picker Wizard (groß) — alle drei Boxen gleich hoch via Grid + flex-column */
+    .persona-picker { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin-top: 0.5rem; align-items: stretch; }
+    .persona {
+      text-align: left; padding: 1rem 1.1rem;
+      background: var(--white); border: 0.5px solid var(--border); border-radius: var(--radius);
+      cursor: pointer; transition: border-color 0.15s, background 0.15s;
+      font-family: 'Inter', sans-serif;
+      display: flex; flex-direction: column; gap: 0.25rem;
+      align-self: stretch;
+      height: 100%;
+    }
+    .persona:hover { border-color: var(--petrol-light); }
+    .persona strong { display: block; font-size: 14px; color: var(--text-primary); margin-bottom: 0.25rem; font-weight: 600; }
+    .persona small { display: block; font-size: 12px; color: var(--text-tertiary); line-height: 1.5; flex: 1; }
+    .persona--active { border-color: var(--petrol); background: rgba(26,92,90,0.06); }
+    .persona--active strong { color: var(--petrol); }
+
+    /* Wizard-Buttons (Zurück / Weiter / Berechnen) */
+    .wizard-actions { display: flex; justify-content: space-between; margin-top: 2.5rem; gap: 1rem; }
+    .wizard-actions--end { justify-content: flex-end; }
+
+    /* =========================================================
+       Phase 3 — Calculating-Übergang
+       ========================================================= */
+    .calculating { padding: 5rem 2rem; text-align: center; min-height: 50vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .calc-spinner {
+      width: 48px; height: 48px;
+      border: 3px solid var(--border);
+      border-top-color: var(--petrol);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+      margin-bottom: 1.5rem;
+    }
+    .calculating p { font-size: 15px; color: var(--text-secondary); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* =========================================================
+       Phase 4 — Ergebnis
+       ========================================================= */
+    .ergebnis { padding: 0 0 0; }
+
+    /* Sektion-Wrapper für alternierende Hintergründe.
+       --bg = bg-light, --white = weiß. Padding 2rem oben/unten,
+       Inhalt-Container intern auf max-width 900 begrenzt. */
+    .section-wrap { padding: 2rem 0; }
+    .section-wrap--bg { background: var(--bg-light); }
+    .section-wrap--white { background: var(--white); }
+    /* Signature-Akzent für Dialog-CTA — volle Breite kontext-blau */
+    .section-wrap--kontext { background: var(--kontext-blau); padding: 2.5rem 0; }
+    /* Wenn ein Container in einem section-wrap steckt, schluckt der Wrap das margin-bottom — sonst kollidieren die alternierenden Hintergründe mit den alten Spacings. */
+    .section-wrap > * { margin-bottom: 0 !important; }
+
+    .ergebnis-kopf { max-width: var(--max-width); margin: 0 auto; padding: 1.5rem 2rem 0.5rem; }
+
+    /* Annahmen-Transparenz-Box
+       Header (zugeklappt): Signal-Gelb + 4px linker Border in Petrol → fällt auf.
+       Aufgeklappter Inhalt: neutral grau, keine Farb-Schreierei. */
+    .annahmen-box {
+      border: 0.5px solid var(--border);
+      border-left: 4px solid var(--petrol);
+      border-radius: var(--radius); margin-bottom: 1.5rem;
+      font-size: 13px;
+      overflow: hidden;
+    }
+    .annahmen-box > summary {
+      cursor: pointer; padding: 0.75rem 1rem;
+      background: var(--signal);
+      color: var(--petrol-dark);
+      font-family: 'Inter', sans-serif; font-weight: 500;
+      list-style: none;
+      transition: background 0.15s;
+    }
+    .annahmen-box > summary:hover { background: var(--signal-dark); }
+    .annahmen-box > summary::-webkit-details-marker { display: none; }
+    .annahmen-box[open] > summary { border-bottom: 0.5px solid var(--border); }
+    .annahmen-box__inner { padding: 0.75rem 1rem 1rem; background: var(--bg-light); }
+    .annahmen-tabelle { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .annahmen-tabelle th, .annahmen-tabelle td {
+      padding: 0.4rem 0.6rem; text-align: left; border-bottom: 0.5px solid var(--border);
+    }
+    .annahmen-tabelle th { font-weight: 500; color: var(--text-tertiary); font-family: 'Inter', sans-serif; }
+    .annahmen-tabelle td { color: var(--text-primary); }
+    .annahmen-disclaimer { font-size: 11px; color: var(--text-tertiary); margin-top: 0.75rem; font-style: italic; }
+
+    /* Headline-Antwort */
+    .headline-antwort {
+      padding: 1.5rem; margin-bottom: 1.5rem;
+      background: var(--white); border: 0.5px solid var(--border);
+      border-left: 3px solid var(--petrol); border-radius: var(--radius);
+    }
+    .headline-antwort h2 { font-size: 22px; margin-bottom: 0.5rem; }
+    .placeholder { color: var(--text-tertiary); font-style: italic; font-size: 14px; }
+
+    /* Persona-Toggle (Ergebnis-Seite, klein) */
+    .persona-toggle {
+      display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+      font-size: 13px; color: var(--text-secondary);
+    }
+    .persona-toggle__label { font-family: 'Inter', sans-serif; }
+    .persona-mini {
+      font-family: 'Inter', sans-serif; font-size: 13px;
+      padding: 0.4rem 0.875rem; border-radius: 999px;
+      background: var(--white); color: var(--text-secondary);
+      border: 0.5px solid var(--border); cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .persona-mini:hover { border-color: var(--petrol-light); color: var(--text-primary); }
+    .persona-mini--active { border-color: var(--petrol); color: var(--petrol); background: rgba(26,92,90,0.06); }
+
+    /* Mini-Cockpit (Pill-Leiste, klickbar) */
+    .mini-cockpit {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-bottom: 0.5rem; padding: 0.75rem;
+      background: var(--bg-light); border: 0.5px solid var(--border); border-radius: var(--radius);
+    }
+    .cockpit-tipp {
+      font-size: 12px; color: var(--stone-gray);
+      margin-bottom: 1.25rem; padding: 0 0.25rem;
+      font-family: 'Inter', sans-serif;
+    }
+    .cockpit-pill {
+      position: relative;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.35rem 0.75rem; border-radius: 999px;
+      background: var(--white); border: 0.5px solid var(--border);
+      font-family: 'Inter', sans-serif; font-size: 12px;
+      color: var(--text-primary); cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    }
+    .cockpit-pill::after {
+      content: '✎';
+      position: absolute; top: -2px; right: -2px;
+      width: 10px; height: 10px;
+      font-size: 9px; line-height: 10px; text-align: center;
+      background: var(--signal); color: var(--petrol-dark);
+      border-radius: 50%;
+      opacity: 0; transition: opacity 0.15s;
+    }
+    .cockpit-pill:hover { border-color: var(--petrol); background: rgba(26,92,90,0.07); transform: translateY(-1px); }
+    .cockpit-pill:hover::after { opacity: 1; }
+    /* Geändert-State: Wert wurde nach Berechnung manuell überschrieben */
+    .cockpit-pill--geaendert { border-color: var(--signal-dark); border-width: 1px; }
+    .cockpit-pill--geaendert::after { opacity: 1; background: var(--signal); color: var(--petrol-dark); }
+    .cockpit-pill__key { color: var(--text-tertiary); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .cockpit-pill__val { color: var(--text-primary); font-weight: 500; }
+    .cockpit-pill__edit-input {
+      font-family: 'Inter', sans-serif; font-size: 12px;
+      padding: 0.2rem 0.4rem; width: 100px;
+      border: 0.5px solid var(--petrol); border-radius: 4px;
+      background: var(--white); color: var(--text-primary);
+    }
+
+    /* Profi-Modus-Toggle (im Cockpit-Kopf entfernt — Aktivierung erfolgt
+       über die Tiefer-rechnen-Sektion am Seitenende, Card 1) */
+
+    /* Anker-Sprung-Navigation (Mobile primär) */
+    .panel-anchors {
+      display: none;
+      gap: 0.5rem; flex-wrap: nowrap;
+      overflow-x: auto;
+      padding: 0.5rem 0;
+      margin-bottom: 1rem;
+      scroll-snap-type: x proximity;
+    }
+    .panel-anchors a {
+      flex-shrink: 0; padding: 0.4rem 0.85rem;
+      font-size: 12px; color: var(--petrol);
+      background: var(--bg-light); border-radius: 999px;
+      scroll-snap-align: start; white-space: nowrap;
+      font-family: 'Inter', sans-serif;
+    }
+    .panel-anchors a:hover { background: rgba(26,92,90,0.1); text-decoration: none; }
+
+    /* =========================================================
+       Panels (3 Stubs)
+       ========================================================= */
+    .panel {
+      max-width: var(--max-width); margin: 0 auto 2rem; padding: 1.75rem 2rem;
+      background: var(--white); border: 0.5px solid var(--border); border-radius: var(--radius);
+    }
+    .panel h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px; margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem; border-bottom: 0.5px solid var(--border);
+    }
+    .panel-placeholder { color: var(--text-tertiary); font-style: italic; font-size: 14px; line-height: 1.6; }
+
+    .kpi-stub {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      margin-top: 1rem; padding: 0.6rem 1rem;
+      background: var(--bg-light); border-radius: var(--radius);
+      font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-secondary);
+    }
+    .kpi-stub strong { color: var(--text-primary); font-size: 14px; }
+
+    /* Belegbarkeits-Badge — klickbar mit Tooltip-Popover */
+    .badge {
+      position: relative;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 18px; height: 18px;
+      font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600;
+      border-radius: 50%; cursor: help;
+      vertical-align: middle;
+    }
+    .badge--A { background: var(--petrol); color: white; }
+    .badge--B { background: var(--stone-gray); color: white; }
+    .badge--C { background: transparent; color: var(--signal-dark); border: 1px solid var(--signal-dark); }
+    .badge:hover .badge__pop,
+    .badge:focus-within .badge__pop { display: block; }
+    .badge__pop {
+      display: none;
+      position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+      width: 240px; padding: 0.6rem 0.75rem;
+      background: var(--petrol-dark); color: var(--white);
+      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 400; line-height: 1.5;
+      border-radius: var(--radius); z-index: 50;
+      text-align: left; pointer-events: none;
+    }
+    .badge__pop::after {
+      content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      border: 5px solid transparent; border-top-color: var(--petrol-dark);
+    }
+
+    /* Belegbarkeits-Legende — einklappbar, zwischen Panel 3 und Schieberegler */
+    .belegbarkeit-legende {
+      max-width: var(--max-width); margin: 0 auto 2rem; padding: 0 2rem;
+    }
+    .belegbarkeit-legende details {
+      background: var(--bg-light); border: 0.5px solid var(--border);
+      border-radius: var(--radius); font-size: 13px;
+    }
+    .belegbarkeit-legende summary {
+      cursor: pointer; padding: 0.75rem 1rem; list-style: none;
+      color: var(--text-secondary); font-family: 'Inter', sans-serif;
+    }
+    .belegbarkeit-legende summary::-webkit-details-marker { display: none; }
+    .belegbarkeit-legende summary::before { content: '▸ '; color: var(--petrol); }
+    .belegbarkeit-legende details[open] summary::before { content: '▾ '; }
+    .belegbarkeit-legende details[open] summary { border-bottom: 0.5px solid var(--border); }
+    .belegbarkeit-legende__inner { padding: 0.75rem 1rem 1rem; display: flex; flex-direction: column; gap: 0.6rem; }
+    .belegbarkeit-legende__row { display: flex; align-items: flex-start; gap: 0.6rem; }
+    .belegbarkeit-legende__row span:not(.badge) { font-size: 13px; line-height: 1.5; color: var(--text-primary); }
+    .belegbarkeit-legende__schluss { font-size: 12px; color: var(--text-tertiary); font-style: italic; margin-top: 0.5rem; }
+
+    /* Methodik-Glasbox-Tooltip */
+    .info-tip {
+      position: relative; display: inline-flex; align-items: center; justify-content: center;
+      width: 16px; height: 16px;
+      font-size: 11px; color: var(--petrol);
+      cursor: help; border: 0.5px solid var(--petrol); border-radius: 50%;
+      background: var(--white);
+    }
+    .info-tip:hover .info-tip__pop,
+    .info-tip:focus-within .info-tip__pop { display: block; }
+    .info-tip__pop {
+      display: none;
+      position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+      width: 240px; padding: 0.75rem;
+      background: var(--petrol-dark); color: var(--white);
+      font-family: 'Inter', sans-serif; font-size: 12px; line-height: 1.5;
+      border-radius: var(--radius); z-index: 50;
+      text-align: left;
+    }
+    .info-tip__pop::after {
+      content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      border: 5px solid transparent; border-top-color: var(--petrol-dark);
+    }
+    .info-tip__title { font-weight: 600; margin-bottom: 0.4rem; display: block; }
+    .info-tip__src { display: block; margin-top: 0.4rem; font-size: 11px; color: var(--petrol-light); }
+
+    /* Konditionale: Vermieter-Bilanz / WEG-Hinweise — kontext-blau, weiß
+       Hebt sich vom grauen Panel-1-Sektion-Hintergrund ab und markiert
+       sie eindeutig als kontextuelle Erläuterung (gleiche Farbfamilie
+       wie die Wizard-Hint-Boxen). */
+    details.conditional {
+      margin-top: 1.5rem; padding: 0;
+      background: var(--kontext-blau); color: var(--white);
+      border: none; border-radius: var(--radius);
+    }
+    details.conditional > summary {
+      cursor: pointer; padding: 0.75rem 1rem;
+      font-family: 'Playfair Display', Georgia, serif; font-size: 16px; font-weight: 500;
+      color: var(--white); list-style: none;
+    }
+    details.conditional > summary::-webkit-details-marker { display: none; }
+    details.conditional > summary::before { content: '▸ '; color: var(--white); display: inline-block; }
+    details.conditional[open] > summary::before { content: '▾ '; }
+    details.conditional > div { padding: 0 1rem 1rem; color: var(--white); }
+    details.conditional .panel-placeholder { color: rgba(255,255,255,0.85); font-style: italic; }
+
+    /* =========================================================
+       Schieberegler-Cluster (3 Blöcke)
+       ========================================================= */
+    .schieberegler-cluster {
+      max-width: var(--max-width); margin: 0 auto 2rem; padding: 0 2rem;
+    }
+    .schieberegler-cluster > h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px; margin-bottom: 1.25rem;
+    }
+    .schieberegler-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;
+    }
+    .schieberegler-block {
+      padding: 1.25rem; background: var(--white);
+      border: 0.5px solid var(--border); border-radius: var(--radius);
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .schieberegler-block h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 16px; font-weight: 500;
+      padding-bottom: 0.4rem; border-bottom: 0.5px solid var(--border);
+      margin-bottom: 0.4rem;
+    }
+    .schieberegler-block .caption {
+      font-size: 11px; color: var(--text-tertiary); line-height: 1.4; margin-top: 0.25rem;
+    }
+    .slider-row {
+      display: flex; flex-direction: column; gap: 0.875rem;
+    }
+    .slider-row label {
+      display: flex; flex-direction: column; gap: 0.3rem;
+      font-size: 12px; color: var(--text-secondary);
+      font-family: 'Inter', sans-serif;
+    }
+    .slider-row label > span:first-child {
+      display: flex; justify-content: space-between; align-items: baseline;
+    }
+    .slider-row output { font-size: 12px; color: var(--petrol); font-weight: 500; }
+    .foerderung-toggles {
+      display: flex; flex-direction: column; gap: 0.4rem; margin: 0.5rem 0;
+    }
+    .foerderung-toggles label {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 12px; color: var(--text-secondary);
+      font-family: 'Inter', sans-serif; cursor: pointer;
+      flex-wrap: wrap;
+    }
+    .foerderung-toggles input[type="checkbox"] { accent-color: var(--petrol); flex-shrink: 0; }
+    .foerderung-toggles .info-tip { width: 14px; height: 14px; font-size: 10px; }
+    .foerderung-quellen {
+      font-size: 11px; color: var(--text-tertiary); line-height: 1.5;
+      margin-top: 0.5rem;
+    }
+    .foerderung-quellen a { color: var(--petrol); }
+    .foerderung-quellen-stand { display: block; margin-top: 0.3rem; font-style: italic; }
+    .foerderung-presets {
+      display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem;
+    }
+    .preset-btn {
+      font-family: 'Inter', sans-serif; font-size: 11px;
+      padding: 0.3rem 0.6rem; border-radius: 999px;
+      background: var(--white); color: var(--text-secondary);
+      border: 0.5px solid var(--border); cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .preset-btn:hover { border-color: var(--petrol); color: var(--petrol); }
+
+    /* =========================================================
+       Big Picture / Wegweiser / Tiefer-rechnen / Dialog-CTA
+       ========================================================= */
+    .big-picture, .wegweiser, .tiefer-rechnen, .dialog-cta {
+      max-width: var(--max-width); margin: 0 auto 2rem; padding: 0 2rem;
+    }
+    .big-picture > h2, .wegweiser > h2, .tiefer-rechnen > h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 400; margin-bottom: 0.5rem;
+    }
+    .netzdiagramm-container {
+      padding: 2.5rem 1.5rem; background: var(--bg-light);
+      border: 0.5px solid var(--border); border-radius: var(--radius);
+      text-align: center; margin-bottom: 1rem;
+    }
+    .empfehlungs-banner {
+      padding: 1rem 1.25rem;
+      background: var(--white); border: 0.5px solid var(--border);
+      border-left: 3px solid var(--petrol); border-radius: var(--radius);
+    }
+
+    .wegweiser-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+    }
+    .wegweiser-item {
+      padding: 1.25rem 1rem;
+      background: var(--white); border: 0.5px solid var(--border); border-radius: var(--radius);
+      text-decoration: none; color: var(--text-primary);
+      transition: border-color 0.15s, transform 0.15s;
+      display: block;
+    }
+    .wegweiser-item:hover { border-color: var(--petrol); text-decoration: none; transform: translateY(-2px); }
+    .wegweiser-item strong {
+      display: block; font-family: 'Playfair Display', Georgia, serif;
+      font-size: 15px; font-weight: 500; color: var(--petrol); margin-bottom: 0.4rem;
+    }
+    .wegweiser-item p { font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin: 0; }
+
+    /* Erweiterter Modus — eigene Sektion (zwischen Schieberegler und Big Picture) */
+    .erweiterter-modus {
+      max-width: var(--max-width); margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .erweiterter-modus h2 {
+      font-family: 'Playfair Display', Georgia, serif; font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+    .erweiterter-modus p {
+      font-size: 14px; color: var(--text-secondary); line-height: 1.6;
+      margin-bottom: 1rem; max-width: 720px;
+    }
+
+    /* Excel-Edition — eigene Sektion mit eigener Card */
+    .excel-edition {
+      max-width: var(--max-width); margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .excel-edition > h2 {
+      font-family: 'Playfair Display', Georgia, serif; font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+    .excel-edition__sub {
+      font-size: 14px; color: var(--text-secondary); margin-bottom: 1.25rem;
+      max-width: 720px;
+    }
+    .excel-edition__methodik {
+      display: inline-block; margin-top: 1rem;
+      font-size: 13px; color: var(--text-tertiary);
+    }
+    .excel-edition__methodik:hover { color: var(--petrol); }
+
+    /* Profi-Modus-Button (Toggle-States: inaktiv vs. aktiv) */
+    .profi-button {
+      background: var(--signal); color: var(--petrol-dark);
+      border: 1px solid var(--signal-dark); border-radius: 4px;
+      padding: 0.55rem 1rem; font-family: 'Inter', sans-serif; font-size: 13px;
+      font-weight: 500; cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .profi-button:hover { background: var(--signal-dark); }
+    .profi-button--aktiv {
+      background: var(--white); color: var(--petrol);
+      border-color: var(--petrol); border-width: 1px;
+    }
+    .profi-button--aktiv:hover { background: rgba(26,92,90,0.06); }
+    .profi-aktiv-hint {
+      font-size: 12px; color: var(--stone-gray); line-height: 1.5;
+      margin-top: 0.5rem;
+    }
+    .profi-aktiv-hint[hidden] { display: none !important; }
+
+    /* Excel-Edition-Card — Headline + Preis nebeneinander Desktop, gestapelt Mobile */
+    .excel-card {
+      padding: 1.5rem 1.5rem 1.75rem;
+      background: var(--white); border: 0.5px solid var(--border); border-radius: var(--radius);
+      display: flex; flex-direction: column; gap: 0.85rem;
+    }
+    .excel-card__head {
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 0.75rem;
+    }
+    .excel-card__title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 18px; font-weight: 500; color: var(--petrol);
+    }
+    .excel-card__preis {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px; font-weight: 500; color: var(--petrol-dark);
+      flex-shrink: 0;
+    }
+    .excel-card__beschreibung p {
+      font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+      margin: 0 0 0.5rem 0;
+    }
+    .excel-card__beschreibung p:last-child { margin-bottom: 0; }
+    .excel-card__cta { margin-top: 0.25rem; }
+    .excel-card .btn--kaufen {
+      background: var(--signal); color: var(--petrol-dark);
+      border: 1px solid var(--signal-dark);
+      font-weight: 500;
+    }
+    .excel-card .btn--kaufen:hover { background: var(--signal-dark); opacity: 1; }
+
+    /* (Bericht-Aufklapp-CSS aus Schleife 2 entfernt — Bericht wandert
+       in den mailto-Body der Dialog-CTA, kein UI-Aufklapp mehr) */
+
+    /* Dialog-CTA — Schlussakkord (Container-Bg liegt am section-wrap--kontext) */
+    .dialog-cta {
+      padding: 0 2rem;
+      color: var(--white);
+      display: flex; flex-direction: column; gap: 1rem;
+      max-width: var(--max-width); margin: 0 auto;
+    }
+    .dialog-cta__title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 24px; font-weight: 400; color: var(--white);
+      margin: 0; line-height: 1.25;
+    }
+    .dialog-cta__sub {
+      font-size: 15px; color: var(--white); line-height: 1.6;
+      margin: 0; max-width: 620px;
+    }
+    .dialog-cta__actions {
+      display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;
+      margin-top: 0.25rem;
+    }
+    /* Haupt-Button: Signal-Gelb als Akzent gegen das blau-graue Container */
+    .btn--dialog-haupt {
+      background: var(--signal); color: var(--petrol-dark);
+      padding: 0.85rem 1.5rem; font-size: 14px; font-weight: 500;
+      border: 1px solid var(--signal-dark);
+    }
+    .btn--dialog-haupt:hover { background: var(--signal-dark); border-color: var(--signal-dark); opacity: 1; }
+    /* Sekundär-Button: weißer Hintergrund mit Petrol-Border */
+    .btn--dialog-sekundaer {
+      background: var(--white); color: var(--petrol);
+      border: 1px solid var(--petrol);
+      padding: 0.55rem 1rem; font-size: 13px;
+    }
+    .btn--dialog-sekundaer:hover { background: rgba(26,92,90,0.08); opacity: 1; }
+    .dialog-cta__hint {
+      font-size: 12px; color: var(--white); opacity: 0.8;
+      margin: 0; margin-top: 0.25rem;
+    }
+
+    /* Toast für „Link kopiert" */
+    .toast {
+      position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      padding: 0.75rem 1.25rem; background: var(--petrol-dark); color: var(--white);
+      border-radius: var(--radius); font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      opacity: 0; pointer-events: none; transition: opacity 0.2s;
+      z-index: 200;
+    }
+    .toast--visible { opacity: 1; }
+
+    /* =========================================================
+       Footer (Site)
+       ========================================================= */
     .footer { border-top: 0.5px solid var(--border); padding: 1.5rem 0; }
-    .footer__inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .footer__inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; }
     .footer__left, .footer__right { font-size: 12px; color: var(--text-tertiary); }
     .footer__right a { color: var(--text-tertiary); }
     .footer__right a:hover { color: var(--petrol); }
     .footer__whatsapp { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #25D366; font-weight: 500; }
     .footer__whatsapp:hover { text-decoration: none; opacity: 0.85; }
 
-    /* RESPONSIVE */
+    /* =========================================================
+       Responsive
+       ========================================================= */
+    @media (max-width: 1023px) {
+      .schieberegler-grid { grid-template-columns: 1fr 1fr; }
+      .schieberegler-grid > .schieberegler-block:first-child { grid-column: 1 / -1; }
+      .wegweiser-grid { grid-template-columns: 1fr 1fr; }
+      .tiefer-rechnen__cards { grid-template-columns: 1fr 1fr; }
+    }
     @media (max-width: 768px) {
       h1 { font-size: 26px; }
       .nav__links { display: none; }
       .nav__hamburger { display: flex; }
       .hero__inner { grid-template-columns: 1fr; padding: 2.5rem 1.5rem 2.5rem; gap: 2rem; }
       .hero__headline { font-size: 30px; }
-      .hero__cover { max-width: 85vw; height: 260px; margin-left: auto; margin-right: auto; order: 2; }
+      .hero__cover { max-width: 85vw; height: 220px; margin-left: auto; margin-right: auto; order: 2; }
       .hero__text { order: 1; }
       .container { padding: 0 1.5rem; }
-      .form-section { padding: 2.5rem 0 3rem; }
-      .grid { grid-template-columns: 1fr; gap: 1.25rem; }
-      fieldset.fs + fieldset.fs { padding-top: 2.25rem; }
-      .footer__inner { flex-direction: column; align-items: flex-start; }
+      .footer__inner { flex-direction: column; align-items: flex-start; padding: 0 1.5rem; }
+      .wizard { padding: 2rem 1.5rem 3rem; min-height: calc(100vh - 56px); }
+      .wizard-progress { font-size: 11px; margin-bottom: 1.75rem; }
+      .wizard-progress__step { padding: 0.6rem 0.25rem; font-size: 11px; }
+      .persona-picker { grid-template-columns: 1fr; }
+      .panel, .ergebnis-kopf, .schieberegler-cluster, .big-picture, .wegweiser, .erweiterter-modus, .excel-edition, .belegbarkeit-legende { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .dialog-cta { padding: 0 1.5rem; }
+      .dialog-cta__title { font-size: 22px; }
+      /* Excel-Card auf Mobile: Headline + Preis stacken statt nebeneinander */
+      .excel-card__head { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+      .schieberegler-grid { grid-template-columns: 1fr; }
+      .schieberegler-grid > .schieberegler-block:first-child { grid-column: auto; }
+      .wegweiser-grid { grid-template-columns: 1fr; }
+      .tiefer-rechnen__cards { grid-template-columns: 1fr; }
+      .panel-anchors { display: flex; }
+      .mini-cockpit { overflow-x: auto; flex-wrap: nowrap; scroll-snap-type: x proximity; }
+      .cockpit-pill { scroll-snap-align: start; flex-shrink: 0; }
+      .persona-toggle { flex-wrap: wrap; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
+  <!-- ==========================================================
+       NAV — übernommen aus existing rechner.html (konsistent index.html)
+       ========================================================== -->
   <header class="nav">
     <div class="nav__inner">
       <a href="index.html" class="nav__logo" aria-label="hausentscheider — Startseite">
@@ -218,9 +841,7 @@
         </ul>
       </nav>
       <button class="nav__hamburger" id="nav-hamburger" aria-label="Menü öffnen" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </button>
     </div>
     <div class="nav__mobile-menu" id="nav-mobile-menu">
@@ -235,21 +856,37 @@
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero" aria-label="Einführung Der Entscheider">
+  <!-- ==========================================================
+       Phase 1 — Hero / Intro
+       Initial sichtbar. CTA "Jetzt durchrechnen" → Phase 2.
+       ========================================================== -->
+  <section id="phase-hero" class="phase phase--active hero" aria-label="Einführung Der Entscheider">
     <div class="hero__inner">
       <div class="hero__text">
         <h1 class="hero__headline">Der Entscheider</h1>
+        <p class="hero__subtitle"><em>Investitionsrechner für Ihre Heizungsentscheidung — damit sich Ihre Investition lohnt, nach den Maßstäben, die Ihnen wichtig sind.</em></p>
         <div class="hero__underline" aria-hidden="true"></div>
         <div class="hero__statement">
-          <p>Investitionsrechner für Ihre Heizungsentscheidung — damit sich Ihre Investition lohnt, nach den Maßstäben, die Ihnen wichtig sind.</p>
-          <p>Die Wirtschaftlichkeitsrechnung gibt es an vielen Stellen. Hier rechnet sie korrekt — und steht dann nicht allein. Sie wird ergänzt um Ihre persönliche Gewichtung der Entscheidung und um eine wissenschaftlich fundierte Bewertung der Zukunftsfähigkeit jeder Option.</p>
           <p>Drei Sichten auf dieselbe Frage. Keine einzelne gibt eine Antwort — alle drei zusammen machen die Entscheidung sichtbar.</p>
+          <p>Die Wirtschaftlichkeitsrechnung gibt es an vielen Stellen. Hier rechnet sie korrekt — und steht dann nicht allein. Sie wird ergänzt um Ihre persönliche Gewichtung der Entscheidung und um eine wissenschaftlich fundierte Bewertung der Zukunftsfähigkeit jeder Option.</p>
           <p>Kein Ersatz für eine Ingenieursplanung. Aber eine belastbare Grundlage, bevor Sie eine in Auftrag geben.</p>
         </div>
+        <div class="hero__cta-row">
+          <button type="button" class="btn btn--primary" id="cta-start">Jetzt durchrechnen →</button>
+        </div>
+
+        <!-- URL-Parameter-Banner (Variante A+) — nur sichtbar bei ?-Parametern -->
+        <div class="url-banner" id="urlParamBanner" hidden>
+          <p id="urlParamBanner-text"></p>
+          <div class="url-banner__actions">
+            <button type="button" class="btn btn--primary btn--small" id="cta-uebernehmen">Werte übernehmen</button>
+            <button type="button" class="btn btn--ghost btn--small" id="cta-neustart">Neu starten</button>
+          </div>
+        </div>
       </div>
+
       <figure class="hero__cover" aria-hidden="true">
-        <!-- Platzhalter: reduzierte SVG-Skizze (Schreibtischlinien + Kaffeetasse von oben). Wird später durch echtes Bild ersetzt. -->
+        <!-- Platzhalter-SVG, bleibt laut Spec §22 bestehen -->
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#7ab8b5" stroke-width="1.5" stroke-linecap="round">
           <line x1="20"  y1="70"  x2="180" y2="70"/>
           <line x1="20"  y1="110" x2="140" y2="110"/>
@@ -262,287 +899,1612 @@
     </div>
   </section>
 
-  <!-- EINGABEBLOCK -->
-  <section class="form-section" aria-label="Eingaben">
-    <div class="container">
-      <div class="form-section__intro">
-        <span class="form-section__label">Ihre Eingaben</span>
-        <h2 class="form-section__titel">Damit der Rechner für Ihr Gebäude rechnet</h2>
-        <p class="form-section__text">Die sechs Pflichtfelder reichen für eine belastbare Grundlage. Wer mehr weiß, kann in den optionalen Feldern präzisieren — muss aber nicht.</p>
+  <!-- ==========================================================
+       Phase 2 — Wizard (3 Schritte, 9 Pflichtfelder + PV-Toggle)
+       Step-Wechsel per data-step / hidden. JS-State zentral.
+       ========================================================== -->
+  <section id="phase-wizard" class="phase wizard" hidden>
+    <div class="wizard-progress" id="wizard-progress">
+      <span class="wizard-progress__step wizard-progress__step--active" data-step-indicator="1">1 · Gebäude</span>
+      <span class="wizard-progress__step" data-step-indicator="2">2 · Heizung &amp; Verbrauch</span>
+      <span class="wizard-progress__step" data-step-indicator="3">3 · Kontext</span>
+    </div>
+
+    <!-- Schritt 1 — Gebäude (3 Felder + PV-Toggle) -->
+    <div class="wizard-step" data-step="1">
+      <h2>Dein Gebäude</h2>
+      <p class="wizard-step__intro">PLZ, Gebäudetyp und — bei MFH — Eigentümer-Typ. Wenn du eine PV-Anlage mitdenken willst, sag es uns hier.</p>
+
+      <div class="wizard-field">
+        <label class="wizard-field__label" for="f-plz">PLZ / Ort</label>
+        <input type="text" id="f-plz" class="wizard-input" placeholder="z. B. 99084 Erfurt" autocomplete="postal-code">
       </div>
 
-      <form class="rechner-form" id="rechner-form" novalidate>
+      <div class="wizard-field">
+        <span class="wizard-field__label">Gebäudetyp</span>
+        <div class="seg" role="radiogroup" aria-label="Gebäudetyp">
+          <button type="button" class="seg__btn" data-set="gebaeudetyp" data-val="EFH">Einfamilienhaus</button>
+          <button type="button" class="seg__btn seg__btn--active" data-set="gebaeudetyp" data-val="MFH">Mehrfamilienhaus</button>
+        </div>
+      </div>
 
-        <!-- 4.1 Pflicht: Angaben zu Ihrem Gebäude -->
-        <fieldset class="fs">
-          <legend class="fs__legend">Angaben zu Ihrem Gebäude</legend>
-          <p class="fs__hint">Die Werte aus Ihrer Heizkostenabrechnung und dem Kaufvertrag oder Grundbuch. Wenn eine Zahl fehlt, schätzen Sie plausibel.</p>
-          <!-- leitfrage-slot -->
+      <!-- Konditional: nur sichtbar bei MFH -->
+      <div class="wizard-field" id="feld-eigentuemer-typ" hidden>
+        <label class="wizard-field__label" for="f-eigentuemer">Eigentümer-Typ</label>
+        <select id="f-eigentuemer" class="wizard-select">
+          <option value="WEG">WEG (Eigentümergemeinschaft)</option>
+          <option value="Einzelvermieter">Einzelvermieter</option>
+          <option value="Selbstnutzer">Selbstnutzer</option>
+        </select>
+      </div>
 
-          <div class="grid">
+      <div class="wizard-field">
+        <span class="wizard-field__label">PV mitdenken?</span>
+        <div class="seg" role="radiogroup" aria-label="PV mitdenken">
+          <button type="button" class="seg__btn seg__btn--active" data-set="pv" data-val="true">ja</button>
+          <button type="button" class="seg__btn" data-set="pv" data-val="false">nein</button>
+        </div>
+        <p class="wizard-field__hint">PV verändert Wirtschaftlichkeit von Wärmepumpe und Hybrid spürbar — Tiefe folgt im Profi-Modus.</p>
+      </div>
 
-            <div class="field">
-              <label class="field__label" for="wohnflaeche">Wohnfläche<span class="field__label-info-slot"></span></label>
-              <div class="field__input-wrap">
-                <input class="field__input field__input--with-suffix" type="number" id="wohnflaeche" name="wohnflaeche" min="1" step="1" placeholder="z.B. 120" aria-required="true" required>
-                <span class="field__suffix">m²</span>
-              </div>
-            </div>
+      <!-- Konditional: FW-Satzungs-Hinweis bei AltstadtPLZ (Kontext-Blau, kein Error) -->
+      <div class="hint" id="fw-satzung-hint" hidden>
+        <strong>Hinweis Erfurter Fernwärmesatzung:</strong> Anschlusszwang gemäß Satzung 3.008 möglich.
+        Hybrid und Pellets in der Innenstadt ausgeschlossen, Befreiungswege nach §6 möglich.
+      </div>
 
-            <div class="field">
-              <label class="field__label" for="heizkosten">Jahresheizkosten<span class="field__label-info-slot"></span></label>
-              <div class="field__input-wrap">
-                <input class="field__input field__input--with-suffix" type="number" id="heizkosten" name="heizkosten" min="0" step="1" placeholder="z.B. 2400" aria-required="true" required>
-                <span class="field__suffix">€</span>
-              </div>
-            </div>
+      <div class="wizard-actions wizard-actions--end">
+        <button type="button" class="btn btn--primary" data-wizard-next>Weiter</button>
+      </div>
+    </div>
 
-            <div class="field">
-              <label class="field__label" for="heizungsart">Aktuelle Heizungsart<span class="field__label-info-slot"></span></label>
-              <select class="field__select" id="heizungsart" name="heizungsart" aria-required="true" required>
-                <option value="" disabled selected>Bitte wählen</option>
-                <option value="gas">Gas</option>
-                <option value="fernwaerme">Fernwärme</option>
-                <option value="oel">Öl</option>
-                <option value="waermepumpe">Wärmepumpe</option>
-                <option value="pellets">Pellets</option>
-                <option value="andere">Andere / unbekannt</option>
-              </select>
-            </div>
+    <!-- Schritt 2 — Heizung & Verbrauch (4 Felder) -->
+    <div class="wizard-step" data-step="2" hidden>
+      <h2>Heizung &amp; Verbrauch</h2>
 
-            <div class="field">
-              <label class="field__label" for="baujahr">Baujahr des Gebäudes<span class="field__label-info-slot"></span></label>
-              <input class="field__input" type="number" id="baujahr" name="baujahr" min="1800" max="2026" step="1" placeholder="z.B. 1962" aria-required="true" required>
-            </div>
+      <!-- Aktivierungs-Statement (kontext-blau, vor erstem Feld) -->
+      <div class="hint">
+        <strong>Du kommst gleich zur wichtigsten Eingabe: deinem Verbrauch.</strong> Aus ihm rechnet sich, was deine aktuelle Heizung dich wirklich kostet — und was eine Alternative bringen würde.
+      </div>
 
-            <div class="field field--full">
-              <span class="field__label" id="sanierungsstand-label">Sanierungsstand<span class="field__label-info-slot"></span></span>
-              <div class="pills" role="radiogroup" aria-labelledby="sanierungsstand-label" aria-required="true">
-                <label class="pill">
-                  <input type="radio" name="sanierungsstand" value="unsaniert" required>
-                  <span class="pill__label">unsaniert</span>
-                </label>
-                <label class="pill">
-                  <input type="radio" name="sanierungsstand" value="teilsaniert" required>
-                  <span class="pill__label">teilsaniert</span>
-                </label>
-                <label class="pill">
-                  <input type="radio" name="sanierungsstand" value="saniert" required>
-                  <span class="pill__label">saniert</span>
-                </label>
-              </div>
-            </div>
+      <p class="wizard-step__intro">Aktuelle Heizung, Wohnfläche, Verbrauch und Sanierungsstand. Verbrauch ist optional — sonst schätzen wir aus Wohnfläche und Sanierung.</p>
 
-            <div class="field">
-              <label class="field__label" for="wohneinheiten">Anzahl Wohneinheiten<span class="field__label-info-slot"></span></label>
-              <input class="field__input" type="number" id="wohneinheiten" name="wohneinheiten" min="1" step="1" placeholder="z.B. 1" aria-required="true" required>
-            </div>
+      <div class="wizard-field">
+        <label class="wizard-field__label" for="f-heizung">Aktuelle Heizung</label>
+        <select id="f-heizung" class="wizard-select">
+          <option value="gas-bw">Gas-Brennwert</option>
+          <option value="gas-nt">Gas-Niedertemperatur</option>
+          <option value="oel">Öl</option>
+          <option value="fw">Fernwärme</option>
+          <option value="wp">Wärmepumpe</option>
+          <option value="pellets">Pellets</option>
+          <option value="sonstige">Sonstige</option>
+        </select>
+        <div style="margin-top: 0.6rem; display: flex; align-items: center; gap: 0.6rem;">
+          <label class="wizard-field__hint" for="f-baujahr" style="margin: 0;">Baujahr Heizung:</label>
+          <input type="number" id="f-baujahr" class="wizard-input wizard-input--inline" min="1950" max="2026" step="1" placeholder="z. B. 1998">
+        </div>
+      </div>
 
+      <div class="wizard-field">
+        <div class="wizard-slider">
+          <div class="wizard-slider__row">
+            <span class="wizard-field__label">Wohnfläche</span>
+            <span class="wizard-slider__value" id="val-wohnflaeche">950 m²</span>
           </div>
-        </fieldset>
+          <input type="range" id="f-wohnflaeche" min="50" max="3000" step="10" value="950">
+        </div>
+      </div>
 
-        <!-- 4.2 Optional: Genauer rechnen -->
-        <fieldset class="fs">
-          <details class="details-optional">
-            <summary>
-              <svg class="details-optional__chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span class="details-optional__summary-text">
-                <span class="details-optional__summary-title">Genauer rechnen (optional)</span>
-                <span class="details-optional__summary-sub">Wenn Sie diese Werte kennen, wird die Berechnung präziser. Wenn nicht, arbeitet der Rechner mit plausiblen Standardwerten.</span>
-              </span>
-            </summary>
-            <div class="details-optional__body">
-              <!-- leitfrage-slot -->
-              <div class="grid">
-
-                <div class="field">
-                  <label class="field__label" for="jahresverbrauch">Jahresverbrauch<span class="field__label-info-slot"></span></label>
-                  <div class="field__input-wrap">
-                    <input class="field__input field__input--with-suffix" type="number" id="jahresverbrauch" name="jahresverbrauch" min="0" step="1" placeholder="z.B. 18000">
-                    <span class="field__suffix">kWh</span>
-                  </div>
-                </div>
-
-                <div class="field">
-                  <label class="field__label" for="warmwasseranteil">Warmwasseranteil am Gesamtverbrauch<span class="field__label-info-slot"></span></label>
-                  <div class="field__input-wrap">
-                    <input class="field__input field__input--with-suffix" type="number" id="warmwasseranteil" name="warmwasseranteil" min="0" max="100" step="1" placeholder="z.B. 20">
-                    <span class="field__suffix">%</span>
-                  </div>
-                </div>
-
-                <div class="field">
-                  <label class="field__label" for="heizlast">Geschätzte Heizlast<span class="field__label-info-slot"></span></label>
-                  <div class="field__input-wrap">
-                    <input class="field__input field__input--with-suffix" type="number" id="heizlast" name="heizlast" min="0" step="0.1" placeholder="z.B. 9">
-                    <span class="field__suffix">kW</span>
-                  </div>
-                </div>
-
-                <div class="field">
-                  <label class="field__label" for="vorlauftemperatur">Vorlauftemperatur der Heizung<span class="field__label-info-slot"></span></label>
-                  <div class="field__input-wrap">
-                    <input class="field__input field__input--with-suffix" type="number" id="vorlauftemperatur" name="vorlauftemperatur" min="0" max="120" step="1" placeholder="z.B. 55">
-                    <span class="field__suffix">°C</span>
-                  </div>
-                </div>
-
-                <div class="field">
-                  <label class="field__label" for="dachform">Dachform<span class="field__label-info-slot"></span></label>
-                  <select class="field__select" id="dachform" name="dachform">
-                    <option value="" disabled selected>Bitte wählen</option>
-                    <option value="satteldach">Satteldach</option>
-                    <option value="walmdach">Walmdach</option>
-                    <option value="flachdach">Flachdach</option>
-                    <option value="pultdach">Pultdach</option>
-                    <option value="andere">Andere</option>
-                  </select>
-                </div>
-
-                <div class="field">
-                  <label class="field__label" for="dachausrichtung">Dachausrichtung<span class="field__label-info-slot"></span></label>
-                  <select class="field__select" id="dachausrichtung" name="dachausrichtung">
-                    <option value="" disabled selected>Bitte wählen</option>
-                    <option value="sued">Süd</option>
-                    <option value="suedost">Südost</option>
-                    <option value="suedwest">Südwest</option>
-                    <option value="ost">Ost</option>
-                    <option value="west">West</option>
-                    <option value="nord">Nord</option>
-                    <option value="unbekannt">unbekannt</option>
-                  </select>
-                </div>
-
-                <div class="field field--full">
-                  <span class="field__label" id="fernwaerme-label">Liegt das Gebäude im Fernwärme-Satzungsgebiet?<span class="field__label-info-slot"></span></span>
-                  <div class="pills" role="radiogroup" aria-labelledby="fernwaerme-label">
-                    <label class="pill">
-                      <input type="radio" name="fernwaerme-satzung" value="ja">
-                      <span class="pill__label">ja</span>
-                    </label>
-                    <label class="pill">
-                      <input type="radio" name="fernwaerme-satzung" value="nein">
-                      <span class="pill__label">nein</span>
-                    </label>
-                    <label class="pill">
-                      <input type="radio" name="fernwaerme-satzung" value="weiss-nicht">
-                      <span class="pill__label">weiß nicht</span>
-                    </label>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </details>
-        </fieldset>
-
-        <!-- 4.3 Kontext Ihrer Entscheidung -->
-        <fieldset class="fs">
-          <legend class="fs__legend">Kontext Ihrer Entscheidung</legend>
-          <p class="fs__hint">Diese Angaben bestimmen, wie der Rechner Ergebnisse gewichtet — und welche Optionen sinnvoll in den Vergleich gehören.</p>
-          <!-- leitfrage-slot -->
-
-          <div class="grid grid--full">
-
-            <div class="field">
-              <span class="field__label" id="zeithorizont-label">Wie lange planen Sie mit dem Gebäude?<span class="field__label-info-slot"></span></span>
-              <div class="pills" role="radiogroup" aria-labelledby="zeithorizont-label" aria-required="true">
-                <label class="pill">
-                  <input type="radio" name="zeithorizont" value="unter-5" required>
-                  <span class="pill__label">unter 5 Jahre</span>
-                </label>
-                <label class="pill">
-                  <input type="radio" name="zeithorizont" value="10" required>
-                  <span class="pill__label">10 Jahre</span>
-                </label>
-                <label class="pill">
-                  <input type="radio" name="zeithorizont" value="20" required>
-                  <span class="pill__label">20 Jahre</span>
-                </label>
-                <label class="pill">
-                  <input type="radio" name="zeithorizont" value="30plus" required>
-                  <span class="pill__label">30+ Jahre</span>
-                </label>
-              </div>
-            </div>
-
-            <div class="field">
-              <span class="field__label" id="nutzungsart-label">Nutzungsart<span class="field__label-info-slot"></span></span>
-              <div class="pills" role="radiogroup" aria-labelledby="nutzungsart-label" aria-required="true">
-                <label class="pill">
-                  <input type="radio" name="nutzungsart" value="selbstnutzung" required>
-                  <span class="pill__label">Selbstnutzung</span>
-                </label>
-                <label class="pill">
-                  <input type="radio" name="nutzungsart" value="vermietung" required>
-                  <span class="pill__label">Vermietung</span>
-                </label>
-                <label class="pill">
-                  <input type="radio" name="nutzungsart" value="mischnutzung" required>
-                  <span class="pill__label">Mischnutzung</span>
-                </label>
-              </div>
-            </div>
-
+      <div class="wizard-field">
+        <div class="wizard-slider">
+          <div class="wizard-slider__row">
+            <span class="wizard-field__label">Jahresverbrauch <small style="color:var(--text-tertiary);font-weight:400;">(optional)</small></span>
+            <span class="wizard-slider__value" id="val-verbrauch">95.000 kWh</span>
           </div>
-        </fieldset>
+          <input type="range" id="f-verbrauch" min="5000" max="500000" step="1000" value="95000">
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.4rem;">
+            <label style="display:flex;align-items:center;gap:0.4rem;font-size:12px;color:var(--text-secondary);font-family:'Inter',sans-serif;cursor:pointer;">
+              <input type="checkbox" id="f-verbrauch-leer" style="accent-color: var(--petrol);">
+              Verbrauch nicht bekannt — schätzen
+            </label>
+          </div>
+        </div>
+        <div class="hint" id="markt-hinweis">
+          Aktueller Markt-Durchschnittspreis Gas: <strong id="markt-gas-preis">10,5 ct/kWh</strong> (Mai 2026).
+          Dein Verbrauch entspricht ca. <strong id="markt-jahreskosten">9.975 € Jahresheizkosten</strong>.
+        </div>
+        <div class="hint" id="hilfsregel-hint" hidden>
+          Wir schätzen deine Heizlast aus Wohnfläche und Sanierungsstand.
+          Aktuelle Schätzung: <strong id="heizlast-schaetzung">76 kW</strong>.
+        </div>
+      </div>
 
-      </form>
+      <div class="wizard-field">
+        <span class="wizard-field__label">Sanierungsstand</span>
+        <div class="seg" role="radiogroup" aria-label="Sanierungsstand">
+          <button type="button" class="seg__btn" data-set="sanierung" data-val="unsaniert">unsaniert <small style="opacity:0.7;">(vor 1977)</small></button>
+          <button type="button" class="seg__btn seg__btn--active" data-set="sanierung" data-val="teilsaniert">teilsaniert <small style="opacity:0.7;">(1977–2002)</small></button>
+          <button type="button" class="seg__btn" data-set="sanierung" data-val="saniert">saniert <small style="opacity:0.7;">(nach 2002)</small></button>
+        </div>
+      </div>
+
+      <div class="wizard-actions">
+        <button type="button" class="btn btn--ghost" data-wizard-back>Zurück</button>
+        <button type="button" class="btn btn--primary" data-wizard-next>Weiter</button>
+      </div>
+    </div>
+
+    <!-- Schritt 3 — Kontext (2 Felder) -->
+    <div class="wizard-step" data-step="3" hidden>
+      <h2>Dein Kontext</h2>
+      <p class="wizard-step__intro">Wie nutzt du das Gebäude — und welche Sicht auf die Entscheidung passt zu dir?</p>
+
+      <div class="wizard-field">
+        <label class="wizard-field__label" for="f-nutzungsart">Nutzungsart</label>
+        <select id="f-nutzungsart" class="wizard-select">
+          <option value="selbstnutzung">Selbstnutzung</option>
+          <option value="mischnutzung" selected>Mischnutzung</option>
+          <option value="vollvermietung">Vollvermietung</option>
+        </select>
+      </div>
+
+      <div class="wizard-field">
+        <span class="wizard-field__label">Entscheider-Typ — deine Sicht auf die Entscheidung</span>
+        <div class="persona-picker" role="radiogroup" aria-label="Entscheider-Typ">
+          <button type="button" class="persona" data-persona="bewahrer">
+            <strong>Bewahrer</strong>
+            <small><em>Erhalt im Vordergrund.</em> Du willst Wert und Substanz langfristig sichern. Zukunftsfähigkeit, Robustheit gegenüber Energiepreis-, CO₂- und Förder-Wandel sind dir wichtiger als der schnellste Cashflow.<br><br>Bei Vermietung gilt für dich: Verantwortung gegenüber Mietenden mitdenken — Betriebskosten lassen sich nicht beliebig weiterreichen. Soziale Tragfähigkeit ist Teil deiner Entscheidung.<br><br>Lange Haltedauer geplant — Familienbesitz, Lebenszeitnutzung.</small>
+          </button>
+          <button type="button" class="persona persona--active" data-persona="optimierer">
+            <strong>Optimierer</strong>
+            <small><em>Wirtschaftlichkeit im Zentrum.</em> Du willst die wirtschaftlich beste Entscheidung über die Lebensdauer der Heizung. Förderung mitnehmen, Risiken meiden, solide Rendite. Du denkst aus Eigentümerperspektive — Umlagefähigkeit auf Mieter ist im Rahmen des Möglichen Teil deines Kalküls.<br><br>Klassische Haltedauer 10–15 Jahre.</small>
+          </button>
+          <button type="button" class="persona" data-persona="wechsler">
+            <strong>Wechsler</strong>
+            <small><em>Verkaufs- oder Übergabe-Perspektive.</em> Du planst Verkauf, Erbübergabe oder eine größere Investitions-Drehung in absehbarer Zeit. Marktwert-Wirkung und Förder-Maximierung sind dir wichtiger als die Lebensdauer.<br><br>Kurze Haltedauer 3–5 Jahre.</small>
+          </button>
+        </div>
+        <p class="wizard-field__hint">Du kannst die Sicht später auf der Ergebnis-Seite frei wechseln und sehen, wie sich die Empfehlung verändert.</p>
+      </div>
+
+      <!-- Konditional: WEG-Statement (sichtbar bei MFH + WEG) -->
+      <div class="hint" id="weg-statement-wizard" hidden>
+        <strong>Du sitzt in einer Eigentümergemeinschaft</strong> — in der Wärmewende oft der schwierigere Pfad. Mehrheiten finden, heterogene Investitionsbereitschaft, Förderfristen drängen. Dieser Rechner gibt dir Zahlen, mit denen du in die Diskussion gehen kannst.
+      </div>
+
+      <!-- Aktivierungs-Statement vor Berechnen-Klick (Signal-Gelb) -->
+      <div class="hint hint--signal">
+        <strong>Drei Sichten, eine Entscheidung.</strong> Du wirst sehen, wie sich die Empfehlung mit deinem Profil verändert. Nimm dir Zeit, hier zu vergleichen.
+      </div>
+
+      <div class="wizard-actions">
+        <button type="button" class="btn btn--ghost" data-wizard-back>Zurück</button>
+        <button type="button" class="btn btn--primary" id="cta-berechnen">Berechnen →</button>
+      </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- ==========================================================
+       Phase 3 — Berechnungs-Übergang (1,5 s)
+       ========================================================== -->
+  <section id="phase-calculating" class="phase calculating" hidden>
+    <div class="calc-spinner" aria-hidden="true"></div>
+    <p>Wir berechnen deinen Vergleich …</p>
+  </section>
+
+  <!-- ==========================================================
+       Phase 4 — Ergebnis-Seite (Skelett, Inhalte folgen in C2/C3/C4)
+       ========================================================== -->
+  <section id="phase-ergebnis" class="phase ergebnis" hidden>
+
+    <div class="section-wrap section-wrap--white"><div class="ergebnis-kopf">
+      <!-- Annahmen-Transparenz-Box -->
+      <details class="annahmen-box">
+        <summary>Annahmen, mit denen wir rechnen — Klick zum Ausklappen ↓</summary>
+        <div class="annahmen-box__inner">
+          <table class="annahmen-tabelle">
+            <thead>
+              <tr><th>Eingabe / Annahme</th><th>Wert</th><th>Quelle</th><th>Beleg</th></tr>
+            </thead>
+            <tbody id="annahmen-tabelle-body">
+              <!-- Auto-gefüllt beim Berechnen-Klick -->
+            </tbody>
+          </table>
+          <p class="annahmen-disclaimer">Diese Berechnung ist eine Orientierungshilfe. Sie ersetzt keine Fachberatung.</p>
+        </div>
+      </details>
+
+      <!-- Headline-Antwort-Container -->
+      <div class="headline-antwort">
+        <h2>Deine Antwort folgt hier</h2>
+        <p class="placeholder">Inhalt folgt in der nächsten Ausbaustufe — algorithmisch generierte Klartext-Antwort aus den drei Sichten.</p>
+      </div>
+
+      <!-- Persona-Toggle (Ergebnis-Seite, klein) -->
+      <div class="persona-toggle">
+        <span class="persona-toggle__label">Sichtweise:</span>
+        <button type="button" class="persona-mini" data-persona-mini="bewahrer">Bewahrer</button>
+        <button type="button" class="persona-mini persona-mini--active" data-persona-mini="optimierer">Optimierer</button>
+        <button type="button" class="persona-mini" data-persona-mini="wechsler">Wechsler</button>
+      </div>
+
+      <!-- Mini-Cockpit (klickbare Pills, Inline-Edit) -->
+      <div class="mini-cockpit" id="mini-cockpit">
+        <!-- Auto-befüllt aus State -->
+      </div>
+      <p class="cockpit-tipp">Tipp: Klick auf eine Pill, um deine Eingabe zu ändern. Werte rechnen sich live um.</p>
+
+      <!-- Anker-Sprung-Navigation (Mobile) -->
+      <nav class="panel-anchors" aria-label="Sprung-Navigation">
+        <a href="#panel-1">Wirtschaftlichkeit</a>
+        <a href="#panel-2">Radar</a>
+        <a href="#panel-3">Zukunftsfähigkeit</a>
+        <a href="#schieberegler">Was-wäre-wenn</a>
+        <a href="#big-picture">Gesamt</a>
+      </nav>
+    </div></div>
+
+    <!-- Panel 1 — Wirtschaftlichkeit (bg-light) -->
+    <div class="section-wrap section-wrap--bg">
+    <section id="panel-1" class="panel">
+      <h2>1 — Wirtschaftlichkeit</h2>
+      <p class="panel-placeholder">Inhalt folgt in der nächsten Ausbaustufe — Headline-KPIs (TCO 25 J · €/m²/Monat · Amortisation), 25-Jahres-Kostenkurve, Vergleich aller fünf Optionen.</p>
+      <div class="kpi-stub">
+        TCO 25 J: <strong>—</strong>
+        <span class="badge badge--A" tabindex="0" aria-label="Belegbarkeit A">A
+          <span class="badge__pop">A — Primärquelle, real belegt (z. B. Realabrechnung, BAFA-Verordnung)</span>
+        </span>
+        <span class="info-tip" tabindex="0" aria-label="Methodik">ⓘ
+          <span class="info-tip__pop">
+            <span class="info-tip__title">TCO 25 Jahre</span>
+            Total Cost of Ownership: Investition + Betrieb + Wartung + Förderung über 25 Jahre, abgezinst mit VDI-2067-Kalkzins.
+            <span class="info-tip__src">Quelle folgt in der nächsten Ausbaustufe.</span>
+          </span>
+        </span>
+      </div>
+
+      <!-- Konditional: Vermieter-Bilanz (sichtbar bei Nutzungsart ≠ Selbstnutzung) -->
+      <details class="conditional" id="vermieter-bilanz" hidden>
+        <summary>Sicht für Eigentümer mit Vermietung</summary>
+        <div>
+          <p class="panel-placeholder">Inhalt folgt in der nächsten Ausbaustufe — fünf Blöcke aus Excel-Tab Vermieter-Sicht: §559 BGB Modernisierungsumlage, Mietspiegel-Effekt, AfA §7b, KfW-Tilgungszuschuss, Marktwert-Premium D→C/D→B.</p>
+        </div>
+      </details>
+
+      <!-- Konditional: WEG-Hinweise (sichtbar bei MFH + WEG) -->
+      <details class="conditional" id="weg-hinweise" hidden>
+        <summary>Hinweise für die Eigentümerversammlung</summary>
+        <div>
+          <p class="panel-placeholder">Inhalt folgt in der nächsten Ausbaustufe — was muss beschlossen werden, welche Mehrheit, welche Fristen, Formulierungs-Vorschläge für die Tagesordnung.</p>
+        </div>
+      </details>
+    </section>
+    </div>
+
+    <!-- Panel 2 — Radar (white) -->
+    <div class="section-wrap section-wrap--white">
+    <section id="panel-2" class="panel">
+      <h2>2 — Entscheidungs-Radar</h2>
+      <p class="panel-placeholder">Inhalt folgt in der nächsten Ausbaustufe — fünf Bewertungsachsen als SVG (Lärm, Komfort, Risiko, Aufwand, Reversibilität), Persona-abhängige Gewichtung.</p>
+      <div class="kpi-stub">
+        Radar-Score: <strong>—</strong>
+        <span class="badge badge--B" tabindex="0" aria-label="Belegbarkeit B">B
+          <span class="badge__pop">B — Marktwert / Bundesmedian (z. B. AGFW-Median, BDEW-Statistik)</span>
+        </span>
+      </div>
+    </section>
+    </div>
+
+    <!-- Panel 3 — FRI (bg-light) -->
+    <div class="section-wrap section-wrap--bg">
+    <section id="panel-3" class="panel">
+      <h2>3 — Zukunftsfähigkeit (FRI)</h2>
+      <p class="panel-placeholder">Inhalt folgt in der nächsten Ausbaustufe — sechs FRI-Dimensionen (Förderpfad, CO₂-Pfad, Marktwirkung, Technologie-Reife, Resilienz, Reversibilität), drei Erklär-Ebenen.</p>
+      <div class="kpi-stub">
+        FRI-Index: <strong>—</strong>
+        <span class="badge badge--C" tabindex="0" aria-label="Belegbarkeit C">C
+          <span class="badge__pop">C — Schätzung / Modell (z. B. Heizlast-Hilfsregel, Default-Investitionskosten)</span>
+        </span>
+      </div>
+    </section>
+
+    <!-- Belegbarkeits-Legende — Anschluss an Panel 3, gleiches bg-light -->
+    <section class="belegbarkeit-legende" aria-label="Belegbarkeits-Legende">
+      <details>
+        <summary>ⓘ Was bedeuten A / B / C?</summary>
+        <div class="belegbarkeit-legende__inner">
+          <div class="belegbarkeit-legende__row">
+            <span class="badge badge--A">A</span>
+            <span><strong>Primärquelle, real belegt</strong> — z. B. Realabrechnung, BAFA-Verordnung, eigene Heizkostenabrechnung.</span>
+          </div>
+          <div class="belegbarkeit-legende__row">
+            <span class="badge badge--B">B</span>
+            <span><strong>Marktwert / Bundesmedian</strong> — z. B. AGFW-Median, BDEW-Statistik, DEPV-Pelletsindex.</span>
+          </div>
+          <div class="belegbarkeit-legende__row">
+            <span class="badge badge--C">C</span>
+            <span><strong>Schätzung / Modell</strong> — z. B. Heizlast-Hilfsregel (DIN EN 12831-1), Default-Investitionskosten aus Excel-Modell.</span>
+          </div>
+          <p class="belegbarkeit-legende__schluss">So zeigen wir offen, woher unsere Werte kommen.</p>
+        </div>
+      </details>
+    </section>
+    </div>
+
+    <!-- Drei Schieberegler-Blöcke (white) -->
+    <div class="section-wrap section-wrap--white">
+    <section id="schieberegler" class="schieberegler-cluster">
+      <h2>Was-wäre-wenn — drei Hebel</h2>
+      <div class="schieberegler-grid">
+
+        <!-- Block A: Zeitraum (Index-Slider mit JS-Mapping auf 1/3/5/10/15/20/25) -->
+        <div class="schieberegler-block">
+          <h3>A — Zeitraum</h3>
+          <div class="slider-row">
+            <label>
+              <span>
+                <span>Betrachtung</span>
+                <output id="out-zeitraum">25 Jahre</output>
+              </span>
+              <input type="range" id="slider-zeitraum" min="0" max="6" step="1" value="6" aria-valuetext="25 Jahre">
+            </label>
+          </div>
+          <p class="caption">Sortiert TCO, Cashflow und Vermögensbilanz live um. Wirkung in der nächsten Ausbaustufe angeschlossen.</p>
+        </div>
+
+        <!-- Block B: Energiepreise -->
+        <div class="schieberegler-block">
+          <h3>B — Energiepreise</h3>
+          <div class="slider-row">
+            <label>
+              <span><span>Gas</span><output id="out-preis-gas">10,5 ct/kWh</output></span>
+              <input type="range" id="slider-preis-gas" min="6.5" max="25" step="0.1" value="10.5">
+            </label>
+            <label>
+              <span><span>Fernwärme</span><output id="out-preis-fw">17,5 ct/kWh</output></span>
+              <input type="range" id="slider-preis-fw" min="10" max="25" step="0.1" value="17.5">
+            </label>
+            <label>
+              <span><span>WP-Strom</span><output id="out-preis-wp">26,0 ct/kWh</output></span>
+              <input type="range" id="slider-preis-wp" min="20" max="50" step="0.1" value="26.0">
+            </label>
+          </div>
+          <p class="caption">Marktwerte aus Preishistorie Mai 2026 — BDEW / AGFW / DEPV. Quelle: Q-BDEW-2026, Q-AGFW-2026.</p>
+        </div>
+
+        <!-- Block C: Mögliche Förderung -->
+        <div class="schieberegler-block">
+          <h3>C — Mögliche Förderung</h3>
+
+          <!-- Hauptelement oben: Förderquote-gesamt-Slider -->
+          <div class="slider-row">
+            <label>
+              <span><span>Förderquote gesamt</span><output id="out-foerderung">50 %</output></span>
+              <input type="range" id="slider-foerderung" min="0" max="70" step="5" value="50">
+            </label>
+            <small style="font-size:11px;color:var(--text-tertiary);line-height:1.4;">Spiel mit der Quote — die Toggles unten zeigen, woraus sie sich zusammensetzt.</small>
+          </div>
+
+          <!-- Komponenten als Information darunter, mit ⓘ-Tooltips pro Toggle -->
+          <div class="foerderung-toggles">
+            <label>
+              <input type="checkbox" id="bafa-grund" checked>
+              <span>BAFA-Grundförderung 30 %</span>
+              <span class="info-tip" tabindex="0" aria-label="Info Grundförderung">ⓘ
+                <span class="info-tip__pop">Steht jedem Eigentümer zu, der eine förderfähige Heizung einbaut.<span class="info-tip__src">Quelle: BAFA-Verordnung 2026.</span></span>
+              </span>
+            </label>
+            <label>
+              <input type="checkbox" id="bafa-klima" checked>
+              <span>Klimageschwindigkeitsbonus 20 %</span>
+              <span class="info-tip" tabindex="0" aria-label="Info Klimabonus">ⓘ
+                <span class="info-tip__pop">Für den frühen Tausch funktionierender fossiler Heizungen. Sinkpfad ab 2029.<span class="info-tip__src">Quelle: BAFA / BWP.</span></span>
+              </span>
+            </label>
+            <label>
+              <input type="checkbox" id="bafa-einkommen">
+              <span>Einkommensbonus 30 %</span>
+              <span class="info-tip" tabindex="0" aria-label="Info Einkommensbonus">ⓘ
+                <span class="info-tip__pop">Nur für Selbstnutzer mit zu versteuerndem Einkommen unter 40.000 €.<span class="info-tip__src">Quelle: BAFA.</span></span>
+              </span>
+            </label>
+            <label>
+              <input type="checkbox" id="bafa-effizienz">
+              <span>Effizienzbonus 5 %</span>
+              <span class="info-tip" tabindex="0" aria-label="Info Effizienzbonus">ⓘ
+                <span class="info-tip__pop">Für besonders effiziente Wärmepumpen (z. B. natürliche Kältemittel, Wasser/Wasser oder Erdsonden).<span class="info-tip__src">Quelle: BAFA.</span></span>
+              </span>
+            </label>
+          </div>
+
+          <div class="foerderung-presets">
+            <button type="button" class="preset-btn" data-preset="heute">Heute (Mai 2026)</button>
+            <button type="button" class="preset-btn" data-preset="2029">Klimabonus 2029 −3 Pp</button>
+            <button type="button" class="preset-btn" data-preset="gestrichen">Förderung gestrichen</button>
+          </div>
+
+          <!-- Quellen-Footer -->
+          <p class="foerderung-quellen">
+            Grundlage: BAFA-Förderverordnung Stand Mai 2026. Quelle: Q-BAFA-2026, Q-BWP-2026.<br>
+            <a href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/effiziente_gebaeude_node.html" target="_blank" rel="noopener">Aktuelle Förderverordnung beim BAFA →</a>
+            <span class="foerderung-quellen-stand">Stand Mai 2026 — nächste Anpassung voraussichtlich Ende 2028 (Klimabonus-Sinkpfad).</span>
+          </p>
+        </div>
+
+      </div>
+    </section>
+    </div>
+
+    <!-- Erweiterter Modus (bg-light) — eigene Sektion, kostenlos, Übergangsstufe zur Excel-Edition -->
+    <div class="section-wrap section-wrap--bg">
+    <section class="erweiterter-modus" aria-label="Erweiterter Modus">
+      <h2>Erweiterter Modus — mehr Hebel im Cockpit</h2>
+      <p>Schaltet zusätzliche Hebel im Cockpit frei (eigener Energiepreis, Jahres-Arbeitszahl der WP, CO₂-Pfad, Verkehrswert) und blendet Detail-Tabellen in den Panels ein. Bleibt für deine Sitzung aktiv — bei einem Reload startest du wieder im Standard-Modus.</p>
+      <button type="button" class="profi-button" id="cta-profi-toggle">Erweiterten Modus aktivieren →</button>
+      <p class="profi-aktiv-hint" id="profi-aktiv-hint" hidden>Detail-Hebel und erweiterte Tabellen werden in der nächsten Ausbaustufe freigeschaltet. Dein Modus-Status bleibt für die Sitzung gespeichert.</p>
+    </section>
+    </div>
+
+    <!-- Big Picture (white) -->
+    <div class="section-wrap section-wrap--white">
+    <section id="big-picture" class="big-picture">
+      <h2>Big Picture</h2>
+      <div class="netzdiagramm-container">
+        <p class="placeholder">Inhalt folgt in der nächsten Ausbaustufe — Radar mit allen drei Panel-Achsen überlagert. Pro Heizoption eine Farbfläche.</p>
+      </div>
+      <div class="empfehlungs-banner">
+        <p class="placeholder">Inhalt folgt in der nächsten Ausbaustufe — algorithmische Empfehlung à la „Für dein Profil tragen Wärmepumpe und Hybrid gleich gut, Fernwärme liegt eine Klasse darunter."</p>
+      </div>
+    </section>
+    </div>
+
+    <!-- Wegweiser-Block (bg-light) -->
+    <div class="section-wrap section-wrap--bg">
+    <section class="wegweiser">
+      <h2>Konkret werden — die nächsten Schritte</h2>
+      <div class="wegweiser-grid">
+        <a href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/effiziente_gebaeude_node.html" target="_blank" rel="noopener" class="wegweiser-item">
+          <strong>Förderung beantragen</strong>
+          <p>Hol dir, was dir zusteht. BAFA-Antrag direkt im Portal — die meisten Förderungen kannst du selbst beantragen.</p>
+        </a>
+        <a href="https://www.kfw.de" target="_blank" rel="noopener" class="wegweiser-item">
+          <strong>KfW-Kredit prüfen</strong>
+          <p>Geld leihen, wo es günstig ist. KfW ergänzt deine BAFA-Förderung mit zinsgünstigen Krediten — gerade für die Differenz, die du selbst tragen musst.</p>
+        </a>
+        <a href="https://www.solarrechner-thueringen.de/#s=startscreen" target="_blank" rel="noopener" class="wegweiser-item">
+          <strong>Solarpotenzial prüfen</strong>
+          <p>Schau dir dein Dach an. Der Solarrechner Thüringen zeigt, wie viel Strom dein Dach realistisch erzeugen könnte — kostenlos, ohne Anmeldung.</p>
+        </a>
+        <a href="https://www.verbraucherzentrale-energieberatung.de/" target="_blank" rel="noopener" class="wegweiser-item">
+          <strong>Beratung suchen</strong>
+          <p>Hol dir eine zweite Meinung. Die Verbraucherzentrale berät kostenlos und unabhängig — gerade wenn du dir bei einer Heizungsentscheidung unsicher bist.</p>
+        </a>
+      </div>
+    </section>
+    </div>
+
+    <!-- Excel-Edition — eigene Sektion (white) -->
+    <div class="section-wrap section-wrap--white">
+    <section class="excel-edition" aria-label="Excel-Edition">
+      <h2>Du willst tiefer rechnen — für Profis und Analysten</h2>
+      <p class="excel-edition__sub">Wenn dir der Web-Rechner zu wenig ist und du selbst rechnen willst.</p>
+      <div class="excel-card">
+        <div class="excel-card__head">
+          <span class="excel-card__title">Excel-Edition — alle Quellen, alle Formeln</span>
+          <span class="excel-card__preis">49 €</span>
+        </div>
+        <div class="excel-card__beschreibung">
+          <p>Alle Hebel, die der Web-Rechner nicht zeigt. Alle Quellen, die wir verwendet haben. Alle Formeln, die in deine Entscheidung einfließen.</p>
+          <p>Dazu jährlich ein Update der Marktwerte, Förderlandschaft und neuen Quellen — direkt von uns ins Postfach.</p>
+          <p>Für Eigentümer, die sich sicher entscheiden wollen. Für Beiräte, die ihre WEG mit Zahlen überzeugen müssen. Für Berater, die auf belastbare Grundlagen setzen.</p>
+        </div>
+        <div class="excel-card__cta">
+          <a class="btn btn--kaufen" href="/excel-edition.html">Excel-Edition kaufen →</a>
+        </div>
+      </div>
+      <a class="excel-edition__methodik" href="/methodik.html">Methodik &amp; Ingenieurbüro →</a>
+    </section>
+    </div>
+
+    <!-- Dialog-CTA — Schluss-Akkord (Kontext-Blau-Container, weißer Text) -->
+    <div class="section-wrap section-wrap--kontext">
+    <section class="dialog-cta">
+      <h2 class="dialog-cta__title">Du hast eine Sondersituation?</h2>
+      <p class="dialog-cta__sub">Schreib uns. Wir lesen, wir antworten.</p>
+      <div class="dialog-cta__actions">
+        <button type="button" class="btn btn--dialog-haupt" id="cta-dialog-mail">Meine Analyse senden &amp; in den Dialog →</button>
+        <button type="button" class="btn btn--dialog-sekundaer" id="cta-teilen">Nur Link mit meinen Werten teilen</button>
+      </div>
+      <p class="dialog-cta__hint">Erste Antwort kostenlos. Tiefere Beratung sprechen wir projekt-basiert ab.</p>
+
+      <!-- Versteckter Bericht-Body — wird beim Init gerendert und in den mailto-Body eingespeist -->
+      <div id="bericht-body" hidden></div>
+    </section>
+    </div>
+
+  </section>
+
+  <!-- ==========================================================
+       FOOTER (Site)
+       ========================================================== -->
   <footer class="footer">
-    <div class="container">
-      <div class="footer__inner">
-        <div class="footer__left">
-          <a href="index.html" style="text-decoration:none;display:inline-flex;align-items:center;vertical-align:middle;">
-            <svg width="130" height="20" viewBox="0 0 130 20" xmlns="http://www.w3.org/2000/svg" style="display:block;">
-              <text x="0" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">haus</text>
-              <text x="42" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">entscheider</text>
-              <line x1="0" y1="18" x2="40" y2="18" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
-            </svg>
-          </a>
-          &nbsp;·&nbsp;Daniel Schöberl&nbsp;·&nbsp;Erfurt / München
-        </div>
-        <div class="footer__right" style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
-          <a href="#" class="footer__whatsapp">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            WhatsApp Kanal
-          </a>
-          <a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a>
-          &nbsp;·&nbsp;
-          <a href="index.html#impressum" style="color:var(--text-tertiary);font-size:12px;">Impressum</a>
-          &nbsp;·&nbsp;
-          <a href="datenschutz.html" style="color:var(--text-tertiary);font-size:12px;">Datenschutz</a>
-        </div>
+    <div class="footer__inner">
+      <div class="footer__left">
+        <a href="index.html" style="text-decoration:none;display:inline-flex;align-items:center;vertical-align:middle;">
+          <svg width="130" height="20" viewBox="0 0 130 20" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+            <text x="0" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">haus</text>
+            <text x="42" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">entscheider</text>
+            <line x1="0" y1="18" x2="40" y2="18" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+          </svg>
+        </a>
+        &nbsp;·&nbsp;Daniel Schöberl&nbsp;·&nbsp;Erfurt / München
+      </div>
+      <div class="footer__right" style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+        <a href="#" class="footer__whatsapp">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp Kanal
+        </a>
+        <a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a>
+        &nbsp;·&nbsp;
+        <a href="index.html#impressum" style="color:var(--text-tertiary);font-size:12px;">Impressum</a>
+        &nbsp;·&nbsp;
+        <a href="datenschutz.html" style="color:var(--text-tertiary);font-size:12px;">Datenschutz</a>
       </div>
     </div>
   </footer>
 
+  <!-- Toast für „Link kopiert" -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
   <script>
-    // Hamburger Menu (aus index.html übernommen)
-    (function() {
-      const btn  = document.getElementById('nav-hamburger');
-      const menu = document.getElementById('nav-mobile-menu');
+  /* =============================================================
+     Der Entscheider — Phase-State-Maschine + JSON-Anbindung
+     Single-File-JS, kein Framework. Alle State-Mutations gehen
+     über setState(patch) → render(). evaluateConditionals() läuft
+     nach jedem Update.
+     ============================================================= */
+  (function () {
+    'use strict';
+
+    // ----- Hardcoded-Konstanten (siehe Spec §10 + Plan-Diskrepanzen) -----
+
+    // TODO: aus parameter.json.block8_heizlast_hilfsregel lesen,
+    // sobald build_json.py Block 8 exportiert.
+    // Fallback-Werte: 0.12 / 0.08 / 0.05 (DIN EN 12831-1).
+    const HEIZLAST_FAKTOR = {
+      unsaniert:   0.12,
+      teilsaniert: 0.08,
+      saniert:     0.05
+    };
+
+    // Approximation — Erfurter FW-Versorgungsgebiet 01 ist primär 99084
+    // (Altstadt). Außerhalb Erfurts greift die Heuristik nicht.
+    const ALTSTADT_PLZ = ['99084'];
+
+    // Sinkpfad-Konstante für Preset-Button "Klimabonus 2029 −3 Pp"
+    // (Memory: project_persona_picker_und_foerderslider.md)
+    const KLIMABONUS_2029 = 0.17;
+
+    // Schwelle Pellets-Filter (Spec §11/§4 block4_plausi)
+    const PELLETS_HEIZLAST_SCHWELLE = 30; // kW
+
+    // ----- State -----
+
+    const state = {
+      phase: 'hero',
+      // Wizard-Felder (Schicht 1 — 9 Pflichtfelder + PV)
+      plz: '',
+      ort: '',
+      gebaeudetyp: 'MFH',
+      eigentuemerTyp: 'WEG',
+      pv: true,
+      heizung: 'gas-bw',
+      baujahr: 1998,
+      wohnflaeche: 950,
+      verbrauch: 95000,
+      verbrauchUnknown: false,
+      sanierung: 'teilsaniert',
+      nutzungsart: 'mischnutzung',
+      persona: 'optimierer',
+
+      // Touched-Tracking — verhindert stille Überschreibung beim
+      // EFH/MFH-Wechsel, wenn der Nutzer das Feld bereits manuell
+      // angefasst hat (CLAUDE.md §8). PLZ ist immer manuell.
+      touched: {
+        wohnflaeche: false,
+        verbrauch:   false,
+        nutzungsart: false
+      },
+
+      // Profi-Modus: in C1 nur State-Flag, Wirkung in nächster Ausbaustufe.
+      profimode: false,
+
+      // Tracking: welche Pills wurden nach Berechnen vom Nutzer überschrieben?
+      // Visualisierung über .cockpit-pill--geaendert.
+      pillGeaendert: {},
+
+      // Override-Schicht (Schieberegler, Profi-Modus)
+      // Sauber getrennt von Wizard-State.
+      overrides: {
+        schieberegler: {
+          zeitraum: 25,
+          preisGas: 10.5,
+          preisFW:  17.5,
+          preisWP:  26.0,
+          foerderung: {
+            grund: true, klima: true, einkommen: false, effizienz: false,
+            master: 50
+          }
+        },
+        profi: {} // leer in C1
+      }
+    };
+
+    // ----- Konfig (aus JSON, nach loadJSON gefüllt) -----
+    let config = { parameter: null, preishistorie: null, loaded: false };
+
+    // ----- Utils -----
+
+    const $  = (sel, ctx) => (ctx || document).querySelector(sel);
+    const $$ = (sel, ctx) => Array.from((ctx || document).querySelectorAll(sel));
+
+    function fmtInt(n) {
+      if (n === null || n === undefined || isNaN(n)) return '—';
+      return Number(n).toLocaleString('de-DE');
+    }
+    function fmtPreis(n) {
+      // ct/kWh mit Komma
+      return Number(n).toFixed(1).replace('.', ',') + ' ct/kWh';
+    }
+    function fmtEuro(n) {
+      return fmtInt(Math.round(n)) + ' €';
+    }
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+      ));
+    }
+
+    // ----- JSON-Load mit Fallback (für lokales file:// ohne Server) -----
+
+    async function loadJSON() {
+      try {
+        const [pRes, hRes] = await Promise.all([
+          fetch('daten/parameter.json'),
+          fetch('daten/preishistorie.json')
+        ]);
+        if (!pRes.ok || !hRes.ok) throw new Error('fetch nicht ok');
+        config.parameter     = await pRes.json();
+        config.preishistorie = await hRes.json();
+        config.loaded = true;
+        console.info('[Entscheider] JSON geladen — parameter.json (' +
+          (config.parameter.anzahl_defined_names || '?') + ' Defined Names) + preishistorie.json (Stand ' +
+          (config.preishistorie.aktueller_monat || '?') + ').');
+      } catch (err) {
+        console.warn('[Entscheider] JSON-Fetch fehlgeschlagen — nutze Fallback. Beim Doppelklick auf die Datei (file://) ist das normal; lokal Server starten für Vollfunktion.', err);
+        config.parameter = fallbackParameter();
+        config.preishistorie = fallbackPreishistorie();
+        config.loaded = true;
+      }
+      // Defaults aus Konfig in State (nur initial, bevor Nutzer berührt hat)
+      applyDefaultsForType(state.gebaeudetyp, /*force=*/true);
+      // UI-Werte für Mai-Stand setzen
+      hydrateMarktHinweis();
+    }
+
+    function fallbackParameter() {
+      return {
+        anzahl_defined_names: 154,
+        block1_energiepreise: {
+          PreisGas: { default: 8.57, min: 6.5, max: 25 },
+          PreisFW:  { default: 17.5, min: 10,  max: 25 },
+          PreisWP:  { default: 25,   min: 20,  max: 50 },
+          PreisOel: { default: 10.5, min: 8,   max: 20 },
+          PreisPellets: { default: 7, min: 5.5, max: 10 }
+        },
+        block2_rahmen: {
+          BonusGrund_default: { default: 0.3 },
+          BonusKlima_default: { default: 0.2 },
+          BonusEink_default:  { default: 0.3 },
+          BonusEff_default:   { default: 0.05 }
+        },
+        block5_gebaeudedefaults: {
+          EFH: { Wohnflaeche: 140, WE: 1, Verbrauch: 18000, Heizlast: 12, Verkehrswert: 500000, Nutzungsart: 'Selbstnutzung', FWSatzung: 'nein' },
+          MFH: { Wohnflaeche: 950, WE: 14, Verbrauch: 95000, Heizlast: 65, Verkehrswert: 1800000, Nutzungsart: 'WEG-Mischnutzung', FWSatzung: 'ja' }
+        }
+      };
+    }
+    function fallbackPreishistorie() {
+      return {
+        aktueller_monat: '2026-05',
+        monate: {
+          '2026-05': { gas: 10.5, fernwaerme: 17.5, heizoel: 13.5, wp_strom: 26, pellets: 7.5, label: 'Mai 2026' }
+        }
+      };
+    }
+
+    // ----- Phase-Switch -----
+
+    function gotoPhase(phase) {
+      state.phase = phase;
+      $$('.phase').forEach(el => {
+        const isActive = el.id === 'phase-' + phase;
+        el.classList.toggle('phase--active', isActive);
+        el.hidden = !isActive;
+      });
+      // Mobile: nach Phase-Wechsel an den Anfang scrollen
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ----- Wizard: Step-Navigation -----
+
+    let currentStep = 1;
+
+    function gotoStep(n) {
+      currentStep = n;
+      $$('.wizard-step').forEach(el => {
+        el.hidden = (Number(el.dataset.step) !== n);
+      });
+      $$('.wizard-progress__step').forEach((el, i) => {
+        const idx = i + 1;
+        el.classList.toggle('wizard-progress__step--active', idx === n);
+        el.classList.toggle('wizard-progress__step--done', idx < n);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ----- Setter (zentrale State-Mutation, ruft evaluateConditionals + render-Subset) -----
+
+    function setField(key, value, opts) {
+      opts = opts || {};
+      state[key] = value;
+      if (opts.userTouched && state.touched.hasOwnProperty(key)) {
+        state.touched[key] = true;
+      }
+      evaluateConditionals();
+      // Bei Verbrauch leer: Heizlast-Schätzung aktualisieren
+      if (key === 'wohnflaeche' || key === 'sanierung' || key === 'verbrauchUnknown') {
+        updateHeizlastHinweis();
+      }
+      // Bei Verbrauch oder Wohnfläche: Markt-Hinweis aktualisieren
+      if (key === 'verbrauch' || key === 'verbrauchUnknown' || key === 'wohnflaeche' || key === 'sanierung') {
+        updateMarktHinweis();
+      }
+    }
+
+    function setOverride(path, value) {
+      // path: dot-notation, z. B. 'schieberegler.preisGas' oder 'schieberegler.foerderung.master'
+      const parts = path.split('.');
+      let target = state.overrides;
+      for (let i = 0; i < parts.length - 1; i++) target = target[parts[i]];
+      target[parts[parts.length - 1]] = value;
+      console.info('[Override]', path, '=', value);
+      // In C1: kein Re-Render der Panels, Wirkung folgt in C2/C3/C4.
+    }
+
+    // ----- Smart Defaults: EFH/MFH-Wechsel -----
+
+    function applyDefaultsForType(type, force) {
+      if (!config.parameter) return;
+      const blk = config.parameter.block5_gebaeudedefaults &&
+                  config.parameter.block5_gebaeudedefaults[type];
+      if (!blk) return;
+
+      // Nur Felder überschreiben, die der Nutzer NICHT manuell verändert hat
+      // (außer force=true beim initialen Laden).
+      if (force || !state.touched.wohnflaeche) {
+        state.wohnflaeche = blk.Wohnflaeche;
+        const slider = $('#f-wohnflaeche');
+        if (slider) slider.value = String(state.wohnflaeche);
+        const out = $('#val-wohnflaeche');
+        if (out) out.textContent = fmtInt(state.wohnflaeche) + ' m²';
+      }
+      if (force || !state.touched.verbrauch) {
+        state.verbrauch = blk.Verbrauch;
+        const slider = $('#f-verbrauch');
+        if (slider) slider.value = String(state.verbrauch);
+        const out = $('#val-verbrauch');
+        if (out) out.textContent = fmtInt(state.verbrauch) + ' kWh';
+      }
+      if (force || !state.touched.nutzungsart) {
+        // Mapping: parameter.json hat "Selbstnutzung" / "WEG-Mischnutzung"
+        // → Web-State: 'selbstnutzung' / 'mischnutzung'
+        const raw = (blk.Nutzungsart || '').toLowerCase();
+        if (raw.includes('selbstnutzung')) state.nutzungsart = 'selbstnutzung';
+        else if (raw.includes('voll')) state.nutzungsart = 'vollvermietung';
+        else state.nutzungsart = 'mischnutzung';
+        const sel = $('#f-nutzungsart');
+        if (sel) sel.value = state.nutzungsart;
+      }
+      // baujahr, sanierung, persona, plz: nie automatisch überschreiben
+    }
+
+    // ----- Smart Default: Heizlast-Hilfsregel -----
+
+    function estimateHeizlast() {
+      const f = HEIZLAST_FAKTOR[state.sanierung] || HEIZLAST_FAKTOR.teilsaniert;
+      return Math.round(state.wohnflaeche * f);
+    }
+
+    function updateHeizlastHinweis() {
+      const hint = $('#hilfsregel-hint');
+      if (!hint) return;
+      if (state.verbrauchUnknown) {
+        hint.hidden = false;
+        const span = $('#heizlast-schaetzung');
+        if (span) span.textContent = estimateHeizlast() + ' kW';
+      } else {
+        hint.hidden = true;
+      }
+    }
+
+    // ----- Inline-Markt-Hinweis -----
+
+    function getAktuellerGasPreis() {
+      if (config.preishistorie && config.preishistorie.monate) {
+        const m = config.preishistorie.monate[config.preishistorie.aktueller_monat];
+        if (m && typeof m.gas === 'number') return m.gas;
+      }
+      return 10.5; // Fallback
+    }
+
+    function hydrateMarktHinweis() {
+      const gas = getAktuellerGasPreis();
+      const span = $('#markt-gas-preis');
+      if (span) span.textContent = fmtPreis(gas);
+      updateMarktHinweis();
+    }
+
+    function updateMarktHinweis() {
+      const gas = getAktuellerGasPreis();
+      const verbrauch = state.verbrauchUnknown ? null : state.verbrauch;
+      const out = $('#markt-jahreskosten');
+      if (!out) return;
+      if (verbrauch) {
+        const euro = (verbrauch * gas) / 100; // ct → €
+        out.textContent = fmtEuro(euro) + ' Jahresheizkosten';
+      } else {
+        out.textContent = '—';
+      }
+    }
+
+    // ----- Konditionale Sichtbarkeits-Logik (5 Regeln) -----
+
+    function evaluateConditionals() {
+      // 1. PLZ ∈ AltstadtPLZ → FW-Satzungs-Hinweis
+      const plzMatch = ALTSTADT_PLZ.some(p => state.plz.startsWith(p));
+      const fwHint = $('#fw-satzung-hint');
+      if (fwHint) fwHint.hidden = !plzMatch;
+
+      // 2. Gebäudetyp === MFH → Eigentümer-Typ-Feld
+      const eigField = $('#feld-eigentuemer-typ');
+      if (eigField) eigField.hidden = (state.gebaeudetyp !== 'MFH');
+
+      // 3. Heizlast > Schwelle UND AltstadtPLZ-Match → Pellets-Option grau
+      // Pragmatik: "Innenstadt" = AltstadtPLZ greift = FW-Satzungs-Lage
+      const heizlast = estimateHeizlast();
+      const pelletsAusschluss = (heizlast > PELLETS_HEIZLAST_SCHWELLE) && plzMatch;
+      const heizungSelect = $('#f-heizung');
+      if (heizungSelect) {
+        const opt = heizungSelect.querySelector('option[value="pellets"]');
+        if (opt) {
+          opt.disabled = pelletsAusschluss;
+          opt.textContent = 'Pellets' + (pelletsAusschluss ? ' (in der Innenstadt nicht zulässig)' : '');
+          // Falls aktuell pellets gewählt und ausgeschlossen wurde: zurück auf gas-bw
+          if (pelletsAusschluss && state.heizung === 'pellets') {
+            state.heizung = 'gas-bw';
+            heizungSelect.value = 'gas-bw';
+          }
+        }
+      }
+
+      // 4. Nutzungsart ≠ Selbstnutzung → Vermieter-Bilanz sichtbar
+      const vermBlk = $('#vermieter-bilanz');
+      if (vermBlk) vermBlk.hidden = (state.nutzungsart === 'selbstnutzung');
+
+      // 5. MFH + WEG → WEG-Hinweise (Ergebnis-Seite) + WEG-Statement (Wizard-Schritt 3) sichtbar
+      const isMFHWEG = (state.gebaeudetyp === 'MFH' && state.eigentuemerTyp === 'WEG');
+      const wegBlk = $('#weg-hinweise');
+      if (wegBlk) wegBlk.hidden = !isMFHWEG;
+      const wegStatement = $('#weg-statement-wizard');
+      if (wegStatement) wegStatement.hidden = !isMFHWEG;
+    }
+
+    // ----- URL-Parameter-Banner (Variante A+) -----
+
+    function initFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      if (Array.from(params).length === 0) return;
+
+      // Mapping: einfache Schreibweise (alt: flaeche/kosten/heizung)
+      // + neue Schreibweise (gt/plz/wf/hz/bj/vb/san/nu/pers/pv/zr/pg/pfw/pwp/fdr)
+      const get = k => params.get(k);
+
+      const flaeche = Number(get('flaeche') || get('wf'));
+      const heizung = get('heizung') || get('hz');
+      const kosten  = Number(get('kosten'));
+
+      // Speichere auch alle anderen, falls vorhanden
+      const pending = {
+        plz: get('plz'),
+        gebaeudetyp: get('gt'),
+        eigentuemerTyp: get('et'),
+        wohnflaeche: flaeche || null,
+        heizung: heizung || null,
+        baujahr: Number(get('bj')) || null,
+        verbrauch: Number(get('vb')) || null,
+        sanierung: get('san'),
+        nutzungsart: get('nu'),
+        persona: get('pers'),
+        pv: get('pv'),
+        // overrides
+        zeitraum: Number(get('zr')) || null,
+        preisGas: Number(get('pg')) || null,
+        preisFW:  Number(get('pfw')) || null,
+        preisWP:  Number(get('pwp')) || null,
+        foerderMaster: Number(get('fdr')) || null,
+        kosten: kosten || null
+      };
+
+      // Banner-Text aus den prominent benannten Werten
+      const teile = [];
+      if (pending.wohnflaeche) teile.push('Wohnfläche <strong>' + fmtInt(pending.wohnflaeche) + ' m²</strong>');
+      if (pending.heizung)     teile.push('Heizung <strong>' + escapeHtml(pending.heizung) + '</strong>');
+      if (pending.kosten)      teile.push('Jahreskosten <strong>' + fmtInt(pending.kosten) + ' €</strong>');
+      if (pending.plz)         teile.push('PLZ <strong>' + escapeHtml(pending.plz) + '</strong>');
+
+      const text = teile.length
+        ? 'Du hast vorher ' + teile.join(', ') + ' eingegeben. Übernehmen oder neu starten?'
+        : 'Es liegen Werte aus einem vorherigen Schritt vor. Übernehmen oder neu starten?';
+
+      const banner = $('#urlParamBanner');
+      const tEl    = $('#urlParamBanner-text');
+      if (banner && tEl) {
+        tEl.innerHTML = text;
+        banner.hidden = false;
+      }
+
+      // Übernehmen-Klick wendet pending auf state an
+      $('#cta-uebernehmen').addEventListener('click', () => {
+        applyPendingFromURL(pending);
+        $('#urlParamBanner').hidden = true;
+        gotoPhase('wizard');
+        gotoStep(1);
+      });
+      $('#cta-neustart').addEventListener('click', () => {
+        $('#urlParamBanner').hidden = true;
+      });
+    }
+
+    function applyPendingFromURL(p) {
+      if (p.plz)              { state.plz = p.plz; const e=$('#f-plz'); if(e) e.value = p.plz; }
+      if (p.gebaeudetyp)      { state.gebaeudetyp = p.gebaeudetyp; syncSegButton('gebaeudetyp', p.gebaeudetyp); }
+      if (p.eigentuemerTyp)   { state.eigentuemerTyp = p.eigentuemerTyp; const e=$('#f-eigentuemer'); if(e) e.value = p.eigentuemerTyp; }
+      if (p.wohnflaeche)      { state.wohnflaeche = p.wohnflaeche; state.touched.wohnflaeche = true; const e=$('#f-wohnflaeche'); if(e) e.value = String(p.wohnflaeche); const o=$('#val-wohnflaeche'); if(o) o.textContent = fmtInt(p.wohnflaeche) + ' m²'; }
+      if (p.heizung)          { state.heizung = p.heizung; const e=$('#f-heizung'); if(e) e.value = p.heizung; }
+      if (p.baujahr)          { state.baujahr = p.baujahr; const e=$('#f-baujahr'); if(e) e.value = String(p.baujahr); }
+      if (p.verbrauch)        { state.verbrauch = p.verbrauch; state.touched.verbrauch = true; const e=$('#f-verbrauch'); if(e) e.value = String(p.verbrauch); const o=$('#val-verbrauch'); if(o) o.textContent = fmtInt(p.verbrauch) + ' kWh'; }
+      if (p.sanierung)        { state.sanierung = p.sanierung; syncSegButton('sanierung', p.sanierung); }
+      if (p.nutzungsart)      { state.nutzungsart = p.nutzungsart; state.touched.nutzungsart = true; const e=$('#f-nutzungsart'); if(e) e.value = p.nutzungsart; }
+      if (p.persona)          { state.persona = p.persona; syncPersona(p.persona); }
+      if (p.pv !== null && p.pv !== undefined) {
+        state.pv = (p.pv === 'true' || p.pv === 'ja' || p.pv === '1');
+        syncSegButton('pv', String(state.pv));
+      }
+      if (p.zeitraum)         { state.overrides.schieberegler.zeitraum = p.zeitraum; const e=$('#slider-zeitraum'); if(e) e.value = String(p.zeitraum); const o=$('#out-zeitraum'); if(o) o.textContent = p.zeitraum + ' Jahre'; }
+      if (p.preisGas)         { state.overrides.schieberegler.preisGas = p.preisGas; const e=$('#slider-preis-gas'); if(e) e.value = String(p.preisGas); const o=$('#out-preis-gas'); if(o) o.textContent = fmtPreis(p.preisGas); }
+      if (p.preisFW)          { state.overrides.schieberegler.preisFW  = p.preisFW;  const e=$('#slider-preis-fw');  if(e) e.value = String(p.preisFW);  const o=$('#out-preis-fw');  if(o) o.textContent = fmtPreis(p.preisFW); }
+      if (p.preisWP)          { state.overrides.schieberegler.preisWP  = p.preisWP;  const e=$('#slider-preis-wp');  if(e) e.value = String(p.preisWP);  const o=$('#out-preis-wp');  if(o) o.textContent = fmtPreis(p.preisWP); }
+      if (p.foerderMaster)    { state.overrides.schieberegler.foerderung.master = p.foerderMaster; const e=$('#slider-foerderung'); if(e) e.value = String(p.foerderMaster); const o=$('#out-foerderung'); if(o) o.textContent = p.foerderMaster + ' %'; }
+      evaluateConditionals();
+      updateHeizlastHinweis();
+      updateMarktHinweis();
+    }
+
+    function syncSegButton(field, val) {
+      $$('.seg__btn[data-set="' + field + '"]').forEach(b => {
+        b.classList.toggle('seg__btn--active', b.dataset.val === String(val));
+      });
+    }
+    function syncPersona(p) {
+      $$('.persona').forEach(b => b.classList.toggle('persona--active', b.dataset.persona === p));
+      $$('.persona-mini').forEach(b => b.classList.toggle('persona-mini--active', b.dataset.personaMini === p));
+    }
+
+    // ----- Listener-Setup: Wizard-Felder -----
+
+    function setupWizardListeners() {
+      // Hero CTA
+      $('#cta-start').addEventListener('click', () => {
+        gotoPhase('wizard');
+        gotoStep(1);
+      });
+
+      // Wizard-Step-Navigation (Weiter / Zurück)
+      $$('.wizard-step [data-wizard-next]').forEach(b => {
+        b.addEventListener('click', () => gotoStep(Math.min(currentStep + 1, 3)));
+      });
+      $$('.wizard-step [data-wizard-back]').forEach(b => {
+        b.addEventListener('click', () => gotoStep(Math.max(currentStep - 1, 1)));
+      });
+
+      // Berechnen → Calculating → Ergebnis
+      $('#cta-berechnen').addEventListener('click', () => {
+        gotoPhase('calculating');
+        setTimeout(() => {
+          renderErgebnis();
+          gotoPhase('ergebnis');
+        }, 1500);
+      });
+
+      // PLZ-Input
+      $('#f-plz').addEventListener('input', e => {
+        const v = e.target.value.trim();
+        const m = v.match(/^(\d{5})\s*(.*)$/);
+        if (m) { state.plz = m[1]; state.ort = m[2]; } else { state.plz = v; state.ort = ''; }
+        evaluateConditionals();
+      });
+
+      // Segment-Buttons (Gebäudetyp, Sanierung, PV)
+      $$('.seg__btn[data-set]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (btn.classList.contains('seg__btn--disabled')) return;
+          const field = btn.dataset.set;
+          const val   = btn.dataset.val;
+          syncSegButton(field, val);
+
+          if (field === 'gebaeudetyp') {
+            const wasMFH = state.gebaeudetyp === 'MFH';
+            const isMFH  = val === 'MFH';
+            state.gebaeudetyp = val;
+            // Beim Wechsel: Defaults aus parameter.json (mit touched-Schutz)
+            applyDefaultsForType(val);
+            // EFH impliziert Selbstnutzer → eigentuemerTyp irrelevant; behalten als Fallback
+            evaluateConditionals();
+            updateHeizlastHinweis();
+            updateMarktHinweis();
+          } else if (field === 'pv') {
+            state.pv = (val === 'true');
+          } else if (field === 'sanierung') {
+            state.sanierung = val;
+            updateHeizlastHinweis();
+            evaluateConditionals();
+          }
+        });
+      });
+
+      // Eigentümer-Typ (nur bei MFH sichtbar)
+      $('#f-eigentuemer').addEventListener('change', e => {
+        state.eigentuemerTyp = e.target.value;
+        evaluateConditionals();
+      });
+
+      // Heizung + Baujahr
+      $('#f-heizung').addEventListener('change', e => { state.heizung = e.target.value; });
+      $('#f-baujahr').addEventListener('input', e => {
+        const v = Number(e.target.value);
+        if (!isNaN(v) && v > 0) state.baujahr = v;
+      });
+
+      // Wohnfläche-Slider
+      const wfSlider = $('#f-wohnflaeche');
+      wfSlider.addEventListener('input', e => {
+        const v = Number(e.target.value);
+        $('#val-wohnflaeche').textContent = fmtInt(v) + ' m²';
+        setField('wohnflaeche', v, { userTouched: true });
+      });
+
+      // Verbrauch-Slider
+      const vSlider = $('#f-verbrauch');
+      vSlider.addEventListener('input', e => {
+        const v = Number(e.target.value);
+        $('#val-verbrauch').textContent = fmtInt(v) + ' kWh';
+        setField('verbrauch', v, { userTouched: true });
+      });
+      // Verbrauch unbekannt — Checkbox
+      $('#f-verbrauch-leer').addEventListener('change', e => {
+        const unknown = e.target.checked;
+        state.verbrauchUnknown = unknown;
+        vSlider.disabled = unknown;
+        $('#val-verbrauch').textContent = unknown ? '—' : (fmtInt(state.verbrauch) + ' kWh');
+        updateHeizlastHinweis();
+        updateMarktHinweis();
+      });
+
+      // Nutzungsart
+      $('#f-nutzungsart').addEventListener('change', e => {
+        setField('nutzungsart', e.target.value, { userTouched: true });
+      });
+
+      // Persona-Picker (Wizard, groß)
+      $$('.persona[data-persona]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.persona = btn.dataset.persona;
+          syncPersona(state.persona);
+        });
+      });
+    }
+
+    // ----- Ergebnis-Renderer -----
+
+    function renderErgebnis() {
+      // Fresh State pro Berechnung — alle "geändert"-Marker zurücksetzen
+      state.pillGeaendert = {};
+      renderAnnahmenTabelle();
+      renderMiniCockpit();
+      renderBericht();
+      evaluateConditionals();
+    }
+
+    function renderAnnahmenTabelle() {
+      const tbody = $('#annahmen-tabelle-body');
+      if (!tbody) return;
+
+      const heizlastVal = state.verbrauchUnknown ? estimateHeizlast() : null;
+      const sb = state.overrides.schieberegler;
+      const fb = sb.foerderung;
+
+      const rows = [
+        ['PLZ / Ort',         (state.plz + ' ' + state.ort).trim() || '—', 'Eingabe', 'A'],
+        ['Gebäudetyp',        state.gebaeudetyp,                            'Eingabe', 'A'],
+        ['Eigentümer-Typ',    (state.gebaeudetyp === 'MFH') ? state.eigentuemerTyp : '— (Selbstnutzer)', 'Eingabe', 'A'],
+        ['Wohnfläche',        fmtInt(state.wohnflaeche) + ' m²',            'Eingabe', 'A'],
+        ['Aktuelle Heizung',  state.heizung + ' (' + state.baujahr + ')',   'Eingabe', 'A'],
+        ['Verbrauch',         state.verbrauchUnknown ? '— (geschätzt)' : (fmtInt(state.verbrauch) + ' kWh'), 'Eingabe / Schätzung', state.verbrauchUnknown ? 'C' : 'A'],
+        heizlastVal ? ['Heizlast (geschätzt)', heizlastVal + ' kW', 'DIN EN 12831-1, Faktor ' + state.sanierung, 'C'] : null,
+        ['Sanierungsstand',   state.sanierung,                              'Eingabe', 'A'],
+        ['Nutzungsart',       state.nutzungsart,                            'Eingabe', 'A'],
+        ['Persona',           state.persona,                                'Eingabe', 'A'],
+        ['PV mitgedacht',     state.pv ? 'ja' : 'nein',                     'Eingabe', 'A'],
+        ['Energiepreis Gas',  fmtPreis(sb.preisGas),                        'Preishistorie Mai 2026', 'B'],
+        ['Energiepreis FW',   fmtPreis(sb.preisFW),                         'Erfurt-Effektivpreis (real belegt durch Realabrechnung)', 'A'],
+        ['Energiepreis WP-Strom', fmtPreis(sb.preisWP),                     'Preishistorie Mai 2026', 'B'],
+        ['BAFA-Förderquote',  fb.master + ' %',                             'BAFA-Förderverordnung Mai 2026', 'A'],
+        ['Zeitraum',          sb.zeitraum + ' Jahre',                       'Standardwert nach VDI-Norm 2067', 'A']
+      ].filter(Boolean);
+
+      tbody.innerHTML = rows.map(r => (
+        '<tr><td>' + escapeHtml(r[0]) + '</td><td>' + escapeHtml(r[1]) +
+        '</td><td>' + escapeHtml(r[2]) + '</td><td><span class="badge badge--' + r[3] + '">' + r[3] + '</span></td></tr>'
+      )).join('');
+    }
+
+    function renderMiniCockpit() {
+      const wrap = $('#mini-cockpit');
+      if (!wrap) return;
+      const sb = state.overrides.schieberegler;
+
+      const pills = [
+        { key: 'plz',           label: 'PLZ',        val: (state.plz + ' ' + state.ort).trim() || '—' },
+        { key: 'gebaeudetyp',   label: 'Typ',        val: state.gebaeudetyp },
+        { key: 'eigentuemer',   label: 'Eigentümer', val: state.gebaeudetyp === 'MFH' ? state.eigentuemerTyp : '—', skip: state.gebaeudetyp !== 'MFH' },
+        { key: 'wohnflaeche',   label: 'Fläche',     val: fmtInt(state.wohnflaeche) + ' m²' },
+        { key: 'heizung',       label: 'Heizung',    val: state.heizung + ' (' + state.baujahr + ')' },
+        { key: 'verbrauch',     label: 'Verbrauch',  val: state.verbrauchUnknown ? '—' : (fmtInt(state.verbrauch) + ' kWh') },
+        { key: 'sanierung',     label: 'Sanierung',  val: state.sanierung },
+        { key: 'nutzungsart',   label: 'Nutzung',    val: state.nutzungsart },
+        { key: 'persona',       label: 'Sicht',      val: state.persona },
+        { key: 'pv',            label: 'PV',         val: state.pv ? 'ja' : 'nein' }
+      ];
+
+      wrap.innerHTML = pills.filter(p => !p.skip).map(p => {
+        const geaendert = state.pillGeaendert[p.key] ? ' cockpit-pill--geaendert' : '';
+        return '<button type="button" class="cockpit-pill' + geaendert + '" data-pill-key="' + p.key + '">' +
+          '<span class="cockpit-pill__key">' + escapeHtml(p.label) + '</span>' +
+          '<span class="cockpit-pill__val">' + escapeHtml(p.val) + '</span>' +
+        '</button>';
+      }).join('');
+
+      // Inline-Edit-Listener
+      $$('.cockpit-pill', wrap).forEach(pill => {
+        pill.addEventListener('click', () => openPillEditor(pill));
+      });
+    }
+
+    // Auswahl-Werte: Pill-Editor öffnet ein Dropdown, kein freies Text-Input.
+    // Verhindert Vertipper, hält State sauber.
+    const PILL_OPTIONS = {
+      gebaeudetyp:    [['EFH','Einfamilienhaus'], ['MFH','Mehrfamilienhaus']],
+      eigentuemer:    [['Einzelvermieter','Einzelvermieter'], ['WEG','WEG'], ['Selbstnutzer','Selbstnutzer']],
+      heizung:        [['gas-bw','Gas-Brennwert'], ['gas-nt','Gas-Niedertemperatur'], ['oel','Öl'],
+                       ['fw','Fernwärme'], ['wp','Wärmepumpe'], ['pellets','Pellets'], ['sonstige','Sonstige']],
+      sanierung:      [['unsaniert','unsaniert'], ['teilsaniert','teilsaniert'], ['saniert','saniert']],
+      nutzungsart:    [['selbstnutzung','Selbstnutzung'], ['mischnutzung','Mischnutzung'], ['vollvermietung','Vollvermietung']],
+      persona:        [['bewahrer','Bewahrer'], ['optimierer','Optimierer'], ['wechsler','Wechsler']],
+      pv:             [['true','ja'], ['false','nein']]
+    };
+
+    function openPillEditor(pill) {
+      const key = pill.dataset.pillKey;
+      const valSpan = pill.querySelector('.cockpit-pill__val');
+      if (!valSpan) return;
+
+      const currentText = valSpan.textContent;
+      const isSelect = !!PILL_OPTIONS[key];
+      const editor = isSelect ? buildPillSelect(key, currentText) : buildPillTextInput(currentText);
+      valSpan.replaceWith(editor);
+      editor.focus();
+      if (!isSelect) editor.select();
+
+      const commit = () => {
+        const newVal = editor.value;
+        const changed = (newVal !== currentText);
+        const newSpan = document.createElement('span');
+        newSpan.className = 'cockpit-pill__val';
+        // Bei Dropdown: Label statt Value anzeigen
+        if (isSelect) {
+          const label = (PILL_OPTIONS[key].find(o => o[0] === newVal) || [newVal, newVal])[1];
+          newSpan.textContent = label;
+        } else {
+          newSpan.textContent = newVal;
+        }
+        editor.replaceWith(newSpan);
+        applyPillChange(key, newVal, isSelect);
+        if (changed) {
+          state.pillGeaendert[key] = true;
+          pill.classList.add('cockpit-pill--geaendert');
+        }
+        console.info('[Pill-Edit]', key, '=', newVal, changed ? '(geändert)' : '(unverändert)');
+      };
+
+      const cancel = () => {
+        const restore = document.createElement('span');
+        restore.className = 'cockpit-pill__val';
+        restore.textContent = currentText;
+        editor.replaceWith(restore);
+      };
+
+      if (isSelect) {
+        // Select committed sofort beim change
+        editor.addEventListener('change', commit, { once: true });
+        editor.addEventListener('blur', commit, { once: true });
+      } else {
+        editor.addEventListener('blur', commit);
+        editor.addEventListener('keydown', e => {
+          if (e.key === 'Enter') editor.blur();
+          else if (e.key === 'Escape') cancel();
+        });
+      }
+    }
+
+    function buildPillTextInput(currentText) {
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'cockpit-pill__edit-input';
+      input.value = currentText;
+      return input;
+    }
+    function buildPillSelect(key, currentText) {
+      const sel = document.createElement('select');
+      sel.className = 'cockpit-pill__edit-input';
+      // currentValue rückwärts aus Label ermitteln, falls möglich
+      const opts = PILL_OPTIONS[key];
+      let currentValue = opts[0][0];
+      const matched = opts.find(o => o[1] === currentText || o[0] === currentText);
+      if (matched) currentValue = matched[0];
+      opts.forEach(([v, label]) => {
+        const o = document.createElement('option');
+        o.value = v; o.textContent = label;
+        if (v === currentValue) o.selected = true;
+        sel.appendChild(o);
+      });
+      return sel;
+    }
+    function applyPillChange(key, newVal, isSelect) {
+      // State-Updates — Pill-Editor in C1: Text-Übernahme, Wirkung in
+      // der nächsten Ausbaustufe für nicht-konditionale Felder
+      if (key === 'persona' && ['bewahrer','optimierer','wechsler'].includes(newVal)) {
+        state.persona = newVal;
+        syncPersona(newVal);
+      } else if (key === 'pv') {
+        state.pv = (newVal === 'true' || newVal === 'ja');
+      } else if (key === 'gebaeudetyp') {
+        state.gebaeudetyp = newVal;
+        evaluateConditionals();
+      } else if (key === 'eigentuemer') {
+        state.eigentuemerTyp = newVal;
+        evaluateConditionals();
+      } else if (key === 'heizung') {
+        state.heizung = newVal;
+      } else if (key === 'sanierung') {
+        state.sanierung = newVal;
+      } else if (key === 'nutzungsart') {
+        state.nutzungsart = newVal;
+        evaluateConditionals();
+      } else if (key === 'plz') {
+        const m = newVal.match(/^(\d{5})\s*(.*)$/);
+        if (m) { state.plz = m[1]; state.ort = m[2]; } else { state.plz = newVal; }
+        evaluateConditionals();
+      } else if (key === 'wohnflaeche') {
+        const n = parseInt(newVal.replace(/[^\d]/g, ''), 10);
+        if (!isNaN(n)) state.wohnflaeche = n;
+      } else if (key === 'verbrauch') {
+        const n = parseInt(newVal.replace(/[^\d]/g, ''), 10);
+        if (!isNaN(n)) state.verbrauch = n;
+      }
+    }
+
+    function renderBericht() {
+      // Klartext-Analyse-Bericht aus aktuellem State + Override-Schicht.
+      // Tonalität: Analyse, nicht Pressemeldung. Variablen identisch.
+      const body = $('#bericht-body');
+      if (!body) return;
+      const sb = state.overrides.schieberegler;
+      const fb = sb.foerderung;
+      const we = (state.gebaeudetyp === 'MFH') ? 14 : 1; // Stub — echter Wert in der nächsten Ausbaustufe
+      const beste = '{beste Option folgt in der nächsten Ausbaustufe}';
+
+      const txt =
+        'Eingabe-Stand Mai 2026: Für ein <strong>' + escapeHtml(state.gebaeudetyp) + '</strong> in <strong>' +
+        escapeHtml((state.plz + ' ' + state.ort).trim() || '—') + '</strong> mit <strong>' +
+        fmtInt(state.wohnflaeche) + ' m²</strong> und <strong>' + we +
+        ' Wohneinheiten</strong> ist die <strong>' + beste + '</strong> über <strong>' +
+        sb.zeitraum + ' Jahre</strong> Betrachtung wirtschaftlich die Option mit der niedrigsten Total-Cost. ' +
+        'Bei aktuell <strong>' + fb.master + ' % BAFA-Förderung</strong> beträgt die Belastung ' +
+        '<strong>{€/m²·Monat folgt in der nächsten Ausbaustufe}</strong>. ' +
+        'Würde der Klimageschwindigkeitsbonus 2029 wie geplant um 3 Pp sinken, läge die Belastung bei ' +
+        '<strong>{€/m²·Monat 2029 folgt in der nächsten Ausbaustufe}</strong>. ' +
+        'Datenbasis: BAFA-Förderverordnung, AGFW-Median, BDEW-Heizkostenmonitor, Stand 1.5.2026. ' +
+        'Methodik unter hausentscheider.de/methodik.';
+
+      body.innerHTML = txt;
+    }
+
+    // ----- Schieberegler-Setup (Wirkung auf Panels in C2/C3/C4) -----
+
+    function setupSchieberegler() {
+      // Zeitraum-Slider: Index 0..6 wird auf 1/3/5/10/15/20/25 Jahre gemappt.
+      // Erlaubt nicht-äquidistante Snap-Werte (Wechsler braucht 3-5 Jahre).
+      const ZEITRAUM_VALUES = [1, 3, 5, 10, 15, 20, 25];
+      const sZ  = $('#slider-zeitraum');
+      const oZ  = $('#out-zeitraum');
+      sZ.addEventListener('input', e => {
+        const idx = Number(e.target.value);
+        const jahre = ZEITRAUM_VALUES[idx] ?? 25;
+        oZ.textContent = jahre + (jahre === 1 ? ' Jahr' : ' Jahre');
+        sZ.setAttribute('aria-valuetext', jahre + ' Jahre');
+        setOverride('schieberegler.zeitraum', jahre);
+        renderBericht();
+      });
+
+      [
+        ['#slider-preis-gas', '#out-preis-gas', 'preisGas'],
+        ['#slider-preis-fw',  '#out-preis-fw',  'preisFW'],
+        ['#slider-preis-wp',  '#out-preis-wp',  'preisWP']
+      ].forEach(([sId, oId, key]) => {
+        const s = $(sId), o = $(oId);
+        s.addEventListener('input', e => {
+          const v = Number(e.target.value);
+          o.textContent = fmtPreis(v);
+          setOverride('schieberegler.' + key, v);
+        });
+      });
+
+      // Förderung-Toggles + Master + Presets
+      const toggles = {
+        'bafa-grund':     { key: 'grund',     pp: 30 },
+        'bafa-klima':     { key: 'klima',     pp: 20 },
+        'bafa-einkommen': { key: 'einkommen', pp: 30 },
+        'bafa-effizienz': { key: 'effizienz', pp: 5 }
+      };
+      function recomputeMaster() {
+        const fb = state.overrides.schieberegler.foerderung;
+        let sum = 0;
+        if (fb.grund)     sum += 30;
+        if (fb.klima)     sum += 20;
+        if (fb.einkommen) sum += 30;
+        if (fb.effizienz) sum += 5;
+        sum = Math.min(70, sum); // Förderdeckel
+        state.overrides.schieberegler.foerderung.master = sum;
+        $('#slider-foerderung').value = String(sum);
+        $('#out-foerderung').textContent = sum + ' %';
+        console.info('[Förderung] Master neu berechnet aus Toggles =', sum, '%');
+      }
+      Object.entries(toggles).forEach(([id, meta]) => {
+        const el = $('#' + id);
+        if (!el) return;
+        el.addEventListener('change', () => {
+          state.overrides.schieberegler.foerderung[meta.key] = el.checked;
+          recomputeMaster();
+          renderBericht();
+        });
+      });
+      // Master-Slider manuelles Override
+      $('#slider-foerderung').addEventListener('input', e => {
+        const v = Number(e.target.value);
+        $('#out-foerderung').textContent = v + ' %';
+        setOverride('schieberegler.foerderung.master', v);
+        renderBericht();
+      });
+
+      // Preset-Buttons
+      $$('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const p = btn.dataset.preset;
+          const fb = state.overrides.schieberegler.foerderung;
+          if (p === 'heute') {
+            fb.grund = true; fb.klima = true; fb.einkommen = false; fb.effizienz = false;
+          } else if (p === '2029') {
+            // Klimabonus auf 17 % (Memory-Sinkpfad). Wir senken die Pp-Tabelle
+            // hier nicht explizit, sondern setzen den Master entsprechend
+            // BAFA + Klima_2029 = 30 + 17 = 47 %.
+            fb.grund = true; fb.klima = true; fb.einkommen = false; fb.effizienz = false;
+            const sum = Math.min(70, 30 + Math.round(KLIMABONUS_2029 * 100));
+            state.overrides.schieberegler.foerderung.master = sum;
+            $('#slider-foerderung').value = String(sum);
+            $('#out-foerderung').textContent = sum + ' %';
+            // Toggles synchronisieren
+            $('#bafa-grund').checked = true;
+            $('#bafa-klima').checked = true;
+            $('#bafa-einkommen').checked = false;
+            $('#bafa-effizienz').checked = false;
+            console.info('[Preset 2029] Master =', sum, '% (Klimabonus auf', KLIMABONUS_2029 * 100, '% gesenkt)');
+            renderBericht();
+            return;
+          } else if (p === 'gestrichen') {
+            fb.grund = false; fb.klima = false; fb.einkommen = false; fb.effizienz = false;
+            state.overrides.schieberegler.foerderung.master = 0;
+            $('#slider-foerderung').value = '0';
+            $('#out-foerderung').textContent = '0 %';
+            $('#bafa-grund').checked = false;
+            $('#bafa-klima').checked = false;
+            $('#bafa-einkommen').checked = false;
+            $('#bafa-effizienz').checked = false;
+            console.info('[Preset gestrichen] Master = 0 %');
+            renderBericht();
+            return;
+          }
+          // Heute-Preset: Toggles synchronisieren + Master neu rechnen
+          $('#bafa-grund').checked = fb.grund;
+          $('#bafa-klima').checked = fb.klima;
+          $('#bafa-einkommen').checked = fb.einkommen;
+          $('#bafa-effizienz').checked = fb.effizienz;
+          recomputeMaster();
+          renderBericht();
+        });
+      });
+    }
+
+    // ----- Persona-Toggle Ergebnis-Seite -----
+
+    function setupPersonaToggle() {
+      $$('.persona-mini[data-persona-mini]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.persona = btn.dataset.personaMini;
+          syncPersona(state.persona);
+          renderMiniCockpit();
+          renderBericht();
+          // Wirkung auf Panel-Gewichtung in C2/C3/C4
+          console.info('[Persona] Aktiv =', state.persona);
+        });
+      });
+    }
+
+    // ----- Card-Aktionen ("Tiefer rechnen"-Sektion) -----
+
+    function setupTieferRechnen() {
+      // Erweiterter-Modus-Toggle (reversibel) + Hinweis-Text bei aktivem State
+      const profiBtn = $('#cta-profi-toggle');
+      const profiHint = $('#profi-aktiv-hint');
+      if (profiBtn) {
+        profiBtn.addEventListener('click', () => {
+          state.profimode = !state.profimode;
+          if (state.profimode) {
+            profiBtn.textContent = '✓ Erweiterter Modus aktiv — Klick zum Deaktivieren';
+            profiBtn.classList.add('profi-button--aktiv');
+            if (profiHint) profiHint.hidden = false;
+            showToast('Erweiterter Modus aktiviert. Zusätzliche Hebel folgen in der nächsten Ausbaustufe.');
+          } else {
+            profiBtn.textContent = 'Erweiterten Modus aktivieren →';
+            profiBtn.classList.remove('profi-button--aktiv');
+            if (profiHint) profiHint.hidden = true;
+          }
+          console.info('[Erweiterter Modus]', state.profimode ? 'aktiviert' : 'deaktiviert',
+            '— Wirkung folgt in der nächsten Ausbaustufe.');
+        });
+      }
+    }
+
+    // ----- Dialog-CTA Schluss-Akkord — mailto mit Bericht-Body -----
+
+    function setupDialogCTA() {
+      const mailBtn = $('#cta-dialog-mail');
+      if (!mailBtn) return;
+      mailBtn.addEventListener('click', () => {
+        // Bericht aktualisieren, danach in mailto-Body packen
+        renderBericht();
+        const datum = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
+        const subject = encodeURIComponent('Hausentscheider-Analyse — ' + datum);
+        const berichtText = ($('#bericht-body')?.innerText || '').trim();
+        const body = encodeURIComponent(
+          berichtText + '\n\n' +
+          'Anbei meine Eingabewerte und drei Sichten. Ich freue mich auf deine fundierte Einschätzung.\n\n' +
+          '— Mehr unter hausentscheider.de/methodik'
+        );
+        window.location.href = 'mailto:dialog@hausentscheider.de?subject=' + subject + '&body=' + body;
+      });
+    }
+
+    // ----- Teilen-Funktion -----
+
+    function setupTeilen() {
+      $('#cta-teilen').addEventListener('click', async () => {
+        const sb = state.overrides.schieberegler;
+        const params = new URLSearchParams({
+          gt: state.gebaeudetyp,
+          plz: state.plz,
+          et: state.eigentuemerTyp,
+          wf: String(state.wohnflaeche),
+          hz: state.heizung,
+          bj: String(state.baujahr),
+          vb: String(state.verbrauch),
+          san: state.sanierung,
+          nu: state.nutzungsart,
+          pers: state.persona,
+          pv: String(state.pv),
+          zr: String(sb.zeitraum),
+          pg: String(sb.preisGas),
+          pfw: String(sb.preisFW),
+          pwp: String(sb.preisWP),
+          fdr: String(sb.foerderung.master)
+        });
+        const url = window.location.origin + window.location.pathname + '?' + params.toString();
+        try {
+          await navigator.clipboard.writeText(url);
+          showToast('Link kopiert. Du kannst ihn jetzt teilen.');
+        } catch (e) {
+          showToast('Kopieren fehlgeschlagen — bitte URL manuell kopieren: ' + url);
+        }
+      });
+    }
+
+    function showToast(msg) {
+      const t = $('#toast');
+      if (!t) return;
+      t.textContent = msg;
+      t.classList.add('toast--visible');
+      clearTimeout(showToast._h);
+      showToast._h = setTimeout(() => t.classList.remove('toast--visible'), 2400);
+    }
+
+    // ----- NAV Hamburger (übernommen) -----
+
+    function setupNav() {
+      const btn = $('#nav-hamburger');
+      const menu = $('#nav-mobile-menu');
       if (!btn || !menu) return;
-      btn.addEventListener('click', function() {
+      btn.addEventListener('click', () => {
         const isOpen = menu.classList.toggle('is-open');
         btn.classList.toggle('is-open');
-        btn.setAttribute('aria-expanded', isOpen);
+        btn.setAttribute('aria-expanded', String(isOpen));
         btn.setAttribute('aria-label', isOpen ? 'Menü schließen' : 'Menü öffnen');
       });
-      menu.querySelectorAll('a').forEach(function(link) {
-        link.addEventListener('click', function() {
+      menu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
           menu.classList.remove('is-open');
           btn.classList.remove('is-open');
           btn.setAttribute('aria-expanded', 'false');
-          btn.setAttribute('aria-label', 'Menü öffnen');
         });
       });
-    })();
+    }
+
+    // ----- Init -----
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      setupNav();
+      setupWizardListeners();
+      setupSchieberegler();
+      setupPersonaToggle();
+      setupTieferRechnen();
+      setupDialogCTA();
+      setupTeilen();
+      initFromURL();
+      await loadJSON();
+      evaluateConditionals();
+      updateMarktHinweis();
+    });
+  })();
   </script>
 </body>
 </html>
