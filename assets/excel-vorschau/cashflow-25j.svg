@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" role="img" aria-label="Excel-Tab Cashflow 25 Jahre Vorschau">
+  <rect width="320" height="180" fill="#f5f4f2"/>
+  <rect x="0" y="0" width="320" height="22" fill="#1a3535"/>
+  <text x="10" y="15" font-family="Inter, Arial, sans-serif" font-size="11" fill="#ffffff" font-weight="500">Cashflow 25 Jahre · Excel-Tab Visualisierungen</text>
+  <!-- Achsen -->
+  <g stroke="#8a8680" stroke-width="0.5">
+    <line x1="40" y1="40" x2="40" y2="150"/>
+    <line x1="40" y1="150" x2="305" y2="150"/>
+  </g>
+  <text x="20" y="50" font-family="Inter, Arial, sans-serif" font-size="8" fill="#5a5956">€</text>
+  <text x="295" y="165" font-family="Inter, Arial, sans-serif" font-size="8" fill="#5a5956">25 J</text>
+  <!-- Kurven (kumulativ negativ) -->
+  <g fill="none" stroke-width="1.5">
+    <path d="M40,80 L70,90 L100,100 L130,108 L160,116 L190,124 L220,131 L250,138 L280,144 L300,148" stroke="#7a7a7a"/>
+    <path d="M40,140 L70,135 L100,130 L130,125 L160,121 L190,117 L220,113 L250,110 L280,108 L300,107" stroke="#7ab8b5"/>
+    <path d="M40,148 L70,140 L100,132 L130,124 L160,118 L190,114 L220,110 L250,107 L280,105 L300,104" stroke="#1a5c5a"/>
+    <path d="M40,90 L70,86 L100,82 L130,79 L160,76 L190,73 L220,70 L250,68 L280,66 L300,64" stroke="#a87a4a"/>
+  </g>
+  <!-- Legende -->
+  <g font-family="Inter, Arial, sans-serif" font-size="9">
+    <rect x="50" y="40" width="10" height="2" fill="#7a7a7a"/>
+    <text x="65" y="44" fill="#5a5956">Gas</text>
+    <rect x="100" y="40" width="10" height="2" fill="#7ab8b5"/>
+    <text x="115" y="44" fill="#5a5956">Hybrid</text>
+    <rect x="160" y="40" width="10" height="2" fill="#1a5c5a"/>
+    <text x="175" y="44" fill="#5a5956">WP</text>
+    <rect x="210" y="40" width="10" height="2" fill="#a87a4a"/>
+    <text x="225" y="44" fill="#5a5956">FW</text>
+  </g>
+  <text x="10" y="172" font-family="Inter, Arial, sans-serif" font-size="8" fill="#8a8680" font-style="italic">Cashflow kumuliert pro Option · Volle Jahres-Tabelle in der Excel</text>
+</svg>

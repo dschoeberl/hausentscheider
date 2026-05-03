@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Chart.js für Cashflow-Kurve und TCO-Vergleich (C2) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     /* =========================================================
        Grundlage — Farbsystem, Typografie, Container
@@ -809,6 +811,521 @@
       .cockpit-pill { scroll-snap-align: start; flex-shrink: 0; }
       .persona-toggle { flex-wrap: wrap; }
     }
+
+    /* =========================================================
+       C2 — Panel 1 Wirtschaftlichkeit (Headline-Pillen, Charts,
+       Vermieter-Bilanz, Profi-Pills)
+       ========================================================= */
+
+    /* Headline-Pillen-Cluster */
+    .headline-pillen { display: flex; flex-wrap: wrap; gap: 0.75rem;
+                       margin: 1rem 0 1.5rem; align-items: stretch; }
+    .headline-pillen .pille {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0.9rem 1.1rem 0.75rem; border: 0.5px solid var(--border);
+      border-radius: var(--radius); background: var(--white);
+      min-width: 200px; flex: 1 1 200px; position: relative;
+      min-height: 80px;
+    }
+    .headline-pillen .pille--primary { background: var(--bg-light); border-color: var(--petrol-light); }
+    .headline-pillen .pille__label { font-size: 12px; color: var(--text-secondary); }
+    .headline-pillen .pille__wert { font-size: 22px; font-family: 'Playfair Display', Georgia, serif;
+                                     color: var(--petrol-dark); margin-top: 4px; }
+    .headline-pillen .pille .badge { position: absolute; top: 0.5rem; right: 2rem; }
+    .headline-pillen .pille .info-tip { position: absolute; top: 0.5rem; right: 0.5rem; }
+
+    /* Chart-Container */
+    .chart-container { position: relative; min-height: 320px; margin: 1.5rem 0;
+                       background: var(--white); padding: 1rem; border-radius: var(--radius);
+                       border: 0.5px solid var(--border); }
+    .chart-container canvas { width: 100% !important; max-height: 380px; }
+
+    /* Vermieter-Bilanz — überschreibt details.conditional > div (Stub-Erbe weiß) */
+    details.conditional > .vb-block,
+    details.conditional > #weg-hinweise-content {
+      color: var(--text-primary);
+    }
+    .vb-block { margin: 1rem; padding: 1rem; background: var(--white);
+                border: 0.5px solid var(--border); border-radius: var(--radius);
+                color: var(--text-primary); }
+    #weg-hinweise-content { padding: 1rem; background: var(--white);
+                             margin: 0.5rem 1rem 1rem; border-radius: var(--radius);
+                             color: var(--text-primary); }
+    #weg-hinweise-content h4 { color: var(--petrol-dark); margin: 0.75rem 0 0.4rem; }
+    #weg-hinweise-content a { color: var(--petrol); }
+    .vb-block h4 { margin-bottom: 0.75rem; color: var(--petrol-dark); }
+    .vb-vorteile { padding-left: 1.5rem; }
+    .vb-vorteile li { margin: 0.4rem 0; }
+    .vb-tabelle-wrap { overflow-x: auto; margin: 0.5rem 0 1rem; }
+    .vb-tabelle { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .vb-tabelle th, .vb-tabelle td { padding: 0.4rem 0.6rem; text-align: right; border-bottom: 0.5px solid var(--border); }
+    .vb-tabelle th:first-child, .vb-tabelle td:first-child { text-align: left; }
+    .vb-tabelle thead th { background: var(--bg-light); font-weight: 500; color: var(--petrol-dark); }
+    .vb-tabelle tr.vb-sigma td { background: var(--bg-light); border-top: 1px solid var(--petrol-light); }
+    .vb-tabelle .ampel { text-align: center; font-size: 16px; }
+    .vb-tabelle .effekt-negativ { color: #b94a4a; }
+    .vb-tabelle .effekt-positiv { color: var(--petrol); }
+    .vb-hinweis { font-size: 12px; color: var(--text-secondary); font-style: italic; }
+    .hinweis-box { margin: 1rem 0; padding: 0.75rem 1rem; background: var(--bg-light);
+                   border-left: 3px solid var(--petrol-light); border-radius: 4px; }
+    .hinweis-box p { margin-bottom: 0.4rem; font-size: 13px; }
+    .hinweis-box p:last-child { margin-bottom: 0; }
+
+    /* Empfehlungs-Banner */
+    .empfehlungs-banner p { font-size: 15px; }
+    .empfehlungs-banner .banner-hinweis { font-size: 13px; color: var(--text-secondary);
+                                           border-left: 2px solid var(--signal); padding-left: 0.75rem;
+                                           margin-top: 0.75rem; font-style: italic; }
+
+    /* Headline-Antwort */
+    .headline-antwort h2 { font-size: 22px; margin-bottom: 0.5rem; }
+    .headline-antwort p { font-size: 16px; line-height: 1.6; }
+
+    /* Risiko-Banner — C2 v2.0 auf Kontextblau-Pastell umgestellt
+       (Memory project_designsystem.md §1+§3 — Kontextblau + Smart-Icon) */
+    .risiko-banner {
+      margin: 1.25rem 0 1.5rem;
+      padding: 1rem 1.25rem;
+      background: #cce0e8;          /* Pastell-Blau-Kontext (designsystem §2) */
+      border: 1px solid var(--petrol);
+      border-radius: var(--radius);
+      color: var(--petrol-dark);
+    }
+    .risiko-banner__titel {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 16px; font-weight: 500; color: var(--petrol-dark);
+      margin: 0 0 0.5rem; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .risiko-banner__punkte {
+      margin: 0.4rem 0; padding-left: 1.5rem;
+      font-size: 13px; line-height: 1.6; color: var(--text-primary);
+    }
+    .risiko-banner__punkte li { margin: 0.3rem 0; }
+    .risiko-banner__cta {
+      margin: 0.6rem 0 0; font-size: 13px; font-style: italic;
+      color: var(--petrol-dark);
+      border-top: 0.5px solid rgba(26, 92, 90, 0.25);
+      padding-top: 0.5rem;
+    }
+
+    /* C2 v2.0 — Pastell-Bewertungs-System (Memory designsystem §2) */
+    .pastell-vorteil       { background: #d4ead4; color: var(--petrol-dark); }
+    .pastell-hinweis       { background: #f5e8c4; color: var(--petrol-dark); }
+    .pastell-risiko        { background: #f4c8c8; color: var(--petrol-dark); }
+    .pastell-erklaerung    { background: #cce0e8; color: var(--petrol-dark); }
+    .pastell-neutral       { background: transparent; color: var(--text-primary); }
+    .pastell-ausgeschlossen{ background: #ededed;  color: #b0b0b0; opacity: 0.6; }
+
+    /* Smart-Icon — Marken-Element (Memory designsystem §3, Platzhalter "💡✦") */
+    .smart-icon { font-size: 1.2em; line-height: 1; display: inline-block; }
+    .smart-icon--klein { font-size: 0.95em; }
+
+    /* Glossar-Tooltip-Pattern (Memory designsystem §4) */
+    .begriff-tooltip { display: inline-flex; align-items: baseline; gap: 0.2rem;
+                       cursor: help; position: relative; }
+    .begriff-tooltip .info-icon { color: var(--petrol-light); font-size: 0.85em; }
+    .begriff-tooltip .glossar-pop {
+      position: absolute; bottom: 100%; left: 0; transform: translateY(-4px);
+      min-width: 220px; max-width: 320px;
+      padding: 0.6rem 0.8rem; background: #cce0e8; color: var(--petrol-dark);
+      border: 1px solid var(--petrol); border-radius: var(--radius);
+      font-size: 12px; line-height: 1.5;
+      opacity: 0; pointer-events: none; transition: opacity 0.15s ease;
+      z-index: 50; text-align: left;
+    }
+    .begriff-tooltip:hover .glossar-pop,
+    .begriff-tooltip:focus .glossar-pop { opacity: 1; pointer-events: auto; }
+
+    /* C2 v2.0 — Wirtschaftlichkeits-Tabelle (Excel-Dashboard-Format) */
+    .dashboard-kopf { display: flex; flex-direction: column; gap: 0.5rem;
+                      align-items: flex-start; margin: 1rem 0 0.75rem; }
+    .dashboard-kopf h3 { margin: 0; color: var(--petrol-dark); }
+    .dashboard-erlaeuterung { font-size: 13px; color: var(--text-primary);
+                              background: var(--bg-light); border-radius: var(--radius);
+                              padding: 0.5rem 0.75rem; width: 100%; max-width: 100%; }
+    .dashboard-erlaeuterung summary { cursor: pointer; color: var(--petrol-dark);
+                                      font-weight: 500; display: flex; align-items: center; gap: 0.4rem; }
+    .dashboard-erlaeuterung > div { padding-top: 0.4rem; }
+    .dashboard-erlaeuterung p { margin: 0.4rem 0; font-size: 13px; }
+    .dashboard-erlaeuterung-zusatz { font-size: 13px; margin: 0.5rem 0 1rem;
+                                     color: var(--text-primary); padding: 0.5rem 0.75rem;
+                                     background: var(--bg-light); border-left: 3px solid var(--petrol-light);
+                                     border-radius: 4px; }
+    .dashboard-tabelle-wrap { overflow-x: auto; margin: 0.5rem 0 1rem; }
+    .dashboard-tabelle { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .dashboard-tabelle th, .dashboard-tabelle td {
+      padding: 0.45rem 0.6rem; text-align: right;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .dashboard-tabelle th:first-child, .dashboard-tabelle td:first-child { text-align: left; }
+    .dashboard-tabelle thead th { background: var(--bg-light); font-weight: 500; color: var(--petrol-dark); }
+    .dashboard-tabelle tr.dashboard-gruppe td {
+      background: var(--petrol-dark); color: var(--white);
+      font-family: 'Playfair Display', Georgia, serif; font-weight: 500;
+      padding: 0.4rem 0.6rem; text-align: left; font-size: 12px;
+      letter-spacing: 0.04em;
+    }
+    @media (max-width: 768px) {
+      /* Mobile: Karten-Stack — eine Karte pro Heizoption */
+      .dashboard-tabelle { display: block; }
+      .dashboard-tabelle thead { display: none; }
+      .dashboard-tabelle tbody { display: block; }
+      .dashboard-tabelle tr { display: grid; grid-template-columns: 1fr 1fr;
+                              gap: 0.25rem; padding: 0.3rem 0;
+                              border-bottom: 0.5px solid var(--border); }
+      .dashboard-tabelle tr.dashboard-gruppe { display: block; padding: 0.4rem; }
+      .dashboard-tabelle td { display: block; padding: 0.3rem 0.5rem;
+                              border: none; }
+      .dashboard-tabelle td:first-child { font-weight: 500; }
+    }
+
+    /* C2 v2.0 — Sensibilisierungs-Block (Spec §7, Kontextblau, Smart-Icon) */
+    .sensibilisierungs-block {
+      margin: 1.5rem 0;
+      padding: 1.25rem 1.5rem;
+      background: #cce0e8;
+      border-left: 4px solid var(--petrol);
+      border-radius: var(--radius);
+      color: var(--petrol-dark);
+    }
+    .sensibilisierung__titel {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 18px; font-weight: 500; color: var(--petrol-dark);
+      margin: 0 0 0.6rem; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .sensibilisierung__intro { color: var(--text-primary); font-size: 14px; margin: 0 0 0.6rem; }
+    .sensibilisierung__punkte { padding-left: 1.5rem; color: var(--text-primary);
+                                font-size: 13px; line-height: 1.65; }
+    .sensibilisierung__punkte li { margin: 0.4rem 0; }
+    .sensibilisierung__punkte strong { color: var(--petrol-dark); }
+    .sensibilisierung__closer { font-style: italic; font-size: 13px;
+                                color: var(--petrol-dark); margin: 0.75rem 0 0;
+                                border-top: 0.5px solid rgba(26, 92, 90, 0.25);
+                                padding-top: 0.5rem; }
+
+    /* Zeitraum-Schieberegler oben (Spec §4 Punkt 5) */
+    .zeitraum-oben { background: var(--white); border: 0.5px solid var(--border);
+                     border-radius: var(--radius); padding: 1rem 1.25rem;
+                     margin: 1rem 0 1.5rem; }
+    .zeitraum-oben h3 { margin: 0 0 0.5rem; color: var(--petrol-dark); font-size: 16px; }
+    .zeitraum-oben input[type="range"] { width: 100%; }
+    .zeitraum-oben output { font-weight: 500; color: var(--petrol-dark); }
+
+    /* C2 v2.0 — Big-Picture (Highlight-Container) */
+    .big-picture-v2 { background: var(--bg-light);
+                       border: 1px solid var(--petrol-light);
+                       border-radius: var(--radius);
+                       padding: 1.25rem; margin: 1.5rem 0; }
+    .big-picture-v2 h2 { margin: 0 0 0.75rem; color: var(--petrol-dark); }
+    .big-picture-v2 .chart-container { background: var(--white); padding: 0.5rem; }
+    .big-picture-v2 .eco-2050-box {
+      margin: 1rem 0 0; padding: 0.75rem; background: var(--white);
+      border-left: 3px solid var(--petrol-light); border-radius: 4px;
+      font-size: 12px; font-style: italic; color: var(--text-secondary);
+    }
+
+    /* C2 v2.0 — Vorgeschmack-Aufklapper */
+    .vorgeschmack-aufklapper {
+      margin: 1.5rem 0; padding: 0;
+      background: var(--white); border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .vorgeschmack-aufklapper > summary {
+      cursor: pointer; padding: 0.9rem 1.25rem;
+      font-family: 'Playfair Display', Georgia, serif; font-weight: 500;
+      color: var(--petrol-dark); display: flex; align-items: center;
+      gap: 0.5rem; flex-wrap: wrap; list-style: none;
+    }
+    .vorgeschmack-aufklapper > summary::-webkit-details-marker { display: none; }
+    .vorgeschmack-aufklapper > summary::before { content: '▸ '; color: var(--petrol); }
+    .vorgeschmack-aufklapper[open] > summary::before { content: '▾ '; }
+    .vorgeschmack-aufklapper > summary .hint {
+      font-family: 'Inter', sans-serif; font-weight: 400; font-size: 13px;
+      color: var(--text-secondary); font-style: italic;
+    }
+    .vorgeschmack-content { padding: 0.5rem 1.25rem 1.25rem; color: var(--text-primary); }
+    .vorgeschmack-content h3 { color: var(--petrol-dark); font-size: 16px;
+                                margin: 1rem 0 0.4rem; }
+    .vorgeschmack-closer { margin: 1rem 0 0; font-size: 13px; font-style: italic;
+                            color: var(--text-secondary); }
+
+    /* C2 v2.0 — Excel-Edition-Sektion (4 Kacheln + 3-Spalten-Tarif) */
+    .excel-edition__intro h2 { color: var(--petrol-dark); }
+    .excel-edition__intro p { color: var(--text-primary); }
+    .excel-edition__kacheln {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1rem; margin: 1.25rem 0;
+    }
+    .excel-kachel {
+      background: var(--white); border: 0.5px solid var(--border);
+      border-radius: var(--radius); padding: 0.75rem;
+      text-decoration: none; color: var(--text-primary);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .excel-kachel:hover { border-color: var(--petrol-light);
+                          box-shadow: 0 2px 8px rgba(26, 92, 90, 0.08); text-decoration: none; }
+    .excel-kachel img { display: block; width: 100%; height: auto;
+                        border-radius: 4px; margin-bottom: 0.5rem; }
+    .excel-kachel h4 { margin: 0.4rem 0 0.2rem; color: var(--petrol-dark); font-size: 14px; }
+    .excel-kachel p { margin: 0; font-size: 12px; color: var(--text-secondary); }
+
+    .excel-edition__tarif {
+      display: grid; grid-template-columns: 1fr 1fr;  /* C2 v2.1: 2 Spalten (Web + Excel, kein Update mehr) */
+      gap: 1rem; margin: 1.5rem 0; max-width: 800px; margin-left: auto; margin-right: auto;
+    }
+    .excel-tarif-spalte {
+      background: var(--white); border: 0.5px solid var(--border);
+      border-radius: var(--radius); padding: 1rem;
+      display: flex; flex-direction: column;
+    }
+    .excel-tarif-spalte--haupt { border: 1.5px solid var(--petrol);
+                                  box-shadow: 0 2px 8px rgba(26, 92, 90, 0.1); }
+    .excel-tarif-spalte h4 { margin: 0; color: var(--petrol-dark); }
+    .excel-tarif-preis { margin: 0.2rem 0 0; font-size: 12px; color: var(--text-secondary); }
+    .excel-tarif-preis-sub {
+      font-family: 'Playfair Display', Georgia, serif; font-size: 22px;
+      color: var(--petrol-dark); margin: 0.2rem 0 0.75rem;
+    }
+    .excel-tarif-spalte ul { list-style: none; padding: 0; margin: 0 0 0.75rem;
+                             font-size: 13px; }
+    .excel-tarif-spalte ul li { margin: 0.3rem 0; color: var(--text-primary); }
+    .excel-tarif-spalte ul li.excel-tarif-nicht { color: var(--text-tertiary); }
+    .excel-tarif-spalte .btn { margin-top: auto; align-self: flex-start; }
+    @media (max-width: 768px) {
+      .excel-edition__kacheln { grid-template-columns: 1fr; }
+      .excel-edition__tarif { grid-template-columns: 1fr; }
+    }
+
+    /* C2 v2.0 — Wegweiser horizontales Scroll-Regal (Memory designsystem §5) */
+    .wegweiser-regal {
+      display: flex; gap: 1rem;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      padding: 0.5rem 0 1rem; margin: 1rem 0;
+      -webkit-overflow-scrolling: touch;
+    }
+    .wegweiser-karte {
+      flex: 0 0 280px;
+      scroll-snap-align: start;
+      background: var(--white); border: 0.5px solid var(--border);
+      border-radius: var(--radius); padding: 1rem;
+      text-decoration: none; color: var(--text-primary);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .wegweiser-karte:hover { border-color: var(--petrol-light);
+                             box-shadow: 0 2px 8px rgba(26, 92, 90, 0.08); text-decoration: none; }
+    .wegweiser-karte h4 { margin: 0; color: var(--petrol-dark); font-size: 16px; }
+    .wegweiser-karte__sub { margin: 0.2rem 0 0.6rem; font-size: 13px;
+                             color: var(--petrol); font-weight: 500; }
+    .wegweiser-karte__text { margin: 0; font-size: 13px; color: var(--text-secondary); }
+    @media (max-width: 768px) { .wegweiser-karte { flex: 0 0 240px; } }
+
+    /* C2 v2.0 — Sondersituations-CTA (Spec §13, am Ende, generisch) */
+    .sondersituations-cta {
+      background: #cce0e8; padding: 1.5rem;
+      border-radius: var(--radius); margin: 1.5rem 0;
+      color: var(--petrol-dark);
+    }
+    .sondersituation__titel {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px; color: var(--petrol-dark);
+      margin: 0 0 0.75rem; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .sondersituations-cta p { color: var(--text-primary); font-size: 14px; line-height: 1.6; }
+    .sondersituation__mail a { color: var(--petrol); font-weight: 500; }
+    .sondersituation__hint { font-size: 12px; color: var(--text-secondary);
+                              font-style: italic; margin-top: 0.75rem; }
+    .sondersituations-cta .btn { margin: 0.5rem 0; }
+
+    /* Listen-Padding-Fix für VB / WEG / Sensibilisierung
+       (Memory designsystem §7 — mindestens 1.5rem padding-left) */
+    .vb-block ol, .vb-block ul,
+    #weg-hinweise-content ol, #weg-hinweise-content ul,
+    .sensibilisierung__punkte,
+    .risiko-banner__punkte { padding-left: 1.5rem; }
+
+    /* PV-Hinweis-Box (Spec §3 — PV nicht im Wizard, Hinweis statt) */
+    .pv-hinweis-box {
+      max-width: var(--max-width-wide); margin: 1rem auto;
+      padding: 0.75rem 1rem;
+      background: var(--bg-light); border-left: 3px solid var(--petrol-light);
+      border-radius: 4px; font-size: 13px; color: var(--text-primary);
+    }
+
+    /* === C2 v2.1 — Erweiterungen === */
+
+    /* Wizard-Plausibilitäts-Hinweise (Bruttoinvest-Felder Schritt 3) */
+    .plausi-hint { color: var(--petrol); font-style: italic; font-size: 12px;
+                    margin-top: 0.3rem; padding: 0.35rem 0.5rem;
+                    background: var(--bg-light); border-left: 2px solid var(--petrol);
+                    border-radius: 3px; }
+
+    /* Lese-Hilfe-Box (prominent unter Wirtschaftlichkeits-Tabelle, NICHT klappbar) */
+    .lese-hilfe-box {
+      margin: 1rem 0; padding: 0.9rem 1rem;
+      background: var(--bg-light); border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .lese-hilfe-box h4 { margin: 0 0 0.5rem; color: var(--petrol-dark); font-size: 14px; }
+    .lese-hilfe-box .pastell-legende { display: flex; flex-wrap: wrap; gap: 0.4rem;
+                                         margin: 0.4rem 0; }
+    .lese-hilfe-box .pastell-legende > span { padding: 0.25rem 0.6rem; border-radius: 3px;
+                                                font-size: 12px; color: var(--petrol-dark); }
+    .lese-hilfe-box .status-quo-hinweis { font-size: 13px; color: var(--text-primary);
+                                            margin: 0.6rem 0 0.4rem;
+                                            padding-left: 1.5rem; position: relative; }
+    .lese-hilfe-box .status-quo-hinweis .smart-icon { position: absolute; left: 0; top: 0; }
+    .lese-hilfe-box .erhaltung-status { font-size: 12px; color: var(--text-secondary);
+                                          font-style: italic; margin: 0.4rem 0 0; }
+
+    /* Schwellwert-Pastell-Tooltip-Pop pro Tabelle-Zelle */
+    .dashboard-tabelle td { position: relative; }
+    .dashboard-tabelle td.pastell-vorteil,
+    .dashboard-tabelle td.pastell-hinweis,
+    .dashboard-tabelle td.pastell-risiko { cursor: help; }
+    .pastell-tip-pop {
+      display: none; position: absolute; bottom: 100%; right: 0;
+      transform: translateY(-4px);
+      min-width: 240px; max-width: 320px;
+      padding: 0.6rem 0.8rem; background: var(--white); color: var(--text-primary);
+      border: 1px solid var(--petrol); border-radius: var(--radius);
+      font-size: 12px; line-height: 1.5; text-align: left;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12); z-index: 60;
+    }
+    .dashboard-tabelle td:hover > .pastell-tip-pop,
+    .dashboard-tabelle td:focus-within > .pastell-tip-pop { display: block; }
+    .pastell-tip-pop strong { color: var(--petrol-dark); }
+
+    /* Inline-Editor für Bruttoinvestitions-Zellen */
+    .invest-zelle { cursor: pointer; }
+    .invest-zelle::after { content: ' ✎'; color: var(--petrol-light); font-size: 0.8em; opacity: 0.6; }
+    .invest-zelle:hover::after { opacity: 1; }
+    .invest-inline-editor { display: flex; align-items: center; gap: 0.25rem; }
+    .invest-inline-editor input { width: 6rem; padding: 0.2rem 0.3rem; border: 1px solid var(--petrol);
+                                    border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 12px;
+                                    text-align: right; }
+    .invest-inline-editor button { padding: 0.15rem 0.35rem; background: var(--petrol);
+                                     color: var(--white); border: none; border-radius: 3px;
+                                     cursor: pointer; font-size: 12px; }
+    .invest-inline-editor button:hover { background: var(--petrol-dark); }
+    .invest-inline-editor .step { background: var(--bg-light); color: var(--petrol-dark);
+                                    padding: 0.15rem 0.3rem; }
+    .invest-default-link { font-size: 11px; color: var(--petrol); text-decoration: underline;
+                             cursor: pointer; margin-left: 0.4rem; }
+
+    /* Zukunftsszenario-Spalte (Spec §9.3) */
+    .zukunftsszenario { background: #cce0e8; padding: 1rem; border-radius: var(--radius); }
+    .zukunftsszenario h3 { margin: 0 0 0.5rem; color: var(--petrol-dark);
+                            display: flex; align-items: center; gap: 0.4rem; }
+    .zukunftsszenario .aussage { padding: 0.5rem 0; border-top: 0.5px solid rgba(26, 92, 90, 0.15); }
+    .zukunftsszenario .aussage:first-of-type { border-top: none; }
+    .zukunftsszenario .aussage__titel { font-size: 12px; color: var(--petrol-dark);
+                                          font-weight: 500; margin-bottom: 0.2rem; }
+    .zukunftsszenario .aussage__werte { font-size: 13px; color: var(--text-primary); }
+    .zukunftsszenario .aussage__delta { color: var(--petrol); font-weight: 500; }
+    .zukunftsszenario .aussage__delta--rot { color: #b94a4a; }
+    .zukunftsszenario .aussage__detail { font-size: 11px; color: var(--text-secondary);
+                                           margin-top: 0.15rem; }
+    .zukunftsszenario .imdefault-hinweis { font-size: 11px; color: var(--text-secondary);
+                                             font-style: italic; margin-bottom: 0.5rem; }
+
+    /* Was-wäre-wenn 3 Spalten — Container-Mitte (Daniel-Bug 04.05.) */
+    .schieberegler-cluster { max-width: var(--max-width-wide); margin: 0 auto; }
+    .was-waere-wenn-3-spalten .schieberegler-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.25rem;
+    }
+    @media (max-width: 1024px) {
+      .was-waere-wenn-3-spalten .schieberegler-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Excel-Edition-Sektion + Sondersituations-CTA: Container-Mitte (Daniel-Bug 04.05.) */
+    .excel-edition-sektion { max-width: var(--max-width-wide); margin: 0 auto; }
+
+    /* Sondersituations-CTA Format-Fix (Spec §13 v2.1) — Kontextblau (dunkler), mittig, Signal-Grün-Button, kein Smart-Icon */
+    .sondersituations-cta {
+      max-width: var(--max-width); margin: 1.5rem auto;
+      background: var(--kontext-blau); padding: 1.75rem;
+      border-radius: var(--radius); color: var(--white);
+      text-align: center;
+    }
+    .sondersituation__titel {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 24px; color: var(--white);
+      margin: 0 0 0.75rem;
+      display: block;  /* statt flex — kein Smart-Icon mehr */
+    }
+    .sondersituations-cta p { color: var(--white); font-size: 14px; line-height: 1.6;
+                              max-width: 640px; margin: 0.6rem auto; }
+    .sondersituation__mail a { color: var(--white); font-weight: 500;
+                                  text-decoration: underline; }
+    /* Button in Signal-Grün */
+    .sondersituations-cta .btn--analyse {
+      background: var(--signal); color: var(--petrol-dark);
+      border: 1px solid var(--signal-dark);
+      padding: 0.6rem 1.4rem; font-family: 'Inter', sans-serif;
+      font-size: 14px; font-weight: 500; cursor: pointer;
+      border-radius: var(--radius); margin: 0.5rem 0;
+    }
+    .sondersituations-cta .btn--analyse:hover { background: var(--signal-dark); }
+    .sondersituation__hint { font-size: 12px; color: rgba(255,255,255,0.85);
+                              font-style: italic; margin-top: 0.75rem; }
+
+    /* Big-Picture Achsen-Legende (Hover-Tooltip pro Achs-Beschriftung) */
+    .bigpicture-achsen-legende { font-size: 12px; color: var(--text-secondary);
+                                  margin: 0.5rem 0; line-height: 1.8; }
+    .bigpicture-achsen-legende strong { color: var(--petrol-dark); }
+    .bp-achs-tip { display: inline-flex; align-items: baseline; gap: 0.15rem;
+                   cursor: help; position: relative; color: var(--petrol-dark); padding: 0 0.2rem; }
+    .bp-achs-pop {
+      display: none; position: absolute; bottom: 100%; left: 0;
+      transform: translateY(-4px);
+      min-width: 240px; max-width: 320px;
+      padding: 0.6rem 0.8rem; background: #cce0e8; color: var(--petrol-dark);
+      border: 1px solid var(--petrol); border-radius: var(--radius);
+      font-size: 12px; line-height: 1.5; z-index: 50;
+      font-style: normal;
+    }
+    .bp-achs-tip:hover .bp-achs-pop, .bp-achs-tip:focus .bp-achs-pop { display: block; }
+
+    /* Big-Picture Methodik-Box (kein Empfehlungs-Banner-Kommentar mehr in v2.1) */
+    .bigpicture-methodik {
+      margin: 1rem 0 0; padding: 0.75rem 1rem;
+      background: var(--white); border-left: 3px solid var(--petrol-light);
+      border-radius: 4px; font-size: 12px; font-style: italic;
+      color: var(--text-secondary);
+    }
+    .bigpicture-methodik a { color: var(--petrol); }
+
+    /* Profi-Pills im Mini-Cockpit (visuell abgegrenzt + Einblend-Animation) */
+    .cockpit-pill--profi { border-color: var(--petrol) !important;
+                            background: var(--bg-light) !important;
+                            border-width: 1px !important;
+                            animation: profi-einblendung 0.6s ease-out; }
+    .cockpit-pill--profi .cockpit-pill__key { color: var(--petrol); font-weight: 500; }
+    .cockpit-pill--profi::before { content: '★ '; color: var(--petrol); font-size: 11px; }
+    @keyframes profi-einblendung {
+      0%   { opacity: 0; transform: translateY(-4px); box-shadow: 0 0 0 4px rgba(26, 92, 90, 0.0); }
+      30%  { opacity: 1; transform: translateY(0);    box-shadow: 0 0 0 4px rgba(26, 92, 90, 0.15); }
+      100% { opacity: 1; transform: translateY(0);    box-shadow: 0 0 0 0px rgba(26, 92, 90, 0.0); }
+    }
+
+    /* Methodik-Tooltip-Pop ergänzen für Formel-Blöcke */
+    .info-tip__pop pre.info-tip__formel {
+      font-family: 'Courier New', monospace; font-size: 11px;
+      background: rgba(0, 0, 0, 0.04); padding: 0.4rem 0.5rem;
+      margin: 0.4rem 0; border-radius: 4px; white-space: pre-wrap;
+      text-align: left; color: var(--text-primary);
+    }
+    .info-tip__pop ul { padding-left: 1.2rem; margin: 0.3rem 0; text-align: left; }
+    .info-tip__pop ul li { font-size: 11px; line-height: 1.5; }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .headline-pillen { flex-direction: column; }
+      .headline-pillen .pille { width: 100%; }
+      .chart-container { min-height: 260px; }
+    }
+
   </style>
 </head>
 <body>
@@ -907,13 +1424,14 @@
     <div class="wizard-progress" id="wizard-progress">
       <span class="wizard-progress__step wizard-progress__step--active" data-step-indicator="1">1 · Gebäude</span>
       <span class="wizard-progress__step" data-step-indicator="2">2 · Heizung &amp; Verbrauch</span>
-      <span class="wizard-progress__step" data-step-indicator="3">3 · Kontext</span>
+      <span class="wizard-progress__step" data-step-indicator="3">3 · Sanierung &amp; Erhaltung</span>
+      <span class="wizard-progress__step" data-step-indicator="4">4 · Kontext</span>
     </div>
 
-    <!-- Schritt 1 — Gebäude (3 Felder + PV-Toggle) -->
+    <!-- Schritt 1 — Gebäude (4 Felder, PV raus) -->
     <div class="wizard-step" data-step="1">
       <h2>Dein Gebäude</h2>
-      <p class="wizard-step__intro">PLZ, Gebäudetyp und — bei MFH — Eigentümer-Typ. Wenn du eine PV-Anlage mitdenken willst, sag es uns hier.</p>
+      <p class="wizard-step__intro">PLZ, Gebäudetyp und — bei MFH — Wohneinheiten und Eigentümer-Typ.</p>
 
       <div class="wizard-field">
         <label class="wizard-field__label" for="f-plz">PLZ / Ort</label>
@@ -929,6 +1447,11 @@
       </div>
 
       <!-- Konditional: nur sichtbar bei MFH -->
+      <div class="wizard-field" id="feld-wohneinheiten" hidden>
+        <label class="wizard-field__label" for="f-wohneinheiten">Wohneinheiten</label>
+        <input type="number" id="f-wohneinheiten" class="wizard-input" min="2" max="100" step="1" value="14">
+      </div>
+
       <div class="wizard-field" id="feld-eigentuemer-typ" hidden>
         <label class="wizard-field__label" for="f-eigentuemer">Eigentümer-Typ</label>
         <select id="f-eigentuemer" class="wizard-select">
@@ -938,19 +1461,22 @@
         </select>
       </div>
 
-      <div class="wizard-field">
-        <span class="wizard-field__label">PV mitdenken?</span>
-        <div class="seg" role="radiogroup" aria-label="PV mitdenken">
-          <button type="button" class="seg__btn seg__btn--active" data-set="pv" data-val="true">ja</button>
-          <button type="button" class="seg__btn" data-set="pv" data-val="false">nein</button>
-        </div>
-        <p class="wizard-field__hint">PV verändert Wirtschaftlichkeit von Wärmepumpe und Hybrid spürbar — Tiefe folgt im Profi-Modus.</p>
+      <!-- C2 v2.1: Eigene Wohnungsgröße (optional bei Vermietung) -->
+      <div class="wizard-field" id="feld-eigene-wohnflaeche" hidden>
+        <label class="wizard-field__label" for="f-eigene-wohnflaeche">Eigene Wohnungsgröße
+          <small style="color:var(--text-tertiary);font-weight:400;">(m², optional)</small>
+        </label>
+        <input type="number" id="f-eigene-wohnflaeche" class="wizard-input" min="20" max="500" step="1" placeholder="z. B. 75">
+        <p class="wizard-field__hint">
+          Falls du Eigentümer einer Wohnung im MFH bist und vermietest — für Mieter-Nebenkosten-Effekt-Berechnung.
+          Bei leerem Feld nehmen wir 1/Wohneinheiten als Anteil.
+        </p>
       </div>
 
-      <!-- Konditional: FW-Satzungs-Hinweis bei AltstadtPLZ (Kontext-Blau, kein Error) -->
+      <!-- Konditional: FW-Satzungs-Hinweis bei AltstadtPLZ -->
       <div class="hint" id="fw-satzung-hint" hidden>
         <strong>Hinweis Erfurter Fernwärmesatzung:</strong> Anschlusszwang gemäß Satzung 3.008 möglich.
-        Hybrid und Pellets in der Innenstadt ausgeschlossen, Befreiungswege nach §6 möglich.
+        Hybrid und Pellets in der Innenstadt grundsätzlich ausgeschlossen, Befreiungswege nach §6 möglich.
       </div>
 
       <div class="wizard-actions wizard-actions--end">
@@ -958,16 +1484,16 @@
       </div>
     </div>
 
-    <!-- Schritt 2 — Heizung & Verbrauch (4 Felder) -->
+    <!-- Schritt 2 — Heizung & Verbrauch (7 Felder) -->
     <div class="wizard-step" data-step="2" hidden>
       <h2>Heizung &amp; Verbrauch</h2>
 
-      <!-- Aktivierungs-Statement (kontext-blau, vor erstem Feld) -->
       <div class="hint">
-        <strong>Du kommst gleich zur wichtigsten Eingabe: deinem Verbrauch.</strong> Aus ihm rechnet sich, was deine aktuelle Heizung dich wirklich kostet — und was eine Alternative bringen würde.
+        <strong>Du kommst gleich zur wichtigsten Eingabe: deinem Verbrauch.</strong>
+        Aus ihm rechnet sich, was deine aktuelle Heizung dich wirklich kostet — und was eine Alternative bringen würde.
       </div>
 
-      <p class="wizard-step__intro">Aktuelle Heizung, Wohnfläche, Verbrauch und Sanierungsstand. Verbrauch ist optional — sonst schätzen wir aus Wohnfläche und Sanierung.</p>
+      <p class="wizard-step__intro">Aktuelle Heizung, Wohnfläche, Heizlast, Verbrauch, Jahreskosten und dein aktueller Energiepreis.</p>
 
       <div class="wizard-field">
         <label class="wizard-field__label" for="f-heizung">Aktuelle Heizung</label>
@@ -990,9 +1516,27 @@
         <div class="wizard-slider">
           <div class="wizard-slider__row">
             <span class="wizard-field__label">Wohnfläche</span>
-            <span class="wizard-slider__value" id="val-wohnflaeche">950 m²</span>
+            <span class="wizard-slider__value" id="val-wohnflaeche">908 m²</span>
           </div>
-          <input type="range" id="f-wohnflaeche" min="50" max="3000" step="10" value="950">
+          <input type="range" id="f-wohnflaeche" min="50" max="3000" step="10" value="908">
+        </div>
+      </div>
+
+      <div class="wizard-field">
+        <div class="wizard-slider">
+          <div class="wizard-slider__row">
+            <span class="wizard-field__label">Heizlast
+              <span class="info-tip" tabindex="0" aria-label="Was ist Heizlast?">ⓘ
+                <span class="info-tip__pop">
+                  <strong>Heizlast (kW)</strong> ist die Wärmemenge, die das Gebäude bei tiefster Außentemperatur braucht.
+                  Wir schätzen sie aus Wohnfläche × Sanierungsfaktor (DIN EN 12831-1).
+                  Du kannst die Schätzung mit deinem realen Wert überschreiben.
+                </span>
+              </span>
+            </span>
+            <span class="wizard-slider__value" id="val-heizlast">65 kW</span>
+          </div>
+          <input type="range" id="f-heizlast" min="5" max="500" step="1" value="65">
         </div>
       </div>
 
@@ -1021,11 +1565,22 @@
       </div>
 
       <div class="wizard-field">
-        <span class="wizard-field__label">Sanierungsstand</span>
-        <div class="seg" role="radiogroup" aria-label="Sanierungsstand">
-          <button type="button" class="seg__btn" data-set="sanierung" data-val="unsaniert">unsaniert <small style="opacity:0.7;">(vor 1977)</small></button>
-          <button type="button" class="seg__btn seg__btn--active" data-set="sanierung" data-val="teilsaniert">teilsaniert <small style="opacity:0.7;">(1977–2002)</small></button>
-          <button type="button" class="seg__btn" data-set="sanierung" data-val="saniert">saniert <small style="opacity:0.7;">(nach 2002)</small></button>
+        <label class="wizard-field__label" for="f-jahreskosten">Aktuelle Jahreskosten aus Abrechnung <small style="color:var(--text-tertiary);font-weight:400;">(€/Jahr)</small></label>
+        <input type="number" id="f-jahreskosten" class="wizard-input" min="0" max="100000" step="100" placeholder="z. B. 8.500">
+        <div class="hint" id="plausi-jahreskosten" hidden>
+          Plausibilitätscheck: deine Abrechnung passt nicht zu Verbrauch × Preis. Prüfe bitte.
+        </div>
+      </div>
+
+      <div class="wizard-field">
+        <label class="wizard-field__label" for="f-eigener-preis">Aktueller Energiepreis <small style="color:var(--text-tertiary);font-weight:400;" id="hint-energietraeger">(Gas in ct/kWh)</small></label>
+        <input type="number" id="f-eigener-preis" class="wizard-input" min="0" max="100" step="0.1" placeholder="z. B. 10,5">
+        <p class="wizard-field__hint" style="display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;">
+          <span>Markt-Schnitt aktuell: Gas 8,57 ct • FW 17,5 ct • WP-Strom 25 ct (Mai 2026)</span>
+          <a href="/preishistorie.html" target="_blank" rel="noopener" style="color:var(--petrol);font-size:11px;">Preishistorie →</a>
+        </p>
+        <div class="hint" id="plausi-energiepreis" hidden>
+          Vergleich Markt-Schnitt: dein Vertrag liegt <strong id="plausi-energiepreis-diff">— %</strong> über/unter Markt-Schnitt.
         </div>
       </div>
 
@@ -1035,8 +1590,142 @@
       </div>
     </div>
 
-    <!-- Schritt 3 — Kontext (2 Felder) -->
+    <!-- Schritt 3 — Sanierung & Erhaltung (6 Felder) -->
     <div class="wizard-step" data-step="3" hidden>
+      <h2>Sanierung &amp; Erhaltung</h2>
+      <p class="wizard-step__intro">Sanierungsstand, geplanter Horizont und finanzielle Vorsorge — das prägt deine Heizungs-Entscheidung mit.</p>
+
+      <div class="wizard-field">
+        <span class="wizard-field__label">Sanierungsstand
+          <span class="info-tip" tabindex="0" aria-label="Wann gilt mein Gebäude als saniert?">ⓘ
+            <span class="info-tip__pop">
+              <strong>Wann gilt mein Gebäude als saniert?</strong><br>
+              <strong>Saniert:</strong> Dämmung + Fenster + ggf. Lüftung modernisiert, Effizienzklasse C oder besser.<br>
+              <strong>Teilsaniert:</strong> mindestens eine wesentliche Maßnahme erfolgt (Dämmung ODER Fenster).<br>
+              <strong>Unsaniert:</strong> Bestand wie ursprünglich, keine wesentliche Modernisierung.
+            </span>
+          </span>
+        </span>
+        <div class="seg" role="radiogroup" aria-label="Sanierungsstand">
+          <button type="button" class="seg__btn" data-set="sanierung" data-val="unsaniert">unsaniert</button>
+          <button type="button" class="seg__btn seg__btn--active" data-set="sanierung" data-val="teilsaniert">teilsaniert</button>
+          <button type="button" class="seg__btn" data-set="sanierung" data-val="saniert">saniert</button>
+        </div>
+      </div>
+
+      <div class="wizard-field">
+        <label class="wizard-field__label" for="f-letzte-sanierung">Letzte Sanierung (Jahr) <small style="color:var(--text-tertiary);font-weight:400;">(optional)</small></label>
+        <input type="number" id="f-letzte-sanierung" class="wizard-input" min="1900" max="2026" step="1" placeholder="z. B. 2010">
+      </div>
+
+      <div class="wizard-field">
+        <span class="wizard-field__label">Geplanter Sanierungshorizont</span>
+        <div class="seg" role="radiogroup" aria-label="Sanierungshorizont">
+          <button type="button" class="seg__btn" data-set="sanierungsHorizont" data-val="5">5 Jahre</button>
+          <button type="button" class="seg__btn seg__btn--active" data-set="sanierungsHorizont" data-val="10">10 Jahre</button>
+          <button type="button" class="seg__btn" data-set="sanierungsHorizont" data-val="15">15 Jahre</button>
+          <button type="button" class="seg__btn" data-set="sanierungsHorizont" data-val="20">20 Jahre</button>
+        </div>
+      </div>
+
+      <div class="wizard-field">
+        <div class="wizard-slider">
+          <div class="wizard-slider__row">
+            <span class="wizard-field__label">Reparatur-Pauschale pro Jahr</span>
+            <span class="wizard-slider__value" id="val-reparaturen">8.000 €</span>
+          </div>
+          <input type="range" id="f-reparaturen" min="0" max="30000" step="100" value="8000">
+        </div>
+      </div>
+
+      <div class="wizard-field">
+        <label class="wizard-field__label" for="f-sanierungs-invest">Jährliche Sanierungs-Investition <small style="color:var(--text-tertiary);font-weight:400;">(€/Jahr)</small>
+          <span class="info-tip" tabindex="0" aria-label="Was ist die jährliche Sanierungs-Investition?">ⓘ
+            <span class="info-tip__pop">
+              Was möchtest du pro Jahr für Sanierung zurücklegen — über die laufenden Reparaturen hinaus?
+              Wirkt nur auf den Sanierungspfad-Posten (Excel-Detail), nicht auf die TCO-Kernrechnung.
+            </span>
+          </span>
+        </label>
+        <input type="number" id="f-sanierungs-invest" class="wizard-input" min="0" max="50000" step="100" placeholder="0">
+      </div>
+
+      <!-- Konditional: nur bei MFH -->
+      <div class="wizard-field" id="feld-ruecklage" hidden>
+        <label class="wizard-field__label" for="f-ruecklage-we-monat">Erhaltungsrücklage pro Wohneinheit pro Monat
+          <small style="color:var(--text-tertiary);font-weight:400;">(€/WE/Monat)</small>
+        </label>
+        <input type="number" id="f-ruecklage-we-monat" class="wizard-input" min="0" max="500" step="1" placeholder="z. B. 50">
+        <p class="wizard-field__hint" id="ruecklage-umrechnung">
+          → entspricht <strong>0,00 €/m²/a</strong> (GdW-Richtwert: 13–17 €/m²/a)
+        </p>
+      </div>
+
+      <!-- C2 v2.1: 4 Bruttoinvestitions-Felder (Modernisierungs-Brutto, Spec §3 v2.1) -->
+      <h3 style="margin-top:1.5rem;color:var(--petrol-dark);font-size:16px;">
+        Investitionskosten der Modernisierungs-Optionen
+        <span class="info-tip" tabindex="0" aria-label="Was sind diese Werte?">ⓘ
+          <span class="info-tip__pop">
+            Wir haben hier typische Werte für ein {EFH/MFH} mit deiner Heizlast geschätzt.
+            Wenn du ein konkretes Angebot vom Heizungsbauer hast, trag den genauen Wert ein.
+            Du kannst die Werte auch in der Ergebnis-Tabelle nochmal ändern.
+          </span>
+        </span>
+      </h3>
+
+      <div class="wizard-field">
+        <div class="wizard-slider">
+          <div class="wizard-slider__row">
+            <span class="wizard-field__label">Bruttoinvestition Hybrid</span>
+            <span class="wizard-slider__value" id="val-brutto-hybrid">73.000 €</span>
+          </div>
+          <input type="range" id="f-brutto-hybrid" min="20000" max="300000" step="1000" value="73000">
+        </div>
+        <p class="wizard-field__hint plausi-hint" id="plausi-brutto-hybrid" hidden></p>
+      </div>
+
+      <div class="wizard-field">
+        <div class="wizard-slider">
+          <div class="wizard-slider__row">
+            <span class="wizard-field__label">Bruttoinvestition Wärmepumpe</span>
+            <span class="wizard-slider__value" id="val-brutto-wp">126.000 €</span>
+          </div>
+          <input type="range" id="f-brutto-wp" min="20000" max="400000" step="1000" value="126000">
+        </div>
+        <p class="wizard-field__hint plausi-hint" id="plausi-brutto-wp" hidden></p>
+      </div>
+
+      <div class="wizard-field">
+        <div class="wizard-slider">
+          <div class="wizard-slider__row">
+            <span class="wizard-field__label">Bruttoinvestition Fernwärme</span>
+            <span class="wizard-slider__value" id="val-brutto-fw">33.000 €</span>
+          </div>
+          <input type="range" id="f-brutto-fw" min="5000" max="150000" step="1000" value="33000">
+        </div>
+        <p class="wizard-field__hint plausi-hint" id="plausi-brutto-fw" hidden></p>
+      </div>
+
+      <!-- Pellets nur sichtbar wenn plausibel; Sichtbarkeit in evaluateConditionals -->
+      <div class="wizard-field" id="feld-brutto-pellets">
+        <div class="wizard-slider">
+          <div class="wizard-slider__row">
+            <span class="wizard-field__label">Bruttoinvestition Pellets</span>
+            <span class="wizard-slider__value" id="val-brutto-pellets">63.000 €</span>
+          </div>
+          <input type="range" id="f-brutto-pellets" min="20000" max="300000" step="1000" value="63000">
+        </div>
+        <p class="wizard-field__hint plausi-hint" id="plausi-brutto-pellets" hidden></p>
+      </div>
+
+      <div class="wizard-actions">
+        <button type="button" class="btn btn--ghost" data-wizard-back>Zurück</button>
+        <button type="button" class="btn btn--primary" data-wizard-next>Weiter</button>
+      </div>
+    </div>
+
+    <!-- Schritt 4 — Kontext (2 Felder) -->
+    <div class="wizard-step" data-step="4" hidden>
       <h2>Dein Kontext</h2>
       <p class="wizard-step__intro">Wie nutzt du das Gebäude — und welche Sicht auf die Entscheidung passt zu dir?</p>
 
@@ -1054,28 +1743,26 @@
         <div class="persona-picker" role="radiogroup" aria-label="Entscheider-Typ">
           <button type="button" class="persona" data-persona="bewahrer">
             <strong>Bewahrer</strong>
-            <small><em>Erhalt im Vordergrund.</em> Du willst Wert und Substanz langfristig sichern. Zukunftsfähigkeit, Robustheit gegenüber Energiepreis-, CO₂- und Förder-Wandel sind dir wichtiger als der schnellste Cashflow.<br><br>Bei Vermietung gilt für dich: Verantwortung gegenüber Mietenden mitdenken — Betriebskosten lassen sich nicht beliebig weiterreichen. Soziale Tragfähigkeit ist Teil deiner Entscheidung.<br><br>Lange Haltedauer geplant — Familienbesitz, Lebenszeitnutzung.</small>
+            <small><em>Erhalt im Vordergrund.</em> Du willst Wert und Substanz langfristig sichern. Zukunftsfähigkeit, Robustheit gegenüber Energiepreis-, CO₂- und Förder-Wandel sind dir wichtiger als der schnellste Cashflow.<br><br>Lange Haltedauer geplant — Familienbesitz, Lebenszeitnutzung.</small>
           </button>
           <button type="button" class="persona persona--active" data-persona="optimierer">
             <strong>Optimierer</strong>
-            <small><em>Wirtschaftlichkeit im Zentrum.</em> Du willst die wirtschaftlich beste Entscheidung über die Lebensdauer der Heizung. Förderung mitnehmen, Risiken meiden, solide Rendite. Du denkst aus Eigentümerperspektive — Umlagefähigkeit auf Mieter ist im Rahmen des Möglichen Teil deines Kalküls.<br><br>Klassische Haltedauer 10–15 Jahre.</small>
+            <small><em>Wirtschaftlichkeit im Zentrum.</em> Du willst die wirtschaftlich beste Entscheidung über die Lebensdauer der Heizung. Förderung mitnehmen, Risiken meiden, solide Rendite.<br><br>Klassische Haltedauer 10–15 Jahre.</small>
           </button>
           <button type="button" class="persona" data-persona="wechsler">
             <strong>Wechsler</strong>
-            <small><em>Verkaufs- oder Übergabe-Perspektive.</em> Du planst Verkauf, Erbübergabe oder eine größere Investitions-Drehung in absehbarer Zeit. Marktwert-Wirkung und Förder-Maximierung sind dir wichtiger als die Lebensdauer.<br><br>Kurze Haltedauer 3–5 Jahre.</small>
+            <small><em>Verkaufs- oder Übergabe-Perspektive.</em> Du planst Verkauf, Erbübergabe oder eine größere Investitions-Drehung. Marktwert-Wirkung und Förder-Maximierung sind dir wichtig.<br><br>Kurze Haltedauer 3–5 Jahre.</small>
           </button>
         </div>
-        <p class="wizard-field__hint">Du kannst die Sicht später auf der Ergebnis-Seite frei wechseln und sehen, wie sich die Empfehlung verändert.</p>
+        <p class="wizard-field__hint">Du kannst die Sicht später auf der Ergebnis-Seite frei wechseln.</p>
       </div>
 
-      <!-- Konditional: WEG-Statement (sichtbar bei MFH + WEG) -->
       <div class="hint" id="weg-statement-wizard" hidden>
         <strong>Du sitzt in einer Eigentümergemeinschaft</strong> — in der Wärmewende oft der schwierigere Pfad. Mehrheiten finden, heterogene Investitionsbereitschaft, Förderfristen drängen. Dieser Rechner gibt dir Zahlen, mit denen du in die Diskussion gehen kannst.
       </div>
 
-      <!-- Aktivierungs-Statement vor Berechnen-Klick (Signal-Gelb) -->
       <div class="hint hint--signal">
-        <strong>Drei Sichten, eine Entscheidung.</strong> Du wirst sehen, wie sich die Empfehlung mit deinem Profil verändert. Nimm dir Zeit, hier zu vergleichen.
+        <strong>Drei Sichten, eine Entscheidung.</strong> Du wirst sehen, wie sich die Empfehlung mit deinem Profil verändert.
       </div>
 
       <div class="wizard-actions">
@@ -1098,8 +1785,8 @@
        ========================================================== -->
   <section id="phase-ergebnis" class="phase ergebnis" hidden>
 
+    <!-- 1. Annahmen-Box / 2. Headline / 3. Risiko-Banner / 4. Persona+Cockpit / 5. Zeitraum-Slider -->
     <div class="section-wrap section-wrap--white"><div class="ergebnis-kopf">
-      <!-- Annahmen-Transparenz-Box -->
       <details class="annahmen-box">
         <summary>Annahmen, mit denen wir rechnen — Klick zum Ausklappen ↓</summary>
         <div class="annahmen-box__inner">
@@ -1107,21 +1794,20 @@
             <thead>
               <tr><th>Eingabe / Annahme</th><th>Wert</th><th>Quelle</th><th>Beleg</th></tr>
             </thead>
-            <tbody id="annahmen-tabelle-body">
-              <!-- Auto-gefüllt beim Berechnen-Klick -->
-            </tbody>
+            <tbody id="annahmen-tabelle-body"></tbody>
           </table>
           <p class="annahmen-disclaimer">Diese Berechnung ist eine Orientierungshilfe. Sie ersetzt keine Fachberatung.</p>
         </div>
       </details>
 
-      <!-- Headline-Antwort-Container -->
       <div class="headline-antwort">
         <h2>Deine Antwort folgt hier</h2>
-        <p class="placeholder">Inhalt folgt in der nächsten Ausbaustufe — algorithmisch generierte Klartext-Antwort aus den drei Sichten.</p>
+        <p class="placeholder">Inhalt folgt nach Berechnen-Klick.</p>
       </div>
 
-      <!-- Persona-Toggle (Ergebnis-Seite, klein) -->
+      <!-- Risiko-Banner (Spec §3.9, jetzt Kontextblau + Smart-Icon) -->
+      <div class="risiko-banner" id="risiko-banner" hidden></div>
+
       <div class="persona-toggle">
         <span class="persona-toggle__label">Sichtweise:</span>
         <button type="button" class="persona-mini" data-persona-mini="bewahrer">Bewahrer</button>
@@ -1129,133 +1815,66 @@
         <button type="button" class="persona-mini" data-persona-mini="wechsler">Wechsler</button>
       </div>
 
-      <!-- Mini-Cockpit (klickbare Pills, Inline-Edit) -->
-      <div class="mini-cockpit" id="mini-cockpit">
-        <!-- Auto-befüllt aus State -->
-      </div>
+      <div class="mini-cockpit" id="mini-cockpit"></div>
       <p class="cockpit-tipp">Tipp: Klick auf eine Pill, um deine Eingabe zu ändern. Werte rechnen sich live um.</p>
 
-      <!-- Anker-Sprung-Navigation (Mobile) -->
+      <!-- 5. ZEITRAUM-SCHIEBEREGLER (Spec §4 Punkt 5 — NEU OBEN, fließend 1–30) -->
+      <div class="zeitraum-oben">
+        <h3>Betrachtungs-Zeitraum</h3>
+        <div class="slider-row">
+          <label>
+            <span>Über wie viele Jahre rechnest du?</span>
+            <output id="out-zeitraum">25 Jahre</output>
+            <input type="range" id="slider-zeitraum-oben" min="1" max="30" step="1" value="25" aria-valuetext="25 Jahre">
+          </label>
+        </div>
+      </div>
+
       <nav class="panel-anchors" aria-label="Sprung-Navigation">
         <a href="#panel-1">Wirtschaftlichkeit</a>
-        <a href="#panel-2">Radar</a>
-        <a href="#panel-3">Zukunftsfähigkeit</a>
+        <a href="#big-picture-v2">Big Picture</a>
         <a href="#schieberegler">Was-wäre-wenn</a>
-        <a href="#big-picture">Gesamt</a>
+        <a href="#excel-edition-sektion">Excel-Edition</a>
       </nav>
     </div></div>
 
-    <!-- Panel 1 — Wirtschaftlichkeit (bg-light) -->
+    <!-- 6. PANEL 1 — Wirtschaftlichkeits-Tabelle (Excel-Dashboard mit Schwellwert-Pastell + Inline-Editor) -->
     <div class="section-wrap section-wrap--bg">
     <section id="panel-1" class="panel">
-      <h2>1 — Wirtschaftlichkeit</h2>
-      <p class="panel-placeholder">Inhalt folgt in der nächsten Ausbaustufe — Headline-KPIs (TCO 25 J · €/m²/Monat · Amortisation), 25-Jahres-Kostenkurve, Vergleich aller fünf Optionen.</p>
-      <div class="kpi-stub">
-        TCO 25 J: <strong>—</strong>
-        <span class="badge badge--A" tabindex="0" aria-label="Belegbarkeit A">A
-          <span class="badge__pop">A — Primärquelle, real belegt (z. B. Realabrechnung, BAFA-Verordnung)</span>
-        </span>
-        <span class="info-tip" tabindex="0" aria-label="Methodik">ⓘ
-          <span class="info-tip__pop">
-            <span class="info-tip__title">TCO 25 Jahre</span>
-            Total Cost of Ownership: Investition + Betrieb + Wartung + Förderung über 25 Jahre, abgezinst mit VDI-2067-Kalkzins.
-            <span class="info-tip__src">Quelle folgt in der nächsten Ausbaustufe.</span>
-          </span>
-        </span>
-      </div>
+      <div id="wirtschaftlichkeit-tabelle"></div>
 
-      <!-- Konditional: Vermieter-Bilanz (sichtbar bei Nutzungsart ≠ Selbstnutzung) -->
-      <details class="conditional" id="vermieter-bilanz" hidden>
+      <!-- 7. LESE-HILFE-BOX prominent (NICHT klappbar, Spec §5.4 + Memory designsystem §2) -->
+      <div class="lese-hilfe-box" id="lese-hilfe-box"></div>
+
+      <!-- 8. SENSIBILISIERUNGS-BLOCK fossile Energie (Kontextblau, Smart-Icon, 11 Punkte) -->
+      <div class="sensibilisierungs-block" id="sensibilisierungs-block"></div>
+
+      <!-- 9. VERMIETER-BILANZ (konditional sichtbar bei Vermietung; Block 1 + 2; Block 3 RAUS in v2.1) -->
+      <details class="conditional" id="vermieter-bilanz" hidden open>
         <summary>Sicht für Eigentümer mit Vermietung</summary>
-        <div>
-          <p class="panel-placeholder">Inhalt folgt in der nächsten Ausbaustufe — fünf Blöcke aus Excel-Tab Vermieter-Sicht: §559 BGB Modernisierungsumlage, Mietspiegel-Effekt, AfA §7b, KfW-Tilgungszuschuss, Marktwert-Premium D→C/D→B.</p>
-        </div>
+        <div class="vb-block" id="vb-block-1"></div>
+        <div class="vb-block" id="vb-block-2"></div>
       </details>
 
-      <!-- Konditional: WEG-Hinweise (sichtbar bei MFH + WEG) -->
-      <details class="conditional" id="weg-hinweise" hidden>
+      <!-- 10. WEG-HINWEISE (konditional sichtbar bei MFH+WEG, open) -->
+      <details class="conditional" id="weg-hinweise" hidden open>
         <summary>Hinweise für die Eigentümerversammlung</summary>
-        <div>
-          <p class="panel-placeholder">Inhalt folgt in der nächsten Ausbaustufe — was muss beschlossen werden, welche Mehrheit, welche Fristen, Formulierungs-Vorschläge für die Tagesordnung.</p>
-        </div>
+        <div id="weg-hinweise-content"></div>
       </details>
     </section>
     </div>
 
-    <!-- Panel 2 — Radar (white) -->
+    <!-- Panel 2 + 3: RAUS in v2.1 (Spec §16). FRI-Methodik integriert in Big Picture. -->
+
+    <!-- 11. WAS-WÄRE-WENN — DREI Spalten (Spec §9 v2.1) -->
     <div class="section-wrap section-wrap--white">
-    <section id="panel-2" class="panel">
-      <h2>2 — Entscheidungs-Radar</h2>
-      <p class="panel-placeholder">Inhalt folgt in der nächsten Ausbaustufe — fünf Bewertungsachsen als SVG (Lärm, Komfort, Risiko, Aufwand, Reversibilität), Persona-abhängige Gewichtung.</p>
-      <div class="kpi-stub">
-        Radar-Score: <strong>—</strong>
-        <span class="badge badge--B" tabindex="0" aria-label="Belegbarkeit B">B
-          <span class="badge__pop">B — Marktwert / Bundesmedian (z. B. AGFW-Median, BDEW-Statistik)</span>
-        </span>
-      </div>
-    </section>
-    </div>
-
-    <!-- Panel 3 — FRI (bg-light) -->
-    <div class="section-wrap section-wrap--bg">
-    <section id="panel-3" class="panel">
-      <h2>3 — Zukunftsfähigkeit (FRI)</h2>
-      <p class="panel-placeholder">Inhalt folgt in der nächsten Ausbaustufe — sechs FRI-Dimensionen (Förderpfad, CO₂-Pfad, Marktwirkung, Technologie-Reife, Resilienz, Reversibilität), drei Erklär-Ebenen.</p>
-      <div class="kpi-stub">
-        FRI-Index: <strong>—</strong>
-        <span class="badge badge--C" tabindex="0" aria-label="Belegbarkeit C">C
-          <span class="badge__pop">C — Schätzung / Modell (z. B. Heizlast-Hilfsregel, Default-Investitionskosten)</span>
-        </span>
-      </div>
-    </section>
-
-    <!-- Belegbarkeits-Legende — Anschluss an Panel 3, gleiches bg-light -->
-    <section class="belegbarkeit-legende" aria-label="Belegbarkeits-Legende">
-      <details>
-        <summary>ⓘ Was bedeuten A / B / C?</summary>
-        <div class="belegbarkeit-legende__inner">
-          <div class="belegbarkeit-legende__row">
-            <span class="badge badge--A">A</span>
-            <span><strong>Primärquelle, real belegt</strong> — z. B. Realabrechnung, BAFA-Verordnung, eigene Heizkostenabrechnung.</span>
-          </div>
-          <div class="belegbarkeit-legende__row">
-            <span class="badge badge--B">B</span>
-            <span><strong>Marktwert / Bundesmedian</strong> — z. B. AGFW-Median, BDEW-Statistik, DEPV-Pelletsindex.</span>
-          </div>
-          <div class="belegbarkeit-legende__row">
-            <span class="badge badge--C">C</span>
-            <span><strong>Schätzung / Modell</strong> — z. B. Heizlast-Hilfsregel (DIN EN 12831-1), Default-Investitionskosten aus Excel-Modell.</span>
-          </div>
-          <p class="belegbarkeit-legende__schluss">So zeigen wir offen, woher unsere Werte kommen.</p>
-        </div>
-      </details>
-    </section>
-    </div>
-
-    <!-- Drei Schieberegler-Blöcke (white) -->
-    <div class="section-wrap section-wrap--white">
-    <section id="schieberegler" class="schieberegler-cluster">
+    <section id="schieberegler" class="schieberegler-cluster was-waere-wenn-3-spalten">
       <h2>Was-wäre-wenn — drei Hebel</h2>
       <div class="schieberegler-grid">
 
-        <!-- Block A: Zeitraum (Index-Slider mit JS-Mapping auf 1/3/5/10/15/20/25) -->
+        <!-- Spalte A: Energiepreise -->
         <div class="schieberegler-block">
-          <h3>A — Zeitraum</h3>
-          <div class="slider-row">
-            <label>
-              <span>
-                <span>Betrachtung</span>
-                <output id="out-zeitraum">25 Jahre</output>
-              </span>
-              <input type="range" id="slider-zeitraum" min="0" max="6" step="1" value="6" aria-valuetext="25 Jahre">
-            </label>
-          </div>
-          <p class="caption">Sortiert TCO, Cashflow und Vermögensbilanz live um. Wirkung in der nächsten Ausbaustufe angeschlossen.</p>
-        </div>
-
-        <!-- Block B: Energiepreise -->
-        <div class="schieberegler-block">
-          <h3>B — Energiepreise</h3>
+          <h3>A — Energiepreise</h3>
           <div class="slider-row">
             <label>
               <span><span>Gas</span><output id="out-preis-gas">10,5 ct/kWh</output></span>
@@ -1270,14 +1889,12 @@
               <input type="range" id="slider-preis-wp" min="20" max="50" step="0.1" value="26.0">
             </label>
           </div>
-          <p class="caption">Marktwerte aus Preishistorie Mai 2026 — BDEW / AGFW / DEPV. Quelle: Q-BDEW-2026, Q-AGFW-2026.</p>
+          <p class="caption">Marktwerte aus Preishistorie Mai 2026 — BDEW / AGFW / DEPV.</p>
         </div>
 
-        <!-- Block C: Mögliche Förderung -->
+        <!-- Spalte B: Mögliche Förderung -->
         <div class="schieberegler-block">
-          <h3>C — Mögliche Förderung</h3>
-
-          <!-- Hauptelement oben: Förderquote-gesamt-Slider -->
+          <h3>B — Mögliche Förderung</h3>
           <div class="slider-row">
             <label>
               <span><span>Förderquote gesamt</span><output id="out-foerderung">50 %</output></span>
@@ -1286,7 +1903,6 @@
             <small style="font-size:11px;color:var(--text-tertiary);line-height:1.4;">Spiel mit der Quote — die Toggles unten zeigen, woraus sie sich zusammensetzt.</small>
           </div>
 
-          <!-- Komponenten als Information darunter, mit ⓘ-Tooltips pro Toggle -->
           <div class="foerderung-toggles">
             <label>
               <input type="checkbox" id="bafa-grund" checked>
@@ -1313,7 +1929,7 @@
               <input type="checkbox" id="bafa-effizienz">
               <span>Effizienzbonus 5 %</span>
               <span class="info-tip" tabindex="0" aria-label="Info Effizienzbonus">ⓘ
-                <span class="info-tip__pop">Für besonders effiziente Wärmepumpen (z. B. natürliche Kältemittel, Wasser/Wasser oder Erdsonden).<span class="info-tip__src">Quelle: BAFA.</span></span>
+                <span class="info-tip__pop">Für besonders effiziente Wärmepumpen.<span class="info-tip__src">Quelle: BAFA.</span></span>
               </span>
             </label>
           </div>
@@ -1324,103 +1940,71 @@
             <button type="button" class="preset-btn" data-preset="gestrichen">Förderung gestrichen</button>
           </div>
 
-          <!-- Quellen-Footer -->
           <p class="foerderung-quellen">
-            Grundlage: BAFA-Förderverordnung Stand Mai 2026. Quelle: Q-BAFA-2026, Q-BWP-2026.<br>
+            Grundlage: BAFA-Förderverordnung Stand Mai 2026.<br>
             <a href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/effiziente_gebaeude_node.html" target="_blank" rel="noopener">Aktuelle Förderverordnung beim BAFA →</a>
-            <span class="foerderung-quellen-stand">Stand Mai 2026 — nächste Anpassung voraussichtlich Ende 2028 (Klimabonus-Sinkpfad).</span>
           </p>
         </div>
 
+        <!-- Spalte C: Zukunftsszenario (NEU v2.1, Spec §9.3) -->
+        <div class="schieberegler-block zukunftsszenario" id="zukunftsszenario"></div>
+
       </div>
     </section>
     </div>
 
-    <!-- Erweiterter Modus (bg-light) — eigene Sektion, kostenlos, Übergangsstufe zur Excel-Edition -->
-    <div class="section-wrap section-wrap--bg">
-    <section class="erweiterter-modus" aria-label="Erweiterter Modus">
-      <h2>Erweiterter Modus — mehr Hebel im Cockpit</h2>
-      <p>Schaltet zusätzliche Hebel im Cockpit frei (eigener Energiepreis, Jahres-Arbeitszahl der WP, CO₂-Pfad, Verkehrswert) und blendet Detail-Tabellen in den Panels ein. Bleibt für deine Sitzung aktiv — bei einem Reload startest du wieder im Standard-Modus.</p>
-      <button type="button" class="profi-button" id="cta-profi-toggle">Erweiterten Modus aktivieren →</button>
-      <p class="profi-aktiv-hint" id="profi-aktiv-hint" hidden>Detail-Hebel und erweiterte Tabellen werden in der nächsten Ausbaustufe freigeschaltet. Dein Modus-Status bleibt für die Sitzung gespeichert.</p>
-    </section>
-    </div>
+    <!-- Erweiterter Modus / Profi-Pills: RAUS in v2.1 (Spec §16) -->
 
-    <!-- Big Picture (white) -->
+    <!-- 12. BIG PICTURE — Highlight (Spec §10 v2.1, 6 Achsen mit Risiko-Schutz, kein Banner-Kommentar) -->
     <div class="section-wrap section-wrap--white">
-    <section id="big-picture" class="big-picture">
-      <h2>Big Picture</h2>
-      <div class="netzdiagramm-container">
-        <p class="placeholder">Inhalt folgt in der nächsten Ausbaustufe — Radar mit allen drei Panel-Achsen überlagert. Pro Heizoption eine Farbfläche.</p>
+    <section id="big-picture-v2" class="big-picture-v2">
+      <h2>Big Picture — die ganze Entscheidung im Bild</h2>
+      <div class="chart-container">
+        <canvas id="chart-big-picture-canvas"></canvas>
       </div>
-      <div class="empfehlungs-banner">
-        <p class="placeholder">Inhalt folgt in der nächsten Ausbaustufe — algorithmische Empfehlung à la „Für dein Profil tragen Wärmepumpe und Hybrid gleich gut, Fernwärme liegt eine Klasse darunter."</p>
+      <div class="bigpicture-methodik">
+        Diese sechs Achsen folgen dem Future-Readiness-Ansatz aus dem
+        <a href="/index.html#ansatz">Eco-2050-Institut</a> —
+        eine ganzheitliche Sicht auf Wirtschaftlichkeit, Nachhaltigkeit, Resilienz,
+        Erweiterbarkeit, Zukunftsfähigkeit und Risiko-Schutz.
       </div>
     </section>
     </div>
 
-    <!-- Wegweiser-Block (bg-light) -->
+    <!-- Vorgeschmack-Aufklapper: RAUS in v2.1 (Spec §16) -->
+
+    <!-- PV-Hinweis-Box (Spec §3 v2.1 — PV nicht im Wizard, Hinweis statt) -->
+    <div class="section-wrap section-wrap--bg">
+    <div class="pv-hinweis-box">
+      <strong>PV / Batteriespeicher / Solarthermie als Verstärker?</strong> —
+      Der Web-Rechner berücksichtigt das nicht direkt. Volle PV-Konfiguration findest du in der
+      <a href="#excel-edition-sektion">Excel-Edition</a>.
+    </div>
+    </div>
+
+    <!-- 15. EXCEL-EDITION — 4 Kacheln + 3-Spalten-Tarif (Spec §11) -->
+    <div class="section-wrap section-wrap--white">
+    <section id="excel-edition-sektion" class="excel-edition-sektion" aria-label="Excel-Edition"></section>
+    </div>
+
+    <!-- 16. WEGWEISER — Scroll-Regal (Spec §12, Memory designsystem §5) -->
     <div class="section-wrap section-wrap--bg">
     <section class="wegweiser">
       <h2>Konkret werden — die nächsten Schritte</h2>
-      <div class="wegweiser-grid">
-        <a href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/effiziente_gebaeude_node.html" target="_blank" rel="noopener" class="wegweiser-item">
-          <strong>Förderung beantragen</strong>
-          <p>Hol dir, was dir zusteht. BAFA-Antrag direkt im Portal — die meisten Förderungen kannst du selbst beantragen.</p>
-        </a>
-        <a href="https://www.kfw.de" target="_blank" rel="noopener" class="wegweiser-item">
-          <strong>KfW-Kredit prüfen</strong>
-          <p>Geld leihen, wo es günstig ist. KfW ergänzt deine BAFA-Förderung mit zinsgünstigen Krediten — gerade für die Differenz, die du selbst tragen musst.</p>
-        </a>
-        <a href="https://www.solarrechner-thueringen.de/#s=startscreen" target="_blank" rel="noopener" class="wegweiser-item">
-          <strong>Solarpotenzial prüfen</strong>
-          <p>Schau dir dein Dach an. Der Solarrechner Thüringen zeigt, wie viel Strom dein Dach realistisch erzeugen könnte — kostenlos, ohne Anmeldung.</p>
-        </a>
-        <a href="https://www.verbraucherzentrale-energieberatung.de/" target="_blank" rel="noopener" class="wegweiser-item">
-          <strong>Beratung suchen</strong>
-          <p>Hol dir eine zweite Meinung. Die Verbraucherzentrale berät kostenlos und unabhängig — gerade wenn du dir bei einer Heizungsentscheidung unsicher bist.</p>
-        </a>
-      </div>
+      <div class="wegweiser-regal" id="wegweiser-regal"></div>
     </section>
     </div>
 
-    <!-- Excel-Edition — eigene Sektion (white) -->
+    <!-- 17. SONDERSITUATIONS-CTA (Spec §13, am Ende, generisch) -->
     <div class="section-wrap section-wrap--white">
-    <section class="excel-edition" aria-label="Excel-Edition">
-      <h2>Du willst tiefer rechnen — für Profis und Analysten</h2>
-      <p class="excel-edition__sub">Wenn dir der Web-Rechner zu wenig ist und du selbst rechnen willst.</p>
-      <div class="excel-card">
-        <div class="excel-card__head">
-          <span class="excel-card__title">Excel-Edition — alle Quellen, alle Formeln</span>
-          <span class="excel-card__preis">49 €</span>
-        </div>
-        <div class="excel-card__beschreibung">
-          <p>Alle Hebel, die der Web-Rechner nicht zeigt. Alle Quellen, die wir verwendet haben. Alle Formeln, die in deine Entscheidung einfließen.</p>
-          <p>Dazu jährlich ein Update der Marktwerte, Förderlandschaft und neuen Quellen — direkt von uns ins Postfach.</p>
-          <p>Für Eigentümer, die sich sicher entscheiden wollen. Für Beiräte, die ihre WEG mit Zahlen überzeugen müssen. Für Berater, die auf belastbare Grundlagen setzen.</p>
-        </div>
-        <div class="excel-card__cta">
-          <a class="btn btn--kaufen" href="/excel-edition.html">Excel-Edition kaufen →</a>
-        </div>
-      </div>
-      <a class="excel-edition__methodik" href="/methodik.html">Methodik &amp; Ingenieurbüro →</a>
-    </section>
+    <section id="sondersituations-cta" class="sondersituations-cta"></section>
     </div>
 
-    <!-- Dialog-CTA — Schluss-Akkord (Kontext-Blau-Container, weißer Text) -->
-    <div class="section-wrap section-wrap--kontext">
-    <section class="dialog-cta">
-      <h2 class="dialog-cta__title">Du hast eine Sondersituation?</h2>
-      <p class="dialog-cta__sub">Schreib uns. Wir lesen, wir antworten.</p>
-      <div class="dialog-cta__actions">
-        <button type="button" class="btn btn--dialog-haupt" id="cta-dialog-mail">Meine Analyse senden &amp; in den Dialog →</button>
-        <button type="button" class="btn btn--dialog-sekundaer" id="cta-teilen">Nur Link mit meinen Werten teilen</button>
-      </div>
-      <p class="dialog-cta__hint">Erste Antwort kostenlos. Tiefere Beratung sprechen wir projekt-basiert ab.</p>
-
-      <!-- Versteckter Bericht-Body — wird beim Init gerendert und in den mailto-Body eingespeist -->
-      <div id="bericht-body" hidden></div>
-    </section>
+    <!-- Versteckte mailto-Helper aus C1 (cta-dialog-mail wird vom v2-CTA aufgerufen) -->
+    <div hidden>
+      <button type="button" id="cta-dialog-mail">mailto-helper</button>
+      <button type="button" id="cta-teilen">teilen-helper</button>
+      <div id="bericht-body"></div>
     </div>
 
   </section>
@@ -1493,39 +2077,50 @@
 
     const state = {
       phase: 'hero',
-      // Wizard-Felder (Schicht 1 — 9 Pflichtfelder + PV)
+      // C2 v2.0 — Wizard-Felder (4 Schritte / 19 Felder, PV raus)
       plz: '',
       ort: '',
       gebaeudetyp: 'MFH',
       eigentuemerTyp: 'WEG',
-      pv: true,
+      pv: true,                          // intern auf true, ohne UI-Toggle (kein Wizard-Feld mehr)
+      wohneinheiten: 14,
       heizung: 'gas-bw',
       baujahr: 1998,
-      wohnflaeche: 950,
+      wohnflaeche: 908,                  // Excel-Bezugs-Wohnfläche (war 950 in v1.1)
+      heizlast: 65,
       verbrauch: 95000,
       verbrauchUnknown: false,
+      jahreskostenIst: null,             // NEU Schritt 2
+      eigenerPreisAktuell: null,         // NEU Schritt 2 — User-Energiepreis
       sanierung: 'teilsaniert',
+      letzteSanierung: null,             // NEU Schritt 3
+      sanierungsHorizont: 10,            // NEU Schritt 3 — 5/10/15/20
+      jaehrlReparaturen: 8000,           // NEU Schritt 3 — Standard MFH
+      jaehrlSanierungsInvest: 0,         // NEU Schritt 3
+      ruecklageProWEMonat: 0,            // NEU Schritt 3 (nur MFH)
       nutzungsart: 'mischnutzung',
       persona: 'optimierer',
 
-      // Touched-Tracking — verhindert stille Überschreibung beim
-      // EFH/MFH-Wechsel, wenn der Nutzer das Feld bereits manuell
-      // angefasst hat (CLAUDE.md §8). PLZ ist immer manuell.
+      // C2 v2.1 — eigene Wohnungsgröße + Bruttoinvestitions-Pflichteingaben
+      eigeneWohnflaeche: null,           // optional bei Vermietung (Schritt 1)
+      bruttoInvest: { hybrid: 73000, wp: 126000, fw: 33000, pellets: 63000 },
+
       touched: {
-        wohnflaeche: false,
-        verbrauch:   false,
-        nutzungsart: false
+        wohnflaeche:   false,
+        verbrauch:     false,
+        heizlast:      false,
+        nutzungsart:   false,
+        wohneinheiten: false,
+        jaehrlReparaturen: false,
+        bruttoInvestHybrid:  false,
+        bruttoInvestWp:      false,
+        bruttoInvestFw:      false,
+        bruttoInvestPellets: false
       },
 
-      // Profi-Modus: in C1 nur State-Flag, Wirkung in nächster Ausbaustufe.
       profimode: false,
-
-      // Tracking: welche Pills wurden nach Berechnen vom Nutzer überschrieben?
-      // Visualisierung über .cockpit-pill--geaendert.
       pillGeaendert: {},
 
-      // Override-Schicht (Schieberegler, Profi-Modus)
-      // Sauber getrennt von Wizard-State.
       overrides: {
         schieberegler: {
           zeitraum: 25,
@@ -1537,7 +2132,7 @@
             master: 50
           }
         },
-        profi: {} // leer in C1
+        profi: {}
       }
     };
 
@@ -1680,7 +2275,8 @@
       for (let i = 0; i < parts.length - 1; i++) target = target[parts[i]];
       target[parts[parts.length - 1]] = value;
       console.info('[Override]', path, '=', value);
-      // In C1: kein Re-Render der Panels, Wirkung folgt in C2/C3/C4.
+      // C2: Re-Render via he:state-changed (rAF-debounced in ergebnis.js)
+      if (window.HE && window.HE.dispatch) window.HE.dispatch();
     }
 
     // ----- Smart Defaults: EFH/MFH-Wechsel -----
@@ -1691,10 +2287,13 @@
                   config.parameter.block5_gebaeudedefaults[type];
       if (!blk) return;
 
-      // Nur Felder überschreiben, die der Nutzer NICHT manuell verändert hat
-      // (außer force=true beim initialen Laden).
+      // C2 v2.0: Excel-Bezugs-Wohnfläche (908 m² für MFH, 140 für EFH).
+      // Überschreibt JSON-Defaults im UI, damit Verifikations-Werte ± 2 % treffen.
+      const EXCEL_BEZUG_WF = { MFH: 908, EFH: 140 };
+      const wohnflaecheDefault = EXCEL_BEZUG_WF[type] || blk.Wohnflaeche;
+
       if (force || !state.touched.wohnflaeche) {
-        state.wohnflaeche = blk.Wohnflaeche;
+        state.wohnflaeche = wohnflaecheDefault;
         const slider = $('#f-wohnflaeche');
         if (slider) slider.value = String(state.wohnflaeche);
         const out = $('#val-wohnflaeche');
@@ -1707,9 +2306,29 @@
         const out = $('#val-verbrauch');
         if (out) out.textContent = fmtInt(state.verbrauch) + ' kWh';
       }
+      // C2 v2.0: Heizlast aus block5
+      if (force || !state.touched.heizlast) {
+        state.heizlast = blk.Heizlast || 65;
+        const slider = $('#f-heizlast');
+        if (slider) slider.value = String(state.heizlast);
+        const out = $('#val-heizlast');
+        if (out) out.textContent = state.heizlast + ' kW';
+      }
+      // C2 v2.0: Wohneinheiten (nur MFH)
+      if (force || !state.touched.wohneinheiten) {
+        state.wohneinheiten = blk.WE || (type === 'MFH' ? 14 : 1);
+        const inp = $('#f-wohneinheiten');
+        if (inp) inp.value = String(state.wohneinheiten);
+      }
+      // C2 v2.0: Reparatur-Pauschale (Standard MFH 8000, EFH 1500)
+      if (force || !state.touched.jaehrlReparaturen) {
+        state.jaehrlReparaturen = blk.Reparaturen || (type === 'MFH' ? 8000 : 1500);
+        const slider = $('#f-reparaturen');
+        if (slider) slider.value = String(state.jaehrlReparaturen);
+        const out = $('#val-reparaturen');
+        if (out) out.textContent = fmtEuro(state.jaehrlReparaturen);
+      }
       if (force || !state.touched.nutzungsart) {
-        // Mapping: parameter.json hat "Selbstnutzung" / "WEG-Mischnutzung"
-        // → Web-State: 'selbstnutzung' / 'mischnutzung'
         const raw = (blk.Nutzungsart || '').toLowerCase();
         if (raw.includes('selbstnutzung')) state.nutzungsart = 'selbstnutzung';
         else if (raw.includes('voll')) state.nutzungsart = 'vollvermietung';
@@ -1717,7 +2336,22 @@
         const sel = $('#f-nutzungsart');
         if (sel) sel.value = state.nutzungsart;
       }
-      // baujahr, sanierung, persona, plz: nie automatisch überschreiben
+
+      // C2 v2.1: Bruttoinvestitions-Defaults nach Spec §3 / Daniel 05.05.
+      // MFH 73/126/33/63 k€, EFH 24/28/18/32 k€ (Modernisierungs-Brutto).
+      const BRUTTO_DEF = (type === 'EFH')
+        ? { hybrid: 24000, wp: 28000, fw: 18000, pellets: 32000 }
+        : { hybrid: 73000, wp: 126000, fw: 33000, pellets: 63000 };
+      ['hybrid','wp','fw','pellets'].forEach(opt => {
+        const tKey = 'bruttoInvest' + opt[0].toUpperCase() + opt.slice(1);
+        if (force || !state.touched[tKey]) {
+          state.bruttoInvest[opt] = BRUTTO_DEF[opt];
+          const slider = $('#f-brutto-' + opt);
+          if (slider) slider.value = String(BRUTTO_DEF[opt]);
+          const out = $('#val-brutto-' + opt);
+          if (out) out.textContent = fmtEuro(BRUTTO_DEF[opt]);
+        }
+      });
     }
 
     // ----- Smart Default: Heizlast-Hilfsregel -----
@@ -1777,9 +2411,22 @@
       const fwHint = $('#fw-satzung-hint');
       if (fwHint) fwHint.hidden = !plzMatch;
 
-      // 2. Gebäudetyp === MFH → Eigentümer-Typ-Feld
+      // 2. Gebäudetyp === MFH → Eigentümer-Typ-Feld + Wohneinheiten-Feld + Erhaltungsrücklage-Feld
       const eigField = $('#feld-eigentuemer-typ');
       if (eigField) eigField.hidden = (state.gebaeudetyp !== 'MFH');
+      const weField = $('#feld-wohneinheiten');
+      if (weField) weField.hidden = (state.gebaeudetyp !== 'MFH');
+      const ruecklageField = $('#feld-ruecklage');
+      if (ruecklageField) ruecklageField.hidden = (state.gebaeudetyp !== 'MFH');
+
+      // C2 v2.1: eigene Wohnungsgröße nur bei Mischnutzung/Vollvermietung
+      const eigWfField = $('#feld-eigene-wohnflaeche');
+      if (eigWfField) eigWfField.hidden = (state.nutzungsart === 'selbstnutzung');
+
+      // C2 v2.1: Pellets-Investitionsfeld nur bei plausibler Pellets-Lage
+      const pelletsAusschlussNeu = (state.gebaeudetyp === 'MFH' && plzMatch);  // gleiche Heuristik wie unten
+      const pelletsBruttoField = $('#feld-brutto-pellets');
+      if (pelletsBruttoField) pelletsBruttoField.hidden = pelletsAusschlussNeu;
 
       // 3. Heizlast > Schwelle UND AltstadtPLZ-Match → Pellets-Option grau
       // Pragmatik: "Innenstadt" = AltstadtPLZ greift = FW-Satzungs-Lage
@@ -1923,7 +2570,7 @@
 
       // Wizard-Step-Navigation (Weiter / Zurück)
       $$('.wizard-step [data-wizard-next]').forEach(b => {
-        b.addEventListener('click', () => gotoStep(Math.min(currentStep + 1, 3)));
+        b.addEventListener('click', () => gotoStep(Math.min(currentStep + 1, 4)));
       });
       $$('.wizard-step [data-wizard-back]').forEach(b => {
         b.addEventListener('click', () => gotoStep(Math.max(currentStep - 1, 1)));
@@ -1931,6 +2578,25 @@
 
       // Berechnen → Calculating → Ergebnis
       $('#cta-berechnen').addEventListener('click', () => {
+        // C2 v2.0: Wizard-Energiepreis (state.eigenerPreisAktuell) wird in den
+        // entsprechenden Schieberegler-Override geschrieben — wirkt auf TCO.
+        if (state.eigenerPreisAktuell != null) {
+          const map = { 'gas-bw': 'preisGas', 'gas-nt': 'preisGas',
+                        'fw': 'preisFW', 'wp': 'preisWP' };
+          const key = map[state.heizung];
+          if (key) {
+            state.overrides.schieberegler[key] = state.eigenerPreisAktuell;
+            // Output-Anzeige sync, falls Slider sichtbar
+            const slMap = { preisGas: '#slider-preis-gas',
+                            preisFW: '#slider-preis-fw',
+                            preisWP: '#slider-preis-wp' };
+            const oMap = { preisGas: '#out-preis-gas',
+                           preisFW: '#out-preis-fw',
+                           preisWP: '#out-preis-wp' };
+            const slEl = $(slMap[key]); if (slEl) slEl.value = String(state.eigenerPreisAktuell);
+            const oEl  = $(oMap[key]);  if (oEl)  oEl.textContent = fmtPreis(state.eigenerPreisAktuell);
+          }
+        }
         gotoPhase('calculating');
         setTimeout(() => {
           renderErgebnis();
@@ -1964,8 +2630,8 @@
             evaluateConditionals();
             updateHeizlastHinweis();
             updateMarktHinweis();
-          } else if (field === 'pv') {
-            state.pv = (val === 'true');
+          } else if (field === 'sanierungsHorizont') {
+            state.sanierungsHorizont = Number(val) || 10;
           } else if (field === 'sanierung') {
             state.sanierung = val;
             updateHeizlastHinweis();
@@ -2024,6 +2690,169 @@
           syncPersona(state.persona);
         });
       });
+
+      // ===== C2 v2.0 — neue Wizard-Listener =====
+
+      // Wohneinheiten (nur MFH sichtbar)
+      const weInp = $('#f-wohneinheiten');
+      if (weInp) weInp.addEventListener('input', e => {
+        const v = Number(e.target.value);
+        if (!isNaN(v) && v >= 1) {
+          state.wohneinheiten = v;
+          state.touched.wohneinheiten = true;
+        }
+      });
+
+      // Heizlast (Schritt 2)
+      const hlSlider = $('#f-heizlast');
+      if (hlSlider) hlSlider.addEventListener('input', e => {
+        const v = Number(e.target.value);
+        $('#val-heizlast').textContent = v + ' kW';
+        state.heizlast = v;
+        state.touched.heizlast = true;
+      });
+
+      // Aktuelle Jahreskosten aus Abrechnung
+      const jkInp = $('#f-jahreskosten');
+      if (jkInp) jkInp.addEventListener('input', e => {
+        const v = Number(e.target.value);
+        state.jahreskostenIst = isNaN(v) || v <= 0 ? null : v;
+        // Plausibilitätscheck Verbrauch × Preis vs Jahreskosten ± 5 %
+        pruefeJahreskostenPlausi();
+      });
+
+      // Aktueller Energiepreis (energieträger-spezifisch)
+      const epInp = $('#f-eigener-preis');
+      if (epInp) epInp.addEventListener('input', e => {
+        const v = Number(e.target.value);
+        state.eigenerPreisAktuell = isNaN(v) || v <= 0 ? null : v;
+        pruefeEnergiepreisPlausi();
+        pruefeJahreskostenPlausi();
+      });
+
+      // Heizung-Wechsel → Energiepreis-Hint-Text aktualisieren (Gas/FW/WP/Pellets/Öl)
+      const hzSelect = $('#f-heizung');
+      if (hzSelect) hzSelect.addEventListener('change', () => {
+        const hint = $('#hint-energietraeger');
+        if (!hint) return;
+        const map = {
+          'gas-bw': 'Gas in ct/kWh', 'gas-nt': 'Gas in ct/kWh',
+          'oel': 'Heizöl in ct/kWh', 'fw': 'Fernwärme in ct/kWh',
+          'wp': 'WP-Strom in ct/kWh', 'pellets': 'Pellets in ct/kWh',
+          'sonstige': 'in ct/kWh'
+        };
+        hint.textContent = '(' + (map[state.heizung] || 'in ct/kWh') + ')';
+      });
+
+      // Letzte Sanierung (Jahr, optional)
+      const lsInp = $('#f-letzte-sanierung');
+      if (lsInp) lsInp.addEventListener('input', e => {
+        const v = Number(e.target.value);
+        state.letzteSanierung = (isNaN(v) || v < 1900) ? null : v;
+      });
+
+      // Reparatur-Pauschale
+      const repSlider = $('#f-reparaturen');
+      if (repSlider) repSlider.addEventListener('input', e => {
+        const v = Number(e.target.value);
+        state.jaehrlReparaturen = v;
+        state.touched.jaehrlReparaturen = true;
+        $('#val-reparaturen').textContent = fmtEuro(v);
+      });
+
+      // Jährliche Sanierungs-Investition
+      const siInp = $('#f-sanierungs-invest');
+      if (siInp) siInp.addEventListener('input', e => {
+        const v = Number(e.target.value);
+        state.jaehrlSanierungsInvest = isNaN(v) || v < 0 ? 0 : v;
+      });
+
+      // Erhaltungsrücklage pro WE pro Monat — Live-Umrechnung auf €/m²/a
+      const ruInp = $('#f-ruecklage-we-monat');
+      if (ruInp) ruInp.addEventListener('input', e => {
+        const v = Number(e.target.value);
+        state.ruecklageProWEMonat = isNaN(v) || v < 0 ? 0 : v;
+        const proQmJahr = (v * (state.wohneinheiten || 1) * 12) / (state.wohnflaeche || 1);
+        const hinweis = $('#ruecklage-umrechnung');
+        if (hinweis) {
+          hinweis.innerHTML = '→ entspricht <strong>'
+            + proQmJahr.toFixed(2).replace('.', ',') + ' €/m²/a</strong>'
+            + ' (GdW-Richtwert: 13–17 €/m²/a)'
+            + (proQmJahr < 13 ? ' — <em>liegt unter Richtwert</em>' : '');
+        }
+      });
+
+      // C2 v2.1: Eigene Wohnungsgröße (optional bei Vermietung)
+      const eigWfInp = $('#f-eigene-wohnflaeche');
+      if (eigWfInp) eigWfInp.addEventListener('input', e => {
+        const v = Number(e.target.value);
+        state.eigeneWohnflaeche = (isNaN(v) || v <= 0) ? null : v;
+      });
+
+      // C2 v2.1: 4 Bruttoinvestitions-Slider mit Plausibilitäts-Hinweis (<50 % / >200 %)
+      ['hybrid', 'wp', 'fw', 'pellets'].forEach(opt => {
+        const slider = $('#f-brutto-' + opt);
+        if (!slider) return;
+        const tKey = 'bruttoInvest' + opt[0].toUpperCase() + opt.slice(1);
+        slider.addEventListener('input', e => {
+          const v = Number(e.target.value);
+          state.bruttoInvest[opt] = v;
+          state.touched[tKey] = true;
+          const out = $('#val-brutto-' + opt);
+          if (out) out.textContent = fmtEuro(v);
+          // Plausibilitäts-Hinweis vs Default (Spec §3 v2.1)
+          const def = (state.gebaeudetyp === 'EFH'
+                       ? { hybrid:24000, wp:28000, fw:18000, pellets:32000 }
+                       : { hybrid:73000, wp:126000, fw:33000, pellets:63000 })[opt];
+          const hinweis = $('#plausi-brutto-' + opt);
+          if (hinweis) {
+            if (v < def * 0.5) {
+              hinweis.innerHTML = 'Sehr niedriger Wert — bist du sicher? Typisch sind <strong>'
+                                  + fmtEuro(def) + '</strong> für ein '
+                                  + state.gebaeudetyp + ' deiner Größe.';
+              hinweis.hidden = false;
+            } else if (v > def * 2) {
+              hinweis.innerHTML = 'Sehr hoher Wert — bist du sicher? Typisch sind <strong>'
+                                  + fmtEuro(def) + '</strong>.';
+              hinweis.hidden = false;
+            } else {
+              hinweis.hidden = true;
+            }
+          }
+        });
+      });
+    }
+
+    // C2 v2.0 — Wizard-Plausibilitätschecks
+    function pruefeJahreskostenPlausi() {
+      const hint = $('#plausi-jahreskosten');
+      if (!hint) return;
+      const jk = state.jahreskostenIst;
+      const ep = state.eigenerPreisAktuell;
+      const v = state.verbrauch;
+      if (!jk || !ep || !v) { hint.hidden = true; return; }
+      const erwartet = (v * ep) / 100;  // ct → €
+      const diff = Math.abs(jk - erwartet) / erwartet;
+      hint.hidden = diff <= 0.05;
+    }
+    function pruefeEnergiepreisPlausi() {
+      const hint = $('#plausi-energiepreis');
+      const diffOut = $('#plausi-energiepreis-diff');
+      if (!hint || !diffOut) return;
+      const ep = state.eigenerPreisAktuell;
+      if (!ep) { hint.hidden = true; return; }
+      // Markt-Schnitt aus Preishistorie nach Heizung
+      const m = config.preishistorie?.monate?.[config.preishistorie?.aktueller_monat];
+      if (!m) { hint.hidden = true; return; }
+      const map = { 'gas-bw': 'gas', 'gas-nt': 'gas', 'oel': 'heizoel',
+                    'fw': 'fernwaerme', 'wp': 'wp_strom', 'pellets': 'pellets' };
+      const marktKey = map[state.heizung];
+      const markt = marktKey ? m[marktKey] : null;
+      if (!markt) { hint.hidden = true; return; }
+      const diff = ((ep - markt) / markt) * 100;
+      if (Math.abs(diff) < 10) { hint.hidden = true; return; }
+      diffOut.textContent = (diff > 0 ? '+' : '') + diff.toFixed(0) + ' %';
+      hint.hidden = false;
     }
 
     // ----- Ergebnis-Renderer -----
@@ -2035,6 +2864,8 @@
       renderMiniCockpit();
       renderBericht();
       evaluateConditionals();
+      // C2: Panels neu rendern (engine.js + ergebnis.js)
+      if (window.HE && window.HE.dispatch) window.HE.dispatch();
     }
 
     function renderAnnahmenTabelle() {
@@ -2223,6 +3054,8 @@
         const n = parseInt(newVal.replace(/[^\d]/g, ''), 10);
         if (!isNaN(n)) state.verbrauch = n;
       }
+      // C2: Pill-Editor-Änderung → Panels neu rechnen
+      if (window.HE && window.HE.dispatch) window.HE.dispatch();
     }
 
     function renderBericht() {
@@ -2232,7 +3065,7 @@
       if (!body) return;
       const sb = state.overrides.schieberegler;
       const fb = sb.foerderung;
-      const we = (state.gebaeudetyp === 'MFH') ? 14 : 1; // Stub — echter Wert in der nächsten Ausbaustufe
+      const we = state.wohneinheiten || (state.gebaeudetyp === 'MFH' ? 14 : 1);
       const beste = '{beste Option folgt in der nächsten Ausbaustufe}';
 
       const txt =
@@ -2254,15 +3087,12 @@
     // ----- Schieberegler-Setup (Wirkung auf Panels in C2/C3/C4) -----
 
     function setupSchieberegler() {
-      // Zeitraum-Slider: Index 0..6 wird auf 1/3/5/10/15/20/25 Jahre gemappt.
-      // Erlaubt nicht-äquidistante Snap-Werte (Wechsler braucht 3-5 Jahre).
-      const ZEITRAUM_VALUES = [1, 3, 5, 10, 15, 20, 25];
-      const sZ  = $('#slider-zeitraum');
+      // C2 v2.0: Zeitraum-Slider OBEN auf Ergebnis-Seite, fließend 1–30 Jahre.
+      const sZ  = $('#slider-zeitraum-oben');
       const oZ  = $('#out-zeitraum');
-      sZ.addEventListener('input', e => {
-        const idx = Number(e.target.value);
-        const jahre = ZEITRAUM_VALUES[idx] ?? 25;
-        oZ.textContent = jahre + (jahre === 1 ? ' Jahr' : ' Jahre');
+      if (sZ) sZ.addEventListener('input', e => {
+        const jahre = Number(e.target.value);
+        if (oZ) oZ.textContent = jahre + (jahre === 1 ? ' Jahr' : ' Jahre');
         sZ.setAttribute('aria-valuetext', jahre + ' Jahre');
         setOverride('schieberegler.zeitraum', jahre);
         renderBericht();
@@ -2308,6 +3138,7 @@
           state.overrides.schieberegler.foerderung[meta.key] = el.checked;
           recomputeMaster();
           renderBericht();
+          if (window.HE && window.HE.dispatch) window.HE.dispatch();
         });
       });
       // Master-Slider manuelles Override
@@ -2341,6 +3172,7 @@
             $('#bafa-effizienz').checked = false;
             console.info('[Preset 2029] Master =', sum, '% (Klimabonus auf', KLIMABONUS_2029 * 100, '% gesenkt)');
             renderBericht();
+            if (window.HE && window.HE.dispatch) window.HE.dispatch();
             return;
           } else if (p === 'gestrichen') {
             fb.grund = false; fb.klima = false; fb.einkommen = false; fb.effizienz = false;
@@ -2353,6 +3185,7 @@
             $('#bafa-effizienz').checked = false;
             console.info('[Preset gestrichen] Master = 0 %');
             renderBericht();
+            if (window.HE && window.HE.dispatch) window.HE.dispatch();
             return;
           }
           // Heute-Preset: Toggles synchronisieren + Master neu rechnen
@@ -2362,6 +3195,7 @@
           $('#bafa-effizienz').checked = fb.effizienz;
           recomputeMaster();
           renderBericht();
+          if (window.HE && window.HE.dispatch) window.HE.dispatch();
         });
       });
     }
@@ -2375,7 +3209,8 @@
           syncPersona(state.persona);
           renderMiniCockpit();
           renderBericht();
-          // Wirkung auf Panel-Gewichtung in C2/C3/C4
+          // C2: Empfehlungs-Banner + Headline-Antwort neu rechnen
+          if (window.HE && window.HE.dispatch) window.HE.dispatch();
           console.info('[Persona] Aktiv =', state.persona);
         });
       });
@@ -2394,14 +3229,20 @@
             profiBtn.textContent = '✓ Erweiterter Modus aktiv — Klick zum Deaktivieren';
             profiBtn.classList.add('profi-button--aktiv');
             if (profiHint) profiHint.hidden = false;
-            showToast('Erweiterter Modus aktiviert. Zusätzliche Hebel folgen in der nächsten Ausbaustufe.');
+            showToast('Erweiterter Modus aktiviert — vier zusätzliche Pills oben im Cockpit (★).');
+            // UX: zum Mini-Cockpit scrollen, damit die neuen Pills sichtbar sind
+            setTimeout(() => {
+              const cockpit = $('#mini-cockpit');
+              if (cockpit) cockpit.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 250);
           } else {
             profiBtn.textContent = 'Erweiterten Modus aktivieren →';
             profiBtn.classList.remove('profi-button--aktiv');
             if (profiHint) profiHint.hidden = true;
           }
-          console.info('[Erweiterter Modus]', state.profimode ? 'aktiviert' : 'deaktiviert',
-            '— Wirkung folgt in der nächsten Ausbaustufe.');
+          // C2: Profi-Pills ein-/ausblenden
+          if (window.HE && window.HE.dispatch) window.HE.dispatch();
+          console.info('[Erweiterter Modus]', state.profimode ? 'aktiviert' : 'deaktiviert');
         });
       }
     }
@@ -2491,6 +3332,15 @@
 
     // ----- Init -----
 
+    // ----- C2: HE-Schnittstelle für js/ergebnis.js -----
+    function dispatchHE() {
+      window.dispatchEvent(new CustomEvent('he:state-changed'));
+    }
+
+    function exposeHE() {
+      window.HE = { state, config, dispatch: dispatchHE };
+    }
+
     document.addEventListener('DOMContentLoaded', async () => {
       setupNav();
       setupWizardListeners();
@@ -2503,8 +3353,13 @@
       await loadJSON();
       evaluateConditionals();
       updateMarktHinweis();
+      // C2: ergebnis.js-Layer aktivieren
+      exposeHE();
+      dispatchHE();
     });
   })();
   </script>
+  <!-- C2: Berechnungs- und Visualisierungs-Layer (ES-Module) -->
+  <script type="module" src="js/ergebnis.js"></script>
 </body>
 </html>
