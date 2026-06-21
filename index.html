@@ -22,6 +22,7 @@
       --petrol-dark:   #1a3535;
       --signal:        #CFF77F;
       --signal-dark:   #a8d45a;
+      --context-blue:  #7e9696;
       --stone-gray:    #8a8680;
       --border:        #e0dedd;
       --bg-light:      #f5f4f2;
@@ -154,6 +155,100 @@
     .profil-btn:hover .profil-btn__label  { color: var(--signal); }
     .profil-btn__circle { width: 52px; height: 52px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; transition: background 0.2s, transform 0.2s; }
     .profil-btn__label { font-size: 10px; color: rgba(255,255,255,0.7); font-family: 'Inter', sans-serif; letter-spacing: 0.5px; white-space: nowrap; transition: color 0.2s; }
+
+    /* === Objekt 001 · Live-Modul (P1) === */
+    .oz-eklasse { display: inline-block; margin-top: 0.6rem; font-size: 11px; font-family: 'Inter', sans-serif; color: #7ab8b5; border: 0.5px solid rgba(122,184,181,0.45); border-radius: 4px; padding: 3px 10px; letter-spacing: 0.3px; }
+
+    /* (a) Die eine Zahl */
+    .oz-anchor { background: var(--petrol-dark); padding: 1.75rem 1.5rem; }
+    .oz-anchor__lbl { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--petrol-light); font-family: 'Inter', sans-serif; margin-bottom: 0.5rem; }
+    .oz-anchor__num { font-family: 'Playfair Display', Georgia, serif; font-size: 56px; line-height: 1; font-weight: 400; color: var(--signal); }
+    .oz-anchor__unit { font-size: 17px; color: #a8d45a; margin-left: 8px; font-family: 'Inter', sans-serif; }
+    .oz-anchor__det { margin-top: 1.1rem; }
+    .oz-anchor__det summary { font-size: 12px; color: var(--petrol-light); cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 6px; min-height: 24px; font-family: 'Inter', sans-serif; }
+    .oz-anchor__det summary::-webkit-details-marker { display: none; }
+    .oz-anchor__det summary::before { content: '▸'; font-size: 10px; transition: transform 0.2s; }
+    .oz-anchor__det[open] summary::before { transform: rotate(90deg); }
+    .oz-anchor__det p { font-size: 12px; color: rgba(255,255,255,0.72); line-height: 1.65; margin: 0.6rem 0 0; }
+    .oz-anchor__ziel { margin-top: 1.1rem; padding-top: 0.9rem; border-top: 0.5px solid rgba(122,184,181,0.2); font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+    .oz-anchor__ziel strong { color: #a8d45a; font-weight: 500; }
+
+    /* (a2) Gebäude-Radar · Future Readiness Index */
+    .oz-radar { background: var(--petrol-dark); padding: 1.5rem 1.5rem 1.75rem; border-top: 0.5px solid rgba(122,184,181,0.15); }
+    .oz-radar__lbl { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--petrol-light); font-family: 'Inter', sans-serif; margin-bottom: 0.2rem; }
+    .oz-radar__title { font-family: 'Playfair Display', Georgia, serif; font-size: 17px; color: #ffffff; font-weight: 400; margin-bottom: 0.3rem; line-height: 1.3; }
+    .oz-radar__intro { font-size: 13px; color: rgba(255,255,255,0.78); line-height: 1.6; margin-bottom: 0.6rem; }
+    .oz-radar__framing { font-size: 12.5px; color: var(--petrol-light); font-style: italic; line-height: 1.5; margin-bottom: 1rem; }
+    .oz-radar__chart { display: block; width: 100%; max-width: 360px; height: auto; margin: 0 auto 0.5rem; }
+    .oz-radar__grid { fill: none; stroke: rgba(122,184,181,0.22); stroke-width: 1; }
+    .oz-radar__soll { fill: none; stroke: var(--context-blue); stroke-width: 1.5; }
+    .oz-radar__axis { stroke: rgba(122,184,181,0.18); stroke-width: 1; }
+    .oz-radar__ist { fill: rgba(207,247,127,0.30); stroke: var(--signal); stroke-width: 2; stroke-linejoin: round; }
+    .oz-radar__pt { fill: var(--signal); }
+    .oz-radar__pt--krit { fill: #ffffff; stroke: var(--signal); stroke-width: 2; }
+    .oz-radar__marker { cursor: pointer; }
+    .oz-radar__marker:focus { outline: none; }
+    .oz-radar__num { fill: var(--petrol); stroke: var(--petrol-dark); stroke-width: 1.5; transition: fill 0.15s; }
+    .oz-radar__num--krit { fill: var(--signal); }
+    .oz-radar__marker.is-active .oz-radar__num { fill: var(--signal); stroke: #ffffff; }
+    .oz-radar__numtext { fill: #ffffff; font-size: 9px; font-family: 'Inter', sans-serif; font-weight: 600; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+    .oz-radar__numtext--krit { fill: #1a3535; }
+    .oz-radar__readout { min-height: 3.4em; background: rgba(126,150,150,0.15); border-left: 2px solid var(--context-blue); border-radius: 0 6px 6px 0; padding: 0.6rem 0.8rem; margin: 0.25rem 0 1rem; font-size: 12.5px; color: rgba(255,255,255,0.85); line-height: 1.55; }
+    .oz-radar__readout strong { color: var(--signal); font-weight: 500; }
+    .oz-radar__legend { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+    .oz-fr-item { display: flex; align-items: center; gap: 7px; width: 100%; text-align: left; background: transparent; border: 0.5px solid rgba(122,184,181,0.25); border-radius: 6px; padding: 7px 9px; min-height: 44px; cursor: pointer; color: rgba(255,255,255,0.82); font-family: 'Inter', sans-serif; font-size: 11px; line-height: 1.3; transition: background 0.15s, border-color 0.15s; }
+    .oz-fr-item:hover, .oz-fr-item.is-active { background: rgba(207,247,127,0.10); border-color: var(--signal); }
+    .oz-fr-item__nr { flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%; background: var(--petrol); color: #ffffff; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; }
+    .oz-fr-item--krit .oz-fr-item__nr { background: var(--signal); color: #1a3535; }
+    .oz-fr-item__feld { flex: 1; }
+    .oz-fr-item__ist { flex-shrink: 0; font-weight: 600; color: var(--petrol-light); }
+    .oz-fr-item--krit .oz-fr-item__ist { color: var(--signal); }
+    .oz-radar__doclink { margin: 1rem 0 0; }
+    .oz-radar__doclink a { font-size: 12.5px; color: var(--signal); font-family: 'Inter', sans-serif; font-weight: 500; }
+    .oz-radar__doclink a:hover { text-decoration: underline; }
+
+    /* (b) Live-Zeitstrahl */
+    .oz-timeline { background: #ffffff; padding: 1.35rem 1.5rem 1.25rem; border-bottom: 0.5px solid var(--border); }
+    .oz-timeline__head { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-tertiary); font-family: 'Inter', sans-serif; margin-bottom: 0.9rem; }
+    .oz-tl-wrap { position: relative; }
+    .oz-tl-wrap::before, .oz-tl-wrap::after { content: ''; position: absolute; left: 0; right: 8px; height: 22px; pointer-events: none; z-index: 2; }
+    .oz-tl-wrap::before { top: 0; background: linear-gradient(#ffffff, rgba(255,255,255,0)); }
+    .oz-tl-wrap::after { bottom: 0; background: linear-gradient(rgba(255,255,255,0), #ffffff); }
+    .oz-tl-scroll { max-height: 480px; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding-right: 8px; scrollbar-width: thin; scrollbar-color: var(--petrol-light) transparent; }
+    .oz-tl-scroll::-webkit-scrollbar { width: 8px; }
+    .oz-tl-scroll::-webkit-scrollbar-track { background: transparent; }
+    .oz-tl-scroll::-webkit-scrollbar-thumb { background: var(--petrol-light); border-radius: 4px; }
+    .oz-tl__item { margin: 0; }
+    .oz-tl__item:not(.oz-tl__item--live) + .oz-tl__item:not(.oz-tl__item--live) { border-top: 0.5px solid var(--border); }
+    .oz-tl__det { width: 100%; }
+    .oz-tl__sum { list-style: none; cursor: pointer; display: grid; grid-template-columns: 18px 1fr auto; gap: 3px 10px; align-items: center; padding: 0.6rem 0; min-height: 44px; }
+    .oz-tl__sum::-webkit-details-marker { display: none; }
+    .oz-tl__dot { grid-column: 1; grid-row: 1; justify-self: start; width: 11px; height: 11px; border-radius: 50%; background: var(--border); }
+    .oz-tl__date { grid-column: 2; grid-row: 1; font-size: 11px; font-family: 'Inter', sans-serif; color: var(--text-tertiary); }
+    .oz-tl__chev { grid-column: 3; grid-row: 1; justify-self: end; font-size: 10px; color: var(--text-tertiary); transition: transform 0.2s; }
+    .oz-tl__det[open] .oz-tl__chev { transform: rotate(90deg); }
+    .oz-tl__meta-row { grid-column: 2 / -1; grid-row: 2; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .oz-tl__typ { font-size: 9px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--petrol); font-family: 'Inter', sans-serif; font-weight: 600; }
+    .oz-tl__titel { grid-column: 2 / -1; grid-row: 3; font-size: 13.5px; color: var(--text-primary); line-height: 1.45; }
+    .oz-tl__ergebnis { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; margin: 0.15rem 0 0.55rem; padding-left: 28px; }
+    .oz-tl__det:not([open]) .oz-tl__ergebnis { display: none; }
+    .oz-tl__item--done .oz-tl__dot { background: var(--petrol); }
+    .oz-tl__item--planned .oz-tl__dot { background: var(--context-blue); }
+    .oz-tl__item--later .oz-tl__dot { background: var(--border); }
+
+    /* (c) Aktueller Schritt (live) */
+    .oz-tl__item--live { background: rgba(207,247,127,0.12); border: 1px solid rgba(207,247,127,0.75); border-radius: 8px; margin: 0.6rem 0; padding: 0.5rem 0.8rem; }
+    .oz-tl__item--live .oz-tl__dot { background: var(--signal); }
+    .oz-tl__item--live .oz-tl__titel { font-weight: 600; }
+    .oz-tl__item--live .oz-tl__ergebnis { color: var(--text-primary); }
+    .oz-tl__live-tag { display: inline-block; margin: 0.1rem 0 0.4rem; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: #1a3535; background: var(--signal); border-radius: 3px; padding: 2px 8px; font-weight: 700; font-family: 'Inter', sans-serif; }
+
+    /* Status-Pills */
+    .oz-pill { display: inline-block; font-size: 11px; font-family: 'Inter', sans-serif; padding: 2px 9px; border-radius: 20px; white-space: nowrap; }
+    .oz-pill--done    { background: #e0f0ee; color: #1a4f4d; border: 0.5px solid #8ec8c4; }
+    .oz-pill--planned { background: #eef2f2; color: #3f5454; border: 0.5px solid #c2d0d0; }
+    .oz-pill--live    { background: var(--signal); color: #1a3535; border: 0.5px solid #b8e85a; font-weight: 600; }
+    .oz-pill--later   { background: var(--panel-bg); color: var(--text-tertiary); border: 0.5px solid var(--border); }
 
     /* Einladungs-Slot */
     .objekt-slot { border: 1.5px solid var(--signal); border-radius: var(--radius); padding: 1.5rem; display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.25rem; flex-wrap: wrap; background: var(--petrol-dark); }
@@ -341,6 +436,12 @@
       .footer__inner          { flex-direction: column; align-items: flex-start; }
       .objekt001__kz          { grid-template-columns: 1fr 1fr; }
       .objekt001__status      { grid-template-columns: 1fr; }
+      .oz-anchor__num         { font-size: 46px; }
+      .oz-anchor              { padding: 1.5rem 1.25rem; }
+      .oz-radar               { padding: 1.5rem 1.25rem 1.75rem; }
+      .oz-radar__legend       { grid-template-columns: 1fr; }
+      .oz-timeline            { padding: 1.25rem 1.25rem 1rem; }
+      .oz-tl-scroll           { max-height: 62vh; }
       .preisspiegel           { grid-template-columns: 1fr 1fr; }
       .objekt-slot            { flex-direction: column; align-items: flex-start; }
       .brueckenbauer          { flex-direction: column; align-items: flex-start; }
@@ -547,14 +648,15 @@
   <section class="objekte-section container" id="objekte">
     <div class="objekte-intro">
       <div>
-        <span class="label" style="margin-bottom:0.5rem;">Objekte</span>
-        <h2 style="font-size:22px;margin:0;">Gebäude, die ihre Entscheidungen transparent machen.</h2>
+        <span class="label" style="margin-bottom:0.5rem;">Erstes Referenzgebäude</span>
+        <h2 style="font-size:22px;margin:0;">Forschung, angewandt auf ein echtes Gebäude.</h2>
       </div>
     </div>
     <p style="font-size:14px;color:var(--text-secondary);max-width:620px;margin-bottom:1rem;line-height:1.7;">
-      Muster werden nur sichtbar, wenn Daten geteilt werden.
-      Jedes dokumentierte Objekt trägt zur gemeinsamen Grundlage bei —
-      für bessere Entscheidungen aller Eigentümer.
+      Den Future-Readiness-Rahmen aus unserer Forschung haben wir zuerst auf die Stadt Erfurt
+      angewandt — hier erstmals auf ein einzelnes Gebäude. Drei Dinge auf einen Blick:
+      die belegte Wärmekosten-Kennzahl von heute, ein Radar der Zukunftsfähigkeit über elf
+      Kompetenzfelder und der laufende Entscheidungsweg. Einordnung statt Empfehlung.
     </p>
 
     <!-- Objekt 001 -->
@@ -563,11 +665,12 @@
         <div>
           <p class="objekt001__nr">Objekt 001 · Erfurt Innenstadt · Dokumentiert seit 2024</p>
           <p class="objekt001__name">Mehrfamilienhaus · Altstadt Erfurt</p>
-          <p class="objekt001__sub">Altbau 1900 · Saniert 2010 · 14 Wohnungen · 784 m²&thinsp;·&thinsp;WEG· Gas-Heizung</p>
+          <p class="objekt001__sub">Altbau 1900 · Saniert 2010 · 14 Wohnungen · 769,83 m² beheizte Fläche · WEG · Gas-Heizung</p>
+          <span class="oz-eklasse">Energieklasse D · 124 kWh/m²a</span>
         </div>
         <div class="objekt001__media">
           <div class="objekt001__img">
-            <img src="images/theaterstrasse-4.jpg" alt="Theaterstraße 4, Erfurt">
+            <img src="images/theaterstrasse-4.jpg" alt="Mehrfamilienhaus · Altstadt Erfurt">
           </div>
           <a href="objekte/theaterstrasse-4.html" class="profil-btn">
             <div class="profil-btn__circle">
@@ -580,39 +683,17 @@
           </a>
         </div>
       </div>
-      <div class="objekt001__kz">
-        <div class="kz">
-          <p class="kz__lbl">Energieklasse</p>
-          <p class="kz__val">D</p>
-          <p class="kz__note">124 kWh/m²a · Altbau 1900</p>
-        </div>
-        <div class="kz">
-          <p class="kz__lbl">Heizkosten IST · Gas</p>
-          <p class="kz__val">1,17<span class="kz__unit">€/m²/Mon.</span></p>
-          <p class="kz__note">13,27 €/m²/Jahr · 11.000 € gesamt</p>
-        </div>
-        <div class="kz">
-          <p class="kz__lbl">Gasverbrauch</p>
-          <p class="kz__val">129<span class="kz__unit">kWh/m²</span></p>
-          <p class="kz__note">101.240 kWh/Jahr gesamt</p>
-        </div>
-        <div class="kz" style="background:rgba(207,247,127,0.08);border-left:2px solid #CFF77F;">
-          <p class="kz__lbl" style="color:#CFF77F;">Ziel · Planung WP</p>
-          <p class="kz__val" style="color:#CFF77F;font-size:24px;">0,91<span class="kz__unit" style="color:#a8d45a;">€/m²/Mon.</span></p>
-          <p class="kz__note" style="color:#a8d45a;">10,92 €/m²/Jahr · −38% vs. IST</p>
-        </div>
-      </div>
-      <div class="objekt001__status">
-        <div class="st-item"><span class="st-dot st-warn"></span>Fernwärmesatzung seit 2006</div>
-        <div class="st-item"><span class="st-dot st-ok"></span>WP-fähig · Heizlast 62 kW</div>
-        <div class="st-item"><span class="st-dot st-warn"></span>Heizung Bj. 1998 · Ersatzteile abgekündigt</div>
-        <div class="st-item"><span class="st-dot st-ok"></span>2 Angebote eingeholt</div>
-        <div class="st-item"><span class="st-dot st-open"></span>Befreiungsantrag in Vorbereitung</div>
-        <div class="st-item"><span class="st-dot st-open"></span>Fernwärme-Angebot ausstehend</div>
-      </div>
+      <!-- (a) Die eine Zahl -->
+      <div class="oz-anchor" id="oz-anchor"></div>
+
+      <!-- (a2) Gebäude-Radar · Future Readiness Index -->
+      <div class="oz-radar" id="oz-radar"></div>
+
+      <!-- (b) Live-Zeitstrahl · (c) aktueller Schritt -->
+      <div class="oz-timeline" id="oz-timeline"></div>
       <div class="objekt001__footer">
         <a href="objekte/theaterstrasse-4.html" class="objekt001__footer-link">Vollständiges Profil ansehen →</a>
-        <span style="font-size:11px;color:var(--text-tertiary);">Daten aus Heizkostenabrechnung 2023/2024 · Investitionsplan Nov. 2025</span>
+        <span style="font-size:11px;color:var(--text-tertiary);">Datenstand 2025 · anonymisiert</span>
       </div>
     </div>
 
@@ -1105,6 +1186,174 @@
           btn.setAttribute('aria-label', 'Menü öffnen');
         });
       });
+    })();
+  </script>
+
+  <!-- Objekt 001 · Live-Modul: Daten + Render (P1) -->
+  <script>
+    (function(){
+      // Eingebettetes Datenobjekt (Muster analog GEBAEUDE_DB der Profilseite).
+      // daten/theaterstrasse-4.json bleibt der dokumentierte Stand; Konsolidierung
+      // Cockpit -> build_json.py -> Seite ist ein spaeterer, separater Schritt.
+      const OBJEKT_001 = {
+        die_eine_zahl: {
+          wert: "1,30",
+          einheit: "€/m²/Monat",
+          label: "Wärmekosten 2025 · Heizung + Warmwasser",
+          davon_co2: "0,12",
+          bezugsflaeche_m2: 769.83,
+          abrechnungsjahr: 2025,
+          systemgrenze: "Wärme = Heizung + Warmwasser, Vollkosten inkl. Heizbetrieb, CO₂ ausgewiesen, Kaltwasser/Abwasser ausgeschlossen.",
+          quelle: "Gas-Jahresabrechnung und Heiznebenkosten-Abrechnung 2025"
+        },
+        zeitstrahl: [
+          { datum: "1998", typ: "Bestand", titel: "Einbau des heutigen Gaskessels", status: "erledigt",
+            ergebnis: "Der Gaskessel (72 kW) war von Beginn an überdimensioniert (Bedarf rund 62 kW) und ist nach über 25 Betriebsjahren am Ende seiner Lebensdauer." },
+          { datum: "2005", typ: "Recht", titel: "Fernwärmesatzung der Stadt tritt in Kraft", status: "erledigt",
+            ergebnis: "Das Gebäude liegt im Satzungsgebiet mit Anschluss- und Benutzungszwang. Eine Befreiung ist nur bei einer emissionsfreien Wärmeversorgung möglich; die 15-jährige Übergangsfrist ist 2020 abgelaufen." },
+          { datum: "2019 → 2025", typ: "Energie & Preis", titel: "Gaskosten +81 %", status: "erledigt",
+            ergebnis: "Die jährlichen Gaskosten stiegen von 2019 bis 2025 um rund 81 %. Der Vollkostenpreis je kWh legte 2019–2024 um 56 % zu (5,03 → 7,84 ct) — das Gebäude wandelt sich vom Verbrauchs- zum Marktsystem." },
+          { datum: "Dez. 2022", typ: "Markt & Klima", titel: "Wärmenetzstrategie 2040 des Versorgers", status: "erledigt",
+            ergebnis: "Die regionale Fernwärme ist heute zu rund 95 % gasbasiert; die Strategie des Versorgers prognostiziert selbst eine Preisverdoppelung bis 2040. Geothermie ist noch ohne Probebohrung." },
+          { datum: "Juli 2023", typ: "Technik", titel: "Sachstandsanalyse Heizung", status: "erledigt",
+            ergebnis: "Ein Ingenieurbüro dokumentierte gutachterlich: Ersatzteile sind abgekündigt, die Anlage ist überdimensioniert, eine kurzfristige Erneuerung wird empfohlen. Der Anschlusszwang war darin noch nicht berücksichtigt." },
+          { datum: "Sept. 2024", typ: "Wärmeplanung", titel: "Start der kommunalen Wärmeplanung", status: "erledigt",
+            ergebnis: "Die Stadt beginnt offiziell die kommunale Wärmeplanung (Fertigstellung Mitte 2026 angekündigt). Der Plan ist rechtlich unverbindlich." },
+          { datum: "2024 → 2025", typ: "Energie", titel: "Gasverbrauch gesunken", status: "erledigt",
+            ergebnis: "Der Jahresverbrauch sank von 97.601 auf 94.932 kWh." },
+          { datum: "16.02.2026", typ: "Recht & Klima", titel: "Behörde bestätigt Anschlusszwang", status: "erledigt",
+            ergebnis: "Das zuständige Umweltamt bestätigt schriftlich: Der Anschlusszwang gilt unabhängig von der kommunalen Wärmeplanung. Zugleich liegt der Fernwärme-CO₂-Faktor (0,228 kg/kWh) über dem von Gas (0,201)." },
+          { datum: "14.05.2026", typ: "Wärmeplanung", titel: "Stellungnahme zur Wärmeplanung eingereicht", status: "erledigt",
+            ergebnis: "Die Eigentümerperspektive wurde formell in die kommunale Wärmeplanung eingebracht." },
+          { datum: "21.06.2026", typ: "Recht & Kosten", titel: "Anschlusskonditionen Fernwärme angefragt", status: "angefragt — Antwort offen", live: true,
+            ergebnis: "Beim Versorger werden die Konditionen eines Fernwärme-Anschlusses ermittelt (Anschlusskosten, Vorlaufzeit). Wegen des Anschlusszwangs ist dies derzeit der wahrscheinlichere Weg — die Wärmepumpe bleibt die zu rechnende Variante." },
+          { datum: "21.06.2026", typ: "Recht & Technik", titel: "Anfrage an Behörde zur Gebietseinstufung", status: "angefragt — Antwort offen", live: true,
+            ergebnis: "Geklärt werden soll, ob ein reines Wohngebiet (35 dB(A)) oder ein allgemeines Wohngebiet (40 dB(A)) gilt. Davon hängt die Schallschutz-Anforderung einer Wärmepumpe ab — und damit ihre Genehmigungsfähigkeit." },
+          { datum: "30.06.2026", typ: "Wärmeplanung", titel: "KWP-Endfassung erwartet", status: "geplant",
+            ergebnis: "Erwartet werden die Endfassung der kommunalen Wärmeplanung und das amtliche Versorgungsgebiet." },
+          { datum: "01.07.2026", typ: "Recht", titel: "Gebäude-Energie-Gesetz-Rahmen in Kraft", status: "geplant",
+            ergebnis: "Der bundesweite Rechtsrahmen für Gebäudeheizungen greift." },
+          { datum: "2026–2028", typ: "Recht", titel: "Fernwärmesatzung modernisiert", status: "mittelfristig",
+            ergebnis: "Erwartet wird eine Neuregelung von Anschlusszwang und Befreiungsmöglichkeiten." },
+          { datum: "2030–2036", typ: "Sanierung", titel: "Geplante energetische Sanierungen", status: "langfristig",
+            ergebnis: "Dach, Fenster und Keller werden schrittweise energetisch saniert." }
+        ],
+        future_readiness: {
+          skala_max: 5,
+          soll: 5,
+          framing: "Der Radar ist kein Urteil, sondern eine Landkarte.",
+          felder: [
+            { nr: 1,  feld: "Nachhaltigkeitsintelligenz",   ist: 2, kritisch: false, befund: "Wärme heute fossil; Wärmepumpe senkt CO₂ um rund 64 %." },
+            { nr: 2,  feld: "Ressourcenbewusstsein",         ist: 3, kritisch: false, befund: "Solide Rücklage, aber Mittel binden sich in wiederholten Analysen." },
+            { nr: 3,  feld: "Anpassungsfähigkeit",           ist: 2, kritisch: false, befund: "Rechtsrahmen (Fernwärmesatzung) lange unbeachtet; Lernkurve begonnen." },
+            { nr: 4,  feld: "Resilienz",                     ist: 1, kritisch: true,  befund: "27-Jahre-Kessel, Ersatzteile abgekündigt — Ausfallrisiko, kein Systembeschluss." },
+            { nr: 5,  feld: "Soziale Gestaltungskraft",      ist: 3, kritisch: false, befund: "Direkte, transparente Eigentümer-Kommunikation etabliert." },
+            { nr: 6,  feld: "Projekt-/Umsetzungskompetenz",  ist: 2, kritisch: true,  befund: "Seit Jahren kein Variantenbeschluss trotz Dringlichkeit." },
+            { nr: 7,  feld: "Digital & Daten",               ist: 2, kritisch: false, befund: "Kein Echtzeit-Monitoring; Datengrundlage teils unbelegt." },
+            { nr: 8,  feld: "Innovationskraft",              ist: 3, kritisch: false, befund: "Wärmepumpe, PV, Sanierungspfad gedacht, noch nicht beschlossen." },
+            { nr: 9,  feld: "Wirtschaftliche Tragfähigkeit", ist: 3, kritisch: false, befund: "Wärmepumpe über 25 Jahre klar günstigste Lösung (TCO)." },
+            { nr: 10, feld: "Netzwerk/Unabhängigkeit",       ist: 2, kritisch: false, befund: "Unabhängiges Zweitgutachten fehlt noch." },
+            { nr: 11, feld: "Integrität/Transparenz",        ist: 2, kritisch: true,  befund: "Entscheidungsprozess braucht mehr Belege und Augenhöhe." }
+          ]
+        }
+      };
+
+      function pillFor(status){
+        if (/angefragt/i.test(status))     return { cls: "oz-pill--live",    text: "angefragt — offen", kind: "live" };
+        if (/laufend/i.test(status))       return { cls: "oz-pill--live",    text: "laufend",           kind: "live" };
+        if (/erledigt/i.test(status))      return { cls: "oz-pill--done",    text: "erledigt",          kind: "done" };
+        if (/geplant/i.test(status))       return { cls: "oz-pill--planned", text: "geplant",           kind: "planned" };
+        if (/mittelfristig/i.test(status)) return { cls: "oz-pill--later",   text: "mittelfristig",     kind: "later" };
+        if (/langfristig/i.test(status))   return { cls: "oz-pill--later",   text: "langfristig",       kind: "later" };
+        return { cls: "oz-pill--planned", text: status, kind: "planned" };
+      }
+
+      const anchorEl = document.getElementById("oz-anchor");
+      const tlEl     = document.getElementById("oz-timeline");
+      if (!anchorEl || !tlEl) return;
+
+      const z = OBJEKT_001.die_eine_zahl;
+      anchorEl.innerHTML =
+        '<p class="oz-anchor__lbl">' + z.label + '</p>' +
+        '<p class="oz-anchor__num">' + z.wert + '<span class="oz-anchor__unit">' + z.einheit + '</span></p>' +
+        '<details class="oz-anchor__det">' +
+          '<summary>Zusammensetzung &amp; Systemgrenze</summary>' +
+          '<p>davon CO₂ ' + z.davon_co2 + ' · Bezugsfläche ' + z.bezugsflaeche_m2.toLocaleString("de-DE") + ' m² · Abrechnungsjahr ' + z.abrechnungsjahr + ' · Quelle: ' + z.quelle + '</p>' +
+          '<p>' + z.systemgrenze + '</p>' +
+        '</details>' +
+        '<p class="oz-anchor__ziel"><strong>Aktueller Stand:</strong> Nach Feststellung des Anschluss- und Benutzungszwangs werden derzeit die Konditionen eines Fernwärme-Anschlusses ermittelt (Anschlusskosten beim Versorger angefragt). Die Wärmepumpe wird als Variante im Wirtschaftlichkeitsvergleich gerechnet — der Forward-Wert folgt auf identischer Vollkostengrenze.</p>';
+
+      // === Säule 2: Gebäude-Radar (Future Readiness Index) ===
+      const radarEl = document.getElementById("oz-radar");
+      if (radarEl) {
+        const FR = OBJEKT_001.future_readiness;
+        const felder = FR.felder, n = felder.length, maxV = FR.skala_max;
+        const S = 320, cx = S / 2, cy = S / 2, R = 116, labelR = R + 20;
+        function pt(i, r){ const a = -Math.PI / 2 + i * 2 * Math.PI / n; return [ +(cx + r * Math.cos(a)).toFixed(1), +(cy + r * Math.sin(a)).toFixed(1) ]; }
+        function ring(r){ return felder.map(function(f, i){ return pt(i, r).join(","); }).join(" "); }
+
+        let svg = '<svg class="oz-radar__chart" viewBox="0 0 ' + S + ' ' + S + '" role="img" aria-label="Gebäude-Radar: 11 Kompetenzfelder, Ist gegen Soll (5)">';
+        for (var v = 1; v <= maxV; v++){ svg += '<polygon class="' + (v === maxV ? "oz-radar__soll" : "oz-radar__grid") + '" points="' + ring(R * v / maxV) + '"/>'; }
+        felder.forEach(function(f, i){ var p = pt(i, R); svg += '<line class="oz-radar__axis" x1="' + cx + '" y1="' + cy + '" x2="' + p[0] + '" y2="' + p[1] + '"/>'; });
+        svg += '<polygon class="oz-radar__ist" points="' + felder.map(function(f, i){ return pt(i, R * f.ist / maxV).join(","); }).join(" ") + '"/>';
+        felder.forEach(function(f, i){ var p = pt(i, R * f.ist / maxV); svg += '<circle class="oz-radar__pt' + (f.kritisch ? " oz-radar__pt--krit" : "") + '" cx="' + p[0] + '" cy="' + p[1] + '" r="' + (f.kritisch ? 4 : 3) + '"/>'; });
+        felder.forEach(function(f, i){ var p = pt(i, labelR); svg += '<g class="oz-radar__marker" data-nr="' + f.nr + '" tabindex="0" role="button" aria-label="' + f.feld + ', Ist ' + f.ist + ' von ' + maxV + '">' +
+          '<circle class="oz-radar__num' + (f.kritisch ? " oz-radar__num--krit" : "") + '" cx="' + p[0] + '" cy="' + p[1] + '" r="9"/>' +
+          '<text class="oz-radar__numtext' + (f.kritisch ? " oz-radar__numtext--krit" : "") + '" x="' + p[0] + '" y="' + p[1] + '">' + f.nr + '</text></g>'; });
+        svg += '</svg>';
+
+        let legend = '<div class="oz-radar__legend">';
+        felder.forEach(function(f){ legend += '<button type="button" class="oz-fr-item' + (f.kritisch ? " oz-fr-item--krit" : "") + '" data-nr="' + f.nr + '">' +
+          '<span class="oz-fr-item__nr">' + f.nr + '</span>' +
+          '<span class="oz-fr-item__feld">' + f.feld + '</span>' +
+          '<span class="oz-fr-item__ist">' + f.ist + '/' + maxV + '</span></button>'; });
+        legend += '</div>';
+
+        radarEl.innerHTML =
+          '<p class="oz-radar__lbl">Future Readiness Index · Forschung × Gebäude</p>' +
+          '<p class="oz-radar__title">Gebäude-Radar — 11 Kompetenzfelder, Ist gegen Soll</p>' +
+          '<p class="oz-radar__intro">Future Readiness misst Zukunftsfähigkeit nicht als eine Zahl, sondern als Kompass aus elf Kompetenzfeldern — von Nachhaltigkeit über Resilienz bis Transparenz. Der Radar zeigt den heutigen Stand (Ist, gefüllte Fläche) gegen das zukunftsfähige Ziel (Soll, äußerer Ring).</p>' +
+          '<p class="oz-radar__framing">' + FR.framing + '</p>' +
+          svg +
+          '<p class="oz-radar__readout" id="oz-radar-readout">Tippe ein Feld für den Kurzbefund. Außenring = zukunftsfähig (5), gefüllte Fläche = heute.</p>' +
+          legend +
+          '<p class="oz-radar__doclink"><a href="dokumente/260621_Gebaeude-Future-Readiness_v2.1.pdf" target="_blank" rel="noopener">Vollständige Analyse lesen (PDF) →</a></p>';
+
+        const readout = document.getElementById("oz-radar-readout");
+        function selectField(nr){
+          const f = felder.find(function(x){ return x.nr === Number(nr); });
+          if (!f) return;
+          readout.innerHTML = '<strong>' + f.nr + ' · ' + f.feld + ' — Ist ' + f.ist + '/' + maxV + '</strong><br>' + f.befund;
+          radarEl.querySelectorAll(".oz-fr-item").forEach(function(b){ b.classList.toggle("is-active", b.dataset.nr === String(nr)); });
+          radarEl.querySelectorAll(".oz-radar__marker").forEach(function(g){ g.classList.toggle("is-active", g.dataset.nr === String(nr)); });
+        }
+        radarEl.addEventListener("click", function(e){ const el = e.target.closest("[data-nr]"); if (el) selectField(el.dataset.nr); });
+        radarEl.addEventListener("keydown", function(e){ if (e.key === "Enter" || e.key === " "){ const el = e.target.closest(".oz-radar__marker[data-nr]"); if (el){ e.preventDefault(); selectField(el.dataset.nr); } } });
+      }
+
+      let html = '<p class="oz-timeline__head">Zeitstrahl · Entscheidungsweg</p>' +
+        '<div class="oz-tl-wrap"><div class="oz-tl-scroll"><div class="oz-tl">';
+      OBJEKT_001.zeitstrahl.forEach(function(e){
+        const p = pillFor(e.status);
+        const live = e.live === true;
+        const itemCls = "oz-tl__item oz-tl__item--" + (live ? "live" : p.kind);
+        html +=
+          '<div class="' + itemCls + '">' +
+            (live ? '<span class="oz-tl__live-tag">Aktueller Schritt</span>' : '') +
+            '<details class="oz-tl__det"' + (live ? ' open' : '') + '>' +
+              '<summary class="oz-tl__sum">' +
+                '<span class="oz-tl__dot"></span>' +
+                '<span class="oz-tl__date">' + e.datum + '</span>' +
+                '<span class="oz-tl__chev">▸</span>' +
+                '<span class="oz-tl__meta-row"><span class="oz-tl__typ">' + e.typ + '</span><span class="oz-pill ' + p.cls + '">' + p.text + '</span></span>' +
+                '<span class="oz-tl__titel">' + e.titel + '</span>' +
+              '</summary>' +
+              '<p class="oz-tl__ergebnis">' + e.ergebnis + '</p>' +
+            '</details>' +
+          '</div>';
+      });
+      html += '</div></div></div>';
+      tlEl.innerHTML = html;
     })();
   </script>
 </body>
