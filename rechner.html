@@ -192,8 +192,9 @@
 
     /* Slider-Reihen */
     .wizard-slider { display: flex; flex-direction: column; gap: 0.4rem; }
-    .wizard-slider__row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
-    .wizard-slider__value { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--petrol); font-weight: 500; }
+    .wizard-slider__row { display: flex; justify-content: space-between; align-items: baseline; gap: 0.6rem; }
+    .wizard-slider__row .wizard-field__label { min-width: 0; margin-bottom: 0; }
+    .wizard-slider__value { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--petrol); font-weight: 500; white-space: nowrap; flex-shrink: 0; }
     input[type="range"] { width: 100%; accent-color: var(--petrol); height: 28px; }
     @media (pointer: coarse) { input[type="range"] { height: 44px; } }
 
@@ -320,6 +321,19 @@
     }
     .headline-antwort h2 { font-size: 22px; margin-bottom: 0.5rem; }
     .placeholder { color: var(--text-tertiary); font-style: italic; font-size: 14px; }
+
+    /* 3-KPI-Antwort (P2-B3c) */
+    .kpi3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin: 1rem 0 0.75rem; }
+    .kpi3__item { background: var(--bg-light); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 0.7rem 0.8rem; }
+    .kpi3__val { font-family: 'Playfair Display', Georgia, serif; font-size: 21px; font-weight: 500; color: var(--petrol-dark); line-height: 1.1; white-space: nowrap; }
+    .kpi3__unit { font-size: 11px; font-family: 'Inter', sans-serif; color: var(--text-secondary); white-space: nowrap; }
+    .kpi3__lbl { font-size: 11px; color: var(--text-secondary); margin-top: 0.35rem; line-height: 1.4; }
+    .kpi3__arrow { font-family: 'Inter', sans-serif; font-weight: 600; }
+    .kpi3__arrow--down { color: #5aaa88; }
+    .kpi3__arrow--up { color: #b94a4a; }
+    .kpi3__ref { font-size: 12px; color: var(--text-tertiary); line-height: 1.55; margin: 0.25rem 0 0; }
+    @media (max-width: 560px) { .kpi3 { grid-template-columns: 1fr; } }
+
 
     /* Persona-Toggle (Ergebnis-Seite, klein) */
     .persona-toggle {
@@ -509,13 +523,19 @@
       border: none; border-radius: var(--radius);
     }
     details.conditional > summary {
-      cursor: pointer; padding: 0.75rem 1rem;
-      font-family: 'Playfair Display', Georgia, serif; font-size: 16px; font-weight: 500;
+      cursor: pointer; padding: 0.85rem 1rem;
+      font-family: 'Playfair Display', Georgia, serif; font-size: 14px; font-weight: 500;
       color: var(--white); list-style: none;
+      display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
     }
     details.conditional > summary::-webkit-details-marker { display: none; }
-    details.conditional > summary::before { content: '▸ '; color: var(--white); display: inline-block; }
-    details.conditional[open] > summary::before { content: '▾ '; }
+    details.conditional > summary::after {
+      content: 'Aufklappen ▾';
+      font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
+      color: #1a3535; background: var(--signal); border-radius: 4px; padding: 3px 9px;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    details.conditional[open] > summary::after { content: 'Schließen ▴'; background: var(--petrol-light); }
     details.conditional > div { padding: 0 1rem 1rem; color: var(--white); }
     details.conditional .panel-placeholder { color: rgba(255,255,255,0.85); font-style: italic; }
 
@@ -966,28 +986,24 @@
       letter-spacing: 0.04em;
     }
     @media (max-width: 768px) {
-      /* Mobile: Karten-Stack — eine Karte pro Heizoption */
-      .dashboard-tabelle { display: block; }
-      .dashboard-tabelle thead { display: none; }
-      .dashboard-tabelle tbody { display: block; }
-      .dashboard-tabelle tr { display: grid; grid-template-columns: 1fr 1fr;
-                              gap: 0.25rem; padding: 0.3rem 0;
-                              border-bottom: 0.5px solid var(--border); }
-      .dashboard-tabelle tr.dashboard-gruppe { display: block; padding: 0.4rem; }
-      .dashboard-tabelle td { display: block; padding: 0.3rem 0.5rem;
-                              border: none; }
-      .dashboard-tabelle td:first-child { font-weight: 500; }
+      /* Mobile: echte Tabelle, horizontal wischbar; erste Spalte (Kennzahl) fixiert */
+      .dashboard-tabelle { font-size: 12px; min-width: 480px; }
+      .dashboard-tabelle th, .dashboard-tabelle td { padding: 0.4rem 0.5rem; }
+      .dashboard-tabelle th:first-child,
+      .dashboard-tabelle td:first-child {
+        position: sticky; left: 0; z-index: 1;
+        background: var(--white); box-shadow: 1px 0 0 var(--border);
+      }
+      .dashboard-tabelle thead th:first-child { background: var(--bg-light); }
+      .dashboard-tabelle tr.dashboard-gruppe td { background: var(--bg-light); }
     }
 
     /* C2 v2.0 — Sensibilisierungs-Block (Spec §7, Kontextblau, Smart-Icon) */
-    .sensibilisierungs-block {
-      margin: 1.5rem 0;
-      padding: 1.25rem 1.5rem;
-      background: #cce0e8;
-      border-left: 4px solid var(--petrol);
-      border-radius: var(--radius);
-      color: var(--petrol-dark);
-    }
+    .sensibilisierungs-block { margin: 0; }
+    .klapp-eyebrow { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-tertiary); font-family: 'Inter', sans-serif; margin: 1.5rem 0 0.5rem; }
+    .sensibilisierungs-block details.conditional { margin-top: 0; }
+    .vb-purpose { font-size: 13px; color: var(--text-secondary); margin: 0 0 0.6rem; line-height: 1.55; }
+    .vb-closer { font-style: italic; font-size: 13px; color: var(--text-secondary); margin: 0.75rem 0 0; }
     .sensibilisierung__titel {
       font-family: 'Playfair Display', Georgia, serif;
       font-size: 18px; font-weight: 500; color: var(--petrol-dark);
@@ -1221,8 +1237,10 @@
     .zukunftsszenario .aussage__titel { font-size: 12px; color: var(--petrol-dark);
                                           font-weight: 500; margin-bottom: 0.2rem; }
     .zukunftsszenario .aussage__werte { font-size: 13px; color: var(--text-primary); }
-    .zukunftsszenario .aussage__delta { color: var(--petrol); font-weight: 500; }
-    .zukunftsszenario .aussage__delta--rot { color: #b94a4a; }
+    .zukunftsszenario .aussage__delta { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px; white-space: nowrap; }
+    .zukunftsszenario .aussage__delta--gut { color: #5aaa88; }
+    .zukunftsszenario .aussage__delta--schlecht { color: #c8a460; }
+    .zukunftsszenario .aussage__delta--neutral { color: var(--text-tertiary); }
     .zukunftsszenario .aussage__detail { font-size: 11px; color: var(--text-secondary);
                                            margin-top: 0.15rem; }
     .zukunftsszenario .imdefault-hinweis { font-size: 11px; color: var(--text-secondary);
@@ -1240,6 +1258,24 @@
 
     /* Excel-Edition-Sektion + Sondersituations-CTA: Container-Mitte (Daniel-Bug 04.05.) */
     .excel-edition-sektion { max-width: var(--max-width-wide); margin: 0 auto; }
+
+    /* P2-B4: Beratungs-Box (ersetzt Excel-Sektion) */
+    .beratung-box { max-width: var(--max-width); margin: 1.5rem auto; background: var(--petrol-dark);
+      color: #fff; border-radius: var(--radius); padding: 1.75rem; }
+    .beratung-box h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 22px; color: #fff;
+      font-weight: 400; margin: 0 0 0.75rem; line-height: 1.3; }
+    .beratung-box p { color: rgba(255,255,255,0.88); font-size: 14px; line-height: 1.65; margin: 0.6rem 0; }
+    .beratung-box strong { color: #fff; }
+    .beratung-box__sub { color: var(--signal) !important; font-weight: 600; margin-top: 1rem !important; }
+    .beratung-box__liste { margin: 0.4rem 0 0.6rem; padding-left: 1.2rem; color: rgba(255,255,255,0.88);
+      font-size: 14px; line-height: 1.6; }
+    .beratung-box__liste li { margin: 0.35rem 0; }
+    .beratung-box__liste strong { color: #fff; }
+    .beratung-box__mail a { color: var(--signal); font-weight: 600; text-decoration: underline; }
+    .beratung-box .btn--analyse { background: var(--signal); color: var(--petrol-dark);
+      border: 1px solid var(--signal-dark); padding: 0.6rem 1.4rem; font-family: 'Inter', sans-serif;
+      font-size: 14px; font-weight: 500; cursor: pointer; border-radius: var(--radius); margin-top: 0.5rem; }
+    .beratung-box .btn--analyse:hover { background: var(--signal-dark); }
 
     /* Sondersituations-CTA Format-Fix (Spec §13 v2.1) — Kontextblau (dunkler), mittig, Signal-Grün-Button, kein Smart-Icon */
     .sondersituations-cta {
@@ -1274,6 +1310,12 @@
     .bigpicture-achsen-legende { font-size: 12px; color: var(--text-secondary);
                                   margin: 0.5rem 0; line-height: 1.8; }
     .bigpicture-achsen-legende strong { color: var(--petrol-dark); }
+    .bp-summary { font-size: 13px; color: var(--text-primary); line-height: 1.6; margin: 0.75rem 0 0.5rem; }
+    .bp-summary strong { color: var(--petrol-dark); }
+    .bp-achsen-titel { font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-tertiary); font-family: 'Inter', sans-serif; margin: 0.6rem 0 0.3rem; }
+    .bp-achsen-liste { margin: 0; padding-left: 1.1rem; font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+    .bp-achsen-liste li { margin: 0.25rem 0; }
+    .bp-achsen-liste strong { color: var(--petrol-dark); }
     .bp-achs-tip { display: inline-flex; align-items: baseline; gap: 0.15rem;
                    cursor: help; position: relative; color: var(--petrol-dark); padding: 0 0.2rem; }
     .bp-achs-pop {
@@ -1373,54 +1415,25 @@
     </div>
   </header>
 
-  <!-- ==========================================================
-       Phase 1 — Hero / Intro
-       Initial sichtbar. CTA "Jetzt durchrechnen" → Phase 2.
-       ========================================================== -->
-  <section id="phase-hero" class="phase phase--active hero" aria-label="Einführung Der Entscheider">
-    <div class="hero__inner">
-      <div class="hero__text">
-        <h1 class="hero__headline">Der Entscheider</h1>
-        <p class="hero__subtitle"><em>Investitionsrechner für Ihre Heizungsentscheidung — damit sich Ihre Investition lohnt, nach den Maßstäben, die Ihnen wichtig sind.</em></p>
-        <div class="hero__underline" aria-hidden="true"></div>
-        <div class="hero__statement">
-          <p>Drei Sichten auf dieselbe Frage. Keine einzelne gibt eine Antwort — alle drei zusammen machen die Entscheidung sichtbar.</p>
-          <p>Die Wirtschaftlichkeitsrechnung gibt es an vielen Stellen. Hier rechnet sie korrekt — und steht dann nicht allein. Sie wird ergänzt um Ihre persönliche Gewichtung der Entscheidung und um eine wissenschaftlich fundierte Bewertung der Zukunftsfähigkeit jeder Option.</p>
-          <p>Kein Ersatz für eine Ingenieursplanung. Aber eine belastbare Grundlage, bevor Sie eine in Auftrag geben.</p>
-        </div>
-        <div class="hero__cta-row">
-          <button type="button" class="btn btn--primary" id="cta-start">Jetzt durchrechnen →</button>
-        </div>
-
-        <!-- URL-Parameter-Banner (Variante A+) — nur sichtbar bei ?-Parametern -->
-        <div class="url-banner" id="urlParamBanner" hidden>
-          <p id="urlParamBanner-text"></p>
-          <div class="url-banner__actions">
-            <button type="button" class="btn btn--primary btn--small" id="cta-uebernehmen">Werte übernehmen</button>
-            <button type="button" class="btn btn--ghost btn--small" id="cta-neustart">Neu starten</button>
-          </div>
-        </div>
-      </div>
-
-      <figure class="hero__cover" aria-hidden="true">
-        <!-- Platzhalter-SVG, bleibt laut Spec §22 bestehen -->
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#7ab8b5" stroke-width="1.5" stroke-linecap="round">
-          <line x1="20"  y1="70"  x2="180" y2="70"/>
-          <line x1="20"  y1="110" x2="140" y2="110"/>
-          <line x1="20"  y1="130" x2="100" y2="130"/>
-          <circle cx="150" cy="140" r="18"/>
-          <circle cx="150" cy="140" r="11" stroke-width="1"/>
-          <path d="M168 138 q10 0 10 8 q0 8 -10 8" stroke-width="1.25"/>
-        </svg>
-      </figure>
-    </div>
-  </section>
+  <!-- Phase 1 (Hero) entfernt (Einstieg A): Einstieg führt direkt in den Wizard,
+       der Intro-Text lebt auf der Startseite. Das URL-Parameter-Banner wurde in
+       den Wizard-Kopf verschoben. -->
 
   <!-- ==========================================================
        Phase 2 — Wizard (3 Schritte, 9 Pflichtfelder + PV-Toggle)
        Step-Wechsel per data-step / hidden. JS-State zentral.
        ========================================================== -->
-  <section id="phase-wizard" class="phase wizard" hidden>
+  <section id="phase-wizard" class="phase wizard phase--active">
+
+    <!-- URL-Parameter-Banner (Deep-Link/Share) — nur sichtbar bei ?-Parametern -->
+    <div class="url-banner" id="urlParamBanner" hidden>
+      <p id="urlParamBanner-text"></p>
+      <div class="url-banner__actions">
+        <button type="button" class="btn btn--primary btn--small" id="cta-uebernehmen">Werte übernehmen</button>
+        <button type="button" class="btn btn--ghost btn--small" id="cta-neustart">Neu starten</button>
+      </div>
+    </div>
+
     <div class="wizard-progress" id="wizard-progress">
       <span class="wizard-progress__step wizard-progress__step--active" data-step-indicator="1">1 · Gebäude</span>
       <span class="wizard-progress__step" data-step-indicator="2">2 · Heizung &amp; Verbrauch</span>
@@ -1515,7 +1528,7 @@
       <div class="wizard-field">
         <div class="wizard-slider">
           <div class="wizard-slider__row">
-            <span class="wizard-field__label">Wohnfläche</span>
+            <span class="wizard-field__label">Wohnfläche <small style="color:var(--text-tertiary);font-weight:400;">(Gesamtgebäude)</small></span>
             <span class="wizard-slider__value" id="val-wohnflaeche">908 m²</span>
           </div>
           <input type="range" id="f-wohnflaeche" min="50" max="3000" step="10" value="908">
@@ -1632,22 +1645,29 @@
         <div class="wizard-slider">
           <div class="wizard-slider__row">
             <span class="wizard-field__label">Reparatur-Pauschale pro Jahr</span>
-            <span class="wizard-slider__value" id="val-reparaturen">8.000 €</span>
+            <span class="wizard-slider__value" id="val-reparaturen">0 €</span>
           </div>
-          <input type="range" id="f-reparaturen" min="0" max="30000" step="100" value="8000">
+          <input type="range" id="f-reparaturen" min="0" max="20000" step="100" value="0">
         </div>
+        <p class="wizard-field__hint">Orientierung: laufende Instandhaltung grob 10–15 €/m²·a (ältere Gebäude eher mehr).</p>
       </div>
 
       <div class="wizard-field">
-        <label class="wizard-field__label" for="f-sanierungs-invest">Jährliche Sanierungs-Investition <small style="color:var(--text-tertiary);font-weight:400;">(€/Jahr)</small>
-          <span class="info-tip" tabindex="0" aria-label="Was ist die jährliche Sanierungs-Investition?">ⓘ
-            <span class="info-tip__pop">
-              Was möchtest du pro Jahr für Sanierung zurücklegen — über die laufenden Reparaturen hinaus?
-              Wirkt nur auf den Sanierungspfad-Posten (Excel-Detail), nicht auf die TCO-Kernrechnung.
+        <div class="wizard-slider">
+          <div class="wizard-slider__row">
+            <span class="wizard-field__label">Jährliche Sanierungs-Investition <small style="color:var(--text-tertiary);font-weight:400;">(€/Jahr)</small>
+              <span class="info-tip" tabindex="0" aria-label="Was ist die jährliche Sanierungs-Investition?">ⓘ
+                <span class="info-tip__pop">
+                  Was möchtest du pro Jahr für Sanierung zurücklegen — über die laufenden Reparaturen hinaus?
+                  Wirkt nur auf den Sanierungspfad-Posten, nicht auf die TCO-Kernrechnung.
+                </span>
+              </span>
             </span>
-          </span>
-        </label>
-        <input type="number" id="f-sanierungs-invest" class="wizard-input" min="0" max="50000" step="100" placeholder="0">
+            <span class="wizard-slider__value" id="val-sanierungs-invest">0 €</span>
+          </div>
+          <input type="range" id="f-sanierungs-invest" min="0" max="30000" step="100" value="0">
+        </div>
+        <p class="wizard-field__hint">Zusätzlich für geplante Modernisierung — Höhe nach Sanierungsfahrplan, kein fester Richtwert.</p>
       </div>
 
       <!-- Konditional: nur bei MFH -->
@@ -1657,7 +1677,7 @@
         </label>
         <input type="number" id="f-ruecklage-we-monat" class="wizard-input" min="0" max="500" step="1" placeholder="z. B. 50">
         <p class="wizard-field__hint" id="ruecklage-umrechnung">
-          → entspricht <strong>0,00 €/m²/a</strong> (GdW-Richtwert: 13–17 €/m²/a)
+          Monatlicher Betrag je Wohneinheit. → entspricht <strong>0,00 €/m²/a</strong> (GdW-Richtwert: 13–17 €/m²/a)
         </p>
       </div>
 
@@ -1666,9 +1686,9 @@
         Investitionskosten der Modernisierungs-Optionen
         <span class="info-tip" tabindex="0" aria-label="Was sind diese Werte?">ⓘ
           <span class="info-tip__pop">
-            Wir haben hier typische Werte für ein {EFH/MFH} mit deiner Heizlast geschätzt.
-            Wenn du ein konkretes Angebot vom Heizungsbauer hast, trag den genauen Wert ein.
-            Du kannst die Werte auch in der Ergebnis-Tabelle nochmal ändern.
+            Die Slider stehen bewusst auf 0 — bitte trag je Option deinen realen oder angebotenen
+            Wert ein (z. B. aus einem Angebot). So wirkt keine Option vorab teurer;
+            du kannst die Werte auch in der Ergebnis-Tabelle nochmal ändern.
           </span>
         </span>
       </h3>
@@ -1676,10 +1696,10 @@
       <div class="wizard-field">
         <div class="wizard-slider">
           <div class="wizard-slider__row">
-            <span class="wizard-field__label">Bruttoinvestition Hybrid</span>
-            <span class="wizard-slider__value" id="val-brutto-hybrid">73.000 €</span>
+            <span class="wizard-field__label">Bruttoinvestition Hybrid <small style="color:var(--text-tertiary);font-weight:400;">(Wärmepumpe + Gas)</small></span>
+            <span class="wizard-slider__value" id="val-brutto-hybrid">0 €</span>
           </div>
-          <input type="range" id="f-brutto-hybrid" min="20000" max="300000" step="1000" value="73000">
+          <input type="range" id="f-brutto-hybrid" min="0" max="200000" step="1000" value="0">
         </div>
         <p class="wizard-field__hint plausi-hint" id="plausi-brutto-hybrid" hidden></p>
       </div>
@@ -1687,10 +1707,10 @@
       <div class="wizard-field">
         <div class="wizard-slider">
           <div class="wizard-slider__row">
-            <span class="wizard-field__label">Bruttoinvestition Wärmepumpe</span>
-            <span class="wizard-slider__value" id="val-brutto-wp">126.000 €</span>
+            <span class="wizard-field__label">Bruttoinvestition Wärmepumpe <small style="color:var(--text-tertiary);font-weight:400;">(Luft-Wärmepumpe)</small></span>
+            <span class="wizard-slider__value" id="val-brutto-wp">0 €</span>
           </div>
-          <input type="range" id="f-brutto-wp" min="20000" max="400000" step="1000" value="126000">
+          <input type="range" id="f-brutto-wp" min="0" max="250000" step="1000" value="0">
         </div>
         <p class="wizard-field__hint plausi-hint" id="plausi-brutto-wp" hidden></p>
       </div>
@@ -1698,10 +1718,10 @@
       <div class="wizard-field">
         <div class="wizard-slider">
           <div class="wizard-slider__row">
-            <span class="wizard-field__label">Bruttoinvestition Fernwärme</span>
-            <span class="wizard-slider__value" id="val-brutto-fw">33.000 €</span>
+            <span class="wizard-field__label">Bruttoinvestition Fernwärme <small style="color:var(--text-tertiary);font-weight:400;">(Anschluss)</small></span>
+            <span class="wizard-slider__value" id="val-brutto-fw">0 €</span>
           </div>
-          <input type="range" id="f-brutto-fw" min="5000" max="150000" step="1000" value="33000">
+          <input type="range" id="f-brutto-fw" min="0" max="120000" step="1000" value="0">
         </div>
         <p class="wizard-field__hint plausi-hint" id="plausi-brutto-fw" hidden></p>
       </div>
@@ -1710,10 +1730,10 @@
       <div class="wizard-field" id="feld-brutto-pellets">
         <div class="wizard-slider">
           <div class="wizard-slider__row">
-            <span class="wizard-field__label">Bruttoinvestition Pellets</span>
-            <span class="wizard-slider__value" id="val-brutto-pellets">63.000 €</span>
+            <span class="wizard-field__label">Bruttoinvestition Pellets <small style="color:var(--text-tertiary);font-weight:400;">(Holz-Pellets)</small></span>
+            <span class="wizard-slider__value" id="val-brutto-pellets">0 €</span>
           </div>
-          <input type="range" id="f-brutto-pellets" min="20000" max="300000" step="1000" value="63000">
+          <input type="range" id="f-brutto-pellets" min="0" max="200000" step="1000" value="0">
         </div>
         <p class="wizard-field__hint plausi-hint" id="plausi-brutto-pellets" hidden></p>
       </div>
@@ -1834,7 +1854,7 @@
         <a href="#panel-1">Wirtschaftlichkeit</a>
         <a href="#big-picture-v2">Big Picture</a>
         <a href="#schieberegler">Was-wäre-wenn</a>
-        <a href="#excel-edition-sektion">Excel-Edition</a>
+        <a href="#excel-edition-sektion">Beratung</a>
       </nav>
     </div></div>
 
@@ -1846,11 +1866,14 @@
       <!-- 7. LESE-HILFE-BOX prominent (NICHT klappbar, Spec §5.4 + Memory designsystem §2) -->
       <div class="lese-hilfe-box" id="lese-hilfe-box"></div>
 
+      <!-- Einordnung: optionale Hintergrund-Kästen -->
+      <p class="klapp-eyebrow">Mehr Hintergrund — optional aufklappen</p>
+
       <!-- 8. SENSIBILISIERUNGS-BLOCK fossile Energie (Kontextblau, Smart-Icon, 11 Punkte) -->
       <div class="sensibilisierungs-block" id="sensibilisierungs-block"></div>
 
       <!-- 9. VERMIETER-BILANZ (konditional sichtbar bei Vermietung; Block 1 + 2; Block 3 RAUS in v2.1) -->
-      <details class="conditional" id="vermieter-bilanz" hidden open>
+      <details class="conditional" id="vermieter-bilanz" hidden>
         <summary>Sicht für Eigentümer mit Vermietung</summary>
         <div class="vb-block" id="vb-block-1"></div>
         <div class="vb-block" id="vb-block-2"></div>
@@ -1870,6 +1893,10 @@
     <div class="section-wrap section-wrap--white">
     <section id="schieberegler" class="schieberegler-cluster was-waere-wenn-3-spalten">
       <h2>Was-wäre-wenn — drei Hebel</h2>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;max-width:640px;margin:0 0 1.25rem;">
+        Verschiebe die Regler, um zu sehen, wie robust die Empfehlung ist — etwa wenn Energiepreise
+        steigen oder die Förderung sinkt. Die Werte rechnen live mit.
+      </p>
       <div class="schieberegler-grid">
 
         <!-- Spalte A: Energiepreise -->
@@ -1973,14 +2000,7 @@
 
     <!-- Vorgeschmack-Aufklapper: RAUS in v2.1 (Spec §16) -->
 
-    <!-- PV-Hinweis-Box (Spec §3 v2.1 — PV nicht im Wizard, Hinweis statt) -->
-    <div class="section-wrap section-wrap--bg">
-    <div class="pv-hinweis-box">
-      <strong>PV / Batteriespeicher / Solarthermie als Verstärker?</strong> —
-      Der Web-Rechner berücksichtigt das nicht direkt. Volle PV-Konfiguration findest du in der
-      <a href="#excel-edition-sektion">Excel-Edition</a>.
-    </div>
-    </div>
+    <!-- PV-Hinweis-Box entfernt (P2-B3) -->
 
     <!-- 15. EXCEL-EDITION — 4 Kacheln + 3-Spalten-Tarif (Spec §11) -->
     <div class="section-wrap section-wrap--white">
@@ -2076,7 +2096,7 @@
     // ----- State -----
 
     const state = {
-      phase: 'hero',
+      phase: 'wizard',
       // C2 v2.0 — Wizard-Felder (4 Schritte / 19 Felder, PV raus)
       plz: '',
       ort: '',
@@ -2095,7 +2115,7 @@
       sanierung: 'teilsaniert',
       letzteSanierung: null,             // NEU Schritt 3
       sanierungsHorizont: 10,            // NEU Schritt 3 — 5/10/15/20
-      jaehrlReparaturen: 8000,           // NEU Schritt 3 — Standard MFH
+      jaehrlReparaturen: 0,              // P2-B2: Start 0 — Nutzer setzt realen Wert
       jaehrlSanierungsInvest: 0,         // NEU Schritt 3
       ruecklageProWEMonat: 0,            // NEU Schritt 3 (nur MFH)
       nutzungsart: 'mischnutzung',
@@ -2103,7 +2123,7 @@
 
       // C2 v2.1 — eigene Wohnungsgröße + Bruttoinvestitions-Pflichteingaben
       eigeneWohnflaeche: null,           // optional bei Vermietung (Schritt 1)
-      bruttoInvest: { hybrid: 73000, wp: 126000, fw: 33000, pellets: 63000 },
+      bruttoInvest: { hybrid: 0, wp: 0, fw: 0, pellets: 0 },
 
       touched: {
         wohnflaeche:   false,
@@ -2322,7 +2342,7 @@
       }
       // C2 v2.0: Reparatur-Pauschale (Standard MFH 8000, EFH 1500)
       if (force || !state.touched.jaehrlReparaturen) {
-        state.jaehrlReparaturen = blk.Reparaturen || (type === 'MFH' ? 8000 : 1500);
+        state.jaehrlReparaturen = 0;
         const slider = $('#f-reparaturen');
         if (slider) slider.value = String(state.jaehrlReparaturen);
         const out = $('#val-reparaturen');
@@ -2337,11 +2357,9 @@
         if (sel) sel.value = state.nutzungsart;
       }
 
-      // C2 v2.1: Bruttoinvestitions-Defaults nach Spec §3 / Daniel 05.05.
-      // MFH 73/126/33/63 k€, EFH 24/28/18/32 k€ (Modernisierungs-Brutto).
-      const BRUTTO_DEF = (type === 'EFH')
-        ? { hybrid: 24000, wp: 28000, fw: 18000, pellets: 32000 }
-        : { hybrid: 73000, wp: 126000, fw: 33000, pellets: 63000 };
+      // P2-B2: Bruttoinvestitions-Startwerte stehen bewusst auf 0 (Slider ganz links) — keine
+      // vorgegebenen Werte, der Nutzer trägt je Option den realen/angebotenen Wert ein.
+      const BRUTTO_DEF = { hybrid: 0, wp: 0, fw: 0, pellets: 0 };
       ['hybrid','wp','fw','pellets'].forEach(opt => {
         const tKey = 'bruttoInvest' + opt[0].toUpperCase() + opt.slice(1);
         if (force || !state.touched[tKey]) {
@@ -2562,12 +2580,6 @@
     // ----- Listener-Setup: Wizard-Felder -----
 
     function setupWizardListeners() {
-      // Hero CTA
-      $('#cta-start').addEventListener('click', () => {
-        gotoPhase('wizard');
-        gotoStep(1);
-      });
-
       // Wizard-Step-Navigation (Weiter / Zurück)
       $$('.wizard-step [data-wizard-next]').forEach(b => {
         b.addEventListener('click', () => gotoStep(Math.min(currentStep + 1, 4)));
@@ -2765,6 +2777,8 @@
       if (siInp) siInp.addEventListener('input', e => {
         const v = Number(e.target.value);
         state.jaehrlSanierungsInvest = isNaN(v) || v < 0 ? 0 : v;
+        const out = $('#val-sanierungs-invest');
+        if (out) out.textContent = fmtEuro(v);
       });
 
       // Erhaltungsrücklage pro WE pro Monat — Live-Umrechnung auf €/m²/a
@@ -2775,7 +2789,7 @@
         const proQmJahr = (v * (state.wohneinheiten || 1) * 12) / (state.wohnflaeche || 1);
         const hinweis = $('#ruecklage-umrechnung');
         if (hinweis) {
-          hinweis.innerHTML = '→ entspricht <strong>'
+          hinweis.innerHTML = 'Monatlicher Betrag je Wohneinheit. → entspricht <strong>'
             + proQmJahr.toFixed(2).replace('.', ',') + ' €/m²/a</strong>'
             + ' (GdW-Richtwert: 13–17 €/m²/a)'
             + (proQmJahr < 13 ? ' — <em>liegt unter Richtwert</em>' : '');
@@ -2806,7 +2820,9 @@
                        : { hybrid:73000, wp:126000, fw:33000, pellets:63000 })[opt];
           const hinweis = $('#plausi-brutto-' + opt);
           if (hinweis) {
-            if (v < def * 0.5) {
+            if (v === 0) {
+              hinweis.hidden = true;
+            } else if (v < def * 0.5) {
               hinweis.innerHTML = 'Sehr niedriger Wert — bist du sicher? Typisch sind <strong>'
                                   + fmtEuro(def) + '</strong> für ein '
                                   + state.gebaeudetyp + ' deiner Größe.';
@@ -3350,6 +3366,7 @@
       setupDialogCTA();
       setupTeilen();
       initFromURL();
+      gotoStep(1);
       await loadJSON();
       evaluateConditionals();
       updateMarktHinweis();

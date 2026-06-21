@@ -210,6 +210,7 @@ function renderVermieterBilanz(input, params) {
   const b1 = $('#vb-block-1');
   if (b1) {
     b1.innerHTML = `
+      <p class="vb-purpose"><strong>Wozu dieser Kasten:</strong> Nur relevant, wenn du vermietest — was dir eine Heizungs-Modernisierung als Eigentümer konkret bringt.</p>
       <h4>Was du als Vermieter durch eine Heizungs-Modernisierung gewinnst</h4>
       <ol class="vb-vorteile">
         <li>Mietspiegel-Klassen-Sprung (~ 0,30 €/m²·Monat) durch energetische Modernisierung</li>
@@ -225,89 +226,9 @@ function renderVermieterBilanz(input, params) {
     `;
   }
 
-  // Block 2 — Jahres-Cashflow (5 Optionen × 7 Posten + Σ, mit Pastell-Bewertung)
+  // Block 2 (Jahres-Cashflow Vermieter) — RAUS (P2-B3): zu komplex für die Hauptansicht.
   const b2 = $('#vb-block-2');
-  if (b2) {
-    const pelletsOK = pelletsPlausibel(input, params);
-    const optionen = pelletsOK
-      ? ['gas', 'hybrid', 'wp', 'fw', 'pellets']
-      : ['gas', 'hybrid', 'wp', 'fw'];
-    const cfs = optionen.map(o => berechneVermieterCashflowProJahr(o, input, params));
-    const posten = ['mod559', 'mietspiegel', 'co2', 'mieterstrom', 'wartung_diff', 'mietausfall', 'bauprozess'];
-    const postenLabels = {
-      mod559:        '§559 Modernisierungs-Umlage',
-      mietspiegel:   'Mietspiegel-Klassen-Sprung',
-      co2:           'CO₂-Verschiebung',
-      mieterstrom:   'Mieterstrom-Erlös (PV)',
-      wartung_diff:  'Wartung-Mehrkosten vs. Status quo',
-      mietausfall:   'Mietausfall (Heizkostenanstieg)',
-      bauprozess:    'Bauprozess-Mietminderung'
-    };
-    const vorzeichen = {
-      mod559: 1, mietspiegel: 1, co2: 1, mieterstrom: 1,
-      wartung_diff: -1, mietausfall: -1, bauprozess: -1
-    };
-
-    const headerRow = '<tr><th>Posten (€/a, gemittelt 25 J)</th>'
-      + optionen.map(o => `<th>${escapeHtml(OPTION_LABELS[o])}</th>`).join('')
-      + '</tr>';
-    // Pastell-Bewertung pro Zeile: hoch-besser (positive Werte = Vermieter-Vorteil)
-    const bodyRows = posten.map(p => {
-      const werteZeile = cfs.map(cf => cf.posten[p] * vorzeichen[p]);
-      const cells = cfs.map((cf, i) => {
-        const wert = werteZeile[i];
-        const klasse = bewerteZelle(wert, werteZeile, true, 'foerderung');
-        return `<td class="${klasse}">${formatEuro(wert)}</td>`;
-      }).join('');
-      return `<tr><td>${escapeHtml(postenLabels[p])}</td>${cells}</tr>`;
-    }).join('');
-    const sigmaWerte = cfs.map(cf => cf.sigma);
-    const sigmaCells = cfs.map((cf, i) => {
-      const klasse = bewerteZelle(cf.sigma, sigmaWerte, true, 'foerderung');
-      return `<td class="${klasse}"><strong>${formatEuro(cf.sigma)}</strong></td>`;
-    }).join('');
-    const sigmaRow = `<tr class="vb-sigma"><td><strong>Σ Cashflow Vermieter</strong></td>${sigmaCells}</tr>`;
-
-    // C2 v2.1 — Mieter-Nebenkosten-Effekt-Zeile (NEU, Spec §6 / §6.3)
-    const mieterEffekte = optionen.map(o => berechneMieterNebenkostenEffekt(o, input, params));
-    const mieterWerte = mieterEffekte.map(m => m.effektProMonat);
-    const mieterCells = mieterEffekte.map((m, i) => {
-      // Höherer Mieter-Effekt = Entlastung = grün → kennzahlTyp 'foerderung'
-      const klasse = bewerteZelle(m.effektProMonat, mieterWerte, true, 'foerderung');
-      return `<td class="${klasse}"><strong>${formatEuro(m.effektProMonat)}</strong>/Monat</td>`;
-    }).join('');
-    const fallback = mieterEffekte.find(m => m.fallbackAnteil);
-    const we = input.wohneinheiten || 14;
-    const anteilProz = (1 / we * 100).toFixed(2).replace('.', ',');
-    const mieterTooltipText = fallback
-      ? 'Mieter trägt 100 % der Energiekosten über Heizkostenabrechnung (HeizkostenV §7) und 50 % der CO₂-Kosten (BEHG-Stufenmodell, Klasse C-D, teilsaniert). Annahme: gleichmäßiger Anteil 1/' + we + ' = ' + anteilProz + ' % (deine Wohnung anteilig). Trag deine konkrete Wohnungsgröße im Wizard ein, dann wird der Effekt für dich exakt berechnet.'
-      : 'Mieter trägt 100 % der Energiekosten über Heizkostenabrechnung (HeizkostenV §7) und 50 % der CO₂-Kosten (BEHG-Stufenmodell, Klasse C-D, teilsaniert). Anteil: deine Wohnungsgröße / Gesamt-Wohnfläche.';
-    const mieterRow = `<tr class="mieter-nk-zeile"><td>Mieter-Nebenkosten-Effekt
-      <span class="info-tip" tabindex="0" aria-label="Methodik Mieter-Nebenkosten">ⓘ
-        <span class="info-tip__pop">${escapeHtml(mieterTooltipText)}</span>
-      </span></td>${mieterCells}</tr>`;
-
-    b2.innerHTML = `
-      <h4>Jahres-Cashflow Vermieter (€/a, gemittelt 25 J)
-        <span class="info-tip" data-tip="formel-vermieter-cashflow" tabindex="0" aria-label="Methodik">ⓘ
-          <span class="info-tip__pop"></span>
-        </span>
-      </h4>
-      <div class="vb-tabelle-wrap">
-        <table class="vb-tabelle">
-          <thead>${headerRow}</thead>
-          <tbody>${bodyRows}${sigmaRow}${mieterRow}</tbody>
-        </table>
-      </div>
-      <p class="vb-hinweis">
-        §559 Mietspiegel-Klassen-Sprung im Detail (Klassen-spezifischer Aufschlag) findest du in der
-        <a href="/excel-edition.html">Excel-Edition</a>. Im Web rechnen wir mit einem typischen Klassen-Sprung von 1.
-        <br>Mieter-Nebenkosten-Effekt: positiver Wert = Entlastung pro Mieter-Monat;
-        bei Status quo Gas Mehrbelastung relativ zur Modernisierung.
-      </p>
-    `;
-    befuelleTooltips(b2);
-  }
+  if (b2) { b2.innerHTML = ''; b2.hidden = true; }
 
   // Block 3 (Vermögensbilanz) — RAUS in v2.1 (Spec §6 / §16, in Excel verschoben)
   // Container falls noch im DOM: leeren und ausblenden.
@@ -325,38 +246,9 @@ function renderVermieterBilanz(input, params) {
    -------------------------------------------------------------- */
 
 function renderWEGHinweise(input) {
+  // P2-B3: WEG-Hinweise aus der Ergebnis-Ansicht entfernt — Container ausblenden.
   const wrap = $('#weg-hinweise');
-  if (!wrap) return;
-  const sichtbar = (input.eigentuemerTyp === 'WEG' && input.gebaeudetyp === 'MFH');
-  console.log('[WEG] eigentuemerTyp:', input.eigentuemerTyp, '| gebaeudetyp:', input.gebaeudetyp,
-              '| sichtbar:', sichtbar);
-  wrap.hidden = !sichtbar;
-  if (!sichtbar) return;
-
-  const content = $('#weg-hinweise-content');
-  if (!content) return;
-  // Spec v2.0 §6: Tonalität „sollte" statt „muss" (Memory designsystem §6).
-  // Beratungs-CTA wandert ans Ende der Seite (Sondersituations-CTA, einmal generisch).
-  content.innerHTML = `
-    <h4>Was sollte beschlossen werden?</h4>
-    <p>Bei einer Heizungs-Erneuerung in einer WEG sind in der Regel drei Beschlüsse zu fassen:</p>
-    <ol>
-      <li><strong>Modernisierungs-Maßnahme</strong> — Auswahl der Heizungs-Option</li>
-      <li><strong>Investitions-Volumen</strong> — Zustimmung zur Finanzierung (Sonderumlage oder Kreditaufnahme über die WEG)</li>
-      <li><strong>Auftrags-Vergabe</strong> — Auswahl des Heizungsbauers / Versorgers</li>
-    </ol>
-
-    <h4>Welche Mehrheit?</h4>
-    <p>Nach WEG-Reform 2020 (§ 19 ff. WEG):</p>
-    <ul>
-      <li>Modernisierende Erhaltungsmaßnahmen: einfache Mehrheit</li>
-      <li>Modernisierungen i. S. v. § 22 WEG (z. B. Heizungs-Erneuerung): einfache Mehrheit, aber Kostenverteilung kann mit doppelt qualifizierter Mehrheit geändert werden</li>
-      <li>Bauliche Veränderungen mit „grundlegender Umgestaltung": doppelt qualifizierte Mehrheit (drei Viertel der Eigentümer + mehr als die Hälfte der Miteigentumsanteile)</li>
-    </ul>
-
-    <h4>Welche Frist?</h4>
-    <p>Die Einberufungs-Frist beträgt mindestens 3 Wochen. Bei Modernisierungs-Beschlüssen empfehlen wir 6 Wochen, um den Eigentümern Zeit zur Vorbereitung zu geben.</p>
-  `;
+  if (wrap) { wrap.hidden = true; }
 }
 
 /* --------------------------------------------------------------
@@ -372,16 +264,50 @@ function renderHeadlineAntwort(input, params) {
   if (!wrap) return;
   const empf = berechneEmpfehlung(input, params);
   const tcoAlle = berechneTCOAlleOptionen(input, params);
+  const dash = berechneAllDashboardKennzahlen(input, params);
   const beste = empf.beste;
   const tcoBeste = tcoAlle[beste].tco;
   const eqm = berechneEurProQmMonat(tcoBeste, input.wohnflaeche, input.zeitraum);
 
+  // KPI „Tendenz": Abstand zur Status-quo-Gas-Option aus vorhandenen TCO-Werten (keine neue Rechnung).
+  const tcoGas = (tcoAlle['gas'] && tcoAlle['gas'].tco) ? tcoAlle['gas'].tco : null;
+  let tendenz;
+  if (beste !== 'gas' && tcoGas) {
+    const deltaPct = Math.round((tcoGas - tcoBeste) / tcoGas * 100);
+    tendenz = (deltaPct >= 0
+      ? '<span class="kpi3__arrow kpi3__arrow--down">&#8595;</span> '
+      : '<span class="kpi3__arrow kpi3__arrow--up">&#8593;</span> ') + Math.abs(deltaPct) + ' %';
+  } else {
+    tendenz = 'Status quo';
+  }
+
+  // KPI CO₂ der besten Option (t/a)
+  const co2t = (dash[beste] && dash[beste].co2EmissionenP_a_t != null) ? dash[beste].co2EmissionenP_a_t : null;
+  const co2Txt = (co2t != null) ? (co2t.toFixed(1).replace('.', ',') + ' t/a') : '—';
+
+  // Heizspiegel-Einordnung des €/m²/Monat (Bundesschnitt Gas-MFH ≈ 1,2–1,4)
+  const hsLabel = eqm < 1.0 ? 'niedrig' : (eqm <= 1.5 ? 'im Schnitt' : 'erhöht');
+
   wrap.innerHTML = `
     <h2>Deine Antwort</h2>
     <p>Die wirtschaftlichste Option für dein Profil ist
-      <strong>${escapeHtml(OPTION_LABELS[beste])}</strong> mit
-      <strong>${eqm.toFixed(2).replace('.', ',')} €/m²/Monat</strong> über
-      <strong>${input.zeitraum} Jahre</strong> Betrachtung.</p>
+      <strong>${escapeHtml(OPTION_LABELS[beste])}</strong> — drei Kennzahlen über
+      <strong>${input.zeitraum} Jahre</strong>:</p>
+    <div class="kpi3">
+      <div class="kpi3__item">
+        <div class="kpi3__val">${eqm.toFixed(2).replace('.', ',')}<span class="kpi3__unit"> €/m²·Mon.</span></div>
+        <div class="kpi3__lbl">Wärmekosten — <strong>${hsLabel}</strong></div>
+      </div>
+      <div class="kpi3__item">
+        <div class="kpi3__val">${tendenz}</div>
+        <div class="kpi3__lbl">ggü. Gas (Status quo)</div>
+      </div>
+      <div class="kpi3__item">
+        <div class="kpi3__val">${co2Txt}</div>
+        <div class="kpi3__lbl">CO₂-Ausstoß</div>
+      </div>
+    </div>
+    <p class="kpi3__ref">Heizspiegel-Einordnung: Bundesschnitt Gas im Mehrfamilienhaus ≈ 1,2–1,4 €/m²·Monat (Heizung inkl. Warmwasser, 2024/25).</p>
   `;
 }
 
@@ -480,12 +406,15 @@ function renderWirtschaftlichkeitsTabelle(input, params) {
     { key: 'jahreskostenJ1',     label: 'Energie + Wartung + CO₂',      fmt: 'euro',   kennzahlTyp: 'kosten' },
     { key: 'co2KostenP_a',       label: 'CO₂-Kosten p.a.',               fmt: 'euro',   kennzahlTyp: 'kosten' },
     { key: 'co2EmissionenP_a_t', label: 'CO₂-Emissionen p.a.',          fmt: 'tonne',  kennzahlTyp: 'kosten' },
-    { gruppe: 'Wirtschaftlichkeit' },
-    { key: 'gesamtAnnuitaet',    label: 'Gesamt-Annuität (€/a)',        fmt: 'euro',   kennzahlTyp: 'kosten' },
-    { key: 'tcoBarwert',         label: 'TCO Barwert über Zeitraum',    fmt: 'euro',   kennzahlTyp: 'kosten' },
+    { gruppe: 'Wirtschaftlichkeit', tip: 'Vergleich der Gesamtbelastung je Option — je niedriger, desto wirtschaftlicher über die gewählte Betrachtungszeit.' },
+    { key: 'gesamtAnnuitaet',    label: 'Gesamt-Annuität (€/a)',        fmt: 'euro',   kennzahlTyp: 'kosten',
+      tip: 'Die jährliche Gesamtbelastung aus Investition und Betrieb, gleichmäßig über die Betrachtungszeit verteilt (Methode nach VDI 2067).' },
+    { key: 'tcoBarwert',         label: 'TCO Barwert über Zeitraum',    fmt: 'euro',   kennzahlTyp: 'kosten',
+      tip: 'TCO = Total Cost of Ownership: alle Kosten über die Betrachtungszeit, auf heute abgezinst (Barwert). Macht Optionen mit unterschiedlichem Investitions- und Betriebskosten-Mix vergleichbar.' },
     { gruppe: 'Belastung' },
     { key: 'eurProQmMonat',      label: '€/m²/Monat ★',                 fmt: 'euroQm', kennzahlTyp: 'kosten' },
-    { key: 'amortisationVsGas',  label: 'Amortisation vs. Gas',         fmt: 'jahre',  kennzahlTyp: 'kosten' }
+    { key: 'amortisationVsGas',  label: 'Amortisation vs. Gas',         fmt: 'jahre',  kennzahlTyp: 'kosten',
+      tip: 'Nach wie vielen Jahren die Mehr-Investition gegenüber einer Gasheizung durch niedrigere Betriebskosten wieder eingespielt ist.' }
   ];
 
   function fmt(wert, format) {
@@ -519,6 +448,12 @@ function renderWirtschaftlichkeitsTabelle(input, params) {
          + `<em>Bei realistischeren Annahmen (Was-wäre-wenn-Schieberegler unten) kippt diese Bewertung typischerweise.</em>`;
   }
 
+  // Kurz-Erklärung als „?"-Tooltip (inline, kein Glossar-Lookup nötig)
+  function tipSpan(text){
+    return ' <span class="info-tip" tabindex="0" aria-label="Erklärung">ⓘ<span class="info-tip__pop">'
+      + escapeHtml(text) + '</span></span>';
+  }
+
   // Header
   let thead = '<tr><th>Kennzahl</th>'
     + optionen.map(o => `<th>${escapeHtml(OPTION_LABELS[o])}</th>`).join('')
@@ -528,7 +463,7 @@ function renderWirtschaftlichkeitsTabelle(input, params) {
   let tbody = '';
   for (const zeile of ZEILEN) {
     if (zeile.gruppe) {
-      tbody += `<tr class="dashboard-gruppe"><td colspan="${optionen.length + 1}">${escapeHtml(zeile.gruppe)}</td></tr>`;
+      tbody += `<tr class="dashboard-gruppe"><td colspan="${optionen.length + 1}">${escapeHtml(zeile.gruppe)}${zeile.tip ? tipSpan(zeile.tip) : ''}</td></tr>`;
       continue;
     }
     const werteZeile = optionen.map(o => dash[o][zeile.key]);
@@ -547,7 +482,7 @@ function renderWirtschaftlichkeitsTabelle(input, params) {
       return `<td class="${klasse}${editKlasse}"${dataAttr} tabindex="${tip ? '0' : ''}">`
            + `${escapeHtml(fmt(wert, zeile.fmt))}${tipHtml}</td>`;
     }).join('');
-    tbody += `<tr><td>${escapeHtml(zeile.label)}</td>${cells}</tr>`;
+    tbody += `<tr><td>${escapeHtml(zeile.label)}${zeile.tip ? tipSpan(zeile.tip) : ''}</td>${cells}</tr>`;
   }
 
   wrap.innerHTML = `
@@ -670,18 +605,17 @@ function renderSensibilisierungsBlock() {
   `).join('');
 
   wrap.innerHTML = `
-    <h3 class="sensibilisierung__titel">${smartIcon()} Bedenke bei der Bewertung dieser Zahlen</h3>
-    <p class="sensibilisierung__intro">
-      Die Berechnung basiert auf heutigen Marktpreisen. Diese Faktoren können
-      die Wirklichkeit über die Betrachtungszeit verschieben:
-    </p>
-    <ol class="sensibilisierung__punkte">
-      ${punkteHtml}
-    </ol>
-    <p class="sensibilisierung__closer">
-      Diese Faktoren sind bewusst nicht in der Default-Berechnung — die
-      <a href="#excel-edition">Excel-Edition</a> modelliert sie als Sensitivitäts-Szenarien explizit.
-    </p>
+    <details class="conditional">
+      <summary>Bedenke bei der Bewertung dieser Zahlen</summary>
+      <div class="vb-block">
+        <p class="vb-purpose"><strong>Wozu dieser Kasten:</strong> Die Berechnung beruht auf heutigen Marktpreisen.
+          Diese Faktoren können sich über die Betrachtungszeit verschieben — behalte sie bei der Interpretation im Blick.</p>
+        <ol class="vb-vorteile">
+          ${punkteHtml}
+        </ol>
+        <p class="vb-closer">Einige davon kannst du im <a href="#schieberegler">„Was-wäre-wenn"</a>-Bereich oben selbst durchspielen.</p>
+      </div>
+    </details>
   `;
 }
 
@@ -773,8 +707,7 @@ function renderBigPicture(input, params) {
     charts.set('bigpicture', new Chart(canvas.getContext('2d'), config));
   }
 
-  // C2 v2.1: Achs-Tooltip-Liste neben/unter dem Chart rendern
-  // (Chart.js v4 hat keine pointLabels-Tooltips — Pattern unter dem Chart)
+  // P2-B3d: Achsen permanent erklären + kurze, mitrechnende Ergebnis-Zusammenfassung
   let legende = $('#bigpicture-achsen-legende');
   if (!legende) {
     legende = document.createElement('div');
@@ -782,14 +715,29 @@ function renderBigPicture(input, params) {
     legende.className = 'bigpicture-achsen-legende';
     canvas.parentElement.parentElement.insertBefore(legende, canvas.parentElement.nextSibling);
   }
-  if (legende.dataset.gerendert !== 'true') {
-    legende.innerHTML = '<strong>Was misst welche Achse?</strong> '
-      + BIG_PICTURE_ACHSEN_LABELS.map((label, i) =>
-          `<span class="bp-achs-tip" tabindex="0">${escapeHtml(label)} ⓘ`
-          + `<span class="bp-achs-pop">${escapeHtml(BIG_PICTURE_ACHSEN_TOOLTIPS[i])}</span></span>`
-        ).join(' · ');
-    legende.dataset.gerendert = 'true';
-  }
+  // Zusammenfassung: beste Option + ihre zwei stärksten Achsen (aus vorhandenen Werten)
+  const empfBP = berechneEmpfehlung(input, params);
+  const besteBP = empfBP.beste;
+  const aB = achsen[besteBP] || {};
+  const achsWerte = [
+    ['Wirtschaftlichkeit', aB.wirtschaftlichkeit],
+    ['Nachhaltigkeit',     aB.nachhaltigkeit],
+    ['Resilienz',          aB.resilienz],
+    ['Erweiterbarkeit',    aB.erweiterbarkeit],
+    ['Zukunftsfähigkeit',  aB.zukunftsfaehigkeit],
+    ['Risiko-Schutz',      100 - (aB.risikoRoh || 0)]
+  ];
+  const top = achsWerte.slice().sort((x, y) => (y[1] || 0) - (x[1] || 0)).slice(0, 2).map(x => x[0]);
+  legende.innerHTML =
+    `<p class="bp-summary">Im Bild: <strong>${escapeHtml(OPTION_LABELS[besteBP])}</strong> liegt besonders bei `
+      + `<strong>${escapeHtml(top[0])}</strong> und <strong>${escapeHtml(top[1])}</strong> vorn. `
+      + `Je weiter außen, desto zukunftsfähiger über die sechs Dimensionen.</p>`
+    + `<p class="bp-achsen-titel">Was die sechs Achsen messen</p>`
+    + `<ul class="bp-achsen-liste">`
+    + BIG_PICTURE_ACHSEN_LABELS.map((label, i) =>
+        `<li><strong>${escapeHtml(label)}:</strong> ${escapeHtml(BIG_PICTURE_ACHSEN_TOOLTIPS[i])}</li>`
+      ).join('')
+    + `</ul>`;
 }
 
 /* --------------------------------------------------------------
@@ -810,12 +758,11 @@ function renderZukunftsszenarioFeld(input, params) {
     : '';
 
   function pfeil(delta, einheit, kostenLogik) {
-    if (delta == null || Math.abs(delta) < 1e-9) return '<span class="aussage__delta">±0</span>';
-    const ist_neg_gut = (kostenLogik === 'kosten');
-    const istVerschlechterung = (delta > 0 && ist_neg_gut) || (delta < 0 && !ist_neg_gut);
-    const klasse = istVerschlechterung ? 'aussage__delta--rot' : '';
-    const richtung = delta > 0 ? '+' : '−';
-    return `<span class="aussage__delta ${klasse}">${richtung}${einheit(Math.abs(delta))}</span>`;
+    if (delta == null || Math.abs(delta) < 1e-9) return '<span class="aussage__delta aussage__delta--neutral">±0</span>';
+    const schlecht = (delta > 0 && kostenLogik === 'kosten') || (delta < 0 && kostenLogik !== 'kosten');
+    const klasse = schlecht ? 'aussage__delta--schlecht' : 'aussage__delta--gut';
+    const pf = delta > 0 ? '↑' : '↓';
+    return `<span class="aussage__delta ${klasse}">${pf} ${einheit(Math.abs(delta))}</span>`;
   }
   const eu = (n) => formatEuro(n);
   const eqm = (n) => n.toFixed(2).replace('.', ',') + ' €';
@@ -828,7 +775,7 @@ function renderZukunftsszenarioFeld(input, params) {
       <div class="aussage__titel">€/m²/Monat beste Option</div>
       <div class="aussage__werte">
         ${escapeHtml(OPTION_LABELS[a1.bestOptionNeu])} ${a1.neu.toFixed(2).replace('.', ',')} €
-        ${z.imDefaultZustand ? '' : `(war ${a1.ist.toFixed(2).replace('.', ',')} €) ${pfeil(a1.delta, eqm, 'kosten')}`}
+        ${z.imDefaultZustand ? '' : pfeil(a1.delta, eqm, 'kosten')}
       </div>
     </div>
   `;
@@ -837,7 +784,7 @@ function renderZukunftsszenarioFeld(input, params) {
   const a2 = z.rankingAussage;
   const aussage2 = `
     <div class="aussage"${dimm}>
-      <div class="aussage__titel">Beste Option ${a2.kippt ? '<span class="aussage__delta aussage__delta--rot">↻ kippt!</span>' : ''}</div>
+      <div class="aussage__titel">Beste Option ${a2.kippt ? '<span class="aussage__delta aussage__delta--schlecht">↻ kippt!</span>' : ''}</div>
       <div class="aussage__werte">
         Aktuell: ${escapeHtml(OPTION_LABELS[a2.neu[0]] || '—')}
         ${z.imDefaultZustand ? '' : ` (war: ${escapeHtml(OPTION_LABELS[a2.ist[0]] || '—')})`}
@@ -853,7 +800,7 @@ function renderZukunftsszenarioFeld(input, params) {
       <div class="aussage__titel">Mieter-Nebenkosten-Effekt</div>
       <div class="aussage__werte">
         ${a3.neu.toFixed(2).replace('.', ',')} €/Monat
-        ${z.imDefaultZustand ? '' : `(war ${a3.ist.toFixed(2).replace('.', ',')} €) ${pfeil(a3.delta, eqm, 'foerderung')}`}
+        ${z.imDefaultZustand ? '' : pfeil(a3.delta, eqm, 'foerderung')}
       </div>
       ${a3.fallbackAnteil ? '<div class="aussage__detail">Anteil 1/Wohneinheiten — eigene Wohnungsgröße im Wizard für genaue Werte.</div>' : ''}
     </div>
@@ -866,8 +813,7 @@ function renderZukunftsszenarioFeld(input, params) {
       <div class="aussage__titel">Amortisation Wärmepumpe vs. Gas</div>
       <div class="aussage__werte">
         ${a4.neu == null ? 'nicht erreicht' : (a4.neu + ' Jahre')}
-        ${z.imDefaultZustand || a4.delta == null ? '' :
-          `(war ${a4.ist == null ? 'nicht erreicht' : (a4.ist + ' J')}) ${pfeil(a4.delta, jahre, 'kosten')}`}
+        ${z.imDefaultZustand || a4.delta == null ? '' : pfeil(a4.delta, jahre, 'kosten')}
       </div>
     </div>
   `;
@@ -879,7 +825,7 @@ function renderZukunftsszenarioFeld(input, params) {
       <div class="aussage__titel">Betriebskosten Gas-Status-quo (Jahr 1)</div>
       <div class="aussage__werte">
         ${formatEuro(a5.neu)}/Jahr
-        ${z.imDefaultZustand ? '' : `(war ${formatEuro(a5.ist)}) ${pfeil(a5.delta, eu, 'kosten')}`}
+        ${z.imDefaultZustand ? '' : pfeil(a5.delta, eu, 'kosten')}
       </div>
     </div>
   `;
@@ -903,74 +849,35 @@ function renderExcelEditionSektion() {
   if (wrap.dataset.gerendert === 'true') return;  // einmal reicht
 
   wrap.innerHTML = `
-    <div class="excel-edition__intro">
-      <h2>Du willst noch tiefer rechnen — für Profis und Analysten</h2>
-      <p>Wenn der Web-Rechner zu wenig ist und du selbst rechnen möchtest,
-         in Ruhe, zu Hause, mit allen Hebeln und Quellen — hier ist deine
-         Werkzeug-Erweiterung.</p>
-    </div>
-
-    <div class="excel-edition__kacheln">
-      <a class="excel-kachel" href="/excel-edition.html">
-        <img src="assets/excel-vorschau/tco-detail.svg" alt="TCO Detail" loading="lazy">
-        <h4>TCO Detail</h4>
-        <p>Komponenten, Annuität, Methodik nach VDI 2067.</p>
-      </a>
-      <a class="excel-kachel" href="/excel-edition.html">
-        <img src="assets/excel-vorschau/cashflow-25j.svg" alt="Cashflow 25 J" loading="lazy">
-        <h4>Cashflow 25 J</h4>
-        <p>Volle Jahres-Tabelle pro Option.</p>
-      </a>
-      <a class="excel-kachel" href="/excel-edition.html">
-        <img src="assets/excel-vorschau/sanierungspfad.svg" alt="Sanierungspfad" loading="lazy">
-        <h4>Sanierungspfad</h4>
-        <p>Erhaltungsrücklage, Investitions-Plan über die Zeit.</p>
-      </a>
-      <a class="excel-kachel" href="/excel-edition.html">
-        <img src="assets/excel-vorschau/sensitivitaet.svg" alt="Sensitivitätsanalyse" loading="lazy">
-        <h4>Sensitivitätsanalyse</h4>
-        <p>CO₂-Pfade, Gas-Subventionen, Stranded-Asset-Szenarien.</p>
-      </a>
-    </div>
-
-    <!-- C2 v2.1: 2-Spalten-Tarif-Vergleich, 49 € jährlich (kein Update-Preis-Modell),
-         Web-Spalte ohne ✗-Liste, Excel-Spalte mit PV/Batterie/Solarthermie als Mehrwert. -->
-    <div class="excel-edition__tarif">
-      <div class="excel-tarif-spalte">
-        <h4>Web</h4>
-        <p class="excel-tarif-preis">kostenlos</p>
-        <p class="excel-tarif-preis-sub">0 €</p>
-        <ul>
-          <li>✓ Dashboard-Vergleich</li>
-          <li>✓ Sensibilisierung fossile Energie</li>
-          <li>✓ Big Picture (6 Achsen)</li>
-          <li>✓ Was-wäre-wenn (Energiepreise + Förderung + Zukunftsszenario)</li>
-          <li>✓ Mieter-Nebenkosten-Effekt</li>
-          <li>✓ TCO Barwert</li>
-          <li>✓ Vermieter-Bilanz Block 1+2</li>
-        </ul>
-      </div>
-      <div class="excel-tarif-spalte excel-tarif-spalte--haupt">
-        <h4>Excel-Edition</h4>
-        <p class="excel-tarif-preis">jährlich</p>
-        <p class="excel-tarif-preis-sub">49 €</p>
-        <ul>
-          <li>✓ Alle Web-Inhalte</li>
-          <li>✓ Vermögensbilanz Block 3</li>
-          <li>✓ Volle Cashflow-Tabelle pro Jahr</li>
-          <li>✓ Sanierungspfad-Tab</li>
-          <li>✓ §7b AfA Detail</li>
-          <li>✓ Mietspiegel-Klassen-Lookup</li>
-          <li>✓ KfW-Kombi-Modell</li>
-          <li>✓ Tab Risiken / CO₂-Aufteilung / Fernwärme-Logik</li>
-          <li>✓ <strong>PV / Batterie / Solarthermie</strong></li>
-          <li>✓ Sensitivität frei wählbar</li>
-          <li>✓ Direktversand per E-Mail</li>
-        </ul>
-        <a class="btn btn--primary" href="/excel-edition.html">Excel kaufen — 49 €</a>
-      </div>
+    <div class="beratung-box">
+      <h2>Bevor du eine große Entscheidung triffst — eine neutrale Einordnung</h2>
+      <p>Zwischen einer allgemeinen Energieberatung (oft zu unverbindlich) und einem beauftragten
+        Ingenieurbüro (gründlich, aber teuer und komplex) klafft eine Lücke.
+        <strong>Genau dort setze ich an — unabhängig, neutral, ohne eigenes Produkt.</strong></p>
+      <p>Ein Heizungsbauer verkauft, was er im Sortiment hat. Ich verkaufe nichts. Ich helfe dir,
+        aus deinen Gebäudedaten und einem ehrlichen Vergleich die <strong>bestmögliche, langfristig
+        tragfähige Entscheidung</strong> abzuleiten — auf Basis belegter Zahlen und meiner
+        Forschungsarbeit zur ganzheitlichen Zukunftsfähigkeit von Gebäuden.</p>
+      <p class="beratung-box__sub">Womit ich dich begleite:</p>
+      <ul class="beratung-box__liste">
+        <li><strong>Entscheidungsgrundlagen</strong> für langfristige Investitionen — verständlich aufbereitet</li>
+        <li><strong>Eigentümerversammlungen</strong> vor- und nachbereiten; verschiedene Perspektiven zu einer gemeinsamen Grundlage verbinden</li>
+        <li><strong>Orientierung</strong> im ständig wechselnden Rahmen (Energiewende, Heizungs- und Gebäudemodernisierungs-Anforderungen)</li>
+      </ul>
+      <p>Für Eigentümergemeinschaften wie für einzelne Eigentümer — eine ruhige, neutrale Orientierung,
+        bevor viel Geld in die falsche Richtung fließt.</p>
+      <p>Schreib mir — die <strong>erste Antwort ist kostenlos</strong>, tiefere Begleitung sprechen wir projektbasiert ab.</p>
+      <p class="beratung-box__mail"><a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a></p>
+      <button type="button" class="btn--analyse" id="cta-beratung-senden">Meine Analyse senden</button>
     </div>
   `;
+  const btn = $('#cta-beratung-senden');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const orig = $('#cta-dialog-mail');
+      if (orig) orig.click();
+    });
+  }
   wrap.dataset.gerendert = 'true';
 }
 
@@ -1023,37 +930,9 @@ function renderWegweiserScrollRegal() {
    -------------------------------------------------------------- */
 
 function renderSondersituationsCTA() {
+  // P2-B4: in die Beratungs-Box (oben) konsolidiert — separater CTA entfällt.
   const wrap = $('#sondersituations-cta');
-  if (!wrap) return;
-  if (wrap.dataset.gerendert === 'true') return;
-
-  // C2 v2.1 Format-Fix (Spec §13): Kontextblau-Hintergrund, mittig, Signal-Grün-Button,
-  // KEIN Smart-Icon im Titel (PowerPoint-Eindruck vermeiden — Daniel-Befund 04.05.).
-  wrap.innerHTML = `
-    <h2 class="sondersituation__titel">Du hast eine Sondersituation?</h2>
-    <p>
-      Vielleicht planst du eine Eigentümerversammlung zur Heizungs-Modernisierung.
-      Oder du fragst dich, wie deine WEG die Sonderumlage verteilt nach MEA-Anteilen.
-      Oder du möchtest dein Sanierungs-Konzept mit Energieberater abstimmen, bevor
-      du eine Investition tätigst. Oder du hast eine ganz andere Frage, die der
-      Web-Rechner nicht beantwortet.
-    </p>
-    <p>Schreib uns — wir lesen, wir antworten, wir begleiten dich.</p>
-    <p class="sondersituation__mail"><a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a></p>
-    <button type="button" class="btn--analyse" id="cta-analyse-senden-v2">Meine Analyse senden</button>
-    <p class="sondersituation__hint">
-      Erste Antwort kostenlos — tiefere Beratung sprechen wir projektbasiert ab.
-    </p>
-  `;
-  // Button-Click → bestehende mailto-Logik aus rechner.html (cta-dialog-mail)
-  const btn = $('#cta-analyse-senden-v2');
-  if (btn) {
-    btn.addEventListener('click', () => {
-      const orig = $('#cta-dialog-mail');
-      if (orig) orig.click();
-    });
-  }
-  wrap.dataset.gerendert = 'true';
+  if (wrap) { wrap.innerHTML = ''; wrap.hidden = true; }
 }
 
 /* --------------------------------------------------------------
