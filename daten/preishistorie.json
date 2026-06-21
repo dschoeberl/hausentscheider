@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "stand": "2026-05-02",
-  "aktueller_monat": "2026-05",
+  "stand": "2026-06-21",
+  "aktueller_monat": "2026-06",
   "spalten_einheit": {
     "gas": "ct/kWh brutto Verbraucher-Durchschnitt",
     "fernwaerme": "ct/kWh Erfurt-Effektivpreis (tarifbasiert, nicht monatsvolatil)",
@@ -10,9 +10,20 @@
     "pellets": "ct/kWh brutto Verbraucher-Durchschnitt"
   },
   "monate": {
+    "2026-06": {
+      "label": "Juni 2026",
+      "aktuell": true,
+      "gas": 10.5,
+      "fernwaerme": 17.5,
+      "heizoel": 11.5,
+      "wp_strom": 25,
+      "pellets": 7.6,
+      "einheit": "ct/kWh",
+      "kontext": "Ölpreise nach dem Frühjahrshoch deutlich gefallen — Heizöl ~110–117 €/100 l (Brent stabil oberhalb 80 USD/Barrel). Wärmepumpen-Tarife weiter günstiger (reduzierte §14a-Netzentgelte, ab ~20–21 ct/kWh). Pellets leicht höher — DEPI meldet Juni-Anstieg (~377 €/t). Gas im Verbraucher-Schnitt stabil (~10 ct/kWh, Neukunde ~9,4). Fernwärme als Erfurt-Effektivpreis (siehe Methodik)."
+    },
     "2026-05": {
       "label": "Mai 2026",
-      "aktuell": true,
+      "aktuell": false,
       "gas": 10.5,
       "fernwaerme": 17.5,
       "heizoel": 13.5,

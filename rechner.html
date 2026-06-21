@@ -1443,7 +1443,7 @@
 
     <!-- Schritt 1 — Gebäude (4 Felder, PV raus) -->
     <div class="wizard-step" data-step="1">
-      <h2>Dein Gebäude</h2>
+      <h2>Ihr Gebäude</h2>
       <p class="wizard-step__intro">PLZ, Gebäudetyp und — bei MFH — Wohneinheiten und Eigentümer-Typ.</p>
 
       <div class="wizard-field">
@@ -1481,7 +1481,7 @@
         </label>
         <input type="number" id="f-eigene-wohnflaeche" class="wizard-input" min="20" max="500" step="1" placeholder="z. B. 75">
         <p class="wizard-field__hint">
-          Falls du Eigentümer einer Wohnung im MFH bist und vermietest — für Mieter-Nebenkosten-Effekt-Berechnung.
+          Falls Sie Eigentümer einer Wohnung im MFH sind und vermieten — für Mieter-Nebenkosten-Effekt-Berechnung.
           Bei leerem Feld nehmen wir 1/Wohneinheiten als Anteil.
         </p>
       </div>
@@ -1502,11 +1502,11 @@
       <h2>Heizung &amp; Verbrauch</h2>
 
       <div class="hint">
-        <strong>Du kommst gleich zur wichtigsten Eingabe: deinem Verbrauch.</strong>
-        Aus ihm rechnet sich, was deine aktuelle Heizung dich wirklich kostet — und was eine Alternative bringen würde.
+        <strong>Sie kommen gleich zur wichtigsten Eingabe: Ihrem Verbrauch.</strong>
+        Aus ihm rechnet sich, was Ihre aktuelle Heizung Sie wirklich kostet — und was eine Alternative bringen würde.
       </div>
 
-      <p class="wizard-step__intro">Aktuelle Heizung, Wohnfläche, Heizlast, Verbrauch, Jahreskosten und dein aktueller Energiepreis.</p>
+      <p class="wizard-step__intro">Aktuelle Heizung, Wohnfläche, Heizlast, Verbrauch, Jahreskosten und Ihr aktueller Energiepreis.</p>
 
       <div class="wizard-field">
         <label class="wizard-field__label" for="f-heizung">Aktuelle Heizung</label>
@@ -1543,7 +1543,7 @@
                 <span class="info-tip__pop">
                   <strong>Heizlast (kW)</strong> ist die Wärmemenge, die das Gebäude bei tiefster Außentemperatur braucht.
                   Wir schätzen sie aus Wohnfläche × Sanierungsfaktor (DIN EN 12831-1).
-                  Du kannst die Schätzung mit deinem realen Wert überschreiben.
+                  Sie können die Schätzung mit Ihrem realen Wert überschreiben.
                 </span>
               </span>
             </span>
@@ -1569,10 +1569,10 @@
         </div>
         <div class="hint" id="markt-hinweis">
           Aktueller Markt-Durchschnittspreis Gas: <strong id="markt-gas-preis">10,5 ct/kWh</strong> (Mai 2026).
-          Dein Verbrauch entspricht ca. <strong id="markt-jahreskosten">9.975 € Jahresheizkosten</strong>.
+          Ihr Verbrauch entspricht ca. <strong id="markt-jahreskosten">9.975 € Jahresheizkosten</strong>.
         </div>
         <div class="hint" id="hilfsregel-hint" hidden>
-          Wir schätzen deine Heizlast aus Wohnfläche und Sanierungsstand.
+          Wir schätzen Ihre Heizlast aus Wohnfläche und Sanierungsstand.
           Aktuelle Schätzung: <strong id="heizlast-schaetzung">76 kW</strong>.
         </div>
       </div>
@@ -1581,7 +1581,7 @@
         <label class="wizard-field__label" for="f-jahreskosten">Aktuelle Jahreskosten aus Abrechnung <small style="color:var(--text-tertiary);font-weight:400;">(€/Jahr)</small></label>
         <input type="number" id="f-jahreskosten" class="wizard-input" min="0" max="100000" step="100" placeholder="z. B. 8.500">
         <div class="hint" id="plausi-jahreskosten" hidden>
-          Plausibilitätscheck: deine Abrechnung passt nicht zu Verbrauch × Preis. Prüfe bitte.
+          Plausibilitätscheck: Ihre Abrechnung passt nicht zu Verbrauch × Preis. Bitte prüfen.
         </div>
       </div>
 
@@ -1593,7 +1593,7 @@
           <a href="/preishistorie.html" target="_blank" rel="noopener" style="color:var(--petrol);font-size:11px;">Preishistorie →</a>
         </p>
         <div class="hint" id="plausi-energiepreis" hidden>
-          Vergleich Markt-Schnitt: dein Vertrag liegt <strong id="plausi-energiepreis-diff">— %</strong> über/unter Markt-Schnitt.
+          Vergleich Markt-Schnitt: Ihr Vertrag liegt <strong id="plausi-energiepreis-diff">— %</strong> über/unter Markt-Schnitt.
         </div>
       </div>
 
@@ -1606,7 +1606,7 @@
     <!-- Schritt 3 — Sanierung & Erhaltung (6 Felder) -->
     <div class="wizard-step" data-step="3" hidden>
       <h2>Sanierung &amp; Erhaltung</h2>
-      <p class="wizard-step__intro">Sanierungsstand, geplanter Horizont und finanzielle Vorsorge — das prägt deine Heizungs-Entscheidung mit.</p>
+      <p class="wizard-step__intro">Sanierungsstand, geplanter Horizont und finanzielle Vorsorge — das prägt Ihre Heizungs-Entscheidung mit.</p>
 
       <div class="wizard-field">
         <span class="wizard-field__label">Sanierungsstand
@@ -1658,7 +1658,7 @@
             <span class="wizard-field__label">Jährliche Sanierungs-Investition <small style="color:var(--text-tertiary);font-weight:400;">(€/Jahr)</small>
               <span class="info-tip" tabindex="0" aria-label="Was ist die jährliche Sanierungs-Investition?">ⓘ
                 <span class="info-tip__pop">
-                  Was möchtest du pro Jahr für Sanierung zurücklegen — über die laufenden Reparaturen hinaus?
+                  Was möchten Sie pro Jahr für Sanierung zurücklegen — über die laufenden Reparaturen hinaus?
                   Wirkt nur auf den Sanierungspfad-Posten, nicht auf die TCO-Kernrechnung.
                 </span>
               </span>
@@ -1686,9 +1686,9 @@
         Investitionskosten der Modernisierungs-Optionen
         <span class="info-tip" tabindex="0" aria-label="Was sind diese Werte?">ⓘ
           <span class="info-tip__pop">
-            Die Slider stehen bewusst auf 0 — bitte trag je Option deinen realen oder angebotenen
+            Die Slider stehen bewusst auf 0 — bitte tragen Sie je Option Ihren realen oder angebotenen
             Wert ein (z. B. aus einem Angebot). So wirkt keine Option vorab teurer;
-            du kannst die Werte auch in der Ergebnis-Tabelle nochmal ändern.
+            Sie können die Werte auch in der Ergebnis-Tabelle nochmal ändern.
           </span>
         </span>
       </h3>
@@ -1746,8 +1746,8 @@
 
     <!-- Schritt 4 — Kontext (2 Felder) -->
     <div class="wizard-step" data-step="4" hidden>
-      <h2>Dein Kontext</h2>
-      <p class="wizard-step__intro">Wie nutzt du das Gebäude — und welche Sicht auf die Entscheidung passt zu dir?</p>
+      <h2>Ihr Kontext</h2>
+      <p class="wizard-step__intro">Wie nutzen Sie das Gebäude — und welche Sicht auf die Entscheidung passt zu Ihnen?</p>
 
       <div class="wizard-field">
         <label class="wizard-field__label" for="f-nutzungsart">Nutzungsart</label>
@@ -1759,30 +1759,30 @@
       </div>
 
       <div class="wizard-field">
-        <span class="wizard-field__label">Entscheider-Typ — deine Sicht auf die Entscheidung</span>
+        <span class="wizard-field__label">Entscheider-Typ — Ihre Sicht auf die Entscheidung</span>
         <div class="persona-picker" role="radiogroup" aria-label="Entscheider-Typ">
           <button type="button" class="persona" data-persona="bewahrer">
             <strong>Bewahrer</strong>
-            <small><em>Erhalt im Vordergrund.</em> Du willst Wert und Substanz langfristig sichern. Zukunftsfähigkeit, Robustheit gegenüber Energiepreis-, CO₂- und Förder-Wandel sind dir wichtiger als der schnellste Cashflow.<br><br>Lange Haltedauer geplant — Familienbesitz, Lebenszeitnutzung.</small>
+            <small><em>Erhalt im Vordergrund.</em> Sie wollen Wert und Substanz langfristig sichern. Zukunftsfähigkeit, Robustheit gegenüber Energiepreis-, CO₂- und Förder-Wandel sind Ihnen wichtiger als der schnellste Cashflow.<br><br>Lange Haltedauer geplant — Familienbesitz, Lebenszeitnutzung.</small>
           </button>
           <button type="button" class="persona persona--active" data-persona="optimierer">
             <strong>Optimierer</strong>
-            <small><em>Wirtschaftlichkeit im Zentrum.</em> Du willst die wirtschaftlich beste Entscheidung über die Lebensdauer der Heizung. Förderung mitnehmen, Risiken meiden, solide Rendite.<br><br>Klassische Haltedauer 10–15 Jahre.</small>
+            <small><em>Wirtschaftlichkeit im Zentrum.</em> Sie wollen die wirtschaftlich beste Entscheidung über die Lebensdauer der Heizung. Förderung mitnehmen, Risiken meiden, solide Rendite.<br><br>Klassische Haltedauer 10–15 Jahre.</small>
           </button>
           <button type="button" class="persona" data-persona="wechsler">
             <strong>Wechsler</strong>
-            <small><em>Verkaufs- oder Übergabe-Perspektive.</em> Du planst Verkauf, Erbübergabe oder eine größere Investitions-Drehung. Marktwert-Wirkung und Förder-Maximierung sind dir wichtig.<br><br>Kurze Haltedauer 3–5 Jahre.</small>
+            <small><em>Verkaufs- oder Übergabe-Perspektive.</em> Sie planen Verkauf, Erbübergabe oder eine größere Investitions-Drehung. Marktwert-Wirkung und Förder-Maximierung sind Ihnen wichtig.<br><br>Kurze Haltedauer 3–5 Jahre.</small>
           </button>
         </div>
-        <p class="wizard-field__hint">Du kannst die Sicht später auf der Ergebnis-Seite frei wechseln.</p>
+        <p class="wizard-field__hint">Sie können die Sicht später auf der Ergebnis-Seite frei wechseln.</p>
       </div>
 
       <div class="hint" id="weg-statement-wizard" hidden>
-        <strong>Du sitzt in einer Eigentümergemeinschaft</strong> — in der Wärmewende oft der schwierigere Pfad. Mehrheiten finden, heterogene Investitionsbereitschaft, Förderfristen drängen. Dieser Rechner gibt dir Zahlen, mit denen du in die Diskussion gehen kannst.
+        <strong>Sie sitzen in einer Eigentümergemeinschaft</strong> — in der Wärmewende oft der schwierigere Pfad. Mehrheiten finden, heterogene Investitionsbereitschaft, Förderfristen drängen. Dieser Rechner gibt Ihnen Zahlen, mit denen Sie in die Diskussion gehen können.
       </div>
 
       <div class="hint hint--signal">
-        <strong>Drei Sichten, eine Entscheidung.</strong> Du wirst sehen, wie sich die Empfehlung mit deinem Profil verändert.
+        <strong>Drei Sichten, eine Entscheidung.</strong> Sie werden sehen, wie sich die Empfehlung mit Ihrem Profil verändert.
       </div>
 
       <div class="wizard-actions">
@@ -1797,7 +1797,7 @@
        ========================================================== -->
   <section id="phase-calculating" class="phase calculating" hidden>
     <div class="calc-spinner" aria-hidden="true"></div>
-    <p>Wir berechnen deinen Vergleich …</p>
+    <p>Wir berechnen Ihren Vergleich …</p>
   </section>
 
   <!-- ==========================================================
@@ -1821,7 +1821,7 @@
       </details>
 
       <div class="headline-antwort">
-        <h2>Deine Antwort folgt hier</h2>
+        <h2>Ihre Antwort folgt hier</h2>
         <p class="placeholder">Inhalt folgt nach Berechnen-Klick.</p>
       </div>
 
@@ -1836,14 +1836,14 @@
       </div>
 
       <div class="mini-cockpit" id="mini-cockpit"></div>
-      <p class="cockpit-tipp">Tipp: Klick auf eine Pill, um deine Eingabe zu ändern. Werte rechnen sich live um.</p>
+      <p class="cockpit-tipp">Tipp: Klicken Sie auf eine Pill, um Ihre Eingabe zu ändern. Werte rechnen sich live um.</p>
 
       <!-- 5. ZEITRAUM-SCHIEBEREGLER (Spec §4 Punkt 5 — NEU OBEN, fließend 1–30) -->
       <div class="zeitraum-oben">
         <h3>Betrachtungs-Zeitraum</h3>
         <div class="slider-row">
           <label>
-            <span>Über wie viele Jahre rechnest du?</span>
+            <span>Über wie viele Jahre rechnen Sie?</span>
             <output id="out-zeitraum">25 Jahre</output>
             <input type="range" id="slider-zeitraum-oben" min="1" max="30" step="1" value="25" aria-valuetext="25 Jahre">
           </label>
@@ -1894,7 +1894,7 @@
     <section id="schieberegler" class="schieberegler-cluster was-waere-wenn-3-spalten">
       <h2>Was-wäre-wenn — drei Hebel</h2>
       <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;max-width:640px;margin:0 0 1.25rem;">
-        Verschiebe die Regler, um zu sehen, wie robust die Empfehlung ist — etwa wenn Energiepreise
+        Verschieben Sie die Regler, um zu sehen, wie robust die Empfehlung ist — etwa wenn Energiepreise
         steigen oder die Förderung sinkt. Die Werte rechnen live mit.
       </p>
       <div class="schieberegler-grid">
@@ -2520,7 +2520,7 @@
       if (pending.plz)         teile.push('PLZ <strong>' + escapeHtml(pending.plz) + '</strong>');
 
       const text = teile.length
-        ? 'Du hast vorher ' + teile.join(', ') + ' eingegeben. Übernehmen oder neu starten?'
+        ? 'Sie haben vorher ' + teile.join(', ') + ' eingegeben. Übernehmen oder neu starten?'
         : 'Es liegen Werte aus einem vorherigen Schritt vor. Übernehmen oder neu starten?';
 
       const banner = $('#urlParamBanner');
@@ -2823,12 +2823,12 @@
             if (v === 0) {
               hinweis.hidden = true;
             } else if (v < def * 0.5) {
-              hinweis.innerHTML = 'Sehr niedriger Wert — bist du sicher? Typisch sind <strong>'
+              hinweis.innerHTML = 'Sehr niedriger Wert — sind Sie sicher? Typisch sind <strong>'
                                   + fmtEuro(def) + '</strong> für ein '
-                                  + state.gebaeudetyp + ' deiner Größe.';
+                                  + state.gebaeudetyp + ' Ihrer Größe.';
               hinweis.hidden = false;
             } else if (v > def * 2) {
-              hinweis.innerHTML = 'Sehr hoher Wert — bist du sicher? Typisch sind <strong>'
+              hinweis.innerHTML = 'Sehr hoher Wert — sind Sie sicher? Typisch sind <strong>'
                                   + fmtEuro(def) + '</strong>.';
               hinweis.hidden = false;
             } else {
@@ -3276,7 +3276,7 @@
         const berichtText = ($('#bericht-body')?.innerText || '').trim();
         const body = encodeURIComponent(
           berichtText + '\n\n' +
-          'Anbei meine Eingabewerte und drei Sichten. Ich freue mich auf deine fundierte Einschätzung.\n\n' +
+          'Anbei meine Eingabewerte und drei Sichten. Ich freue mich auf Ihre fundierte Einschätzung.\n\n' +
           '— Mehr unter hausentscheider.de/methodik'
         );
         window.location.href = 'mailto:dialog@hausentscheider.de?subject=' + subject + '&body=' + body;
@@ -3309,7 +3309,7 @@
         const url = window.location.origin + window.location.pathname + '?' + params.toString();
         try {
           await navigator.clipboard.writeText(url);
-          showToast('Link kopiert. Du kannst ihn jetzt teilen.');
+          showToast('Link kopiert. Sie können ihn jetzt teilen.');
         } catch (e) {
           showToast('Kopieren fehlgeschlagen — bitte URL manuell kopieren: ' + url);
         }

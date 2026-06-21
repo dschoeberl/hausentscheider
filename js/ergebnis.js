@@ -101,7 +101,7 @@ const RISIKO_BANNER = {
       'Strom-Sondertarif WP-Strom hängt teilweise vom Gas-Preis ab (Mittellast-Korrelation ~30 %)',
       'Schallschutz nach TA Lärm im MFH ggf. relevant — Gutachten kann nötig sein'
     ],
-    cta: 'Profi-Modus aktivieren: JAZ-Override mit deinem Datenblatt-Wert minus 0,3 testen.'
+    cta: 'Profi-Modus aktivieren: JAZ-Override mit Ihrem Datenblatt-Wert minus 0,3 testen.'
   },
   fw: {
     titel: 'Fernwärme: behalte diese Risiken im Blick',
@@ -120,7 +120,7 @@ const RISIKO_BANNER = {
       'Gas-Subventionen (Gaspreis-Bremse, reduzierte MwSt.) können auslaufen — Sprung-Anstieg möglich',
       'Kommunale Wärmeplanung schreibt vor 2028 Gas-Stilllegungs-Pläne vor'
     ],
-    cta: 'Schau dir Hybrid und Wärmepumpe als Alternative an — Schieberegler nutzen.'
+    cta: 'Schauen Sie sich Hybrid und Wärmepumpe als Alternative an — Schieberegler nutzen.'
   }
 };
 
@@ -210,8 +210,8 @@ function renderVermieterBilanz(input, params) {
   const b1 = $('#vb-block-1');
   if (b1) {
     b1.innerHTML = `
-      <p class="vb-purpose"><strong>Wozu dieser Kasten:</strong> Nur relevant, wenn du vermietest — was dir eine Heizungs-Modernisierung als Eigentümer konkret bringt.</p>
-      <h4>Was du als Vermieter durch eine Heizungs-Modernisierung gewinnst</h4>
+      <p class="vb-purpose"><strong>Wozu dieser Kasten:</strong> Nur relevant, wenn Sie vermieten — was Ihnen eine Heizungs-Modernisierung als Eigentümer konkret bringt.</p>
+      <h4>Was Sie als Vermieter durch eine Heizungs-Modernisierung gewinnen</h4>
       <ol class="vb-vorteile">
         <li>Mietspiegel-Klassen-Sprung (~ 0,30 €/m²·Monat) durch energetische Modernisierung</li>
         <li>Modernisierungs-Umlage nach §559 BGB (8 % p.a. der Investition, max. 12 Jahre)</li>
@@ -289,8 +289,8 @@ function renderHeadlineAntwort(input, params) {
   const hsLabel = eqm < 1.0 ? 'niedrig' : (eqm <= 1.5 ? 'im Schnitt' : 'erhöht');
 
   wrap.innerHTML = `
-    <h2>Deine Antwort</h2>
-    <p>Die wirtschaftlichste Option für dein Profil ist
+    <h2>Ihre Antwort</h2>
+    <p>Die wirtschaftlichste Option für Ihr Profil ist
       <strong>${escapeHtml(OPTION_LABELS[beste])}</strong> — drei Kennzahlen über
       <strong>${input.zeitraum} Jahre</strong>:</p>
     <div class="kpi3">
@@ -428,7 +428,7 @@ function renderWirtschaftlichkeitsTabelle(input, params) {
 
   // Tooltip-Text pro Zelle: dynamische Erklärung der Pastell-Klassifikation
   function tooltipText(opt, wert, werteZeile, klasse, zeile) {
-    if (klasse === 'pastell-ausgeschlossen') return 'Pellets ist in deiner Lage nicht plausibel und daher nicht Teil des Vergleichs.';
+    if (klasse === 'pastell-ausgeschlossen') return 'Pellets ist in Ihrer Lage nicht plausibel und daher nicht Teil des Vergleichs.';
     if (klasse === 'pastell-neutral') return null;
     const aktive = werteZeile.filter(v => v != null && !isNaN(v));
     if (aktive.length < 2 || wert == null) return null;
@@ -568,7 +568,7 @@ function renderLeseHilfeBox(input, params) {
     const horiText = { 'reicht-nicht': 'reicht das nicht', knapp: 'reicht das knapp', gut: 'reicht das gut' }[er.horizontBewertung];
     erHTML = `<p class="erhaltung-status">
       <strong>Plausibilitäts-Hinweis Erhaltungsrücklage:</strong>
-      Deine Rücklage ${er.proQmJahr.toFixed(2).replace('.',',')} €/m²/a liegt ${klassText} dem
+      Ihre Rücklage ${er.proQmJahr.toFixed(2).replace('.',',')} €/m²/a liegt ${klassText} dem
       GdW-Richtwert ${er.gdwUnter}–${er.gdwOber} €/m²/a. Bei ${er.horizont}-Jahres-Plan ${horiText}.
     </p>`;
   }
@@ -587,7 +587,7 @@ function renderLeseHilfeBox(input, params) {
       kippt sie typischerweise zugunsten der Wärmepumpe.
     </p>
     ${erHTML}
-    ${!pelletsOK ? '<p style="font-size:12px;color:var(--text-secondary);margin:0.4rem 0 0;">Pellets ist in deiner Lage nicht plausibel und nicht Teil des Vergleichs.</p>' : ''}
+    ${!pelletsOK ? '<p style="font-size:12px;color:var(--text-secondary);margin:0.4rem 0 0;">Pellets ist in Ihrer Lage nicht plausibel und nicht Teil des Vergleichs.</p>' : ''}
   `;
 }
 
@@ -613,7 +613,7 @@ function renderSensibilisierungsBlock() {
         <ol class="vb-vorteile">
           ${punkteHtml}
         </ol>
-        <p class="vb-closer">Einige davon kannst du im <a href="#schieberegler">„Was-wäre-wenn"</a>-Bereich oben selbst durchspielen.</p>
+        <p class="vb-closer">Einige davon können Sie im <a href="#schieberegler">„Was-wäre-wenn"</a>-Bereich oben selbst durchspielen.</p>
       </div>
     </details>
   `;
@@ -636,12 +636,12 @@ const BIG_PICTURE_ACHSEN_LABELS = [
 ];
 
 const BIG_PICTURE_ACHSEN_TOOLTIPS = [
-  'Berücksichtigt Investition, Förderung, Energie, Wartung, CO₂ über deinen Zeitraum. Hoch = wirtschaftlich.',
+  'Berücksichtigt Investition, Förderung, Energie, Wartung, CO₂ über Ihren Zeitraum. Hoch = wirtschaftlich.',
   'Niedrige CO₂-Emissionen pro Jahr. Bezug zu planetaren Grenzen — 422 ppm CO₂ in der Atmosphäre, Klimaneutralität 2045.',
-  'Robustheit gegen Marktschocks und Versorgungsstörungen. Wie unabhängig bist du von Gas-Netz, Strom-Netz, Versorger-Monopol?',
-  'Integrierbarkeit von PV, Batterie, Solarthermie, Wallbox. Kannst du dein System schrittweise erweitern?',
-  'Politische Konformität (EPBD, GMG, kommunale Wärmeplanung). Wie gut passt deine Lösung zu kommenden gesetzlichen Anforderungen?',
-  'Wie gut bist du gegen Stranded-Asset, regulatorische Sprünge, Kostenexplosion abgesichert? Hoch = geschützt.'
+  'Robustheit gegen Marktschocks und Versorgungsstörungen. Wie unabhängig sind Sie von Gas-Netz, Strom-Netz, Versorger-Monopol?',
+  'Integrierbarkeit von PV, Batterie, Solarthermie, Wallbox. Können Sie Ihr System schrittweise erweitern?',
+  'Politische Konformität (EPBD, GMG, kommunale Wärmeplanung). Wie gut passt Ihre Lösung zu kommenden gesetzlichen Anforderungen?',
+  'Wie gut sind Sie gegen Stranded-Asset, regulatorische Sprünge, Kostenexplosion abgesichert? Hoch = geschützt.'
 ];
 
 function renderBigPicture(input, params) {
@@ -754,7 +754,7 @@ function renderZukunftsszenarioFeld(input, params) {
   const z = berechneZukunftsszenarioAussagen(input, params);
   const dimm = z.imDefaultZustand ? ' style="opacity:0.7"' : '';
   const intro = z.imDefaultZustand
-    ? '<p class="imdefault-hinweis">Bewege links die Schieberegler — hier siehst du den Effekt.</p>'
+    ? '<p class="imdefault-hinweis">Bewegen Sie links die Schieberegler — hier sehen Sie den Effekt.</p>'
     : '';
 
   function pfeil(delta, einheit, kostenLogik) {
@@ -850,15 +850,15 @@ function renderExcelEditionSektion() {
 
   wrap.innerHTML = `
     <div class="beratung-box">
-      <h2>Bevor du eine große Entscheidung triffst — eine neutrale Einordnung</h2>
+      <h2>Bevor Sie eine große Entscheidung treffen — eine neutrale Einordnung</h2>
       <p>Zwischen einer allgemeinen Energieberatung (oft zu unverbindlich) und einem beauftragten
         Ingenieurbüro (gründlich, aber teuer und komplex) klafft eine Lücke.
         <strong>Genau dort setze ich an — unabhängig, neutral, ohne eigenes Produkt.</strong></p>
-      <p>Ein Heizungsbauer verkauft, was er im Sortiment hat. Ich verkaufe nichts. Ich helfe dir,
-        aus deinen Gebäudedaten und einem ehrlichen Vergleich die <strong>bestmögliche, langfristig
+      <p>Ein Heizungsbauer verkauft, was er im Sortiment hat. Ich verkaufe nichts. Ich helfe Ihnen,
+        aus Ihren Gebäudedaten und einem ehrlichen Vergleich die <strong>bestmögliche, langfristig
         tragfähige Entscheidung</strong> abzuleiten — auf Basis belegter Zahlen und meiner
         Forschungsarbeit zur ganzheitlichen Zukunftsfähigkeit von Gebäuden.</p>
-      <p class="beratung-box__sub">Womit ich dich begleite:</p>
+      <p class="beratung-box__sub">Womit ich Sie begleite:</p>
       <ul class="beratung-box__liste">
         <li><strong>Entscheidungsgrundlagen</strong> für langfristige Investitionen — verständlich aufbereitet</li>
         <li><strong>Eigentümerversammlungen</strong> vor- und nachbereiten; verschiedene Perspektiven zu einer gemeinsamen Grundlage verbinden</li>
@@ -866,7 +866,7 @@ function renderExcelEditionSektion() {
       </ul>
       <p>Für Eigentümergemeinschaften wie für einzelne Eigentümer — eine ruhige, neutrale Orientierung,
         bevor viel Geld in die falsche Richtung fließt.</p>
-      <p>Schreib mir — die <strong>erste Antwort ist kostenlos</strong>, tiefere Begleitung sprechen wir projektbasiert ab.</p>
+      <p>Schreiben Sie mir — die <strong>erste Antwort ist kostenlos</strong>, tiefere Begleitung sprechen wir projektbasiert ab.</p>
       <p class="beratung-box__mail"><a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a></p>
       <button type="button" class="btn--analyse" id="cta-beratung-senden">Meine Analyse senden</button>
     </div>
@@ -889,7 +889,7 @@ function renderExcelEditionSektion() {
 const WEGWEISER_KARTEN = [
   { titel: 'BAFA',
     sub:    'Förderung beantragen',
-    text:   'Hol dir, was dir zusteht. Antrag direkt im Portal.',
+    text:   'Holen Sie sich, was Ihnen zusteht. Antrag direkt im Portal.',
     url:    'https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/effiziente_gebaeude_node.html' },
   { titel: 'KfW',
     sub:    'Kredit prüfen',
@@ -897,7 +897,7 @@ const WEGWEISER_KARTEN = [
     url:    'https://www.kfw.de' },
   { titel: 'Solarrechner',
     sub:    'Thüringen',
-    text:   'Wieviel Strom dein Dach realistisch erzeugen könnte.',
+    text:   'Wie viel Strom Ihr Dach realistisch erzeugen könnte.',
     url:    'https://www.solarrechner-thueringen.de/#s=startscreen' },
   { titel: 'Verbraucher-Zentrale',
     sub:    'Beratung',
