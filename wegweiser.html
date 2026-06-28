@@ -15,6 +15,7 @@
       --petrol:       #1D9E75;
       --petrol-dark:  #0d5c42;
       --petrol-mid:   #4db8a8;
+      --signal:       #CFF77F;
       --white:        #ffffff;
       --off-white:    #f5f4f0;
       --border:       #d8d6ce;
@@ -185,7 +186,7 @@
 
     /* Hausentscheider-Box (eigenständiger Block, KEINE Karte) */
     .hausentscheider-box {
-      background:#7e9696;
+      background:#1a3535;
       color:#ffffff;
       padding:16px;
       border-radius:6px;
@@ -208,6 +209,12 @@
       text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.4);
     }
     .hausentscheider-box__link:hover { border-bottom-color:#ffffff; text-decoration:none; }
+
+    /* Signalgelb-Button (einheitlich mit Startseite) */
+    .btn { display:inline-block; padding:0.6rem 1.5rem; font-family:'Inter',sans-serif; font-size:13px; border-radius:4px; cursor:pointer; transition:opacity 0.2s; text-decoration:none; border:none; }
+    .btn:hover { opacity:0.85; text-decoration:none; }
+    .btn--signal { background:var(--signal); color:#1a3535; font-weight:500; border:none; }
+    .btn--signal:hover { opacity:0.9; text-decoration:none; }
 
     /* ── ZONE 3: QUELLEN ─────────────────────────────── */
     .quellen { background:var(--white); border-top:0.5px solid var(--border); padding:3.5rem 0 4rem; }
@@ -623,7 +630,7 @@
       <div class="hausentscheider-box__label">Dialog</div>
       <div class="hausentscheider-box__kern">Fragen, die hier offen sind, gehören auf den Tisch.</div>
       <div class="hausentscheider-box__text">Schreiben Sie mir — ich ordne ein, neutral und belegt: <a href="mailto:dialog@hausentscheider.de" style="color:#fff;text-decoration:underline;">dialog@hausentscheider.de</a></div>
-      <a href="rechner.html" class="hausentscheider-box__link">Zum Entscheider — die Optionen für Ihr Gebäude rechnen →</a>
+      <a href="rechner.html" class="btn btn--signal" style="margin-top:14px;">Zum Entscheider →</a>
     </div>
 
   </div>
