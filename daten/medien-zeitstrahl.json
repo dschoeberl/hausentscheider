@@ -101,6 +101,13 @@
       "berichtet": true
     },
     {
+      "datum": "2026-05-11",
+      "datumLabel": "11. Mai",
+      "label": "Bürgerversammlung: öffentliche Vorstellung der KWP (Rathausfestsaal)",
+      "berichtet": false,
+      "tag": "kaum berichtet"
+    },
+    {
       "datum": "2026-06-30",
       "datumLabel": "30. Juni",
       "label": "Inkrafttreten KWP + adressgenauer Stadtplan",
