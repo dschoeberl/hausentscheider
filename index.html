@@ -271,11 +271,11 @@
     .oz-radar__axis { stroke: rgba(122,184,181,0.18); stroke-width: 1; }
     .oz-radar__ist { fill: rgba(207,247,127,0.30); stroke: var(--signal); stroke-width: 2; stroke-linejoin: round; }
     .oz-radar__pt { fill: var(--signal); }
-    .oz-radar__pt--krit { fill: #ffffff; stroke: var(--signal); stroke-width: 2; }
+    .oz-radar__pt--krit { fill: var(--tommy-rot); stroke: none; }
     .oz-radar__marker { cursor: pointer; }
     .oz-radar__marker:focus { outline: none; }
     .oz-radar__num { fill: var(--petrol); stroke: var(--petrol-dark); stroke-width: 1.5; transition: fill 0.15s; }
-    .oz-radar__num--krit { fill: var(--signal); }
+    .oz-radar__num--krit { fill: var(--tommy-rot); }
     .oz-radar__marker.is-active .oz-radar__num { fill: var(--signal); stroke: #ffffff; }
     .oz-radar__numtext { fill: #ffffff; font-size: 11px; font-family: 'Inter', sans-serif; font-weight: 600; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
     .oz-radar__numtext--krit { fill: #1a3535; }
@@ -286,17 +286,20 @@
     .oz-fr-item { display: flex; align-items: center; gap: 7px; width: 100%; text-align: left; background: transparent; border: 0.5px solid rgba(122,184,181,0.25); border-radius: 6px; padding: 7px 9px; min-height: 44px; cursor: pointer; color: rgba(255,255,255,0.82); font-family: 'Inter', sans-serif; font-size: 11px; line-height: 1.3; transition: background 0.15s, border-color 0.15s; }
     .oz-fr-item:hover, .oz-fr-item.is-active { background: rgba(207,247,127,0.10); border-color: var(--signal); }
     .oz-fr-item__nr { flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%; background: var(--petrol); color: #ffffff; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; }
-    .oz-fr-item--krit .oz-fr-item__nr { background: var(--signal); color: #1a3535; }
+    .oz-fr-item--krit .oz-fr-item__nr { background: var(--tommy-rot); color: #ffffff; }
+    .oz-fr-item--krit { border-color: rgba(216,30,52,0.4); }
     .oz-fr-item__feld { flex: 1; }
     .oz-fr-item__ist { flex-shrink: 0; font-weight: 600; color: var(--petrol-light); }
-    .oz-fr-item--krit .oz-fr-item__ist { color: var(--signal); }
+    .oz-fr-item--krit .oz-fr-item__ist { color: var(--tommy-rot); }
     .oz-radar__doclink { margin: 1rem 0 0; }
     .oz-radar__doclink a { font-size: 12.5px; color: var(--signal); font-family: 'Inter', sans-serif; font-weight: 500; }
     .oz-radar__doclink a:hover { text-decoration: underline; }
 
     /* (b) Live-Zeitstrahl */
     .oz-timeline { background: #ffffff; padding: 1.35rem 1.5rem 1.25rem; border-bottom: 0.5px solid var(--border); }
-    .oz-timeline__head { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-tertiary); font-family: 'Inter', sans-serif; margin-bottom: 0.9rem; }
+    .oz-timeline__head { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--petrol); font-weight: 600; font-family: 'Inter', sans-serif; margin-bottom: 0.4rem; }
+    .oz-timeline__title { font-family: 'Playfair Display', Georgia, serif; font-size: 19px; font-weight: 400; color: var(--text-primary); margin: 0 0 0.4rem; line-height: 1.3; }
+    .oz-timeline__lead { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin: 0 0 1.1rem; max-width: 580px; }
     .oz-tl-wrap { position: relative; }
     .oz-tl-wrap::before, .oz-tl-wrap::after { content: ''; position: absolute; left: 0; right: 8px; height: 22px; pointer-events: none; z-index: 2; }
     .oz-tl-wrap::before { top: 0; background: linear-gradient(#ffffff, rgba(255,255,255,0)); }
@@ -311,7 +314,7 @@
     .oz-tl__sum { list-style: none; cursor: pointer; display: grid; grid-template-columns: 18px 1fr auto; gap: 3px 10px; align-items: center; padding: 0.6rem 0; min-height: 44px; }
     .oz-tl__sum::-webkit-details-marker { display: none; }
     .oz-tl__dot { grid-column: 1; grid-row: 1; justify-self: start; width: 11px; height: 11px; border-radius: 50%; background: var(--border); }
-    .oz-tl__date { grid-column: 2; grid-row: 1; font-size: 11px; font-family: 'Inter', sans-serif; color: var(--text-tertiary); }
+    .oz-tl__date { grid-column: 2; grid-row: 1; font-size: 12.5px; font-family: 'Inter', sans-serif; color: var(--petrol); font-weight: 600; }
     .oz-tl__chev { grid-column: 3; grid-row: 1; justify-self: end; font-size: 10px; color: var(--text-tertiary); transition: transform 0.2s; }
     .oz-tl__det[open] .oz-tl__chev { transform: rotate(90deg); }
     .oz-tl__meta-row { grid-column: 2 / -1; grid-row: 2; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -1206,9 +1209,9 @@
     <div class="objekt-slot">
       <div class="objekt-slot__body">
         <p class="objekt-slot__title">Wie zukunftsfähig ist Ihr Gebäude?</p>
-        <p class="objekt-slot__sub">Sie haben gerade gesehen, wie der Future-Readiness-Index dieses Gebäude über elf Kompetenzfelder einordnet. Möchten Sie so eine Analyse für Ihr eigenes Gebäude? Dann kommen Sie auf mich zu.</p>
+        <p class="objekt-slot__sub">Sie haben gerade ein echtes Gebäude offen auf dem Tisch gesehen — Wärmekosten, Future Readiness, Entscheidungsweg. Genau diese Analyse und die Begleitung dahinter gibt es auch für Ihr Gebäude.</p>
       </div>
-      <a href="mailto:dialog@hausentscheider.de" class="btn btn--signal">dialog@hausentscheider.de</a>
+      <a href="#begleitung" class="btn btn--signal">Zur Begleitung →</a>
     </div>
   </section>
 
@@ -1778,13 +1781,13 @@
             { nr: 3,  feld: "Anpassungsfähigkeit",           ist: 2,
               skala1: "Rechts- und Marktlage unbeachtet", skala5: "frühzeitig angepasst, vorausschauend",
               befund: "Der rechtliche Rahmen (Fernwärmesatzung) blieb lange unbeachtet; die Lernkurve hat erst begonnen." },
-            { nr: 4,  feld: "Resilienz",                     ist: 1,
+            { nr: 4,  feld: "Resilienz",                     ist: 1, krit: true,
               skala1: "akut ausfallgefährdet", skala5: "robust, unabhängig, beschlussfähig",
               befund: "Der Gaskessel ist 27 Jahre alt, Ersatzteile sind abgekündigt — ein Ausfall ist jederzeit möglich, ein Systembeschluss steht aus." },
             { nr: 5,  feld: "Soziale Gestaltungskraft",      ist: 2,
               skala1: "keine Abstimmung, Stillstand", skala5: "transparente, handlungsfähige Gemeinschaft",
               befund: "Eine direkte, transparente Kommunikation ist angelegt — doch die Eigentümer-Einbindung ist noch nicht formalisiert und mündete bislang in keinen Beschluss." },
-            { nr: 6,  feld: "Projekt-/Umsetzungskompetenz",  ist: 2,
+            { nr: 6,  feld: "Projekt-/Umsetzungskompetenz",  ist: 2, krit: true,
               skala1: "kein Fortschritt trotz Dringlichkeit", skala5: "klare Beschlüsse, zügige Umsetzung",
               befund: "Der Handlungsdruck liegt seit Jahren vor, ein Variantenbeschluss fehlt aber weiterhin." },
             { nr: 7,  feld: "Digital & Daten",               ist: 2,
@@ -1799,7 +1802,7 @@
             { nr: 10, feld: "Netzwerk/Unabhängigkeit",       ist: 2,
               skala1: "abhängig von einer Quelle", skala5: "unabhängig, mehrere Perspektiven",
               befund: "Ein unabhängiges Zweitgutachten fehlt noch; das Beratungsnetzwerk ist auf wenige Akteure konzentriert." },
-            { nr: 11, feld: "Integrität/Transparenz",        ist: 2,
+            { nr: 11, feld: "Integrität/Transparenz",        ist: 2, krit: true,
               skala1: "intransparent, unbelegt", skala5: "belegt, nachvollziehbar, auf Augenhöhe",
               befund: "Der Entscheidungsprozess braucht mehr Belege und mehr Augenhöhe." }
           ]
@@ -1854,14 +1857,14 @@
         for (var v = 1; v <= maxV; v++){ svg += '<polygon class="' + (v === maxV ? "oz-radar__soll" : "oz-radar__grid") + '" points="' + ring(R * v / maxV) + '"/>'; }
         felder.forEach(function(f, i){ var p = pt(i, R); svg += '<line class="oz-radar__axis" x1="' + cx + '" y1="' + cy + '" x2="' + p[0] + '" y2="' + p[1] + '"/>'; });
         svg += '<polygon class="oz-radar__ist" points="' + felder.map(function(f, i){ return pt(i, R * f.ist / maxV).join(","); }).join(" ") + '"/>';
-        felder.forEach(function(f, i){ var p = pt(i, R * f.ist / maxV); svg += '<circle class="oz-radar__pt" cx="' + p[0] + '" cy="' + p[1] + '" r="5"/>'; });
+        felder.forEach(function(f, i){ var p = pt(i, R * f.ist / maxV); svg += '<circle class="oz-radar__pt' + (f.krit ? ' oz-radar__pt--krit' : '') + '" cx="' + p[0] + '" cy="' + p[1] + '" r="5"/>'; });
         felder.forEach(function(f, i){ var p = pt(i, labelR); svg += '<g class="oz-radar__marker" data-nr="' + f.nr + '" tabindex="0" role="button" aria-label="' + f.feld + ', Ist ' + f.ist + ' von ' + maxV + '">' +
-          '<circle class="oz-radar__num" cx="' + p[0] + '" cy="' + p[1] + '" r="12"/>' +
+          '<circle class="oz-radar__num' + (f.krit ? ' oz-radar__num--krit' : '') + '" cx="' + p[0] + '" cy="' + p[1] + '" r="12"/>' +
           '<text class="oz-radar__numtext" x="' + p[0] + '" y="' + p[1] + '">' + f.nr + '</text></g>'; });
         svg += '</svg>';
 
         let legend = '<div class="oz-radar__legend">';
-        felder.forEach(function(f){ legend += '<button type="button" class="oz-fr-item" data-nr="' + f.nr + '">' +
+        felder.forEach(function(f){ legend += '<button type="button" class="oz-fr-item' + (f.krit ? ' oz-fr-item--krit' : '') + '" data-nr="' + f.nr + '">' +
           '<span class="oz-fr-item__nr">' + f.nr + '</span>' +
           '<span class="oz-fr-item__feld">' + f.feld + '</span>' +
           '<span class="oz-fr-item__ist">' + f.ist + '/' + maxV + '</span></button>'; });
@@ -1898,7 +1901,9 @@
         radarEl.addEventListener("keydown", function(e){ if (e.key === "Enter" || e.key === " "){ const el = e.target.closest(".oz-radar__marker[data-nr]"); if (el){ e.preventDefault(); selectField(el.dataset.nr); } } });
       }
 
-      let html = '<p class="oz-timeline__head">Zeitstrahl · Entscheidungsweg</p>' +
+      let html = '<p class="oz-timeline__head">Zeitstrahl · Theaterstraße 4</p>' +
+        '<h3 class="oz-timeline__title">Der Entscheidungsweg — Schritt für Schritt belegt</h3>' +
+        '<p class="oz-timeline__lead">Von 1998 bis heute: jeder Schritt mit Datum und Beleg. Der aktuelle, offene Schritt ist hervorgehoben — so verfolgen Sie mit, wie sich die Entscheidung formt.</p>' +
         '<div class="oz-tl-wrap"><div class="oz-tl-scroll"><div class="oz-tl">';
       OBJEKT_001.zeitstrahl.forEach(function(e){
         const p = pillFor(e.status);
@@ -1912,7 +1917,7 @@
                 '<span class="oz-tl__dot"></span>' +
                 '<span class="oz-tl__date">' + e.datum + '</span>' +
                 '<span class="oz-tl__chev">▸</span>' +
-                '<span class="oz-tl__meta-row"><span class="oz-tl__typ">' + e.typ + '</span><span class="oz-pill ' + p.cls + '">' + p.text + '</span></span>' +
+                '<span class="oz-tl__meta-row"><span class="oz-tl__typ">' + e.typ + '</span>' + (p.kind === 'done' ? '' : '<span class="oz-pill ' + p.cls + '">' + p.text + '</span>') + '</span>' +
                 '<span class="oz-tl__titel">' + e.titel + '</span>' +
               '</summary>' +
               '<p class="oz-tl__ergebnis">' + e.ergebnis + '</p>' +
