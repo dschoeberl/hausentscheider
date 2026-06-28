@@ -1,5 +1,5 @@
 {
-  "_hinweis": "Wärmewende im Blick — Zeitstrahl der lokalen Berichterstattung. Neuer Artikel = ein Objekt an 'eintraege' anhängen. 'datum' (ISO) treibt die proportionale Achse, 'datumLabel' ist die Anzeige. Die 'zuletzt ergänzt'-Marke wird automatisch aus dem jüngsten Eintrag abgeleitet — nichts separat pflegen. Töne: zustimmend | sachlich | erklaerend | kritisch. Eigene Überschriften und sinngemäße Zusammenfassungen — keine Originaltitel oder Volltexte.",
+  "_hinweis": "Wärmewende im Blick — Zeitstrahl der lokalen Berichterstattung. Neuer Artikel = ein Objekt an 'eintraege' anhängen. 'datum' (ISO) treibt die proportionale Achse, 'datumLabel' ist die Anzeige. Die 'zuletzt ergänzt'-Marke wird automatisch aus dem jüngsten Eintrag abgeleitet — nichts separat pflegen. Töne: zustimmend | sachlich | erklaerend | kritisch. Zusammenfassung und kommentar je 3–5 Sätze, eigene Worte, konkrete Fakten/Zahlen; kurze wörtliche Zitate nur mit Quelle. Eigene, zugespitzte Überschriften — keine Originaltitel oder Volltexte.",
   "eintraege": [
     {
       "datum": "2026-04-30",
@@ -7,8 +7,8 @@
       "headline": "„Auf dem Weg zur grünen Wärme“ – sagt die Tagung",
       "ton": "zustimmend",
       "quelle": "TA · Thüringen",
-      "zusammenfassung": "Zur Thüringer Wärmetagung wird die Wärmewende als Aufbruch erzählt — Ausbau, grüne Quellen, Zuversicht. Der Ton setzt das Framing für den ganzen Mai.",
-      "kommentar": "Optimistischer Auftakt, aber im Versprechens-Modus. Was „grün“ konkret heißt — mit welchem Termin —, bleibt offen. Mehr Absicht als Beleg.",
+      "zusammenfassung": "Zur 2. Thüringer Wärmetagung wird die Erfurter Wärmewende als Aufbruch erzählt: Fernwärme-Ausbau, grüne Quellen, Zuversicht. Konkrete Termine oder Zahlen zur Dekarbonisierung bleiben im Hintergrund. Der Ton setzt das Framing für den ganzen Mai.",
+      "kommentar": "Eine Tagung darf Aufbruch feiern — aber für eine Entscheidung über 20 Jahre zählt nicht die Stimmung, sondern der Beleg. Welche grüne Quelle kommt wann, mit welcher Sicherheit und zu welchem Preis? Genau die Übersetzung von der Absicht zur belastbaren Zahl fehlt. Wer den Optimismus für eine Zusage hält, verwechselt Richtung mit Fahrplan.",
       "link": ""
     },
     {
@@ -17,8 +17,8 @@
       "headline": "Der Bund lockert — am selben Tag legt die Stadt fest",
       "ton": "sachlich",
       "quelle": "TA · Politik & Lokalteil",
-      "zusammenfassung": "Der Bund kippt das Verbot fossiler Heizungen nach 2045; ein Fachmann rät zum Abwarten. Im Lokalteil derselben Ausgabe: die kommunale Festlegung zum 30.06.",
-      "kommentar": "Zwei Zeitlogiken in einem Blatt. Was die Gleichzeitigkeit für einen Haushalt bedeutet, führt keiner zusammen — es bleibt beim Leser.",
+      "zusammenfassung": "Im Wirtschaftsteil kippt Bundesministerin Reiche das geplante 2045-Betriebsverbot für fossile Heizungen; das neue Gebäudemodernisierungsgesetz sieht nur noch eine schrittweise Erneuerbaren-Quote vor (10 % ab 2029 bis 60 % ab 2040) und ist erst Referentenentwurf. Ein Energieberater rät im Interview wörtlich: „Im Moment würde ich abwarten.“ Im Lokalteil derselben Ausgabe steht dagegen die kommunale Festlegung zum 30.06.",
+      "kommentar": "Beide Meldungen sind für sich korrekt — zusammen ergeben sie ein Dilemma, das niemand auflöst. Der Bund signalisiert „abwarten“, die Kommune „jetzt festlegen“; wer dazwischensteht, trägt das Risiko allein. Heikel wird der Rat zum Abwarten dort, wo im Satzungsgebiet ein neuer Gaskessel schon nicht mehr zulässig sein kann. Die eigentliche Denkaufgabe — was gilt für mein Gebäude, wenn Bund und Stadt gegenläufig steuern? — bleibt vollständig beim Leser.",
       "link": ""
     },
     {
@@ -27,8 +27,8 @@
       "headline": "„Welche Heizung wohin?“ — der Plan, gut erklärt",
       "ton": "erklaerend",
       "quelle": "TA · Lokalteil",
-      "zusammenfassung": "Das ausführliche Frage-Antwort-Stück erklärt verständlich, wie die KWP Gebiete einteilt — das hilfreichste Stück des Zeitraums.",
-      "kommentar": "Handwerklich stark — erklärt den Plan. Aber es prüft ihn nicht: Annahmen, Preise, Zeitpläne bleiben unhinterfragt. Erklären ist nicht prüfen.",
+      "zusammenfassung": "Das große Frage-Antwort-Stück erklärt den Plan so klar wie kein anderes: die Farblogik der Gebiete, 3.800 Häuserblocks, 115.000 Haushalte, eine Fernwärmemenge, die von 540 auf 720 GWh wachsen soll — heute zu 95 % aus Erdgas —, 1,5 Mrd. € Investitionen bis 2045. Auch die offene Stelle wird benannt: In den „Prüfgebieten“ (rund ein Drittel der Stadt) bleibt bis zu fünf Jahre offen, wie geheizt wird; ein adressgenauer Stadtplan ist für den 30.06. angekündigt.",
+      "kommentar": "Handwerklich das stärkste Stück — und trotzdem der Kern des Musters: Es erklärt den Plan, aber es prüft ihn nicht. Die 1,5 Milliarden, die 95 % Erdgas, die fünf Jahre offenen Prüfgebiete werden referiert, nicht hinterfragt: Wie entwickelt sich der Preis, wenn so viel investiert wird? Was passiert, wenn die Geothermie nicht trägt? Und die eine Zahl, die der Eigentümer wirklich braucht — Euro pro Quadratmeter und Monat über 20 Jahre — kommt nicht vor. Gut erklärt ist noch nicht durchgerechnet.",
       "link": ""
     },
     {
@@ -37,8 +37,8 @@
       "headline": "Das Heizungsgesetz, vom Schornsteinfeger übersetzt",
       "ton": "erklaerend",
       "quelle": "TA · Lokalteil",
-      "zusammenfassung": "Ein Schornsteinfeger-Meister übersetzt die Bundesreform alltagsnah — was sie praktisch für Hausbesitzer bedeutet.",
-      "kommentar": "Gute Übersetzung, typisch fürs Muster: Aufklärung passiert, wenn ein Ereignis sie auslöst — nicht kontinuierlich.",
+      "zusammenfassung": "Ein Schornsteinfeger-Meister übersetzt die Bundesreform alltagsnah: was das neue Heizungsrecht praktisch für Hausbesitzer bedeutet, welche Fristen und Pflichten gelten. Handwerksnah und verständlich — ausgelöst durch den Gesetzentwurf.",
+      "kommentar": "Ein nützlicher Service — und zugleich typisch für das ereignisgetriebene Muster: Aufklärung passiert, weil ein Gesetzentwurf den Anlass liefert, nicht als laufende Begleitung. Der Beitrag erklärt die Regeln, aber nicht die Wirtschaftlichkeit der Optionen. Für die eigentliche Frage — welche Lösung rechnet sich für mein Gebäude — verweist auch dieses Stück implizit auf andere. Hilfreich beim „Was gilt“, offen beim „Was lohnt“.",
       "link": ""
     },
     {
@@ -47,8 +47,8 @@
       "headline": "„Verbraucher brauchen Klarheit“ — die Zeitung benennt die Lücke selbst",
       "ton": "kritisch",
       "quelle": "TA · Kommentar",
-      "zusammenfassung": "Ein Leitkommentar benennt offen, dass den Verbrauchern die Planungssicherheit fehlt — zu wenig Orientierung für die anstehenden Entscheidungen.",
-      "kommentar": "Bemerkenswert: Die Redaktion benennt die Lücke selbst. Genau die — keine belastbare Entscheidungsgrundlage je Haushalt — zieht sich durch den ganzen Korpus.",
+      "zusammenfassung": "Die Funke-Textchefin Birgitta Stauber bringt die Lage im Kommentar auf den Punkt: „Wer investiert, braucht Planungssicherheit. Doch die ist nicht in Sicht.“ Verbraucher bräuchten viel mehr Informationen — und finanzielle Unterstützung —, wenn sie dämmen, die Heizung tauschen oder auf Fernwärme umstellen sollen.",
+      "kommentar": "Bemerkenswert, weil die Diagnose aus dem Haus selbst kommt — an prominenter Stelle, nicht in einem ausgelagerten Vortrag. Stauber benennt präzise, was der ganze Korpus zeigt: Es fehlt die Planungssicherheit und die belastbare Information für die einzelne Entscheidung. Der Kommentar fordert sie ein, kann sie aber nicht liefern — das ist nicht seine Aufgabe. Genau diese Lücke zwischen berechtigter Forderung und fehlender Antwort ist der Raum, den ein unabhängiger Wegweiser füllen muss.",
       "link": ""
     },
     {
@@ -57,8 +57,8 @@
       "headline": "Bauchschmerzen erlaubt — aber bitte beruhigt",
       "ton": "zustimmend",
       "quelle": "TA · Lokalteil",
-      "zusammenfassung": "Ein Stück greift das Unbehagen vieler Eigentümer auf — Unsicherheit über Kosten und Pflichten — und fängt es beruhigend wieder ein.",
-      "kommentar": "Das Unbehagen wird benannt und gleich abgefedert. Die eigentliche Frage — was kostet welche Entscheidung über 20 Jahre — bleibt offen.",
+      "zusammenfassung": "Unter der volkstümlichen Überschrift „Bauchschmerzen und kalte Füße“ steckt der härteste Stoff des Zeitraums: Der SWE-Netz-Chef räumt ein, dass die Leistung von Wärmepumpen bei Netzengpässen aus der Ferne um über 40 % gedrosselt werden kann (§ 14a EnWG). Und der Plan selbst sagt für rund ein Drittel der Stadt — die „Prüfgebiete“ — offen: „Wir wissen es nicht.“",
+      "kommentar": "Hier liegt der härteste Stoff — und er wird durch den Ton entschärft. Dass eine Wärmepumpe bei Netzengpässen um über 40 % ferngedrosselt werden darf, ist eine zentrale Information für jeden, der dezentral plant — sie verdient mehr als eine volkstümliche Überschrift. Und das „Wir wissen es nicht“ für ein Drittel der Stadt ist ein ehrliches, aber gravierendes Eingeständnis. Wer nur die Schlagzeile liest, nimmt „Bauchschmerzen“ mit, nicht die Tragweite. Beide Punkte gehören nüchtern auf den Tisch, nicht beruhigt.",
       "link": ""
     },
     {
@@ -67,8 +67,8 @@
       "headline": "Steigende Mieten — erzählt ohne die Heizung",
       "ton": "sachlich",
       "quelle": "TA · Lokalteil",
-      "zusammenfassung": "Ein Stück zu Mieten und Wohnkosten nennt Baukosten, Zinsen, Nebenkosten — als eigene Geschichte, getrennt von Wärme und Infrastruktur.",
-      "kommentar": "Wärme, Wohnen und Geld werden getrennt erzählt. Dass die Heizungsentscheidung die „zweite Miete“ der nächsten 20 Jahre prägt, verbindet keiner.",
+      "zusammenfassung": "„Ein Zimmer weniger fürs gleiche Geld“ — der Artikel rechnet Baukosten, Zinsen und Nebenkosten vor, ganz ohne die Heizungs- und Infrastrukturentscheidung, die genau diese Nebenkosten über 20 Jahre treibt. Wohnen und Wärme stehen als zwei getrennte Geschichten nebeneinander.",
+      "kommentar": "Korrekt gerechnet — aber in der falschen Schublade. Baukosten, Zinsen und Nebenkosten erscheinen ohne die eine Entscheidung, die die Nebenkosten über zwei Jahrzehnte prägt: das Wärmesystem. Gerade für die zwei Drittel der Erfurter, die zur Miete wohnen, ist die Heizung von heute die „zweite Miete“ von morgen. Solange Wohnen und Wärme getrennt erzählt werden, bleibt die wichtigste Stellschraube unsichtbar.",
       "link": ""
     },
     {
@@ -77,8 +77,8 @@
       "headline": "120 km Leitungen: beschlossen. Die grüne Quelle: erhofft.",
       "ton": "zustimmend",
       "quelle": "TA · Lokalteil",
-      "zusammenfassung": "Der Ausbau wird konkret — 120 km neue Leitungen, verdoppelte Anschlussfläche, beschlossen und terminiert.",
-      "kommentar": "Infrastruktur im Indikativ — beschlossen, jetzt. Die grüne Quelle (Geothermie, Abwärme) bleibt im Konjunktiv. Über 20 Jahre ist genau dieser Unterschied der entscheidende — und der am schwersten erkennbare.",
+      "zusammenfassung": "Der Ausbau wird konkret und verbindlich: 120 km neue Leitungen, verdoppelte Anschlussfläche. Die grüne Begründung dagegen bleibt im Möglichkeitsmodus — Geothermie „sollte möglich sein“, werde „eher auf der Langstrecke“ helfen, die Vorlauftemperatur „soll abgesenkt werden“. Der SWE-Geschäftsführer zur Umstellung: „Das geht wahrscheinlich fast geräuschlos.“",
+      "kommentar": "Das Reinstück des Konjunktiv-Musters: Was beschlossen ist, steht im Indikativ (120 km, jetzt), was es rechtfertigt, im Möglichkeitsmodus. „Fast geräuschlos“ beschreibt die Umstellung — nicht ihre Sicherheit. Für eine 20-Jahres-Entscheidung ist genau der Unterschied zwischen zugesagter und erhoffter grüner Wärme entscheidend, weil er über CO₂- und Kostenbilanz bestimmt. Ohne verbindlichen Emissionspfad 2030/35/40 bleibt der Ausbau sicher und die grüne Begründung ein Versprechen ohne Termin.",
       "link": ""
     },
     {
@@ -88,8 +88,8 @@
       "headline": "„Eine Wundertüte“ — Gegenrede, aber nur zum Stichtag",
       "ton": "kritisch",
       "quelle": "TA · Kommentar",
-      "zusammenfassung": "Anhand der städtischen Treibhausgasbilanz kommt der Klimaentscheid zu Wort und nennt die Wärmeplanung „kein Entscheidungsinstrument, sondern eine Wundertüte“.",
-      "kommentar": "Hier kommt Gegenrede vor — aber anlassgetaktet, ausgelöst durch ein offizielles Zahlenwerk. Laufende kritische Begleitung fehlt.",
+      "zusammenfassung": "Anlässlich der städtischen Treibhausgasbilanz titelt die Zeitung „Die Stadt Erfurt verfehlt ihr Klimaziel“: Erfurt senkte die Pro-Kopf-Emissionen 2021–2023 nur um 5,3 %, bundesweit waren es 11,7 %. Der Klimaentscheid kommt zu Wort — das Ziel werde „krachend“ verfehlt — und nennt die Wärmeplanung für jemanden, der jetzt zwischen Fernwärme und Wärmepumpe entscheiden muss, eine „Wundertüte“.",
+      "kommentar": "Endlich echte Gegenrede — aber sie erscheint, weil ein offizielles Zahlenwerk den Anlass liefert, nicht als laufende Prüfung. Die Zahlen sind hart: 5,3 % statt 11,7 % Minderung, das Ziel „krachend“ verfehlt. Das Bild der „Wundertüte“ trifft die Eigentümerlage präzise — man entscheidet, ohne zu wissen, was drin ist. Bliebe es bei anlassgetakteter Kritik, fehlt genau das, was Vertrauen schafft: eine kontinuierliche, unabhängige Begleitung mit Nachfragen zu Preisen und Annahmen.",
       "link": ""
     }
   ],
