@@ -125,7 +125,8 @@
 
     /* Objekt 001 Karte */
     .objekt001 { border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.25rem; }
-    .objekt001__header { background: var(--petrol-dark); padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
+    .objekt001__header { background: var(--petrol-dark); padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: flex-start; gap: 1.25rem; flex-wrap: wrap; }
+    .objekt001__header > div:first-child { flex: 1 1 260px; min-width: 0; }
     .objekt001__nr { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol-light); font-family: 'Inter', sans-serif; margin-bottom: 5px; }
     .objekt001__name { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; font-weight: 400; color: #ffffff; margin-bottom: 3px; }
     .objekt001__sub { font-size: 12px; color: #7ab8b5; }
@@ -150,7 +151,7 @@
 
     /* Gebäudebild im Header */
     .objekt001__media { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
-    .objekt001__img { width: 140px; height: 140px; border-radius: 6px; overflow: hidden; flex-shrink: 0; }
+    .objekt001__img { width: 190px; height: 190px; border-radius: 6px; overflow: hidden; flex-shrink: 0; }
     .objekt001__img img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
 
     /* Profil Button */
@@ -177,8 +178,8 @@
     .oz-anchor__ziel { margin-top: 1.1rem; padding-top: 0.9rem; border-top: 0.5px solid rgba(122,184,181,0.2); font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.6; }
     .oz-anchor__ziel strong { color: #a8d45a; font-weight: 500; }
     /* Pastell-Einordnungs-Skala für die eine Zahl */
-    .oz-skala { margin: 2rem 0 0.2rem; }
-    .oz-skala__bar { position: relative; height: 10px; border-radius: 5px; margin-top: 1.4rem;
+    .oz-skala { margin: 1.3rem 0 0.2rem; }
+    .oz-skala__bar { position: relative; height: 8px; border-radius: 5px; margin-top: 1rem;
       background: linear-gradient(to right, #74bf86 0%, #cfe8d0 26%, #f4e6b0 52%, #f1c6b0 76%, #df8079 100%); }
     .oz-skala__marker { position: absolute; top: -7px; bottom: -7px; width: 3px; background: var(--petrol-dark);
       transform: translateX(-50%); border-radius: 2px; box-shadow: 0 0 0 1.5px #ffffff; }
@@ -191,6 +192,68 @@
       color: rgba(255,255,255,0.7); margin-top: 0.45rem; font-family: 'Inter', sans-serif; }
     .oz-skala__cap { font-size: 11.5px; color: rgba(255,255,255,0.72); line-height: 1.55; margin: 0.55rem 0 0; }
     .oz-skala__cap strong { color: var(--signal); }
+
+    /* === Wärmekosten-Landkarte === */
+    .oz-map { margin: 0.4rem 0 0.2rem; }
+    .oz-map__bar { position: relative; height: 8px; border-radius: 5px; margin-top: 3.5rem;
+      background: linear-gradient(to right, #74bf86 0%, #cfe8d0 26%, #f4e6b0 52%, #f1c6b0 76%, #df8079 100%); }
+    .oz-map__mark { position: absolute; top: -6px; bottom: -6px; width: 2.5px; transform: translateX(-50%); border-radius: 2px; background: var(--petrol-dark); box-shadow: 0 0 0 1.5px rgba(255,255,255,0.45); }
+    .oz-map__mark::after { content: ''; position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; border-radius: 50%; transform: translate(-50%,-50%); background: var(--petrol-dark); border: 1.5px solid rgba(255,255,255,0.55); }
+    .oz-map__mark--gas { box-shadow: 0 0 0 1.5px #fff; }
+    .oz-map__mark--gas::after { background: var(--signal); border-color: #fff; width: 10px; height: 10px; }
+    .oz-map__lblbox { position: absolute; bottom: calc(100% + 9px); left: 50%; transform: translateX(-50%); text-align: center; white-space: nowrap; }
+    .oz-map__val { display: block; font-family: 'Playfair Display', Georgia, serif; font-size: 19px; color: rgba(255,255,255,0.82); line-height: 1; }
+    .oz-map__mark--gas .oz-map__val { color: var(--signal); font-size: 23px; }
+    .oz-map__cap { display: block; font-size: 9px; letter-spacing: 0.4px; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-top: 3px; font-family: 'Inter', sans-serif; }
+    .oz-map__cap em { color: var(--tommy-rot); font-style: normal; font-weight: 700; }
+    .oz-map__labels { display: flex; justify-content: space-between; font-size: 10px; color: rgba(255,255,255,0.6); margin-top: 0.5rem; font-family: 'Inter', sans-serif; }
+    .oz-map__basis { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.5; margin: 0.95rem 0 0; font-family: 'Inter', sans-serif; }
+    .oz-map__basis strong { color: rgba(255,255,255,0.78); font-weight: 600; }
+    .oz-map__risk { font-size: 11.5px; color: var(--petrol-light); line-height: 1.55; margin: 0.5rem 0 0; font-family: 'Inter', sans-serif; }
+
+    /* === Performance-Cockpit === */
+    .oz-cockpit { background: var(--petrol-dark); padding: 0 1.5rem 1.75rem; }
+    .oz-cockpit__rule { height: 0.5px; background: rgba(122,184,181,0.18); margin: 0 0 1.4rem; }
+    .oz-cockpit__head { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--petrol-light); font-family: 'Inter', sans-serif; margin: 0 0 0.9rem; }
+    .oz-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 1.4rem; }
+    .oz-kpi { position: relative; background: rgba(255,255,255,0.04); border: 0.5px solid rgba(122,184,181,0.18); border-radius: 8px; padding: 0.85rem 0.85rem; }
+    .oz-kpi__val { display: block; font-family: 'Playfair Display', Georgia, serif; font-size: 21px; color: #fff; line-height: 1.1; }
+    .oz-kpi__lbl { display: block; font-size: 10.5px; color: rgba(255,255,255,0.6); font-family: 'Inter', sans-serif; line-height: 1.4; margin-top: 0.35rem; }
+    .oz-kpi--risk { border-color: rgba(216,30,52,0.45); }
+    .oz-kpi__ref { display: block; font-size: 10px; color: rgba(255,255,255,0.5); font-family: 'Inter', sans-serif; line-height: 1.4; margin-top: 0.45rem; padding-top: 0.4rem; border-top: 0.5px solid rgba(122,184,181,0.15); }
+    .oz-kpi__flag { position: absolute; top: 0.6rem; right: 0.65rem; font-size: 8.5px; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 700; color: #fff; background: var(--tommy-rot); border-radius: 3px; padding: 1px 6px; font-family: 'Inter', sans-serif; }
+    .oz-recht { display: flex; align-items: center; gap: 0.7rem; background: rgba(216,30,52,0.10); border-left: 3px solid var(--tommy-rot); border-radius: 0 6px 6px 0; padding: 0.7rem 0.9rem; margin-bottom: 1.5rem; font-size: 12.5px; color: rgba(255,255,255,0.85); line-height: 1.5; font-family: 'Inter', sans-serif; }
+    .oz-recht strong { color: #fff; font-weight: 600; }
+    .oz-recht__flag { flex-shrink: 0; font-size: 8.5px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; color: #fff; background: var(--tommy-rot); border-radius: 3px; padding: 3px 7px; font-family: 'Inter', sans-serif; }
+    .oz-vergleich__sub { font-size: 11.5px; color: rgba(255,255,255,0.6); font-family: 'Inter', sans-serif; margin: 0 0 1.1rem; }
+    .oz-vgl-row { margin-bottom: 1.05rem; }
+    .oz-vgl-row__lbl { display: block; font-size: 11.5px; color: #fff; font-weight: 600; font-family: 'Inter', sans-serif; margin-bottom: 0.45rem; }
+    .oz-vgl-line { display: grid; grid-template-columns: 92px 1fr auto; align-items: center; gap: 9px; margin: 0.28rem 0; }
+    .oz-vgl-line__opt { font-size: 11px; color: rgba(255,255,255,0.72); font-family: 'Inter', sans-serif; }
+    .oz-vgl-track { position: relative; height: 20px; background: rgba(255,255,255,0.05); border-radius: 4px; }
+    .oz-vgl-line--mark { margin-top: 1.7rem; }
+    .oz-vgl-mark { position: absolute; top: -4px; bottom: -4px; width: 2px; background: #ffffff; transform: translateX(-50%); border-radius: 2px; z-index: 2; }
+    .oz-vgl-mark__lbl { position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); font-size: 8.5px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--signal); white-space: nowrap; font-family: 'Inter', sans-serif; font-weight: 700; }
+    .oz-vgl-fill { height: 100%; background: var(--petrol-light); border-radius: 4px; }
+    .oz-vgl-fill--ist { background: rgba(122,184,181,0.45); }
+    .oz-vgl-line__val { font-size: 11.5px; font-weight: 600; color: #fff; font-family: 'Inter', sans-serif; white-space: nowrap; min-width: 64px; text-align: right; }
+    .oz-vgl-note { font-size: 11px; color: var(--petrol-light); font-style: italic; font-family: 'Inter', sans-serif; margin: 0.35rem 0 0; line-height: 1.5; }
+    .oz-vgl-status { display: grid; grid-template-columns: 1fr auto auto; gap: 7px 12px; margin-top: 1.2rem; padding-top: 1rem; border-top: 0.5px solid rgba(122,184,181,0.15); font-family: 'Inter', sans-serif; font-size: 11.5px; align-items: center; }
+    .oz-vgl-status__h { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--petrol-light); text-align: right; }
+    .oz-vgl-status__lbl { color: rgba(255,255,255,0.72); }
+    .oz-vgl-status__v { text-align: right; color: #fff; min-width: 96px; }
+    .oz-vgl-status__v--risk { color: var(--tommy-rot); font-weight: 600; }
+    .oz-ampel { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; margin-top: 1.3rem; font-size: 10.5px; color: rgba(255,255,255,0.6); font-family: 'Inter', sans-serif; }
+    .oz-ampel span { display: inline-flex; align-items: center; gap: 5px; }
+    .oz-ampel i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+    .oz-ampel i.is-belegt { background: var(--petrol-light); }
+    .oz-ampel i.is-offen { background: var(--context-blue); }
+    .oz-ampel i.is-aus { background: var(--tommy-rot); }
+    @media (max-width: 680px) {
+      .oz-kpis { grid-template-columns: 1fr 1fr; }
+      .oz-cockpit { padding: 0 1.25rem 1.5rem; }
+      .oz-vgl-line { grid-template-columns: 78px 1fr auto; gap: 7px; }
+    }
 
     /* (a2) Gebäude-Radar · Future Readiness Index */
     .oz-radar { background: var(--petrol-dark); padding: 1.5rem 1.5rem 1.75rem; border-top: 0.5px solid rgba(122,184,181,0.15); }
@@ -216,6 +279,7 @@
     .oz-radar__marker.is-active .oz-radar__num { fill: var(--signal); stroke: #ffffff; }
     .oz-radar__numtext { fill: #ffffff; font-size: 11px; font-family: 'Inter', sans-serif; font-weight: 600; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
     .oz-radar__numtext--krit { fill: #1a3535; }
+    .oz-radar__marker.is-active .oz-radar__numtext { fill: #1a3535; }
     .oz-radar__readout { min-height: 3.4em; background: rgba(126,150,150,0.15); border-left: 2px solid var(--context-blue); border-radius: 0 6px 6px 0; padding: 0.6rem 0.8rem; margin: 0.25rem 0 1rem; font-size: 12.5px; color: rgba(255,255,255,0.85); line-height: 1.55; }
     .oz-radar__readout strong { color: var(--signal); font-weight: 500; }
     .oz-radar__legend { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
@@ -1054,6 +1118,79 @@
       <!-- (a) Die eine Zahl -->
       <div class="oz-anchor" id="oz-anchor"></div>
 
+      <!-- (a1) Performance-Cockpit -->
+      <div class="oz-cockpit" id="oz-cockpit">
+        <div class="oz-cockpit__rule"></div>
+        <p class="oz-cockpit__head">Performance · auf einen Blick</p>
+        <div class="oz-kpis">
+          <div class="oz-kpi oz-kpi--risk">
+            <span class="oz-kpi__flag">Risiko</span>
+            <span class="oz-kpi__val">1998</span>
+            <span class="oz-kpi__lbl">Gaskessel · 72 kW</span>
+            <span class="oz-kpi__ref">27 Jahre — über übliche Lebensdauer (~20–25 J.) · Ersatzteile abgekündigt</span>
+          </div>
+          <div class="oz-kpi">
+            <span class="oz-kpi__val">~62 kW</span>
+            <span class="oz-kpi__lbl">Heizlast (inkl. Lüftung)</span>
+            <span class="oz-kpi__ref">Kessel mit 72 kW überdimensioniert · wärmepumpenfähig ✓</span>
+          </div>
+          <div class="oz-kpi">
+            <span class="oz-kpi__val">64.745 €</span>
+            <span class="oz-kpi__lbl">Erhaltungsrücklage</span>
+            <span class="oz-kpi__ref">7,65 €/m²·a — unter Fachempfehlung Altbau (~17 €/m²·a)</span>
+          </div>
+          <div class="oz-kpi oz-kpi--risk">
+            <span class="oz-kpi__flag">steigt&nbsp;▲</span>
+            <span class="oz-kpi__val">+103 %</span>
+            <span class="oz-kpi__lbl">Gas-Vollkosten seit 2019</span>
+            <span class="oz-kpi__ref">5,03 → 10,20 ct/kWh · vom Verbrauchs- zum Marktsystem</span>
+          </div>
+        </div>
+
+        <div class="oz-recht">
+          <span class="oz-recht__flag">Ausschluss</span>
+          <span>Eine neue <strong>Gas- oder Hybridanlage</strong> ist hier rechtlich nicht zulässig (§ 5 Fernwärmesatzung, amtlich bestätigt). Die Entscheidung steht zwischen <strong>Fernwärme</strong> und <strong>reiner Wärmepumpe</strong>.</span>
+        </div>
+
+        <p class="oz-cockpit__head">Die zwei zulässigen Optionen</p>
+        <p class="oz-vergleich__sub">Belegte Werte aus der Entscheidungsgrundlage — neutral, ohne Empfehlung.</p>
+
+        <div class="oz-vgl-row">
+          <span class="oz-vgl-row__lbl">Gesamtkosten über 25 Jahre</span>
+          <div class="oz-vgl-line oz-vgl-line--mark"><span class="oz-vgl-line__opt">Fernwärme</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:100%"></div><span class="oz-vgl-mark" style="left:22%"><span class="oz-vgl-mark__lbl">Break-even WP · ~J. 5–6</span></span></div><span class="oz-vgl-line__val">444.000 €</span></div>
+          <div class="oz-vgl-line"><span class="oz-vgl-line__opt">Wärmepumpe</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:57%"></div></div><span class="oz-vgl-line__val">255.000 €</span></div>
+          <p class="oz-vgl-note">Bis dahin hat sich die höhere WP-Investition zurückgezahlt — danach spart sie über die Laufzeit rund 190.000 €.</p>
+        </div>
+
+        <div class="oz-vgl-row">
+          <span class="oz-vgl-row__lbl">CO₂ · kg pro m²·Jahr</span>
+          <div class="oz-vgl-line"><span class="oz-vgl-line__opt">Gas (heute)</span><div class="oz-vgl-track"><div class="oz-vgl-fill oz-vgl-fill--ist" style="width:75%"></div></div><span class="oz-vgl-line__val">19,5</span></div>
+          <div class="oz-vgl-line"><span class="oz-vgl-line__opt">Fernwärme</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:100%"></div></div><span class="oz-vgl-line__val">26,0</span></div>
+          <div class="oz-vgl-line"><span class="oz-vgl-line__opt">Wärmepumpe</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:43%"></div></div><span class="oz-vgl-line__val">11,2</span></div>
+          <p class="oz-vgl-note">Überraschend, aber belegt: Erfurter Fernwärme liegt über dem heutigen Gas — das Netz ist ~95 % gasbasiert.</p>
+        </div>
+
+        <div class="oz-vgl-row">
+          <span class="oz-vgl-row__lbl">Jahreskosten 2026</span>
+          <div class="oz-vgl-line"><span class="oz-vgl-line__opt">Fernwärme</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:100%"></div></div><span class="oz-vgl-line__val">16.500 €</span></div>
+          <div class="oz-vgl-line"><span class="oz-vgl-line__opt">Wärmepumpe</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:37%"></div></div><span class="oz-vgl-line__val">5.800–6.500 €</span></div>
+          <p class="oz-vgl-note">Basis: ~94.932 kWh Wärmebedarf/Jahr · effektiver Arbeitspreis Gas 10,2 / Fernwärme 16,9 ct/kWh — die Wärmepumpe braucht dafür nur ~⅓ Strom (Umweltwärme).</p>
+        </div>
+
+        <div class="oz-vgl-status">
+          <span class="oz-vgl-status__lbl"></span><span class="oz-vgl-status__h">Fernwärme</span><span class="oz-vgl-status__h">Wärmepumpe</span>
+          <span class="oz-vgl-status__lbl">Preisrisiko 25 Jahre</span><span class="oz-vgl-status__v oz-vgl-status__v--risk">hoch</span><span class="oz-vgl-status__v">gering</span>
+          <span class="oz-vgl-status__lbl">BEG-Förderung</span><span class="oz-vgl-status__v">nein</span><span class="oz-vgl-status__v">ja · 30–60 %</span>
+          <span class="oz-vgl-status__lbl">Rechtlich</span><span class="oz-vgl-status__v">zulässig</span><span class="oz-vgl-status__v">mit Befreiung</span>
+        </div>
+
+        <div class="oz-ampel">
+          <span><i class="is-belegt"></i>belegt</span>
+          <span><i class="is-offen"></i>vor Vergabe offen</span>
+          <span><i class="is-aus"></i>rechtlicher Ausschluss</span>
+        </div>
+      </div>
+
       <!-- (a2) Gebäude-Radar · Future Readiness Index -->
       <div class="oz-radar" id="oz-radar"></div>
 
@@ -1644,21 +1781,21 @@
             { nr: 4,  feld: "Resilienz",                     ist: 1,
               skala1: "akut ausfallgefährdet", skala5: "robust, unabhängig, beschlussfähig",
               befund: "Der Gaskessel ist 27 Jahre alt, Ersatzteile sind abgekündigt — ein Ausfall ist jederzeit möglich, ein Systembeschluss steht aus." },
-            { nr: 5,  feld: "Soziale Gestaltungskraft",      ist: 3,
+            { nr: 5,  feld: "Soziale Gestaltungskraft",      ist: 2,
               skala1: "keine Abstimmung, Stillstand", skala5: "transparente, handlungsfähige Gemeinschaft",
-              befund: "Eine direkte, transparente Eigentümer-Kommunikation ist etabliert — ein deutlicher Fortschritt." },
+              befund: "Eine direkte, transparente Kommunikation ist angelegt — doch die Eigentümer-Einbindung ist noch nicht formalisiert und mündete bislang in keinen Beschluss." },
             { nr: 6,  feld: "Projekt-/Umsetzungskompetenz",  ist: 2,
               skala1: "kein Fortschritt trotz Dringlichkeit", skala5: "klare Beschlüsse, zügige Umsetzung",
               befund: "Der Handlungsdruck liegt seit Jahren vor, ein Variantenbeschluss fehlt aber weiterhin." },
             { nr: 7,  feld: "Digital & Daten",               ist: 2,
               skala1: "keine Daten, kein Monitoring", skala5: "belegte Daten, laufendes Monitoring",
               befund: "Kein Echtzeit-Monitoring; die Datengrundlage ist teils unbelegt." },
-            { nr: 8,  feld: "Innovationskraft",              ist: 3,
+            { nr: 8,  feld: "Innovationskraft",              ist: 1,
               skala1: "nur Status quo", skala5: "neue Lösungen aktiv umgesetzt",
-              befund: "Wärmepumpe, PV und ein Sanierungspfad sind gedacht, aber noch nicht beschlossen." },
-            { nr: 9,  feld: "Wirtschaftliche Tragfähigkeit", ist: 3,
+              befund: "Wärmepumpe, PV und ein Sanierungspfad sind analysiert, aber nicht beschlossen — es bleibt bislang beim Status quo." },
+            { nr: 9,  feld: "Wirtschaftliche Tragfähigkeit", ist: 2,
               skala1: "teuerste Lösung über die Laufzeit", skala5: "klar günstigste, tragfähige Lösung",
-              befund: "Über 25 Jahre ist die Wärmepumpe die günstigste Option; zugleich ist das Nebenkostenniveau hoch und teils unbelegt." },
+              befund: "Über 25 Jahre ist die Wärmepumpe die klar günstigste Lösung — doch sie ist weder priorisiert noch beschlossen; das Nebenkostenniveau bleibt hoch und teils unbelegt." },
             { nr: 10, feld: "Netzwerk/Unabhängigkeit",       ist: 2,
               skala1: "abhängig von einer Quelle", skala5: "unabhängig, mehrere Perspektiven",
               befund: "Ein unabhängiges Zweitgutachten fehlt noch; das Beratungsnetzwerk ist auf wenige Akteure konzentriert." },
@@ -1684,18 +1821,20 @@
       if (!anchorEl || !tlEl) return;
 
       const z = OBJEKT_001.die_eine_zahl;
-      const vNum = parseFloat(String(z.wert).replace(',', '.'));
       const sMin = 0.5, sMax = 2.0;
-      const skalaPos = Math.max(2, Math.min(98, (vNum - sMin) / (sMax - sMin) * 100)).toFixed(0);
-      const skalaZone = vNum < 1.0 ? 'niedrig' : (vNum <= 1.6 ? 'im Schnitt' : 'erhöht');
+      function ozPos(v){ return Math.max(4, Math.min(96, (v - sMin) / (sMax - sMin) * 100)).toFixed(1); }
       anchorEl.innerHTML =
-        '<p class="oz-anchor__lbl">' + z.label + '</p>' +
-        '<p class="oz-anchor__num">' + z.wert + '<span class="oz-anchor__unit">' + z.einheit + '</span></p>' +
-        '<div class="oz-skala">' +
-          '<div class="oz-skala__bar"><span class="oz-skala__marker" style="left:' + skalaPos + '%"><span class="oz-skala__marker-lbl">dieses Gebäude</span></span></div>' +
-          '<div class="oz-skala__labels"><span>niedrig</span><span>im Schnitt</span><span>erhöht</span></div>' +
-          '<p class="oz-skala__cap">Einordnung am Heizspiegel-Schnitt (Gas im Mehrfamilienhaus ≈ 1,2–1,4 €/m²·Monat): dieses Gebäude liegt <strong>' + skalaZone + '</strong>. Eine Wärmepumpe verschiebt den Wert Richtung niedrig.</p>' +
+        '<p class="oz-anchor__lbl">Wärmekosten · €/m²·Monat — heute und die zwei zulässigen Pfade</p>' +
+        '<div class="oz-map">' +
+          '<div class="oz-map__bar">' +
+            '<span class="oz-map__mark oz-map__mark--wp" style="left:' + ozPos(0.70) + '%"><span class="oz-map__lblbox"><span class="oz-map__val">~0,70</span><span class="oz-map__cap">Wärmepumpe</span></span></span>' +
+            '<span class="oz-map__mark oz-map__mark--gas" style="left:' + ozPos(1.30) + '%"><span class="oz-map__lblbox"><span class="oz-map__val">1,30</span><span class="oz-map__cap">Gas heute</span></span></span>' +
+            '<span class="oz-map__mark oz-map__mark--fw" style="left:' + ozPos(1.80) + '%"><span class="oz-map__lblbox"><span class="oz-map__val">~1,80</span><span class="oz-map__cap">Fernwärme <em>steigt ▸</em></span></span></span>' +
+          '</div>' +
+          '<div class="oz-map__labels"><span>niedrig</span><span>im Schnitt</span><span>erhöht</span></div>' +
         '</div>' +
+        '<p class="oz-map__basis">Basis: 94.932 kWh/Jahr · 769,83 m² · Heizung + Warmwasser, Vollkosten. <strong>Gas</strong> = heutiger Wert (2025); <strong>Fernwärme</strong> und <strong>Wärmepumpe</strong> sind belegte Projektionen.</p>' +
+        '<p class="oz-map__risk">Fernwärme steigt: Die Stadtwerke prognostizieren bis 2040 eine Verdopplung. Der Anschlusszwang bindet ans Netz — das Preisrisiko tragen am Ende Eigentümer und Mieter.</p>' +
         '<details class="oz-anchor__det">' +
           '<summary>Zusammensetzung &amp; Systemgrenze</summary>' +
           '<p>davon CO₂ ' + z.davon_co2 + ' · Bezugsfläche ' + z.bezugsflaeche_m2.toLocaleString("de-DE") + ' m² · Abrechnungsjahr ' + z.abrechnungsjahr + ' · Quelle: ' + z.quelle + '</p>' +
