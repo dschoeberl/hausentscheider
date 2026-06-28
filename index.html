@@ -87,15 +87,18 @@
     .btn--signal   { background: var(--signal); color: var(--petrol-dark); font-weight: 500; border: none; white-space: nowrap; flex-shrink: 0; }
     .btn--signal:hover { opacity: 0.9; text-decoration: none; }
     .btn--whatsapp { background: #25D366; color: white; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; padding: 0.6rem 1.25rem; }
+    .btn--tommy    { background: var(--tommy-rot); color: #ffffff; }
 
     /* DREI KERNAUSSAGEN */
-    .kernaussagen { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 0.5px solid var(--border); }
-    .kernaussage { padding: 1.75rem 2rem; border-right: 0.5px solid var(--border); }
+    .kernaussagen { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 0.5px solid var(--border); }
+    .kernaussage { padding: 1.75rem 2rem; border-right: 0.5px solid var(--border); display: flex; flex-direction: column; }
     .kernaussage:last-child { border-right: none; }
     .kernaussage__line { width: 32px; height: 3px; background: var(--petrol); margin-bottom: 1rem; }
     .kernaussage__title { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; font-weight: 500; color: var(--text-primary); margin-bottom: 0.5rem; }
     .kernaussage__text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin: 0; }
-    .kernaussage__cta { margin-top: 1rem; }
+    .kernaussage__cta { margin-top: auto; padding-top: 1.25rem; }
+    .kernaussage__marke { display: inline-block; line-height: 0; transition: opacity 0.2s; }
+    .kernaussage__marke:hover { opacity: 0.65; }
 
     /* ARTIKEL-KARTEN */
     .artikel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; padding: 1.5rem 0 2.5rem; }
@@ -296,6 +299,13 @@
     .section--dark .leistung__titel { color: var(--signal); }
     .section--dark .leistung__text { color: #c8e0df; }
     .section--dark .label--muted { color: #7ab8b5; }
+
+    /* #ueber — Tommy-Rot-Eckkeil oben links + helles Logo-Masthead */
+    #ueber { position: relative; overflow: hidden; }
+    #ueber::before { content: ''; position: absolute; top: 0; left: 0; width: 160px; height: 160px; background: var(--tommy-rot); clip-path: polygon(0 0, 100% 0, 0 100%); z-index: 0; }
+    #ueber .container { position: relative; z-index: 1; }
+    .ueber__logo { display: inline-block; line-height: 0; margin-bottom: 2rem; transition: opacity 0.2s; }
+    .ueber__logo:hover { opacity: 0.8; }
     .ueber-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; padding: 2.5rem 0; align-items: start; }
     .ueber__zitat { border-left: 3px solid var(--petrol); padding-left: 1.25rem; margin-top: 1.5rem; }
     .ueber__zitat p { font-family: 'Playfair Display', Georgia, serif; font-size: 17px; font-style: italic; color: var(--text-primary); line-height: 1.5; margin: 0; }
@@ -376,6 +386,17 @@
     .cta__text { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.25rem; }
     .cta__email { font-size: 13px; color: var(--text-tertiary); margin-top: 1rem; }
     .cta__email a { color: var(--petrol); }
+
+    /* Begleitung / Service — dunkler Conversion-Block vor dem Dialog-CTA */
+    .begleitung-box { background: #1a3535; color: #ffffff; border-radius: var(--radius); padding: 2.5rem 2.25rem; }
+    .begleitung-box__eyebrow { display: inline-block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol-light); font-family: 'Inter', sans-serif; margin-bottom: 0.75rem; }
+    .begleitung-box__titel { font-family: 'Playfair Display', Georgia, serif; font-size: 24px; font-weight: 400; color: #ffffff; margin: 0 0 1rem; line-height: 1.3; }
+    .begleitung-box p { color: #c8e0df; font-size: 14.5px; line-height: 1.7; margin: 0.6rem 0; }
+    .begleitung-box__sub { color: var(--signal); font-weight: 600; margin-top: 1.1rem; }
+    .begleitung-box__liste { margin: 0.5rem 0 0.9rem; padding-left: 1.2rem; color: #c8e0df; font-size: 14.5px; line-height: 1.65; }
+    .begleitung-box__liste li { margin: 0.4rem 0; }
+    .begleitung-box__liste strong { color: #ffffff; }
+    .begleitung-box .btn--signal { margin-top: 0.75rem; }
     .form { display: flex; flex-direction: column; gap: 0.75rem; max-width: 420px; }
     .form input, .form textarea { font-family: 'Inter', sans-serif; font-size: 14px; padding: 0.6rem 0.875rem; border: 0.5px solid var(--border); border-radius: 4px; background: var(--white); color: var(--text-primary); outline: none; transition: border-color 0.2s; width: 100%; }
     .form input:focus, .form textarea:focus { border-color: var(--petrol); }
@@ -437,6 +458,13 @@
     .rechner__btn { margin-top: 1rem; align-self: flex-end; }
     .rechner__hinweis { font-size: 12px; color: var(--text-tertiary); margin-top: 0.75rem; }
     .rechner__fehler { font-size: 12px; color: #c0392b; margin-top: 0.5rem; }
+
+    @media (min-width: 681px) and (max-width: 1000px) {
+      .kernaussagen { grid-template-columns: repeat(2, 1fr); }
+      .kernaussage { border-right: none; }
+      .kernaussage:nth-child(odd) { border-right: 0.5px solid var(--border); }
+      .kernaussage:nth-child(1), .kernaussage:nth-child(2) { border-bottom: 0.5px solid var(--border); }
+    }
 
     @media (max-width: 680px) {
       h1, .hero__headline     { font-size: 22px; }
@@ -545,28 +573,44 @@
       <p class="kernaussage__text">
         Kommunen, Stadtwerke, Energieberater, Hausverwaltungen — sie alle handeln aus ihrer Rolle heraus. Doch niemand trägt Ihre Verantwortung: Investitionen mit 20 bis 30 Jahren Zeithorizont, oft ohne unabhängige Begleitung. Hausentscheider schließt diese Lücke.
       </p>
+      <p class="kernaussage__cta">
+        <a href="#ueber" class="kernaussage__marke" aria-label="Über Hausentscheider">
+          <svg width="150" height="23" viewBox="0 0 180 28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <text x="0" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">haus</text>
+            <text x="58" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">entscheider</text>
+            <line x1="0" y1="26" x2="56" y2="26" stroke="#1a5c5a" stroke-width="2" stroke-linecap="square"/>
+          </svg>
+        </a>
+      </p>
     </div>
     <div class="kernaussage">
       <div class="kernaussage__line"></div>
       <p class="kernaussage__title">Der Wegweiser</p>
       <p class="kernaussage__text">
-        Viele sprechen über die Wärmewende. Hier sehen Sie, wer was sagt — und was es für Ihre Entscheidung bedeutet. Die wichtigsten Fragen, die lautesten Stimmen, die offenen Antworten. Ihr Kompass durch die Debatte. Bevor Sie entscheiden.
+        Wer spricht über die Wärmewende — und wer wird nicht gehört? Der Wegweiser stellt die Fragen, die vor Ihrer Entscheidung zählen, und markiert jede ehrlich: belegt — oder offen, weil Stadt, Versorger oder Bund die Antwort schuldig bleiben. Mehr bleibt offen als belegt; erst die Fragen, nicht die Lautstärke.
       </p>
       <p class="kernaussage__cta">
-        <a href="wegweiser.html" style="font-size:13px;color:var(--petrol);font-weight:500;">Zum Wegweiser →</a>
+        <a href="wegweiser.html" class="btn btn--tommy" style="font-size:12px;padding:0.45rem 1rem;">Zum Wegweiser →</a>
+      </p>
+    </div>
+    <div class="kernaussage">
+      <div class="kernaussage__line"></div>
+      <p class="kernaussage__title">Der Entscheider</p>
+      <p class="kernaussage__text">
+        Wirtschaftlichkeit, persönliche Gewichtung und Zukunftsfähigkeit Ihrer Heizungsentscheidung — auf einer Seite. Keine Empfehlung von der Stange, sondern eine belastbare Grundlage, bevor Sie ein Ingenieurbüro beauftragen.
+      </p>
+      <p class="kernaussage__cta">
+        <a href="rechner.html" class="btn btn--signal" style="font-size:12px;padding:0.45rem 1rem;">Zum Entscheider →</a>
       </p>
     </div>
     <div class="kernaussage">
       <div class="kernaussage__line"></div>
       <p class="kernaussage__title">Die Stimme</p>
       <p class="kernaussage__text">
-        Hausentscheider ist kein Ratgeberportal. Es ist ein Netzwerk von Eigentümern, die ihre Perspektiven teilen und gemeinsam besser entscheiden. Werden Sie Teil davon.
+        Wer die Folgen trägt, sollte gehört werden. Hausentscheider ist kein Ratgeberportal, sondern ein Netzwerk von Eigentümern, die ihre Perspektiven teilen und gemeinsam klarer entscheiden. Werden Sie Teil davon.
       </p>
-      <p class="kernaussage__cta" style="margin-top:1rem;">
-        <a href="#" class="btn--whatsapp btn" style="font-size:12px;padding:0.4rem 0.875rem;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          WhatsApp Kanal beitreten
-        </a>
+      <p class="kernaussage__cta">
+        <a href="#kontakt" class="btn btn--primary" style="font-size:12px;padding:0.45rem 1rem;">Zum Dialog →</a>
       </p>
     </div>
   </div>
@@ -1069,6 +1113,13 @@
   <!-- ÜBER HAUSENTSCHEIDER -->
 <section class="section section--dark" id="ueber">
   <div class="container">
+    <a href="/" class="ueber__logo" aria-label="Hausentscheider — Startseite">
+      <svg width="170" height="26" viewBox="0 0 180 28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <text x="0" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#ffffff">haus</text>
+        <text x="58" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#ffffff">entscheider</text>
+        <line x1="0" y1="26" x2="56" y2="26" stroke="#D81E34" stroke-width="2.5" stroke-linecap="square"/>
+      </svg>
+    </a>
     <div class="ueber-grid">
 
       <!-- LINKS -->
@@ -1088,25 +1139,31 @@
         <span class="label label--muted">Was Hausentscheider einzigartig macht</span>
 
         <div class="leistung" style="margin-top:1rem;margin-bottom:1.5rem;">
-          <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:var(--signal);font-family:'Inter',sans-serif;margin-bottom:0.35rem;">01 &nbsp;RANKING</p>
-          <p class="leistung__titel" style="color:var(--petrol-light);">Erstmals werden Gebäude vergleichbar — nicht nur Preise.</p>
-          <p class="leistung__text">Verivox vergleicht Tarife. Check24 vergleicht Angebote. Hausentscheider vergleicht Gebäude-Performance — in Euro pro m², auf Basis echter Abrechnungen. Live sortiert. Dynamisch bei Preisänderungen.</p>
+          <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:var(--signal);font-family:'Inter',sans-serif;margin-bottom:0.35rem;">01 &nbsp;WEGWEISER</p>
+          <p class="leistung__titel" style="color:var(--petrol-light);">Orientierung statt Lautstärke.</p>
+          <p class="leistung__text">Die Fragen, die vor Ihrer Entscheidung zählen — ehrlich markiert: belegt, oder offen, weil Stadt, Versorger oder Bund die Antwort schuldig bleiben. Erst die Fragen, nicht die Lautstärke.</p>
         </div>
 
         <div class="leistung" style="margin-bottom:1.5rem;">
-          <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:var(--signal);font-family:'Inter',sans-serif;margin-bottom:0.35rem;">02 &nbsp;SIMULATION</p>
-          <p class="leistung__titel" style="color:var(--petrol-light);">Sie spielen Entscheidungen durch — bevor Sie sie treffen.</p>
-          <p class="leistung__text">Investitionen, Förderungen, Energiepreise: alles veränderbar, alles live. Der Amortisationsrechner zeigt, wann sich welche Entscheidung lohnt — bei jedem Gaspreis-Szenario.</p>
+          <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:var(--signal);font-family:'Inter',sans-serif;margin-bottom:0.35rem;">02 &nbsp;MEDIEN-RESONANZ</p>
+          <p class="leistung__titel" style="color:var(--petrol-light);">Wie über Ihre Wärmewende berichtet wird — und was fehlt.</p>
+          <p class="leistung__text">Ein laufender Zeitstrahl der lokalen Berichterstattung: gut erklärt, aber selten geprüft und an den entscheidenden Terminen zu dünn — auf einen Blick sichtbar gemacht.</p>
         </div>
 
         <div class="leistung" style="margin-bottom:1.5rem;">
-          <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:var(--signal);font-family:'Inter',sans-serif;margin-bottom:0.35rem;">03 &nbsp;WEGWEISER</p>
-          <p class="leistung__titel" style="color:var(--petrol-light);">Sie finden Orientierung — ohne selbst zu suchen.</p>
-          <p class="leistung__text">Alle relevanten Quellen zu Erfurt an einem Ort. Ergänzt durch eine unabhängige Einordnung aus Eigentümerperspektive — damit Sie nicht bei null anfangen müssen.</p>
+          <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:var(--signal);font-family:'Inter',sans-serif;margin-bottom:0.35rem;">03 &nbsp;DER ENTSCHEIDER</p>
+          <p class="leistung__titel" style="color:var(--petrol-light);">Sie spielen Ihre Entscheidung durch, bevor Sie sie treffen.</p>
+          <p class="leistung__text">Wirtschaftlichkeit, persönliche Gewichtung und Zukunftsfähigkeit auf einer Seite — live bei jedem Förder- und Preis-Szenario. Eine belastbare Grundlage, bevor Sie ein Ingenieurbüro beauftragen.</p>
+        </div>
+
+        <div class="leistung" style="margin-bottom:1.5rem;">
+          <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:var(--signal);font-family:'Inter',sans-serif;margin-bottom:0.35rem;">04 &nbsp;BEGLEITUNG</p>
+          <p class="leistung__titel" style="color:var(--petrol-light);">Wenn es konkret wird, stehe ich an Ihrer Seite.</p>
+          <p class="leistung__text">Einordnung und Begleitung auf Gebäudeebene — in der Eigentümerversammlung und im Dialog mit Hausverwaltung, Ingenieurbüro und Stadt Erfurt. Neutral, belegt, auf Augenhöhe.</p>
         </div>
 
         <div class="leistung" style="margin-bottom:0;">
-          <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:var(--signal);font-family:'Inter',sans-serif;margin-bottom:0.35rem;">04 &nbsp;NETZWERK</p>
+          <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:var(--signal);font-family:'Inter',sans-serif;margin-bottom:0.35rem;">05 &nbsp;NETZWERK</p>
           <p class="leistung__titel" style="color:var(--petrol-light);">Sie sind nicht allein.</p>
           <p class="leistung__text">Andere Eigentümer teilen ihre Daten, Erfahrungen und nächsten Schritte. Was im Einzelfall unsichtbar bleibt, wird im Netzwerk zum Muster.</p>
         </div>
@@ -1230,6 +1287,23 @@
         <img src="images/eco2050-logo.png" alt="eco2050 Institut für Nachhaltigkeit" style="height:56px;width:auto;display:block;">
       </div>
       <div class="partner__item partner__item--offen">Weitere Partner · in Gespräch</div>
+    </div>
+  </section>
+
+  <!-- BEGLEITUNG / SERVICE — Einlösung von „Die Lücke" -->
+  <section class="section container" id="begleitung" aria-label="Begleitung und Service">
+    <div class="begleitung-box">
+      <span class="begleitung-box__eyebrow">Begleitung · Erfurt</span>
+      <h2 class="begleitung-box__titel">Begleitung, wenn es konkret wird</h2>
+      <p>Die schwierigste Phase beginnt nach der Rechnung: in der Eigentümerversammlung, im Gespräch mit Hausverwaltung, Ingenieurbüro und der Stadt Erfurt. Hier fehlt unabhängige Einordnung — niemand am Tisch trägt Ihre Verantwortung.</p>
+      <p class="begleitung-box__sub">Ich begleite Eigentümer und Eigentümergemeinschaften — neutral, belegt, auf Augenhöhe:</p>
+      <ul class="begleitung-box__liste">
+        <li><strong>Ihre Zahlen eingeordnet</strong>, bevor Sie entscheiden — Fernwärme vs. Wärmepumpe, Förderfristen, Anschlusszwang.</li>
+        <li><strong>Die Eigentümerversammlung vorbereitet</strong> — Argumente, Mehrheiten, Beschlussgrundlage.</li>
+        <li><strong>Übersetzt</strong> zwischen Eigentümern, Hausverwaltung, Ingenieurbüro und Stadt.</li>
+      </ul>
+      <p>Schreiben Sie mir — ich höre zu und ordne ein.</p>
+      <a href="#kontakt" class="btn btn--signal">Schreiben Sie mir →</a>
     </div>
   </section>
 
