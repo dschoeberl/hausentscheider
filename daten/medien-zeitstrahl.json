@@ -1,0 +1,116 @@
+{
+  "_hinweis": "Wärmewende im Blick — Zeitstrahl der lokalen Berichterstattung. Neuer Artikel = ein Objekt an 'eintraege' anhängen. 'datum' (ISO) treibt die proportionale Achse, 'datumLabel' ist die Anzeige. Die 'zuletzt ergänzt'-Marke wird automatisch aus dem jüngsten Eintrag abgeleitet — nichts separat pflegen. Töne: zustimmend | sachlich | erklaerend | kritisch. Eigene Überschriften und sinngemäße Zusammenfassungen — keine Originaltitel oder Volltexte.",
+  "eintraege": [
+    {
+      "datum": "2026-04-30",
+      "datumLabel": "30. April",
+      "headline": "„Auf dem Weg zur grünen Wärme“ – sagt die Tagung",
+      "ton": "zustimmend",
+      "quelle": "TA · Thüringen",
+      "zusammenfassung": "Zur Thüringer Wärmetagung wird die Wärmewende als Aufbruch erzählt — Ausbau, grüne Quellen, Zuversicht. Der Ton setzt das Framing für den ganzen Mai.",
+      "kommentar": "Optimistischer Auftakt, aber im Versprechens-Modus. Was „grün“ konkret heißt — mit welchem Termin —, bleibt offen. Mehr Absicht als Beleg.",
+      "link": ""
+    },
+    {
+      "datum": "2026-05-06",
+      "datumLabel": "6. Mai",
+      "headline": "Der Bund lockert — am selben Tag legt die Stadt fest",
+      "ton": "sachlich",
+      "quelle": "TA · Politik & Lokalteil",
+      "zusammenfassung": "Der Bund kippt das Verbot fossiler Heizungen nach 2045; ein Fachmann rät zum Abwarten. Im Lokalteil derselben Ausgabe: die kommunale Festlegung zum 30.06.",
+      "kommentar": "Zwei Zeitlogiken in einem Blatt. Was die Gleichzeitigkeit für einen Haushalt bedeutet, führt keiner zusammen — es bleibt beim Leser.",
+      "link": ""
+    },
+    {
+      "datum": "2026-05-06",
+      "datumLabel": "6. Mai",
+      "headline": "„Welche Heizung wohin?“ — der Plan, gut erklärt",
+      "ton": "erklaerend",
+      "quelle": "TA · Lokalteil",
+      "zusammenfassung": "Das ausführliche Frage-Antwort-Stück erklärt verständlich, wie die KWP Gebiete einteilt — das hilfreichste Stück des Zeitraums.",
+      "kommentar": "Handwerklich stark — erklärt den Plan. Aber es prüft ihn nicht: Annahmen, Preise, Zeitpläne bleiben unhinterfragt. Erklären ist nicht prüfen.",
+      "link": ""
+    },
+    {
+      "datum": "2026-05-08",
+      "datumLabel": "8. Mai",
+      "headline": "Das Heizungsgesetz, vom Schornsteinfeger übersetzt",
+      "ton": "erklaerend",
+      "quelle": "TA · Lokalteil",
+      "zusammenfassung": "Ein Schornsteinfeger-Meister übersetzt die Bundesreform alltagsnah — was sie praktisch für Hausbesitzer bedeutet.",
+      "kommentar": "Gute Übersetzung, typisch fürs Muster: Aufklärung passiert, wenn ein Ereignis sie auslöst — nicht kontinuierlich.",
+      "link": ""
+    },
+    {
+      "datum": "2026-05-11",
+      "datumLabel": "11. Mai",
+      "headline": "„Verbraucher brauchen Klarheit“ — die Zeitung benennt die Lücke selbst",
+      "ton": "kritisch",
+      "quelle": "TA · Kommentar",
+      "zusammenfassung": "Ein Leitkommentar benennt offen, dass den Verbrauchern die Planungssicherheit fehlt — zu wenig Orientierung für die anstehenden Entscheidungen.",
+      "kommentar": "Bemerkenswert: Die Redaktion benennt die Lücke selbst. Genau die — keine belastbare Entscheidungsgrundlage je Haushalt — zieht sich durch den ganzen Korpus.",
+      "link": ""
+    },
+    {
+      "datum": "2026-05-16",
+      "datumLabel": "16. Mai",
+      "headline": "Bauchschmerzen erlaubt — aber bitte beruhigt",
+      "ton": "zustimmend",
+      "quelle": "TA · Lokalteil",
+      "zusammenfassung": "Ein Stück greift das Unbehagen vieler Eigentümer auf — Unsicherheit über Kosten und Pflichten — und fängt es beruhigend wieder ein.",
+      "kommentar": "Das Unbehagen wird benannt und gleich abgefedert. Die eigentliche Frage — was kostet welche Entscheidung über 20 Jahre — bleibt offen.",
+      "link": ""
+    },
+    {
+      "datum": "2026-06-02",
+      "datumLabel": "2. Juni",
+      "headline": "Steigende Mieten — erzählt ohne die Heizung",
+      "ton": "sachlich",
+      "quelle": "TA · Lokalteil",
+      "zusammenfassung": "Ein Stück zu Mieten und Wohnkosten nennt Baukosten, Zinsen, Nebenkosten — als eigene Geschichte, getrennt von Wärme und Infrastruktur.",
+      "kommentar": "Wärme, Wohnen und Geld werden getrennt erzählt. Dass die Heizungsentscheidung die „zweite Miete“ der nächsten 20 Jahre prägt, verbindet keiner.",
+      "link": ""
+    },
+    {
+      "datum": "2026-06-06",
+      "datumLabel": "6. Juni",
+      "headline": "120 km Leitungen: beschlossen. Die grüne Quelle: erhofft.",
+      "ton": "zustimmend",
+      "quelle": "TA · Lokalteil",
+      "zusammenfassung": "Der Ausbau wird konkret — 120 km neue Leitungen, verdoppelte Anschlussfläche, beschlossen und terminiert.",
+      "kommentar": "Infrastruktur im Indikativ — beschlossen, jetzt. Die grüne Quelle (Geothermie, Abwärme) bleibt im Konjunktiv. Über 20 Jahre ist genau dieser Unterschied der entscheidende — und der am schwersten erkennbare.",
+      "link": ""
+    },
+    {
+      "datum": "2026-06-06",
+      "datumLabel": "ca. 6. Juni",
+      "ca": true,
+      "headline": "„Eine Wundertüte“ — Gegenrede, aber nur zum Stichtag",
+      "ton": "kritisch",
+      "quelle": "TA · Kommentar",
+      "zusammenfassung": "Anhand der städtischen Treibhausgasbilanz kommt der Klimaentscheid zu Wort und nennt die Wärmeplanung „kein Entscheidungsinstrument, sondern eine Wundertüte“.",
+      "kommentar": "Hier kommt Gegenrede vor — aber anlassgetaktet, ausgelöst durch ein offizielles Zahlenwerk. Laufende kritische Begleitung fehlt.",
+      "link": ""
+    }
+  ],
+  "meilensteine": [
+    {
+      "datum": "2026-05-04",
+      "datumLabel": "4. Mai",
+      "label": "Pressekonferenz: KWP-Ergebnisse vorgestellt",
+      "berichtet": true
+    },
+    {
+      "datum": "2026-06-30",
+      "datumLabel": "30. Juni",
+      "label": "Inkrafttreten KWP + adressgenauer Stadtplan",
+      "berichtet": false
+    },
+    {
+      "datum": "2026-07-01",
+      "datumLabel": "1. Juli",
+      "label": "Gebäudemodernisierungsgesetz (GMG) tritt in Kraft",
+      "berichtet": false
+    }
+  ]
+}

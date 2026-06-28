@@ -570,6 +570,289 @@
     </div>
   </div>
 
+  <!-- WÄRMEWENDE IM BLICK · Medien-Zeitstrahl -->
+  <section class="wib" id="medien-zeitstrahl" aria-label="Wärmewende im Blick — Medien-Zeitstrahl">
+    <style>
+      .wib { background: var(--white); padding: 3.25rem 0 3rem; border-top: 0.5px solid var(--border); }
+      .wib__eyebrow { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol-light); font-family: 'Inter', sans-serif; margin-bottom: 0.6rem; }
+      .wib__head-row { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+      .wib__title { font-size: 26px; margin: 0 0 0.4rem; }
+      .wib__updated { font-size: 11px; color: var(--text-tertiary); font-family: 'Inter', sans-serif; white-space: nowrap; }
+      .wib__updated b { color: var(--petrol); font-weight: 600; }
+      .wib__lead { font-size: 15px; color: var(--text-secondary); line-height: 1.7; max-width: 640px; margin: 0.25rem 0 1.6rem; }
+      .wib-loading { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-tertiary); }
+
+      /* Horizontale Übersichts-Leiste (Signatur) */
+      .wib-strip { position: relative; height: 60px; margin: 0 0 0.25rem; }
+      .wib-strip__line { position: absolute; left: 0; right: 0; top: 26px; height: 2px; background: var(--border); }
+      .wib-strip__gap { position: absolute; top: 18px; height: 18px; background: repeating-linear-gradient(135deg, rgba(138,134,128,0.18) 0 4px, transparent 4px 8px); border-radius: 2px; }
+      .wib-tick { position: absolute; top: 16px; width: 3px; height: 22px; border-radius: 2px; transform: translateX(-50%); }
+      .wib-tick--zustimmend { background: #1a5c5a; }
+      .wib-tick--neutral    { background: #9aa6a3; }
+      .wib-tick--kritisch   { top: 20px; width: 12px; height: 12px; border-radius: 50%; background: var(--white); border: 2.5px solid #a8481f; }
+      .wib-strip__heute { position: absolute; top: 8px; bottom: 18px; width: 1.5px; background: var(--petrol-dark); }
+      .wib-strip__heute::after { content: 'heute'; position: absolute; top: -13px; left: 50%; transform: translateX(-50%); font-family: 'Inter', sans-serif; font-size: 8px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--petrol-dark); white-space: nowrap; }
+      .wib-strip__fade { position: absolute; top: 0; bottom: 18px; right: 0; background: linear-gradient(to right, rgba(255,255,255,0), var(--white) 78%); pointer-events: none; }
+      .wib-strip__more { position: absolute; top: 22px; right: 0; font-family: 'Inter', sans-serif; font-size: 10px; font-style: italic; color: var(--text-tertiary); }
+      .wib-strip__mon { position: absolute; bottom: 0; transform: translateX(-50%); font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.5px; color: var(--text-tertiary); }
+
+      .wib-tally { font-family: 'Inter', sans-serif; font-size: 12.5px; color: var(--text-secondary); margin: 0.6rem 0 0.2rem; }
+      .wib-tally b { color: var(--text-primary); font-weight: 600; }
+
+      .wib-legend { display: flex; gap: 1.25rem 1.5rem; flex-wrap: wrap; margin: 0.6rem 0 1.6rem; }
+      .wib-legend__item { display: flex; align-items: flex-start; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 12px; max-width: 230px; }
+      .wib-legend__sw { width: 12px; height: 12px; border-radius: 50%; margin-top: 2px; flex-shrink: 0; }
+      .wib-legend__sw--ring { background: var(--white); border: 2.5px solid #a8481f; }
+      .wib-legend__name { color: var(--text-primary); font-weight: 600; }
+      .wib-legend__desc { color: var(--text-tertiary); }
+
+      /* Vertikale, proportionale Detail-Achse */
+      .wib-scroll { max-height: 560px; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding-right: 8px; scrollbar-width: thin; scrollbar-color: var(--petrol-light) transparent; }
+      .wib-scroll::-webkit-scrollbar { width: 8px; }
+      .wib-scroll::-webkit-scrollbar-thumb { background: var(--petrol-light); border-radius: 4px; }
+      .wib-axis { position: relative; }
+      .wib-axis > * { position: relative; padding-left: 1.75rem; }
+      .wib-axis > *::before { content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 2px; background: var(--petrol-light); opacity: 0.4; }
+      .wib-axis > .wib--future::before { background: none; border-left: 2px dashed var(--petrol-light); opacity: 0.55; }
+
+      .wib-item__dot { position: absolute; left: 1px; top: 0.2rem; width: 14px; height: 14px; border-radius: 50%; box-shadow: 0 0 0 4px var(--white); }
+      .wib-item--zustimmend .wib-item__dot { background: #1a5c5a; }
+      .wib-item--neutral    .wib-item__dot { background: #9aa6a3; }
+      .wib-item--kritisch   .wib-item__dot { background: var(--white); border: 3px solid #a8481f; }
+
+      .wib-det summary { list-style: none; cursor: pointer; display: block; padding: 0.1rem 0 0.85rem; }
+      .wib-det summary::-webkit-details-marker { display: none; }
+      .wib-date { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.5px; color: var(--text-tertiary); margin-right: 0.6rem; }
+      .wib-ton { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 700; padding: 1px 7px; border-radius: 3px; }
+      .wib-item--zustimmend .wib-ton { color: #1a5c5a; background: rgba(26,92,90,0.10); }
+      .wib-item--neutral    .wib-ton { color: #5e6a67; background: rgba(154,166,163,0.20); }
+      .wib-item--kritisch   .wib-ton { color: #a8481f; background: rgba(168,72,31,0.10); }
+      .wib-headline { display: block; margin-top: 0.4rem; font-family: 'Playfair Display', Georgia, serif; font-size: 17px; color: var(--text-primary); line-height: 1.35; transition: color 0.15s; }
+      .wib-det:hover .wib-headline, .wib-det[open] .wib-headline { color: var(--petrol); }
+      .wib-chev { float: right; color: var(--petrol-light); font-size: 12px; transition: transform 0.2s; }
+      .wib-det[open] .wib-chev { transform: rotate(90deg); }
+      .wib-body { padding-bottom: 1rem; }
+      .wib-zusammenfassung { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin: 0.1rem 0 0.9rem; }
+      .wib-einordnung { border-left: 3px solid var(--signal); background: var(--bg-light); padding: 0.6rem 0.9rem; border-radius: 0 6px 6px 0; }
+      .wib-einordnung__lbl { display: block; font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--petrol); font-weight: 700; margin-bottom: 0.3rem; }
+      .wib-einordnung p { font-size: 13.5px; color: var(--text-primary); line-height: 1.65; margin: 0; }
+      .wib-quelle { font-family: 'Inter', sans-serif; font-size: 11px; color: var(--text-tertiary); margin: 0.7rem 0 0; }
+      .wib-quelle a { color: var(--petrol); font-weight: 500; }
+
+      .wib-spacer { }
+      .wib-gap { position: absolute; left: 1.75rem; top: 50%; transform: translateY(-50%); font-family: 'Inter', sans-serif; font-size: 11px; color: var(--text-tertiary); font-style: italic; background: var(--white); padding: 3px 8px 3px 0; }
+      .wib-gap em { color: var(--petrol); font-style: italic; font-weight: 500; }
+
+      .wib-ms { padding-top: 0.25rem; padding-bottom: 0.85rem; }
+      .wib-ms__node { position: absolute; left: 3px; top: 0.4rem; width: 9px; height: 9px; transform: rotate(45deg); background: var(--petrol-dark); box-shadow: 0 0 0 3px var(--white); }
+      .wib--future .wib-ms__node { background: var(--white); border: 1.5px solid var(--petrol-light); }
+      .wib-ms__date { font-family: 'Inter', sans-serif; font-size: 11px; color: var(--petrol-dark); font-weight: 600; margin-right: 0.5rem; }
+      .wib-ms__label { font-family: 'Inter', sans-serif; font-size: 12.5px; color: var(--text-secondary); }
+      .wib-ms__tag { display: inline-block; margin-left: 0.5rem; font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.8px; text-transform: uppercase; color: var(--petrol-light); border: 1px solid var(--petrol-light); border-radius: 3px; padding: 1px 6px; }
+
+      .wib-heute { padding-top: 0.15rem; padding-bottom: 0.85rem; }
+      .wib-heute__node { position: absolute; left: 3px; top: 0.3rem; width: 9px; height: 9px; border-radius: 50%; background: var(--petrol-dark); box-shadow: 0 0 0 3px var(--white); }
+      .wib-heute__txt { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--petrol-dark); font-weight: 700; }
+
+      .wib-tail { padding-top: 0.15rem; min-height: 44px; }
+      .wib-tail__txt { font-family: 'Inter', sans-serif; font-size: 11px; color: var(--text-tertiary); font-style: italic; }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .wib--reveal .wib-item, .wib--reveal .wib-ms, .wib--reveal .wib-heute { opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .wib--reveal.is-in .wib-item, .wib--reveal.is-in .wib-ms, .wib--reveal.is-in .wib-heute { opacity: 1; transform: none; }
+      }
+      @media (max-width: 600px) {
+        .wib__title { font-size: 22px; }
+        .wib-legend__item { max-width: 100%; }
+        .wib-headline { font-size: 15.5px; }
+      }
+    </style>
+    <div class="container">
+      <p class="wib__eyebrow">Medien-Resonanz · Erfurt</p>
+      <div class="wib__head-row">
+        <h2 class="wib__title">Wärmewende im Blick</h2>
+        <span class="wib__updated" id="wib-updated"></span>
+      </div>
+      <p class="wib__lead">Nah dran an dem, was über die Erfurter Wärmewende berichtet wird — wann, von wem, und was fehlt. Laufend ergänzt.</p>
+      <div id="wib-mount"><p class="wib-loading">Zeitstrahl wird geladen …</p></div>
+    </div>
+    <script>
+      (function () {
+        var mount = document.getElementById('wib-mount');
+        if (!mount) return;
+        var MONTHS = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+        function parse(d) { return new Date(d + 'T00:00:00'); }
+        function days(a, b) { return Math.round((parse(a) - parse(b)) / 86400000); }
+        function heuteISO() { var n = new Date(), m = ('0' + (n.getMonth() + 1)).slice(-2), d = ('0' + n.getDate()).slice(-2); return n.getFullYear() + '-' + m + '-' + d; }
+        function heuteLabel() { var n = new Date(); return n.getDate() + '. ' + MONTHS[n.getMonth()]; }
+        function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+        function toneInfo(t) {
+          if (t === 'zustimmend') return { key: 'zustimmend', cls: 'zustimmend', label: 'zustimmend' };
+          if (t === 'kritisch')   return { key: 'kritisch',   cls: 'kritisch',   label: 'kritisch' };
+          return { key: 'neutral', cls: 'neutral', label: (t === 'erklaerend' ? 'erklärend' : 'sachlich') };
+        }
+
+        fetch('daten/medien-zeitstrahl.json', { cache: 'no-cache' })
+          .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+          .then(render)
+          .catch(function (err) {
+            console.error('[Wärmewende im Blick] Daten konnten nicht geladen werden:', err);
+            mount.innerHTML = '<p class="wib-loading">Der Medien-Zeitstrahl wird gerade aktualisiert.</p>';
+          });
+
+        function render(data) {
+          var entries = (data.eintraege || []).slice().sort(function (a, b) { return parse(a.datum) - parse(b.datum); });
+          var ms = (data.meilensteine || []).slice();
+          if (!entries.length) { mount.innerHTML = ''; return; }
+
+          var firstISO = entries[0].datum;
+          var lastEntryISO = entries[entries.length - 1].datum;
+          var lastEntryLabel = String(entries[entries.length - 1].datumLabel).replace(/^ca\.\s*/, '');
+          var hISO = heuteISO();
+
+          var tally = { zustimmend: 0, neutral: 0, kritisch: 0 };
+          entries.forEach(function (e) { tally[toneInfo(e.ton).key]++; });
+          document.getElementById('wib-updated').innerHTML = 'zuletzt ergänzt am <b>' + esc(lastEntryLabel) + '</b>';
+
+          /* Achsen-Spanne der Leiste: erster Eintrag → spätester Meilenstein/heute */
+          var endISO = lastEntryISO;
+          ms.forEach(function (m) { if (parse(m.datum) > parse(endISO)) endISO = m.datum; });
+          if (parse(hISO) > parse(endISO)) endISO = hISO;
+          var span = Math.max(1, days(endISO, firstISO));
+          function pct(iso) { return Math.max(0, Math.min(100, days(iso, firstISO) / span * 100)); }
+
+          /* Größte Funkstille (Eintrag → Eintrag) generisch ermitteln */
+          var bigGap = null;
+          for (var i = 1; i < entries.length; i++) {
+            var g = days(entries[i].datum, entries[i - 1].datum);
+            if (g >= 12 && (!bigGap || g > bigGap.g)) bigGap = { g: g, from: entries[i - 1].datum, to: entries[i].datum };
+          }
+
+          /* --- Horizontale Leiste --- */
+          var ticks = '', seen = {};
+          entries.forEach(function (e) {
+            var ti = toneInfo(e.ton), base = pct(e.datum);
+            var n = seen[e.datum] || 0; seen[e.datum] = n + 1;
+            ticks += '<span class="wib-tick wib-tick--' + ti.cls + '" style="left:' + (base + n * 0.9) + '%"></span>';
+          });
+          var gapHtml = '';
+          if (bigGap) { var a = pct(bigGap.from), b = pct(bigGap.to); gapHtml = '<span class="wib-strip__gap" style="left:' + a + '%;width:' + (b - a) + '%"></span>'; }
+          var months = '';
+          [['2026-05-01', 'Mai'], ['2026-06-01', 'Juni'], ['2026-07-01', 'Juli']].forEach(function (m) {
+            var p = days(m[0], firstISO) / span * 100;
+            if (p > 1 && p < 99) months += '<span class="wib-strip__mon" style="left:' + p + '%">' + m[1] + '</span>';
+          });
+          var lastEntryPct = pct(lastEntryISO);
+          var aria = 'Übersicht: ' + entries.length + ' Beiträge zwischen ' + entries[0].datumLabel + ' und ' + lastEntryLabel + ', davon ' + tally.kritisch + ' kritisch. Danach läuft der Zeitstrahl offen weiter.';
+          var strip =
+            '<div class="wib-strip" role="img" aria-label="' + esc(aria) + '">' +
+              gapHtml +
+              '<div class="wib-strip__line"></div>' +
+              ticks +
+              '<span class="wib-strip__heute" style="left:' + pct(hISO) + '%"></span>' +
+              '<span class="wib-strip__fade" style="left:' + lastEntryPct + '%"></span>' +
+              '<span class="wib-strip__more">läuft weiter →</span>' +
+              months +
+            '</div>';
+
+          var tallyHtml = '<p class="wib-tally"><b>' + entries.length + ' Beiträge</b> · ' +
+            tally.zustimmend + ' zustimmend · ' + tally.neutral + ' erklärend/sachlich · ' +
+            '<b style="color:#a8481f">' + tally.kritisch + ' kritisch</b></p>';
+
+          var legendHtml =
+            '<div class="wib-legend">' +
+              legItem('background:#1a5c5a', '', 'zustimmend', 'übernimmt die offizielle Sicht, ohne sie zu hinterfragen') +
+              legItem('background:#9aa6a3', '', 'erklärend · sachlich', 'informiert neutral, hilft verstehen') +
+              legItem('', 'wib-legend__sw--ring', 'kritisch', 'hinterfragt, bezieht Position') +
+            '</div>';
+
+          /* --- Vertikale, proportionale Achse --- */
+          var items = [];
+          entries.forEach(function (e) { items.push({ k: 'entry', iso: e.datum, d: e }); });
+          ms.forEach(function (m) { items.push({ k: 'ms', iso: m.datum, d: m }); });
+          items.push({ k: 'heute', iso: hISO, d: { datumLabel: heuteLabel() } });
+          var ord = { entry: 0, heute: 1, ms: 2 };
+          items.sort(function (x, y) { var t = parse(x.iso) - parse(y.iso); return t !== 0 ? t : ord[x.k] - ord[y.k]; });
+
+          var PXD = 5, MIN = 16, MAX = 150, html = '', prevISO = null, prevEntryISO = null;
+          items.forEach(function (it) {
+            var future = parse(it.iso) > parse(lastEntryISO);
+            if (prevISO) {
+              var h = Math.max(MIN, Math.min(MAX, days(it.iso, prevISO) * PXD)), gapLabel = '';
+              if (it.k === 'entry' && prevEntryISO === prevISO) {
+                var ge = days(it.iso, prevEntryISO);
+                if (ge >= 12) {
+                  var within = parse(it.iso) <= parse('2026-06-03');
+                  gapLabel = '<span class="wib-gap">' + ge + ' Tage ohne Bericht' + (within ? ' <em>— mitten in der Einspruchsfrist</em>' : '') + '</span>';
+                }
+              }
+              html += '<div class="wib-spacer' + (future ? ' wib--future' : '') + '" style="height:' + h + 'px">' + gapLabel + '</div>';
+            }
+            if (it.k === 'entry') { html += entryHtml(it.d, future); prevEntryISO = it.iso; }
+            else if (it.k === 'ms') { html += msHtml(it.d, future); }
+            else { html += heuteHtml(it.d); }
+            prevISO = it.iso;
+          });
+          html += '<div class="wib-spacer wib--future" style="height:18px"></div>' +
+                  '<div class="wib-tail wib--future"><span class="wib-tail__txt">wird laufend ergänzt</span></div>';
+
+          mount.innerHTML = strip + tallyHtml + legendHtml + '<div class="wib-scroll"><div class="wib-axis">' + html + '</div></div>';
+
+          /* Sanftes Erscheinen (gestaffelt), Reduced-Motion respektiert */
+          var section = document.getElementById('medien-zeitstrahl');
+          var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (!reduce && 'IntersectionObserver' in window) {
+            var nodes = mount.querySelectorAll('.wib-item, .wib-ms, .wib-heute');
+            for (var k = 0; k < nodes.length; k++) nodes[k].style.transitionDelay = Math.min(k * 50, 400) + 'ms';
+            section.classList.add('wib--reveal');
+            var io = new IntersectionObserver(function (es) {
+              es.forEach(function (en) { if (en.isIntersecting) { section.classList.add('is-in'); io.disconnect(); } });
+            }, { threshold: 0.12 });
+            io.observe(section);
+          }
+        }
+
+        function legItem(swStyle, swCls, name, desc) {
+          return '<div class="wib-legend__item">' +
+            '<span class="wib-legend__sw ' + swCls + '" style="' + swStyle + '"></span>' +
+            '<span><span class="wib-legend__name">' + name + '</span><br><span class="wib-legend__desc">' + desc + '</span></span>' +
+          '</div>';
+        }
+        function entryHtml(e, future) {
+          var ti = toneInfo(e.ton);
+          var link = e.link ? ' · <a href="' + esc(e.link) + '" target="_blank" rel="noopener">Original ansehen →</a>' : '';
+          return '<div class="wib-item wib-item--' + ti.cls + (future ? ' wib--future' : '') + '">' +
+            '<span class="wib-item__dot"></span>' +
+            '<details class="wib-det">' +
+              '<summary>' +
+                '<span class="wib-chev">▸</span>' +
+                '<span class="wib-date">' + esc(e.datumLabel) + '</span>' +
+                '<span class="wib-ton">' + esc(ti.label) + '</span>' +
+                '<span class="wib-headline">' + esc(e.headline) + '</span>' +
+              '</summary>' +
+              '<div class="wib-body">' +
+                '<p class="wib-zusammenfassung">' + esc(e.zusammenfassung) + '</p>' +
+                '<div class="wib-einordnung"><span class="wib-einordnung__lbl">Einordnung</span><p>' + esc(e.kommentar) + '</p></div>' +
+                '<p class="wib-quelle">' + esc(e.quelle) + link + '</p>' +
+              '</div>' +
+            '</details>' +
+          '</div>';
+        }
+        function msHtml(m, future) {
+          var tag = (m.berichtet === false) ? '<span class="wib-ms__tag">Berichterstattung offen</span>' : '';
+          return '<div class="wib-ms' + (future ? ' wib--future' : '') + '">' +
+            '<span class="wib-ms__node"></span>' +
+            '<span class="wib-ms__date">' + esc(m.datumLabel) + '</span>' +
+            '<span class="wib-ms__label">' + esc(m.label) + '</span>' + tag +
+          '</div>';
+        }
+        function heuteHtml(h) {
+          return '<div class="wib-heute"><span class="wib-heute__node"></span><span class="wib-heute__txt">Heute · ' + esc(h.datumLabel) + '</span></div>';
+        }
+      })();
+    </script>
+  </section>
+
   <!-- AKTUELLE ENERGIEPREISE -->
   <section class="energiepreise" id="energiepreise" aria-label="Aktuelle Energiepreise">
     <style>
@@ -689,33 +972,6 @@
       tblEl.innerHTML = head + body;
     })();
   </script>
-
-  <!-- AKTUELL -->
-  <section class="aktuell-section" id="aktuell">
-    <div class="container">
-      <span class="label" style="margin-bottom:0.5rem;">Aktuell</span>
-      <div class="artikel-grid">
-        <div class="artikel-karte">
-          <p class="artikel-karte__meta">Kommentar · März 2026</p>
-          <h3 class="artikel-karte__titel">Ein Jahr kommunale Wärmeplanung in Erfurt — Zwischen Anspruch und Wirklichkeit</h3>
-          <p class="artikel-karte__teaser">95 Prozent der Erfurter Fernwärme basiert auf Erdgas. Eine Satzung aus 2006 legt Anschlusspflichten fest, die kaum jemand kennt. Was bedeutet das für Eigentümerinnen und Eigentümer in der Innenstadt?</p>
-          <a href="dokumente/gastkommentar-waermewende-erfurt-2026.pdf" class="artikel-karte__link" target="_blank">Artikel lesen (PDF) →</a>
-        </div>
-        <div class="artikel-karte">
-          <p class="artikel-karte__meta">Forschung · 2025 · eco2050 Institut für Nachhaltigkeit</p>
-          <h3 class="artikel-karte__titel">Future Readiness in der Wärmewende — Vom Ziel zur Fähigkeit</h3>
-          <p class="artikel-karte__teaser">Der Bewertungsrahmen für kommunale Wärmepläne. Entwickelt auf Basis von vier Experteninterviews mit zentralen Akteuren der deutschen Wärmewende.</p>
-          <a href="dokumente/future-readiness-in-der-waermewende-executive-summary.pdf" class="artikel-karte__link" target="_blank">Executive Summary lesen (PDF) →</a>
-        </div>
-        <div class="artikel-karte">
-          <p class="artikel-karte__meta">Warum Hausentscheider · März 2026</p>
-          <h3 class="artikel-karte__titel">Ich muss diese Entscheidung selbst treffen. Genau deshalb gibt es Hausentscheider.</h3>
-          <p class="artikel-karte__teaser">Ich sitze selbst mit am Tisch. Warum Forschung, Erfahrung und persönliche Verantwortung zusammenkommen — und was daraus entstanden ist.</p>
-          <a href="dokumente/deshalb-gibt-es-hausentscheider.pdf" target="_blank" class="artikel-karte__link">Artikel lesen (PDF) →</a>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- OBJEKTE -->
   <section class="objekte-section container" id="objekte">
@@ -942,6 +1198,8 @@
         <p class="autor__rolle">Transformationsforscher · Wohnungseigentümer in Erfurt</p>
         <p style="margin:0.5rem 0 1rem;">
           <a href="dokumente/deshalb-gibt-es-hausentscheider.pdf" target="_blank" style="font-size:13px;color:var(--petrol);font-weight:500;">Warum ich das mache → (PDF)</a>
+          &nbsp;·&nbsp;
+          <a href="dokumente/gastkommentar-waermewende-erfurt-2026.pdf" target="_blank" style="font-size:13px;color:var(--petrol);font-weight:500;">Eigentümer-Einschätzung → (PDF)</a>
         </p>
         <p class="autor__bio">
           Daniel Schöberl ist in Erfurt aufgewachsen und Wohnungseigentümer in der Erfurter Innenstadt.
