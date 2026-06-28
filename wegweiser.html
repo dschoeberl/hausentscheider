@@ -226,32 +226,6 @@
     .quellen-item a:hover { color:var(--petrol); text-decoration:none; }
     .quellen-item__note { font-size:11px; color:var(--text-muted); margin-top:1px; }
 
-    /* WhatsApp CTA */
-    .wa-cta {
-      margin-top: 2.5rem;
-      background: var(--petrol);
-      border-radius: var(--radius);
-      padding: 1.75rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .wa-cta__text h3 { font-family:'Playfair Display',Georgia,serif; font-size:18px; font-weight:400; color:#fff; margin-bottom:0.25rem; }
-    .wa-cta__text p { font-size:13px; color:rgba(255,255,255,0.75); }
-    .wa-cta__btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: #fff; color: var(--petrol);
-      font-size: 13px; font-weight: 600;
-      padding: 0.6rem 1.25rem;
-      border-radius: 4px;
-      text-decoration: none;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .wa-cta__btn:hover { background:rgba(255,255,255,0.9); text-decoration:none; }
-
     /* ── FOOTER ──────────────────────────────────────── */
     .footer { border-top:0.5px solid var(--border); padding:1.5rem 0; }
     .footer__inner { max-width:var(--max-w); margin:0 auto; padding:0 2rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; font-size:12px; color:var(--text-muted); }
@@ -262,7 +236,6 @@
     @media (max-width:640px) {
       .nav__links { display:none; }
       .quellen-grid { grid-template-columns:1fr; gap:1.5rem; }
-      .wa-cta { flex-direction:column; }
     }
 
     /* ── REDESIGN: Stimmfeld-Headline + Fragen-Status ── */
@@ -635,19 +608,12 @@
       </div>
     </div>
 
-    <!-- WhatsApp CTA -->
-    <div class="wa-cta">
-      <div class="wa-cta__text">
-        <h3>Ihre Stimme fehlt noch — werden Sie lauter.</h3>
-        <p>Eigentümer in Erfurt, die gemeinsam informierter entscheiden.</p>
-      </div>
-      <a href="#" class="wa-cta__btn" target="_blank" rel="noopener">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8 1C4.134 1 1 4.134 1 8c0 1.26.326 2.443.895 3.47L1 15l3.617-.873A7 7 0 1 0 8 1z" fill="#1D9E75" stroke="#1D9E75" stroke-width="0.5"></path>
-          <path d="M5.5 6c0-.276.224-.5.5-.5h.5c.276 0 .5.224.5.5l.25 1.5c0 .2-.1.388-.268.486L6.5 8.5s.5 1 2 1.5l.482-.468A.5.5 0 0 1 9.5 9.5l1.5.25c.276 0 .5.224.5.5v.5c0 .276-.224.5-.5.5C6.91 11.25 5.5 8.09 5.5 6z" fill="white"></path>
-        </svg>
-        WhatsApp-Gruppe beitreten
-      </a>
+    <!-- Abschluss: Dialog & Entscheider -->
+    <div class="hausentscheider-box">
+      <div class="hausentscheider-box__label">Dialog</div>
+      <div class="hausentscheider-box__kern">Fragen, die hier offen sind, gehören auf den Tisch.</div>
+      <div class="hausentscheider-box__text">Schreiben Sie mir — ich ordne ein, neutral und belegt: <a href="mailto:dialog@hausentscheider.de" style="color:#fff;text-decoration:underline;">dialog@hausentscheider.de</a></div>
+      <a href="rechner.html" class="hausentscheider-box__link">Zum Entscheider — die Optionen für Ihr Gebäude rechnen →</a>
     </div>
 
   </div>
