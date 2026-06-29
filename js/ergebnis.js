@@ -310,8 +310,10 @@ function renderWirtschaftlichkeitsTabelle(input, params) {
     { gruppe: 'Investition' },
     { key: 'bruttoinvest',       label: 'Bruttoinvestition',           fmt: 'euro',   kennzahlTyp: 'kosten', editierbar: true },
     { key: 'foerderung',         label: 'Fördersumme',                  fmt: 'euro',   kennzahlTyp: 'foerderung' },
-    { key: 'nettoInvest',        label: 'Netto-Investition',            fmt: 'euro',   kennzahlTyp: 'kosten' },
-    { key: 'sonderumlageProWE',  label: 'Sonderumlage pro Einheit',     fmt: 'euro',   kennzahlTyp: 'kosten' },
+    { key: 'nettoInvest',        label: 'Netto-Investition',            fmt: 'euro',   kennzahlTyp: 'kosten',
+      tip: 'Bruttoinvestition minus Förderung — der Betrag, den Sie tatsächlich finanzieren.' },
+    { key: 'sonderumlageProWE',  label: 'Sonderumlage pro Einheit',     fmt: 'euro',   kennzahlTyp: 'kosten',
+      tip: `Netto-Investition ÷ Wohneinheiten — der Anteil je Wohnung (bei ${input.wohneinheiten} Einheiten).` },
     { gruppe: 'Jahreskosten heute' },
     { key: 'jahreskostenJ1',     label: 'Energie + Wartung + CO₂',      fmt: 'euro',   kennzahlTyp: 'kosten' },
     { key: 'co2KostenP_a',       label: 'CO₂-Kosten p.a.',               fmt: 'euro',   kennzahlTyp: 'kosten' },
@@ -323,7 +325,8 @@ function renderWirtschaftlichkeitsTabelle(input, params) {
     { key: 'tcoBarwert',         label: `Gesamtkosten über ${input.zeitraum} Jahre`, fmt: 'euro',   kennzahlTyp: 'kosten',
       tip: 'Gesamt-Annuität × Jahre — die nominale Summe aller Kosten (Investition, Energie, Wartung, CO₂) über die Betrachtungszeit. Kein abgezinster Barwert. Macht Optionen mit unterschiedlichem Investitions- und Betriebskosten-Mix vergleichbar.' },
     { gruppe: 'Belastung' },
-    { key: 'eurProQmMonat',      label: '€/m²/Monat ★',                 fmt: 'euroQm', kennzahlTyp: 'kosten' },
+    { key: 'eurProQmMonat',      label: '€/m²/Monat ★',                 fmt: 'euroQm', kennzahlTyp: 'kosten',
+      tip: 'Gesamt-Annuität ÷ Wohnfläche ÷ 12 — macht Gebäude unterschiedlicher Größe vergleichbar.' },
     { key: 'amortisationVsGas',  label: 'Amortisation vs. Gas',         fmt: 'jahre',  kennzahlTyp: 'kosten',
       tip: 'Nach wie vielen Jahren die Mehr-Investition gegenüber einer Gasheizung durch niedrigere Betriebskosten wieder eingespielt ist.' }
   ];
