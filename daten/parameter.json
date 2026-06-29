@@ -29,8 +29,8 @@
   "anzahl_defined_names": 154,
   "block1_energiepreise": {
     "PreisGas": {
-      "label": "Gas (Effektivpreis netto, Bestandstarif)",
-      "default": 8.57,
+      "label": "Gas (Effektivpreis brutto, Bestandstarif)",
+      "default": 10.2,
       "min": 6.5,
       "max": 25,
       "einheit": "ct/kWh",
@@ -39,7 +39,7 @@
       "steigerung_min": 0,
       "steigerung_max": 0.08,
       "steigerung_quelle": "Q-PFAD-01",
-      "kontext": "Gas (Effektivpreis netto, alle Komponenten)"
+      "kontext": "Gas (Effektivpreis brutto inkl. MwSt., alle Komponenten; brutto-Umrechnung aus 8,57 netto × 1,19)"
     },
     "PreisFW": {
       "label": "Fernwaerme (Erfurt-Effektivpreis brutto)",
@@ -55,7 +55,7 @@
       "kontext": "Fernwärme Effektivpreis BRUTTO auf Gebäudeebene (Arbeits- + Leistungspreis + Betriebskosten + Messgebühren + Umlagen). Q3/2026 ab Juli: 19,3 ct (Q1/Q2: 17,5). Hergeleitet aus Lagebild Fernwärme Erfurt + SWE-Preisblatt Stand 01.07.2026, normiert auf Referenzgebäude 62 kW / 225.864 kWh. Pflege quartalsweise."
     },
     "PreisWP": {
-      "label": "Waermestrom (WP-Sondertarif)",
+      "label": "Waermestrom (WP-Sondertarif, brutto)",
       "default": 25,
       "min": 20,
       "max": 50,
@@ -65,10 +65,10 @@
       "steigerung_min": -0.01,
       "steigerung_max": 0.06,
       "steigerung_quelle": "Q-PFAD-03",
-      "kontext": "Wärmestrom (WP-Sondertarif)"
+      "kontext": "Wärmestrom (WP-Sondertarif, brutto inkl. MwSt.)"
     },
     "PreisOel": {
-      "label": "Heizoel (Bestand)",
+      "label": "Heizoel (Bestand, brutto)",
       "default": 10.5,
       "min": 8,
       "max": 20,
@@ -78,10 +78,10 @@
       "steigerung_min": 0,
       "steigerung_max": 0.08,
       "steigerung_quelle": "Q-PFAD-04",
-      "kontext": "Heizöl (Bestand)"
+      "kontext": "Heizöl (Bestand, brutto inkl. MwSt.)"
     },
     "PreisPellets": {
-      "label": "Pellets (Jahresdurchschnittspreis)",
+      "label": "Pellets (Jahresdurchschnittspreis, brutto)",
       "default": 7,
       "min": 5.5,
       "max": 10,
@@ -91,7 +91,7 @@
       "steigerung_min": 0,
       "steigerung_max": 0.06,
       "steigerung_quelle": "Q-PFAD-05",
-      "kontext": "Pellets (Jahresdurchschnittspreis)"
+      "kontext": "Pellets (Jahresdurchschnittspreis, brutto inkl. MwSt.)"
     }
   },
   "block2_rahmen": {

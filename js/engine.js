@@ -978,12 +978,15 @@ function _testInputMFHDefault(params) {
 // Wartungsquoten heizungs-spezifisch: Gas-BW 2 %, Hybrid 3,5 %,
 // WP 1,5 %, FW 1 %, Pellets 3 %. JSON-Werte werden im nächsten
 // Excel-Patch v2.1 nachgezogen.
+// Stand 29.06.2026: Defaults auf brutto umgestellt (Gas 10,2 / FW 19,3 / WP 25).
+// Folge: im Default-Testfall (908 m²/14 WE) kippt die beste Option von Hybrid auf WP,
+// weil der korrekte Brutto-Gaspreis den Gas-Anteil des Hybrids verteuert (WP-Preis unverändert).
 const VERIFIKATIONS_SOLL = {
-  tco_25j: { gas: 393657, hybrid: 390789, wp: 403565, fw: 778758, pellets: 358121 },
-  eurQm:   { gas: 1.45,   hybrid: 1.43,    wp: 1.48,   fw: 2.86,    pellets: 1.31 },
-  besteOption: 'hybrid',
-  // Override-Test: Bruttoinvest WP 100k → erwartete TCO ~357 T€ (Daniel 05.05.)
-  override_wp_100k: 357000,
+  tco_25j: { gas: 449866, hybrid: 407651, wp: 403565, fw: 845834, pellets: 358121 },
+  eurQm:   { gas: 1.65,   hybrid: 1.50,    wp: 1.48,   fw: 3.11,    pellets: 1.31 },
+  besteOption: 'wp',
+  // Override-Test: Bruttoinvest WP 100k → erwartete TCO ~356 T€ (WP-Preis unverändert)
+  override_wp_100k: 356487,
   toleranzProz: 2  // ± 2 %
 };
 
