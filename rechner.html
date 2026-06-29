@@ -1852,7 +1852,6 @@
 
       <nav class="panel-anchors" aria-label="Sprung-Navigation">
         <a href="#panel-1">Wirtschaftlichkeit</a>
-        <a href="#big-picture-v2">Big Picture</a>
         <a href="#schieberegler">Was-wäre-wenn</a>
         <a href="#excel-edition-sektion">Beratung</a>
       </nav>
@@ -1865,25 +1864,6 @@
 
       <!-- 7. LESE-HILFE-BOX prominent (NICHT klappbar, Spec §5.4 + Memory designsystem §2) -->
       <div class="lese-hilfe-box" id="lese-hilfe-box"></div>
-
-      <!-- Einordnung: optionale Hintergrund-Kästen -->
-      <p class="klapp-eyebrow">Mehr Hintergrund — optional aufklappen</p>
-
-      <!-- 8. SENSIBILISIERUNGS-BLOCK fossile Energie (Kontextblau, Smart-Icon, 11 Punkte) -->
-      <div class="sensibilisierungs-block" id="sensibilisierungs-block"></div>
-
-      <!-- 9. VERMIETER-BILANZ (konditional sichtbar bei Vermietung; Block 1 + 2; Block 3 RAUS in v2.1) -->
-      <details class="conditional" id="vermieter-bilanz" hidden>
-        <summary>Sicht für Eigentümer mit Vermietung</summary>
-        <div class="vb-block" id="vb-block-1"></div>
-        <div class="vb-block" id="vb-block-2"></div>
-      </details>
-
-      <!-- 10. WEG-HINWEISE (konditional sichtbar bei MFH+WEG, open) -->
-      <details class="conditional" id="weg-hinweise" hidden open>
-        <summary>Hinweise für die Eigentümerversammlung</summary>
-        <div id="weg-hinweise-content"></div>
-      </details>
     </section>
     </div>
 
@@ -1982,22 +1962,6 @@
 
     <!-- Erweiterter Modus / Profi-Pills: RAUS in v2.1 (Spec §16) -->
 
-    <!-- 12. BIG PICTURE — Highlight (Spec §10 v2.1, 6 Achsen mit Risiko-Schutz, kein Banner-Kommentar) -->
-    <div class="section-wrap section-wrap--white">
-    <section id="big-picture-v2" class="big-picture-v2">
-      <h2>Big Picture — die ganze Entscheidung im Bild</h2>
-      <div class="chart-container">
-        <canvas id="chart-big-picture-canvas"></canvas>
-      </div>
-      <div class="bigpicture-methodik">
-        Diese sechs Achsen folgen dem Future-Readiness-Ansatz aus dem
-        <a href="/index.html#ansatz">Eco-2050-Institut</a> —
-        eine ganzheitliche Sicht auf Wirtschaftlichkeit, Nachhaltigkeit, Resilienz,
-        Erweiterbarkeit, Zukunftsfähigkeit und Risiko-Schutz.
-      </div>
-    </section>
-    </div>
-
     <!-- Vorgeschmack-Aufklapper: RAUS in v2.1 (Spec §16) -->
 
     <!-- PV-Hinweis-Box entfernt (P2-B3) -->
@@ -2005,14 +1969,6 @@
     <!-- 15. EXCEL-EDITION — 4 Kacheln + 3-Spalten-Tarif (Spec §11) -->
     <div class="section-wrap section-wrap--white">
     <section id="excel-edition-sektion" class="excel-edition-sektion" aria-label="Excel-Edition"></section>
-    </div>
-
-    <!-- 16. WEGWEISER — Scroll-Regal (Spec §12, Memory designsystem §5) -->
-    <div class="section-wrap section-wrap--bg">
-    <section class="wegweiser">
-      <h2>Konkret werden — die nächsten Schritte</h2>
-      <div class="wegweiser-regal" id="wegweiser-regal"></div>
-    </section>
     </div>
 
     <!-- 17. SONDERSITUATIONS-CTA (Spec §13, am Ende, generisch) -->

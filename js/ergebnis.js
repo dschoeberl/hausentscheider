@@ -24,7 +24,6 @@ import {
   berechneSensitivitaet,
   berechneEmpfehlung,
   pelletsPlausibel,
-  wirksamVM,
   fwSatzungAktiv,
   formatEuro,
   formatProzent,
@@ -36,7 +35,6 @@ import {
   // C2 v2.0
   berechneAllDashboardKennzahlen,
   bewerteZelle,
-  berechneBigPictureAchsen,
   berechneErhaltungsruecklageStatus,
   // C2 v2.1
   berechneMieterNebenkostenEffekt,
@@ -124,34 +122,6 @@ const RISIKO_BANNER = {
   }
 };
 
-/* Sensibilisierungs-Block fossile Energie — 11 finale Punkte aus
-   Memory project_hybrid_risiko_modellierung.md.
-   Sichtbar bei jeder Empfehlung, in Kontextblau mit Smart-Icon. */
-const SENSIBILISIERUNGS_PUNKTE = [
-  { titel: 'CO₂-Preis steigt ab 2027 (EU-ETS2)',
-    text: 'heute 55 €/t, bis 2035 realistisch 130–200 €/t' },
-  { titel: 'Gas-Subventionen können entfallen',
-    text: 'Gaspreis-Bremse, reduzierte MwSt., gestreckter CO₂-Preis sind politische Entscheidungen' },
-  { titel: 'Geopolitische Konflikte verursachen Gas-Spikes',
-    text: '2022 kurzzeitig 30 ct/kWh; Pipeline-Sabotage, Hormuz-Beispiel' },
-  { titel: 'Grüngasquote ab 2029 (10 %)',
-    text: 'macht Gas pro kWh teurer' },
-  { titel: 'Stranded-Asset-Risiko Gasnetz',
-    text: 'kommunale Wärmeplanung könnte Gasnetz vor 2040 stilllegen' },
-  { titel: 'Wasserstoff-Umstellung',
-    text: 'bestehende Brenner brauchen Anpassung, Umrüst-Kosten 10–15 T€ pro MFH (DVGW)' },
-  { titel: 'EPBD-Klassen-Anforderungen ab 2028',
-    text: 'schwächste Klassen können Marktwert-Abschlag bringen' },
-  { titel: 'Mietspiegel-Argumentation',
-    text: 'wird mit Energie-Effizienz-Verschlechterung schwieriger' },
-  { titel: 'Klima-Realität',
-    text: 'CO₂-Gehalt der Atmosphäre bei ~422 ppm bereits über planetarer Grenze. 2024 global wärmstes Jahr; Europa erhitzt sich am schnellsten' },
-  { titel: 'Generationen-Verantwortung',
-    text: 'Klimaneutralität 2045 als Voraussetzung für die nächste Generation. Was 2026 eingebaut wird, prägt den Klima-Beitrag des Gebäudes für 18–25 Jahre' },
-  { titel: 'Mieter-Vermieter-Aufteilungs-Trend',
-    text: 'der Vermieter trägt zunehmend Mit-Verantwortung für die Folgekosten seiner Heizungs-Wahl. Beschlossen: CO₂-Aufteilung nach BEHG-Stufenmodell. In Diskussion: Gas-Netzentgelte. Wer in fossile Heizung investiert, kann nicht mehr darauf vertrauen, dass alle Folgekosten Mieter-Sache bleiben.' }
-];
-
 /* --------------------------------------------------------------
    Charts-Registry
    -------------------------------------------------------------- */
@@ -190,66 +160,6 @@ function getParams() {
 
 /* C2 v2.1: renderCashflowKurve + renderTCOVergleich GELÖSCHT
    (waren in Vorgeschmack-Aufklapper, der komplett raus ist — Spec §16). */
-
-/* --------------------------------------------------------------
-   Vermieter-Bilanz (5 Blöcke)
-   -------------------------------------------------------------- */
-
-function renderVermieterBilanz(input, params) {
-  const wrap = $('#vermieter-bilanz');
-  if (!wrap) return;
-
-  // Konditional sichtbar
-  const sichtbar = wirksamVM(input) === 1;
-  console.log('[VB] nutzungsart:', input.nutzungsart, '| wirksamVM:', wirksamVM(input),
-              '| sichtbar:', sichtbar);
-  wrap.hidden = !sichtbar;
-  if (!sichtbar) return;
-
-  // Block 1 — qualitative Vorteile (statisch)
-  const b1 = $('#vb-block-1');
-  if (b1) {
-    b1.innerHTML = `
-      <p class="vb-purpose"><strong>Wozu dieser Kasten:</strong> Nur relevant, wenn Sie vermieten — was Ihnen eine Heizungs-Modernisierung als Eigentümer konkret bringt.</p>
-      <h4>Was Sie als Vermieter durch eine Heizungs-Modernisierung gewinnen</h4>
-      <ol class="vb-vorteile">
-        <li>Mietspiegel-Klassen-Sprung (~ 0,30 €/m²·Monat) durch energetische Modernisierung</li>
-        <li>Modernisierungs-Umlage nach §559 BGB (8 % p.a. der Investition, max. 12 Jahre)</li>
-        <li>Wegfall des Risikos durch CO₂-Preis-Verschiebung (CO₂-Verschiebung 2027 ff.)</li>
-        <li>Marktwert-Steigerung durch energetische Klasse (DC → DB ca. 8–14 %)</li>
-        <li>Schutz vor EPBD-Abschlag (~ 7 % Marktwert-Reduktion bei nicht-konformen Gebäuden ab 2028)</li>
-        <li>KfW-Zinszuschuss zusätzlich zur BAFA-Förderung (ca. 20 % auf Restkredit)</li>
-        <li>§7b Sonder-AfA für 4 Jahre (5 %/J) — verbesserte steuerliche Abschreibung</li>
-        <li>Vermarktungs-Vorteil bei Neuvermietung (Energiekosten-Argument)</li>
-        <li>Risikominderung durch Reduktion der Sanierungs-Schuld vor Übergabe an Erben</li>
-      </ol>
-    `;
-  }
-
-  // Block 2 (Jahres-Cashflow Vermieter) — RAUS (P2-B3): zu komplex für die Hauptansicht.
-  const b2 = $('#vb-block-2');
-  if (b2) { b2.innerHTML = ''; b2.hidden = true; }
-
-  // Block 3 (Vermögensbilanz) — RAUS in v2.1 (Spec §6 / §16, in Excel verschoben)
-  // Container falls noch im DOM: leeren und ausblenden.
-  const b3 = $('#vb-block-3');
-  if (b3) { b3.innerHTML = ''; b3.hidden = true; }
-  // Block 4 + 5 schon in v2.0 raus — falls noch im DOM, ausblenden.
-  const b4 = $('#vb-block-4');
-  if (b4) { b4.innerHTML = ''; b4.hidden = true; }
-  const b5 = $('#vb-block-5');
-  if (b5) { b5.innerHTML = ''; b5.hidden = true; }
-}
-
-/* --------------------------------------------------------------
-   WEG-Hinweise (3 Stub-Inhalte)
-   -------------------------------------------------------------- */
-
-function renderWEGHinweise(input) {
-  // P2-B3: WEG-Hinweise aus der Ergebnis-Ansicht entfernt — Container ausblenden.
-  const wrap = $('#weg-hinweise');
-  if (wrap) { wrap.hidden = true; }
-}
 
 /* --------------------------------------------------------------
    Empfehlungs-Banner + Headline-Antwort
@@ -592,155 +502,6 @@ function renderLeseHilfeBox(input, params) {
 }
 
 /* --------------------------------------------------------------
-   renderSensibilisierungsBlock (Spec §7, 11 Punkte)
-   Kontextblau-Hintergrund, Smart-Icon im Titel, sachliche Tonalität.
-   -------------------------------------------------------------- */
-
-function renderSensibilisierungsBlock() {
-  const wrap = $('#sensibilisierungs-block');
-  if (!wrap) return;
-
-  const punkteHtml = SENSIBILISIERUNGS_PUNKTE.map((p, i) => `
-    <li><strong>${escapeHtml(p.titel)}</strong> — ${escapeHtml(p.text)}</li>
-  `).join('');
-
-  wrap.innerHTML = `
-    <details class="conditional">
-      <summary>Bedenke bei der Bewertung dieser Zahlen</summary>
-      <div class="vb-block">
-        <p class="vb-purpose"><strong>Wozu dieser Kasten:</strong> Die Berechnung beruht auf heutigen Marktpreisen.
-          Diese Faktoren können sich über die Betrachtungszeit verschieben — behalte sie bei der Interpretation im Blick.</p>
-        <ol class="vb-vorteile">
-          ${punkteHtml}
-        </ol>
-        <p class="vb-closer">Einige davon können Sie im <a href="#schieberegler">„Was-wäre-wenn"</a>-Bereich oben selbst durchspielen.</p>
-      </div>
-    </details>
-  `;
-}
-
-/* --------------------------------------------------------------
-   renderBigPicture (Spec §9)
-   Chart.js Radar, 6 Achsen, ein Dataset pro Heizoption.
-   Risiko-Achse wird beim Render invertiert (100 - risiko-roh).
-   Pellets-Linie ausblenden bei !plausibel.
-   -------------------------------------------------------------- */
-
-const BIG_PICTURE_ACHSEN_LABELS = [
-  'Wirtschaftlichkeit',
-  'Nachhaltigkeit',
-  'Resilienz',
-  'Erweiterbarkeit',
-  'Zukunftsfähigkeit',
-  'Risiko-Schutz'   // C2 v2.1: war "Risiko (invers)" — jetzt konsistent „hoch = gut"
-];
-
-const BIG_PICTURE_ACHSEN_TOOLTIPS = [
-  'Berücksichtigt Investition, Förderung, Energie, Wartung, CO₂ über Ihren Zeitraum. Hoch = wirtschaftlich.',
-  'Niedrige CO₂-Emissionen pro Jahr. Bezug zu planetaren Grenzen — 422 ppm CO₂ in der Atmosphäre, Klimaneutralität 2045.',
-  'Robustheit gegen Marktschocks und Versorgungsstörungen. Wie unabhängig sind Sie von Gas-Netz, Strom-Netz, Versorger-Monopol?',
-  'Integrierbarkeit von PV, Batterie, Solarthermie, Wallbox. Können Sie Ihr System schrittweise erweitern?',
-  'Politische Konformität (EPBD, GMG, kommunale Wärmeplanung). Wie gut passt Ihre Lösung zu kommenden gesetzlichen Anforderungen?',
-  'Wie gut sind Sie gegen Stranded-Asset, regulatorische Sprünge, Kostenexplosion abgesichert? Hoch = geschützt.'
-];
-
-function renderBigPicture(input, params) {
-  const canvas = $('#chart-big-picture-canvas');
-  if (!canvas || typeof Chart === 'undefined') return;
-
-  const achsen = berechneBigPictureAchsen(input, params);
-  const pelletsOK = pelletsPlausibel(input, params);
-  const optionen = pelletsOK
-    ? ['gas', 'hybrid', 'wp', 'fw', 'pellets']
-    : ['gas', 'hybrid', 'wp', 'fw'];
-
-  const datasets = optionen.map(opt => {
-    const a = achsen[opt];
-    return {
-      label: OPTION_LABELS[opt],
-      data: [
-        a.wirtschaftlichkeit,
-        a.nachhaltigkeit,
-        a.resilienz,
-        a.erweiterbarkeit,
-        a.zukunftsfaehigkeit,
-        100 - a.risikoRoh   // C2 v2.1 Risiko-Schutz: hoch = geschützt = gut (konsistent zu allen Achsen)
-      ],
-      borderColor: CHART_FARBEN[opt],
-      backgroundColor: CHART_FARBEN[opt] + '33',
-      borderWidth: 2,
-      pointRadius: 3,
-      fill: true
-    };
-  });
-
-  const config = {
-    type: 'radar',
-    data: { labels: BIG_PICTURE_ACHSEN_LABELS, datasets },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      animation: false,
-      plugins: {
-        title: { display: true, text: 'Big Picture — sechs Achsen, fünf Optionen' },
-        legend: { position: 'bottom' },
-        tooltip: {
-          callbacks: { label: ctx => `${ctx.dataset.label}: ${Math.round(ctx.parsed.r)}` }
-        }
-      },
-      scales: {
-        r: {
-          min: 0, max: 100,
-          ticks: { display: false, stepSize: 20 },
-          pointLabels: { font: { size: 11 } }
-        }
-      }
-    }
-  };
-
-  if (charts.has('bigpicture')) {
-    const c = charts.get('bigpicture');
-    c.data.labels = BIG_PICTURE_ACHSEN_LABELS;
-    c.data.datasets = datasets;
-    c.update('none');
-  } else {
-    charts.set('bigpicture', new Chart(canvas.getContext('2d'), config));
-  }
-
-  // P2-B3d: Achsen permanent erklären + kurze, mitrechnende Ergebnis-Zusammenfassung
-  let legende = $('#bigpicture-achsen-legende');
-  if (!legende) {
-    legende = document.createElement('div');
-    legende.id = 'bigpicture-achsen-legende';
-    legende.className = 'bigpicture-achsen-legende';
-    canvas.parentElement.parentElement.insertBefore(legende, canvas.parentElement.nextSibling);
-  }
-  // Zusammenfassung: beste Option + ihre zwei stärksten Achsen (aus vorhandenen Werten)
-  const empfBP = berechneEmpfehlung(input, params);
-  const besteBP = empfBP.beste;
-  const aB = achsen[besteBP] || {};
-  const achsWerte = [
-    ['Wirtschaftlichkeit', aB.wirtschaftlichkeit],
-    ['Nachhaltigkeit',     aB.nachhaltigkeit],
-    ['Resilienz',          aB.resilienz],
-    ['Erweiterbarkeit',    aB.erweiterbarkeit],
-    ['Zukunftsfähigkeit',  aB.zukunftsfaehigkeit],
-    ['Risiko-Schutz',      100 - (aB.risikoRoh || 0)]
-  ];
-  const top = achsWerte.slice().sort((x, y) => (y[1] || 0) - (x[1] || 0)).slice(0, 2).map(x => x[0]);
-  legende.innerHTML =
-    `<p class="bp-summary">Im Bild: <strong>${escapeHtml(OPTION_LABELS[besteBP])}</strong> liegt besonders bei `
-      + `<strong>${escapeHtml(top[0])}</strong> und <strong>${escapeHtml(top[1])}</strong> vorn. `
-      + `Je weiter außen, desto zukunftsfähiger über die sechs Dimensionen.</p>`
-    + `<p class="bp-achsen-titel">Was die sechs Achsen messen</p>`
-    + `<ul class="bp-achsen-liste">`
-    + BIG_PICTURE_ACHSEN_LABELS.map((label, i) =>
-        `<li><strong>${escapeHtml(label)}:</strong> ${escapeHtml(BIG_PICTURE_ACHSEN_TOOLTIPS[i])}</li>`
-      ).join('')
-    + `</ul>`;
-}
-
-/* --------------------------------------------------------------
    C2 v2.1 — renderZukunftsszenarioFeld (Spec §9.3)
    Spalte C im Was-wäre-wenn — 5 Aussagen Vorher/Nachher.
    Im Default-Zustand (keine Schieberegler bewegt) ist Vorher=Nachher,
@@ -882,49 +643,6 @@ function renderExcelEditionSektion() {
 }
 
 /* --------------------------------------------------------------
-   renderWegweiserScrollRegal (Spec §12, Memory designsystem §5)
-   Horizontales Scroll-Regal mit 5 Karten.
-   -------------------------------------------------------------- */
-
-const WEGWEISER_KARTEN = [
-  { titel: 'BAFA',
-    sub:    'Förderung beantragen',
-    text:   'Holen Sie sich, was Ihnen zusteht. Antrag direkt im Portal.',
-    url:    'https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/effiziente_gebaeude_node.html' },
-  { titel: 'KfW',
-    sub:    'Kredit prüfen',
-    text:   'Zinsgünstige Kredite und Tilgungszuschuss zur BAFA dazu.',
-    url:    'https://www.kfw.de' },
-  { titel: 'Solarrechner',
-    sub:    'Thüringen',
-    text:   'Wie viel Strom Ihr Dach realistisch erzeugen könnte.',
-    url:    'https://www.solarrechner-thueringen.de/#s=startscreen' },
-  { titel: 'Verbraucher-Zentrale',
-    sub:    'Beratung',
-    text:   'Kostenlos und unabhängig — eine zweite Meinung.',
-    url:    'https://www.verbraucherzentrale-energieberatung.de/' },
-  { titel: 'SWE Erfurt',
-    sub:    'Stadtwerke',
-    text:   'Lokaler Versorger für Strom, Gas, Fernwärme.',
-    url:    'https://www.stadtwerke-erfurt.de/' }
-];
-
-function renderWegweiserScrollRegal() {
-  const wrap = $('#wegweiser-regal');
-  if (!wrap) return;
-  if (wrap.dataset.gerendert === 'true') return;
-
-  wrap.innerHTML = WEGWEISER_KARTEN.map(k => `
-    <a class="wegweiser-karte" href="${escapeHtml(k.url)}" target="_blank" rel="noopener">
-      <h4>${escapeHtml(k.titel)}</h4>
-      <p class="wegweiser-karte__sub">${escapeHtml(k.sub)}</p>
-      <p class="wegweiser-karte__text">${escapeHtml(k.text)}</p>
-    </a>
-  `).join('');
-  wrap.dataset.gerendert = 'true';
-}
-
-/* --------------------------------------------------------------
    renderSondersituationsCTA (Spec §13)
    Generischer CTA am Ende der Seite, ein Button "Meine Analyse senden".
    -------------------------------------------------------------- */
@@ -991,13 +709,8 @@ function aktualisiereAllePanels() {
     renderRisikoBanner(input, params);
     renderWirtschaftlichkeitsTabelle(input, params);
     renderLeseHilfeBox(input, params);
-    renderSensibilisierungsBlock();
-    renderVermieterBilanz(input, params);
-    renderWEGHinweise(input);
     renderZukunftsszenarioFeld(input, params);
-    renderBigPicture(input, params);
     renderExcelEditionSektion();
-    renderWegweiserScrollRegal();
     renderSondersituationsCTA();
     renderTooltipFromGlossar();
     // ENTFERNT in v2.1: renderHeadlineKPIs, renderEmpfehlungsBanner-unter-BigPicture,
