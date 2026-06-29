@@ -603,6 +603,51 @@ function renderZukunftsszenarioFeld(input, params) {
 }
 
 /* --------------------------------------------------------------
+   Botschaftskasten — Analyse-Nachricht (Endpunkt)
+   Reine Daten-Funktion: liefert { subject, body } aus dem aktuellen
+   State. Heute per mailto verschickt; für einen späteren Wechsel auf
+   ein Formular-Backend reicht es, body an den Endpunkt zu POSTen.
+   -------------------------------------------------------------- */
+
+function baueAnalyseNachricht(input, params) {
+  const empf    = berechneEmpfehlung(input, params);
+  const tcoAlle = berechneTCOAlleOptionen(input, params);
+  const beste   = empf.beste;
+  const eqm     = berechneEurProQmMonat(tcoAlle[beste].tco, input.wohnflaeche, input.zeitraum);
+  const fq      = berechneFoerderQuote(input, params).quote;
+  const typ     = input.gebaeudetyp === 'EFH' ? 'Einfamilienhaus' : 'Mehrfamilienhaus';
+  const nf      = n => (n == null ? '—' : Number(n).toLocaleString('de-DE'));
+  const preis   = (k, name) => {
+    const v = (input.preis && input.preis[k] != null)
+      ? input.preis[k]
+      : (params.block1_energiepreise && params.block1_energiepreise[name]
+          ? params.block1_energiepreise[name].default : null);
+    return v == null ? '—' : Number(v).toLocaleString('de-DE');
+  };
+
+  const subject = 'Meine Entscheider-Analyse von hausentscheider.de';
+  const body =
+`Hallo,
+
+hier meine Analyse aus dem Entscheider auf hausentscheider.de.
+
+Annahmen:
+- Gebäude: ${typ}, ${nf(input.wohnflaeche)} m², ${nf(input.wohneinheiten)} Wohneinheiten
+- Jahresverbrauch: ${nf(input.verbrauch)} kWh, Sanierungsstand: ${input.sanierung}
+- Betrachtungszeitraum: ${input.zeitraum} Jahre, Förderquote: ${Math.round(fq * 100)} %
+- Energiepreise: Gas ${preis('gas', 'PreisGas')} ct, Fernwärme ${preis('fw', 'PreisFW')} ct, WP-Strom ${preis('wp', 'PreisWP')} ct/kWh
+
+Wirtschaftlichstes Ergebnis: ${OPTION_LABELS[beste]} — ${eqm.toFixed(2).replace('.', ',')} €/m²·Monat
+
+Mein Anliegen:
+
+
+— gesendet über hausentscheider.de/rechner`;
+
+  return { subject, body };
+}
+
+/* --------------------------------------------------------------
    renderExcelEditionSektion (Spec §11)
    4 Referenzbild-Kacheln + 3-Spalten-Tarif-Vergleich.
    Statisch — Inhalte ändern sich nicht durch State.
@@ -639,8 +684,12 @@ function renderExcelEditionSektion() {
   const btn = $('#cta-beratung-senden');
   if (btn) {
     btn.addEventListener('click', () => {
-      const orig = $('#cta-dialog-mail');
-      if (orig) orig.click();
+      const inp = getInput();
+      const par = getParams();
+      if (!inp || !par) return;
+      const { subject, body } = baueAnalyseNachricht(inp, par);
+      window.location.href = 'mailto:dialog@hausentscheider.de?subject='
+        + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
     });
   }
   wrap.dataset.gerendert = 'true';
