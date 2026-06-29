@@ -42,8 +42,8 @@
       "kontext": "Gas (Effektivpreis netto, alle Komponenten)"
     },
     "PreisFW": {
-      "label": "Fernwaerme (Erfurt-Effektivpreis netto)",
-      "default": 17.5,
+      "label": "Fernwaerme (Erfurt-Effektivpreis brutto)",
+      "default": 19.3,
       "min": 10,
       "max": 25,
       "einheit": "ct/kWh",
@@ -52,7 +52,7 @@
       "steigerung_min": 0,
       "steigerung_max": 0.08,
       "steigerung_quelle": "Q-PFAD-02",
-      "kontext": "Fernwärme (Effektivpreis netto inkl. Leistungspreis)"
+      "kontext": "Fernwärme Effektivpreis BRUTTO auf Gebäudeebene (Arbeits- + Leistungspreis + Betriebskosten + Messgebühren + Umlagen). Q3/2026 ab Juli: 19,3 ct (Q1/Q2: 17,5). Hergeleitet aus Lagebild Fernwärme Erfurt + SWE-Preisblatt Stand 01.07.2026, normiert auf Referenzgebäude 62 kW / 225.864 kWh. Pflege quartalsweise."
     },
     "PreisWP": {
       "label": "Waermestrom (WP-Sondertarif)",
