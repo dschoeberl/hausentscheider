@@ -977,14 +977,16 @@
   <section class="energiepreise" id="energiepreise" aria-label="Aktuelle Energiepreise">
     <style>
       .energiepreise { background: var(--bg-light); padding: 3.5rem 0 3rem; border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); }
-      .energiepreise__titel { font-size: 26px; margin-bottom: 0.625rem; }
+      .energiepreise__titel { font-size: 26px; margin-bottom: 0.875rem; }
+      .energiepreise__titel::after { content: ''; display: block; width: 48px; height: 2px; background: var(--petrol); margin-top: 0.625rem; border-radius: 1px; }
       .energiepreise__intro { font-size: 14px; color: var(--text-secondary); max-width: 560px; line-height: 1.7; margin-bottom: 1.25rem; }
       .ep-schiene { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; font-size: 13px; color: var(--text-primary); font-weight: 500; margin-bottom: 1rem; }
       .ep-livedot { width: 7px; height: 7px; border-radius: 50%; background: var(--petrol-light); flex-shrink: 0; animation: ep-blink 2s ease-in-out infinite; }
       @keyframes ep-blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
       .ep-sep { color: var(--border); }
-      .ep-tafeln { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.625rem; margin-bottom: 1.25rem; }
-      .ep-tafel { background: var(--petrol-dark); border-radius: 6px; padding: 0.875rem 1rem 0.75rem; }
+      .ep-tafeln { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.75rem; margin-bottom: 1.25rem; }
+      .ep-tafel { background: var(--petrol-dark); border-radius: 6px; padding: 0.875rem 1rem 0.75rem; transition: transform .15s ease, box-shadow .15s ease; }
+      .ep-tafel:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26,53,53,0.22); }
       .ep-tafel__lbl { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--signal); margin-bottom: 0.4rem; font-weight: 600; }
       .ep-tafel__preis-row { display: flex; align-items: baseline; gap: 5px; margin-bottom: 6px; }
       .ep-tafel__preis { font-family: 'Inter', sans-serif; font-size: 30px; font-weight: 600; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
@@ -1003,24 +1005,25 @@
       .ep-verlauf tbody td:first-child { color: var(--text-primary); font-weight: 500; }
       .ep-verlauf tr.is-current td { background: rgba(207,247,127,0.18); color: var(--text-primary); font-weight: 600; }
       .ep-einheit { font-size: 11px; color: var(--text-secondary); margin-bottom: 1rem; }
-      .ep-doclink a { font-size: 13px; color: var(--petrol-dark); font-weight: 500; }
-      .ep-doclink a:hover { text-decoration: underline; }
+      .ep-doclink { margin-top: 0.25rem; }
+      .ep-cta { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--tommy-rot); color: #fff; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; padding: 0.6rem 1.15rem; border-radius: 999px; transition: background .15s ease, transform .15s ease, box-shadow .15s ease; }
+      .ep-cta:hover { background: #b3192c; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(216,30,52,0.28); text-decoration: none; }
       @media (max-width: 768px) { .ep-tafeln { grid-template-columns: 1fr 1fr; } .energiepreise__titel { font-size: 22px; } }
     </style>
     <div class="container">
       <span class="label" style="margin-bottom:0.5rem;display:block;">Aktuelle Energiepreise</span>
       <h2 class="energiepreise__titel">Wo stehen die Energiepreise gerade?</h2>
-      <p class="energiepreise__intro">Durchschnittliche Verbraucherpreise je Energieträger — vergleichbar gemacht in der gemeinsamen Größe ct/kWh. Fernwärme als Erfurter Effektivpreis. Monatlich aktualisiert.</p>
+      <p class="energiepreise__intro">Energiepreise schwanken — und welche Heizung sich langfristig rechnet, hängt genau davon ab. Hier die aktuellen Verbraucher-Durchschnittspreise je Energieträger, vergleichbar gemacht in der gemeinsamen Größe ct/kWh (Fernwärme als Erfurter Effektivpreis). Monatlich aktualisiert.</p>
       <div class="ep-schiene">
         <span class="ep-livedot" aria-hidden="true"></span>
         <span>Preisstand</span><span class="ep-sep">·</span>
-        <span id="ep-stand">Mai 2026</span><span class="ep-sep">·</span>
+        <span id="ep-stand">Juni 2026</span><span class="ep-sep">·</span>
         <span>wird monatlich aktualisiert</span>
       </div>
       <div class="ep-tafeln" id="ep-tafeln"></div>
       <div class="ep-verlauf"><table id="ep-verlauf-tbl"></table></div>
       <p class="ep-einheit">Alle Werte in ct/kWh brutto. Fernwärme = Erfurter Effektivpreis auf Gebäudeebene (tarifbasiert, nicht monatsvolatil).</p>
-      <p class="ep-doclink"><a href="preishistorie.html">Vollständige Preishistorie mit Marktkontext →</a></p>
+      <p class="ep-doclink"><a class="ep-cta" href="preishistorie.html">Vollständige Preishistorie mit Marktkontext →</a></p>
     </div>
   </section>
   <script>
