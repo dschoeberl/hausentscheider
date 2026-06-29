@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "stand": "2026-06-21",
-  "aktueller_monat": "2026-06",
+  "stand": "2026-07-01",
+  "aktueller_monat": "2026-07",
   "spalten_einheit": {
     "gas": "ct/kWh brutto Verbraucher-Durchschnitt",
     "fernwaerme": "ct/kWh Erfurt-Effektivpreis (tarifbasiert, nicht monatsvolatil)",
@@ -10,9 +10,21 @@
     "pellets": "ct/kWh brutto Verbraucher-Durchschnitt"
   },
   "monate": {
+    "2026-07": {
+      "label": "Juli 2026",
+      "aktuell": true,
+      "vorlaeufig_andere_traeger": true,
+      "gas": 10.5,
+      "fernwaerme": 19.3,
+      "heizoel": 11.5,
+      "wp_strom": 25,
+      "pellets": 7.6,
+      "einheit": "ct/kWh",
+      "kontext": "Fernwärme steigt zum 3. Quartal: SWE-Arbeitspreis +17 % (11,54 → 13,77 ct/kWh brutto), Effektivpreis auf Gebäudeebene ~17,5 → ~19,3 ct/kWh (SWE-Preisblatt, Stand 1.7.2026). Gas, Heizöl, WP-Strom und Pellets vorläufig aus Juni übernommen — die Juli-Marktwerte folgen."
+    },
     "2026-06": {
       "label": "Juni 2026",
-      "aktuell": true,
+      "aktuell": false,
       "gas": 10.5,
       "fernwaerme": 17.5,
       "heizoel": 11.5,

@@ -1017,12 +1017,12 @@
       <div class="ep-schiene">
         <span class="ep-livedot" aria-hidden="true"></span>
         <span>Preisstand</span><span class="ep-sep">·</span>
-        <span id="ep-stand">Juni 2026</span><span class="ep-sep">·</span>
+        <span id="ep-stand">Juli 2026</span><span class="ep-sep">·</span>
         <span>wird monatlich aktualisiert</span>
       </div>
       <div class="ep-tafeln" id="ep-tafeln"></div>
       <div class="ep-verlauf"><table id="ep-verlauf-tbl"></table></div>
-      <p class="ep-einheit">Alle Werte in ct/kWh brutto. Fernwärme = Erfurter Effektivpreis auf Gebäudeebene (tarifbasiert, nicht monatsvolatil).</p>
+      <p class="ep-einheit">Alle Werte in ct/kWh brutto. Fernwärme = Erfurter Effektivpreis auf Gebäudeebene (tarifbasiert, nicht monatsvolatil) — zum 3. Quartal (ab Juli) bestätigt auf ~19,3 ct (SWE-Preisblatt 1.7.2026). Gas/Heizöl/WP-Strom/Pellets für Juli noch vorläufig (Juni-Stand), Juli-Marktwerte folgen.</p>
       <p class="ep-doclink"><a class="ep-cta" href="preishistorie.html">Vollständige Preishistorie mit Marktkontext →</a></p>
     </div>
   </section>
@@ -1031,8 +1031,9 @@
     // Beim Monats-Update: neuesten Monat oben in PH.monate einfügen + PH.aktuell setzen.
     (function(){
       var PH = {
-        aktuell: '2026-06',
+        aktuell: '2026-07',
         monate: [
+          { key:'2026-07', label:'Juli 2026',    gas:10.5, fernwaerme:19.3, heizoel:11.5, wp_strom:25, pellets:7.6 },
           { key:'2026-06', label:'Juni 2026',    gas:10.5, fernwaerme:17.5, heizoel:11.5, wp_strom:25, pellets:7.6 },
           { key:'2026-05', label:'Mai 2026',     gas:10.5, fernwaerme:17.5, heizoel:13.5, wp_strom:26, pellets:7.5 },
           { key:'2026-04', label:'April 2026',   gas:10.5, fernwaerme:17.5, heizoel:15.3, wp_strom:27, pellets:7.5 },
