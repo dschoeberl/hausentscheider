@@ -1112,7 +1112,9 @@ function buildInput(uiState, params) {
     gebaeudetyp: uiState.gebaeudetyp,
     eigentuemerTyp: uiState.eigentuemerTyp,
     wohnflaeche: uiState.wohnflaeche,
-    we: def.WE || (uiState.gebaeudetyp === 'MFH' ? 14 : 1),
+    // WE aus User-Eingabe (Spec-Befund 2): vorher fix def.WE → Sonderumlage/Rücklage
+    // rechneten immer mit 14 statt der eingegebenen Wohneinheiten.
+    we: uiState.wohneinheiten ?? def.WE ?? (uiState.gebaeudetyp === 'MFH' ? 14 : 1),
     heizung: uiState.heizung,
     baujahr: uiState.baujahr,
     verbrauch: uiState.verbrauchUnknown
