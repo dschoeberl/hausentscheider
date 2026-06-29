@@ -349,6 +349,7 @@
       <span class="label" style="margin-bottom:0.6rem;">Der Weg des Plans</span>
       <h2 style="margin-bottom:0.6rem;">Etappe für Etappe — von der Analyse zur Endfassung</h2>
       <p class="kwp-tl__abgrenzung">Die Startseite verfolgt den <em>Diskurs</em> — was über die Wärmewende berichtet wird. Hier verfolgen wir den <em>Plan</em> selbst: was die Stadt tut. Die Phase ab dem 30. Juni läuft offen weiter; die Bewertung wird dann fortgeschrieben.</p>
+      <p id="kwp-tl-updated" style="font-size:11.5px;color:var(--text-tertiary);font-family:'Inter',sans-serif;margin:0 0 1.25rem;"></p>
       <div id="kwp-timeline"><p style="color:var(--text-tertiary);font-size:13px;">Zeitstrahl wird geladen …</p></div>
     </div>
   </section>
@@ -530,6 +531,19 @@
         var entries = (data.eintraege || []).slice().sort(function(a,b){ return parse(a.datum) - parse(b.datum); });
         if (!entries.length){ el.innerHTML = ''; return; }
         var hISO = heuteISO();
+
+        // „Letzte erfasste Etappe“ — aus der jüngsten NICHT-offenen Etappe abgeleitet
+        // (nicht aus heute und nicht aus angekündigten Zukunfts-Einträgen). Pflegt sich
+        // von allein, sobald eine reale Etappe ergänzt oder eine offene eingetreten ist.
+        var erfasst = entries.filter(function(e){ return !e.offen; });
+        var offene  = entries.filter(function(e){ return e.offen; });
+        var lu = erfasst.length ? erfasst[erfasst.length - 1] : entries[entries.length - 1];
+        var luEl = document.getElementById('kwp-tl-updated');
+        if (luEl && lu){
+          var txt = 'Letzte erfasste Etappe: <b style="color:var(--petrol);font-weight:600;">' + esc(lu.datumLabel) + '</b>';
+          if (offene.length) txt += ' — Folgeetappen ab ' + esc(offene[0].datumLabel) + ' sind angekündigt.';
+          luEl.innerHTML = txt;
+        }
         var firstFutureISO = null;
         entries.forEach(function(e){ if(!firstFutureISO && parse(e.datum) > parse(hISO)) firstFutureISO = e.datum; });
 
