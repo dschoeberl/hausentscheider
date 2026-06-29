@@ -1943,8 +1943,11 @@
           '<p class="oz-radar__framing">' + FR.framing + '</p>' +
           svg +
           '<p class="oz-radar__readout" id="oz-radar-readout">Tippen Sie ein Feld für den Kurzbefund. Außenring = zukunftsfähig (5), gefüllte Fläche = heute.</p>' +
-          legend +
-          '<p class="oz-radar__doclink"><a href="dokumente/future-readiness-referenzgebaeude-erfurt.pdf" target="_blank" rel="noopener">Vollständige Analyse lesen (PDF) →</a></p>';
+          legend;
+        // "Vollständige Analyse"-Link vorerst entfernt (29.06.2026): Die öffentliche
+        // Gebäude-Future-Readiness-Fassung (v2.4, Stand 22.06.) rechnet Fernwärme noch mit
+        // 17,5 ct / 444k nominal — die Karte führt jetzt 19,3 ct (Q3) mit Steigerung als
+        // Leitwert. Link wird wieder gesetzt, sobald ein deckungsgleiches v2.5-PDF vorliegt.
 
         const readout = document.getElementById("oz-radar-readout");
         function selectField(nr){
