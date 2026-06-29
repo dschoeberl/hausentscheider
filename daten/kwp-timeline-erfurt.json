@@ -114,6 +114,16 @@
       "link": ""
     },
     {
+      "datum": "2026-07-01",
+      "datumLabel": "1. Juli 2026",
+      "titel": "Fernwärme-Arbeitspreis steigt (SWE, Q3 2026)",
+      "art": "beitrag",
+      "zusammenfassung": "Das SWE-Preisblatt Wärme weist zum 3. Quartal einen Arbeitspreis von 13,77 ct/kWh brutto aus (Vorquartal 11,54) — ein Anstieg von rund 17 %. Der Effektivpreis auf Gebäudeebene steigt damit von rund 17,5 auf ~19,3 ct/kWh brutto.",
+      "kommentar": "Die Fernwärme ist das Rückgrat des Wärmeplans — ein Preissprung dieser Größe in einem einzigen Quartal unterstreicht das im Plan selbst benannte Preisrisiko. Für anschlusszwang-gebundene Gebäude ist dieser Pfad real spürbar, nicht abstrakt.",
+      "offen": true,
+      "link": ""
+    },
+    {
       "datum": "2027-01-01",
       "datumLabel": "ab 2027",
       "titel": "M16-Plattform im Vollbetrieb (angekündigt)",
