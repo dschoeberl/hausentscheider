@@ -69,5 +69,19 @@
     "fw_lp_hint": "Aus SWE-Angebot · 62 kW",
     "fw_fix_hint": "Messpreis + Zähler",
     "amort_basis_gas_ct": 10.0
+  },
+  "wirtschaft": {
+    "_pflege": "Single source für den Wirtschaftsvergleich der Startseiten-Referenzkarte (index.html, const WIRTSCHAFT — dorthin gespiegelt). Preis ändern = hier + dort. Fernwärme QUARTALSWEISE (SWE-Preisblatt, vgl. parameter.json PreisFW).",
+    "verbrauch_kwh": 95000,
+    "bezugsflaeche_m2": 769.83,
+    "we": 14,
+    "zeitraum_j": 25,
+    "jaz": 3.8,
+    "stand": "Q3 2026",
+    "preise_ct_brutto": { "gas": 10.2, "fernwaerme": 19.3, "wp_strom": 25 },
+    "steigerung_pa": { "gas": 0.03, "fernwaerme": 0.04, "wp_strom": 0.025 },
+    "invest_eur": { "fernwaerme": 13650, "wp": 132000 },
+    "wp_foerderung_anteil": 0.58,
+    "ist_eur_m2_monat_2025": 1.30
   }
 }

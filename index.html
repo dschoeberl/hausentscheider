@@ -1166,12 +1166,7 @@
         <p class="oz-cockpit__head">Die zwei zulässigen Optionen</p>
         <p class="oz-vergleich__sub">Belegte Werte aus der Entscheidungsgrundlage — neutral, ohne Empfehlung.</p>
 
-        <div class="oz-vgl-row">
-          <span class="oz-vgl-row__lbl">Gesamtkosten über 25 Jahre</span>
-          <div class="oz-vgl-line oz-vgl-line--mark"><span class="oz-vgl-line__opt">Fernwärme</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:100%"></div><span class="oz-vgl-mark" style="left:22%"><span class="oz-vgl-mark__lbl">Break-even WP · ~J. 5–6</span></span></div><span class="oz-vgl-line__val">444.000 €</span></div>
-          <div class="oz-vgl-line"><span class="oz-vgl-line__opt">Wärmepumpe</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:57%"></div></div><span class="oz-vgl-line__val">255.000 €</span></div>
-          <p class="oz-vgl-note">Bis dahin hat sich die höhere WP-Investition zurückgezahlt — danach spart sie über die Laufzeit rund 190.000 €.</p>
-        </div>
+        <div class="oz-vgl-row" id="oz-vgl-gesamt"></div>
 
         <div class="oz-vgl-row">
           <span class="oz-vgl-row__lbl">CO₂ · kg pro m²·Jahr</span>
@@ -1181,12 +1176,7 @@
           <p class="oz-vgl-note">Überraschend, aber belegt: Erfurter Fernwärme liegt über dem heutigen Gas — das Netz ist ~95 % gasbasiert.</p>
         </div>
 
-        <div class="oz-vgl-row">
-          <span class="oz-vgl-row__lbl">Jahreskosten 2026</span>
-          <div class="oz-vgl-line"><span class="oz-vgl-line__opt">Fernwärme</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:100%"></div></div><span class="oz-vgl-line__val">16.500 €</span></div>
-          <div class="oz-vgl-line"><span class="oz-vgl-line__opt">Wärmepumpe</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:37%"></div></div><span class="oz-vgl-line__val">5.800–6.500 €</span></div>
-          <p class="oz-vgl-note">Basis: ~94.932 kWh Wärmebedarf/Jahr · effektiver Arbeitspreis Gas 10,2 / Fernwärme 16,9 ct/kWh — die Wärmepumpe braucht dafür nur ~⅓ Strom (Umweltwärme).</p>
-        </div>
+        <div class="oz-vgl-row" id="oz-vgl-jahres"></div>
 
         <div class="oz-vgl-status">
           <span class="oz-vgl-status__lbl"></span><span class="oz-vgl-status__h">Fernwärme</span><span class="oz-vgl-status__h">Wärmepumpe</span>
@@ -1839,26 +1829,78 @@
       const tlEl     = document.getElementById("oz-timeline");
       if (!anchorEl || !tlEl) return;
 
+      // === Wirtschaftsvergleich Referenzgebäude — SINGLE SOURCE ===
+      // Gespiegelt in daten/theaterstrasse-4.json ("wirtschaft"). Bei Preisänderung HIER pflegen.
+      // Fernwärme QUARTALSWEISE (SWE-Preisblatt, vgl. parameter.json PreisFW). Methodik = Entscheider-Rechner
+      // (Energiekosten mit jährlicher Preissteigerung über die Laufzeit + Netto-Investition).
+      const WIRTSCHAFT = {
+        verbrauch_kwh: 95000, flaeche_m2: 769.83, n: 25, jaz: 3.8, stand: "Q3 2026",
+        preis_ct: { gas: 10.2, fw: 19.3, wp: 25 },     // brutto
+        steig:    { gas: 0.03, fw: 0.04, wp: 0.025 },   // pro Jahr
+        invest:   { fw: 13650, wp: 132000 }, wp_foerd: 0.58,
+        ist_eur_m2_monat: 1.30                          // gemessen 2025 (Gas, Vollkosten)
+      };
+      const WV = (function(){
+        const W = WIRTSCHAFT, v = W.verbrauch_kwh, n = W.n, fl = W.flaeche_m2;
+        const e1 = { fw: v * W.preis_ct.fw/100, wp: (v / W.jaz) * W.preis_ct.wp/100, gas: v * W.preis_ct.gas/100 };
+        const inv = { fw: W.invest.fw, wp: Math.round(W.invest.wp * (1 - W.wp_foerd)) };
+        const sumEsc = (j, e) => e === 0 ? j * n : j * (Math.pow(1 + e, n) - 1) / e;
+        const mit  = { fw: sumEsc(e1.fw, W.steig.fw) + inv.fw, wp: sumEsc(e1.wp, W.steig.wp) + inv.wp };
+        const ohne = { fw: e1.fw * n + inv.fw, wp: e1.wp * n + inv.wp };
+        let be = null, cFW = inv.fw, cWP = inv.wp;
+        for (let t = 1; t <= n; t++){ cFW += e1.fw * Math.pow(1 + W.steig.fw, t - 1); cWP += e1.wp * Math.pow(1 + W.steig.wp, t - 1); if (be === null && cFW >= cWP) be = t; }
+        return { e1, mit, ohne, be, ersparnis: mit.fw - mit.wp, diffFW: mit.fw - ohne.fw,
+                 fwMonat: e1.fw / fl / 12, wpMonat: e1.wp / fl / 12 };
+      })();
+      const fmtTsd = x => Math.round(x / 1000).toLocaleString('de-DE') + '.000 €';
+      const fmtEur = x => Math.round(x).toLocaleString('de-DE') + ' €';
+
       const z = OBJEKT_001.die_eine_zahl;
-      const sMin = 0.5, sMax = 2.0;
+      const sMin = 0.5, sMax = 2.2;
       function ozPos(v){ return Math.max(4, Math.min(96, (v - sMin) / (sMax - sMin) * 100)).toFixed(1); }
       anchorEl.innerHTML =
         '<p class="oz-anchor__lbl">Wärmekosten · €/m²·Monat — heute und die zwei zulässigen Pfade</p>' +
         '<div class="oz-map">' +
           '<div class="oz-map__bar">' +
-            '<span class="oz-map__mark oz-map__mark--wp" style="left:' + ozPos(0.70) + '%"><span class="oz-map__lblbox"><span class="oz-map__val">~0,70</span><span class="oz-map__cap">Wärmepumpe</span></span></span>' +
-            '<span class="oz-map__mark oz-map__mark--gas" style="left:' + ozPos(1.30) + '%"><span class="oz-map__lblbox"><span class="oz-map__val">1,30</span><span class="oz-map__cap">Gas heute</span></span></span>' +
-            '<span class="oz-map__mark oz-map__mark--fw" style="left:' + ozPos(1.80) + '%"><span class="oz-map__lblbox"><span class="oz-map__val">~1,80</span><span class="oz-map__cap">Fernwärme <em>steigt ▸</em></span></span></span>' +
+            '<span class="oz-map__mark oz-map__mark--wp" style="left:' + ozPos(WV.wpMonat) + '%"><span class="oz-map__lblbox"><span class="oz-map__val">~' + WV.wpMonat.toFixed(2).replace('.', ',') + '</span><span class="oz-map__cap">Wärmepumpe</span></span></span>' +
+            '<span class="oz-map__mark oz-map__mark--gas" style="left:' + ozPos(WIRTSCHAFT.ist_eur_m2_monat) + '%"><span class="oz-map__lblbox"><span class="oz-map__val">' + WIRTSCHAFT.ist_eur_m2_monat.toFixed(2).replace('.', ',') + '</span><span class="oz-map__cap">Gas heute</span></span></span>' +
+            '<span class="oz-map__mark oz-map__mark--fw" style="left:' + ozPos(WV.fwMonat) + '%"><span class="oz-map__lblbox"><span class="oz-map__val">~' + WV.fwMonat.toFixed(2).replace('.', ',') + '</span><span class="oz-map__cap">Fernwärme <em>steigt ▸</em></span></span></span>' +
           '</div>' +
           '<div class="oz-map__labels"><span>niedrig</span><span>im Schnitt</span><span>erhöht</span></div>' +
         '</div>' +
-        '<p class="oz-map__basis">Basis: 94.932 kWh/Jahr · 769,83 m² · Heizung + Warmwasser, Vollkosten. <strong>Gas</strong> = heutiger Wert (2025); <strong>Fernwärme</strong> und <strong>Wärmepumpe</strong> sind belegte Projektionen.</p>' +
+        '<p class="oz-map__basis">Basis: 95.000 kWh/Jahr · 769,83 m² · Heizung + Warmwasser, Vollkosten. <strong>Gas</strong> = gemessener Wert (2025); <strong>Fernwärme</strong> und <strong>Wärmepumpe</strong> sind belegte Projektionen zu heutigen Preisen.</p>' +
         '<p class="oz-map__risk">Fernwärme steigt: Die Stadtwerke prognostizieren bis 2040 eine Verdopplung. Der Anschlusszwang bindet ans Netz — das Preisrisiko tragen am Ende Eigentümer und Mieter.</p>' +
         '<details class="oz-anchor__det">' +
           '<summary>Zusammensetzung &amp; Systemgrenze</summary>' +
           '<p>davon CO₂ ' + z.davon_co2 + ' · Bezugsfläche ' + z.bezugsflaeche_m2.toLocaleString("de-DE") + ' m² · Abrechnungsjahr ' + z.abrechnungsjahr + ' · Quelle: ' + z.quelle + '</p>' +
           '<p>' + z.systemgrenze + '</p>' +
         '</details>';
+
+      // === Wirtschaftsvergleich: Gesamtkosten (beide Wege) + Jahreskosten ===
+      const gesamtEl = document.getElementById("oz-vgl-gesamt");
+      if (gesamtEl) {
+        const wpBreite = Math.round(WV.mit.wp / WV.mit.fw * 100);
+        const bePos = Math.round((WV.be || 6) / WIRTSCHAFT.n * 100);
+        gesamtEl.innerHTML =
+          '<span class="oz-vgl-row__lbl">Gesamtkosten über 25 Jahre</span>' +
+          '<div class="oz-vgl-line oz-vgl-line--mark"><span class="oz-vgl-line__opt">Fernwärme</span>' +
+            '<div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:100%"></div>' +
+              '<span class="oz-vgl-mark" style="left:' + bePos + '%"><span class="oz-vgl-mark__lbl">Break-even WP · ~J. ' + (WV.be || '—') + '</span></span>' +
+            '</div><span class="oz-vgl-line__val">' + fmtTsd(WV.mit.fw) + '<small style="display:block;opacity:.55;font-weight:400;font-size:10px;">ohne Steigerung ' + fmtTsd(WV.ohne.fw) + '</small></span></div>' +
+          '<div class="oz-vgl-line"><span class="oz-vgl-line__opt">Wärmepumpe</span>' +
+            '<div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:' + wpBreite + '%"></div></div>' +
+            '<span class="oz-vgl-line__val">' + fmtTsd(WV.mit.wp) + '<small style="display:block;opacity:.55;font-weight:400;font-size:10px;">ohne Steigerung ' + fmtTsd(WV.ohne.wp) + '</small></span></div>' +
+          '<p class="oz-vgl-note">Über 25 Jahre zählt die Preissteigerung. Fachlicher Standard für eine solche Entscheidung ist die Rechnung <strong>mit</strong> Steigerung (Gas +3 %, Fernwärme +4 %, WP-Strom +2,5 % pro Jahr — wie im Entscheider-Rechner). Ohne Steigerung wirkt Fernwärme rund <strong>' + fmtTsd(WV.diffFW) + '</strong> günstiger, als sie über die Laufzeit real wird — genau das ist das Preisrisiko des Anschlusszwangs. Die Wärmepumpe spart über 25 Jahre rund <strong>' + fmtTsd(WV.ersparnis) + '</strong>.</p>';
+      }
+      const jahresEl = document.getElementById("oz-vgl-jahres");
+      if (jahresEl) {
+        const wpB = Math.round(WV.e1.wp / WV.e1.fw * 100);
+        jahresEl.innerHTML =
+          '<span class="oz-vgl-row__lbl">Jahreskosten heute · Energie</span>' +
+          '<div class="oz-vgl-line"><span class="oz-vgl-line__opt">Fernwärme</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:100%"></div></div><span class="oz-vgl-line__val">' + fmtEur(WV.e1.fw) + '</span></div>' +
+          '<div class="oz-vgl-line"><span class="oz-vgl-line__opt">Wärmepumpe</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:' + wpB + '%"></div></div><span class="oz-vgl-line__val">' + fmtEur(WV.e1.wp) + '</span></div>' +
+          '<p class="oz-vgl-note">Basis: 95.000 kWh Wärmebedarf/Jahr · Arbeitspreis Gas 10,2 / Fernwärme 19,3 / WP-Strom 25 ct/kWh brutto (Q3 2026) — die Wärmepumpe braucht dafür nur ~⅓ Strom (Umweltwärme).</p>';
+      }
 
       // === Säule 2: Gebäude-Radar (Future Readiness Index) ===
       const radarEl = document.getElementById("oz-radar");
