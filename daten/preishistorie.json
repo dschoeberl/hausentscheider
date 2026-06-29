@@ -13,14 +13,13 @@
     "2026-07": {
       "label": "Juli 2026",
       "aktuell": true,
-      "vorlaeufig_andere_traeger": true,
       "gas": 10.5,
       "fernwaerme": 19.3,
       "heizoel": 11.5,
       "wp_strom": 25,
-      "pellets": 7.6,
+      "pellets": 7.5,
       "einheit": "ct/kWh",
-      "kontext": "Fernwärme steigt zum 3. Quartal: SWE-Arbeitspreis +17 % (11,54 → 13,77 ct/kWh brutto), Effektivpreis auf Gebäudeebene ~17,5 → ~19,3 ct/kWh (SWE-Preisblatt, Stand 1.7.2026). Gas, Heizöl, WP-Strom und Pellets vorläufig aus Juni übernommen — die Juli-Marktwerte folgen."
+      "kontext": "Fernwärme steigt zum 3. Quartal auf ~19,3 ct/kWh brutto (SWE-Arbeitspreis +17 %, Preisblatt Stand 1.7.2026). Der übrige Markt bleibt stabil: Gas im Verbraucher-Schnitt ~10,5 ct (BDEW: Bestand 11,6 / Neukunde 9,2), Heizöl ~11,5 ct (TECSON ~117 ct/l), WP-Strom-Tarife ~25 ct (Spanne 20–26, §14a ab ~20), Pellets im Sommertief 7,5 ct (DEPI ~377 €/t)."
     },
     "2026-06": {
       "label": "Juni 2026",
