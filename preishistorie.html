@@ -3,12 +3,22 @@
   PREISHISTORIE — monatliche Pflege
   ══════════════════════════════════════════════════════════════════
   Neuen Monat eintragen:
-  1. Die nächste .hist-card kopieren (Bereich MONAT bis /MONAT)
-  2. Ganz oben einfügen (neuester Monat immer als Erster)
-  3. Klasse "hist-card--current" vom alten Monat entfernen, beim
-     neuen setzen
-  4. Preise, Deltas und Kontexttext anpassen
-  5. Auf der Startseite (index.html) das inline PH-Objekt + daten/preishistorie.json pflegen
+  1. Bisherige Hero-Karte (.hist-card--hero, unter "Aktueller Stand") zur
+     normalen Karte machen: Klassen "hist-card--hero hist-card--current" und
+     den "Aktuell"-Badge entfernen, unter die "Verlauf"-Überschrift verschieben.
+  2. Neue Karte als Hero ganz oben unter "Aktueller Stand" einsetzen
+     (Klassen "hist-card hist-card--hero hist-card--current" + "Aktuell"-Badge).
+  3. Preise, Deltas und Kontexttext anpassen.
+  4. Auf der Startseite (index.html) das inline PH-Objekt + daten/preishistorie.json pflegen.
+  ──────────────────────────────────────────────────────────────────
+  QUELLEN:
+  • Gas / Heizöl / WP-Strom / Pellets — MONATLICH: BDEW, Verivox, TECSON (Heizöl), DEPI (Pellets).
+  • Fernwärme (Erfurt) — QUARTALSWEISE, nicht monatlich. SWE Energie Preisblatt:
+    https://www.swe-energie.de/site/energie/get/documents_E-421602985/energie/documents/Downloads/preisblaetter-und-vertragsbedingungen/waerme/preise_fernwaermeversorgung.pdf
+    (Pfad: swe-energie.de → Servicewelt → Preisblätter & Vertragsbedingungen → Wärme)
+    Stand 1.7.2026: Arbeitspreis Q3 13,77 ct/kWh brutto (Q2 11,54) — +~19 % ab Juli.
+    "17,5 ct/kWh" = Effektivpreis auf Gebäudeebene (Arbeits- + Leistungs- + Mess- + Zertifikatepreis);
+    ab Juli 2026 aus dem Q3-Blatt neu herleiten.
   ══════════════════════════════════════════════════════════════════
 -->
 <html lang="de">
@@ -66,6 +76,19 @@
       margin-bottom: 0.875rem;
     }
     .hist-card--current { border-left-color: var(--petrol); }
+
+    /* Aktueller Monat als Hero — spiegelt den Tafel-Look der Startseite */
+    .section-eyebrow { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--petrol); font-weight: 600; margin: 0 0 0.75rem; }
+    .verlauf-eyebrow { margin: 1.75rem 0 0.75rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
+    .hist-card--hero { background: var(--petrol-dark); border-left-color: var(--petrol-light); box-shadow: 0 6px 22px rgba(26,53,53,0.28); }
+    .hist-card--hero .hist-card__monat { color: var(--white); }
+    .hist-card--hero .hist-p { background: rgba(255,255,255,0.06); }
+    .hist-card--hero .hist-p__lbl { color: var(--signal); }
+    .hist-card--hero .hist-p__val { color: var(--white); }
+    .hist-card--hero .hist-p__unit { color: rgba(255,255,255,0.5); }
+    .hist-card--hero .hist-kontext { color: rgba(255,255,255,0.82); border-top-color: rgba(255,255,255,0.15); }
+    .hist-card--hero .down { color: #90d4a8; }
+    .hist-card--hero .up { color: #f0b870; }
 
     .hist-card__top { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.875rem; }
     .hist-card__monat { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; font-weight: 400; color: var(--text-main); }
@@ -138,11 +161,91 @@
 
 <div class="content">
 
+  <p class="section-eyebrow">Aktueller Stand</p>
+
+  <!-- MONAT: JUNI 2026 (Hero) -->
+  <div class="hist-card hist-card--hero hist-card--current">
+    <div class="hist-card__top">
+      <span class="hist-card__monat">Juni 2026</span>
+      <span class="hist-badge">Aktuell</span>
+    </div>
+    <div class="hist-preise">
+      <div class="hist-p">
+        <span class="hist-p__lbl">Gas Ø</span>
+        <span class="hist-p__val">10,5</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta" style="color:rgba(255,255,255,0.45);">— stabil ggü. Mai</span>
+      </div>
+      <div class="hist-p">
+        <span class="hist-p__lbl">Fernwärme Ø</span>
+        <span class="hist-p__val">17,5</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta" style="color:rgba(255,255,255,0.45);">— stabil</span>
+      </div>
+      <div class="hist-p">
+        <span class="hist-p__lbl">Heizöl Ø</span>
+        <span class="hist-p__val">11,5</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta down">↓ −2,0 ggü. Mai</span>
+      </div>
+      <div class="hist-p">
+        <span class="hist-p__lbl">WP-Strom Ø</span>
+        <span class="hist-p__val">25</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta down">↓ −1 ggü. Mai</span>
+      </div>
+    </div>
+    <p class="hist-kontext">
+      Ölpreise nach dem Frühjahrshoch deutlich gefallen — Heizöl ~110–117 €/100 l (Brent stabil oberhalb 80 USD/Barrel).
+      Wärmepumpen-Tarife weiter günstiger durch reduzierte §14a-Netzentgelte (ab ~20–21 ct/kWh). Pellets leicht höher (DEPI meldet Juni-Anstieg, ~377 €/t).
+      Gas im Verbraucher-Schnitt stabil (~10 ct/kWh, Neukunde ~9,4).
+    </p>
+  </div>
+  <!-- /MONAT -->
+
+  <p class="section-eyebrow verlauf-eyebrow">Verlauf</p>
+
+  <!-- MONAT: MAI 2026 -->
+  <div class="hist-card">
+    <div class="hist-card__top">
+      <span class="hist-card__monat">Mai 2026</span>
+    </div>
+    <div class="hist-preise">
+      <div class="hist-p">
+        <span class="hist-p__lbl">Gas Ø</span>
+        <span class="hist-p__val">10,5</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta" style="color:var(--text-muted);">— stabil</span>
+      </div>
+      <div class="hist-p">
+        <span class="hist-p__lbl">Fernwärme Ø</span>
+        <span class="hist-p__val">17,5</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta" style="color:var(--text-muted);">— stabil</span>
+      </div>
+      <div class="hist-p">
+        <span class="hist-p__lbl">Heizöl Ø</span>
+        <span class="hist-p__val">13,5</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta down">↓ −1,8 ggü. April</span>
+      </div>
+      <div class="hist-p">
+        <span class="hist-p__lbl">WP-Strom Ø</span>
+        <span class="hist-p__val">26</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta down">↓ −1 ggü. April</span>
+      </div>
+    </div>
+    <p class="hist-kontext">
+      Heizöl normalisiert sich nach der Iran-Krise (~135 €/100 l). WP-Strom weiter im Abwärtstrend. Pellets stabil bei ~376 €/t.
+    </p>
+  </div>
+  <!-- /MONAT -->
+
   <!-- MONAT: APRIL 2026 -->
-  <div class="hist-card hist-card--current">
+  <div class="hist-card">
     <div class="hist-card__top">
       <span class="hist-card__monat">April 2026</span>
-      <span class="hist-badge">Aktuell</span>
     </div>
     <div class="hist-preise">
       <div class="hist-p">
@@ -153,7 +256,7 @@
       </div>
       <div class="hist-p">
         <span class="hist-p__lbl">Fernwärme Ø</span>
-        <span class="hist-p__val">26</span>
+        <span class="hist-p__val">17,5</span>
         <span class="hist-p__unit">ct/kWh</span>
         <span class="hist-p__delta" style="color:var(--text-muted);">— stabil</span>
       </div>
@@ -191,7 +294,7 @@
       </div>
       <div class="hist-p">
         <span class="hist-p__lbl">Fernwärme Ø</span>
-        <span class="hist-p__val">26</span>
+        <span class="hist-p__val">17,5</span>
         <span class="hist-p__unit">ct/kWh</span>
         <span class="hist-p__delta" style="color:var(--text-muted);">— stabil</span>
       </div>
@@ -229,7 +332,7 @@
       </div>
       <div class="hist-p">
         <span class="hist-p__lbl">Fernwärme Ø</span>
-        <span class="hist-p__val">26</span>
+        <span class="hist-p__val">17,5</span>
         <span class="hist-p__unit">ct/kWh</span>
         <span class="hist-p__delta" style="color:var(--text-muted);">— stabil</span>
       </div>
@@ -268,7 +371,7 @@
       </div>
       <div class="hist-p">
         <span class="hist-p__lbl">Fernwärme Ø</span>
-        <span class="hist-p__val">26</span>
+        <span class="hist-p__val">17,5</span>
         <span class="hist-p__unit">ct/kWh</span>
         <span class="hist-p__delta neu">Startpunkt</span>
       </div>
@@ -294,7 +397,7 @@
 
   <p class="hinweis">
     Alle Angaben sind Durchschnittswerte für Mehrfamilienhaus-Bestandskunden in Deutschland (Erfurt/Thüringen als Referenzregion).
-    Fernwärme-Preise beziehen sich auf den Erfurter Markt (Stadtwerke Erfurt, Spanne 14–39 ct/kWh).
+    Fernwärme als Erfurter Effektivpreis auf Gebäudeebene (Stadtwerke Erfurt, tarifbasiert, nicht monatsvolatil).
     Quellen: BDEW, Verivox, Finanztip, TECSON, TGA-Fachplaner-Barometer · <a href="index.html#energiepreise">Aktuelle Energiepreise</a>
   </p>
 
