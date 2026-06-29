@@ -34,6 +34,9 @@
       --border:        #e0dedd;
       --bg-light:      #f5f4f2;
       --bg-warn:       #fff8e6;
+      --tommy-rot:     #D81E34;
+      --tommy-rot-bg:  #fbe7ea;
+      --tommy-rot-text:#A3122A;
       --text-primary:  #1a1a1a;
       --text-secondary:#5a5956;
       --text-tertiary: #8a8680;
@@ -215,9 +218,9 @@
       font-size: 14px; color: var(--white); opacity: 0.85;
     }
     .hint strong { color: var(--white); font-weight: 600; }
-    /* Reservierte Variante für künftige Errors / echte Warnungen — nicht in C1 verwendet */
-    .hint--warn { background: var(--bg-warn); color: var(--text-primary); border-left: 3px solid var(--signal-dark); padding-left: 1rem; }
-    .hint--warn::before { color: var(--signal-dark); }
+    /* Warnung / Plausibilitätscheck — Tommyrot (Risiko/Warnung-Disziplin) */
+    .hint--warn { background: var(--tommy-rot-bg); color: var(--text-primary); border-left: 3px solid var(--tommy-rot); }
+    .hint--warn::before { content: '⚠'; color: var(--tommy-rot); opacity: 1; }
     .hint--warn strong { color: var(--text-primary); }
 
     /* Aktivierungs-Statement: Signal-Gelb-Variante mit Petrol-Dark-Text */
@@ -906,14 +909,15 @@
     .risiko-banner {
       margin: 1.25rem 0 1.5rem;
       padding: 1rem 1.25rem;
-      background: #cce0e8;          /* Pastell-Blau-Kontext (designsystem §2) */
-      border: 1px solid var(--petrol);
+      background: var(--tommy-rot-bg);   /* Tommyrot-Akzent, heller Grund (Risiko/Warnung) */
+      border: 1px solid var(--tommy-rot);
+      border-left: 4px solid var(--tommy-rot);
       border-radius: var(--radius);
       color: var(--petrol-dark);
     }
     .risiko-banner__titel {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 16px; font-weight: 500; color: var(--petrol-dark);
+      font-size: 16px; font-weight: 500; color: var(--tommy-rot-text);
       margin: 0 0 0.5rem; display: flex; align-items: center; gap: 0.5rem;
     }
     .risiko-banner__punkte {
@@ -1170,10 +1174,11 @@
     /* === C2 v2.1 — Erweiterungen === */
 
     /* Wizard-Plausibilitäts-Hinweise (Bruttoinvest-Felder Schritt 3) */
-    .plausi-hint { color: var(--petrol); font-style: italic; font-size: 12px;
-                    margin-top: 0.3rem; padding: 0.35rem 0.5rem;
-                    background: var(--bg-light); border-left: 2px solid var(--petrol);
-                    border-radius: 3px; }
+    .plausi-hint { color: var(--tommy-rot-text); font-style: italic; font-size: 12px;
+                    margin-top: 0.3rem; padding: 0.35rem 0.5rem 0.35rem 1.6rem;
+                    background: var(--tommy-rot-bg); border-left: 2px solid var(--tommy-rot);
+                    border-radius: 3px; position: relative; }
+    .plausi-hint::before { content: '⚠'; position: absolute; left: 0.5rem; top: 0.35rem; color: var(--tommy-rot); font-style: normal; }
 
     /* Lese-Hilfe-Box (prominent unter Wirtschaftlichkeits-Tabelle, NICHT klappbar) */
     .lese-hilfe-box {
@@ -1573,7 +1578,7 @@
       <div class="wizard-field">
         <label class="wizard-field__label" for="f-jahreskosten">Aktuelle Jahreskosten aus Abrechnung <small style="color:var(--text-tertiary);font-weight:400;">(€/Jahr)</small></label>
         <input type="number" id="f-jahreskosten" class="wizard-input" min="0" max="100000" step="100" placeholder="z. B. 8.500">
-        <div class="hint" id="plausi-jahreskosten" hidden>
+        <div class="hint hint--warn" id="plausi-jahreskosten" hidden>
           Plausibilitätscheck: Ihre Abrechnung passt nicht zu Verbrauch × Preis. Bitte prüfen.
         </div>
       </div>
@@ -1585,7 +1590,7 @@
           <span>Markt-Schnitt aktuell: Gas 8,57 ct • FW 17,5 ct • WP-Strom 25 ct (Mai 2026)</span>
           <a href="/preishistorie.html" target="_blank" rel="noopener" style="color:var(--petrol);font-size:11px;">Preishistorie →</a>
         </p>
-        <div class="hint" id="plausi-energiepreis" hidden>
+        <div class="hint hint--warn" id="plausi-energiepreis" hidden>
           Vergleich Markt-Schnitt: Ihr Vertrag liegt <strong id="plausi-energiepreis-diff">— %</strong> über/unter Markt-Schnitt.
         </div>
       </div>
