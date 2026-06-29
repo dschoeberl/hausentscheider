@@ -1,0 +1,127 @@
+{
+  "_hinweis": "KWP-Prozess-Zeitstrahl Erfurt — verfolgt den Plan (nicht den Diskurs; das tut die Medien-Timeline auf der Startseite). Neue Etappe = ein Objekt an 'eintraege' anhängen; 'datum' (ISO) treibt die Achse, 'datumLabel' ist die Anzeige. 'art': meilenstein | etappe | beitrag. 'offen': true markiert die laufende Phase ab dem 30.06.2026 — die Achse läuft sichtbar weiter. 'kommentar' = unabhängige Einordnung (Mehrwert), anerkennend und prüfend, kein Pranger. Quelle der Datierungen: Stellungnahme KWP Erfurt v6 (Schöberl), Anhang C; Pressekonferenz 04.05.2026.",
+  "stadt": "Erfurt",
+  "bewertungsstand": "Stand 14.05.2026 · wird nach dem 30.06.2026 fortgeschrieben",
+  "eintraege": [
+    {
+      "datum": "2025-09-23",
+      "datumLabel": "23. September 2025",
+      "titel": "Bestands- und Potenzialanalyse vorgestellt",
+      "art": "etappe",
+      "zusammenfassung": "Stadt Erfurt und SWE präsentieren die Bestands- und Potenzialanalyse — die Datengrundlage des späteren Zielszenarios (u. a. 19 Abwärmequellen, Geothermie, Solarthermie, Power-to-Heat).",
+      "kommentar": "Der erste öffentliche Schritt: Bestand erheben, bevor festgelegt wird. Mehrere hier bezifferte Potenziale — allen voran Solarthermie mit 6.483 GWh/a — tauchen im späteren Zielszenario nur am Rande auf.",
+      "offen": false,
+      "link": ""
+    },
+    {
+      "datum": "2026-03-26",
+      "datumLabel": "26. März 2026",
+      "titel": "Wärmeplan fertiggestellt (Stand 26.03., 502 Seiten)",
+      "art": "etappe",
+      "zusammenfassung": "Der Gesamtbericht der Kommunalen Wärmeplanung wird mit Datum 26. März 2026 fertiggestellt — drei Monate vor der gesetzlichen Frist. Er bildet die Grundlage der Future-Readiness-Bewertung.",
+      "kommentar": "Termintreue ist eine echte Stärke — viele Kommunen vergleichbarer Größe sind nicht so weit. Das Dokument ist der Stand, auf den sich die Bewertung auf dieser Seite bezieht; die Endfassung folgt am 30.06.",
+      "offen": false,
+      "link": ""
+    },
+    {
+      "datum": "2026-05-04",
+      "datumLabel": "4. Mai 2026",
+      "titel": "Pressekonferenz & Beginn der öffentlichen Auslegung",
+      "art": "meilenstein",
+      "zusammenfassung": "Stadt und SWE stellen die zentralen Ergebnisse von Zielszenario und Umsetzungsstrategie vor; die öffentliche Auslegung mit Frist für Stellungnahmen beginnt (bis 03.06.). Drei Risikokategorien werden offen benannt.",
+      "kommentar": "Die ehrliche Risiko-Benennung und die Methodik der Prüfgebiete verdienen Anerkennung. Zugleich enthielt die offizielle Seite zum Auslegungsbeginn an zwei Stellen Platzhalter statt der eigentlichen Inhalte — Konsultationszeit, die in der ersten Woche verloren ging.",
+      "offen": false,
+      "link": ""
+    },
+    {
+      "datum": "2026-05-11",
+      "datumLabel": "11. Mai 2026",
+      "titel": "Bürgerinformationsveranstaltung (~60 Teilnehmende)",
+      "art": "etappe",
+      "zusammenfassung": "Öffentliche Informationsveranstaltung im Festsaal des Rathauses. Nach Teilnehmerberichten rund 60 Personen; Fragen nach konkreten Kosten konnten nicht mit belastbaren Kennzahlen beantwortet werden.",
+      "kommentar": "Ein wertvolles Format — aber rund 60 Teilnehmende bei über 215.000 Einwohnern zeigen, wie dünn die öffentliche Resonanz war. Die unbeantwortete Kostenfrage spiegelt eine zentrale Lücke des Plans (Feld 9).",
+      "offen": false,
+      "link": ""
+    },
+    {
+      "datum": "2026-05-13",
+      "datumLabel": "13. Mai 2026",
+      "titel": "Kabinettsbeschluss Gebäudemodernisierungsgesetz (Bund)",
+      "art": "etappe",
+      "zusammenfassung": "Das Bundeskabinett beschließt das Gebäudemodernisierungsgesetz — keine zwei Monate vor der KWP-Endfassung. Es sieht u. a. den Wegfall der 65-%-EE-Pflicht und der Beratungspflicht (§ 72 GEG-Entwurf) vor.",
+      "kommentar": "Ein anschaulicher Beleg für die Anpassungsfrage (Feld 3): Die bundesrechtliche Grundlage, auf der die KWP ihre Eigentümer-Adressierung aufbaut, ändert sich noch während der Auslegung. Der Wegfall der Beratungspflicht verschiebt Verantwortung auf die kommunale Ebene.",
+      "offen": false,
+      "link": ""
+    },
+    {
+      "datum": "2026-05-14",
+      "datumLabel": "14. Mai 2026",
+      "titel": "Stellungnahme aus Eigentümer- und Forschungsperspektive versandt",
+      "art": "beitrag",
+      "zusammenfassung": "Die Future-Readiness-Bewertung der KWP (Grundlage dieser Seite) wird an die Stabsstelle Kommunale Wärmeplanung versandt — mit 23 gestaffelten Forderungen und der Bitte um förmliche Berücksichtigung.",
+      "kommentar": "Der eigene Beitrag: dieselbe Methodik, die hier auf das Referenzgebäude angewandt wird, angewandt auf die Stadt. Anerkennung der Stärken zuerst, dann die strukturellen Lücken — als Bauanleitung, nicht als Anklage.",
+      "offen": false,
+      "link": "dokumente/260514_Stellungnahme_KWP_Erfurt_v6.pdf"
+    },
+    {
+      "datum": "2026-05-15",
+      "datumLabel": "Mitte Mai 2026",
+      "titel": "Wärmeplan-Volltext digital bereitgestellt",
+      "art": "etappe",
+      "zusammenfassung": "Der 502-seitige Wärmeplan wird auf erfurt.de/waermeplanung digital eingestellt. Damit ist die wichtigste Sofort-Forderung der Stellungnahme (Forderung 1) erfüllt.",
+      "kommentar": "Eine ausdrücklich zu begrüßende Korrektur — und zugleich Beleg, dass die Verfahrensmängel der ersten Auslegungswoche real waren. Sie zeigt: Der Prozess ist korrigierbar, wenn man Hinweise aufnimmt.",
+      "offen": false,
+      "link": ""
+    },
+    {
+      "datum": "2026-06-03",
+      "datumLabel": "3. Juni 2026",
+      "titel": "Ende der öffentlichen Auslegung",
+      "art": "meilenstein",
+      "zusammenfassung": "Die vierwöchige Auslegungsfrist endet. Die adressbezogene M16-Plattform — das wichtigste Selbstverortungs-Werkzeug — steht zu diesem Zeitpunkt noch nicht zur Verfügung.",
+      "kommentar": "Vier Wochen für 502 fachlich anspruchsvolle Seiten sind knapp (Hamburg legte sechs Wochen aus). Dass die Frist endet, bevor die M16-Plattform online ist, ist mit der Logik einer Bürgerbeteiligung schwer vereinbar.",
+      "offen": false,
+      "link": ""
+    },
+    {
+      "datum": "2026-06-03",
+      "datumLabel": "3. Juni 2026",
+      "titel": "Zweite Stellungnahme eingereicht (Klimaentscheid Erfurt)",
+      "art": "beitrag",
+      "zusammenfassung": "Zum Ende der Auslegung reicht der Klimaentscheid Erfurt eine weitere Stellungnahme ein — mit einer quantitativen Klimapfad-Analyse und einer technisch-wirtschaftlichen Bewertung des Wärmeplans (Fremdquelle).",
+      "kommentar": "Eine zweite, unabhängige Prüfung des Plans. In den Kernlücken — fehlende Kostenangaben je Gebiet, Wasserstoff für Gebäude, kein Plan B für die Geothermie, Mieter- und Sozialperspektive — deckt sie sich mit der Future-Readiness-Bewertung. Dass mehrere Stellungnahmen unabhängig zu denselben Befunden kommen, härtet deren Belastbarkeit.",
+      "offen": false,
+      "link": ""
+    },
+    {
+      "datum": "2026-06-30",
+      "datumLabel": "30. Juni 2026",
+      "titel": "Inkrafttreten der KWP-Endfassung + adressgenauer Stadtplan (M16)",
+      "art": "meilenstein",
+      "zusammenfassung": "Die Endfassung des Wärmeplans tritt in Kraft; der adressgenaue Stadtplan (Maßnahme M16) wird angekündigt. Ab hier zeigt sich, welche der 23 Forderungen aufgenommen wurden.",
+      "kommentar": "Der Prüfstein für diese Seite: Die Future-Readiness-Bewertung wird nach Veröffentlichung der Endfassung aktualisiert. Hier läuft der Zeitstrahl offen weiter — die Phase ab dem 30.06. ist Teil der Aussage.",
+      "offen": true,
+      "link": ""
+    },
+    {
+      "datum": "2026-07-01",
+      "datumLabel": "1. Juli 2026",
+      "titel": "Gebäudemodernisierungsgesetz tritt in Kraft",
+      "art": "etappe",
+      "zusammenfassung": "Mit dem Gebäudemodernisierungsgesetz entfällt bundesweit die 65-%-EE-Pflicht für neue Heizungen. Die Steuerung des Sanierungsgeschehens verschiebt sich stärker auf die kommunale Ebene.",
+      "kommentar": "Folge lokal offen: Ob Erfurt die entstehende Lücke mit einer eigenständigen kommunalen Sanierungs- und Beratungsstrategie füllt (Forderungen 22/23), wird sich in der Fortschreibung zeigen.",
+      "offen": true,
+      "link": ""
+    },
+    {
+      "datum": "2027-01-01",
+      "datumLabel": "ab 2027",
+      "titel": "M16-Plattform im Vollbetrieb (angekündigt)",
+      "art": "etappe",
+      "zusammenfassung": "Die adressbezogene Informationsplattform (M16) soll laut Plan ab 2027 im Vollbetrieb laufen — straßenscharfe Information zu den geeigneten Wärmeversorgungsoptionen.",
+      "kommentar": "Genau in diese Leerstelle stößt unabhängiges Monitoring: Bis die Stadt ihr eigenes Dashboard hat, macht diese Seite den Stand sichtbar und prüfbar.",
+      "offen": true,
+      "link": ""
+    }
+  ]
+}

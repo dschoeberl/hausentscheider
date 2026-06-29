@@ -1,0 +1,57 @@
+{
+  "_hinweis": "Die 23 Forderungen aus Kapitel 6 / Anhang A der Stellungnahme KWP Erfurt v6 (Schöberl). Gestaffelt nach Frist mit Farblogik aus Anhang A: rot = sofort (bis 03.06.2026), gelb = strukturell (Endfassung 30.06.2026), blau = Governance (fortlaufend). Diese Datei ergänzt den im Briefing genannten Zwei-Dateien-Plan (fri + timeline), damit der Ausblick-Block ebenfalls datengetrieben und prüfbar ist. 'status' optional — z. B. 'erfuellt' für Forderung 1.",
+  "stadt": "Erfurt",
+  "quelle": "dokumente/260514_Stellungnahme_KWP_Erfurt_v6.pdf — Kapitel 6, Anhang A",
+  "ebenen": [
+    {
+      "ebene": "sofort",
+      "farbe": "rot",
+      "frist": "bis 03.06.2026",
+      "titel": "Sofort umsetzbar",
+      "intro": "Innerhalb weniger Tage umsetzbar — sie heilen die Verfahrensmängel und stellen den Anspruch auf Informationszugang her.",
+      "forderungen": [
+        { "nr": 1, "titel": "Vollständige digitale Bereitstellung des Wärmeplans (502 S.) auf erfurt.de — dauerhaft gesichert.", "rechtsgrundlage": "§§ 13 + 14 WPG, UIG, ThürUIG, ThürTG", "status": "erfuellt" },
+        { "nr": 2, "titel": "Platzhalter-Verlinkungen auf der Konsultationsseite einpflegen (Volltext + Karte der Prüfgebiete).", "rechtsgrundlage": "§ 13 WPG", "status": "" },
+        { "nr": 3, "titel": "Adressbezogene Informationsplattform aus M16 (Mindestversion) vor Konsultationsende vorziehen.", "rechtsgrundlage": "§ 13 WPG, Maßnahme M16", "status": "" },
+        { "nr": 4, "titel": "Konsultationsfrist um mindestens zwei Wochen verlängern — gerechnet ab Vollverfügbarkeit.", "rechtsgrundlage": "§ 14 WPG", "status": "" },
+        { "nr": 5, "titel": "Laienverständliche Kurzfassung des Wärmeplans (max. 30 S.) veröffentlichen.", "rechtsgrundlage": "UIG, ThürTG", "status": "" }
+      ]
+    },
+    {
+      "ebene": "strukturell",
+      "farbe": "gelb",
+      "frist": "Endfassung 30.06.2026",
+      "titel": "Strukturell",
+      "intro": "Sie betreffen den Inhalt des Plans selbst und schließen die strukturellen Lücken aus Kapitel 4 und 5.",
+      "forderungen": [
+        { "nr": 6, "titel": "Bewertungskriterien erweitern: €/m²/Monat-Lebenszykluskosten, Resilienz-Dimension, explizite Future-Readiness-Bewertung.", "rechtsgrundlage": "KWP Kap. 6 (Zielszenario)", "status": "" },
+        { "nr": 7, "titel": "Wasserstoff für Industrie vs. Privathaushalt klar differenzieren — mit Mengen-/Preisprognose und Liste der Industrie-Ankerkunden.", "rechtsgrundlage": "KWP Kap. 5.3", "status": "" },
+        { "nr": 8, "titel": "Potenzialflächen-Kartierung Solarthermie (6.483 GWh/a) + transparente Vergleichsstudie zum Solarthermie-Ausschluss.", "rechtsgrundlage": "KWP Kap. 6 + 7", "status": "" },
+        { "nr": 9, "titel": "Fernwärme-Tarifstruktur & jährliche Leistungsanpassung als eigenes Kapitel + Tarif-Reform-Prüfung mit der SWE.", "rechtsgrundlage": "KWP Kap. 7 + 9, Fernwärmesatzung", "status": "" },
+        { "nr": 10, "titel": "Mieterperspektive und CO₂KostAufG-Dynamik als Querschnittsthema aufnehmen.", "rechtsgrundlage": "KWP Kap. 5 + 6", "status": "" },
+        { "nr": 11, "titel": "Entwurf der Fernwärmesatzungs-Modernisierung (M6) gemeinsam mit der Endfassung zur Konsultation — inkl. Befreiungspraxis (§ 6 Abs. 3) und 30-kW-Grenze.", "rechtsgrundlage": "Fernwärmesatzung Erfurt, Maßnahme M6", "status": "" },
+        { "nr": 12, "titel": "Zeitliche Reihenfolge der 17 Maßnahmen, kritische Pfade, Verantwortlichkeiten und Berichtspflichten als Umsetzungs-Begleitdokument.", "rechtsgrundlage": "KWP Kap. 7", "status": "" },
+        { "nr": 13, "titel": "Plan-B-Darstellung für eine nicht (ausreichend) fündige Tiefengeothermie inkl. Träger der versunkenen Investitionen.", "rechtsgrundlage": "KWP Kap. 5.3", "status": "" },
+        { "nr": 14, "titel": "Transformationsplan der SWE Energie GmbH veröffentlichen.", "rechtsgrundlage": "KWP Kap. 6 / 7", "status": "" }
+      ]
+    },
+    {
+      "ebene": "governance",
+      "farbe": "blau",
+      "frist": "fortlaufend",
+      "titel": "Governance",
+      "intro": "Sie betreffen die Architektur, in der der Plan über den 30.06.2026 hinaus fortgeschrieben wird.",
+      "forderungen": [
+        { "nr": 15, "titel": "Jährliches Kennzahlen-Dashboard auf erfurt.de (EE-Anteil, CO₂-Faktor, Anschlussquote, Investitionsfortschritt, Förderabrufe).", "rechtsgrundlage": "KWP Kap. 9", "status": "" },
+        { "nr": 16, "titel": "Klimabeirat Erfurt nach Hamburger Vorbild einrichten.", "rechtsgrundlage": "§ 7 HmbKlimaschVG, ThürKlimaG", "status": "" },
+        { "nr": 17, "titel": "Halbjährliche Schätzbilanz der CO₂-Emissionen im Wärmesektor (analog Hamburg).", "rechtsgrundlage": "ThürKlimaG, KWP Kap. 9", "status": "" },
+        { "nr": 18, "titel": "Alle eingegangenen Stellungnahmen veröffentlichen + transparent darstellen, welche Hinweise wie eingearbeitet wurden.", "rechtsgrundlage": "§ 13 Abs. 4 WPG, ThürTG", "status": "" },
+        { "nr": 19, "titel": "Thüringer Klimarat als externe Prüfinstanz einbinden (Stellungnahme als Anhang) + Wohnen im Eigentum e.V. als Stakeholder aufnehmen.", "rechtsgrundlage": "KWP Kap. 7", "status": "" },
+        { "nr": 20, "titel": "Kontinuierliche, eigenständige Bürgerkommunikation der Stadt (Newsletter, Halbjahresinfo, Social Media) — nicht über die SWE.", "rechtsgrundlage": "KWP Kap. 7", "status": "" },
+        { "nr": 21, "titel": "Finanzbedarf je Maßnahme M1–M17 (Bandbreiten) + Mengen-/Preisprognose H₂ je Industrie-Letztverbraucher veröffentlichen.", "rechtsgrundlage": "KWP Kap. 9", "status": "" },
+        { "nr": 22, "titel": "Eigenständige kommunale Sanierungsstrategie mit jährlicher Quote nach Gebäudetypen + Tarif-Reform-Prüfung — Antwort auf den Wegfall der 65-%-EE-Pflicht.", "rechtsgrundlage": "GModG (Kabinett 13.05.2026), BEG/KfW, ThürEnG", "status": "" },
+        { "nr": 23, "titel": "Kontinuierliches Beteiligungs- und Sensibilisierungsformat (Klima-Pavillon 2.0, Bürgerforen, Open-Data-Sprechstunde, Stadt-Printkanal) — Antwort auf den Wegfall der Beratungspflicht.", "rechtsgrundlage": "§ 72 GEG-Entwurf (13.05.2026)", "status": "" }
+      ]
+    }
+  ]
+}

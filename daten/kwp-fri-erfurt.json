@@ -1,0 +1,136 @@
+{
+  "_hinweis": "Future-Readiness-Bewertung der Kommunalen Wärmeplanung Erfurt — Stadtebene. Quelle (maßgeblich, freigegeben): Stellungnahme KWP Erfurt v6, Daniel Schöberl / eco2050, Kap. 4 (S. 6–14). Schema je Feld: ampel (gelb|rot), ist+soll (1–5), kernbeobachtung (Ampel-Tabelle S. 6), defizit1 (= Bedeutung einer 1, S. 14), soll5 (= Bedeutung einer 5, S. 14), begruendung (Zwei-Satz-Begründung S. 12–13). Eine zweite Stadt wäre ein weiterer JSON-Satz nach demselben Schema. WICHTIG/zu verifizieren: Die numerischen 'ist'-Werte stehen im PDF nur als Grafik (Netzdiagramm S. 14), nicht im Text — hier abgeleitet aus der Ampel (gelb=3, rot=2; soll=5 = Soll-Definition). Falls das Original-Netzdiagramm je Feld abweichende Werte zeigt, bitte hier korrigieren.",
+  "stadt": "Erfurt",
+  "bewertungsstand": "Wärmeplan Stand 26.03.2026 · Bewertung 14.05.2026",
+  "skala_max": 5,
+  "aktualisierung": "Aktualisierung nach Veröffentlichung der Endfassung (30.06.2026) und der adressbezogenen M16-Plattform.",
+  "quelle": {
+    "titel": "Stellungnahme zur Kommunalen Wärmeplanung Erfurt aus Eigentümer- und Forschungsperspektive",
+    "autor": "Daniel Schöberl · Forschungsprojekt Future Readiness in der Wärmewende, eco2050 Institut für Nachhaltigkeit",
+    "datei": "dokumente/260514_Stellungnahme_KWP_Erfurt_v6.pdf",
+    "kapitel": "Kapitel 4 — Die Erfurter KWP im Future-Readiness-Spiegel"
+  },
+  "felder": [
+    {
+      "feld": 1,
+      "name": "Nachhaltigkeitsintelligenz & Systemverantwortung",
+      "ampel": "gelb",
+      "ist": 3,
+      "soll": 5,
+      "kernbeobachtung": "Ziel 2045 ist klar — prüfbare Zwischenetappen 2030/2035/2040 mit kumulierten CO₂-Budgets fehlen.",
+      "defizit1": "Ziel ohne Systemverantwortung; fossile Basis unreflektiert.",
+      "soll5": "Klares 2045-Ziel mit prüfbaren Zwischenetappen und Emissionspfad.",
+      "begruendung": "Das Ziel 2045 ist klar und politisch verankert. Was fehlt, sind prüfbare Zwischenetappen 2030/2035/2040 mit kumulierten CO₂-Budgets und einer Sofortprogrammpflicht bei Zielverfehlung — der Pfad zum Ziel bleibt damit weicher als das Ziel selbst. Der Begriff „Nachhaltigkeit“ kommt auf 502 Seiten kein einziges Mal vor."
+    },
+    {
+      "feld": 2,
+      "name": "Ressourcenbewusstsein & Priorisierung",
+      "ampel": "gelb",
+      "ist": 3,
+      "soll": 5,
+      "kernbeobachtung": "17 Maßnahmen mit Strategiefeld und Zeitachse, aber ohne kritischen Pfad und Abhängigkeitenlogik.",
+      "defizit1": "Maßnahmen ohne Priorisierung und Kostenlogik.",
+      "soll5": "Maßnahmen nach Wirkung und €-Korridor priorisiert.",
+      "begruendung": "Der Plan strukturiert 17 Maßnahmen mit Strategiefeld, Zeitachse und qualitativer Kostenbewertung — eine echte Long-List. Der kritische Pfad mit Abhängigkeitenlogik und die genaue Verteilung der rund 1 Mrd. Euro Investitionsbedarf sind im schriftlichen Plan nicht erkennbar."
+    },
+    {
+      "feld": 3,
+      "name": "Anpassungsfähigkeit & Lernbereitschaft",
+      "ampel": "gelb",
+      "ist": 3,
+      "soll": 5,
+      "kernbeobachtung": "Fünfjährige Fortschreibung gesetzlich verankert — kein jährlicher Lernrhythmus dazwischen.",
+      "defizit1": "Plan statisch; keine Lernschleifen über die Pflicht hinaus.",
+      "soll5": "Iterative Fortschreibung mit echtem Monitoring.",
+      "begruendung": "Die gesetzliche Fortschreibung alle fünf Jahre ist verankert; das ist Mindestanforderung. Was fehlt, ist ein jährlicher, niederfrequenter Lern-Modus mit öffentlichem Dashboard, halbjährlicher Schätzbilanz und Stellungnahme-Bericht — also die Differenz zwischen Gesetzeskonformität und tatsächlicher Lernfähigkeit über zwanzig Jahre."
+    },
+    {
+      "feld": 4,
+      "name": "Resilienz & Systemrobustheit",
+      "ampel": "gelb",
+      "ist": 3,
+      "soll": 5,
+      "kernbeobachtung": "Drei Risikokategorien benannt; Quellenvielfalt, Redundanz und Klimadimension untergewichtet.",
+      "defizit1": "Monopol- und Klimarisiken unbenannt; kein Plan B.",
+      "soll5": "Risiken benannt; Alternativpfade hinterlegt.",
+      "begruendung": "Drei Risikokategorien sind in der Pressekonferenz benannt — institutionell, technologisch, baulich. Untergewichtet bleiben Quellenvielfalt und Redundanz, die kumulierte Abhängigkeit (Fossil, Importroute, Konzern, Material, Fachkräfte) und die klimatischen Standortveränderungen mit ihren Konsequenzen auf Wasser- und Kühl-Last."
+    },
+    {
+      "feld": 5,
+      "name": "Soziale Gestaltungskraft & Bürgerbindung",
+      "ampel": "rot",
+      "ist": 2,
+      "soll": 5,
+      "kernbeobachtung": "„Mieter/Miete“ nur zweimal auf 502 Seiten; CO₂KostAufG und Heizkostenverordnung fehlen.",
+      "defizit1": "Mieter und Verteilungswirkung kommen nicht vor.",
+      "soll5": "Mieterperspektive und CO₂KostAufG als Querschnitt verankert.",
+      "begruendung": "Im 502-Seiten-Plan tauchen die Begriffe Mieter und Miete zusammen nur zweimal auf. CO₂KostAufG-Stufenmodell, Heizkostenverordnung und Nebenkostenmechanik fehlen — obwohl rund zwei Drittel der Erfurter Bevölkerung zur Miete wohnen."
+    },
+    {
+      "feld": 6,
+      "name": "Projekt- & Umsetzungskompetenz",
+      "ampel": "gelb",
+      "ist": 3,
+      "soll": 5,
+      "kernbeobachtung": "Dreistufiges Controlling beschrieben — kritische Pfade, Berichtspflichten und Eskalation öffentlich nicht erkennbar.",
+      "defizit1": "Maßnahmen ohne Reihenfolge, Verantwortliche und Controlling.",
+      "soll5": "Kritische Pfade, Zuständigkeiten und Controlling klar.",
+      "begruendung": "Das Umsetzungsmanagement mit dreistufigem Controlling ist im Bericht beschrieben — gegenüber der Pressekonferenz eine echte Vertiefung. Was öffentlich nicht erkennbar bleibt, sind Berichtspflichten gegenüber Stadtrat und Öffentlichkeit, Zwischenmeilensteine und Eskalationsmechanismen bei Verzögerungen."
+    },
+    {
+      "feld": 7,
+      "name": "Technologischer Hebel & digitale Gestaltung",
+      "ampel": "rot",
+      "ist": 2,
+      "soll": 5,
+      "kernbeobachtung": "M16-Plattform erst ab 2027; kein digitaler Zwilling, kein öffentliches Dashboard.",
+      "defizit1": "Keine adressbezogene, nutzbare Datenplattform.",
+      "soll5": "Adressscharfe Plattform früh verfügbar und gepflegt.",
+      "begruendung": "Die adressbezogene Plattform (M16) ist als Maßnahme verankert, aber zur Konsultation nicht verfügbar — mit voller Laufzeit erst ab 2027. Es fehlen digitaler Zwilling, öffentliches Kennzahlen-Dashboard und Open-Data-Strukturen für die Modellannahmen."
+    },
+    {
+      "feld": 8,
+      "name": "Innovationskraft & Gestaltungsfreiraum",
+      "ampel": "gelb",
+      "ist": 3,
+      "soll": 5,
+      "kernbeobachtung": "Solarthermie 6.483 GWh/a Potenzial beziffert — im Zielszenario praktisch ungenutzt.",
+      "defizit1": "Optionen (Solarthermie, Speicher) vorschnell ausgeschlossen.",
+      "soll5": "Innovationsoptionen offen und transparent geprüft.",
+      "begruendung": "Solarthermie ist im Bericht mit 6.483 GWh/a Potenzial beziffert — dem Zwölffachen der Tiefengeothermie. Trotzdem bleibt sie im Zielszenario marginal; die Entscheidungsbasis ist eine einzelne, von der SWE betreute Masterarbeit. Batteriespeicher sind nicht als eigener Pfad ausgewiesen."
+    },
+    {
+      "feld": 9,
+      "name": "Wirtschaftliche Tragfähigkeit & soziale Fairness",
+      "ampel": "rot",
+      "ist": 2,
+      "soll": 5,
+      "kernbeobachtung": "Wärmegestehungskosten nur qualitativ je Quartier, keine €/m²/Monat; Tarifstruktur unerwähnt.",
+      "defizit1": "Kosten nur qualitativ je Quartier; keine €/m²-Sicht.",
+      "soll5": "Lebenszyklus-Kosten und Tarifstruktur transparent.",
+      "begruendung": "Wärmegestehungskosten werden je Quartier qualitativ bewertet (Ampel niedrig/mittel/hoch), nicht in €/m²/Monat über den Lebenszyklus. Konkrete Investitionsvolumina je Maßnahme fehlen. Die Tarifstruktur der Fernwärme (Arbeits- und Leistungspreis) und ihre Wirkung auf Sanierungsanreize bleibt im Plan ohne Erwähnung."
+    },
+    {
+      "feld": 10,
+      "name": "Netzwerkfähigkeit & politische Gestaltung",
+      "ampel": "gelb",
+      "ist": 3,
+      "soll": 5,
+      "kernbeobachtung": "Stadt-SWE-Freistaat-Achse stark; Thüringer Klimarat und Wohnen im Eigentum nicht eingebunden.",
+      "defizit1": "Tragende Achse, aber externe Prüfinstanzen außen vor.",
+      "soll5": "Unabhängige Gremien (Klimarat) strukturell eingebunden.",
+      "begruendung": "Die Stadt-SWE-Freistaat-Achse ist tragend und im Bericht detailliert beschrieben. Der Thüringer Klimarat ist nicht eingebunden, Wohnen im Eigentum erscheint nur als Berater-Anlaufstelle, lokale Forschungseinrichtungen wie Fachhochschule Erfurt und Bauhaus-Universität Weimar tauchen nicht auf."
+    },
+    {
+      "feld": 11,
+      "name": "Integritätsfähigkeit & bewusste Ausschlüsse",
+      "ampel": "rot",
+      "ist": 2,
+      "soll": 5,
+      "kernbeobachtung": "H₂ für Privathaushalte nicht ausgeschlossen ohne Mengen-/Preisbeleg; kein Plan B für die Geothermie.",
+      "defizit1": "Bequeme Optionen offen gehalten, ohne Deckung.",
+      "soll5": "Klare, belegte Ausschlüsse — Nein sagen können.",
+      "begruendung": "Wasserstoff für Privathaushalte ist nicht ausgeschlossen — und das, obwohl die zitierte Kundenanalyse (9 von 42 Industriekunden mit Absichtserklärung, Preisaspekte explizit ausgeklammert) keine belastbare Basis bietet und das Wasserstoffbeschleunigungsgesetz seinem Kern nach Industrie und Schwerverkehr adressiert. Ein Plan B für die noch ausstehende Tiefengeothermie-Probebohrung fehlt."
+    }
+  ]
+}

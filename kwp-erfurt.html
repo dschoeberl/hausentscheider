@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kommunale Wärmeplanung Erfurt im Future-Readiness-Spiegel — unabhängiges Monitoring des Wärmeplans: elf Kompetenzfelder (Ist gegen Soll), Prozess-Zeitstrahl und 23 Forderungen. Belegt statt behauptet.">
+  <title>Kommunale Wärmeplanung Erfurt — Future-Readiness-Dashboard | Hausentscheider</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 16px; font-weight: 400; line-height: 1.7;
+      color: #1a1a1a; background: #ffffff; overflow-x: hidden;
+    }
+    :root {
+      --petrol:        #1a5c5a;
+      --petrol-light:  #7ab8b5;
+      --petrol-dark:   #1a3535;
+      --signal:        #CFF77F;
+      --signal-dark:   #a8d45a;
+      --tommy-rot:     #D81E34;
+      --context-blue:  #7e9696;
+      --gov-blau:      #4a7a9a;
+      --frist-gelb:    #c8a460;
+      --border:        #e0dedd;
+      --bg-light:      #f5f4f2;
+      --text-primary:  #1a1a1a;
+      --text-secondary:#5a5956;
+      --text-tertiary: #8a8680;
+      --white:         #ffffff;
+      --max-width:     900px;
+      --radius:        8px;
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; font-weight: 400; line-height: 1.3; color: var(--text-primary); }
+    h1 { font-size: 32px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 18px; }
+    p { margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
+    a { color: var(--petrol); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol); font-family: 'Inter', sans-serif; display: block; }
+    .label--muted { color: var(--text-tertiary); }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; overflow-x: hidden; }
+    .section { padding: 3rem 0; border-bottom: 0.5px solid var(--border); overflow-x: hidden; }
+    .section:last-of-type { border-bottom: none; }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 0.5px solid var(--border); }
+    .nav__inner { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .nav__logo { text-decoration: none; display: inline-flex; align-items: center; }
+    .nav__logo:hover { text-decoration: none; opacity: 0.85; }
+    .nav__logo svg { display: block; }
+    .nav__links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+    .nav__links a { font-size: 13px; color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+    .nav__links a:hover, .nav__links a.is-current { color: var(--petrol); }
+    .nav__dropdown { position: relative; }
+    .nav__dropdown-toggle { font-size: 13px; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 4px; background: none; border: none; font-family: 'Inter', sans-serif; padding: 0; }
+    .nav__dropdown-toggle.is-current, .nav__dropdown-toggle:hover { color: var(--petrol); }
+    .nav__dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 0; background: var(--white); border: 0.5px solid var(--border); border-radius: var(--radius); min-width: 220px; padding: 0.5rem 0; z-index: 110; }
+    .nav__dropdown:hover .nav__dropdown-menu, .nav__dropdown:focus-within .nav__dropdown-menu { display: block; }
+    .nav__dropdown-menu a { display: flex; align-items: center; gap: 6px; padding: 0.5rem 1rem; font-size: 13px; color: var(--text-secondary); }
+    .nav__dropdown-menu a:hover { color: var(--petrol); background: var(--bg-light); text-decoration: none; }
+    .nav__city-badge { font-size: 10px; background: var(--petrol); color: white; padding: 1px 6px; border-radius: 10px; font-family: 'Inter', sans-serif; }
+
+    /* BUTTONS */
+    .btn { display: inline-block; padding: 0.6rem 1.5rem; font-family: 'Inter', sans-serif; font-size: 13px; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; text-decoration: none; border: none; }
+    .btn:hover { opacity: 0.85; text-decoration: none; }
+    .btn--primary  { background: var(--petrol); color: white; }
+    .btn--secondary { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.5); }
+    .btn--signal   { background: var(--signal); color: var(--petrol-dark); font-weight: 500; border: none; }
+
+    /* HERO — FRI-Netzdiagramm als Motiv (Foto-Fallback-Pfad bleibt über .hero__bg reserviert) */
+    .hero { position: relative; min-height: 480px; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; background: var(--petrol-dark); }
+    .hero__bg { position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(120% 90% at 78% 30%, #234a48 0%, var(--petrol-dark) 60%, #122727 100%); }
+    .hero::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--petrol); z-index: 3; }
+    .kwp-hero__art { position: absolute; top: 50%; right: -40px; transform: translateY(-50%); width: 460px; max-width: 62%; z-index: 1; opacity: 0.5; pointer-events: none; }
+    .kwp-hero__art svg { width: 100%; height: auto; display: block; }
+    .hero__content { position: relative; z-index: 2; padding: 2.75rem 2.5rem; max-width: var(--max-width); margin: 0 auto; width: 100%; }
+    .hero__eyebrow { font-size: 11px; letter-spacing: 2px; color: var(--petrol-light); text-transform: uppercase; margin-bottom: 0.75rem; font-family: 'Inter', sans-serif; }
+    .hero__headline { font-family: 'Playfair Display', Georgia, serif; font-size: 30px; font-weight: 400; color: #ffffff; line-height: 1.3; max-width: 640px; margin-bottom: 1rem; }
+    .hero__sub { font-size: 15px; color: #a8d4d2; line-height: 1.7; max-width: 560px; margin-bottom: 1.5rem; font-family: 'Inter', sans-serif; }
+    .kwp-hero__stand { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: #cfe3e2; background: rgba(0,0,0,0.25); border: 0.5px solid rgba(122,184,181,0.4); border-radius: 20px; padding: 5px 13px; font-family: 'Inter', sans-serif; }
+    .kwp-hero__stand-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--signal); flex-shrink: 0; }
+
+    /* INTRO / Status quo */
+    .kwp-intro p { font-size: 15px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 1rem; max-width: 680px; }
+    .kwp-intro p strong { color: var(--text-primary); font-weight: 500; }
+
+    /* === FRI-DASHBOARD (Herzstück) === */
+    .kwp-dash { background: var(--petrol-dark); border-radius: var(--radius); padding: 1.75rem 1.75rem 2rem; }
+    .kwp-dash__lbl { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--petrol-light); font-family: 'Inter', sans-serif; margin-bottom: 0.3rem; }
+    .kwp-dash__title { font-family: 'Playfair Display', Georgia, serif; font-size: 21px; color: #fff; font-weight: 400; margin-bottom: 0.5rem; line-height: 1.3; }
+    .kwp-dash__intro { font-size: 13.5px; color: rgba(255,255,255,0.8); line-height: 1.65; margin-bottom: 1.5rem; max-width: 640px; }
+    .kwp-dash__intro strong { color: var(--signal); font-weight: 500; }
+    .kwp-dash__grid { display: grid; grid-template-columns: minmax(0, 420px) 1fr; gap: 1.75rem; align-items: start; }
+    .kwp-radar__chart { display: block; width: 100%; height: auto; }
+    .kwp-radar__grid { fill: none; stroke: rgba(122,184,181,0.16); stroke-width: 1; }
+    .kwp-radar__axis { stroke: rgba(122,184,181,0.14); stroke-width: 1; }
+    .kwp-radar__soll { fill: rgba(207,247,127,0.14); stroke: var(--signal-dark); stroke-width: 1.5; stroke-linejoin: round; }
+    .kwp-radar__ist { fill: rgba(216,30,52,0.26); stroke: var(--tommy-rot); stroke-width: 2; stroke-linejoin: round; }
+    .kwp-radar__pt { fill: var(--tommy-rot); }
+    .kwp-radar__pt--krit { fill: #ff7088; }
+    .kwp-radar__marker { cursor: pointer; }
+    .kwp-radar__marker:focus { outline: none; }
+    .kwp-radar__num { fill: var(--petrol); stroke: var(--petrol-dark); stroke-width: 1.5; transition: fill 0.15s; }
+    .kwp-radar__num--krit { fill: var(--tommy-rot); }
+    .kwp-radar__marker.is-active .kwp-radar__num { fill: var(--signal); stroke: #ffffff; }
+    .kwp-radar__numtext { fill: #fff; font-size: 11px; font-family: 'Inter', sans-serif; font-weight: 600; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+    .kwp-radar__marker.is-active .kwp-radar__numtext { fill: var(--petrol-dark); }
+    .kwp-radar__legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin-top: 0.9rem; font-size: 11px; color: rgba(255,255,255,0.7); font-family: 'Inter', sans-serif; }
+    .kwp-radar__legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .kwp-leg-soll { width: 14px; height: 0; border-top: 2px solid var(--signal-dark); }
+    .kwp-leg-ist { width: 12px; height: 12px; background: rgba(216,30,52,0.4); border: 1.5px solid var(--tommy-rot); border-radius: 2px; }
+    .kwp-amp { font-weight: 700; font-style: normal; }
+    .kwp-amp--rot { color: var(--tommy-rot); }
+    .kwp-amp--gelb { color: var(--frist-gelb); }
+
+    .kwp-readout { min-height: 4.2em; background: rgba(126,150,150,0.15); border-left: 2px solid var(--context-blue); border-radius: 0 6px 6px 0; padding: 0.75rem 0.9rem; margin-bottom: 1rem; font-size: 12.5px; color: rgba(255,255,255,0.85); line-height: 1.55; }
+    .kwp-readout strong { color: var(--signal); font-weight: 500; }
+    .kwp-readout__skala { display: block; font-size: 11px; color: var(--petrol-light); margin: 0.3rem 0; }
+    .kwp-fields { display: flex; flex-direction: column; gap: 4px; }
+    .kwp-fi { display: grid; grid-template-columns: 22px 1fr auto; align-items: center; gap: 10px; width: 100%; text-align: left; background: rgba(255,255,255,0.04); border: 0.5px solid rgba(122,184,181,0.18); border-left: 2px solid var(--frist-gelb); border-radius: 5px; padding: 0.5rem 0.7rem; cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.15s; }
+    .kwp-fi:hover, .kwp-fi.is-active { background: rgba(255,255,255,0.1); }
+    .kwp-fi--krit { border-left-color: var(--tommy-rot); }
+    .kwp-fi__nr { font-size: 11px; font-weight: 600; color: #fff; background: rgba(0,0,0,0.25); border-radius: 4px; text-align: center; padding: 2px 0; }
+    .kwp-fi__name { font-size: 12.5px; color: rgba(255,255,255,0.9); line-height: 1.35; }
+    .kwp-fi__amp { font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; font-weight: 600; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; }
+    .kwp-fi__amp--rot { color: #ff8497; }
+    .kwp-fi__amp--gelb { color: var(--frist-gelb); }
+    .kwp-dash__note { margin-top: 1.25rem; padding-top: 1rem; border-top: 0.5px solid rgba(122,184,181,0.15); font-size: 12px; color: rgba(255,255,255,0.62); line-height: 1.6; font-family: 'Inter', sans-serif; }
+    .kwp-dash__doclink { margin-top: 1rem; }
+    .kwp-dash__doclink a { font-size: 12.5px; color: var(--signal); font-weight: 500; }
+    .kwp-dash__doclink a:hover { text-decoration: underline; }
+
+    /* === PROZESS-TIMELINE === */
+    .kwp-tl__abgrenzung { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; border-left: 2px solid var(--petrol-light); padding-left: 0.85rem; margin-bottom: 1.5rem; font-style: italic; max-width: 640px; }
+    .kwp-tl { position: relative; margin-left: 6px; padding-left: 1.75rem; }
+    .kwp-tl::before { content: ''; position: absolute; left: 5px; top: 4px; bottom: 38px; width: 2px; background: linear-gradient(var(--petrol-light), var(--petrol-light) 70%, transparent); }
+    .kwp-tl-item { position: relative; padding-bottom: 1.1rem; }
+    .kwp-tl-item__dot { position: absolute; left: -1.75rem; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--petrol); border: 2px solid var(--white); box-shadow: 0 0 0 1px var(--petrol-light); }
+    .kwp-tl-item--meilenstein .kwp-tl-item__dot { background: var(--signal); box-shadow: 0 0 0 1px var(--signal-dark); }
+    .kwp-tl-item--beitrag .kwp-tl-item__dot { background: var(--context-blue); }
+    .kwp-tl-item--offen .kwp-tl-item__dot { background: var(--white); box-shadow: 0 0 0 1.5px var(--petrol-light); }
+    .kwp-tl-det summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: center; }
+    .kwp-tl-det summary::-webkit-details-marker { display: none; }
+    .kwp-tl-date { grid-column: 1; font-size: 12px; font-family: 'Inter', sans-serif; color: var(--petrol); font-weight: 600; }
+    .kwp-tl-chev { grid-column: 2; grid-row: 1 / span 2; font-size: 10px; color: var(--text-tertiary); transition: transform 0.2s; align-self: center; }
+    .kwp-tl-det[open] .kwp-tl-chev { transform: rotate(90deg); }
+    .kwp-tl-titel { grid-column: 1; font-size: 14px; color: var(--text-primary); line-height: 1.4; }
+    .kwp-tl-badge { display: inline-block; font-size: 8.5px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; font-family: 'Inter', sans-serif; border-radius: 3px; padding: 1px 6px; margin-bottom: 4px; }
+    .kwp-tl-badge--meilenstein { background: var(--signal); color: var(--petrol-dark); }
+    .kwp-tl-badge--etappe { background: var(--bg-light); color: var(--text-secondary); border: 0.5px solid var(--border); }
+    .kwp-tl-badge--beitrag { background: rgba(126,150,150,0.18); color: var(--context-blue); border: 0.5px solid var(--context-blue); }
+    .kwp-tl-body { margin: 0.4rem 0 0; }
+    .kwp-tl-det:not([open]) .kwp-tl-body { display: none; }
+    .kwp-tl-zus { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.5rem; }
+    .kwp-tl-kom { font-size: 12.5px; color: var(--text-primary); line-height: 1.6; border-left: 2px solid var(--signal-dark); padding-left: 0.75rem; }
+    .kwp-tl-kom-lbl { display: block; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--petrol); font-weight: 700; margin-bottom: 2px; font-family: 'Inter', sans-serif; }
+    .kwp-tl-item--offen .kwp-tl-titel { color: var(--petrol); }
+    .kwp-tl-heute { position: relative; padding-bottom: 1.1rem; }
+    .kwp-tl-heute__dot { position: absolute; left: calc(-1.75rem - 1px); top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--tommy-rot); border: 2px solid var(--white); box-shadow: 0 0 0 1px var(--tommy-rot); }
+    .kwp-tl-heute__lbl { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--tommy-rot); font-weight: 700; font-family: 'Inter', sans-serif; }
+    .kwp-tl-tail { position: relative; font-size: 11.5px; color: var(--text-tertiary); font-style: italic; font-family: 'Inter', sans-serif; padding-top: 2px; }
+    .kwp-tl-tail__dot { position: absolute; left: -1.75rem; top: 5px; width: 8px; height: 8px; border-radius: 50%; border: 1.5px dashed var(--petrol-light); }
+
+    /* === FORDERUNGEN === */
+    .kwp-ford { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .kwp-ford__col { border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .kwp-ford__head { padding: 0.85rem 1rem; color: #fff; }
+    .kwp-ford__head--rot { background: var(--tommy-rot); }
+    .kwp-ford__head--gelb { background: var(--frist-gelb); }
+    .kwp-ford__head--blau { background: var(--gov-blau); }
+    .kwp-ford__frist { font-size: 9.5px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.9; font-family: 'Inter', sans-serif; }
+    .kwp-ford__titel { font-family: 'Playfair Display', Georgia, serif; font-size: 17px; }
+    .kwp-ford__intro { font-size: 11.5px; color: var(--text-secondary); line-height: 1.5; padding: 0.75rem 1rem; border-bottom: 0.5px solid var(--border); background: var(--bg-light); }
+    .kwp-ford__list { list-style: none; padding: 0.4rem 0; }
+    .kwp-ford__item { display: grid; grid-template-columns: 26px 1fr; gap: 8px; padding: 0.6rem 1rem; border-bottom: 0.5px solid var(--border); }
+    .kwp-ford__item:last-child { border-bottom: none; }
+    .kwp-ford__nr { font-size: 11px; font-weight: 600; color: #fff; border-radius: 4px; text-align: center; height: 20px; line-height: 20px; }
+    .kwp-ford__nr--rot { background: var(--tommy-rot); }
+    .kwp-ford__nr--gelb { background: var(--frist-gelb); }
+    .kwp-ford__nr--blau { background: var(--gov-blau); }
+    .kwp-ford__txt { font-size: 12.5px; color: var(--text-primary); line-height: 1.45; }
+    .kwp-ford__rg { display: block; font-size: 10.5px; color: var(--text-tertiary); margin-top: 3px; }
+    .kwp-ford__status { display: inline-block; font-size: 9px; letter-spacing: 0.5px; text-transform: uppercase; font-weight: 700; color: #1a4f4d; background: #d4f0d0; border: 0.5px solid #8ec8a4; border-radius: 3px; padding: 0 5px; margin-left: 5px; }
+
+    /* === UPDATE / CTA === */
+    .kwp-update { background: var(--bg-light); border-radius: var(--radius); padding: 1.75rem; display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+    .kwp-update__body { flex: 1; min-width: 240px; }
+    .kwp-update__body p { font-size: 13px; color: var(--text-secondary); line-height: 1.65; margin: 0; }
+    .kwp-update__body strong { color: var(--text-primary); font-weight: 500; }
+
+    /* === FLUGHÖHEN-STREIFEN === */
+    .kwp-fh { background: var(--petrol-dark); }
+    .kwp-fh__lbl { color: var(--petrol-light); }
+    .kwp-fh__title { color: #fff; font-size: 20px; margin-bottom: 0.4rem; }
+    .kwp-fh__sub { color: #a8d4d2; font-size: 13.5px; margin-bottom: 1.5rem; max-width: 600px; }
+    .kwp-fh__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+    .kwp-fh__tile { display: block; padding: 1.1rem 1rem; border: 0.5px solid rgba(122,184,181,0.25); border-radius: var(--radius); background: rgba(255,255,255,0.03); transition: background 0.2s, border-color 0.2s; }
+    .kwp-fh__tile:hover { text-decoration: none; background: rgba(255,255,255,0.07); border-color: var(--petrol-light); }
+    .kwp-fh__tile-eb { font-size: 9.5px; letter-spacing: 1px; text-transform: uppercase; color: var(--petrol-light); font-family: 'Inter', sans-serif; margin-bottom: 0.4rem; }
+    .kwp-fh__tile-name { font-size: 13.5px; color: #fff; line-height: 1.4; }
+    .kwp-fh__tile--current { background: rgba(207,247,127,0.1); border-color: var(--signal); }
+    .kwp-fh__tile--current .kwp-fh__tile-eb { color: var(--signal); }
+    .kwp-fh__tile--current .kwp-fh__tile-name { color: var(--signal); }
+
+    /* FOOTER */
+    .footer { border-top: 0.5px solid var(--border); padding: 1.5rem 0; }
+    .footer__inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .footer__left, .footer__right { font-size: 12px; color: var(--text-tertiary); }
+    .footer__right a { color: var(--text-tertiary); }
+    .footer__right a:hover { color: var(--petrol); }
+
+    /* HAMBURGER + MOBILE */
+    .nav__hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 8px; gap: 5px; flex-shrink: 0; }
+    .nav__hamburger span { display: block; width: 22px; height: 1.5px; background: var(--text-primary); transition: all 0.25s ease; transform-origin: center; }
+    .nav__hamburger.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav__hamburger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__hamburger.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .nav__mobile-menu { display: none; background: var(--white); border-top: 0.5px solid var(--border); padding: 0.5rem 1.25rem 1rem; }
+    .nav__mobile-menu.is-open { display: block; }
+    .nav__mobile-menu ul { list-style: none; display: flex; flex-direction: column; }
+    .nav__mobile-menu li a { display: block; padding: 0.875rem 0; font-size: 15px; color: var(--text-secondary); text-decoration: none; border-bottom: 0.5px solid var(--border); font-family: 'Inter', sans-serif; transition: color 0.2s; }
+    .nav__mobile-menu li:last-child a { border-bottom: none; }
+    .nav__mobile-menu li a:hover, .nav__mobile-menu li a.is-current { color: var(--petrol); }
+    .nav__mobile-menu li a.is-sub { padding-left: 1rem; font-size: 14px; color: var(--text-tertiary); }
+
+    @media (max-width: 880px) {
+      .kwp-dash__grid { grid-template-columns: 1fr; }
+      .kwp-radar__chart { max-width: 420px; margin: 0 auto; }
+      .kwp-ford { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 680px) {
+      h1, .hero__headline { font-size: 23px; }
+      .nav__links { display: none; }
+      .nav__hamburger { display: flex; }
+      .kwp-hero__art { display: none; }
+      .hero__content { padding: 2rem 1.25rem; }
+      .container { padding: 0 1.25rem; }
+      .kwp-dash { padding: 1.5rem 1.1rem 1.75rem; }
+      .kwp-fh__grid { grid-template-columns: 1fr 1fr; }
+      .footer__inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo" aria-label="hausentscheider — Startseite">
+        <svg width="180" height="28" viewBox="0 0 180 28" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">haus</text>
+          <text x="58" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">entscheider</text>
+          <line x1="0" y1="26" x2="56" y2="26" stroke="#1a5c5a" stroke-width="2" stroke-linecap="square"/>
+        </svg>
+      </a>
+      <nav aria-label="Hauptnavigation">
+        <ul class="nav__links">
+          <li><a href="index.html#ansatz">Ansatz</a></li>
+          <li><a href="index.html#objekte">Objekte</a></li>
+          <li><a href="wegweiser.html">Wegweiser</a></li>
+          <li class="nav__dropdown">
+            <button class="nav__dropdown-toggle is-current" aria-haspopup="true">Wärmeplanung ▾</button>
+            <div class="nav__dropdown-menu" role="menu">
+              <a href="kwp-erfurt.html" role="menuitem">Erfurt — Kommunale Wärmeplanung <span class="nav__city-badge">aktuell</span></a>
+            </div>
+          </li>
+          <li><a href="index.html#ueber">Über Hausentscheider</a></li>
+          <li><a href="index.html#kontakt">Dialog</a></li>
+        </ul>
+      </nav>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Menü öffnen" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav__mobile-menu" id="nav-mobile-menu">
+      <ul>
+        <li><a href="index.html#ansatz">Ansatz</a></li>
+        <li><a href="index.html#objekte">Objekte</a></li>
+        <li><a href="wegweiser.html">Wegweiser</a></li>
+        <li><a href="kwp-erfurt.html" class="is-current">Wärmeplanung</a></li>
+        <li><a href="kwp-erfurt.html" class="is-sub is-current">↳ Erfurt — Kommunale Wärmeplanung</a></li>
+        <li><a href="index.html#ueber">Über Hausentscheider</a></li>
+        <li><a href="index.html#kontakt">Dialog</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Einführung">
+    <div class="hero__bg"></div>
+    <div class="kwp-hero__art" id="kwp-hero-art" aria-hidden="true"></div>
+    <div class="hero__content">
+      <p class="hero__eyebrow">Kommunale Wärmeplanung · Erfurt</p>
+      <h1 class="hero__headline">Vom Ziel zur Fähigkeit — die Erfurter Wärmeplanung im Future-Readiness-Spiegel</h1>
+      <p class="hero__sub">Ein unabhängiges Monitoring des kommunalen Wärmeplans: dieselbe Future-Readiness-Methodik, die wir auf einzelne Gebäude anwenden — angewandt auf die ganze Stadt. Belegt statt behauptet.</p>
+      <p class="kwp-hero__stand"><span class="kwp-hero__stand-dot"></span>Bewertungsstand: Wärmeplan 26.03.2026 · Bewertung 14.05.2026 — Update nach der Endfassung (30.06.2026)</p>
+    </div>
+  </section>
+
+  <!-- EINLEITUNG / STATUS QUO -->
+  <section class="section">
+    <div class="container kwp-intro">
+      <span class="label" style="margin-bottom:1rem;">Was die KWP leistet — und was diese Seite tut</span>
+      <p>Erfurt hat seinen Wärmeplan <strong>termingerecht</strong> vorgelegt — in einer komplizierten Bundes-Gesetzeslage, baublockscharf für alle 53 Ortsteile, mit ehrlicher Risiko-Benennung und einem dreistufigen Controlling-Konzept. Das ist nicht selbstverständlich und verdient Anerkennung.</p>
+      <p>Diese Seite begleitet den Plan <strong>unabhängig</strong> — als das Monitoring, das der Plan für sich selbst einfordert (ein jährliches Kennzahlen-Dashboard, eine externe Prüfinstanz, Open Data), das die Stadt selbst aber erst ab 2027 mit der adressbezogenen M16-Plattform aufbauen will. Grundlage ist die eingereichte Stellungnahme aus Eigentümer- und Forschungsperspektive.</p>
+      <p>Gemessen wird der Plan an <strong>elf Kompetenzfeldern der Future Readiness</strong>: nicht, was er heute plant, sondern wie zukunftsfähig er über zwanzig Jahre steuert. Die Bewertung ist eine Einordnung, kein Pranger — Stärken zuerst, dann die strukturellen Lücken, die heute noch korrigierbar sind.</p>
+    </div>
+  </section>
+
+  <!-- FRI-DASHBOARD -->
+  <section class="section" id="dashboard">
+    <div class="container">
+      <div class="kwp-dash">
+        <p class="kwp-dash__lbl">Future Readiness Index · Forschung × Stadt</p>
+        <h2 class="kwp-dash__title">Der Future-Readiness-Spiegel der Stadt — Ist gegen Soll</h2>
+        <p class="kwp-dash__intro">Die <strong>grüne Linie</strong> ist das zukunftsfähige Soll (Ring 5), die <strong>rote Fläche</strong> der heutige Stand. Die Differenz ist die Wirkung, die in der Stellungnahme steckt. Vier Felder stehen auf Rot — <strong>Soziales, Digitales, Wirtschaftlichkeit, Integrität</strong>. Tippen Sie ein Feld für den Befund.</p>
+        <div class="kwp-dash__grid">
+          <div>
+            <div id="kwp-radar"><p style="color:rgba(255,255,255,0.6);font-size:13px;">Dashboard wird geladen …</p></div>
+            <div class="kwp-radar__legend">
+              <span><i class="kwp-leg-soll"></i> Soll — zukunftsfähig (5)</span>
+              <span><i class="kwp-leg-ist"></i> Ist — heute</span>
+              <span><i class="kwp-amp kwp-amp--rot">&#9679;</i> strukturelle Lücke</span>
+              <span><i class="kwp-amp kwp-amp--gelb">&#9680;</i> teilweise erfüllt</span>
+            </div>
+          </div>
+          <div>
+            <div class="kwp-readout" id="kwp-readout">Außenring (grün) = zukunftsfähig (Soll&nbsp;5), gefüllte Fläche (rot) = heute (Ist). Tippen Sie ein Feld für die Kurzbegründung.</div>
+            <div class="kwp-fields" id="kwp-fields"></div>
+          </div>
+        </div>
+        <p class="kwp-dash__note" id="kwp-konvergenz"></p>
+        <p class="kwp-dash__doclink"><a href="dokumente/260514_Stellungnahme_KWP_Erfurt_v6.pdf" target="_blank" rel="noopener">Vollständige Stellungnahme lesen (PDF) →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROZESS-TIMELINE -->
+  <section class="section" id="prozess">
+    <div class="container">
+      <span class="label" style="margin-bottom:0.6rem;">Der Weg des Plans</span>
+      <h2 style="margin-bottom:0.6rem;">Etappe für Etappe — von der Analyse zur Endfassung</h2>
+      <p class="kwp-tl__abgrenzung">Die Startseite verfolgt den <em>Diskurs</em> — was über die Wärmewende berichtet wird. Hier verfolgen wir den <em>Plan</em> selbst: was die Stadt tut. Die Phase ab dem 30. Juni läuft offen weiter; die Bewertung wird dann fortgeschrieben.</p>
+      <div id="kwp-timeline"><p style="color:var(--text-tertiary);font-size:13px;">Zeitstrahl wird geladen …</p></div>
+    </div>
+  </section>
+
+  <!-- FORDERUNGEN -->
+  <section class="section" id="forderungen">
+    <div class="container">
+      <span class="label" style="margin-bottom:0.6rem;">Was zwischen Ist und Soll liegt</span>
+      <h2 style="margin-bottom:0.6rem;">23 Forderungen — die Bauanleitung</h2>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;max-width:680px;margin-bottom:1.5rem;">Die Differenz zwischen rotem Ist und grünem Soll ist kein Vorwurf, sondern eine Bauanleitung — gestaffelt nach Frist: <strong style="color:var(--tommy-rot);">sofort</strong>, <strong style="color:var(--frist-gelb);">strukturell</strong>, <strong style="color:var(--gov-blau);">Governance</strong>.</p>
+      <div id="kwp-forderungen"><p style="color:var(--text-tertiary);font-size:13px;">Forderungen werden geladen …</p></div>
+    </div>
+  </section>
+
+  <!-- UPDATE / CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="kwp-update">
+        <div class="kwp-update__body">
+          <p><strong>Lebendig und ehrlich:</strong> Diese Bewertung bezieht sich auf den Stand 26.03./14.05.2026 und wird nach Veröffentlichung der Endfassung am 30.06.2026 sowie der M16-Plattform aktualisiert. Bis die Stadt ihr eigenes Dashboard hat, macht diese Seite den Stand sichtbar und prüfbar.</p>
+        </div>
+        <a class="btn btn--primary" href="dokumente/260514_Stellungnahme_KWP_Erfurt_v6.pdf" target="_blank" rel="noopener" style="flex-shrink:0;">Stellungnahme (PDF) →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLUGHÖHEN-STREIFEN -->
+  <section class="section kwp-fh">
+    <div class="container">
+      <span class="label kwp-fh__lbl" style="margin-bottom:0.6rem;">Vier Flughöhen, eine Methodik</span>
+      <h2 class="kwp-fh__title">Wie alles zusammenhängt</h2>
+      <p class="kwp-fh__sub">Der Future Readiness Index ist die Klammer — einmal aufs Gebäude angewandt, einmal auf die Stadt. So wird dieselbe Frage auf vier Ebenen lesbar: das Grundsätzliche, das Mediale, das Konkrete und das Systemische.</p>
+      <div class="kwp-fh__grid">
+        <a class="kwp-fh__tile" href="wegweiser.html">
+          <span class="kwp-fh__tile-eb">Grundsätzlich</span>
+          <span class="kwp-fh__tile-name">Wegweiser — die 20 Fragen</span>
+        </a>
+        <a class="kwp-fh__tile" href="index.html#medien-zeitstrahl">
+          <span class="kwp-fh__tile-eb">Medial</span>
+          <span class="kwp-fh__tile-name">Wärmewende im Blick</span>
+        </a>
+        <a class="kwp-fh__tile" href="index.html#objekte">
+          <span class="kwp-fh__tile-eb">Konkret</span>
+          <span class="kwp-fh__tile-name">Referenzobjekt — Gebäude-FRI</span>
+        </a>
+        <a class="kwp-fh__tile kwp-fh__tile--current" href="kwp-erfurt.html">
+          <span class="kwp-fh__tile-eb">Systemisch · hier</span>
+          <span class="kwp-fh__tile-name">Stadt — Kommunale Wärmeplanung</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__left">
+          <a href="index.html" style="text-decoration:none;display:inline-flex;align-items:center;vertical-align:middle;">
+            <svg width="130" height="20" viewBox="0 0 130 20" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+              <text x="0" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">haus</text>
+              <text x="42" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">entscheider</text>
+              <line x1="0" y1="18" x2="40" y2="18" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+            </svg>
+          </a>
+          &nbsp;·&nbsp;Daniel Schöberl&nbsp;·&nbsp;Erfurt / München
+        </div>
+        <div class="footer__right" style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+          <a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a>
+          &nbsp;·&nbsp;
+          <a href="index.html#impressum" style="font-size:12px;">Impressum</a>
+          &nbsp;·&nbsp;
+          <a href="datenschutz.html" style="font-size:12px;">Datenschutz</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Hamburger Menu
+    (function() {
+      var btn  = document.getElementById('nav-hamburger');
+      var menu = document.getElementById('nav-mobile-menu');
+      if (!btn || !menu) return;
+      btn.addEventListener('click', function() {
+        var isOpen = menu.classList.toggle('is-open');
+        btn.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', isOpen);
+        btn.setAttribute('aria-label', isOpen ? 'Menü schließen' : 'Menü öffnen');
+      });
+      menu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          menu.classList.remove('is-open');
+          btn.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.setAttribute('aria-label', 'Menü öffnen');
+        });
+      });
+    })();
+  </script>
+
+  <!-- KWP-Dashboard: Daten + Render -->
+  <script>
+    (function () {
+      var MONTHS = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+      function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+      function parse(d){ return new Date(d + 'T00:00:00'); }
+      function heuteISO(){ var n=new Date(), m=('0'+(n.getMonth()+1)).slice(-2), d=('0'+n.getDate()).slice(-2); return n.getFullYear()+'-'+m+'-'+d; }
+      function heuteLabel(){ var n=new Date(); return n.getDate()+'. '+MONTHS[n.getMonth()]+' '+n.getFullYear(); }
+      var AMP = { rot: { sym: '●', cls: 'rot', label: 'rot' }, gelb: { sym: '◐', cls: 'gelb', label: 'gelb' }, gruen: { sym: '○', cls: 'gruen', label: 'grün' } };
+
+      function getJSON(url){ return fetch(url, { cache: 'no-cache' }).then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status+' '+url); return r.json(); }); }
+
+      /* ---------- RADAR ---------- */
+      function radarSVG(felder, maxV, opts){
+        opts = opts || {};
+        var n = felder.length, S = 320, cx = S/2, cy = S/2, R = 118, labelR = R + 20;
+        function pt(i, r){ var a = -Math.PI/2 + i*2*Math.PI/n; return [ +(cx + r*Math.cos(a)).toFixed(1), +(cy + r*Math.sin(a)).toFixed(1) ]; }
+        function ring(r){ return felder.map(function(f,i){ return pt(i,r).join(','); }).join(' '); }
+        var svg = '<svg class="kwp-radar__chart" viewBox="0 0 '+S+' '+S+'" role="img" aria-label="Future-Readiness-Netzdiagramm: elf Kompetenzfelder, Ist (rot) gegen Soll (grün, Ring 5)">';
+        for (var v=1; v<=maxV; v++){ svg += '<polygon class="kwp-radar__grid" points="'+ring(R*v/maxV)+'"/>'; }
+        felder.forEach(function(f,i){ var p=pt(i,R); svg += '<line class="kwp-radar__axis" x1="'+cx+'" y1="'+cy+'" x2="'+p[0]+'" y2="'+p[1]+'"/>'; });
+        svg += '<polygon class="kwp-radar__soll" points="'+ felder.map(function(f,i){ return pt(i, R*(f.soll||maxV)/maxV).join(','); }).join(' ') +'"/>';
+        svg += '<polygon class="kwp-radar__ist" points="'+ felder.map(function(f,i){ return pt(i, R*f.ist/maxV).join(','); }).join(' ') +'"/>';
+        if (!opts.decorative){
+          felder.forEach(function(f,i){ var p=pt(i, R*f.ist/maxV); var krit = f.ampel==='rot'; svg += '<circle class="kwp-radar__pt'+(krit?' kwp-radar__pt--krit':'')+'" cx="'+p[0]+'" cy="'+p[1]+'" r="4.5"/>'; });
+          felder.forEach(function(f,i){ var p=pt(i, labelR); var krit = f.ampel==='rot';
+            svg += '<g class="kwp-radar__marker" data-nr="'+f.feld+'" tabindex="0" role="button" aria-label="'+esc(f.name)+', Ist '+f.ist+' von '+maxV+'">' +
+              '<circle class="kwp-radar__num'+(krit?' kwp-radar__num--krit':'')+'" cx="'+p[0]+'" cy="'+p[1]+'" r="11.5"/>' +
+              '<text class="kwp-radar__numtext" x="'+p[0]+'" y="'+p[1]+'">'+f.feld+'</text></g>';
+          });
+        }
+        svg += '</svg>';
+        return svg;
+      }
+
+      function renderDashboard(data){
+        var felder = data.felder || [], maxV = data.skala_max || 5;
+        var radarEl = document.getElementById('kwp-radar');
+        var fieldsEl = document.getElementById('kwp-fields');
+        var readout = document.getElementById('kwp-readout');
+        radarEl.innerHTML = radarSVG(felder, maxV, {});
+
+        var list = '';
+        felder.forEach(function(f){
+          var a = AMP[f.ampel] || AMP.gelb, krit = f.ampel==='rot';
+          list += '<button type="button" class="kwp-fi'+(krit?' kwp-fi--krit':'')+'" data-nr="'+f.feld+'">' +
+            '<span class="kwp-fi__nr">'+f.feld+'</span>' +
+            '<span class="kwp-fi__name">'+esc(f.name)+'</span>' +
+            '<span class="kwp-fi__amp kwp-fi__amp--'+a.cls+'">'+a.sym+' '+f.ist+'/'+maxV+'</span></button>';
+        });
+        fieldsEl.innerHTML = list;
+
+        function select(nr){
+          var f = felder.find(function(x){ return String(x.feld) === String(nr); });
+          if (!f) return;
+          var a = AMP[f.ampel] || AMP.gelb;
+          readout.innerHTML = '<strong>'+f.feld+' · '+esc(f.name)+' — Ist '+f.ist+'/'+maxV+' ('+a.sym+' '+a.label+')</strong>' +
+            '<span class="kwp-readout__skala">1 = '+esc(f.defizit1)+'  ·  5 = '+esc(f.soll5)+'</span>' + esc(f.begruendung);
+          fieldsEl.querySelectorAll('.kwp-fi').forEach(function(b){ b.classList.toggle('is-active', String(b.dataset.nr)===String(nr)); });
+          radarEl.querySelectorAll('.kwp-radar__marker').forEach(function(g){ g.classList.toggle('is-active', String(g.dataset.nr)===String(nr)); });
+        }
+        fieldsEl.addEventListener('click', function(e){ var el=e.target.closest('[data-nr]'); if(el) select(el.dataset.nr); });
+        radarEl.addEventListener('click', function(e){ var el=e.target.closest('[data-nr]'); if(el) select(el.dataset.nr); });
+        radarEl.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ var el=e.target.closest('.kwp-radar__marker[data-nr]'); if(el){ e.preventDefault(); select(el.dataset.nr); } } });
+
+        // Hero-Motiv (dekorativ, gleiche Daten, ohne Interaktion)
+        var heroArt = document.getElementById('kwp-hero-art');
+        if (heroArt) heroArt.innerHTML = radarSVG(felder, maxV, { decorative: true });
+
+        // Konvergenz-Hinweis (Fremdquelle, neutral)
+        var konv = document.getElementById('kwp-konvergenz');
+        if (konv) konv.innerHTML = 'Unabhängig davon kommt eine zweite eingereichte Stellungnahme (Klimaentscheid Erfurt) in den Kernlücken — Kosten, Wasserstoff, Plan B für die Geothermie, Mieter- und Sozialperspektive — zu vergleichbaren Befunden. Dass mehrere Stellungnahmen unabhängig konvergieren, härtet „belegt statt behauptet“.';
+      }
+
+      /* ---------- TIMELINE ---------- */
+      function renderTimeline(data){
+        var el = document.getElementById('kwp-timeline');
+        var entries = (data.eintraege || []).slice().sort(function(a,b){ return parse(a.datum) - parse(b.datum); });
+        if (!entries.length){ el.innerHTML = ''; return; }
+        var hISO = heuteISO();
+        var firstFutureISO = null;
+        entries.forEach(function(e){ if(!firstFutureISO && parse(e.datum) > parse(hISO)) firstFutureISO = e.datum; });
+
+        var BADGE = { meilenstein:'Meilenstein', etappe:'Etappe', beitrag:'Beitrag' };
+        var html = '<div class="kwp-tl">';
+        var heutePlatziert = false;
+        entries.forEach(function(e){
+          if (!heutePlatziert && firstFutureISO && e.datum === firstFutureISO){
+            html += '<div class="kwp-tl-heute"><span class="kwp-tl-heute__dot"></span><span class="kwp-tl-heute__lbl">Heute · '+esc(heuteLabel())+'</span></div>';
+            heutePlatziert = true;
+          }
+          var art = e.art || 'etappe';
+          var cls = 'kwp-tl-item kwp-tl-item--'+art + (e.offen ? ' kwp-tl-item--offen' : '');
+          html += '<div class="'+cls+'"><span class="kwp-tl-item__dot"></span>' +
+            '<details class="kwp-tl-det"'+(e.offen?' open':'')+'>' +
+              '<summary>' +
+                '<span class="kwp-tl-date">'+esc(e.datumLabel)+'</span>' +
+                '<span class="kwp-tl-chev">▸</span>' +
+                '<span class="kwp-tl-titel"><span class="kwp-tl-badge kwp-tl-badge--'+art+'">'+(BADGE[art]||'Etappe')+'</span><br>'+esc(e.titel)+'</span>' +
+              '</summary>' +
+              '<div class="kwp-tl-body">' +
+                '<p class="kwp-tl-zus">'+esc(e.zusammenfassung)+'</p>' +
+                (e.kommentar ? '<p class="kwp-tl-kom"><span class="kwp-tl-kom-lbl">Einordnung</span>'+esc(e.kommentar)+'</p>' : '') +
+                (e.link ? '<p style="margin-top:0.5rem;"><a href="'+esc(e.link)+'" target="_blank" rel="noopener" style="font-size:12px;">Quelle ansehen →</a></p>' : '') +
+              '</div>' +
+            '</details></div>';
+        });
+        if (!heutePlatziert){
+          html += '<div class="kwp-tl-heute"><span class="kwp-tl-heute__dot"></span><span class="kwp-tl-heute__lbl">Heute · '+esc(heuteLabel())+'</span></div>';
+        }
+        html += '<div class="kwp-tl-tail"><span class="kwp-tl-tail__dot"></span>wird laufend ergänzt</div>';
+        html += '</div>';
+        el.innerHTML = html;
+      }
+
+      /* ---------- FORDERUNGEN ---------- */
+      function renderForderungen(data){
+        var el = document.getElementById('kwp-forderungen');
+        var ebenen = data.ebenen || [];
+        if (!ebenen.length){ el.innerHTML = ''; return; }
+        var html = '<div class="kwp-ford">';
+        ebenen.forEach(function(eb){
+          var c = eb.farbe || 'gelb';
+          html += '<div class="kwp-ford__col">' +
+            '<div class="kwp-ford__head kwp-ford__head--'+c+'">' +
+              '<span class="kwp-ford__frist">'+esc(eb.frist)+'</span>' +
+              '<div class="kwp-ford__titel">'+esc(eb.titel)+'</div>' +
+            '</div>' +
+            '<p class="kwp-ford__intro">'+esc(eb.intro)+'</p>' +
+            '<ul class="kwp-ford__list">';
+          (eb.forderungen || []).forEach(function(f){
+            var status = (f.status === 'erfuellt') ? '<span class="kwp-ford__status">erfüllt</span>' : '';
+            html += '<li class="kwp-ford__item">' +
+              '<span class="kwp-ford__nr kwp-ford__nr--'+c+'">'+f.nr+'</span>' +
+              '<span class="kwp-ford__txt">'+esc(f.titel)+status +
+                (f.rechtsgrundlage ? '<span class="kwp-ford__rg">'+esc(f.rechtsgrundlage)+'</span>' : '') +
+              '</span></li>';
+          });
+          html += '</ul></div>';
+        });
+        html += '</div>';
+        el.innerHTML = html;
+      }
+
+      /* ---------- LADEN ---------- */
+      getJSON('daten/kwp-fri-erfurt.json').then(renderDashboard).catch(function(err){
+        console.error('[KWP-Dashboard]', err);
+        var r = document.getElementById('kwp-radar'); if (r) r.innerHTML = '<p style="color:rgba(255,255,255,0.7);font-size:13px;">Das Dashboard wird gerade aktualisiert.</p>';
+      });
+      getJSON('daten/kwp-timeline-erfurt.json').then(renderTimeline).catch(function(err){
+        console.error('[KWP-Timeline]', err);
+        var t = document.getElementById('kwp-timeline'); if (t) t.innerHTML = '<p style="color:var(--text-tertiary);font-size:13px;">Der Zeitstrahl wird gerade aktualisiert.</p>';
+      });
+      getJSON('daten/kwp-forderungen-erfurt.json').then(renderForderungen).catch(function(err){
+        console.error('[KWP-Forderungen]', err);
+        var f = document.getElementById('kwp-forderungen'); if (f) f.innerHTML = '<p style="color:var(--text-tertiary);font-size:13px;">Die Forderungen werden gerade aktualisiert.</p>';
+      });
+    })();
+  </script>
+
+</body>
+</html>
