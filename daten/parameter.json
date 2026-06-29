@@ -235,43 +235,48 @@
     },
     "WartGas": {
       "label": "Wartung Gas-Brennwert",
-      "default": 0.025,
+      "default": 0.02,
       "min": 0.015,
       "max": 0.035,
       "einheit": "%",
-      "quelle": "Q-WART-01"
+      "quelle": "Q-WART-01",
+      "kommentar": "v2.1 (05.05.2026): an engine.js _wartungsquote angeglichen (vorher 0,025) — engine.js ist führend"
     },
     "WartHybrid": {
       "label": "Wartung Hybrid",
-      "default": 0.03,
+      "default": 0.035,
       "min": 0.025,
       "max": 0.04,
       "einheit": "%",
-      "quelle": "Q-WART-02"
+      "quelle": "Q-WART-02",
+      "kommentar": "v2.1 (05.05.2026): an engine.js _wartungsquote angeglichen (vorher 0,03) — engine.js ist führend"
     },
     "WartWP": {
       "label": "Wartung Waermepumpe",
-      "default": 0.02,
+      "default": 0.015,
       "min": 0.01,
       "max": 0.03,
       "einheit": "%",
-      "quelle": "Q-WART-03"
+      "quelle": "Q-WART-03",
+      "kommentar": "v2.1 (05.05.2026): an engine.js _wartungsquote angeglichen (vorher 0,02) — engine.js ist führend"
     },
     "WartFW": {
       "label": "Wartung Fernwaerme",
-      "default": 0.015,
+      "default": 0.01,
       "min": 0.01,
       "max": 0.02,
       "einheit": "%",
-      "quelle": "Q-WART-04"
+      "quelle": "Q-WART-04",
+      "kommentar": "v2.1 (05.05.2026): an engine.js _wartungsquote angeglichen (vorher 0,015) — engine.js ist führend"
     },
     "WartPellets": {
       "label": "Wartung Pellets",
-      "default": 0.035,
+      "default": 0.03,
       "min": 0.025,
       "max": 0.045,
       "einheit": "%",
-      "quelle": "Q-WART-05"
+      "quelle": "Q-WART-05",
+      "kommentar": "v2.1 (05.05.2026): an engine.js _wartungsquote angeglichen (vorher 0,035) — engine.js ist führend"
     },
     "GdWUntergrenze": {
       "label": "GdW-Soll Erhaltungsruecklage Untergrenze",
