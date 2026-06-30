@@ -304,7 +304,7 @@
     .oz-tl-wrap::before, .oz-tl-wrap::after { content: ''; position: absolute; left: 0; right: 8px; height: 22px; pointer-events: none; z-index: 2; }
     .oz-tl-wrap::before { top: 0; background: linear-gradient(#ffffff, rgba(255,255,255,0)); }
     .oz-tl-wrap::after { bottom: 0; background: linear-gradient(rgba(255,255,255,0), #ffffff); }
-    .oz-tl-scroll { max-height: 480px; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding-right: 8px; scrollbar-width: thin; scrollbar-color: var(--petrol-light) transparent; }
+    .oz-tl-scroll { max-height: 480px; overflow-y: auto; overscroll-behavior: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; padding-right: 8px; scrollbar-width: thin; scrollbar-color: var(--petrol-light) transparent; }
     .oz-tl-scroll::-webkit-scrollbar { width: 8px; }
     .oz-tl-scroll::-webkit-scrollbar-track { background: transparent; }
     .oz-tl-scroll::-webkit-scrollbar-thumb { background: var(--petrol-light); border-radius: 4px; }
@@ -720,7 +720,7 @@
       .wib-legend__desc { color: #93a09c; }
 
       /* Vertikale, proportionale Detail-Achse */
-      .wib-scroll { max-height: 560px; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding-right: 8px; scrollbar-width: thin; scrollbar-color: var(--tommy-rot) transparent; }
+      .wib-scroll { max-height: 560px; overflow-y: auto; overscroll-behavior: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; padding-right: 8px; scrollbar-width: thin; scrollbar-color: var(--tommy-rot) transparent; }
       .wib-scroll::-webkit-scrollbar { width: 8px; }
       .wib-scroll::-webkit-scrollbar-thumb { background: var(--tommy-rot); border-radius: 4px; }
       .wib-axis { position: relative; }
