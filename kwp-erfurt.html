@@ -140,11 +140,12 @@
 
     /* === PROZESS-TIMELINE === */
     .kwp-tl__abgrenzung { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; border-left: 2px solid var(--petrol-light); padding-left: 0.85rem; margin-bottom: 1.5rem; font-style: italic; max-width: 640px; }
-    .kwp-tl { position: relative; margin: 20px 0; padding: 0.25rem 0.9rem 0.25rem 2.5rem; max-height: 560px; overflow-y: auto; overscroll-behavior: auto; -webkit-overflow-scrolling: touch; background: #f0eeea; border-top: 2px solid var(--petrol); border-bottom: 2px solid var(--petrol); scrollbar-width: thin; scrollbar-color: var(--petrol-light) transparent; }
-    .kwp-tl::-webkit-scrollbar { width: 8px; }
-    .kwp-tl::-webkit-scrollbar-track { background: transparent; }
-    .kwp-tl::-webkit-scrollbar-thumb { background: var(--petrol-light); border-radius: 4px; }
-    .kwp-tl::before { content: ''; position: absolute; left: 17px; top: 4px; bottom: 38px; width: 2px; background: linear-gradient(var(--text-primary), var(--text-primary) 70%, transparent); }
+    #kwp-timeline { position: relative; margin: 20px 0; max-height: 560px; overflow-y: auto; overscroll-behavior: auto; -webkit-overflow-scrolling: touch; background: #f0eeea; border-top: 2px solid var(--petrol); border-bottom: 2px solid var(--petrol); scrollbar-width: thin; scrollbar-color: var(--petrol-light) transparent; }
+    #kwp-timeline::-webkit-scrollbar { width: 8px; }
+    #kwp-timeline::-webkit-scrollbar-track { background: transparent; }
+    #kwp-timeline::-webkit-scrollbar-thumb { background: var(--petrol-light); border-radius: 4px; }
+    .kwp-tl { position: relative; padding: 0.25rem 0.9rem 0.25rem 2.5rem; }
+    .kwp-tl::before { content: ''; position: absolute; left: 17px; top: 4px; bottom: 38px; width: 2px; background: var(--text-primary); }
     .kwp-tl-item { position: relative; padding-bottom: 1.1rem; }
     .kwp-tl-item__dot { position: absolute; left: -1.75rem; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--petrol); border: 2px solid var(--white); box-shadow: 0 0 0 1px var(--petrol-light); }
     .kwp-tl-item--meilenstein .kwp-tl-item__dot { background: var(--signal); box-shadow: 0 0 0 1px var(--signal-dark); }
@@ -249,7 +250,7 @@
       .kwp-dash { padding: 1.5rem 1.1rem 1.75rem; }
       .kwp-fh__grid { grid-template-columns: 1fr 1fr; }
       .footer__inner { flex-direction: column; align-items: flex-start; }
-      .kwp-tl { max-height: 62vh; }
+      #kwp-timeline { max-height: 62vh; }
     }
   </style>
 </head>
