@@ -1218,8 +1218,8 @@
 
     /* Inline-Editor für Bruttoinvestitions-Zellen */
     .invest-zelle { cursor: pointer; }
-    .invest-zelle::after { content: ' ✎'; color: var(--petrol-light); font-size: 0.8em; opacity: 0.6; }
-    .invest-zelle:hover::after { opacity: 1; }
+    .invest-zelle::before { content: '✎ '; color: var(--petrol-light); font-size: 0.8em; opacity: 0.6; }
+    .invest-zelle:hover::before { opacity: 1; }
     .invest-inline-editor { display: flex; align-items: center; gap: 0.25rem; }
     .invest-inline-editor input { width: 6rem; padding: 0.2rem 0.3rem; border: 1px solid var(--petrol);
                                     border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 12px;
@@ -1242,9 +1242,9 @@
     .zukunftsszenario .aussage__titel { font-size: 12px; color: var(--petrol-dark);
                                           font-weight: 500; margin-bottom: 0.2rem; }
     .zukunftsszenario .aussage__werte { font-size: 13px; color: var(--text-primary); }
-    .zukunftsszenario .aussage__delta { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px; white-space: nowrap; }
-    .zukunftsszenario .aussage__delta--gut { color: #5aaa88; }
-    .zukunftsszenario .aussage__delta--schlecht { color: #c8a460; }
+    .zukunftsszenario .aussage__delta { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 13px; white-space: nowrap; }
+    .zukunftsszenario .aussage__delta--gut { color: #157a45; }
+    .zukunftsszenario .aussage__delta--schlecht { color: var(--tommy-rot); }
     .zukunftsszenario .aussage__delta--neutral { color: var(--text-tertiary); }
     .zukunftsszenario .aussage__detail { font-size: 11px; color: var(--text-secondary);
                                            margin-top: 0.15rem; }
@@ -1668,7 +1668,7 @@
       <h3 style="margin-top:1.5rem;color:var(--petrol-dark);font-size:16px;">
         Investitionskosten der Modernisierungs-Optionen
       </h3>
-      <p class="wizard-field__hint" style="margin-top:-0.5rem;margin-bottom:1rem;">Die Slider stehen bewusst auf 0 — tragen Sie je Option Ihren realen oder angebotenen Wert ein (z. B. aus einem Angebot). So wirkt keine Option vorab teurer; in der Ergebnis-Tabelle nachträglich änderbar.</p>
+      <p class="wizard-field__hint" style="margin-top:0.5rem;margin-bottom:1rem;">Die Slider stehen bewusst auf 0 — tragen Sie je Option Ihren realen oder angebotenen Wert ein (z. B. aus einem Angebot). So wirkt keine Option vorab teurer; in der Ergebnis-Tabelle nachträglich änderbar.</p>
 
       <div class="wizard-field">
         <div class="wizard-slider">
@@ -1678,7 +1678,6 @@
           </div>
           <input type="range" id="f-brutto-hybrid" min="0" max="200000" step="1000" value="0">
         </div>
-        <p class="wizard-field__hint plausi-hint" id="plausi-brutto-hybrid" hidden></p>
       </div>
 
       <div class="wizard-field">
@@ -1689,7 +1688,6 @@
           </div>
           <input type="range" id="f-brutto-wp" min="0" max="250000" step="1000" value="0">
         </div>
-        <p class="wizard-field__hint plausi-hint" id="plausi-brutto-wp" hidden></p>
       </div>
 
       <div class="wizard-field">
@@ -1700,7 +1698,6 @@
           </div>
           <input type="range" id="f-brutto-fw" min="0" max="120000" step="1000" value="0">
         </div>
-        <p class="wizard-field__hint plausi-hint" id="plausi-brutto-fw" hidden></p>
       </div>
 
       <!-- Pellets nur sichtbar wenn plausibel; Sichtbarkeit in evaluateConditionals -->
@@ -1712,7 +1709,6 @@
           </div>
           <input type="range" id="f-brutto-pellets" min="0" max="200000" step="1000" value="0">
         </div>
-        <p class="wizard-field__hint plausi-hint" id="plausi-brutto-pellets" hidden></p>
       </div>
 
       <div class="wizard-actions">
@@ -2747,27 +2743,6 @@
           state.touched[tKey] = true;
           const out = $('#val-brutto-' + opt);
           if (out) out.textContent = fmtEuro(v);
-          // Plausibilitäts-Hinweis vs Default (Spec §3 v2.1)
-          const def = (state.gebaeudetyp === 'EFH'
-                       ? { hybrid:24000, wp:28000, fw:18000, pellets:32000 }
-                       : { hybrid:73000, wp:126000, fw:33000, pellets:63000 })[opt];
-          const hinweis = $('#plausi-brutto-' + opt);
-          if (hinweis) {
-            if (v === 0) {
-              hinweis.hidden = true;
-            } else if (v < def * 0.5) {
-              hinweis.innerHTML = 'Sehr niedriger Wert — sind Sie sicher? Typisch sind <strong>'
-                                  + fmtEuro(def) + '</strong> für ein '
-                                  + state.gebaeudetyp + ' Ihrer Größe.';
-              hinweis.hidden = false;
-            } else if (v > def * 2) {
-              hinweis.innerHTML = 'Sehr hoher Wert — sind Sie sicher? Typisch sind <strong>'
-                                  + fmtEuro(def) + '</strong>.';
-              hinweis.hidden = false;
-            } else {
-              hinweis.hidden = true;
-            }
-          }
         });
       });
     }
