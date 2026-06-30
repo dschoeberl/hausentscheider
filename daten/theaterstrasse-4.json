@@ -78,10 +78,10 @@
     "zeitraum_j": 25,
     "jaz": 3.8,
     "stand": "Q3 2026",
-    "preise_ct_brutto": { "gas": 10.2, "fernwaerme": 19.3, "wp_strom": 25 },
+    "preise_ct_brutto": { "gas": 10.2, "fernwaerme": 18.8, "wp_strom": 25 },
     "steigerung_pa": { "gas": 0.03, "fernwaerme": 0.04, "wp_strom": 0.025 },
-    "invest_eur": { "fernwaerme": 13650, "wp": 132000 },
-    "wp_foerderung_anteil": 0.58,
+    "invest_eur": { "fernwaerme": 26500, "wp": 130000 },
+    "wp_foerderung_anteil": 0.35,
     "ist_eur_m2_monat_2025": 1.30
   }
 }

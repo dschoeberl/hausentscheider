@@ -1755,7 +1755,7 @@
           { datum: "30.06.2026", typ: "Wärmeplanung", titel: "KWP-Endfassung erwartet", status: "geplant",
             ergebnis: "Erwartet werden die Endfassung der kommunalen Wärmeplanung und das amtliche Versorgungsgebiet." },
           { datum: "01.07.2026", typ: "Energie & Preis", titel: "Fernwärme-Preissprung (SWE Q3 2026)", status: "erledigt",
-            ergebnis: "Der SWE-Arbeitspreis Fernwärme steigt zum 3. Quartal von 11,76 auf 13,77 ct/kWh (+17 %); der Effektivpreis auf Gebäudeebene klettert damit von rund 17,5 auf ~19,3 ct/kWh brutto. Das bestätigt das Preisrisiko des Anschlusszwangs — Fernwärme wird teurer, nicht günstiger." },
+            ergebnis: "Das SWE-Preisblatt Wärme weist ab 1.7. einen Arbeitspreis von 13,77 ct/kWh brutto aus (Vorquartal 11,54) — +19,3 % in einem Quartal. Hinzu kommt der jahresbezogene Leistungspreis (75,04 €/kW·a); der effektive Wärmepreis je Gebäude liegt damit höher und hängt vom Verbrauch ab — je weniger Verbrauch, desto höher der ct/kWh-Wert. Der CO₂-Zertifikatepreis (~1,9 ct/kWh) steht laut Preisblatt unter Vorbehalt. Das bestätigt das Preisrisiko des Anschlusszwangs — Fernwärme wird teurer, nicht günstiger." },
           { datum: "01.07.2026", typ: "Recht", titel: "Gebäudemodernisierungsgesetz (GMG) in Kraft", status: "geplant",
             ergebnis: "Der reformierte bundesweite Rechtsrahmen für Gebäude (vormals Gebäudeenergiegesetz) greift." },
           { datum: "2026–2028", typ: "Recht", titel: "Fernwärmesatzung modernisiert", status: "mittelfristig",
@@ -1825,9 +1825,9 @@
       // (Energiekosten mit jährlicher Preissteigerung über die Laufzeit + Netto-Investition).
       const WIRTSCHAFT = {
         verbrauch_kwh: 95000, flaeche_m2: 769.83, n: 25, jaz: 3.8, stand: "Q3 2026",
-        preis_ct: { gas: 10.2, fw: 19.3, wp: 25 },     // brutto
+        preis_ct: { gas: 10.2, fw: 18.8, wp: 25 },     // brutto (FW Effektivpreis bei 95.000 kWh/62 kW, ohne CO2-Vorbehalt; mit = 20,7)
         steig:    { gas: 0.03, fw: 0.04, wp: 0.025 },   // pro Jahr
-        invest:   { fw: 13650, wp: 132000 }, wp_foerd: 0.58,
+        invest:   { fw: 26500, wp: 130000 }, wp_foerd: 0.35,
         ist_eur_m2_monat: 1.30                          // gemessen 2025 (Gas, Vollkosten)
       };
       const WV = (function(){
@@ -1875,12 +1875,13 @@
           '<span class="oz-vgl-row__lbl">Gesamtkosten über 25 Jahre</span>' +
           '<div class="oz-vgl-line oz-vgl-line--mark"><span class="oz-vgl-line__opt">Fernwärme</span>' +
             '<div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:100%"></div>' +
-              '<span class="oz-vgl-mark" style="left:' + bePos + '%"><span class="oz-vgl-mark__lbl">Break-even WP · ~J. ' + (WV.be || '—') + '</span></span>' +
+              '<span class="oz-vgl-mark" style="left:' + bePos + '%"><span class="oz-vgl-mark__lbl">Amortisation WP vs. Fernwärme · ~Jahr ' + (WV.be || '—') + '</span></span>' +
             '</div><span class="oz-vgl-line__val">' + fmtTsd(WV.mit.fw) + '<small style="display:block;opacity:.55;font-weight:400;font-size:10px;">ohne Steigerung ' + fmtTsd(WV.ohne.fw) + '</small></span></div>' +
           '<div class="oz-vgl-line"><span class="oz-vgl-line__opt">Wärmepumpe</span>' +
             '<div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:' + wpBreite + '%"></div></div>' +
             '<span class="oz-vgl-line__val">' + fmtTsd(WV.mit.wp) + '<small style="display:block;opacity:.55;font-weight:400;font-size:10px;">ohne Steigerung ' + fmtTsd(WV.ohne.wp) + '</small></span></div>' +
-          '<p class="oz-vgl-note">Über 25 Jahre zählt die Preissteigerung. Fachlicher Standard für eine solche Entscheidung ist die Rechnung <strong>mit</strong> Steigerung (Gas +3 %, Fernwärme +4 %, WP-Strom +2,5 % pro Jahr — wie im Entscheider-Rechner). Ohne Steigerung wirkt Fernwärme rund <strong>' + fmtTsd(WV.diffFW) + '</strong> günstiger, als sie über die Laufzeit real wird — genau das ist das Preisrisiko des Anschlusszwangs. Die Wärmepumpe spart über 25 Jahre rund <strong>' + fmtTsd(WV.ersparnis) + '</strong>.</p>';
+          '<p class="oz-vgl-note">Über 25 Jahre zählt die Preissteigerung. Fachlicher Standard für eine solche Entscheidung ist die Rechnung <strong>mit</strong> Steigerung (Gas +3 %, Fernwärme +4 %, WP-Strom +2,5 % pro Jahr — wie im Entscheider-Rechner). Ohne Steigerung wirkt Fernwärme rund <strong>' + fmtTsd(WV.diffFW) + '</strong> günstiger, als sie über die Laufzeit real wird — genau das ist das Preisrisiko des Anschlusszwangs. Die Wärmepumpe spart über 25 Jahre rund <strong>' + fmtTsd(WV.ersparnis) + '</strong> — nominale Gesamtkosten mit jährlicher Preissteigerung (FW +4 %/Jahr, im Rahmen der SWE-Prognose „Verdopplung bis 2040").</p>' +
+          '<p class="oz-vgl-note">Investitionsannahme (konservativ): Wärmepumpe 130.000 € brutto / ~84.500 € netto (35 % BEG-Förderung), Fernwärme 26.500 € (SWE-Anschluss + nachgeschalteter Teil). Das günstigere reale WP-Angebot lag bei ~100.000 €; mit PV/iSFP steigt die Förderung auf bis zu 60 % — Potenzial nach unten. <strong>Schallschutz:</strong> Maßgeblich ist die amtlich bestätigte Einstufung als allgemeines Wohngebiet (40 dB(A) nachts); moderne Luft-Wasser-Wärmepumpen liegen im Nachtbetrieb darunter, übliche Standardmaßnahmen genügen.</p>';
       }
       const jahresEl = document.getElementById("oz-vgl-jahres");
       if (jahresEl) {
@@ -1889,7 +1890,7 @@
           '<span class="oz-vgl-row__lbl">Jahreskosten heute · Energie</span>' +
           '<div class="oz-vgl-line"><span class="oz-vgl-line__opt">Fernwärme</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:100%"></div></div><span class="oz-vgl-line__val">' + fmtEur(WV.e1.fw) + '</span></div>' +
           '<div class="oz-vgl-line"><span class="oz-vgl-line__opt">Wärmepumpe</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:' + wpB + '%"></div></div><span class="oz-vgl-line__val">' + fmtEur(WV.e1.wp) + '</span></div>' +
-          '<p class="oz-vgl-note">Basis: 95.000 kWh Wärmebedarf/Jahr · Arbeitspreis Gas 10,2 / Fernwärme 19,3 / WP-Strom 25 ct/kWh brutto (Q3 2026) — die Wärmepumpe braucht dafür nur ~⅓ Strom (Umweltwärme).</p>';
+          '<p class="oz-vgl-note">Basis: 95.000 kWh Wärmebedarf/Jahr · brutto Q3 2026: Gas 10,2 / WP-Strom 25 ct/kWh, Fernwärme-Effektivpreis 18,8 ct/kWh (bei 95.000 kWh / 62 kW; mit CO₂-Zertifikat unter Vorbehalt 20,7 ct — <a href="https://www.swe-energie.de/site/energie/get/documents_E-421602985/energie/documents/Downloads/preisblaetter-und-vertragsbedingungen/waerme/preise_fernwaermeversorgung.pdf" target="_blank" rel="noopener">SWE-Preisblatt 1.7.2026</a>) — die Wärmepumpe braucht dafür nur ~⅓ Strom (Umweltwärme).</p>';
       }
 
       // === Säule 2: Gebäude-Radar (Future Readiness Index) ===
@@ -1935,7 +1936,7 @@
           legend;
         // "Vollständige Analyse"-Link vorerst entfernt (29.06.2026): Die öffentliche
         // Gebäude-Future-Readiness-Fassung (v2.4, Stand 22.06.) rechnet Fernwärme noch mit
-        // 17,5 ct / 444k nominal — die Karte führt jetzt 19,3 ct (Q3) mit Steigerung als
+        // 17,5 ct / 444k nominal — die Karte führt jetzt 18,8 ct (Q3) mit Steigerung als
         // Leitwert. Link wird wieder gesetzt, sobald ein deckungsgleiches v2.5-PDF vorliegt.
 
         const readout = document.getElementById("oz-radar-readout");
