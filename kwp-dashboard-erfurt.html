@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Status-Dashboard der kommunalen Wärmeplanung Erfurt — 17 Maßnahmen in 6 Säulen, Investitionen, Meilensteine und alle 17 Kritikpunkte aus der Beteiligung mit Begründung und unabhängiger Einordnung. Belegt statt behauptet.">
+  <title>Status-Dashboard Wärmeplanung Erfurt | Hausentscheider</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; overflow-x: hidden; }
+    body { font-family: 'Inter', -apple-system, sans-serif; font-size: 16px; font-weight: 400; line-height: 1.7; color: #1a1a1a; background: #ffffff; overflow-x: hidden; }
+    :root {
+      --petrol: #1a5c5a; --petrol-light: #7ab8b5; --petrol-dark: #1a3535;
+      --signal: #CFF77F; --signal-dark: #a8d45a; --tommy-rot: #D81E34; --tommy-rot-bg: #fbe7ea; --tommy-rot-text: #A3122A;
+      --gov-blau: #4a7a9a; --frist-gelb: #c8a460; --ok-gruen: #5aaa88;
+      --border: #e0dedd; --bg-light: #f5f4f2; --bg-grau: #f0eee9;
+      --text-primary: #1a1a1a; --text-secondary: #5a5956; --text-tertiary: #8a8680;
+      --white: #ffffff; --max-width: 900px; --radius: 8px;
+    }
+    h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; font-weight: 400; line-height: 1.3; color: var(--text-primary); }
+    h1 { font-size: 30px; } h2 { font-size: 24px; }
+    a { color: var(--petrol); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol); font-family: 'Inter', sans-serif; display: block; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; overflow-x: hidden; }
+    .section { padding: 2.75rem 0; border-bottom: 0.5px solid var(--border); overflow-x: hidden; }
+    .section:last-of-type { border-bottom: none; }
+
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 0.5px solid var(--border); }
+    .nav__inner { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .nav__logo { text-decoration: none; display: inline-flex; align-items: center; }
+    .nav__logo:hover { text-decoration: none; opacity: 0.85; }
+    .nav__links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+    .nav__links a { font-size: 13px; color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+    .nav__links a:hover, .nav__links a.is-current { color: var(--petrol); }
+    .nav__dropdown { position: relative; }
+    .nav__dropdown-toggle { font-size: 13px; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 4px; background: none; border: none; font-family: 'Inter', sans-serif; padding: 0; }
+    .nav__dropdown-toggle.is-current, .nav__dropdown-toggle:hover { color: var(--petrol); }
+    .nav__dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 0; background: var(--white); border: 0.5px solid var(--border); border-radius: var(--radius); min-width: 240px; padding: 0.5rem 0; z-index: 110; }
+    .nav__dropdown:hover .nav__dropdown-menu, .nav__dropdown:focus-within .nav__dropdown-menu { display: block; }
+    .nav__dropdown-menu a { display: flex; align-items: center; gap: 6px; padding: 0.5rem 1rem; font-size: 13px; color: var(--text-secondary); }
+    .nav__dropdown-menu a:hover, .nav__dropdown-menu a.is-current { color: var(--petrol); background: var(--bg-light); text-decoration: none; }
+    .nav__city-badge { font-size: 10px; background: var(--petrol); color: white; padding: 1px 6px; border-radius: 10px; font-family: 'Inter', sans-serif; }
+    .nav__hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 8px; gap: 5px; flex-shrink: 0; }
+    .nav__hamburger span { display: block; width: 22px; height: 1.5px; background: var(--text-primary); transition: all 0.25s ease; transform-origin: center; }
+    .nav__hamburger.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav__hamburger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__hamburger.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .nav__mobile-menu { display: none; background: var(--white); border-top: 0.5px solid var(--border); padding: 0.5rem 1.25rem 1rem; }
+    .nav__mobile-menu.is-open { display: block; }
+    .nav__mobile-menu ul { list-style: none; display: flex; flex-direction: column; }
+    .nav__mobile-menu li a { display: block; padding: 0.875rem 0; font-size: 15px; color: var(--text-secondary); text-decoration: none; border-bottom: 0.5px solid var(--border); }
+    .nav__mobile-menu li:last-child a { border-bottom: none; }
+    .nav__mobile-menu li a.is-current { color: var(--petrol); }
+    .nav__mobile-menu li a.is-sub { padding-left: 1rem; font-size: 14px; color: var(--text-tertiary); }
+
+    .db-hero { background: var(--petrol-dark); padding: 2.75rem 0; }
+    .db-hero .label { color: var(--signal); }
+    .db-hero h1 { color: #fff; margin: 0.35rem 0 0; }
+    .db-sub { color: var(--petrol-light); font-size: 14px; margin: 0.45rem 0 1.5rem; }
+    .db-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7rem; }
+    .db-kpi { background: rgba(255,255,255,0.07); border: 0.5px solid rgba(255,255,255,0.16); border-radius: var(--radius); padding: 0.7rem 0.85rem; }
+    .db-kpi b { display: block; font-family: 'Playfair Display', serif; font-weight: 500; font-size: 26px; color: #fff; line-height: 1.1; }
+    .db-kpi b.sig { color: var(--signal); }
+    .db-kpi span { font-size: 12px; color: var(--petrol-light); }
+
+    .db-kacheln { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; margin-top: 1.1rem; }
+    .db-kach { background: #fff; border: 0.5px solid var(--border); border-top: 3px solid var(--border); border-radius: var(--radius); padding: 1rem 1.05rem; display: flex; flex-direction: column; }
+    .db-kach__head { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+    .db-kach__name { font-size: 15px; font-weight: 500; }
+    .db-pill { display: inline-block; min-width: 98px; text-align: center; font-size: 11px; padding: 2px 10px; border-radius: 999px; font-weight: 500; color: #fff; flex-shrink: 0; }
+    .db-kach__sum { font-size: 13px; color: var(--text-secondary); line-height: 1.55; margin: 0.6rem 0 0.75rem; }
+    .db-kach__m { font-size: 12px; color: var(--petrol); font-weight: 500; margin-top: auto; letter-spacing: 0.2px; }
+    .db-kach--fw { border-top-color: var(--tommy-rot); border-color: rgba(216,30,52,0.3); }
+    .db-kach--warn { border-top-color: var(--frist-gelb); border-color: rgba(200,164,96,0.35); background: #fdf8ee; }
+    .db-kach--open { border-top-color: var(--gov-blau); border-color: rgba(74,122,154,0.35); background: #eff5f9; }
+    .db-kach--ok { border-top-color: var(--ok-gruen); border-color: rgba(90,170,136,0.4); background: #eef6f1; }
+    .db-foknote { font-size: 9.5px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--tommy-rot); font-weight: 500; }
+
+    .db-krit { border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-top: 1.1rem; }
+    .db-krit__head { background: var(--bg-grau); padding: 0.65rem 0.9rem; display: flex; justify-content: space-between; align-items: baseline; border-bottom: 0.5px solid var(--border); }
+    .db-krit__head .label { color: var(--tommy-rot); }
+    .db-krit__count { font-size: 11.5px; color: var(--text-secondary); }
+    .db-krow { display: flex; align-items: stretch; border-bottom: 0.5px solid var(--border); }
+    .db-krow:last-child { border-bottom: none; }
+    .db-kst { flex: 0 0 118px; background: var(--petrol-dark); display: flex; align-items: center; gap: 8px; padding: 0.7rem 0.85rem; }
+    .db-kst .dot { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; }
+    .db-kst .lab { font-size: 10.5px; letter-spacing: 0.3px; color: #d6ddda; font-weight: 500; }
+    .db-ktx { flex: 1; padding: 0.7rem 0.95rem; background: #fff; }
+    .db-krow:nth-child(even) .db-ktx { background: var(--bg-light); }
+    .db-ktx__t { font-size: 14px; font-weight: 500; line-height: 1.35; color: var(--text-primary); }
+    .db-ktx__b { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-top: 3px; }
+    .db-ktx__b b { font-weight: 500; color: var(--petrol); }
+
+    .db-fuss { font-size: 12px; color: var(--text-tertiary); line-height: 1.6; margin-top: 1.25rem; }
+    .db-fuss a { color: var(--petrol); }
+
+    .footer { border-top: 0.5px solid var(--border); padding: 1.5rem 0; }
+    .footer__inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .footer__left, .footer__right { font-size: 12px; color: var(--text-tertiary); }
+    .footer__right a { color: var(--text-tertiary); }
+    .footer__right a:hover { color: var(--petrol); }
+
+    @media (max-width: 680px) {
+      .nav__links { display: none; }
+      .nav__hamburger { display: flex; }
+      .footer__inner { flex-direction: column; align-items: flex-start; }
+      .db-kpis { grid-template-columns: repeat(2, 1fr); }
+      .db-kacheln { grid-template-columns: 1fr; }
+      .db-kst { flex: 0 0 100px; }
+      h1 { font-size: 25px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo" aria-label="hausentscheider — Startseite">
+        <svg width="180" height="28" viewBox="0 0 180 28" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">haus</text>
+          <text x="58" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">entscheider</text>
+          <line x1="0" y1="26" x2="56" y2="26" stroke="#1a5c5a" stroke-width="2" stroke-linecap="square"/>
+        </svg>
+      </a>
+      <nav aria-label="Hauptnavigation">
+        <ul class="nav__links">
+          <li><a href="index.html#ansatz">Ansatz</a></li>
+          <li><a href="index.html#objekte">Objekte</a></li>
+          <li><a href="wegweiser.html">Wegweiser</a></li>
+          <li class="nav__dropdown">
+            <button class="nav__dropdown-toggle is-current" aria-haspopup="true">Wärmeplanung ▾</button>
+            <div class="nav__dropdown-menu" role="menu">
+              <a href="kwp-erfurt.html" role="menuitem">Erfurt — Kommunale Wärmeplanung</a>
+              <a href="kwp-dashboard-erfurt.html" role="menuitem" class="is-current">Erfurt — Status-Dashboard <span class="nav__city-badge">neu</span></a>
+            </div>
+          </li>
+          <li><a href="index.html#ueber">Über Hausentscheider</a></li>
+          <li><a href="index.html#kontakt">Dialog</a></li>
+        </ul>
+      </nav>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Menü öffnen" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav__mobile-menu" id="nav-mobile-menu">
+      <ul>
+        <li><a href="index.html#ansatz">Ansatz</a></li>
+        <li><a href="index.html#objekte">Objekte</a></li>
+        <li><a href="wegweiser.html">Wegweiser</a></li>
+        <li><a href="kwp-erfurt.html">Wärmeplanung Erfurt</a></li>
+        <li><a href="kwp-dashboard-erfurt.html" class="is-sub is-current">↳ Status-Dashboard Erfurt</a></li>
+        <li><a href="index.html#ueber">Über Hausentscheider</a></li>
+        <li><a href="index.html#kontakt">Dialog</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="db-hero" aria-label="Überblick">
+    <div class="container">
+      <span class="label">Status-Dashboard · Erfurt</span>
+      <h1>Wärmewende Erfurt — im Überblick</h1>
+      <p class="db-sub">Stand Juni 2026 · unabhängiges Tracking der kommunalen Wärmeplanung</p>
+      <div class="db-kpis">
+        <div class="db-kpi"><b>2045</b><span>klimaneutral · EE 30/80&nbsp;%</span></div>
+        <div class="db-kpi"><b>17</b><span>Maßnahmen · 6 Säulen</span></div>
+        <div class="db-kpi"><b class="sig">~1,5&nbsp;Mrd&nbsp;€</b><span>Investition · unaufgeteilt</span></div>
+        <div class="db-kpi"><b>0 / 24</b><span>Stellungnahmen übernommen</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-label="Die sechs Säulen">
+    <div class="container">
+      <span class="label">Die 6 Säulen · 17 Maßnahmen</span>
+      <div class="db-kacheln">
+        <div class="db-kach db-kach--fw">
+          <div class="db-kach__head"><span class="db-kach__name">Fernwärme</span><span class="db-pill" style="background:var(--tommy-rot)">ungesichert</span></div>
+          <div class="db-kach__sum">Netzausbau läuft — die Dekarbonisierung der Erzeugung (Geothermie, Abwärme) ist noch ungesichert.</div>
+          <div class="db-kach__m" style="color:var(--tommy-rot)">M2 · M3 · M4 · M5 · M6 &nbsp;·&nbsp; <span class="db-foknote">Fokus: meiste Kritik</span></div>
+        </div>
+        <div class="db-kach db-kach--warn">
+          <div class="db-kach__head"><span class="db-kach__name">Strom- &amp; Gasnetz</span><span class="db-pill" style="background:var(--frist-gelb)">in Prüfung</span></div>
+          <div class="db-kach__sum">Stromnetz für dezentrale Wärmepumpen stärken; Gasnetz dort zurückbauen, wo eine Alternative gesichert ist.</div>
+          <div class="db-kach__m">M9 · M10</div>
+        </div>
+        <div class="db-kach db-kach--warn">
+          <div class="db-kach__head"><span class="db-kach__name">Erneuerbare &amp; Flächen</span><span class="db-pill" style="background:var(--frist-gelb)">in Prüfung</span></div>
+          <div class="db-kach__sum">Flächen für Geothermie, Abwärme, Photovoltaik und Wind frühzeitig sichern.</div>
+          <div class="db-kach__m">M1</div>
+        </div>
+        <div class="db-kach db-kach--open">
+          <div class="db-kach__head"><span class="db-kach__name">Gebäude-Sanierung</span><span class="db-pill" style="background:var(--gov-blau)">offen</span></div>
+          <div class="db-kach__sum">Sanierung kommunaler und privater Gebäude — bisher ohne verbindliche Quoten, liegt bei den Eigentümern.</div>
+          <div class="db-kach__m">M7 · M8</div>
+        </div>
+        <div class="db-kach db-kach--ok">
+          <div class="db-kach__head"><span class="db-kach__name">Kommunikation &amp; Beratung</span><span class="db-pill" style="background:var(--ok-gruen)">läuft</span></div>
+          <div class="db-kach__sum">Kommunikationskonzept und Beratungsangebote für Eigentümer und Letztverbraucher.</div>
+          <div class="db-kach__m">M11 · M12</div>
+        </div>
+        <div class="db-kach db-kach--ok">
+          <div class="db-kach__head"><span class="db-kach__name">Steuerung &amp; Umsetzung</span><span class="db-pill" style="background:var(--ok-gruen)">läuft</span></div>
+          <div class="db-kach__sum">Prüfgebiete konkretisieren, Infoplattform (M16) aufbauen, Gebietsausweisung nach §26 prüfen.</div>
+          <div class="db-kach__m">M13 · M14 · M15 · M16 · M17</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-label="Kritikpunkte aus der Beteiligung">
+    <div class="container">
+      <span class="label" style="color:var(--tommy-rot)">Alle Kritikpunkte aus der Beteiligung</span>
+      <p style="font-size:13.5px;color:var(--text-secondary);margin:0.5rem 0 0;max-width:640px;">Aus der öffentlichen Auslegung gingen 24 Stellungnahmen ein — keine wurde in den Plan übernommen. Diese 17 inhaltlichen Punkte stammen aus der Eigentümer-/Forschungs-Stellungnahme; jeweils mit der Begründung der Stadt und unserer Einordnung.</p>
+      <div class="db-krit">
+        <div class="db-krit__head"><span class="label">Kritik · Begründung der Stadt · unsere Einordnung</span><span class="db-krit__count">17 Punkte · 0 übernommen</span></div>
+        <div class="db-krow"><div class="db-kst"><span class="dot" style="background:var(--tommy-rot)"></span><span class="lab">abgelehnt</span></div><div class="db-ktx"><div class="db-ktx__t">Keine €/m²/Monat-Rechnung über den Lebenszyklus</div><div class="db-ktx__b">Stadt: zu unsicher, nur Größenordnung ~1,5 Mrd € genannt. <b>Wir:</b> genau diese Vergleichszahl braucht der Eigentümer — der Entscheider-Rechner liefert sie.</div></div></div>
+        <div class="db-krow"><div class="db-kst"><span class="dot" style="background:#d9a441"></span><span class="lab">vertagt</span></div><div class="db-ktx"><div class="db-ktx__t">Keine Priorisierung &amp; keine Reihenfolge der 17 Maßnahmen</div><div class="db-ktx__b">Stadt: Ausgestaltung erst nach Plan-Abschluss. <b>Wir:</b> 17 Maßnahmen ohne Reihenfolge sind faktisch keine Steuerung.</div></div></div>
+        <div class="db-krow"><div class="db-kst"><span class="dot" style="background:#d9a441"></span><span class="lab">vertagt</span></div><div class="db-ktx"><div class="db-ktx__t">Kein Finanzbedarf / Investitionsbudget je Maßnahme</div><div class="db-ktx__b">Stadt: nur Kostenbandbreiten möglich. <b>Wir:</b> ohne Kosten je Maßnahme ist keine Priorisierung machbar.</div></div></div>
+        <div class="db-krow"><div class="db-kst"><span class="dot" style="background:#d9a441"></span><span class="lab">vertagt</span></div><div class="db-ktx"><div class="db-ktx__t">Kein jährliches Monitoring / Lern-Dashboard</div><div class="db-ktx__b">Stadt: im Umsetzungsmanagement zu prüfen. <b>Wir:</b> genau diese Lücke füllt dieses Dashboard.</div></div></div>
+        <div class="db-krow"><div class="db-kst"><span class="dot" style="background:#d9a441"></span><span class="lab">vertagt</span></div><div class="db-ktx"><div class="db-ktx__t">Keine Zwischenziele/CO₂-Budgets 2030 · 2035 · 2040</div><div class="db-ktx__b">Stadt: an Landeszielen orientiert, kein eigenes Budget. <b>Wir:</b> ohne Etappen kein nachsteuerbarer Pfad.</div></div></div>
+        <div class="db-krow"><div class="db-kst"><span class="dot" style="background:var(--petrol-light)"></span><span class="lab">verteidigt</span></div><div class="db-ktx"><div class="db-ktx__t">Wasserstoff für Haushalte bleibt offen gehalten</div><div class="db-ktx__b">Stadt: für Industrie-Anker, kein Zwang, Synergien. <b>Wir:</b> für Wohngebäude unrealistisch (30–50 ct/kWh, Mengen offen).</div></div></div>
+        <div class="db-krow"><div class="db-kst"><span class="dot" style="background:var(--tommy-rot)"></span><span class="lab">bestritten</span></div><div class="db-ktx"><div class="db-ktx__t">„Verdopplung der Fernwärmepreise bis 2040"</div><div class="db-ktx__b">Stadt: SWE-Strategie betrifft mehrere Netze. <b>Wir:</b> die SWE-eigene Strategie nennt sie; Q3-Sprung +19 % zeigt die Richtung.</div></div></div>
+        <div class="db-krow"><div class="db-kst"><span class="dot" style="background:var(--signal)"></span><span class="lab">anerkannt</span></div><div class="db-ktx"><div class="db-ktx__t">Leistungspreis-Paradoxon: Sanieren kann den kWh-Preis erhöhen</div><div class="db-ktx__b">Stadt: Effekt möglich, Verrechnungsleistung anpassbar. <b>Wir:</b> stimmt — gehört in den Plan, Sanierer müssen es wissen.</div></div></div>
+        <div class="db-krow"><div class="db-kst"><span class="dot" style="background:#d9a441"></span><span class="lab">vertagt</span></div><div class="db-ktx"><div class="db-ktx__t">Mieterperspektive &amp; CO₂-Kostenaufteilung</div><div class="db-ktx__b">Stadt: Untersetzung in der Fortschreibung. <b>Wir:</b> 2/3 Mieterhaushalte — das ist nicht vertagbar.</div></div></div>
+        <div class="db-krow"><div class="db-kst"><span class="dot" style="background:#9aa6a3"></span><span class="lab">separat</span></div><div class="db-ktx"><div class="db-ktx__t">Anschlusszwang &amp; Fernwärmesatzung (M6)</div><div class="db-ktx__b">Stadt: eigener Stadtrats-Prozess. <b>Wir:</b> entscheidet über die Wahlfreiheit — gehört mit der KWP konsultiert.</div></div></div>
+        <div class="db-krow"><div class="db-kst"><span class="dot" style="background:var(--signal)"></span><span class="lab">anerkannt</span></div><div class="db-ktx"><div class="db-ktx__t">Geothermie ohne Plan B (~32 Mio €, nicht probegebohrt)</div><div class="db-ktx__b">Stadt: petrothermal, geschlossener Kreislauf. <b>Wir:</b> was, wenn die Bohrung nicht trägt? Ein Plan B fehlt.</div></div></div>
+        <div class="db-krow"><div class="db-kst"><span class="dot" style="background:var(--petrol-light)"></span><span class="lab">verteidigt</span></div><div class="db-ktx"><div class="db-ktx__t">Solarthermie-Potenzial marginalisiert</div><div class="db-ktx__b">Stadt: gesamtsystemisch unwirtschaftlich, Flächenkonkurrenz. <b>Wir:</b> Entscheidung auf Basis einer SWE-Masterarbeit — Abwägung offenlegen.</div></div></div>
+        <div class="db-krow"><div class="db-kst"><span class="dot" style="background:#9aa6a3"></span><span class="lab">zur Kenntnis</span></div><div class="db-ktx"><div class="db-ktx__t">Doppelpfad-Investitionen (Gas + Fernwärme + Strom parallel)</div><div class="db-ktx__b">Stadt: Übergangsphase nötig. <b>Wir:</b> die Parallelkosten landen über Tarife beim Anschlusskunden.</div></div></div>
+        <div class="db-krow"><div class="db-kst"><span class="dot" style="background:#9aa6a3"></span><span class="lab">zur Kenntnis</span></div><div class="db-ktx"><div class="db-ktx__t">Resilienz: Monopolstruktur (SWE) &amp; Erdgas-Abhängigkeit</div><div class="db-ktx__b">Stadt: Diversifizierung läuft, Details vertraulich. <b>Wir:</b> Ein-Anbieter plus Anschlusszwang ist das Eigentümer-Risiko.</div></div></div>
+        <div class="db-krow"><div class="db-kst"><span class="dot" style="background:#d9a441"></span><span class="lab">vertagt</span></div><div class="db-ktx"><div class="db-ktx__t">Reversible Wärmepumpen (Kühlung) unterbewertet</div><div class="db-ktx__b">Stadt: Kühlung erst in der Fortschreibung. <b>Wir:</b> ein realer WP-Vorteil, der im Vergleich fehlt.</div></div></div>
+        <div class="db-krow"><div class="db-kst"><span class="dot" style="background:#9aa6a3"></span><span class="lab">zur Kenntnis</span></div><div class="db-ktx"><div class="db-ktx__t">Eigentümer- und Mietervertreter nicht eingebunden</div><div class="db-ktx__b">Stadt: angefragt, keine Rückmeldung. <b>Wir:</b> die Hauptbetroffenen fehlen am Tisch.</div></div></div>
+        <div class="db-krow"><div class="db-kst"><span class="dot" style="background:var(--tommy-rot)"></span><span class="lab">abgelehnt</span></div><div class="db-ktx"><div class="db-ktx__t">4 Wochen Auslegung zu knapp · M16-Plattform zu spät</div><div class="db-ktx__b">Stadt: entspricht dem Gesetz. <b>Wir:</b> die Frist endete, bevor das Selbstverortungs-Werkzeug online war.</div></div></div>
+      </div>
+      <p class="db-fuss">Quellen: Kommunaler Wärmeplan Erfurt (Entwurf, 26.03.2026, 502 Seiten) · Abwägung der eingegangenen Stellungnahmen (Stadt Erfurt, 12.06.2026). Maßnahmen M1–M17 aus Kapitel 7 (Umsetzungsstrategie). Status- und Einordnungsbewertung: Hausentscheider — belegt statt behauptet. Mehr im <a href="kwp-erfurt.html">Future-Readiness-Dashboard</a> und im <a href="wegweiser.html">Wegweiser</a>.</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__left">
+          <a href="index.html" style="text-decoration:none;display:inline-flex;align-items:center;vertical-align:middle;">
+            <svg width="130" height="20" viewBox="0 0 130 20" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+              <text x="0" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">haus</text>
+              <text x="42" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">entscheider</text>
+              <line x1="0" y1="18" x2="40" y2="18" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+            </svg>
+          </a>
+          &nbsp;·&nbsp;Daniel Schöberl&nbsp;·&nbsp;Erfurt / München
+        </div>
+        <div class="footer__right" style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+          <a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a>
+          &nbsp;·&nbsp;
+          <a href="index.html#impressum" style="font-size:12px;">Impressum</a>
+          &nbsp;·&nbsp;
+          <a href="datenschutz.html" style="font-size:12px;">Datenschutz</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var btn = document.getElementById('nav-hamburger');
+      var menu = document.getElementById('nav-mobile-menu');
+      if (!btn || !menu) return;
+      btn.addEventListener('click', function() {
+        var isOpen = menu.classList.toggle('is-open');
+        btn.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', isOpen);
+        btn.setAttribute('aria-label', isOpen ? 'Menü schließen' : 'Menü öffnen');
+      });
+      menu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          menu.classList.remove('is-open');
+          btn.classList.remove('is-open');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
