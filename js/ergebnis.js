@@ -309,7 +309,8 @@ function renderWirtschaftlichkeitsTabelle(input, params) {
   const ZEILEN = [
     { gruppe: 'Investition' },
     { key: 'bruttoinvest',       label: 'Bruttoinvestition',           fmt: 'euro',   kennzahlTyp: 'kosten', editierbar: true },
-    { key: 'foerderung',         label: 'Fördersumme',                  fmt: 'euro',   kennzahlTyp: 'foerderung' },
+    { key: 'foerderung',         label: 'Fördersumme',                  fmt: 'euro',   kennzahlTyp: 'foerderung',
+      tip: 'Anrechenbare BAFA-Förderung auf die Investition: Grundförderung + gewählte Boni, gedeckelt bei 70 %. Gilt für Wärmepumpe, Hybrid und Fernwärme — nicht für Gas. Zusammensetzung über die Förder-Schalter im Was-wäre-wenn-Bereich.' },
     { key: 'nettoInvest',        label: 'Netto-Investition',            fmt: 'euro',   kennzahlTyp: 'kosten',
       tip: 'Bruttoinvestition minus Förderung — der Betrag, den Sie tatsächlich finanzieren.' },
     { key: 'sonderumlageProWE',  label: 'Sonderumlage pro Einheit',     fmt: 'euro',   kennzahlTyp: 'kosten',
