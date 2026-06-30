@@ -2755,9 +2755,12 @@
       const ep = state.eigenerPreisAktuell;
       const v = state.verbrauch;
       if (!jk || !ep || !v) { hint.hidden = true; return; }
-      const erwartet = (v * ep) / 100;  // ct → €
-      const diff = Math.abs(jk - erwartet) / erwartet;
-      hint.hidden = diff <= 0.05;
+      const erwartet = (v * ep) / 100;  // ct → € (nur Arbeitspreis, ohne Grundpreis)
+      // Echte Abrechnungen enthalten zusätzlich den Grundpreis und liegen daher
+      // über dem reinen Arbeitspreis-Wert. Nur bei grobem Missverhältnis warnen
+      // (Tippfehler / falsche Einheit), nicht bei normalem Grundpreis-Aufschlag.
+      const ratio = jk / erwartet;
+      hint.hidden = ratio >= 0.5 && ratio <= 2.0;
     }
     function pruefeEnergiepreisPlausi() {
       const hint = $('#plausi-energiepreis');
