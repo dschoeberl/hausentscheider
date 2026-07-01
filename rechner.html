@@ -71,7 +71,8 @@
     .nav__dropdown-toggle { font-size: 13px; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 4px; background: none; border: none; font-family: 'Inter', sans-serif; padding: 0; }
     .nav__dropdown-toggle:hover { color: var(--petrol); }
     .nav__dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 0; background: var(--white); border: 0.5px solid var(--border); border-radius: var(--radius); min-width: 160px; padding: 0.5rem 0; }
-    .nav__dropdown:hover .nav__dropdown-menu { display: block; }
+    .nav__dropdown:hover .nav__dropdown-menu,
+    .nav__dropdown.is-open .nav__dropdown-menu { display: block; }
     .nav__dropdown-menu a { display: flex; align-items: center; gap: 6px; padding: 0.5rem 1rem; font-size: 13px; color: var(--text-secondary); }
     .nav__dropdown-menu a:hover { color: var(--petrol); background: var(--bg-light); text-decoration: none; }
     .nav__city-badge { font-size: 10px; background: var(--petrol); color: white; padding: 1px 6px; border-radius: 10px; font-family: 'Inter', sans-serif; }
@@ -3254,6 +3255,35 @@
           btn.classList.remove('is-open');
           btn.setAttribute('aria-expanded', 'false');
         });
+      });
+
+      // Nav-Dropdown per Klick (öffnet/schließt zuverlässig, nicht nur per Hover)
+      const dropdowns = document.querySelectorAll('.nav__dropdown');
+      const closeAllDropdowns = except => {
+        dropdowns.forEach(dd => {
+          if (dd === except) return;
+          dd.classList.remove('is-open');
+          const t = dd.querySelector('.nav__dropdown-toggle');
+          if (t) t.setAttribute('aria-expanded', 'false');
+        });
+      };
+      dropdowns.forEach(dd => {
+        const toggle = dd.querySelector('.nav__dropdown-toggle');
+        if (!toggle) return;
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.addEventListener('click', e => {
+          e.preventDefault();
+          e.stopPropagation();
+          closeAllDropdowns(dd);
+          const open = dd.classList.toggle('is-open');
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      });
+      document.addEventListener('click', e => {
+        if (!e.target.closest || !e.target.closest('.nav__dropdown')) closeAllDropdowns(null);
+      });
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeAllDropdowns(null);
       });
     }
 
