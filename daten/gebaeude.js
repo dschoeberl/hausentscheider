@@ -16,14 +16,14 @@ var GEBAEUDE_DB = {
     id:               "theaterstrasse-4",
     slug:             "theaterstrasse-4",
     objektNummer:     "001",
-    metaTitle:        "Objekt 001 · Theaterstraße 4, Erfurt",
-    metaDescription:  "Objektprofil Theaterstraße 4, Erfurt — WEG 14 Wohnungen, Altbau 1900. Entscheidungsstand Heizungserneuerung.",
+    metaTitle:        "Objekt 001 · Mehrfamilienhaus, Erfurt Altstadt",
+    metaDescription:  "Objektprofil Referenzobjekt Erfurt Altstadt — WEG, 14 Wohnungen, Altbau 1900. Entscheidungsstand Heizungserneuerung.",
 
     // ── Kopfbereich ─────────────────────────────────────
     titel:            "Mehrfamilienhaus · Altstadt Erfurt",
     subtitle:         "Altbau 1900 · Saniert 2010 · 14 Wohnungen · 784 m² · WEG · Gas-Heizung",
     bild:             "theaterstrasse-4.jpg",
-    bildAlt:          "Mehrfamilienhaus Theaterstraße 4, Erfurt Altstadt — Gründerzeitbau von 1900",
+    bildAlt:          "Mehrfamilienhaus in der Erfurter Altstadt — Gründerzeitbau von 1900",
 
     // ── Standort & Gebäude ──────────────────────────────
     standort:         "Erfurt Innenstadt",

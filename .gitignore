@@ -1,4 +1,14 @@
 .claude/
 
-# Klarnamen-/Pruef-Fassungen — nicht ins oeffentliche Repo
-dokumente/*Entscheidungsgrundlage*.docx
+# Sensible Arbeits-/Quelldateien — nie ins oeffentliche Repo.
+# Veroeffentlichte Belege in dokumente/ sind PDFs und bleiben getrackt;
+# ignoriert werden Arbeitsdateien (Excel/Word/E-Mail) und alles, was das
+# Referenzobjekt namentlich identifiziert (Adresse, WEG, Cockpit, Klarnamen).
+dokumente/*.xlsx
+dokumente/*.docx
+dokumente/*.msg
+dokumente/*Entscheidungsgrundlage*
+dokumente/*Cockpit*
+dokumente/*Theaterstr*
+dokumente/*Theaterstra*
+dokumente/*WEG101*
