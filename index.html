@@ -331,16 +331,18 @@
     .oz-tl__item { margin: 0; }
     .oz-tl__item:not(.oz-tl__item--live) + .oz-tl__item:not(.oz-tl__item--live) { border-top: 0.5px solid var(--border); }
     .oz-tl__det { width: 100%; }
-    .oz-tl__sum { list-style: none; cursor: pointer; display: grid; grid-template-columns: 18px 1fr auto; gap: 3px 10px; align-items: center; padding: 0.6rem 0; min-height: 44px; }
+    .oz-tl__sum { list-style: none; cursor: pointer; display: grid; grid-template-columns: 18px 1fr auto; gap: 3px 10px; align-items: center; padding: 0.6rem 0.5rem; min-height: 44px; border-radius: 6px; transition: background 0.15s; }
+    .oz-tl__sum:hover { background: rgba(26,92,90,0.06); }
     .oz-tl__sum::-webkit-details-marker { display: none; }
     .oz-tl__dot { grid-column: 1; grid-row: 1; justify-self: start; width: 11px; height: 11px; border-radius: 50%; background: var(--border); }
     .oz-tl__date { grid-column: 2; grid-row: 1; font-size: 12.5px; font-family: 'Inter', sans-serif; color: var(--petrol); font-weight: 600; }
-    .oz-tl__chev { grid-column: 3; grid-row: 1; justify-self: end; font-size: 10px; color: var(--text-tertiary); transition: transform 0.2s; }
+    .oz-tl__chev { grid-column: 3; grid-row: 1; justify-self: end; display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; border: 0.5px solid var(--petrol-light); background: rgba(26,92,90,0.06); color: var(--petrol); font-size: 11px; transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s; }
+    .oz-tl__sum:hover .oz-tl__chev { background: var(--petrol); border-color: var(--petrol); color: #ffffff; }
     .oz-tl__det[open] .oz-tl__chev { transform: rotate(90deg); }
     .oz-tl__meta-row { grid-column: 2 / -1; grid-row: 2; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .oz-tl__typ { font-size: 9px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--petrol); font-family: 'Inter', sans-serif; font-weight: 600; }
     .oz-tl__titel { grid-column: 2 / -1; grid-row: 3; font-size: 13.5px; color: var(--text-primary); line-height: 1.45; }
-    .oz-tl__ergebnis { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; margin: 0.15rem 0 0.55rem; padding-left: 28px; }
+    .oz-tl__ergebnis { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; margin: 0.3rem 0.5rem 0.7rem 36px; background: #ffffff; border-left: 3px solid var(--petrol); border-radius: 0 6px 6px 0; padding: 0.6rem 0.85rem; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
     .oz-tl__det:not([open]) .oz-tl__ergebnis { display: none; }
     .oz-tl__item--done .oz-tl__dot { background: var(--petrol); }
     .oz-tl__item--planned .oz-tl__dot { background: var(--context-blue); }
@@ -350,7 +352,7 @@
     .oz-tl__item--live { background: rgba(207,247,127,0.12); border: 1px solid rgba(207,247,127,0.75); border-radius: 8px; margin: 0.6rem 0; padding: 0.5rem 0.8rem; }
     .oz-tl__item--live .oz-tl__dot { background: var(--signal); }
     .oz-tl__item--live .oz-tl__titel { font-weight: 600; }
-    .oz-tl__item--live .oz-tl__ergebnis { color: var(--text-primary); }
+    .oz-tl__item--live .oz-tl__ergebnis { color: var(--text-primary); background: transparent; border-left: none; box-shadow: none; padding: 0; margin: 0.15rem 0 0.2rem 28px; }
     .oz-tl__live-tag { display: inline-block; margin: 0.1rem 0 0.4rem; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: #1a3535; background: var(--signal); border-radius: 3px; padding: 2px 8px; font-weight: 700; font-family: 'Inter', sans-serif; }
 
     /* Status-Pills */
