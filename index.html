@@ -187,6 +187,16 @@
     .oz-anchor__det summary::before { content: '▸'; font-size: 10px; transition: transform 0.2s; }
     .oz-anchor__det[open] summary::before { transform: rotate(90deg); }
     .oz-anchor__det p { font-size: 12px; color: rgba(255,255,255,0.72); line-height: 1.65; margin: 0.6rem 0 0; }
+    .oz-fw-det { margin-top: 1.1rem; }
+    .oz-fw-det summary { font-size: 12px; color: var(--petrol-light); cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 6px; min-height: 24px; padding: 4px 8px; border-radius: 4px; font-family: 'Inter', sans-serif; transition: box-shadow 0.2s, background 0.2s, color 0.2s; }
+    .oz-fw-det summary::-webkit-details-marker { display: none; }
+    .oz-fw-det summary::before { content: '▸'; font-size: 10px; transition: transform 0.2s; }
+    .oz-fw-det[open] summary { color: #fff; background: rgba(255,255,255,0.05); box-shadow: inset 3px 0 0 var(--tommy-rot); border-radius: 0 4px 4px 0; }
+    .oz-fw-det[open] summary::before { transform: rotate(90deg); }
+    .oz-fw-det__body { margin-top: 0.6rem; background: #eaece9; border-left: 3px solid var(--tommy-rot); border-radius: 0 6px 6px 0; padding: 0.85rem 1.1rem; }
+    .oz-fw-det__body p { font-size: 12px; color: #2a2a28; line-height: 1.65; margin: 0 0 0.6rem; }
+    .oz-fw-det__body p:last-child { margin-bottom: 0; }
+    .oz-fw-det__body strong { color: #1a1a1a; }
     .oz-anchor__ziel { margin-top: 1.1rem; padding-top: 0.9rem; border-top: 0.5px solid rgba(122,184,181,0.2); font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.6; }
     .oz-anchor__ziel strong { color: #a8d45a; font-weight: 500; }
     /* Pastell-Einordnungs-Skala für die eine Zahl */
@@ -1955,13 +1965,15 @@
             '<span class="oz-vgl-line__val">' + fmtTsd(WV.mit.wp) + '<small style="display:block;opacity:.55;font-weight:400;font-size:10px;">ohne Steigerung ' + fmtTsd(WV.ohne.wp) + '</small></span></div>' +
           '<p class="oz-vgl-note">Über 25 Jahre zählt die Preissteigerung. Fachlicher Standard für eine solche Entscheidung ist die Rechnung <strong>mit</strong> Steigerung (Gas +3 %, Fernwärme +4 %, WP-Strom +2,5 % pro Jahr — wie im Entscheider-Rechner). Ohne Steigerung wirkt Fernwärme rund <strong>' + fmtTsd(WV.diffFW) + '</strong> günstiger, als sie über die Laufzeit real wird — genau das ist das Preisrisiko des Anschlusszwangs. Die Wärmepumpe spart über 25 Jahre rund <strong>' + fmtTsd(WV.ersparnis) + '</strong> — nominale Gesamtkosten mit jährlicher Preissteigerung (FW +4 %/Jahr, im Rahmen der SWE-Prognose „Verdopplung bis 2040").</p>' +
           '<p class="oz-vgl-note">Investitionsannahme (konservativ): Wärmepumpe 130.000 € brutto / ~84.500 € netto (35 % BEG-Förderung), Fernwärme ~31.500 € brutto (SWE-Anschluss + bauliche Maßnahmen — Aufschlüsselung unten). Das günstigere reale WP-Angebot lag bei ~100.000 €; mit PV/iSFP steigt die Förderung auf bis zu 60 % — Potenzial nach unten. <strong>Schallschutz:</strong> Maßgeblich ist die amtlich bestätigte Einstufung als allgemeines Wohngebiet (40 dB(A) nachts); moderne Luft-Wasser-Wärmepumpen liegen im Nachtbetrieb darunter, übliche Standardmaßnahmen genügen.</p>' +
-          '<details class="oz-anchor__det">' +
+          '<details class="oz-fw-det">' +
             '<summary>Fernwärme-Anschluss — was wirklich anfällt</summary>' +
-            '<p>Der niedrige „Anschlusspreis" ist nur ein Teil. Ein Fernwärme-Anschluss besteht aus zwei Blöcken:</p>' +
-            '<p><strong>Block A — SWE-Anschluss</strong> (belegt, SWE-Schreiben 18.03.2026): Baukostenzuschuss ca. 2.480 € (39,99 €/kW × 62 kW) + Hausanschlusskostenbeitrag 8.982 € = <strong>ca. 11.500 € netto</strong>. Enthalten: Anschlussleitung bis ins Gebäude und Fernwärme-Grundstation („SWE Comfort").</p>' +
-            '<p><strong>Block B — bauliche Maßnahmen im Gebäude</strong> (Heizkreise, Pumpen, Mischer, Warmwasserbereitung, Anbindung der Heizzentrale): <strong>ca. 15.000–25.000 € netto</strong> — Erfahrungswert, von der SWE nicht beziffert.</p>' +
-            '<p><strong>Gesamtinvestition Fernwärme realistisch ca. 26.500–36.500 € netto</strong>, verbindlich erst mit dem konkreten SWE-Angebot. Der scheinbare Investitionsvorteil gegenüber der Wärmepumpe schrumpft damit deutlich — über 25 Jahre kehrt sich das Bild ohnehin um.</p>' +
-            '<p>Hinweis: konservativ mit 62 kW gerechnet; bei den dokumentierten 58,9 kW fiele der Baukostenzuschuss etwas niedriger aus.</p>' +
+            '<div class="oz-fw-det__body">' +
+              '<p>Der niedrige „Anschlusspreis" ist nur ein Teil. Ein Fernwärme-Anschluss besteht aus zwei Blöcken:</p>' +
+              '<p><strong>Block A — SWE-Anschluss</strong> (belegt, SWE-Schreiben 18.03.2026): Baukostenzuschuss ca. 2.480 € (39,99 €/kW × 62 kW) + Hausanschlusskostenbeitrag 8.982 € = <strong>ca. 11.500 € netto</strong>. Enthalten: Anschlussleitung bis ins Gebäude und Fernwärme-Grundstation („SWE Comfort").</p>' +
+              '<p><strong>Block B — bauliche Maßnahmen im Gebäude</strong> (Heizkreise, Pumpen, Mischer, Warmwasserbereitung, Anbindung der Heizzentrale): <strong>ca. 15.000–25.000 € netto</strong> — Erfahrungswert, von der SWE nicht beziffert.</p>' +
+              '<p><strong>Gesamtinvestition Fernwärme realistisch ca. 26.500–36.500 € netto</strong>, verbindlich erst mit dem konkreten SWE-Angebot. Der scheinbare Investitionsvorteil gegenüber der Wärmepumpe schrumpft damit deutlich — über 25 Jahre kehrt sich das Bild ohnehin um.</p>' +
+              '<p>Hinweis: konservativ mit 62 kW gerechnet; bei den dokumentierten 58,9 kW fiele der Baukostenzuschuss etwas niedriger aus.</p>' +
+            '</div>' +
           '</details>';
       }
       const jahresEl = document.getElementById("oz-vgl-jahres");
