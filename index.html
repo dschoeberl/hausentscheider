@@ -768,7 +768,8 @@
       .wib-item--kritisch   .wib-ton { color: #e0954a; background: rgba(224,149,74,0.14); }
       .wib-headline { display: block; margin-top: 0.4rem; font-family: 'Playfair Display', Georgia, serif; font-size: 17px; color: #eef3f1; line-height: 1.35; transition: color 0.15s; }
       .wib-det:hover .wib-headline, .wib-det[open] .wib-headline { color: #7ab8b5; }
-      .wib-chev { float: right; color: var(--petrol-light); font-size: 12px; transition: transform 0.2s; }
+      .wib-chev { float: right; display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; border: 0.5px solid var(--petrol-light); background: rgba(255,255,255,0.08); color: var(--petrol-light); font-size: 11px; transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s; }
+      .wib-det summary:hover .wib-chev { background: var(--petrol-light); border-color: var(--petrol-light); color: #1a3535; }
       .wib-det[open] .wib-chev { transform: rotate(90deg); }
       .wib-body { padding-bottom: 1rem; }
       .wib-zusammenfassung { font-size: 14px; color: #b9c6c3; line-height: 1.7; margin: 0.1rem 0 0.9rem; }
