@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Kommunale Wärmeplanung Erfurt im Future-Readiness-Spiegel — unabhängiges Monitoring des Wärmeplans: elf Kompetenzfelder (Ist gegen Soll), Prozess-Zeitstrahl und 23 Forderungen. Belegt statt behauptet.">
-  <title>Kommunale Wärmeplanung Erfurt — Future-Readiness-Dashboard | Hausentscheider</title>
+  <title>Kommunale Wärmeplanung Erfurt — Future-Readiness-Bewertung | Hausentscheider</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -92,7 +92,7 @@
     .kwp-intro p { font-size: 15px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 1rem; max-width: 680px; }
     .kwp-intro p strong { color: var(--text-primary); font-weight: 500; }
 
-    /* === FRI-DASHBOARD (Herzstück) === */
+    /* === FRI-BEWERTUNG (Herzstück) === */
     .kwp-dash { background: var(--petrol-dark); border-radius: var(--radius); padding: 1.75rem 1.75rem 2rem; }
     .kwp-dash__lbl { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--petrol-light); font-family: 'Inter', sans-serif; margin-bottom: 0.3rem; }
     .kwp-dash__title { font-family: 'Playfair Display', Georgia, serif; font-size: 21px; color: #fff; font-weight: 400; margin-bottom: 0.5rem; line-height: 1.3; }
@@ -218,7 +218,7 @@
           <li class="nav__dropdown">
             <button class="nav__dropdown-toggle is-current" aria-haspopup="true">Wärmeplanung ▾</button>
             <div class="nav__dropdown-menu" role="menu">
-              <a href="kwp-erfurt.html" role="menuitem">Erfurt — Kommunale Wärmeplanung <span class="nav__city-badge">aktuell</span></a>
+              <a href="kwp-erfurt.html" role="menuitem">Erfurt — Future-Readiness-Bewertung <span class="nav__city-badge">aktuell</span></a>
               <a href="kwp-dashboard-erfurt.html" role="menuitem">Erfurt — Status-Dashboard <span class="nav__city-badge">neu</span></a>
             </div>
           </li>
@@ -236,7 +236,7 @@
         <li><a href="index.html#objekte">Objekte</a></li>
         <li><a href="wegweiser.html">Wegweiser</a></li>
         <li><a href="kwp-erfurt.html" class="is-current">Wärmeplanung</a></li>
-        <li><a href="kwp-erfurt.html" class="is-sub is-current">↳ Erfurt — Kommunale Wärmeplanung</a></li>
+        <li><a href="kwp-erfurt.html" class="is-sub is-current">↳ Erfurt — Future-Readiness-Bewertung</a></li>
         <li><a href="kwp-dashboard-erfurt.html" class="is-sub">↳ Erfurt — Status-Dashboard</a></li>
         <li><a href="index.html#ueber">Über Hausentscheider</a></li>
         <li><a href="index.html#kontakt">Dialog</a></li>
@@ -309,7 +309,7 @@
     <div class="container">
       <div class="kwp-update">
         <div class="kwp-update__body">
-          <p><strong>Lebendig und ehrlich:</strong> Diese Bewertung bezieht sich auf den Stand 26.03./14.05.2026 und wird nach Veröffentlichung der Endfassung am 30.06.2026 sowie der M16-Plattform aktualisiert. Bis die Stadt ihr eigenes Dashboard hat, macht diese Seite den Stand sichtbar und prüfbar.</p>
+          <p><strong>Lebendig und ehrlich:</strong> Diese Bewertung bezieht sich auf den Stand 26.03./14.05.2026 und wird nach Veröffentlichung der Endfassung am 30.06.2026 sowie der M16-Plattform aktualisiert. Bis die Stadt ihr eigenes Monitoring hat, macht diese Bewertung den Plan sichtbar und prüfbar.</p>
         </div>
         <a class="btn btn--primary" href="dokumente/260514_Stellungnahme_KWP_Erfurt_v6.pdf" target="_blank" rel="noopener" style="flex-shrink:0;">Stellungnahme (PDF) →</a>
       </div>
@@ -391,7 +391,7 @@
     })();
   </script>
 
-  <!-- KWP-Dashboard: Daten + Render -->
+  <!-- FR-Bewertung (FRI-Radar): Daten + Render -->
   <script>
     (function () {
       var MONTHS = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
@@ -467,8 +467,8 @@
 
       /* ---------- LADEN ---------- */
       getJSON('daten/kwp-fri-erfurt.json').then(renderDashboard).catch(function(err){
-        console.error('[KWP-Dashboard]', err);
-        var r = document.getElementById('kwp-radar'); if (r) r.innerHTML = '<p style="color:rgba(255,255,255,0.7);font-size:13px;">Das Dashboard wird gerade aktualisiert.</p>';
+        console.error('[FR-Bewertung]', err);
+        var r = document.getElementById('kwp-radar'); if (r) r.innerHTML = '<p style="color:rgba(255,255,255,0.7);font-size:13px;">Die Bewertung wird gerade aktualisiert.</p>';
       });
     })();
   </script>

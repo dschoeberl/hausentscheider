@@ -87,6 +87,17 @@
     .btn--signal   { background: var(--signal); color: var(--petrol-dark); font-weight: 500; border: none; white-space: nowrap; flex-shrink: 0; }
     .btn--signal:hover { opacity: 0.9; text-decoration: none; }
     .btn--whatsapp { background: #25D366; color: white; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; padding: 0.6rem 1.25rem; }
+
+    /* ZWEI-WEGE-CTA · Future-Readiness-Bewertung + Status-Dashboard (gleichwertiges Paar) */
+    .kwp-duo { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 0 0 1.7rem; }
+    .kwp-duo__btn { flex: 1 1 250px; display: flex; align-items: center; gap: 0.7rem; background: var(--petrol); color: #fff; border: 1px solid rgba(255,255,255,0.14); border-radius: 6px; padding: 0.8rem 1rem; text-decoration: none; transition: opacity 0.2s; }
+    .kwp-duo__btn:hover { opacity: 0.9; text-decoration: none; }
+    .kwp-duo__ic { flex-shrink: 0; }
+    .kwp-duo__txt { display: flex; flex-direction: column; line-height: 1.25; }
+    .kwp-duo__txt b { font-size: 13.5px; font-weight: 600; display: flex; align-items: center; gap: 7px; }
+    .kwp-duo__txt small { font-size: 11.5px; opacity: 0.85; font-weight: 400; }
+    .kwp-duo__arrow { margin-left: auto; font-size: 16px; opacity: 0.9; padding-left: 0.4rem; }
+    .kwp-duo__live { width: 7px; height: 7px; border-radius: 50%; background: var(--signal, #CFF77F); box-shadow: 0 0 0 3px rgba(207,247,127,0.22); flex-shrink: 0; }
     .btn--tommy    { background: var(--tommy-rot); color: #ffffff; }
 
     /* DREI KERNAUSSAGEN */
@@ -588,7 +599,7 @@
           <li class="nav__dropdown">
             <button class="nav__dropdown-toggle" aria-haspopup="true">Wärmeplanung ▾</button>
             <div class="nav__dropdown-menu" role="menu">
-              <a href="kwp-erfurt.html" role="menuitem">Erfurt — Kommunale Wärmeplanung <span class="nav__city-badge">aktuell</span></a>
+              <a href="kwp-erfurt.html" role="menuitem">Erfurt — Future-Readiness-Bewertung <span class="nav__city-badge">aktuell</span></a>
               <a href="kwp-dashboard-erfurt.html" role="menuitem">Erfurt — Status-Dashboard <span class="nav__city-badge">neu</span></a>
             </div>
           </li>
@@ -607,7 +618,7 @@
         <li><a href="#ansatz">Ansatz</a></li>
         <li><a href="#objekte">Objekte</a></li>
         <li><a href="wegweiser.html">Wegweiser</a></li>
-        <li><a href="kwp-erfurt.html">Wärmeplanung — Erfurt</a></li>
+        <li><a href="kwp-erfurt.html">Future-Readiness-Bewertung — Erfurt</a></li>
         <li><a href="kwp-dashboard-erfurt.html">Status-Dashboard — Erfurt</a></li>
         <li><a href="#ueber">Über Hausentscheider</a></li>
         <li><a href="#kontakt">Dialog</a></li>
@@ -790,11 +801,19 @@
         <span class="wib__updated" id="wib-updated"></span>
       </div>
       <p class="wib__lead">Nah dran an dem, was über die Erfurter Wärmewende berichtet wird — wann, von wem, und was fehlt. Laufend ergänzt.</p>
-      <p style="font-family:'Inter',sans-serif;font-size:12.5px;color:#8fa09c;line-height:1.6;margin:-0.9rem 0 0.9rem;">Das hier ist der <strong style="color:#c4d0ce;font-weight:600;">Diskurs</strong> — was berichtet wird. Den <strong style="color:#c4d0ce;font-weight:600;">Plan</strong> selbst bewerten wir im Future-Readiness-Spiegel:</p>
-      <a href="kwp-erfurt.html" class="btn btn--signal" style="display:inline-flex;align-items:center;gap:8px;margin:0 0 1.7rem;">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        Kommunale Wärmeplanung Erfurt →
-      </a>
+      <p style="font-family:'Inter',sans-serif;font-size:12.5px;color:#8fa09c;line-height:1.6;margin:-0.9rem 0 0.9rem;">Das hier ist der <strong style="color:#c4d0ce;font-weight:600;">Diskurs</strong> — was berichtet wird. Den <strong style="color:#c4d0ce;font-weight:600;">Plan</strong> selbst zeigen wir aus zwei Blickwinkeln:</p>
+      <div class="kwp-duo">
+        <a href="kwp-erfurt.html" class="kwp-duo__btn">
+          <svg class="kwp-duo__ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.6"/></svg>
+          <span class="kwp-duo__txt"><b>Future-Readiness-Bewertung</b><small>Wie zukunftsfähig ist der Plan?</small></span>
+          <span class="kwp-duo__arrow">→</span>
+        </a>
+        <a href="kwp-dashboard-erfurt.html" class="kwp-duo__btn">
+          <svg class="kwp-duo__ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 12 7 12 10 5 14 19 17 12 21 12"/></svg>
+          <span class="kwp-duo__txt"><b>Status-Dashboard <span class="kwp-duo__live" title="laufend aktuell"></span></b><small>Wo steht der Plan?</small></span>
+          <span class="kwp-duo__arrow">→</span>
+        </a>
+      </div>
       <div id="wib-mount"><p class="wib-loading">Zeitstrahl wird geladen …</p></div>
     </div>
     <script>
@@ -1381,7 +1400,7 @@
       </div>
       <div class="brueckenbauer" style="margin-top:1.5rem;">
         <p class="brueckenbauer__text">Das hier ist das Erklärstück. So sieht der Future Readiness Index <strong>angewandt auf Erfurt</strong> aus — die echte Kommunale Wärmeplanung im Ist-Soll-Spiegel.</p>
-        <a href="kwp-erfurt.html" class="brueckenbauer__link">Zum KWP-Dashboard →</a>
+        <a href="kwp-erfurt.html" class="brueckenbauer__link">Zur Future-Readiness-Bewertung →</a>
       </div>
     </div>
   </section>
