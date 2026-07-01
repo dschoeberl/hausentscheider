@@ -138,61 +138,7 @@
     .kwp-dash__doclink a { font-size: 12.5px; color: var(--signal); font-weight: 500; }
     .kwp-dash__doclink a:hover { text-decoration: underline; }
 
-    /* === PROZESS-TIMELINE === */
-    .kwp-tl__abgrenzung { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; border-left: 2px solid var(--petrol-light); padding-left: 0.85rem; margin-bottom: 1.5rem; font-style: italic; max-width: 640px; }
-    #kwp-timeline { position: relative; margin: 20px 0; max-height: 560px; overflow-y: auto; overscroll-behavior: auto; -webkit-overflow-scrolling: touch; background: #f0eeea; border-top: 2px solid var(--petrol); border-bottom: 2px solid var(--petrol); scrollbar-width: thin; scrollbar-color: var(--petrol-light) transparent; }
-    #kwp-timeline::-webkit-scrollbar { width: 8px; }
-    #kwp-timeline::-webkit-scrollbar-track { background: transparent; }
-    #kwp-timeline::-webkit-scrollbar-thumb { background: var(--petrol-light); border-radius: 4px; }
-    .kwp-tl { position: relative; padding: 0.25rem 0.9rem 0.25rem 2.5rem; }
-    .kwp-tl::before { content: ''; position: absolute; left: 17px; top: 4px; bottom: 38px; width: 2px; background: var(--text-primary); }
-    .kwp-tl-item { position: relative; padding-bottom: 1.1rem; }
-    .kwp-tl-item__dot { position: absolute; left: -1.75rem; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--petrol); border: 2px solid var(--white); box-shadow: 0 0 0 1px var(--petrol-light); }
-    .kwp-tl-item--meilenstein .kwp-tl-item__dot { background: var(--signal); box-shadow: 0 0 0 1px var(--signal-dark); }
-    .kwp-tl-item--beitrag .kwp-tl-item__dot { background: var(--context-blue); }
-    .kwp-tl-item--offen .kwp-tl-item__dot { background: var(--white); box-shadow: 0 0 0 1.5px var(--petrol-light); }
-    .kwp-tl-det summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: center; }
-    .kwp-tl-det summary::-webkit-details-marker { display: none; }
-    .kwp-tl-date { grid-column: 1; font-size: 12px; font-family: 'Inter', sans-serif; color: var(--petrol); font-weight: 600; }
-    .kwp-tl-chev { grid-column: 2; grid-row: 1 / span 2; font-size: 10px; color: var(--text-tertiary); transition: transform 0.2s; align-self: center; }
-    .kwp-tl-det[open] .kwp-tl-chev { transform: rotate(90deg); }
-    .kwp-tl-titel { grid-column: 1; font-size: 14px; color: var(--text-primary); line-height: 1.4; }
-    .kwp-tl-badge { display: inline-block; font-size: 8.5px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; font-family: 'Inter', sans-serif; border-radius: 3px; padding: 1px 6px; margin-bottom: 4px; }
-    .kwp-tl-badge--meilenstein { background: var(--signal); color: var(--petrol-dark); }
-    .kwp-tl-badge--etappe { background: var(--bg-light); color: var(--text-secondary); border: 0.5px solid var(--border); }
-    .kwp-tl-badge--beitrag { background: rgba(126,150,150,0.18); color: var(--context-blue); border: 0.5px solid var(--context-blue); }
-    .kwp-tl-body { margin: 0.4rem 0 0; }
-    .kwp-tl-det:not([open]) .kwp-tl-body { display: none; }
-    .kwp-tl-zus { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.5rem; }
-    .kwp-tl-kom { font-size: 12.5px; color: var(--text-primary); line-height: 1.6; border-left: 2px solid var(--signal-dark); padding-left: 0.75rem; }
-    .kwp-tl-kom-lbl { display: block; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--petrol); font-weight: 700; margin-bottom: 2px; font-family: 'Inter', sans-serif; }
-    .kwp-tl-item--offen .kwp-tl-titel { color: var(--petrol); }
-    .kwp-tl-heute { position: relative; padding-bottom: 1.1rem; }
-    .kwp-tl-heute__dot { position: absolute; left: calc(-1.75rem - 1px); top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--tommy-rot); border: 2px solid var(--white); box-shadow: 0 0 0 1px var(--tommy-rot); }
-    .kwp-tl-heute__lbl { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--tommy-rot); font-weight: 700; font-family: 'Inter', sans-serif; }
-    .kwp-tl-tail { position: relative; font-size: 11.5px; color: var(--text-tertiary); font-style: italic; font-family: 'Inter', sans-serif; padding-top: 2px; }
-    .kwp-tl-tail__dot { position: absolute; left: -1.75rem; top: 5px; width: 8px; height: 8px; border-radius: 50%; border: 1.5px dashed var(--petrol-light); }
-
-    /* === FORDERUNGEN === */
-    .kwp-ford { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-    .kwp-ford__col { border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-    .kwp-ford__head { padding: 0.85rem 1rem; color: #fff; }
-    .kwp-ford__head--rot { background: var(--tommy-rot); }
-    .kwp-ford__head--gelb { background: var(--frist-gelb); }
-    .kwp-ford__head--blau { background: var(--gov-blau); }
-    .kwp-ford__frist { font-size: 9.5px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.9; font-family: 'Inter', sans-serif; }
-    .kwp-ford__titel { font-family: 'Playfair Display', Georgia, serif; font-size: 17px; }
-    .kwp-ford__intro { font-size: 11.5px; color: var(--text-secondary); line-height: 1.5; padding: 0.75rem 1rem; border-bottom: 0.5px solid var(--border); background: var(--bg-light); }
-    .kwp-ford__list { list-style: none; padding: 0.4rem 0; }
-    .kwp-ford__item { display: grid; grid-template-columns: 26px 1fr; gap: 8px; padding: 0.6rem 1rem; border-bottom: 0.5px solid var(--border); }
-    .kwp-ford__item:last-child { border-bottom: none; }
-    .kwp-ford__nr { font-size: 11px; font-weight: 600; color: #fff; border-radius: 4px; text-align: center; height: 20px; line-height: 20px; }
-    .kwp-ford__nr--rot { background: var(--tommy-rot); }
-    .kwp-ford__nr--gelb { background: var(--frist-gelb); }
-    .kwp-ford__nr--blau { background: var(--gov-blau); }
-    .kwp-ford__txt { font-size: 12.5px; color: var(--text-primary); line-height: 1.45; }
-    .kwp-ford__rg { display: block; font-size: 10.5px; color: var(--text-tertiary); margin-top: 3px; }
-    .kwp-ford__status { display: inline-block; font-size: 9px; letter-spacing: 0.5px; text-transform: uppercase; font-weight: 700; color: #1a4f4d; background: #d4f0d0; border: 0.5px solid #8ec8a4; border-radius: 3px; padding: 0 5px; margin-left: 5px; }
+    /* Prozess-Timeline und Forderungen sind ins Status-Dashboard (kwp-dashboard-erfurt.html) umgezogen. */
 
     /* === UPDATE / CTA === */
     .kwp-update { background: var(--bg-light); border-radius: var(--radius); padding: 1.75rem; display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
@@ -238,7 +184,6 @@
     @media (max-width: 880px) {
       .kwp-dash__grid { grid-template-columns: 1fr; }
       .kwp-radar__chart { max-width: 420px; margin: 0 auto; }
-      .kwp-ford { grid-template-columns: 1fr; }
     }
     @media (max-width: 680px) {
       h1, .hero__headline { font-size: 23px; }
@@ -250,7 +195,6 @@
       .kwp-dash { padding: 1.5rem 1.1rem 1.75rem; }
       .kwp-fh__grid { grid-template-columns: 1fr 1fr; }
       .footer__inner { flex-direction: column; align-items: flex-start; }
-      #kwp-timeline { max-height: 62vh; }
     }
   </style>
 </head>
@@ -350,24 +294,13 @@
     </div>
   </section>
 
-  <!-- PROZESS-TIMELINE -->
-  <section class="section" id="prozess">
+  <!-- BRÜCKE: Prozess & Forderungen im Status-Dashboard -->
+  <section class="section">
     <div class="container">
-      <span class="label" style="margin-bottom:0.6rem;">Der Weg des Plans</span>
-      <h2 style="margin-bottom:0.6rem;">Etappe für Etappe — von der Analyse zur Endfassung</h2>
-      <p class="kwp-tl__abgrenzung">Die Startseite verfolgt den <em>Diskurs</em> — was über die Wärmewende berichtet wird. Hier verfolgen wir den <em>Plan</em> selbst: was die Stadt tut. Die Phase ab dem 30. Juni läuft offen weiter; die Bewertung wird dann fortgeschrieben.</p>
-      <p id="kwp-tl-updated" style="font-size:11.5px;color:var(--text-tertiary);font-family:'Inter',sans-serif;margin:0 0 1.25rem;"></p>
-      <div id="kwp-timeline"><p style="color:var(--text-tertiary);font-size:13px;">Zeitstrahl wird geladen …</p></div>
-    </div>
-  </section>
-
-  <!-- FORDERUNGEN -->
-  <section class="section" id="forderungen">
-    <div class="container">
-      <span class="label" style="margin-bottom:0.6rem;">Was zwischen Ist und Soll liegt</span>
-      <h2 style="margin-bottom:0.6rem;">23 Forderungen — die Bauanleitung</h2>
-      <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;max-width:680px;margin-bottom:1.5rem;">Die Differenz zwischen rotem Ist und grünem Soll ist kein Vorwurf, sondern eine Bauanleitung — gestaffelt nach Frist: <strong style="color:var(--tommy-rot);">sofort</strong>, <strong style="color:var(--frist-gelb);">strukturell</strong>, <strong style="color:var(--gov-blau);">Governance</strong>.</p>
-      <div id="kwp-forderungen"><p style="color:var(--text-tertiary);font-size:13px;">Forderungen werden geladen …</p></div>
+      <span class="label" style="margin-bottom:0.6rem;">Wo steht der Plan?</span>
+      <h2 style="margin-bottom:0.6rem;">Prozess und Forderungen — im Status-Dashboard</h2>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;max-width:680px;margin-bottom:1.25rem;">Diese Seite <strong style="color:var(--text-primary);font-weight:500;">bewertet</strong> den Plan — Ist gegen Soll. <strong style="color:var(--text-primary);font-weight:500;">Wo</strong> er steht (der Weg des Plans als Zeitstrahl) und <strong style="color:var(--text-primary);font-weight:500;">was daraus folgt</strong> (die 23 Forderungen als Bauanleitung) verfolgen wir laufend im Status-Dashboard.</p>
+      <a href="kwp-dashboard-erfurt.html" class="btn btn--primary">Zum Status-Dashboard →</a>
     </div>
   </section>
 
@@ -532,101 +465,10 @@
         if (konv) konv.innerHTML = 'Unabhängig davon kommt eine zweite eingereichte Stellungnahme (Klimaentscheid Erfurt) in den Kernlücken — Kosten, Wasserstoff, Plan B für die Geothermie, Mieter- und Sozialperspektive — zu vergleichbaren Befunden. Dass mehrere Stellungnahmen unabhängig konvergieren, härtet „belegt statt behauptet“.';
       }
 
-      /* ---------- TIMELINE ---------- */
-      function renderTimeline(data){
-        var el = document.getElementById('kwp-timeline');
-        var entries = (data.eintraege || []).slice().sort(function(a,b){ return parse(a.datum) - parse(b.datum); });
-        if (!entries.length){ el.innerHTML = ''; return; }
-        var hISO = heuteISO();
-
-        // „Letzte erfasste Etappe“ — aus der jüngsten NICHT-offenen Etappe abgeleitet
-        // (nicht aus heute und nicht aus angekündigten Zukunfts-Einträgen). Pflegt sich
-        // von allein, sobald eine reale Etappe ergänzt oder eine offene eingetreten ist.
-        var erfasst = entries.filter(function(e){ return !e.offen; });
-        var offene  = entries.filter(function(e){ return e.offen; });
-        var lu = erfasst.length ? erfasst[erfasst.length - 1] : entries[entries.length - 1];
-        var luEl = document.getElementById('kwp-tl-updated');
-        if (luEl && lu){
-          var txt = 'Letzte erfasste Etappe: <b style="color:var(--petrol);font-weight:600;">' + esc(lu.datumLabel) + '</b>';
-          if (offene.length) txt += ' — Folgeetappen ab ' + esc(offene[0].datumLabel) + ' sind angekündigt.';
-          luEl.innerHTML = txt;
-        }
-        var firstFutureISO = null;
-        entries.forEach(function(e){ if(!firstFutureISO && parse(e.datum) > parse(hISO)) firstFutureISO = e.datum; });
-
-        var BADGE = { meilenstein:'Meilenstein', etappe:'Etappe', beitrag:'Beitrag' };
-        var html = '<div class="kwp-tl">';
-        var heutePlatziert = false;
-        entries.forEach(function(e){
-          if (!heutePlatziert && firstFutureISO && e.datum === firstFutureISO){
-            html += '<div class="kwp-tl-heute"><span class="kwp-tl-heute__dot"></span><span class="kwp-tl-heute__lbl">Heute · '+esc(heuteLabel())+'</span></div>';
-            heutePlatziert = true;
-          }
-          var art = e.art || 'etappe';
-          var cls = 'kwp-tl-item kwp-tl-item--'+art + (e.offen ? ' kwp-tl-item--offen' : '');
-          html += '<div class="'+cls+'"><span class="kwp-tl-item__dot"></span>' +
-            '<details class="kwp-tl-det"'+(e.offen?' open':'')+'>' +
-              '<summary>' +
-                '<span class="kwp-tl-date">'+esc(e.datumLabel)+'</span>' +
-                '<span class="kwp-tl-chev">▸</span>' +
-                '<span class="kwp-tl-titel"><span class="kwp-tl-badge kwp-tl-badge--'+art+'">'+(BADGE[art]||'Etappe')+'</span><br>'+esc(e.titel)+'</span>' +
-              '</summary>' +
-              '<div class="kwp-tl-body">' +
-                '<p class="kwp-tl-zus">'+esc(e.zusammenfassung)+'</p>' +
-                (e.kommentar ? '<p class="kwp-tl-kom"><span class="kwp-tl-kom-lbl">Einordnung</span>'+esc(e.kommentar)+'</p>' : '') +
-                (e.link ? '<p style="margin-top:0.5rem;"><a href="'+esc(e.link)+'" target="_blank" rel="noopener" style="font-size:12px;">Quelle ansehen →</a></p>' : '') +
-              '</div>' +
-            '</details></div>';
-        });
-        if (!heutePlatziert){
-          html += '<div class="kwp-tl-heute"><span class="kwp-tl-heute__dot"></span><span class="kwp-tl-heute__lbl">Heute · '+esc(heuteLabel())+'</span></div>';
-        }
-        html += '<div class="kwp-tl-tail"><span class="kwp-tl-tail__dot"></span>wird laufend ergänzt</div>';
-        html += '</div>';
-        el.innerHTML = html;
-      }
-
-      /* ---------- FORDERUNGEN ---------- */
-      function renderForderungen(data){
-        var el = document.getElementById('kwp-forderungen');
-        var ebenen = data.ebenen || [];
-        if (!ebenen.length){ el.innerHTML = ''; return; }
-        var html = '<div class="kwp-ford">';
-        ebenen.forEach(function(eb){
-          var c = eb.farbe || 'gelb';
-          html += '<div class="kwp-ford__col">' +
-            '<div class="kwp-ford__head kwp-ford__head--'+c+'">' +
-              '<span class="kwp-ford__frist">'+esc(eb.frist)+'</span>' +
-              '<div class="kwp-ford__titel">'+esc(eb.titel)+'</div>' +
-            '</div>' +
-            '<p class="kwp-ford__intro">'+esc(eb.intro)+'</p>' +
-            '<ul class="kwp-ford__list">';
-          (eb.forderungen || []).forEach(function(f){
-            var status = (f.status === 'erfuellt') ? '<span class="kwp-ford__status">erfüllt</span>' : '';
-            html += '<li class="kwp-ford__item">' +
-              '<span class="kwp-ford__nr kwp-ford__nr--'+c+'">'+f.nr+'</span>' +
-              '<span class="kwp-ford__txt">'+esc(f.titel)+status +
-                (f.rechtsgrundlage ? '<span class="kwp-ford__rg">'+esc(f.rechtsgrundlage)+'</span>' : '') +
-              '</span></li>';
-          });
-          html += '</ul></div>';
-        });
-        html += '</div>';
-        el.innerHTML = html;
-      }
-
       /* ---------- LADEN ---------- */
       getJSON('daten/kwp-fri-erfurt.json').then(renderDashboard).catch(function(err){
         console.error('[KWP-Dashboard]', err);
         var r = document.getElementById('kwp-radar'); if (r) r.innerHTML = '<p style="color:rgba(255,255,255,0.7);font-size:13px;">Das Dashboard wird gerade aktualisiert.</p>';
-      });
-      getJSON('daten/kwp-timeline-erfurt.json').then(renderTimeline).catch(function(err){
-        console.error('[KWP-Timeline]', err);
-        var t = document.getElementById('kwp-timeline'); if (t) t.innerHTML = '<p style="color:var(--text-tertiary);font-size:13px;">Der Zeitstrahl wird gerade aktualisiert.</p>';
-      });
-      getJSON('daten/kwp-forderungen-erfurt.json').then(renderForderungen).catch(function(err){
-        console.error('[KWP-Forderungen]', err);
-        var f = document.getElementById('kwp-forderungen'); if (f) f.innerHTML = '<p style="color:var(--text-tertiary);font-size:13px;">Die Forderungen werden gerade aktualisiert.</p>';
       });
     })();
   </script>
