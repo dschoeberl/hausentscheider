@@ -98,6 +98,17 @@
     .db-fuss { font-size: 12px; color: var(--text-tertiary); line-height: 1.6; margin-top: 1.25rem; }
     .db-fuss a { color: var(--petrol); }
 
+    /* Teaser: Positionierungs-Landkarte (dunkle Welt) */
+    .db-poscta { display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: center; background: var(--petrol-dark); border-left: 4px solid var(--tommy-rot); border-radius: var(--radius); padding: 1.5rem 1.75rem; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
+    .db-poscta:hover { text-decoration: none; transform: translateY(-2px); box-shadow: 0 10px 26px rgba(26,53,53,0.3); }
+    .db-poscta__eyebrow { display: inline-block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #fff; background: var(--tommy-rot); padding: 3px 9px; border-radius: 3px; font-weight: 600; }
+    .db-poscta__title { font-family: 'Playfair Display', Georgia, serif; font-weight: 500; color: #fff; font-size: 22px; line-height: 1.3; margin: 0.7rem 0 0.45rem; }
+    .db-poscta__text { font-size: 13.5px; color: #c4d0ce; line-height: 1.65; max-width: 54ch; margin: 0 0 0.75rem; }
+    .db-poscta__link { font-size: 13px; color: var(--signal); font-weight: 600; }
+    .db-poscta:hover .db-poscta__link { text-decoration: underline; }
+    .db-poscta__viz { flex-shrink: 0; }
+    @media (max-width: 680px) { .db-poscta { grid-template-columns: 1fr; padding: 1.25rem 1.35rem; } .db-poscta__viz { display: none; } }
+
     .footer { border-top: 0.5px solid var(--border); padding: 1.5rem 0; }
     .footer__inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
     .footer__left, .footer__right { font-size: 12px; color: var(--text-tertiary); }
@@ -196,7 +207,8 @@
             <button class="nav__dropdown-toggle is-current" aria-haspopup="true">Wärmeplanung ▾</button>
             <div class="nav__dropdown-menu" role="menu">
               <a href="kwp-erfurt.html" role="menuitem">Erfurt — Future-Readiness-Bewertung</a>
-              <a href="kwp-dashboard-erfurt.html" role="menuitem" class="is-current">Erfurt — Status-Dashboard <span class="nav__city-badge">neu</span></a>
+              <a href="kwp-dashboard-erfurt.html" role="menuitem" class="is-current">Erfurt — Status-Dashboard</a>
+              <a href="kwp-erfurt-positionierung.html" role="menuitem">Erfurt — Positionierung der Akteure <span class="nav__city-badge">neu</span></a>
             </div>
           </li>
           <li><a href="index.html#ueber">Über Hausentscheider</a></li>
@@ -214,6 +226,7 @@
         <li><a href="wegweiser.html">Wegweiser</a></li>
         <li><a href="kwp-erfurt.html">Future-Readiness-Bewertung Erfurt</a></li>
         <li><a href="kwp-dashboard-erfurt.html" class="is-sub is-current">↳ Status-Dashboard Erfurt</a></li>
+        <li><a href="kwp-erfurt-positionierung.html" class="is-sub">↳ Positionierung der Akteure Erfurt</a></li>
         <li><a href="index.html#ueber">Über Hausentscheider</a></li>
         <li><a href="index.html#kontakt">Dialog</a></li>
       </ul>
@@ -307,6 +320,38 @@
         <div class="db-krow"><div class="db-kst"><span class="dot" style="background:var(--tommy-rot)"></span><span class="lab">abgelehnt</span></div><div class="db-ktx"><div class="db-ktx__t">4 Wochen Auslegung zu knapp · M16-Plattform zu spät</div><div class="db-ktx__b">Stadt: entspricht dem Gesetz. <b>Wir:</b> die Frist endete, bevor das Selbstverortungs-Werkzeug online war.</div></div></div>
       </div>
       <p class="db-fuss">Quellen: Kommunaler Wärmeplan Erfurt (Entwurf, 26.03.2026, 502 Seiten) · Abwägung der eingegangenen Stellungnahmen (Stadt Erfurt, 12.06.2026). Maßnahmen M1–M17 aus Kapitel 7 (Umsetzungsstrategie). Status- und Einordnungsbewertung: Hausentscheider — belegt statt behauptet. Mehr in der <a href="kwp-erfurt.html">Future-Readiness-Bewertung</a> und im <a href="wegweiser.html">Wegweiser</a>.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-label="Positionierung der Akteure">
+    <div class="container">
+      <a href="kwp-erfurt-positionierung.html" class="db-poscta">
+        <div class="db-poscta__body">
+          <span class="db-poscta__eyebrow">Interaktive Landkarte</span>
+          <h2 class="db-poscta__title">Und wer waren diese 24?</h2>
+          <p class="db-poscta__text">Alle 24 Stellungnahmen als Positionierungs-Landkarte: wer bestätigt, wer kritisiert — und bei welchen Themen sich völlig unterschiedliche Kritiker treffen, ohne sich abgesprochen zu haben.</p>
+          <span class="db-poscta__link">Zur Positionierung der Akteure →</span>
+        </div>
+        <div class="db-poscta__viz" aria-hidden="true">
+          <svg width="200" height="140" viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="150" y1="42" x2="120" y2="72" stroke="#CFF77F" stroke-width="1" opacity="0.5"/>
+            <line x1="126" y1="36" x2="120" y2="72" stroke="#CFF77F" stroke-width="1" opacity="0.5"/>
+            <line x1="106" y1="54" x2="120" y2="72" stroke="#CFF77F" stroke-width="1" opacity="0.5"/>
+            <circle cx="40" cy="106" r="5" fill="#93a29e"/>
+            <circle cx="58" cy="118" r="4" fill="#93a29e"/>
+            <circle cx="30" cy="120" r="3.5" fill="#93a29e"/>
+            <circle cx="74" cy="98" r="4" fill="#93a29e"/>
+            <circle cx="92" cy="62" r="4" fill="#93a29e"/>
+            <circle cx="120" cy="72" r="3" fill="#CFF77F" opacity="0.9"/>
+            <circle cx="150" cy="42" r="11" fill="#CFF77F" opacity="0.18"/>
+            <circle cx="150" cy="42" r="6" fill="#CFF77F"/>
+            <circle cx="126" cy="36" r="10" fill="#CFF77F" opacity="0.18"/>
+            <circle cx="126" cy="36" r="5.5" fill="#CFF77F"/>
+            <circle cx="106" cy="54" r="9" fill="#CFF77F" opacity="0.18"/>
+            <circle cx="106" cy="54" r="5" fill="#CFF77F"/>
+          </svg>
+        </div>
+      </a>
     </div>
   </section>
 

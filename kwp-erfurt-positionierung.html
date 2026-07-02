@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Alle 24 Stellungnahmen zur Kommunalen Wärmeplanung Erfurt als interaktive Landkarte: wer bestätigt, wer kritisiert — und bei welchen Themen sich unabhängige Kritiker treffen, ohne sich abgesprochen zu haben.">
+  <title>Wer steht wo? — Positionierung der Stellungnahmen zur KWP Erfurt | Hausentscheider</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; overflow-x: hidden; }
+    body { font-family: 'Inter', -apple-system, sans-serif; font-size: 16px; font-weight: 400; line-height: 1.6; color: #1a1a1a; background: #ffffff; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    :root {
+      --petrol: #1a5c5a; --petrol-light: #7ab8b5; --petrol-dark: #1a3535;
+      --signal: #CFF77F; --signal-dark: #a8d45a; --tommy-rot: #D81E34;
+      --border: #e0dedd; --bg-light: #f5f4f2;
+      --text-primary: #1a1a1a; --text-secondary: #5a5956; --text-tertiary: #8a8680;
+      --white: #ffffff; --max-width: 900px; --radius: 8px;
+      /* dunkle Ebene (Medien-Resonanz-Welt) */
+      --d-bg: #1a3535; --d-lead: #c4d0ce; --d-muted: #8fa09c; --d-line: rgba(255,255,255,0.13);
+    }
+    h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; font-weight: 500; line-height: 1.25; }
+    a { color: var(--petrol); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── NAV (site-konsistent) ─────────────────────────── */
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 0.5px solid var(--border); }
+    .nav__inner { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .nav__logo { text-decoration: none; display: inline-flex; align-items: center; }
+    .nav__logo:hover { text-decoration: none; opacity: 0.85; }
+    .nav__links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+    .nav__links a { font-size: 13px; color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+    .nav__links a:hover, .nav__links a.is-current { color: var(--petrol); }
+    .nav__dropdown { position: relative; }
+    .nav__dropdown-toggle { font-size: 13px; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 4px; background: none; border: none; font-family: 'Inter', sans-serif; padding: 0; }
+    .nav__dropdown-toggle.is-current, .nav__dropdown-toggle:hover { color: var(--petrol); }
+    .nav__dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 0; background: var(--white); border: 0.5px solid var(--border); border-radius: var(--radius); min-width: 240px; padding: 0.5rem 0; z-index: 110; }
+    .nav__dropdown:hover .nav__dropdown-menu, .nav__dropdown:focus-within .nav__dropdown-menu, .nav__dropdown.is-open .nav__dropdown-menu { display: block; }
+    .nav__dropdown-menu a { display: flex; align-items: center; gap: 6px; padding: 0.5rem 1rem; font-size: 13px; color: var(--text-secondary); }
+    .nav__dropdown-menu a:hover, .nav__dropdown-menu a.is-current { color: var(--petrol); background: var(--bg-light); text-decoration: none; }
+    .nav__city-badge { font-size: 10px; background: var(--petrol); color: white; padding: 1px 6px; border-radius: 10px; font-family: 'Inter', sans-serif; }
+    .nav__hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 8px; gap: 5px; flex-shrink: 0; }
+    .nav__hamburger span { display: block; width: 22px; height: 1.5px; background: var(--text-primary); transition: all 0.25s ease; transform-origin: center; }
+    .nav__hamburger.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav__hamburger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__hamburger.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .nav__mobile-menu { display: none; background: var(--white); border-top: 0.5px solid var(--border); padding: 0.5rem 1.25rem 1rem; }
+    .nav__mobile-menu.is-open { display: block; }
+    .nav__mobile-menu ul { list-style: none; display: flex; flex-direction: column; }
+    .nav__mobile-menu li a { display: block; padding: 0.875rem 0; font-size: 15px; color: var(--text-secondary); text-decoration: none; border-bottom: 0.5px solid var(--border); }
+    .nav__mobile-menu li:last-child a { border-bottom: none; }
+    .nav__mobile-menu li a.is-current { color: var(--petrol); }
+    .nav__mobile-menu li a.is-sub { padding-left: 1rem; font-size: 14px; color: var(--text-tertiary); }
+
+    /* ── DUNKLE HAUPTFLÄCHE ────────────────────────────── */
+    .pos { background: var(--d-bg); border-top: 6px solid var(--tommy-rot); padding-bottom: 3.25rem; }
+    .wrap { max-width: var(--max-width); margin: 0 auto; padding: 2.75rem 2rem 0; }
+
+    .eyebrow { display: inline-block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #fff; background: var(--tommy-rot); font-weight: 600; padding: 5px 11px; border-radius: 3px; margin-bottom: 1rem; }
+    .pos h1 { font-size: clamp(1.9rem, 4.5vw, 2.7rem); color: #fff; margin: 0 0 0.55rem; }
+    .lede { font-size: 1.02rem; color: var(--d-lead); line-height: 1.7; max-width: 62ch; margin: 0 0 1.4rem; }
+    .rule { height: 3px; width: 64px; background: var(--signal); border: none; margin: 0 0 1.7rem; }
+
+    /* Kennzahlen-Band */
+    .stats { display: flex; flex-wrap: wrap; gap: 0.7rem; margin: 0 0 2rem; }
+    .stat { flex: 1 1 150px; border: 0.5px solid rgba(255,255,255,0.16); border-radius: var(--radius); padding: 0.85rem 1rem; background: rgba(255,255,255,0.05); }
+    .stat b { font-family: 'Playfair Display', serif; font-weight: 500; font-size: 1.95rem; display: block; line-height: 1; color: #fff; }
+    .stat.zero b { color: var(--tommy-rot); }
+    .stat span { font-size: 12px; color: var(--d-muted); letter-spacing: 0.2px; line-height: 1.4; display: block; margin-top: 0.35rem; }
+    .stat span strong { color: var(--d-lead); font-weight: 600; }
+
+    /* Karten-Container */
+    .mapcard { border: 0.5px solid rgba(255,255,255,0.12); border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.03); }
+    .maphead { padding: 1rem 1.2rem; border-bottom: 0.5px solid rgba(255,255,255,0.12); }
+    .maphead h2 { font-size: 1.25rem; color: #fff; margin: 0 0 0.25rem; }
+    .maphead p { margin: 0; font-size: 13px; color: var(--d-muted); line-height: 1.55; }
+
+    .maplayout { display: grid; grid-template-columns: 1fr 300px; }
+    @media (max-width: 820px) { .maplayout { grid-template-columns: 1fr; } }
+    .mapsvgwrap { padding: 0.5rem 0.4rem; }
+    svg#map { display: block; width: 100%; height: auto; }
+
+    /* Detail-Panel — heller Inset (Aufklapp-Muster) */
+    .panel { border-left: 0.5px solid rgba(0,0,0,0.08); padding: 1.1rem 1.2rem; background: #eef1ee; color: var(--text-primary); min-height: 100%; }
+    @media (max-width: 820px) { .panel { border-left: none; border-top: 0.5px solid rgba(255,255,255,0.12); } }
+    .panel .ph { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--petrol); font-weight: 700; margin-bottom: 0.5rem; }
+    .panel .pname { font-family: 'Playfair Display', serif; font-size: 1.15rem; margin: 0 0 0.25rem; color: var(--text-primary); }
+    .panel .pmeta { font-size: 12px; color: var(--text-secondary); margin-bottom: 0.7rem; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 20px; letter-spacing: 0.3px; }
+    .badge.V { background: var(--signal); color: var(--petrol-dark); }
+    .badge.K { background: #e0ddd8; color: var(--text-secondary); }
+    .panel .psay { font-size: 13.5px; color: var(--text-primary); line-height: 1.55; }
+    .panel .hint { font-size: 12px; color: var(--text-tertiary); font-style: italic; line-height: 1.55; }
+
+    circle.pt { cursor: pointer; transition: opacity 0.2s; }
+    circle.pt:hover { opacity: 0.85; }
+    .lbl { font-size: 9.5px; font-family: 'Inter', sans-serif; fill: var(--d-lead); pointer-events: none; }
+    .qlabel { font-size: 11px; font-family: 'Inter', sans-serif; font-weight: 600; letter-spacing: 0.4px; }
+    .axcap { font-size: 10.5px; font-family: 'Inter', sans-serif; fill: var(--d-muted); letter-spacing: 0.4px; }
+
+    /* Themen-Umschalter */
+    .themebar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 0.85rem 1.2rem 0.1rem; }
+    .themebarlbl { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--d-muted); font-weight: 600; margin-right: 0.2rem; }
+    .filters { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .chip { font-size: 12px; padding: 4px 12px; border: 0.5px solid rgba(255,255,255,0.2); border-radius: 20px; background: rgba(255,255,255,0.06); cursor: pointer; color: var(--d-lead); transition: all 0.15s; font-family: inherit; }
+    .chip:hover { border-color: var(--petrol-light); color: #fff; }
+    .chip.active { background: var(--signal); color: var(--petrol-dark); border-color: var(--signal); font-weight: 600; }
+    .chip.all.active { background: rgba(255,255,255,0.16); color: #fff; border-color: rgba(255,255,255,0.3); font-weight: 500; }
+    .themecap { padding: 0.6rem 1.2rem 0.2rem; font-size: 12.5px; color: var(--d-lead); line-height: 1.6; min-height: 1.2rem; }
+    .themecap b { color: var(--signal); font-weight: 600; }
+
+    .legend { display: flex; flex-wrap: wrap; gap: 1rem; padding: 0.9rem 1.2rem; border-top: 0.5px solid rgba(255,255,255,0.12); font-size: 12px; color: var(--d-lead); align-items: center; }
+    .legend .k { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .dot { width: 13px; height: 13px; border-radius: 50%; display: inline-block; }
+
+    /* Die Stillen */
+    .silent { margin-top: 2.4rem; border: 1px dashed rgba(255,255,255,0.22); border-radius: 12px; padding: 1.2rem 1.3rem; background: rgba(255,255,255,0.03); }
+    .silent h2 { font-size: 1.15rem; color: #fff; margin: 0 0 0.35rem; }
+    .silent p { font-size: 13px; color: var(--d-muted); margin: 0 0 0.9rem; max-width: 64ch; line-height: 1.6; }
+    .silentchips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .schip { font-size: 11.5px; padding: 3px 9px; border-radius: 5px; background: rgba(255,255,255,0.06); color: var(--d-muted); }
+    .schip.flag { background: rgba(224,149,74,0.14); color: #e0954a; font-weight: 500; }
+
+    /* Takeaway */
+    .takeaway { margin-top: 2rem; background: rgba(0,0,0,0.22); border-left: 6px solid var(--signal); border-radius: 8px; padding: 1.35rem 1.5rem; }
+    .takeaway p { margin: 0; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.15rem; line-height: 1.5; color: #eef3f1; }
+
+    .src { margin-top: 1.7rem; font-size: 11.5px; color: var(--d-muted); font-style: italic; border-top: 0.5px solid rgba(255,255,255,0.12); padding-top: 0.85rem; line-height: 1.65; }
+    .src a { color: var(--petrol-light); font-weight: 500; font-style: normal; }
+
+    /* ── FOOTER (site-konsistent) ──────────────────────── */
+    .footer { border-top: 0.5px solid var(--border); padding: 1.5rem 0; }
+    .footer__inner { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .footer__left, .footer__right { font-size: 12px; color: var(--text-tertiary); }
+    .footer__right a { color: var(--text-tertiary); }
+    .footer__right a:hover { color: var(--petrol); }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .heroGlow { animation: heroPulse 3.6s ease-in-out infinite; }
+      @keyframes heroPulse { 0%, 100% { opacity: 0.12; } 50% { opacity: 0.26; } }
+      .critNode { animation: nodePulse 3s ease-in-out infinite; }
+      @keyframes nodePulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+    }
+
+    @media (max-width: 680px) {
+      .nav__links { display: none; }
+      .nav__hamburger { display: flex; }
+      .footer__inner { flex-direction: column; align-items: flex-start; }
+      .wrap { padding-left: 1.4rem; padding-right: 1.4rem; }
+      .pos h1 { font-size: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo" aria-label="hausentscheider — Startseite">
+        <svg width="180" height="28" viewBox="0 0 180 28" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">haus</text>
+          <text x="58" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">entscheider</text>
+          <line x1="0" y1="26" x2="56" y2="26" stroke="#1a5c5a" stroke-width="2" stroke-linecap="square"/>
+        </svg>
+      </a>
+      <nav aria-label="Hauptnavigation">
+        <ul class="nav__links">
+          <li><a href="index.html#ansatz">Ansatz</a></li>
+          <li><a href="index.html#objekte">Objekte</a></li>
+          <li><a href="wegweiser.html">Wegweiser</a></li>
+          <li class="nav__dropdown">
+            <button class="nav__dropdown-toggle is-current" aria-haspopup="true">Wärmeplanung ▾</button>
+            <div class="nav__dropdown-menu" role="menu">
+              <a href="kwp-erfurt.html" role="menuitem">Erfurt — Future-Readiness-Bewertung</a>
+              <a href="kwp-dashboard-erfurt.html" role="menuitem">Erfurt — Status-Dashboard</a>
+              <a href="kwp-erfurt-positionierung.html" role="menuitem" class="is-current">Erfurt — Positionierung der Akteure <span class="nav__city-badge">neu</span></a>
+            </div>
+          </li>
+          <li><a href="index.html#ueber">Über Hausentscheider</a></li>
+          <li><a href="index.html#kontakt">Dialog</a></li>
+        </ul>
+      </nav>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Menü öffnen" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav__mobile-menu" id="nav-mobile-menu">
+      <ul>
+        <li><a href="index.html#ansatz">Ansatz</a></li>
+        <li><a href="index.html#objekte">Objekte</a></li>
+        <li><a href="wegweiser.html">Wegweiser</a></li>
+        <li><a href="kwp-erfurt.html">Future-Readiness-Bewertung Erfurt</a></li>
+        <li><a href="kwp-dashboard-erfurt.html" class="is-sub">↳ Status-Dashboard Erfurt</a></li>
+        <li><a href="kwp-erfurt-positionierung.html" class="is-sub is-current">↳ Positionierung der Akteure</a></li>
+        <li><a href="index.html#ueber">Über Hausentscheider</a></li>
+        <li><a href="index.html#kontakt">Dialog</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="pos">
+    <div class="wrap">
+
+      <p class="eyebrow">Positionierungs-Landkarte</p>
+      <h1>Wer steht wo?</h1>
+      <p class="lede">Die 24 Stellungnahmen zur Kommunalen Wärmeplanung Erfurt — nicht als Liste, sondern als Landkarte. Wer bestätigt, wer kritisiert? Wer denkt sektoral, wer über das Ganze? Und wer schweigt?</p>
+      <hr class="rule">
+
+      <div class="stats">
+        <div class="stat zero"><b>0</b><span>Stellungnahmen <strong>berücksichtigt</strong> (in den Plan eingearbeitet)</span></div>
+        <div class="stat"><b>3</b><span>für die Fortschreibung <strong>vorgemerkt</strong></span></div>
+        <div class="stat"><b>21</b><span>nur <strong>zur Kenntnis genommen</strong></span></div>
+        <div class="stat"><b>~30</b><span>angeschriebene Stellen haben <strong>gar nicht geantwortet</strong></span></div>
+      </div>
+
+      <div class="mapcard">
+        <div class="maphead">
+          <h2>Die Positionierung der Akteure</h2>
+          <p>Waagerecht: Grundhaltung zum Plan · senkrecht: Blickwinkel. Punktgröße = inhaltliche Substanz, Farbe = Bewertung durch die Stadt. Auf einen Punkt tippen für Details — oder unten ein Kritikthema wählen, um zu sehen, welche Akteure sich dort treffen.</p>
+        </div>
+
+        <div class="themebar">
+          <span class="themebarlbl">Konvergenz nach Thema</span>
+          <div class="filters" id="themes"></div>
+        </div>
+        <div class="themecap" id="themecap"></div>
+
+        <div class="maplayout">
+          <div class="mapsvgwrap">
+            <svg id="map" viewBox="0 0 720 560" role="img" aria-label="Positionierungs-Streudiagramm der Akteure"></svg>
+          </div>
+          <div class="panel" id="panel">
+            <div class="ph">Akteur auswählen</div>
+            <p class="pname">Tippe auf einen Punkt</p>
+            <p class="hint">Jeder Punkt ist eine Stellungnahme. Der dichte Schwarm unten links sind Behörden und Nachbarkommunen mit „keine Einwände“. Oben rechts der isolierte Cluster der inhaltlichen Kritiker.</p>
+          </div>
+        </div>
+
+        <div class="legend">
+          <span class="k"><span class="dot" style="background:var(--signal)"></span> Vorgemerkt für Fortschreibung (3)</span>
+          <span class="k"><span class="dot" style="background:#93a29e"></span> Zur Kenntnis genommen (21)</span>
+          <span class="k"><span class="dot" style="background:#9aa8a4;width:9px;height:9px"></span><span class="dot" style="background:#9aa8a4;width:17px;height:17px"></span> Größe = Substanz</span>
+        </div>
+      </div>
+
+      <div class="silent">
+        <h2>Die Stillen — Zustimmung durch Schweigen</h2>
+        <p>Wer angeschrieben wird und nichts sagt, stimmt im Verfahren faktisch zu. Rund dreißig beteiligte Stellen haben nicht geantwortet. Einige davon fallen besonders auf:</p>
+        <div class="silentchips" id="silentchips"></div>
+      </div>
+
+      <div class="takeaway">
+        <p>Vier von vierundzwanzig Eingaben tragen den gesamten inhaltlichen Gehalt der Konsultation — und es sind fast nur unabhängige Stimmen. Sie haben sich nicht abgesprochen und kommen doch zur selben Diagnose. Das ist kein Zufall, sondern ein struktureller Befund.</p>
+      </div>
+
+      <p class="src">Quelle: Landeshauptstadt Erfurt, Stabsstelle Kommunale Wärmeplanung — „Abwägung der eingegangenen Stellungnahmen“, Stand 17.06.2026. Positionierung: eigene Einordnung nach Lektüre aller 24 Stellungnahmen (Haltung und Blickwinkel sind Bewertungen, keine amtlichen Kategorien). Analyse: Daniel Schöberl / Hausentscheider. &nbsp;·&nbsp; Ausführliche Analyse: <a href="dokumente/260702_Abw%C3%A4gung_Analyse_Wer-sagt-was-zur-KWP.pdf" target="_blank" rel="noopener">Wer sagt was zur KWP (PDF)</a>.</p>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__left">
+        <a href="index.html" style="text-decoration:none;display:inline-flex;align-items:center;vertical-align:middle;">
+          <svg width="130" height="20" viewBox="0 0 130 20" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+            <text x="0" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">haus</text>
+            <text x="42" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">entscheider</text>
+            <line x1="0" y1="18" x2="40" y2="18" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+          </svg>
+        </a>
+        &nbsp;·&nbsp;Daniel Schöberl&nbsp;·&nbsp;Erfurt / München
+      </div>
+      <div class="footer__right" style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+        <a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a>
+        &nbsp;·&nbsp;
+        <a href="index.html#impressum" style="font-size:12px;">Impressum</a>
+        &nbsp;·&nbsp;
+        <a href="datenschutz.html" style="font-size:12px;">Datenschutz</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav-Dropdown per Klick
+    (function() {
+      var dropdowns = document.querySelectorAll('.nav__dropdown');
+      if (!dropdowns.length) return;
+      function closeAll(except) {
+        dropdowns.forEach(function(dd) {
+          if (dd === except) return;
+          dd.classList.remove('is-open');
+          var t = dd.querySelector('.nav__dropdown-toggle');
+          if (t) t.setAttribute('aria-expanded', 'false');
+        });
+      }
+      dropdowns.forEach(function(dd) {
+        var toggle = dd.querySelector('.nav__dropdown-toggle');
+        if (!toggle) return;
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          closeAll(dd);
+          var open = dd.classList.toggle('is-open');
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      });
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest || !e.target.closest('.nav__dropdown')) closeAll(null);
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeAll(null);
+      });
+    })();
+    // Hamburger
+    (function() {
+      var btn = document.getElementById('nav-hamburger');
+      var menu = document.getElementById('nav-mobile-menu');
+      if (!btn || !menu) return;
+      btn.addEventListener('click', function() {
+        var isOpen = menu.classList.toggle('is-open');
+        btn.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', isOpen);
+        btn.setAttribute('aria-label', isOpen ? 'Menü schließen' : 'Menü öffnen');
+      });
+      menu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          menu.classList.remove('is-open');
+          btn.classList.remove('is-open');
+        });
+      });
+    })();
+  </script>
+
+  <script>
+  const ACTORS=[
+    {nr:2,name:"Hausentscheider",type:"buerger",verdict:"V",x:87,y:94,sub:3,say:"27 Punkte über das gesamte Verfahren: Kostentransparenz, Wasserstoff-Differenzierung, Solarthermie, Mieterperspektive, Akteurskonstellation, Governance. Aus Eigentümer- und Forschungssicht."},
+    {nr:17,name:"Klimaentscheid Erfurt",type:"klima",verdict:"V",x:79,y:85,sub:3,say:"Transparenz, Kostentransparenz, Alternativen bei ausbleibender Geothermie, Konkretisierung der Prüfgebiete, soziale Auswirkungen, Sanierungsdynamik, Stromnetzausbau."},
+    {nr:20,name:"BUND Erfurt",type:"umwelt",verdict:"V",x:72,y:76,sub:3,say:"Kurzfassung & Verständlichkeit, Sanierung zuerst mit verbindlichen Quoten, CO₂-Budgets 2030/35/40, Wärmepumpe vor Wasserstoff, Solarthermie-Transparenz, soziale Gerechtigkeit."},
+    {nr:9,name:"Bürger — Prüfgebiet Marbach",type:"buerger",verdict:"K",x:79,y:55,sub:2,say:"Kritik an pauschaler Prüfgebiet-Beurteilung; reale Gebäudekosten (Wärmeübergabe) fehlen; Heizungsfachleute einbinden; mehrere Versorgungsvarianten je Gebiet zulassen."},
+    {nr:7,name:"Messe Erfurt GmbH",type:"wirtschaft",verdict:"K",x:61,y:27,sub:2,say:"Unsicherheit über den Wasserstoff-Zeitpunkt gefährdet die eigene Investitionsplanung; fordert belastbare Zeitachsen und Planungssicherheit für den Standort."},
+    {nr:14,name:"Kulturbund für Europa",type:"umwelt",verdict:"K",x:53,y:70,sub:2,say:"Warnt vor Flächen-/Naturschutzkonflikten (Wind, Solar, Gewässerthermie); Wärmebedarf senken als zentrale Säule; Prüfgebiete zeitnah präzisieren."},
+    {nr:23,name:"Landesamt f. Denkmalpflege",type:"behoerde",verdict:"K",x:45,y:52,sub:1,say:"Denkmale brauchen individuelle Lösungen statt pauschaler Strategien; in Denkmaldichte zentrale Netze bevorzugen; im Wärmeplan über Sanierung aufklären."},
+    {nr:8,name:"Gemeinde Am Ettersberg",type:"kommune",verdict:"K",x:17,y:61,sub:1,say:"Begrüßt die Wärmeplanung ausdrücklich als Beitrag zum Klimaschutz; erhebt keine Einwände."},
+    {nr:1,name:"Stadtverwaltung Arnstadt",type:"kommune",verdict:"K",x:14,y:17,sub:1,say:"Stadteigene Interessen nicht berührt, grundsätzlich keine Einwände."},
+    {nr:5,name:"Stadtverwaltung Gotha",type:"kommune",verdict:"K",x:17,y:24,sub:1,say:"Keine Beeinträchtigung eigener Belange; Hinweis auf die eigene beschlossene Wärmeplanung."},
+    {nr:12,name:"Stadtverwaltung Weimar",type:"kommune",verdict:"K",x:10,y:20,sub:1,say:"Keine Betroffenheit ableitbar, keine Anmerkungen; verweist auf eigenen Wärmeplan."},
+    {nr:22,name:"Gemeinde Nesse-Apfelstädt",type:"kommune",verdict:"K",x:8,y:14,sub:1,say:"Belange der Gemeinde durch die Planung nicht beeinträchtigt."},
+    {nr:3,name:"Fernstraßen-Bundesamt",type:"behoerde",verdict:"K",x:24,y:12,sub:1,say:"Verweist auf Anbauverbote nach § 9 FStrG entlang Autobahnen/Bundesstraßen; bittet um künftige direkte Beteiligung."},
+    {nr:4,name:"Thür. Landesverwaltungsamt",type:"behoerde",verdict:"K",x:13,y:9,sub:1,say:"Keine durch das Amt zu vertretenden öffentlichen Belange berührt."},
+    {nr:6,name:"Landesamt f. Landwirtschaft",type:"behoerde",verdict:"K",x:29,y:23,sub:1,say:"Sparsamer Umgang mit Grund und Boden; Erhalt landwirtschaftlicher Flächen bei Flächeninanspruchnahme."},
+    {nr:10,name:"Landesamt f. Bodenmanagement",type:"behoerde",verdict:"K",x:22,y:13,sub:1,say:"Schutz amtlicher Festpunkte und laufender Bodenordnungsverfahren; keine Bedenken gegen den Plan."},
+    {nr:11,name:"50Hertz Transmission",type:"netz",verdict:"K",x:26,y:9,sub:1,say:"Schutzstreifen und Abstände zu Höchstspannungsleitungen und Richtfunk bei der Umsetzung beachten."},
+    {nr:13,name:"Bundesanstalt f. Immobilienaufgaben",type:"behoerde",verdict:"K",x:36,y:15,sub:1,say:"Schutz von Ausgleichs- und Bundeswehrflächen; keine bundeseigenen Flächen für Geothermie/Wind/PV."},
+    {nr:15,name:"Schutzgemeinschaft Dt. Wald",type:"umwelt",verdict:"K",x:9,y:16,sub:1,say:"Als anerkannter Naturschutzverband keine Einwände gegen das Verfahren."},
+    {nr:16,name:"Autobahn GmbH des Bundes",type:"behoerde",verdict:"K",x:17,y:8,sub:1,say:"Technische Belange entlang A4/A71; Abstände und Beteiligung bei konkreten Maßnahmen."},
+    {nr:18,name:"Eisenbahn-Bundesamt",type:"behoerde",verdict:"K",x:31,y:10,sub:1,say:"Unklar, ob PV-Potenziale entlang Bahntrassen und Baublock-Bildung berücksichtigt wurden; Rückfrage empfohlen."},
+    {nr:19,name:"Bundeswehr (BAIUDBw)",type:"behoerde",verdict:"K",x:9,y:8,sub:1,say:"Verteidigungsbelange nicht beeinträchtigt, keine Einwände."},
+    {nr:21,name:"Landesamt f. Verbraucherschutz",type:"behoerde",verdict:"K",x:9,y:12,sub:1,say:"Keine arbeitsschutzrechtlichen Belange berührt."},
+    {nr:24,name:"Landesanglerverband Thüringen",type:"umwelt",verdict:"K",x:23,y:19,sub:1,say:"Gewässerbezogene Belange (verspätet eingegangen, gleichwohl berücksichtigt)."}
+  ];
+
+  const THEMES=[
+    {key:"kosten",label:"Kostentransparenz",nrs:[2,17,20,9,7],
+     insight:"Fünf sehr unterschiedliche Akteure — eine unabhängige Eigentümer-Stimme, ein Klimabündnis, ein Umweltverband, ein Prüfgebiets-Anwohner und ein Messebetreiber — verlangen dasselbe: belastbare Zahlen. €/m² pro Monat, Investitionsbudget je Maßnahme. Im Plan steht keine einzige Eurosumme."},
+    {key:"wasserstoff",label:"Wasserstoff für Private",nrs:[2,17,20,9,7],
+     insight:"Skepsis quer durch die Lager: Wasserstoff für Wohngebäude ist ineffizient, teuer und mengen-/preisunklar. Selbst die Messe (Gewerbe) sieht den offenen Zeitplan als Investitionsrisiko."},
+    {key:"sanierung",label:"Sanierung & Wärmebedarf",nrs:[2,17,20,14],
+     insight:"Der günstigste Beitrag zur Wärmewende ist die eingesparte Kilowattstunde. Vier Stimmen fordern verbindliche Sanierungsquoten statt reiner Erzeugungsplanung."},
+    {key:"pruefgebiete",label:"Prüfgebiete & Geothermie",nrs:[2,17,20,9,14],
+     insight:"Die Prüfgebiete sind das große Fragezeichen des Plans. Fünf Akteure wollen schnellere Konkretisierung — und einen Plan B, falls die Tiefengeothermie nicht fündig wird."},
+    {key:"soziales",label:"Mieter & soziale Gerechtigkeit",nrs:[2,17,20],
+     insight:"Zwei Drittel der Erfurter wohnen zur Miete. Drei Stimmen fordern, die soziale Wirkung steigender Wärmekosten explizit mitzudenken — im Plan kommt sie kaum vor."}
+  ];
+
+  const SILENT=[
+    {n:"IHK Erfurt",flag:true},{n:"NABU Thüringen",flag:true},{n:"Grüne Liga Thüringen",flag:true},
+    {n:"AG Artenschutz Thüringen"},{n:"AHO Orchideen Thüringen"},{n:"Landesjagdverband Thüringen"},
+    {n:"Deutsche Bahn AG",flag:true},{n:"Deutsche Telekom Technik",flag:true},{n:"TEN Thüringer Energienetze",flag:true},
+    {n:"Helios Klinikum Erfurt",flag:true},{n:"Landbäckerei Thieme"},{n:"Bischöfliches Ordinariat"},
+    {n:"Ev. Kirchenkreisamt Erfurt"},{n:"Landesanstalt f. Umwelt & Bergbau"},{n:"Forstamt Erfurt-Willrode"},
+    {n:"Landesamt f. Bau und Verkehr"},{n:"Min. Bildung/Jugend/Sport"},{n:"Min. Infrastruktur/Landwirtschaft"},
+    {n:"9 Umlandgemeinden & VGs"}
+  ];
+
+  const TYPES={buerger:"Bürger / Eigentümer",klima:"Zivilgesellschaft / Klima",umwelt:"Umwelt-/Naturschutz",wirtschaft:"Wirtschaft",kommune:"Nachbarkommune",behoerde:"Behörde",netz:"Netzbetreiber"};
+  const byNr={}; ACTORS.forEach(a=>byNr[a.nr]=a);
+
+  const SVGNS="http://www.w3.org/2000/svg";
+  const map=document.getElementById("map");
+  const W=720,H=560, ML=64,MR=150,MT=30,MB=54;
+  const PW=W-ML-MR, PH=H-MT-MB;
+  const px=x=>ML+(x/100)*PW;
+  const py=y=>MT+(1-y/100)*PH;
+
+  const DEFS='<defs><radialGradient id="critGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#CFF77F" stop-opacity="0.14"/><stop offset="55%" stop-color="#CFF77F" stop-opacity="0.05"/><stop offset="100%" stop-color="#CFF77F" stop-opacity="0"/></radialGradient></defs>';
+
+  function el(tag,attrs,txt){const e=document.createElementNS(SVGNS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(txt!=null)e.textContent=txt;return e;}
+
+  function drawFrame(){
+    map.innerHTML=DEFS;
+    // Kritiker-Quadrant zart angeleuchtet
+    map.appendChild(el("rect",{x:px(50),y:py(100),width:px(100)-px(50),height:py(50)-py(100),fill:"rgba(207,247,127,0.05)"}));
+    map.appendChild(el("ellipse",{cx:px(78),cy:py(84),rx:150,ry:120,fill:"url(#critGlow)"}));
+    // Achsenkreuz (gestrichelt)
+    map.appendChild(el("line",{x1:px(50),y1:MT,x2:px(50),y2:MT+PH,stroke:"rgba(255,255,255,0.13)","stroke-dasharray":"4 4"}));
+    map.appendChild(el("line",{x1:ML,y1:py(50),x2:ML+PW,y2:py(50),stroke:"rgba(255,255,255,0.13)","stroke-dasharray":"4 4"}));
+    // Rahmenachsen
+    map.appendChild(el("line",{x1:ML,y1:MT,x2:ML,y2:MT+PH,stroke:"rgba(255,255,255,0.28)"}));
+    map.appendChild(el("line",{x1:ML,y1:MT+PH,x2:ML+PW,y2:MT+PH,stroke:"rgba(255,255,255,0.28)"}));
+    // Achsen-Captions
+    map.appendChild(el("text",{x:ML,y:MT+PH+34,class:"axcap"},"bestätigend / keine Einwände"));
+    map.appendChild(el("text",{x:ML+PW,y:MT+PH+34,class:"axcap","text-anchor":"end"},"grundsätzlich kritisch →"));
+    map.appendChild(el("text",{x:ML-8,y:MT+10,class:"axcap","text-anchor":"end"},"gesamt-"));
+    map.appendChild(el("text",{x:ML-8,y:MT+22,class:"axcap","text-anchor":"end"},"systemisch"));
+    map.appendChild(el("text",{x:ML-8,y:MT+PH-4,class:"axcap","text-anchor":"end"},"sektoral"));
+    // Quadranten-Labels
+    map.appendChild(el("text",{x:px(60),y:py(98),class:"qlabel",fill:"#b8e06a","text-anchor":"middle"},"Die Steuerungs-Kritiker"));
+    map.appendChild(el("text",{x:px(25),y:py(6),class:"qlabel",fill:"#7a8884","text-anchor":"middle"},"Die Betroffenheits-Melder"));
+  }
+
+  let activeTheme=null;
+  function radius(sub){return sub===3?15:sub===2?10:6.5;}
+  function fill(v){return v==="V"?"#CFF77F":"#93a29e";}
+  function stroke(v){return v==="V"?"#eaffc0":"#5f6d69";}
+
+  function render(){
+    drawFrame();
+    const th = activeTheme ? THEMES.find(t=>t.key===activeTheme) : null;
+    const tagged = th ? new Set(th.nrs) : null;
+
+    // Themen-Modus: Konvergenz-Web (hinter den Punkten)
+    if(tagged){
+      const pts=[...tagged].map(nr=>byNr[nr]).filter(Boolean);
+      const cx=pts.reduce((s,a)=>s+px(a.x),0)/pts.length;
+      const cy=pts.reduce((s,a)=>s+py(a.y),0)/pts.length;
+      pts.forEach(a=>map.appendChild(el("line",{x1:cx,y1:cy,x2:px(a.x),y2:py(a.y),stroke:"#CFF77F","stroke-width":1.3,opacity:.5})));
+      map.appendChild(el("circle",{cx:cx,cy:cy,r:9,fill:"#CFF77F",opacity:.16}));
+      map.appendChild(el("circle",{cx:cx,cy:cy,r:4,fill:"#CFF77F",opacity:.9,class:"critNode"}));
+    } else {
+      // gestrichelter Signal-Ring um die drei Kritiker (nur Neutralansicht)
+      map.appendChild(el("ellipse",{cx:px(79),cy:py(85),rx:62,ry:56,fill:"none",stroke:"#CFF77F","stroke-width":1.5,"stroke-dasharray":"3 4",opacity:.55}));
+    }
+
+    ACTORS.forEach(a=>{
+      const on = !tagged || tagged.has(a.nr);
+      const isHero = a.verdict==="V";
+      const g=el("g",{opacity:on?1:0.14});
+      // Glow: Kritiker leuchten immer sanft; im Themen-Modus leuchten die getaggten stärker
+      let glow=null;
+      if(on){
+        if(tagged && on) glow={r:radius(a.sub)+8, op:0.32, cls:null};
+        else if(isHero) glow={r:radius(a.sub)+6, op:0.16, cls:"heroGlow"};
+      }
+      if(glow){
+        const ga={cx:px(a.x),cy:py(a.y),r:glow.r,fill:"#CFF77F",opacity:glow.op};
+        if(glow.cls) ga.class=glow.cls;
+        g.appendChild(el("circle",ga));
+      }
+      const c=el("circle",{cx:px(a.x),cy:py(a.y),r:radius(a.sub),fill:fill(a.verdict),stroke:stroke(a.verdict),"stroke-width":isHero?2:1,class:"pt"});
+      c.addEventListener("click",()=>select(a));
+      c.addEventListener("mouseenter",()=>select(a));
+      g.appendChild(c);
+      g.appendChild(el("text",{x:px(a.x),y:py(a.y)+3.3,"text-anchor":"middle","font-size":a.sub===1?"8":"9.5","font-family":"Inter",fill:isHero?"#12261f":"#22302c","font-weight":isHero?"700":"500","pointer-events":"none"},a.nr));
+      if(a.sub>=2 || (tagged && on)){
+        const nm=a.name.split(" (")[0].replace("Daniel Schöberl","D. Schöberl");
+        if(isHero) g.appendChild(el("text",{x:px(a.x)+radius(a.sub)+6,y:py(a.y)+3.5,class:"lbl","text-anchor":"start",fill:"#e2ece6","font-weight":"600"},nm));
+        else g.appendChild(el("text",{x:px(a.x),y:py(a.y)-radius(a.sub)-4,class:"lbl","text-anchor":"middle"},nm));
+      }
+      map.appendChild(g);
+    });
+  }
+
+  function select(a){
+    document.getElementById("panel").innerHTML=`<div class="ph">Stellungnahme Nr. ${a.nr}</div>
+      <p class="pname">${a.name}</p>
+      <p class="pmeta">${TYPES[a.type]} &nbsp;·&nbsp; <span class="badge ${a.verdict}">${a.verdict==="V"?"Vorgemerkt für Fortschreibung":"Zur Kenntnis genommen"}</span></p>
+      <p class="psay">${a.say}</p>`;
+  }
+
+  function setTheme(key,btn){
+    activeTheme=key;
+    document.querySelectorAll("#themes .chip").forEach(c=>c.classList.remove("active"));
+    btn.classList.add("active");
+    const cap=document.getElementById("themecap");
+    if(!key){
+      cap.innerHTML="Wähle ein Kritikthema — die Landkarte zeigt dann, welche oft völlig unterschiedlichen Akteure sich dort treffen.";
+    } else {
+      const th=THEMES.find(t=>t.key===key);
+      const names=th.nrs.map(nr=>byNr[nr].name.split(" (")[0].replace("Daniel Schöberl","D. Schöberl")).join(", ");
+      cap.innerHTML=`<b>${th.label}</b> — genannt von ${th.nrs.length} Akteuren: ${names}. ${th.insight}`;
+    }
+    render();
+  }
+
+  function buildThemes(){
+    const f=document.getElementById("themes");
+    const all=document.createElement("button");
+    all.className="chip all active"; all.textContent="Alle Akteure";
+    all.onclick=()=>setTheme(null,all);
+    f.appendChild(all);
+    THEMES.forEach(t=>{
+      const b=document.createElement("button");
+      b.className="chip"; b.textContent=t.label;
+      b.onclick=()=>setTheme(t.key,b);
+      f.appendChild(b);
+    });
+  }
+
+  function buildSilent(){
+    const box=document.getElementById("silentchips");
+    SILENT.forEach(s=>{const c=document.createElement("span");c.className="schip"+(s.flag?" flag":"");c.textContent=s.n;box.appendChild(c);});
+  }
+
+  buildThemes();
+  setTheme(null,document.querySelector("#themes .chip.all"));
+  buildSilent();
+  select(ACTORS[0]);
+  </script>
+</body>
+</html>
