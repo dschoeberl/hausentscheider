@@ -22,7 +22,7 @@ var GEBAEUDE_DB = {
     // ── Kopfbereich ─────────────────────────────────────
     titel:            "Mehrfamilienhaus · Altstadt Erfurt",
     subtitle:         "Altbau 1900 · Saniert 2010 · 14 Wohnungen · 784 m² · WEG · Gas-Heizung",
-    bild:             "theaterstrasse-4.jpg",
+    bild:             "referenzgebaeude.jpg",
     bildAlt:          "Mehrfamilienhaus in der Erfurter Altstadt — Gründerzeitbau von 1900",
 
     // ── Standort & Gebäude ──────────────────────────────
