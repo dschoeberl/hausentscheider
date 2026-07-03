@@ -976,7 +976,9 @@
                                      color: var(--text-primary); padding: 0.5rem 0.75rem;
                                      background: var(--bg-light); border-left: 3px solid var(--petrol-light);
                                      border-radius: 4px; }
-    .dashboard-tabelle-wrap { overflow-x: auto; margin: 0.5rem 0 1rem; }
+    /* overflow-x nur mobil: auf dem Desktop würde overflow-x:auto auch overflow-y
+       auf auto zwingen und die nach oben aufklappenden ⓘ-Tooltips oben abschneiden. */
+    .dashboard-tabelle-wrap { margin: 0.5rem 0 1rem; }
     .dashboard-tabelle { width: 100%; border-collapse: collapse; font-size: 13px; }
     .dashboard-tabelle th, .dashboard-tabelle td {
       padding: 0.45rem 0.6rem; text-align: right;
@@ -992,6 +994,7 @@
     }
     @media (max-width: 768px) {
       /* Mobile: echte Tabelle, horizontal wischbar; erste Spalte (Kennzahl) fixiert */
+      .dashboard-tabelle-wrap { overflow-x: auto; }
       .dashboard-tabelle { font-size: 12px; min-width: 480px; }
       .dashboard-tabelle th, .dashboard-tabelle td { padding: 0.4rem 0.5rem; }
       .dashboard-tabelle th:first-child,
