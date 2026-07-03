@@ -757,6 +757,10 @@ function berechneEmpfehlung(input, params) {
   // Fernwärmesatzung sind real, Nutzer entscheidet — Banner-Hinweis dazu.
   const aktive = optionen.filter(o => {
     if (o === 'pellets' && !pelletsOK) return false;
+    // Modernisierungs-Optionen ohne eingetragene Investition (0 €) sind nicht
+    // Teil des Vergleichs — sie dürfen die Empfehlung nicht gewinnen. Gas bleibt
+    // als Status-quo-Anker immer drin.
+    if (o !== 'gas' && berechneInvestition(o, input, params) <= 0) return false;
     return true;
   });
 
@@ -1281,6 +1285,16 @@ function berechneAllDashboardKennzahlen(input, params) {
     const eurQm = berechneEurProQmMonat(tcoBarwert, input.wohnflaeche, T);
     const amort = berechneAmortisation(opt, input, params);
 
+    // plausibel: technische Zulässigkeit (nur Pellets kann unplausibel sein).
+    //   Steuert die Inline-Editierbarkeit — bleibt für 0-Invest-Optionen true.
+    // beruecksichtigt: Teil des Vergleichs? Gas immer (Status-quo-Anker).
+    //   Modernisierungs-Optionen nur, wenn eine Bruttoinvestition eingetragen
+    //   ist (> 0). 0 = vom Nutzer nicht gewählt → ausgegraut, aus Wertung raus.
+    const plausibel = (opt === 'pellets') ? pellPlausibel : true;
+    const beruecksichtigt = (opt === 'gas')
+      ? true
+      : (investMehr > 0 && plausibel);
+
     result[opt] = {
       bruttoinvest:       investMehr,
       foerderung:         foerder,
@@ -1294,7 +1308,8 @@ function berechneAllDashboardKennzahlen(input, params) {
       tcoStatisch,
       eurProQmMonat:      eurQm,
       amortisationVsGas:  amort,
-      plausibel:          (opt === 'pellets') ? pellPlausibel : true
+      plausibel,
+      beruecksichtigt
     };
   }
   return result;
@@ -1497,7 +1512,7 @@ function _kennzahlen(input, params) {
   const dash = berechneAllDashboardKennzahlen(input, params);
   const empf = berechneEmpfehlung(input, params);
   const eqms = ['gas', 'hybrid', 'wp', 'fw', 'pellets']
-    .filter(o => dash[o].plausibel)
+    .filter(o => dash[o].beruecksichtigt)
     .map(o => ({ option: o, eurQm: dash[o].eurProQmMonat, tco: dash[o].tcoBarwert }));
   eqms.sort((a, b) => a.eurQm - b.eurQm);
   return {

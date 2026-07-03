@@ -343,7 +343,11 @@ function renderWirtschaftlichkeitsTabelle(input, params) {
 
   // Tooltip-Text pro Zelle: dynamische Erklärung der Pastell-Klassifikation
   function tooltipText(opt, wert, werteZeile, klasse, zeile) {
-    if (klasse === 'pastell-ausgeschlossen') return 'Pellets ist in Ihrer Lage nicht plausibel und daher nicht Teil des Vergleichs.';
+    if (klasse === 'pastell-ausgeschlossen') {
+      return (opt === 'pellets' && !dash.pellets.plausibel)
+        ? 'Pellets ist in Ihrer Lage nicht plausibel und daher nicht Teil des Vergleichs.'
+        : 'Für diese Option ist keine Investition eingetragen — sie ist daher nicht Teil des Vergleichs. Tragen Sie eine Bruttoinvestition ein, um sie zu vergleichen.';
+    }
     if (klasse === 'pastell-neutral') return null;
     const aktive = werteZeile.filter(v => v != null && !isNaN(v));
     if (aktive.length < 2 || wert == null) return null;
@@ -381,12 +385,17 @@ function renderWirtschaftlichkeitsTabelle(input, params) {
       tbody += `<tr class="dashboard-gruppe"><td colspan="${optionen.length + 1}">${escapeHtml(zeile.gruppe)}${zeile.tip ? tipSpan(zeile.tip) : ''}</td></tr>`;
       continue;
     }
-    const werteZeile = optionen.map(o => dash[o][zeile.key]);
+    // Nicht berücksichtigte Optionen (0 € Investition bzw. Pellets unplausibel)
+    // werden auf null maskiert — so fließen sie nicht in die Best-Wert-Ermittlung
+    // der Farbbewertung ein und erscheinen als „–".
+    const werteZeile = optionen.map(o => dash[o].beruecksichtigt ? dash[o][zeile.key] : null);
     const cells = optionen.map((o, i) => {
       const wert = werteZeile[i];
-      const klasse = (zeile.kennzahlTyp == null)
-        ? 'pastell-neutral'
-        : bewerteZelle(wert, werteZeile, dash[o].plausibel, zeile.kennzahlTyp);
+      const klasse = !dash[o].beruecksichtigt
+        ? 'pastell-ausgeschlossen'
+        : (zeile.kennzahlTyp == null
+            ? 'pastell-neutral'
+            : bewerteZelle(wert, werteZeile, true, zeile.kennzahlTyp));
       // Inline-Editor-Klasse für Bruttoinvest (nur bei Modernisierungs-Optionen)
       const editKlasse = (zeile.editierbar && o !== 'gas' && dash[o].plausibel)
                           ? ' invest-zelle' : '';
