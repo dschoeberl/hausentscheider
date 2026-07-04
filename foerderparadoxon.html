@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Das Förderparadoxon — Fernwärme vs. Wärmepumpe | Hausentscheider</title>
+<meta name="description" content="Warum die BEG-Förderung die klimafreundlichere, zukunftsfähigere Wärmepumpe schlechter dastehen lässt als den Fernwärme-Anschluss — eine Sachanalyse am Referenzobjekt Erfurter Altstadt.">
+<meta name="robots" content="index,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --petrol:#1a5c5a; --petrol-light:#7ab8b5; --petrol-dark:#1a3535;
+    --signal:#CFF77F; --signal-dark:#a8d45a; --tommy:#D81E34;
+    --wp-tint:#E0F0EE; --wp-text:#1A4F4D; --fw-tint:#F5EDE0; --fw-text:#6B4C28;
+    --border:#e0dedd; --bg:#f5f4f2; --white:#fff;
+    --t1:#1a1a1a; --t2:#5a5956; --t3:#8a8680;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--white);color:var(--t1);font-family:'Inter',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:760px;margin:0 auto;padding:2.4rem 1.4rem 4rem;}
+  h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:500;line-height:1.22;color:var(--t1);}
+  .eyebrow{font-size:11px;letter-spacing:2.2px;text-transform:uppercase;color:var(--petrol);font-weight:600;margin:0 0 .5rem;}
+  h1{font-size:clamp(1.8rem,4.5vw,2.6rem);margin:0 0 .6rem;}
+  .lede{font-size:1.08rem;color:var(--t2);margin:0 0 1.4rem;}
+  .rule{height:3px;width:64px;background:var(--signal-dark);border:none;margin:0 0 1.6rem;}
+  .byline{font-size:12.5px;color:var(--t3);margin:0 0 2rem;letter-spacing:.2px;}
+
+  h2{font-size:1.35rem;margin:2.4rem 0 .3rem;}
+  h2 .num{color:var(--petrol);font-size:1rem;font-weight:600;margin-right:.5rem;}
+  .sechead{border-bottom:2px solid var(--petrol);padding-bottom:.4rem;margin-bottom:.9rem;}
+  p{margin:0 0 1rem;}
+  strong{color:var(--t1);}
+
+  .stats{display:flex;flex-wrap:wrap;gap:.7rem;margin:0 0 2rem;}
+  .stat{flex:1 1 150px;border:1px solid var(--border);border-radius:8px;padding:.9rem 1rem;background:var(--bg);}
+  .stat b{font-family:'Playfair Display',serif;font-size:1.9rem;display:block;line-height:1;color:var(--petrol);margin-bottom:.3rem;}
+  .stat.warn b{color:var(--tommy);}
+  .stat span{font-size:12px;color:var(--t2);letter-spacing:.2px;}
+
+  .statement{margin:1.6rem 0;background:var(--petrol-dark);color:#fff;border-left:6px solid var(--signal);border-radius:8px;padding:1.2rem 1.4rem;}
+  .statement p{margin:0;font-family:'Playfair Display',serif;font-style:italic;font-size:1.18rem;line-height:1.45;}
+
+  .note{margin:1.4rem 0;background:var(--bg);border-left:5px solid var(--petrol);border-radius:6px;padding:1rem 1.2rem;}
+  .note p{margin:0;font-size:14px;color:var(--t2);}
+  .note .nh{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--petrol);font-weight:600;margin-bottom:.4rem;display:block;}
+
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:1.4rem 0;}
+  @media(max-width:560px){.compare{grid-template-columns:1fr;}}
+  .col{border:1px solid var(--border);border-radius:8px;padding:1rem 1.1rem;}
+  .col.wp{background:var(--wp-tint);}
+  .col.fw{background:var(--fw-tint);}
+  .col h3{font-size:1.05rem;margin:0 0 .5rem;}
+  .col.wp h3{color:var(--wp-text);}
+  .col.fw h3{color:var(--fw-text);}
+  .col ul{margin:0;padding-left:1.1rem;font-size:13.5px;color:var(--t2);}
+  .col li{margin-bottom:.4rem;}
+
+  .src{margin-top:2.4rem;font-size:11.5px;color:var(--t3);line-height:1.55;border-top:1px solid var(--border);padding-top:.9rem;}
+  .brand{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.4rem;flex-wrap:wrap;gap:.5rem;}
+  .brand .wm{font-family:'Playfair Display',serif;font-size:1.2rem;}
+  .brand .wm .u{border-bottom:2px solid var(--petrol);}
+  .brand .tag{font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--t3);}
+
+  /* Schlanker Website-Kopf + Footer (an bestehende Unterseiten angeglichen) */
+  .site-head{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:.5px solid var(--border);}
+  .site-head__inner{max-width:760px;margin:0 auto;padding:0 1.4rem;height:56px;display:flex;align-items:center;justify-content:space-between;}
+  .site-head__logo{text-decoration:none;display:inline-flex;align-items:center;}
+  .site-head__logo:hover{opacity:.85;}
+  .site-head__links{display:flex;gap:1.4rem;align-items:center;}
+  .site-head__links a{font-size:13px;color:var(--t2);text-decoration:none;transition:color .2s;}
+  .site-head__links a:hover{color:var(--petrol);}
+  .site-foot{border-top:.5px solid var(--border);padding:1.5rem 0;margin-top:1.5rem;}
+  .site-foot__inner{max-width:760px;margin:0 auto;padding:0 1.4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
+  .site-foot__left,.site-foot__right{font-size:12px;color:var(--t3);}
+  .site-foot a{color:var(--t3);text-decoration:none;}
+  .site-foot a:hover{color:var(--petrol);}
+  @media(max-width:560px){.site-head__links{gap:1rem;} .site-head__links a{font-size:12px;} .site-foot__inner{flex-direction:column;align-items:flex-start;}}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="site-head__inner">
+    <a href="index.html" class="site-head__logo" aria-label="hausentscheider — Startseite">
+      <svg width="180" height="28" viewBox="0 0 180 28" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">haus</text>
+        <text x="58" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">entscheider</text>
+        <line x1="0" y1="26" x2="56" y2="26" stroke="#1a5c5a" stroke-width="2" stroke-linecap="square"/>
+      </svg>
+    </a>
+    <nav class="site-head__links" aria-label="Navigation">
+      <a href="index.html">Startseite</a>
+      <a href="wegweiser.html">Wegweiser</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap">
+
+  <p class="tag" style="font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--t3);margin:0 0 1.4rem;">Wärmewende · Förderlogik · Analyse</p>
+
+  <p class="eyebrow">Wenn der Fördersatz die Wirklichkeit verschiebt</p>
+  <h1>Das Förderparadoxon</h1>
+  <p class="lede"><strong>Die Förderung folgt der Pflicht — nicht dem Klima.</strong> Warum die Förderung die klimafreundlichere, zukunftsfähigere Entscheidung schlechter dastehen lässt — am Beispiel Fernwärme und Wärmepumpe in Erfurt.</p>
+  <hr class="rule">
+  <p class="byline">Daniel Schöberl · Hausentscheider · Juli 2026 · Sachanalyse am Referenzobjekt Erfurter Altstadt</p>
+
+  <div class="stats">
+    <div class="stat"><b>~95&nbsp;%</b><span>Anteil Gas an der Erfurter Fernwärme (nach vorliegenden Angaben)</span></div>
+    <div class="stat"><b>30&nbsp;%</b><span>BEG-Grundförderung auf den Fernwärme-Anschluss — auch im Zwanggebiet</span></div>
+    <div class="stat warn"><b>0&nbsp;%</b><span>Förderung der Wärmepumpe im Anschlusszwang-Gebiet ohne Befreiung</span></div>
+  </div>
+
+  <h2 class="sechead"><span class="num">1</span>Der Widerspruch in einem Satz</h2>
+  <p>Ein Eigentümer in der Erfurter Altstadt steht vor der Wahl zwischen Fernwärme-Anschluss und Wärmepumpe. Das Gebäude liegt im Satzungsgebiet mit Anschluss- und Benutzungszwang nach der städtischen Fernwärmesatzung. In dieser Konstellation erzeugt die Förderlogik ein paradoxes Ergebnis: <strong>Der Anschluss an das überwiegend gasbasierte Netz ist förderfähig. Die Wärmepumpe, die den geringeren CO₂-Fußabdruck hat und mit einem grüner werdenden Strommix über die Zeit sauberer wird, ist es nicht</strong> — jedenfalls nicht, solange keine Befreiung vom Anschlusszwang erwirkt ist.</p>
+  <p>Die Förderfähigkeit richtet sich hier also nicht nach dem Klimaergebnis, sondern nach der gesetzlichen Pflicht. Gefördert wird, wozu man ohnehin verpflichtet ist. Das ist die Wurzel der Verzerrung.</p>
+
+  <div class="statement">
+    <p>Die Förderung belohnt nicht die bessere Technologie, sondern den vorgeschriebenen Weg. Wer den Fördersatz für ein Klimaurteil hält, entscheidet gegen die eigene Zukunftsfähigkeit.</p>
+  </div>
+
+  <h2 class="sechead"><span class="num">2</span>Die Förderung ist vom CO₂-Gehalt entkoppelt</h2>
+  <p>Für den Anschluss an ein <em>bestehendes</em> Wärmenetz wurden die technischen Anforderungen an Primärenergiefaktor und Anteil erneuerbarer Energien gestrichen. Das heißt konkret: Ein zu rund 95&nbsp;% gasbasiertes Netz erhält denselben Zuschuss wie ein zu 100&nbsp;% erneuerbares. Die Förderung macht keinen Unterschied nach dem, was tatsächlich verbrannt wird.</p>
+  <p>Für den konkreten Fall ist das keine graue Theorie: Der CO₂-Faktor der Erfurter Fernwärme liegt mit 0,228&nbsp;kg/kWh heute über dem von Erdgas (0,201&nbsp;kg/kWh). Das grüne Etikett der Fernwärme deckt die Herkunft der Wärme nicht — der geförderte Weg ist im Ist-Zustand der emissionsintensivere.</p>
+  <p>Für den Eigentümer entsteht daraus ein Signalfehler. „Gefördert" wird intuitiv als „die grüne, die staatlich befürwortete, die richtige Wahl" gelesen. Tatsächlich sagt der Fördersatz über den Kohlenstoffgehalt der gelieferten Wärme nichts aus.</p>
+
+  <h2 class="sechead"><span class="num">3</span>Der Anschlusszwang kippt das Spielfeld zweimal</h2>
+  <p>Die Verzerrung wirkt nicht additiv, sondern doppelt — und in dieselbe Richtung:</p>
+  <div class="compare">
+    <div class="col fw">
+      <h3>Fernwärme</h3>
+      <ul>
+        <li>gesetzlich vorgeschriebener Weg (Anschlusszwang)</li>
+        <li>Anschluss mit 30&nbsp;% bezuschusst</li>
+        <li>erscheint im Vergleich rund ein Drittel günstiger</li>
+      </ul>
+    </div>
+    <div class="col wp">
+      <h3>Wärmepumpe</h3>
+      <ul>
+        <li>nur mit Befreiung vom Zwang zulässig</li>
+        <li>im Zwanggebiet ohne Befreiung nicht förderfähig</li>
+        <li>erscheint im Vergleich teuer und „nicht unterstützt"</li>
+      </ul>
+    </div>
+  </div>
+  <p>Der Eigentümer, der beide Nettokosten nebeneinanderlegt, sieht ein Bild, das die langfristige Realität geradezu umkehrt: Die kohlenstoffintensivere Option wirkt billiger und legitimer, die klimafreundlichere teurer und exotischer. Beides ist ein Effekt der Rechtslage, nicht der Technik.</p>
+
+  <h2 class="sechead"><span class="num">4</span>Der eigentliche Kostenfehler steckt im Betrieb</h2>
+  <p>Die Förderung ist ein einmaliger Zuschuss auf die Investition. Die Kosten einer Fernwärmeversorgung entstehen aber überwiegend danach — im laufenden Grund-, Arbeits- und Leistungspreis über 20 bis 30 Jahre. Und genau dieser Betriebsblock trägt bei einem gasbasierten Netz zwei strukturelle Risiken: die Kopplung an den Gaspreis und die steigende CO₂-Bepreisung (ab 2027 über den europäischen Emissionshandel ETS&nbsp;2 mit voraussichtlich deutlich anziehender Tonnenkosten-Kurve).</p>
+  <p>Der Erfurter Fall zeigt die Richtung bereits: Zum 3.&nbsp;Quartal 2026 hob der Versorger den Fernwärme-Arbeitspreis in einem einzigen Quartal um rund 19&nbsp;% an (von 11,54 auf 13,77&nbsp;ct/kWh brutto); hinzu kommt der jahresbezogene Leistungspreis von 75,04&nbsp;€/kW·a. Die Stadtwerke selbst prognostizieren bis 2040 eine Verdopplung des Fernwärmepreises. Der Anschlusszwang bindet ans Netz — das Preisrisiko tragen am Ende Eigentümer und Mieter.</p>
+  <p>Die Förderung zieht also einen scheinbaren Vorteil nach vorn, während das eigentliche Kostenrisiko hinten liegt — unsichtbar in einer naiven Investitionsgegenüberstellung. Die Wärmepumpe hat die höhere Anfangsinvestition, ist dafür vom Gaspreis entkoppelt und profitiert von einem Strommix, der über die Laufzeit sauberer und in Anteilen günstiger wird. <strong>Bezuschusst wird die Option, deren Kosten nach hinten verlagert sind und tendenziell steigen.</strong></p>
+
+  <div class="note">
+    <span class="nh">Einordnung</span>
+    <p>Über 25 Jahre kehrt sich der scheinbare Investitionsvorteil der Fernwärme ohnehin um — die Förderung verschiebt lediglich den Startpunkt, nicht die Richtung der Kurve. Der Zuschuss macht die teurere Betriebsphase nicht billiger, er kaschiert sie am Anfang.</p>
+  </div>
+
+  <h2 class="sechead"><span class="num">5</span>Der Zuschuss finanziert einen Lock-in</h2>
+  <p>Zum Anschlusszwang gehört der Benutzungszwang: Man muss die Wärme aus dem Netz beziehen — dauerhaft, ohne Ausstiegsoption. Ein bezuschusster Anschluss an ein Monopolnetz mit gasbasierter Brennstoffgrundlage bindet das Gebäude damit an eine Versorgung, deren Dekarbonisierung ein Versprechen ist (Transformationsplan), keine Tatsache — und deren Preis man nicht verlassen kann.</p>
+  <p>Damit steht die Förderlogik quer zur Idee der Zukunftsfähigkeit. Was ein Gebäude zukunftsfest macht, ist unter anderem seine <em>Reversibilität</em>: die Fähigkeit, auf bessere, günstigere, sauberere Lösungen umzusteigen. Genau diese Optionalität gibt der geförderte Weg auf. Der Future-Readiness-Gedanke wird invertiert: Die bezuschusste Option schneidet bei Umkehrbarkeit und Handlungsspielraum am schlechtesten ab.</p>
+
+  <h2 class="sechead"><span class="num">6</span>Kein Skandal — ein unabgestimmtes Regelsystem</h2>
+  <p>Das Ergebnis ist nicht böse gemeint, es ist emergent. Drei Regelwerke greifen ineinander, die nie aufeinander abgestimmt wurden: Die kommunale Fernwärmesatzung Erfurts stammt aus 2005 und dient der Netzauslastung und -refinanzierung, nicht der Klimaoptimierung; sie ist bis heute nicht an die kommunale Wärmeplanung angepasst. Die BEG schließt Maßnahmen von der Förderung aus, zu denen eine rechtliche Verpflichtung besteht — eine allgemeine Anti-Mitnahme-Regel. Und das Gebäudeenergiegesetz definiert den Fernwärmeanschluss als Erfüllungsoption.</p>
+  <p>Jede Regel für sich ist nachvollziehbar. Übereinandergelegt in einem noch nicht an die Wärmeplanung angepassten Satzungsgebiet erzeugen sie einen Ausgang, der die ökologisch überlegene Technologie benachteiligt. Es ist ein Artefakt fehlender Harmonisierung — und für den einzelnen Eigentümer trotzdem real und teuer.</p>
+
+  <h2 class="sechead"><span class="num">7</span>Was das für die Entscheidung heißt</h2>
+  <p>Für einen Eigentümer, der eine langfristig tragfähige Wärmeentscheidung treffen will, ist die Lehre nicht „Fernwärme ist schlecht" — sondern: <strong>Der Fördersatz ist kein Urteil über Nachhaltigkeit oder Lebenszykluskosten.</strong> Er ist ein Rechtsartefakt, das man kennen, aber nicht mit einer Empfehlung verwechseln darf.</p>
+  <p>Die tatsächlich zukunftsfähige Entscheidung entsteht erst, wenn man am Etikett vorbeischaut: auf die Brennstoffgrundlage hinter dem Netz (heute rund 95&nbsp;% Gas), auf die CO₂-Preis-Kurve im Betrieb, auf die Umkehrbarkeit — und auf die Befreiungsoption, die der Wärmepumpe ihre Förderfähigkeit zurückgibt. Genau das ist der Kern von Entscheidungsinfrastruktur: Eine Förderung stiftet nur dann Orientierung, wenn man sieht, was sie in Wahrheit belohnt.</p>
+
+  <div class="statement">
+    <p>Ein grünes Etikett auf einer gasbasierten Leitung ist keine Entscheidungshilfe. Es ist der Punkt, an dem die eigene Prüfung anfangen muss.</p>
+  </div>
+
+  <p class="src">Methodik &amp; Quellen: Förderlogik nach BEG-Heizungsförderung 2024/2026 (KfW-Programm 458; BAFA-Merkblatt zum Wärmenetz-/Gebäudenetzanschluss — Wegfall der technischen EE-Anforderungen für den Anschluss an bestehende Wärmenetze; Nicht-Förderfähigkeit von Maßnahmen mit rechtlicher Verpflichtung im Anschlusszwang-Gebiet). Anschlusskosten belegt: SWE-Schreiben 18.03.2026. Fernwärme-Preise und CO₂-Faktor: SWE-Preisblatt Wärme 1.7.2026 bzw. amtliche Bestätigung des Umweltamts. Der Gasanteil der Erfurter Fernwärme (~95&nbsp;%) beruht auf den vorliegenden Angaben zum Erfurter Netz und ist keine unabhängig geprüfte Zahl. CO₂-Bepreisung: europäischer Emissionshandel ETS&nbsp;2 ab 2027. Bewertung: eigene Einordnung, Hausentscheider — sachliche Analyse, keine Rechts- oder Förderberatung.</p>
+
+</div>
+<footer class="site-foot">
+  <div class="site-foot__inner">
+    <div class="site-foot__left">
+      <a href="index.html" style="text-decoration:none;display:inline-flex;align-items:center;vertical-align:middle;">
+        <svg width="130" height="20" viewBox="0 0 130 20" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <text x="0" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">haus</text>
+          <text x="42" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">entscheider</text>
+          <line x1="0" y1="18" x2="40" y2="18" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+        </svg>
+      </a>
+      &nbsp;·&nbsp;Daniel Schöberl&nbsp;·&nbsp;Erfurt / München
+    </div>
+    <div class="site-foot__right">
+      <a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a>
+      &nbsp;·&nbsp;
+      <a href="index.html#impressum">Impressum</a>
+      &nbsp;·&nbsp;
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
