@@ -163,6 +163,7 @@ body{
   background:linear-gradient(160deg,#f3f9ef,#e9f3ea);border:1px solid rgba(168,212,90,.6)}
 .cta .qr{width:96px;height:96px;border-radius:14px;background:#fff;margin:0 auto 12px;display:grid;place-items:center;border:1px solid var(--line)}
 .cta .qr svg{width:78px;height:78px}
+.cta .qr img{width:84px;height:84px;display:block}
 .cta h3{font-family:var(--serif);font-size:18px;margin:0 0 6px;color:var(--petrol-dark)}
 .cta p{font-size:12.5px;color:var(--ink-2);line-height:1.45;margin:0 auto 13px;max-width:30ch}
 .cta .go{display:inline-flex;align-items:center;gap:8px;background:var(--signal);color:var(--signal-ink);
@@ -186,6 +187,47 @@ body{
   .screen{border-radius:0;height:100vh}
   .appbar{padding-top:calc(12px + env(safe-area-inset-top))}
 }
+/* Ebenen-Zwischenüberschrift */
+.ebene-head{padding:18px 15px 2px;margin-top:4px}
+.ebene-head .lab{display:inline-flex;align-items:center;gap:7px;font-family:var(--serif);font-size:15px;color:var(--petrol-dark);font-weight:700}
+.ebene-head .lab svg{width:16px;height:16px}
+.ebene-head .sub{font-size:11.5px;color:var(--ink-3);line-height:1.4;margin:3px 0 0}
+/* Bewertungsachse — Future-Readiness-Kriterien, nur wo belegt */
+.bewertung{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin:0 0 10px}
+.bewertung .bw-lead{font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);font-weight:700;margin-right:2px}
+.bw{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;border:1px solid var(--line);background:#f3f7f5;color:var(--ink-2)}
+.bw b{font-weight:800}
+.bw.pos{background:rgba(168,212,90,.18);border-color:rgba(168,212,90,.5);color:#3d6018}
+.bw.pos b{color:#4e7d1f}
+.bw.neg{background:rgba(216,30,52,.08);border-color:rgba(216,30,52,.3);color:#8a3a44}
+.bw.neg b{color:var(--tommy)}
+/* "Was nicht gesagt wird" */
+.post.wng{background:#f3f7f5;border:1px dashed #c3d0cc;box-shadow:none}
+.post.wng .wng-lab{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin-bottom:8px}
+.post.wng .wng-lab svg{width:14px;height:14px}
+.post.wng .ptitle{font-size:16px}
+/* Grundlagen / Wissens-Bausteine (evergreen) */
+.wissen{margin:20px 12px 0}
+.wissen .h{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:700;margin:0 3px 3px}
+.wissen .hsub{font-size:11.5px;color:var(--ink-3);margin:0 3px 10px;line-height:1.45}
+.wissen .hsub a{color:var(--petrol);text-decoration:none;border-bottom:1px solid rgba(26,92,90,.35)}
+.wkat{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--petrol);font-weight:700;margin:12px 3px 6px}
+.wb{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:8px;overflow:hidden}
+.wb summary{list-style:none;cursor:pointer;padding:11px 13px;font-size:13px;font-weight:600;color:var(--petrol-dark);display:flex;align-items:center;gap:8px}
+.wb summary::-webkit-details-marker{display:none}
+.wb summary::after{content:'+';margin-left:auto;color:var(--ink-3);font-weight:700;font-size:15px}
+.wb[open] summary::after{content:'–'}
+.wb-body{padding:2px 13px 12px}
+.wb-body p{font-size:12.5px;line-height:1.5;color:var(--ink-2);margin:9px 0 0}
+.wb-body .lab{color:var(--petrol);font-weight:700}
+.wb-body .wb-erfurt{color:#5b4448}
+.wb-body .wb-erfurt b{color:var(--tommy)}
+/* Resonanz-Einladung — Themen vorschlagen */
+.resonanz{margin:14px 0 0;padding:15px 16px;border-radius:18px;background:linear-gradient(120deg,rgba(216,30,52,.07),rgba(122,184,181,.10));border:1px solid var(--line)}
+.resonanz b{display:block;font-size:13.5px;color:var(--petrol-dark);margin-bottom:3px}
+.resonanz p{font-size:12px;color:var(--ink-2);line-height:1.45;margin:0 0 11px}
+.resonanz .res-btn{display:inline-flex;align-items:center;gap:6px;background:var(--tommy);color:#fff;font-weight:700;font-size:12.5px;padding:8px 15px;border-radius:999px;text-decoration:none}
+.resonanz .res-btn:hover{filter:brightness(1.06)}
 </style>
 </head>
 <body>
@@ -195,7 +237,7 @@ body{
       <div class="logo" id="brand-logo"></div>
       <div class="t">
         <div class="name">Technik-Radar</div>
-        <div class="sub">bundesweit beobachtet, für Erfurt übersetzt</div>
+        <div class="sub">bundesweit beobachtet · für Erfurt übersetzt</div>
       </div>
       <a class="home" href="index.html" aria-label="hausentscheider.de — Startseite">
         <svg width="106" height="18" viewBox="0 0 130 22" xmlns="http://www.w3.org/2000/svg">
@@ -210,8 +252,8 @@ body{
 
     <div class="pin">
       <div class="pintxt">
-        <b>Jeden Freitag, ein Blick.</b>
-        <span>Was sich bei Wärmepumpe, Schall und Kosten bewegt — kuratiert, eingeordnet, für Erfurt übersetzt.</span>
+        <b>Die Wärmewende — entlang Ihrer Entscheidung.</b>
+        <span>Wöchentlich und belegt: was sich bei Wärmepumpe, Fernwärme und Gas bewegt — und was vor Ort gern übersehen wird.</span>
       </div>
       <button class="follow js-kanal-link-btn" id="follow-btn">Folgen</button>
     </div>
@@ -219,6 +261,7 @@ body{
     <div class="filterbar" id="filterbar"></div>
 
     <main id="feed"></main>
+    <section id="wissen"></section>
     <section id="archiv"></section>
 
     <div class="foot">
@@ -246,16 +289,33 @@ const IC = {
   save:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4Z"/></svg>',
   wa:    '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.6.2-.2.3-.7.8-.8 1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.2-.6-1.5-.9-2-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.3.3-1 .9-1 2.3 0 1.4 1 2.7 1.1 2.9.2.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>'
 };
-const RUBRIK_ICON = { signal:IC.bulb, technik:IC.rotor, schall:IC.wave, kosten:IC.euro };
-const FILTER_ORDER = ["signal","technik","schall","kosten"];
+IC.fernwaerme='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h9a3 3 0 0 1 3 3 3 3 0 0 0 3 3h3"/><circle cx="3.2" cy="9" r="1.3"/><circle cx="20.8" cy="15" r="1.3"/></svg>';
+IC.gas='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 3.5 5 5 5 9.5A5 5 0 0 1 7 12c0-1.6.7-2.8 1.6-3.7.4 1.4 1.3 2 2.4 2C10.6 7.6 10.5 5 12 2Z"/></svg>';
+IC.solar='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg>';
+IC.geo='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9a8 8 0 0 1 16 0"/><path d="M12 9v11"/><path d="m8.5 16 3.5 4 3.5-4"/></svg>';
+IC.paragraf='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3.5"/></svg>';
+IC.gap='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2Z"/><path d="M8.5 10h.01M12 10h.01M15.5 10h.01"/></svg>';
+
+const EBENEN = {
+  optionen:{label:"Die Optionen", sub:"Wärmepumpe, Fernwärme, Gas. Was sich für Ihre Wahl bewegt.", icon:IC.rotor},
+  rahmen:{label:"Der Rahmen", sub:"Gesetze, Förderung, Wärmeplanung. Was Ihre Annahmen verschiebt.", icon:IC.paragraf},
+  erfurt:{label:"Erfurt konkret", sub:"Stadt, Stadtwerke, lokale Entwicklungen. Plus übertragbare Beispiele von außerhalb.", icon:IC.pin},
+  wng:{label:"Was nicht gesagt wird", sub:"Die Lücke — faktenbasiert benannt.", icon:IC.gap}
+};
+const EBENEN_ORDER = ["optionen","rahmen","erfurt","wng"];
+const OPTION_ICON = { waermepumpe:IC.rotor, fernwaerme:IC.fernwaerme, gas:IC.gas, solarthermie:IC.solar, geothermie:IC.geo, eisspeicher:IC.geo, "pv-solarthermie":IC.solar };
+const OPTION_LABEL = { waermepumpe:"Wärmepumpe", fernwaerme:"Fernwärme", gas:"Gas / H₂", solarthermie:"Solarthermie", geothermie:"Geothermie", eisspeicher:"Eisspeicher", "pv-solarthermie":"PV + Solarthermie" };
+const BW_ORDER = ["klimaneutral","effizient","kosten_ee","unabhaengig","resilient"];
+const BW_LABEL = { klimaneutral:"klimaneutral", effizient:"effizient", kosten_ee:"EE-Kosten", unabhaengig:"unabhängig", resilient:"resilient" };
 
 /* ===== Datenmodell — neueste Ausgabe zuerst. Wöchentlich vorne anfügen. ===== */
 const ausgaben = [
 {
   kw:27, jahr:2026, datum:"4. Juli", titel:"Auftakt — Bestandsaufnahme der entscheidungsrelevanten Lage",
   posts:[
+    /* ---- Technologie-Signal (Hero) ---- */
     {
-      typ:"signal", rubrik:"Signal", icon:"signal", badge:"Marktverfügbar",
+      typ:"signal", badge:"Marktverfügbar",
       titel:"Schall verliert an Schrecken",
       body:'Seit Januar 2026 wird eine Luft-Wärmepumpe nur noch gefördert, wenn ihr Außengerät <b>deutlich leiser</b> ist als bisher verlangt — und der Markt zieht mit. Zusammen mit Kaskaden und Innenaufstellung sinkt der nach außen hörbare Schall spürbar.',
       einordnung:'Schallangaben sind nur mit Kontext vergleichbar: Schallleistungspegel ≠ Schalldruckpegel, dazu Messabstand, Tag-/Nachtbetrieb und Betriebsmodus. Ein einzelner Dezibel-Wert ist noch kein Gebäude-Urteil.',
@@ -265,11 +325,13 @@ const ausgaben = [
       },
       quellen:[{t:"BWP",u:"https://www.waermepumpe.de/presse/news/details/beg-foerderung-2026-neue-schallanforderungen-fuer-waermepumpen/"},{t:"Zukunft Altbau",u:"https://www.zukunftaltbau.de/presse/presseinformationen/waermepumpen-werden-immer-leiser-markt-erfuellt-strengere-foerderanforderungen/"}]
     },
+    /* ---- Ebene: Die Optionen ---- */
     {
-      typ:"post", rubrik:"Technik", icon:"technik",
+      typ:"post", ebene:"optionen", option:"waermepumpe",
       titel:"Propan ist Standard — und heizt heißer",
       body:'Das Kältemittel <b>R290 (Propan)</b> ist 2026 praktisch überall. Neue Geräte schaffen bis zu <b>75 °C Vorlauf</b> — auch an kalten Tagen — und lassen sich für größere Häuser zu Kaskaden bündeln.',
       einordnung:'75 °C ist der Höchstwert, nicht der Dauer-Effizienzpunkt. Je höher der Vorlauf, desto niedriger die Arbeitszahl — die Effizienz gehört separat geprüft.',
+      bewertung:{ klimaneutral:'+', effizient:'~', unabhaengig:'+' },
       bridge:{
         fuerErfurt:'Für die vielen unsanierten Gründerzeit- und Bestandsbauten der Stadt heißt das: hohe Vorlauftemperaturen ohne teure Komplettdämmung rücken in Reichweite.',
         referenz:'Ein innerstädtisches Mehrfamilienhaus in der Größenordnung unseres Referenzobjekts lässt sich mit heutigen Kaskaden technisch abdecken.'
@@ -277,11 +339,22 @@ const ausgaben = [
       quellen:[{t:"Mitsubishi Electric — Produktprogramm 2026/2027",u:"https://de.mitsubishielectric.com/de/pr/local/2026/0409/"}]
     },
     {
-      typ:"post", rubrik:"Kosten", icon:"kosten",
+      typ:"post", ebene:"optionen", option:"waermepumpe",
+      titel:"Kaskade und Innenaufstellung — der leise Hebel",
+      body:'Zwei Bauweisen senken den nach außen dringenden Schall zusätzlich: mehrere kleinere Geräte in <b>Kaskade</b> statt eines großen, und die <b>Innenaufstellung</b> mit Luftführung über Kanäle. Beides verlagert die Geräuschquelle weg von Nachbarfenstern.',
+      einordnung:'Auch hier gilt: Schallleistung ≠ Schalldruck. Maßgeblich ist der Pegel am Immissionsort (Nachbarschaft), nicht der Katalogwert — das gehört fürs eigene Gebäude gerechnet.',
+      bridge:{
+        fuerErfurt:'In dichter Innenstadtlage mit knappen Abständen entscheidet genau das oft zwischen „genehmigungsfähig" und „Streitfall".'
+      },
+      quellen:[{t:"Beleg folgt",u:"#"}]
+    },
+    {
+      typ:"post", ebene:"optionen", option:"gas",
       titel:"Wärmepumpe & Fernwärme meist günstiger als neue Gasheizung",
       body:'Eine Vollkostenrechnung über 20 Jahre (Fraunhofer ISE) sieht im Mehrfamilienhaus mit 12 Wohnungen die Gasheizung im besten Fall rund <b>10.500 € je Wohnung</b> teurer als die Wärmepumpe — Treiber ist auch die ab 2026 steigende Grüngas-Pflicht.',
       einordnung:'Ein Datenpunkt, beauftragt von einem Fernwärme-Versorger. Es sind Vollkosten über 20 Jahre, kein Arbeitspreis. Größenordnung plausibel — ersetzt aber keine Rechnung fürs eigene Haus.',
       pruef:'Wer Gas als Vergleichsoption hinterlegt hat, sollte die dortigen Annahmen gegen eine aktuelle Vollkostenlogik prüfen — inklusive der Grüngas-Pflicht ab 2026.',
+      bewertung:{ klimaneutral:'-', kosten_ee:'-', unabhaengig:'-' },
       bridge:{
         fuerErfurt:'Wo die Erfurter Wärmeplanung Fernwärme-Vorranggebiete absteckt, lohnt der Vollkostenvergleich doppelt — die Studie ist ein Prüfauftrag, kein Automatismus.',
         referenz:'Für unser Referenzobjekt bleibt die entscheidende Größe die eigene Vollkostenrechnung — nicht der Durchschnitt aus einer Studie.'
@@ -289,17 +362,116 @@ const ausgaben = [
       quellen:[{t:"Fraunhofer ISE / MVV",u:"https://www.mvv.de/journalisten/pressemitteilungen/detail/studie-von-fraunhofer-ise"}]
     },
     {
-      typ:"note",
-      text:'<b>Solarthermie & weitere Technologien:</b> diese Woche kein aufnahmewürdiger Stand. Wir melden uns, wenn sich etwas bewegt — kein Signal wird konstruiert.'
+      typ:"post", ebene:"optionen", option:"solarthermie",
+      titel:"Solarthermie: solide beim Warmwasser, kein neues Signal",
+      body:'Im Mehrfamilienhaus deckt Solarthermie vor allem den <b>Warmwasser</b>-Bedarf — je nach Auslegung ist ein erheblicher solarer Anteil möglich. Ein Baustein, keine eigenständige Heizlösung.',
+      einordnung:'Diese Woche ohne marktveränderndes Signal — wir halten es bewusst kurz und konstruieren keine Neuigkeit.',
+      quellen:[{t:"Beleg folgt",u:"#"}]
+    },
+    /* ---- Ebene: Der Rahmen ---- */
+    {
+      typ:"post", ebene:"rahmen",
+      titel:"Grüngas-Pflicht ab 2026 — die Gas-Annahme wackelt",
+      body:'Wer heute eine Gasheizung plant, muss über die Laufzeit einen steigenden Anteil <b>grüner Gase</b> einkalkulieren. Das verschiebt die Betriebskosten-Annahme — nach oben, nicht nach unten.',
+      einordnung:'Ein Rahmen-Effekt: nicht die Technik ändert sich, sondern die Regel dahinter. Vollkosten ≠ heutiger Arbeitspreis — die Pflicht wirkt erst über die Jahre.',
+      bridge:{
+        fuerErfurt:'Für Eigentümer, die Gas als „günstige Übergangslösung" hinterlegt haben, ist das der Punkt zum Nachrechnen.'
+      },
+      quellen:[{t:"Beleg folgt",u:"#"}]
+    },
+    {
+      typ:"post", ebene:"rahmen",
+      titel:"Neue Absicherung für Tiefengeothermie",
+      body:'Der Bund flankiert Tiefengeothermie stärker gegen das <b>Fündigkeitsrisiko</b> — die teure Unsicherheit, ob eine Bohrung genug Wärme liefert. Das senkt die Einstiegshürde für Quartiers- und Fernwärmeprojekte.',
+      einordnung:'Rahmen-Effekt: verändert nicht die Technik, sondern wer sie sich zu welchem Risiko leisten kann. Für Erfurt erst mit konkretem Projekt relevant.',
+      quellen:[{t:"Beleg folgt",u:"#"}]
+    },
+    /* ---- Ebene: Erfurt konkret ---- */
+    {
+      typ:"post", ebene:"erfurt",
+      titel:"Prüfgebiete von außerhalb: kalte Nahwärme & Geothermie-Quartiere",
+      body:'Andernorts entstehen Quartierslösungen mit <b>kalter Nahwärme</b> und Geothermie (u. a. Lübeck, Trier) — übertragbare Beispiele, wie ganze Straßenzüge gemeinsam versorgt werden.',
+      einordnung:'Für Erfurt bisher eher im Konjunktiv: interessante Referenz, noch kein lokaler Beschluss. Als Prüfrichtung im Blick behalten.',
+      quellen:[{t:"Beleg folgt",u:"#"}]
+    },
+    /* ---- Ebene: Was nicht gesagt wird ---- */
+    {
+      typ:"wasnichtgesagt", ebene:"wng",
+      titel:"Die Schieflage der lokalen Resonanz",
+      body:'Die lokale Berichterstattung und Kommunikation gewichten <b>Fernwärme und Gas</b> stark; die <b>Wärmepumpe</b> bleibt in ihren Vorteilen unterbelichtet, <b>Geothermie</b> meist im Konjunktiv. Wir gleichen das aus — mit Zahlen und Quellen, nicht mit Meinung.',
+      einordnung:'Belegt statt behauptet: Es geht nicht darum, eine Technik zu bewerben, sondern eine dokumentierte Gewichtung sichtbar zu machen. Einordnung, keine Empfehlung.',
+      quellen:[{t:"Beleg folgt",u:"#"}]
     }
   ]
 }
 ];
 
+/* ===== Wissens-Bausteine (evergreen, belegt — für ruhige Wochen / Vertiefung) ===== */
+const WISSEN = [
+  { kat:"Schall", titel:"Schallleistung ist nicht Schalldruck",
+    fakt:'Der <b>Schallleistungspegel</b> beschreibt, wie viel Schall ein Gerät insgesamt erzeugt (Geräte-Kennwert). Der <b>Schalldruckpegel</b> ist das, was an einem bestimmten Ort ankommt — er sinkt mit dem Abstand. Ein einzelner Dezibel-Wert ohne Angabe, welcher gemeint ist, sagt für Ihr Gebäude wenig aus.',
+    hinweisLabel:"Prüfhinweis", hinweis:'Für die Nachbarschaftsfrage zählt der prognostizierte Schalldruck am maßgeblichen Immissionsort nach TA Lärm — nicht die Katalogzahl des Herstellers.',
+    quelle:{t:"BWP",u:"https://www.waermepumpe.de/"} },
+  { kat:"Schall", titel:"Was den Nachtwert wirklich senkt",
+    fakt:'Nachts entscheidet der leiseste sinnvolle Betrieb. Vier Hebel wirken zusammen: <b>Silent-/Nachtmodus</b>, <b>Aufstellungsort und Abstand</b>, <b>Kaskade</b> statt einem Großgerät und passive Maßnahmen (Entkopplung, Einhausung). Erst deren Summe, nicht ein einzelner Wert, entscheidet über die Einhaltung.',
+    fuerErfurt:'In enger Innenstadtlage ist die Aufstellung oft der größte Hebel — vor teuren Zusatzbauten lohnt die Prüfung der Geräteauswahl.',
+    quelle:{t:"Zukunft Altbau",u:"https://www.zukunftaltbau.de/"} },
+  { kat:"Effizienz", titel:"Was die JAZ aussagt — und was gut heißt",
+    fakt:'Die <b>Jahresarbeitszahl (JAZ)</b> sagt, wie viele Kilowattstunden Wärme je Kilowattstunde Strom übers Jahr herauskommen. Feldmessungen des Fraunhofer ISE zeigen im Bestand im Schnitt <b>3,4</b> (Luft/Wasser) und <b>4,3</b> (Erdwärme) — mit realer Spanne (Luft 2,6–4,9). Eine JAZ über 3 heißt: aus einer Einheit Strom werden mehr als drei Einheiten Wärme.',
+    hinweisLabel:"Einordnung", hinweis:'Herstellerprospekte nennen oft den SCOP unter Laborbedingungen — die reale JAZ im Betrieb liegt darunter.',
+    quelle:{t:"Fraunhofer ISE (PI 11/2025)",u:"https://www.ise.fraunhofer.de/content/dam/ise/de/documents/presseinformationen/2025/3025_ISE_PI_Waermepumpen-heizen-auch-im-Altbau-klimafreundlich.pdf"} },
+  { kat:"Effizienz", titel:"Die Vorlauftemperatur ist der Hebel",
+    fakt:'Der wichtigste Einzelfaktor für die Effizienz ist die Vorlauftemperatur. Jedes Kelvin weniger senkt den Stromverbrauch um rund <b>2,5–3 %</b>; <b>5 °C</b> niedriger verbessern die JAZ um etwa <b>10–15 %</b>. Flächenheizungen arbeiten bei 30–35 °C, Niedertemperatur-Heizkörper bei 40–45 °C.',
+    hinweisLabel:"Prüfhinweis", hinweis:'Vor der Reflex-Komplettdämmung lohnt der Blick auf die Systemtemperatur: oft genügt der Tausch einzelner Heizkörper gegen größere Flächen, um die Vorlauftemperatur — und damit die Kosten — deutlich zu senken.',
+    fuerErfurt:'Genau der Hebel für den Gründerzeit-Bestand, wo Komplettsanierung oft nicht in Frage kommt.',
+    quelle:{t:"energie-experten.org",u:"https://www.energie-experten.org/heizung/waermepumpe/leistung/vorlauftemperatur"} },
+  { kat:"Effizienz", titel:"Warmwasser getrennt gedacht hebt die Effizienz",
+    fakt:'Wird die Warmwasserbereitung im Mehrfamilienhaus <b>dezentral</b> gelöst (statt zentral auf hoher Temperatur vorgehalten), kann die Wärmepumpe mit niedrigerer Vorlauftemperatur laufen — das hebt die JAZ um etwa <b>0,3–0,5 Punkte</b> und entschärft zugleich die Legionellen-Thematik.',
+    hinweisLabel:"Einordnung", hinweis:'Kein Selbstläufer — die dezentrale Lösung will geplant sein, spart aber laufend.',
+    quelle:{t:"reduco.ai",u:"https://reduco.ai/blog/heizung/waermepumpe-mehrfamilienhaus"} },
+  { kat:"Technik", titel:"R290 (Propan): warum das Kältemittel zählt",
+    fakt:'R290 hat einen sehr niedrigen Treibhauseffekt (<b>GWP 3</b> gegenüber 675 bei R32) und erlaubt <b>hohe Vorlauftemperaturen bis 75 °C</b> — auch bei tiefen Außentemperaturen. Getrieben durch die F-Gas-Verordnung ist es 2026 faktisch Standard.',
+    hinweisLabel:"Einordnung", hinweis:'Hohe Vorlauf-Fähigkeit heißt „auch im Bestand einsetzbar" — nicht „dauerhaft effizient bei 75 °C".',
+    quelle:{t:"BWP",u:"https://www.waermepumpe.de/"} },
+  { kat:"Technik", titel:"Kaskade & Teillast: kleiner, aber öfter im besten Bereich",
+    fakt:'Mehrere kleinere Geräte im Verbund (<b>Kaskade</b>) können die Leistung feiner an den Bedarf anpassen und laufen häufiger im effizienten <b>Teillastbereich</b> statt zu takten — mit dem Nebeneffekt geringerer Schallemission gegenüber einem Großgerät.',
+    fuerErfurt:'Für Mehrfamilienhäuser mit schwankendem Bedarf die naheliegende Bauform.',
+    quelle:{t:"Stiebel Eltron",u:"https://www.stiebel-eltron.ch/de/home/magazin/kaskaden.html"} }
+];
+
 /* ===== Render ===== */
-function rubrikChip(p){
-  const cls = p.icon==="signal" ? "rubrik sig" : "rubrik";
-  return '<span class="'+cls+'">'+(RUBRIK_ICON[p.icon]||"")+p.rubrik+'</span>';
+function iconFor(p){
+  if(p.typ==="signal") return IC.bulb;
+  if(p.typ==="wasnichtgesagt") return IC.gap;
+  if(p.ebene==="optionen") return OPTION_ICON[p.option]||IC.rotor;
+  if(p.ebene==="rahmen") return IC.paragraf;
+  if(p.ebene==="erfurt") return IC.pin;
+  return IC.bulb;
+}
+function labelFor(p){
+  if(p.typ==="signal") return "Signal";
+  if(p.ebene==="optionen") return OPTION_LABEL[p.option]||"Option";
+  if(p.ebene==="rahmen") return "Rahmen";
+  if(p.ebene==="erfurt") return "Erfurt";
+  return "";
+}
+function chipFor(p){
+  const cls = p.typ==="signal" ? "rubrik sig" : "rubrik";
+  return '<span class="'+cls+'">'+iconFor(p)+labelFor(p)+'</span>';
+}
+function bewertungRow(bw){
+  if(!bw) return "";
+  const chips = BW_ORDER.filter(k=>bw[k]).map(k=>{
+    const v=bw[k];
+    const cls = v==='+'?'pos':(v==='-'?'neg':'neu');
+    const sym = v==='+'?'+':(v==='-'?'−':'~');
+    return '<span class="bw '+cls+'"><b>'+sym+'</b>'+BW_LABEL[k]+'</span>';
+  }).join("");
+  return chips ? '<div class="bewertung"><span class="bw-lead">Zukunftsfähigkeit</span>'+chips+'</div>' : "";
+}
+function ebeneHead(eb){
+  const e=EBENEN[eb]; if(!e) return "";
+  return '<div class="ebene-head" data-ebene="'+eb+'"><span class="lab">'+e.icon+e.label+'</span><p class="sub">'+e.sub+'</p></div>';
 }
 function bridgeBlock(b){
   if(!b) return "";
@@ -320,15 +492,26 @@ function reactionBar(){
 }
 function renderPost(p){
   if(p.typ==="note") return '<div class="note">'+p.text+'</div>';
+  if(p.typ==="wasnichtgesagt"){
+    let h='<article class="post wng" data-ebene="wng">';
+    h+='<div class="wng-lab">'+IC.gap+'Was nicht gesagt wird</div>';
+    h+='<h2 class="ptitle">'+p.titel+'</h2>';
+    h+='<p class="pbody">'+p.body+'</p>';
+    if(p.einordnung) h+='<div class="mini"><b>Einordnung:</b> '+p.einordnung+'</div>';
+    h+=quellen(p.quellen);
+    return h+'</article>';
+  }
   const isSig = p.typ==="signal";
-  let html = '<article class="post'+(isSig?' signal':'')+'" data-rubrik="'+(p.icon||'')+'">';
+  const eb = p.ebene || (isSig?"signal":"");
+  let html = '<article class="post'+(isSig?' signal':'')+'" data-ebene="'+eb+'">';
   html += '<div class="phead">';
-  html += '<div class="ava'+(isSig?' sig':'')+'">'+(isSig?IC.bulb:RUBRIK_ICON[p.icon]||IC.bulb)+'</div>';
-  html += '<div class="who"><div class="n">Hausentscheider</div><div class="h">KW 27 · '+p.rubrik+'</div></div>';
-  html += rubrikChip(p)+'</div>';
+  html += '<div class="ava'+(isSig?' sig':'')+'">'+iconFor(p)+'</div>';
+  html += '<div class="who"><div class="n">Hausentscheider</div><div class="h">KW 27 · '+labelFor(p)+'</div></div>';
+  html += chipFor(p)+'</div>';
   if(p.badge) html += '<span class="badge"><span class="dot"></span>'+p.badge+'</span>';
   html += '<h2 class="ptitle">'+p.titel+'</h2>';
   html += '<p class="pbody">'+p.body+'</p>';
+  html += bewertungRow(p.bewertung);
   if(p.einordnung) html += '<div class="mini"><b>Einordnung:</b> '+p.einordnung+'</div>';
   if(p.pruef) html += '<div class="mini pruef"><b>Prüfbedarf:</b> '+p.pruef+'</div>';
   html += bridgeBlock(p.bridge);
@@ -338,11 +521,11 @@ function renderPost(p){
 }
 function ctaCard(){
   return '<div class="cta">'+
-    '<div class="qr">'+qrPlaceholder()+'</div>'+
+    '<div class="qr"><img src="images/technik-radar-qr-logo.png" alt="QR-Code zum Technik-Radar WhatsApp-Kanal" width="84" height="84"></div>'+
     '<h3>Den Radar aufs Handy</h3>'+
-    '<p>Einmal pro Woche im WhatsApp-Kanal. Einseitig, ohne Anmeldung, jederzeit kündbar.</p>'+
+    '<p>Code scannen oder Button tippen — einmal pro Woche im WhatsApp-Kanal. Einseitig, ohne Anmeldung, jederzeit kündbar.</p>'+
     '<a class="go js-kanal-link" href="'+KANAL_URL+'" target="_blank" rel="noopener">'+IC.wa+'Kanal in WhatsApp öffnen</a>'+
-    '<div class="fine">Ihre Nummer bleibt für uns und andere unsichtbar. QR-Code folgt mit der Kanal-Freischaltung.</div>'+
+    '<div class="fine">Ihre Nummer bleibt für uns und andere unsichtbar.</div>'+
   '</div>';
 }
 function qrPlaceholder(){
@@ -357,22 +540,49 @@ function qrPlaceholder(){
     '<rect x="72" y="72" width="5" height="5"/><rect x="82" y="82" width="5" height="5"/><rect x="52" y="82" width="5" height="5"/></svg>';
 }
 
+/* ===== Wissens-Bausteine + Resonanz-Einladung ===== */
+function renderWissen(){
+  const sec=document.getElementById("wissen");
+  if(!sec||!WISSEN.length) return;
+  const kats=[...new Set(WISSEN.map(w=>w.kat))];
+  let h='<div class="wissen"><div class="h">Grundlagen</div>'+
+    '<div class="hsub">Belegt und zeitlos — Wissen, kein Signal. Thema fehlt? <a href="mailto:dialog@hausentscheider.de?subject=Technik-Radar%20%E2%80%93%20Themenvorschlag">Schreiben Sie uns</a>.</div>';
+  kats.forEach(kat=>{
+    h+='<div class="wkat">'+kat+'</div>';
+    WISSEN.filter(w=>w.kat===kat).forEach(w=>{
+      h+='<details class="wb"><summary>'+w.titel+'</summary><div class="wb-body">';
+      h+='<p>'+w.fakt+'</p>';
+      if(w.hinweis) h+='<p><span class="lab">'+(w.hinweisLabel||"Einordnung")+':</span> '+w.hinweis+'</p>';
+      if(w.fuerErfurt) h+='<p class="wb-erfurt"><b>Für Erfurt:</b> '+w.fuerErfurt+'</p>';
+      h+='<p class="src">Quelle: <a href="'+w.quelle.u+'" target="_blank" rel="noopener">'+w.quelle.t+'</a></p>';
+      h+='</div></details>';
+    });
+  });
+  sec.innerHTML=h+'</div>';
+}
+function resonanzCard(){
+  return '<div class="resonanz"><b>Welches Thema sollen wir aufnehmen?</b>'+
+    '<p>Sie vermissen eine Option, eine Entwicklung, eine Zahl? Schreiben Sie uns — wir nehmen Ihre Anregung in den Radar auf.</p>'+
+    '<a class="res-btn" href="mailto:dialog@hausentscheider.de?subject=Technik-Radar%20%E2%80%93%20Themenvorschlag">dialog@hausentscheider.de →</a></div>';
+}
+
 /* ===== Themen-Filter (clientseitig, keine Datenerfassung) ===== */
 const activeFilters = new Set();
-function vorhandeneRubriken(){
+const FILTER_EBENEN = ["optionen","rahmen","erfurt"];
+function vorhandeneEbenen(){
   const present = {};
-  ausgaben.forEach(a=>a.posts.forEach(p=>{ if(p.icon) present[p.icon]=p.rubrik; }));
-  return FILTER_ORDER.filter(k=>present[k]).map(k=>({key:k,label:present[k]}));
+  ausgaben.forEach(a=>a.posts.forEach(p=>{ if(p.ebene) present[p.ebene]=true; }));
+  return FILTER_EBENEN.filter(k=>present[k]);
 }
 function renderFilter(){
   const fb=document.getElementById("filterbar");
-  const rubs=vorhandeneRubriken();
-  if(rubs.length<2){ fb.style.display="none"; return; }
-  fb.innerHTML='<div class="lead">Themen wählen — nur diese anzeigen</div>'+
-    '<div class="chips">'+rubs.map(r=>'<button class="chip" data-rubrik="'+r.key+'">'+(RUBRIK_ICON[r.key]||"")+'<span>'+r.label+'</span></button>').join("")+'</div>';
+  const ebs=vorhandeneEbenen();
+  if(ebs.length<2){ fb.style.display="none"; return; }
+  fb.innerHTML='<div class="lead">Ebene wählen — nur diese anzeigen</div>'+
+    '<div class="chips">'+ebs.map(k=>'<button class="chip" data-ebene="'+k+'">'+EBENEN[k].icon+'<span>'+EBENEN[k].label+'</span></button>').join("")+'</div>';
   fb.querySelectorAll(".chip").forEach(c=>{
     c.addEventListener("click",()=>{
-      const k=c.getAttribute("data-rubrik");
+      const k=c.getAttribute("data-ebene");
       if(activeFilters.has(k)){ activeFilters.delete(k); c.classList.remove("on"); }
       else { activeFilters.add(k); c.classList.add("on"); }
       applyFilter();
@@ -381,20 +591,28 @@ function renderFilter(){
 }
 function applyFilter(){
   const any=activeFilters.size>0;
-  document.querySelectorAll("#feed .post").forEach(el=>{
-    const r=el.getAttribute("data-rubrik");
-    el.style.display=(!any||activeFilters.has(r))?"":"none";
+  document.querySelectorAll("#feed [data-ebene]").forEach(el=>{
+    const e=el.getAttribute("data-ebene");
+    if(e==="signal"||e==="wng"){ el.style.display=""; return; }  // Signal + Was-nicht-gesagt immer sichtbar
+    el.style.display=(!any||activeFilters.has(e))?"":"none";
   });
-  document.querySelectorAll("#feed .note").forEach(el=>{ el.style.display=any?"none":""; });
 }
 
 (function(){
   document.getElementById("brand-logo").innerHTML = IC.bulbRay;
   const neu = ausgaben[0];
   let feed = '<div class="issue-head"><div class="k">Ausgabe KW '+neu.kw+'/'+neu.jahr+'</div><div class="ti">'+neu.titel+'</div></div>';
-  feed += '<div class="feed">'+neu.posts.map(renderPost).join("")+ctaCard()+'</div>';
+  let body = neu.posts.filter(p=>p.typ==="signal").map(renderPost).join("");
+  ["optionen","rahmen","erfurt"].forEach(eb=>{
+    const inEb = neu.posts.filter(p=>p.ebene===eb);
+    if(inEb.length) body += ebeneHead(eb) + inEb.map(renderPost).join("");
+  });
+  body += neu.posts.filter(p=>p.typ==="wasnichtgesagt").map(renderPost).join("");
+  body += neu.posts.filter(p=>p.typ==="note").map(renderPost).join("");
+  feed += '<div class="feed">'+body+resonanzCard()+ctaCard()+'</div>';
   document.getElementById("feed").innerHTML = feed;
 
+  renderWissen();
   renderFilter();
 
   // Archiv (ab zweiter Ausgabe)
