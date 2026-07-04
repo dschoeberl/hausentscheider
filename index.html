@@ -1241,9 +1241,10 @@
         <div class="oz-vgl-status">
           <span class="oz-vgl-status__lbl"></span><span class="oz-vgl-status__h">Fernwärme</span><span class="oz-vgl-status__h">Wärmepumpe</span>
           <span class="oz-vgl-status__lbl">Preisrisiko 25 Jahre</span><span class="oz-vgl-status__v oz-vgl-status__v--risk">hoch</span><span class="oz-vgl-status__v">gering</span>
-          <span class="oz-vgl-status__lbl">BEG-Förderung</span><span class="oz-vgl-status__v">nein</span><span class="oz-vgl-status__v">ja · 30–60 %</span>
+          <span class="oz-vgl-status__lbl">BEG-Förderung</span><span class="oz-vgl-status__v">ja · 30 %</span><span class="oz-vgl-status__v">35 %*</span>
           <span class="oz-vgl-status__lbl">Rechtlich</span><span class="oz-vgl-status__v">zulässig</span><span class="oz-vgl-status__v">mit Befreiung</span>
         </div>
+        <p class="oz-vgl-note">* Wärmepumpe nur mit Befreiung vom Anschlusszwang; je nach Konstellation 30–60 %. Fernwärme-Anschluss auch im Zwanggebiet mit 30 % förderfähig.</p>
 
         <div class="oz-ampel">
           <span><i class="is-belegt"></i>belegt</span>
@@ -1918,13 +1919,13 @@
         verbrauch_kwh: 95000, flaeche_m2: 769.83, n: 25, jaz: 3.8, stand: "Q3 2026",
         preis_ct: { gas: 10.2, fw: 18.8, wp: 25 },     // brutto (FW Effektivpreis bei 95.000 kWh/62 kW, ohne CO2-Vorbehalt; mit = 20,7)
         steig:    { gas: 0.03, fw: 0.04, wp: 0.025 },   // pro Jahr
-        invest:   { fw: 31500, wp: 130000 }, wp_foerd: 0.35,   // FW brutto: Block A ~11.500 netto + Block B (untere Spanne) 15.000 netto = 26.500 netto x 1,19
+        invest:   { fw: 31500, wp: 130000 }, wp_foerd: 0, fw_foerd: 0.30,   // Welt B (Zwanggebiet): WP ohne Befreiung nicht foerderfaehig; FW 30 % BEG auf Brutto. FW brutto: Block A ~11.500 netto + Block B (untere Spanne) 15.000 netto = 26.500 netto x 1,19
         ist_eur_m2_monat: 1.30                          // gemessen 2025 (Gas, Vollkosten)
       };
       const WV = (function(){
         const W = WIRTSCHAFT, v = W.verbrauch_kwh, n = W.n, fl = W.flaeche_m2;
         const e1 = { fw: v * W.preis_ct.fw/100, wp: (v / W.jaz) * W.preis_ct.wp/100, gas: v * W.preis_ct.gas/100 };
-        const inv = { fw: W.invest.fw, wp: Math.round(W.invest.wp * (1 - W.wp_foerd)) };
+        const inv = { fw: Math.round(W.invest.fw * (1 - W.fw_foerd)), wp: Math.round(W.invest.wp * (1 - W.wp_foerd)) };
         const sumEsc = (j, e) => e === 0 ? j * n : j * (Math.pow(1 + e, n) - 1) / e;
         const mit  = { fw: sumEsc(e1.fw, W.steig.fw) + inv.fw, wp: sumEsc(e1.wp, W.steig.wp) + inv.wp };
         const ohne = { fw: e1.fw * n + inv.fw, wp: e1.wp * n + inv.wp };
@@ -1972,7 +1973,7 @@
             '<div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:' + wpBreite + '%"></div></div>' +
             '<span class="oz-vgl-line__val">' + fmtTsd(WV.mit.wp) + '<small style="display:block;opacity:.55;font-weight:400;font-size:10px;">ohne Steigerung ' + fmtTsd(WV.ohne.wp) + '</small></span></div>' +
           '<p class="oz-vgl-note">Über 25 Jahre zählt die Preissteigerung. Fachlicher Standard für eine solche Entscheidung ist die Rechnung <strong>mit</strong> Steigerung (Gas +3 %, Fernwärme +4 %, WP-Strom +2,5 % pro Jahr — wie im Entscheider-Rechner). Ohne Steigerung wirkt Fernwärme rund <strong>' + fmtTsd(WV.diffFW) + '</strong> günstiger, als sie über die Laufzeit real wird — genau das ist das Preisrisiko des Anschlusszwangs. Die Wärmepumpe spart über 25 Jahre rund <strong>' + fmtTsd(WV.ersparnis) + '</strong> — nominale Gesamtkosten mit jährlicher Preissteigerung (FW +4 %/Jahr, im Rahmen der SWE-Prognose „Verdopplung bis 2040").</p>' +
-          '<p class="oz-vgl-note">Investitionsannahme (konservativ): Wärmepumpe 130.000 € brutto / ~84.500 € netto (35 % BEG-Förderung), Fernwärme ~31.500 € brutto (SWE-Anschluss + bauliche Maßnahmen — Aufschlüsselung unten). Das günstigere reale WP-Angebot lag bei ~100.000 €; mit PV/iSFP steigt die Förderung auf bis zu 60 % — Potenzial nach unten. <strong>Schallschutz:</strong> Maßgeblich ist die amtlich bestätigte Einstufung als allgemeines Wohngebiet (40 dB(A) nachts); moderne Luft-Wasser-Wärmepumpen liegen im Nachtbetrieb darunter, übliche Standardmaßnahmen genügen.</p>' +
+          '<p class="oz-vgl-note">Investitionsannahme (konservativ): Wärmepumpe 130.000 € brutto — im Anschlusszwang-Gebiet ohne Befreiung nicht förderfähig (mit erwirkter Befreiung 35 % BEG → ~84.500 €; das günstigere reale WP-Angebot lag bei ~100.000 €, mit PV/iSFP bis zu 60 % — Potenzial nach unten). Fernwärme ~31.500 € brutto → ~22.050 € nach 30 % BEG-Grundförderung (SWE-Anschluss + bauliche Maßnahmen — Aufschlüsselung unten). <strong>Schallschutz:</strong> Maßgeblich ist die amtlich bestätigte Einstufung als allgemeines Wohngebiet (40 dB(A) nachts); moderne Luft-Wasser-Wärmepumpen liegen im Nachtbetrieb darunter, übliche Standardmaßnahmen genügen.</p>' +
           '<details class="oz-fw-det">' +
             '<summary>Fernwärme-Anschluss — was wirklich anfällt</summary>' +
             '<div class="oz-fw-det__body">' +
@@ -1980,6 +1981,7 @@
               '<p><strong>Block A — SWE-Anschluss</strong> (belegt, SWE-Schreiben 18.03.2026): Baukostenzuschuss ca. 2.480 € (39,99 €/kW × 62 kW) + Hausanschlusskostenbeitrag 8.982 € = <strong>ca. 11.500 € netto</strong>. Enthalten: Anschlussleitung bis ins Gebäude und Fernwärme-Grundstation („SWE Comfort").</p>' +
               '<p><strong>Block B — bauliche Maßnahmen im Gebäude</strong> (Heizkreise, Pumpen, Mischer, Warmwasserbereitung, Anbindung der Heizzentrale): <strong>ca. 15.000–25.000 € netto</strong> — Erfahrungswert, von der SWE nicht beziffert.</p>' +
               '<p><strong>Gesamtinvestition Fernwärme realistisch ca. 26.500–36.500 € netto</strong>, verbindlich erst mit dem konkreten SWE-Angebot. Der scheinbare Investitionsvorteil gegenüber der Wärmepumpe schrumpft damit deutlich — über 25 Jahre kehrt sich das Bild ohnehin um.</p>' +
+              '<p><strong>Förderung:</strong> Der Anschluss ist mit 30 % BEG-Grundförderung förderfähig — auch im Anschlusszwang-Gebiet und trotz überwiegend gasbasiertem Netz (für den Anschluss an ein bestehendes Wärmenetz gelten keine EE-Mindestanforderungen). Auf die konservativ gerechnete Bruttoinvestition (~31.500 €) verbleiben damit rund <strong>22.050 € nach Förderung</strong>. Die Wärmepumpe verliert im selben Zwanggebiet ohne Befreiung ihre Förderfähigkeit — der scheinbare Kostenabstand hat damit auch eine rechtliche, keine rein technische Ursache.</p>' +
               '<p>Hinweis: konservativ mit 62 kW gerechnet; bei den dokumentierten 58,9 kW fiele der Baukostenzuschuss etwas niedriger aus.</p>' +
             '</div>' +
           '</details>';
