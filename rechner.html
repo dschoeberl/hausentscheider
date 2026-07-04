@@ -1789,6 +1789,7 @@
         <button type="button" class="btn btn--ghost" data-wizard-back>Zurück</button>
         <button type="button" class="btn btn--primary" id="cta-berechnen">Berechnen →</button>
       </div>
+      <p class="hint" id="berechnen-hinweis" hidden style="margin-top:0.75rem;">Bitte tragen Sie für mindestens eine Modernisierungs-Option (Schritt 3) Investitionskosten ein — sonst gibt es nichts zu vergleichen.</p>
     </div>
   </section>
 
@@ -2548,6 +2549,16 @@
 
       // Berechnen → Calculating → Ergebnis
       $('#cta-berechnen').addEventListener('click', () => {
+        // Guard: ohne mindestens eine Modernisierungs-Investition gibt es nichts
+        // zu vergleichen (Optionen ohne Invest werden ausgegraut/aus der Wertung genommen).
+        const bi = state.bruttoInvest || {};
+        const investSumme = (bi.hybrid || 0) + (bi.wp || 0) + (bi.fw || 0) + (bi.pellets || 0);
+        const berechnenHinweis = $('#berechnen-hinweis');
+        if (investSumme <= 0) {
+          if (berechnenHinweis) berechnenHinweis.hidden = false;
+          return;
+        }
+        if (berechnenHinweis) berechnenHinweis.hidden = true;
         // C2 v2.0: Wizard-Energiepreis (state.eigenerPreisAktuell) wird in den
         // entsprechenden Schieberegler-Override geschrieben — wirkt auf TCO.
         if (state.eigenerPreisAktuell != null) {
