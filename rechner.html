@@ -191,8 +191,9 @@
     .seg__btn--active { background: var(--petrol); color: var(--white); }
     /* Aktiver Button bleibt im Hover lesbar — heller Petrol-Hintergrund + weißer Text */
     .seg__btn--active:hover { background: var(--petrol); color: var(--white); }
-    /* Tommy-Rot-Variante — hebt gewichtige Weichen (Anschlusszwang) hervor */
-    .seg--tommy .seg__btn--active, .seg--tommy .seg__btn--active:hover { background: var(--tommy-rot); color: var(--white); }
+    /* Tommy-Rot markiert bewusst die folgenreiche Antwort (Anschlusszwang „Ja",
+       Befreiung „Nein" = Förderung eingeschränkt) — nur wenn sie gewählt ist. */
+    .seg__btn--warn.seg__btn--active, .seg__btn--warn.seg__btn--active:hover { background: var(--tommy-rot); color: var(--white); }
     .seg__btn--disabled { color: var(--text-tertiary); cursor: not-allowed; opacity: 0.55; text-decoration: line-through; }
     .seg__btn--disabled:hover { color: var(--text-tertiary); background: transparent; }
 
@@ -1510,9 +1511,9 @@
             <span class="info-tip__pop">Im Anschlusszwang-Gebiet ist der Fernwärme-Anschluss förderfähig, die Wärmepumpe (und andere Alternativen) nur mit Befreiung. Grund: Die Förderung schließt Maßnahmen aus, zu denen eine gesetzliche Pflicht besteht — die Pflicht trifft den Netzanschluss, nicht die Alternative.<span class="info-tip__src">Quelle: BEG / KfW 458.</span></span>
           </span>
         </span>
-        <div class="seg seg--tommy" role="radiogroup" aria-label="Anschlusszwang-Gebiet">
+        <div class="seg" role="radiogroup" aria-label="Anschlusszwang-Gebiet">
           <button type="button" class="seg__btn seg__btn--active" data-set="anschlusszwang" data-val="nein">Nein</button>
-          <button type="button" class="seg__btn" data-set="anschlusszwang" data-val="ja">Ja</button>
+          <button type="button" class="seg__btn seg__btn--warn" data-set="anschlusszwang" data-val="ja">Ja</button>
         </div>
       </div>
 
@@ -1520,7 +1521,7 @@
       <div class="wizard-field" id="feld-befreiung" hidden>
         <span class="wizard-field__label">Befreiung vom Anschlusszwang erwirkt?</span>
         <div class="seg" role="radiogroup" aria-label="Befreiung vom Anschlusszwang">
-          <button type="button" class="seg__btn seg__btn--active" data-set="befreiung" data-val="nein">Nein</button>
+          <button type="button" class="seg__btn seg__btn--warn seg__btn--active" data-set="befreiung" data-val="nein">Nein</button>
           <button type="button" class="seg__btn" data-set="befreiung" data-val="ja">Ja</button>
         </div>
         <p class="wizard-field__hint">Ohne Befreiung ist im Zwanggebiet nur der Fernwärme-Anschluss förderfähig; mit Befreiung sind auch Wärmepumpe und Hybrid wieder förderfähig.</p>
