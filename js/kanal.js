@@ -6,7 +6,7 @@
    - jedes Element mit class="js-kanal-link" (Buttons, Footer-Links)
    ============================================================ */
 (function () {
-  var KANAL_URL = "#kanal-link-folgt";
+  var KANAL_URL = "https://whatsapp.com/channel/0029Vb8h6wX77qVYequg7c0s";
   window.KANAL_URL = KANAL_URL;
 
   function apply() {
