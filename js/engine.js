@@ -513,13 +513,15 @@ function berechneCashflowAlleOptionen(input, params) {
    12) Amortisation
    -------------------------------------------------------------- */
 
-function berechneAmortisation(option, input, params) {
-  if (option === 'gas') return 0;
+function berechneAmortisation(option, input, params, vergleich) {
+  vergleich = vergleich || 'gas';
+  // Status quo (Gas) amortisiert nichts; Vergleich mit sich selbst ebenso wenig.
+  if (option === 'gas' || option === vergleich) return 0;
   const T = input.zeitraum || 25;
-  const cfStatusQuo = berechneCashflowKurve('gas',  input, params);
-  const cfOption    = berechneCashflowKurve(option, input, params);
+  const cfBasis  = berechneCashflowKurve(vergleich, input, params);
+  const cfOption = berechneCashflowKurve(option,    input, params);
   for (let t = 1; t <= T; t++) {
-    if (cfOption.kumuliert[t] >= cfStatusQuo.kumuliert[t]) return t;
+    if (cfOption.kumuliert[t] >= cfBasis.kumuliert[t]) return t;
   }
   return null;
 }
@@ -1290,7 +1292,8 @@ function berechneAllDashboardKennzahlen(input, params) {
     const tcoStatisch = _berechneTCOStatisch(opt, input, params);
 
     const eurQm = berechneEurProQmMonat(tcoBarwert, input.wohnflaeche, T);
-    const amort = berechneAmortisation(opt, input, params);
+    const amort   = berechneAmortisation(opt, input, params);
+    const amortFW = berechneAmortisation(opt, input, params, 'fw');
 
     // plausibel: technische Zulässigkeit (nur Pellets kann unplausibel sein).
     //   Steuert die Inline-Editierbarkeit — bleibt für 0-Invest-Optionen true.
@@ -1315,6 +1318,7 @@ function berechneAllDashboardKennzahlen(input, params) {
       tcoStatisch,
       eurProQmMonat:      eurQm,
       amortisationVsGas:  amort,
+      amortisationVsFW:   amortFW,
       plausibel,
       beruecksichtigt
     };

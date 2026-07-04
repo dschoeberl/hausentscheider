@@ -329,7 +329,9 @@ function renderWirtschaftlichkeitsTabelle(input, params) {
     { key: 'eurProQmMonat',      label: '€/m²/Monat ★',                 fmt: 'euroQm', kennzahlTyp: 'kosten',
       tip: 'Gesamt-Annuität ÷ Wohnfläche ÷ 12 — macht Gebäude unterschiedlicher Größe vergleichbar.' },
     { key: 'amortisationVsGas',  label: 'Amortisation vs. Gas',         fmt: 'jahre',  kennzahlTyp: 'kosten',
-      tip: 'Nach wie vielen Jahren die Mehr-Investition gegenüber einer Gasheizung durch niedrigere Betriebskosten wieder eingespielt ist.' }
+      tip: 'Nach wie vielen Jahren die Mehr-Investition gegenüber einer Gasheizung durch niedrigere Betriebskosten wieder eingespielt ist.' },
+    { key: 'amortisationVsFW',   label: 'Amortisation vs. Fernwärme',   fmt: 'jahre',  kennzahlTyp: 'kosten',
+      tip: 'Nach wie vielen Jahren sich eine Option gegenüber dem Fernwärme-Anschluss rechnet — der zweite zulässige Pfad im Anschlusszwang-Gebiet. „—" heißt: rechnet sich im Betrachtungszeitraum nicht bzw. entfällt für Gas und für die Fernwärme selbst.' }
   ];
 
   function fmt(wert, format) {
