@@ -67,6 +67,13 @@
     .nav__dropdown-menu a { display: flex; align-items: center; gap: 6px; padding: 0.5rem 1rem; font-size: 13px; color: var(--text-secondary); }
     .nav__dropdown-menu a:hover { color: var(--petrol); background: var(--bg-light); text-decoration: none; }
     .nav__city-badge { font-size: 10px; background: var(--petrol); color: white; padding: 1px 6px; border-radius: 10px; font-family: 'Inter', sans-serif; }
+    .radar-pill { display: inline-flex; align-items: center; gap: 6px; background: var(--tommy-rot); color: #fff; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 12px; line-height: 1; padding: 5px 12px 5px 9px; border-radius: 999px; text-decoration: none; vertical-align: middle; transition: filter 0.2s; }
+    .radar-pill:hover { filter: brightness(1.07); }
+    .radar-pill svg { width: 13px; height: 13px; display: block; flex-shrink: 0; }
+    .radar-pill .radar-pill-dot { animation: radarPillSweep 2.4s ease-out infinite; }
+    @keyframes radarPillSweep { 0% { opacity: 0.35; } 50% { opacity: 1; } 100% { opacity: 0.35; } }
+    @media (prefers-reduced-motion: reduce) { .radar-pill .radar-pill-dot { animation: none; } }
+    .kanal__list a.radar-pill, .kanal__list a.radar-pill:hover { color: #fff; border-bottom: none; }
 
     /* HERO */
     .hero { position: relative; min-height: 540px; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; }
@@ -1083,7 +1090,7 @@
             <li>Ein kurzer Wochenüberblick statt Dauerrauschen — nur, was eine Gebäudeentscheidung wirklich verschiebt.</li>
             <li>Klare Einordnung statt Herstellerversprechen — belegt, nicht behauptet, und mit Blick auf das, was vor Ort oft fehlt.</li>
             <li>Einen „Prüfbedarf"-Hinweis, wenn eine bisher getroffene Annahme neu bewertet werden sollte.</li>
-            <li>Den vollständigen Beitrag mit Quellen jederzeit im <a href="radar.html">Technik-Radar auf hausentscheider.de</a>.</li>
+            <li>Den vollständigen Beitrag mit Quellen jederzeit im <a href="radar.html" class="radar-pill"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle class="radar-pill-dot" cx="12" cy="12" r="1.6" fill="#fff" stroke="none"/></svg>Technik-Radar</a>.</li>
           </ul>
           <p class="kanal__synergie">Der Kanal ist die schnelle Spur, hausentscheider.de das Nachschlagewerk: auf dem Handy die Kurzfassung, auf der Website die Herleitung, die Quellen und der Entscheider-Rechner, mit dem Sie es auf Ihr eigenes Gebäude beziehen.</p>
           <p class="kanal__wunsch">Welches Thema wünschen Sie sich im Kanal? Schreiben Sie an <a href="mailto:dialog@hausentscheider.de?subject=Technik-Radar%20%E2%80%93%20Themenvorschlag">dialog@hausentscheider.de</a> — wir nehmen Ihre Anregung auf.</p>
