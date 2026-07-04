@@ -79,14 +79,14 @@ body{
 .pin{
   margin:12px;padding:13px 14px;border-radius:16px;
   background:linear-gradient(120deg,rgba(207,247,127,.30),rgba(122,184,181,.12));
-  border:1px solid rgba(168,212,90,.55);display:flex;align-items:center;gap:12px;
+  border:1px solid rgba(168,212,90,.55);display:flex;flex-direction:column;align-items:stretch;gap:11px;
 }
 .pin .pintxt{flex:1}
 .pin .pintxt b{font-size:13px;display:block;margin-bottom:2px;color:var(--petrol-dark)}
 .pin .pintxt span{font-size:11.5px;color:var(--ink-2);line-height:1.35}
 .pin .follow{
-  flex:0 0 auto;background:var(--tommy);color:#fff;border:none;font-family:var(--sans);
-  font-weight:800;font-size:12.5px;border-radius:999px;padding:9px 16px;cursor:pointer;white-space:nowrap;transition:.15s;
+  flex:0 0 auto;background:var(--signal);color:var(--signal-ink);border:none;font-family:var(--sans);
+  font-weight:800;font-size:12.5px;border-radius:999px;padding:10px 16px;cursor:pointer;text-align:center;transition:.15s;
 }
 .pin .follow:hover{filter:brightness(1.06)}
 /* Themen-Filter */
@@ -255,7 +255,7 @@ body{
         <b>Die Wärmewende — entlang Ihrer Entscheidung.</b>
         <span>Wöchentlich und belegt: was sich bei Wärmepumpe, Fernwärme und Gas bewegt — und was vor Ort gern übersehen wird.</span>
       </div>
-      <button class="follow js-kanal-link-btn" id="follow-btn">Folgen</button>
+      <button class="follow js-kanal-link-btn" id="follow-btn">Kanal in WhatsApp öffnen</button>
     </div>
 
     <div class="filterbar" id="filterbar"></div>
@@ -635,10 +635,7 @@ function applyFilter(){
     });
   });
   const fb=document.getElementById("follow-btn");
-  fb.addEventListener("click",()=>{
-    const on = fb.textContent.trim()==="Folgen";
-    if(on){ window.open(KANAL_URL,"_blank"); fb.textContent="Kanal geöffnet"; }
-  });
+  fb.addEventListener("click",()=>{ window.open(KANAL_URL,"_blank"); });
 })();
 </script>
 </body>
