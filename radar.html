@@ -317,7 +317,7 @@ const ausgaben = [
     {
       typ:"signal", badge:"Marktverfügbar",
       titel:"Schall verliert an Schrecken",
-      body:'Seit Januar 2026 wird eine Luft-Wärmepumpe nur noch gefördert, wenn ihr Außengerät <b>deutlich leiser</b> ist als bisher verlangt — und der Markt zieht mit. Zusammen mit Kaskaden und Innenaufstellung sinkt der nach außen hörbare Schall spürbar.',
+      body:'Seit Januar 2026 wird eine Luft-Wärmepumpe nur noch gefördert, wenn ihr Außengerät <b>deutlich leiser</b> ist als bisher verlangt — und der Markt zieht mit. Zusammen mit durchdachter Aufstellung sinkt der nach außen hörbare Schall zusätzlich.',
       einordnung:'Schallangaben sind nur mit Kontext vergleichbar: Schallleistungspegel ≠ Schalldruckpegel, dazu Messabstand, Tag-/Nachtbetrieb und Betriebsmodus. Ein einzelner Dezibel-Wert ist noch kein Gebäude-Urteil.',
       bridge:{
         fuerErfurt:'In der dichten Gründerzeit-Innenstadt war Schall bisher das teuerste Gegenargument gegen die Wärmepumpe — der Grund für kalkulierte Schallschutzwände.',
@@ -340,20 +340,20 @@ const ausgaben = [
     },
     {
       typ:"post", ebene:"optionen", option:"waermepumpe",
-      titel:"Kaskade und Innenaufstellung — der leise Hebel",
-      body:'Zwei Bauweisen senken den nach außen dringenden Schall zusätzlich: mehrere kleinere Geräte in <b>Kaskade</b> statt eines großen, und die <b>Innenaufstellung</b> mit Luftführung über Kanäle. Beides verlagert die Geräuschquelle weg von Nachbarfenstern.',
-      einordnung:'Auch hier gilt: Schallleistung ≠ Schalldruck. Maßgeblich ist der Pegel am Immissionsort (Nachbarschaft), nicht der Katalogwert — das gehört fürs eigene Gebäude gerechnet.',
+      titel:"Wo die Wärmepumpe steht, entscheidet über den Lärm",
+      body:'Der wirksamste Hebel gegen Außenlärm ist die <b>Aufstellung</b>. Aus Sicht des Immissionsschutzes ist die <b>Innenaufstellung</b> der Außenaufstellung vorzuziehen; steht das Gerät auf der <b>abgewandten Gebäudeseite</b>, sinkt der Pegel um rund <b>15–20 dB</b>. Die lauteste Geräteseite gehört von schutzbedürftigen Räumen weggedreht.',
+      einordnung:'Auch hier gilt: Schallleistung ≠ Schalldruck. Maßgeblich ist der Pegel am Immissionsort (Nachbarschaft) nach TA Lärm — nicht der Katalogwert.',
       bridge:{
         fuerErfurt:'In dichter Innenstadtlage mit knappen Abständen entscheidet genau das oft zwischen „genehmigungsfähig" und „Streitfall".'
       },
-      quellen:[{t:"Beleg folgt",u:"#"}]
+      quellen:[{t:"Bayerisches Landesamt für Umwelt",u:"https://www.lfu.bayern.de/laerm/gewerbe_anlagen/luftwaermepumpen/index.htm"}]
     },
     {
       typ:"post", ebene:"optionen", option:"gas",
       titel:"Wärmepumpe & Fernwärme meist günstiger als neue Gasheizung",
-      body:'Eine Vollkostenrechnung über 20 Jahre (Fraunhofer ISE) sieht im Mehrfamilienhaus mit 12 Wohnungen die Gasheizung im besten Fall rund <b>10.500 € je Wohnung</b> teurer als die Wärmepumpe — Treiber ist auch die ab 2026 steigende Grüngas-Pflicht.',
+      body:'Eine Vollkostenrechnung über 20 Jahre (Fraunhofer ISE) sieht im Mehrfamilienhaus mit 12 Wohnungen die Gasheizung im besten Fall rund <b>10.500 € je Wohnung</b> teurer als die Wärmepumpe — Treiber ist auch die kommende Grüngas-Pflicht für neue Gasheizungen.',
       einordnung:'Ein Datenpunkt, beauftragt von einem Fernwärme-Versorger. Es sind Vollkosten über 20 Jahre, kein Arbeitspreis. Größenordnung plausibel — ersetzt aber keine Rechnung fürs eigene Haus.',
-      pruef:'Wer Gas als Vergleichsoption hinterlegt hat, sollte die dortigen Annahmen gegen eine aktuelle Vollkostenlogik prüfen — inklusive der Grüngas-Pflicht ab 2026.',
+      pruef:'Wer Gas als Vergleichsoption hinterlegt hat, sollte die dortigen Annahmen gegen eine aktuelle Vollkostenlogik prüfen — inklusive der kommenden Grüngas-Pflicht (Bio-Treppe).',
       bewertung:{ klimaneutral:'-', kosten_ee:'-', unabhaengig:'-' },
       bridge:{
         fuerErfurt:'Wo die Erfurter Wärmeplanung Fernwärme-Vorranggebiete absteckt, lohnt der Vollkostenvergleich doppelt — die Studie ist ein Prüfauftrag, kein Automatismus.',
@@ -364,43 +364,43 @@ const ausgaben = [
     {
       typ:"post", ebene:"optionen", option:"solarthermie",
       titel:"Solarthermie: solide beim Warmwasser, kein neues Signal",
-      body:'Im Mehrfamilienhaus deckt Solarthermie vor allem den <b>Warmwasser</b>-Bedarf — je nach Auslegung ist ein erheblicher solarer Anteil möglich. Ein Baustein, keine eigenständige Heizlösung.',
+      body:'Im Mehrfamilienhaus deckt Solarthermie vor allem den <b>Warmwasser</b>-Bedarf: bei reiner Trinkwassererwärmung liegt der solare Deckungsgrad üblicherweise bei <b>50–60 %</b> im Jahresmittel — im MFH je nach Dämmung eher darunter. Ein Baustein, keine eigenständige Heizlösung.',
       einordnung:'Diese Woche ohne marktveränderndes Signal — wir halten es bewusst kurz und konstruieren keine Neuigkeit.',
-      quellen:[{t:"Beleg folgt",u:"#"}]
+      quellen:[{t:"heizung.de — Solare Deckungsrate",u:"https://www.heizung.de/lexikon/solare-deckungsrate.html"}]
     },
     /* ---- Ebene: Der Rahmen ---- */
     {
       typ:"post", ebene:"rahmen",
-      titel:"Grüngas-Pflicht ab 2026 — die Gas-Annahme wackelt",
-      body:'Wer heute eine Gasheizung plant, muss über die Laufzeit einen steigenden Anteil <b>grüner Gase</b> einkalkulieren. Das verschiebt die Betriebskosten-Annahme — nach oben, nicht nach unten.',
-      einordnung:'Ein Rahmen-Effekt: nicht die Technik ändert sich, sondern die Regel dahinter. Vollkosten ≠ heutiger Arbeitspreis — die Pflicht wirkt erst über die Jahre.',
+      titel:"Bio-Treppe: neue Gasheizungen müssen grüner werden",
+      body:'Neu eingebaute Gas- und Ölheizungen müssen nach GEG über die Laufzeit steigende Anteile erneuerbarer Brennstoffe (Biomethan, Wasserstoff) nutzen: <b>15 % ab 2029, 30 % ab 2035, 60 % ab 2040</b>. Das verschiebt die Betriebskosten-Annahme — nach oben, nicht nach unten.',
+      einordnung:'Ein Rahmen-Effekt: nicht die Technik ändert sich, sondern die Regel dahinter. Vollkosten ≠ heutiger Arbeitspreis. Achtung, Rechtslage im Fluss — die GEG-Novelle 2026 wird noch überarbeitet.',
       bridge:{
         fuerErfurt:'Für Eigentümer, die Gas als „günstige Übergangslösung" hinterlegt haben, ist das der Punkt zum Nachrechnen.'
       },
-      quellen:[{t:"Beleg folgt",u:"#"}]
+      quellen:[{t:"Vaillant — GEG im Überblick",u:"https://www.vaillant.de/ratgeber/gesetze-und-verordnungen/geg-gebaeudeenergiegesetz/"}]
     },
     {
       typ:"post", ebene:"rahmen",
-      titel:"Neue Absicherung für Tiefengeothermie",
-      body:'Der Bund flankiert Tiefengeothermie stärker gegen das <b>Fündigkeitsrisiko</b> — die teure Unsicherheit, ob eine Bohrung genug Wärme liefert. Das senkt die Einstiegshürde für Quartiers- und Fernwärmeprojekte.',
+      titel:"KfW-Programm 572 sichert das Fündigkeitsrisiko ab",
+      body:'Seit Dezember 2025 sichert das <b>KfW-Programm 572</b> — gemeinsam mit Munich Re und dem Bund — das <b>Fündigkeitsrisiko</b> von Tiefengeothermie ab: die teure Unsicherheit, ob eine Bohrung genug Wärme liefert. Bis zu <b>100 % des Darlehens</b> (max. 25 Mio. € je Bohrprojekt) sind abgesichert. Das senkt die Einstiegshürde für Quartiers- und Fernwärmeprojekte.',
       einordnung:'Rahmen-Effekt: verändert nicht die Technik, sondern wer sie sich zu welchem Risiko leisten kann. Für Erfurt erst mit konkretem Projekt relevant.',
-      quellen:[{t:"Beleg folgt",u:"#"}]
+      quellen:[{t:"KfW",u:"https://www.kfw.de/%C3%9Cber-die-KfW/Newsroom/Aktuelles/Pressemitteilungen-Details_875520.html"},{t:"Rödl & Partner",u:"https://www.roedl.com/insights/absicherung-fuendigkeitsrisiko-tiefengeothermieprojekte-kfw-programm-572/"}]
     },
     /* ---- Ebene: Erfurt konkret ---- */
     {
       typ:"post", ebene:"erfurt",
-      titel:"Prüfgebiete von außerhalb: kalte Nahwärme & Geothermie-Quartiere",
-      body:'Andernorts entstehen Quartierslösungen mit <b>kalter Nahwärme</b> und Geothermie (u. a. Lübeck, Trier) — übertragbare Beispiele, wie ganze Straßenzüge gemeinsam versorgt werden.',
+      titel:"Prüfgebiet Lübeck: kalte Nahwärme für ein ganzes Quartier",
+      body:'Im Lübecker Quartier Lauerhofer Feld entsteht ein <b>kaltes Nahwärmenetz</b> mit rund <b>135 Erdwärmesonden</b> und dezentralen Wärmepumpen für etwa <b>400 Wohneinheiten</b> — ein übertragbares Beispiel, wie ganze Straßenzüge gemeinsam versorgt werden. Auch Trier baut sein Nahwärmenetz als Quartiersbaustein aus.',
       einordnung:'Für Erfurt bisher eher im Konjunktiv: interessante Referenz, noch kein lokaler Beschluss. Als Prüfrichtung im Blick behalten.',
-      quellen:[{t:"Beleg folgt",u:"#"}]
+      quellen:[{t:"ingenieur.de — Lübeck kalte Nahwärme",u:"https://www.ingenieur.de/technik/fachbereiche/bau/135-sonden-23000-bohrmeter-so-baut-luebeck-kalte-nahwaerme-auf/"},{t:"Stadt Trier — Energiequartier",u:"https://www.trier.de/umwelt-verkehr/klimaschutz/energiequartier/"}]
     },
     /* ---- Ebene: Was nicht gesagt wird ---- */
     {
       typ:"wasnichtgesagt", ebene:"wng",
       titel:"Die Schieflage der lokalen Resonanz",
-      body:'Die lokale Berichterstattung und Kommunikation gewichten <b>Fernwärme und Gas</b> stark; die <b>Wärmepumpe</b> bleibt in ihren Vorteilen unterbelichtet, <b>Geothermie</b> meist im Konjunktiv. Wir gleichen das aus — mit Zahlen und Quellen, nicht mit Meinung.',
+      body:'Die lokale Debatte gewichtet <b>Fernwärme und Gas</b> stark; die <b>Wärmepumpe</b> bleibt in ihren Vorteilen unterbelichtet, <b>Geothermie</b> meist im Konjunktiv. Dabei sieht die Studienlage (siehe oben) Wärmepumpe und Fernwärme meist günstiger als eine neue Gasheizung. Wir machen diese Lücke sichtbar — mit Zahlen und Quellen, nicht mit Meinung.',
       einordnung:'Belegt statt behauptet: Es geht nicht darum, eine Technik zu bewerben, sondern eine dokumentierte Gewichtung sichtbar zu machen. Einordnung, keine Empfehlung.',
-      quellen:[{t:"Beleg folgt",u:"#"}]
+      quellen:[{t:"Hausentscheider — Abwägungs-Analyse zur Erfurter Wärmeplanung",u:"dokumente/260702_Abw%C3%A4gung_Analyse_Wer-sagt-was-zur-KWP.pdf"}]
     }
   ]
 }
