@@ -1501,6 +1501,29 @@
         Hybrid und Pellets in der Innenstadt grundsätzlich ausgeschlossen, Befreiungswege nach §6 möglich.
       </div>
 
+      <!-- Anschlusszwang-Gebiet — steuert die Förderfähigkeit je System -->
+      <div class="wizard-field">
+        <span class="wizard-field__label">Liegt Ihr Gebäude im Anschlusszwang-Gebiet?
+          <span class="info-tip" tabindex="0" aria-label="Info Anschlusszwang">ⓘ
+            <span class="info-tip__pop">Im Anschlusszwang-Gebiet ist der Fernwärme-Anschluss förderfähig, die Wärmepumpe (und andere Alternativen) nur mit Befreiung. Grund: Die Förderung schließt Maßnahmen aus, zu denen eine gesetzliche Pflicht besteht — die Pflicht trifft den Netzanschluss, nicht die Alternative.<span class="info-tip__src">Quelle: BEG / KfW 458.</span></span>
+          </span>
+        </span>
+        <div class="seg" role="radiogroup" aria-label="Anschlusszwang-Gebiet">
+          <button type="button" class="seg__btn seg__btn--active" data-set="anschlusszwang" data-val="nein">Nein</button>
+          <button type="button" class="seg__btn" data-set="anschlusszwang" data-val="ja">Ja</button>
+        </div>
+      </div>
+
+      <!-- Konditional: nur bei Anschlusszwang = ja -->
+      <div class="wizard-field" id="feld-befreiung" hidden>
+        <span class="wizard-field__label">Befreiung vom Anschlusszwang erwirkt?</span>
+        <div class="seg" role="radiogroup" aria-label="Befreiung vom Anschlusszwang">
+          <button type="button" class="seg__btn seg__btn--active" data-set="befreiung" data-val="nein">Nein</button>
+          <button type="button" class="seg__btn" data-set="befreiung" data-val="ja">Ja</button>
+        </div>
+        <p class="wizard-field__hint">Ohne Befreiung ist im Zwanggebiet nur der Fernwärme-Anschluss förderfähig; mit Befreiung sind auch Wärmepumpe und Hybrid wieder förderfähig.</p>
+      </div>
+
       <div class="wizard-actions wizard-actions--end">
         <button type="button" class="btn btn--primary" data-wizard-next>Weiter</button>
       </div>
@@ -2583,6 +2606,14 @@
             state.sanierung = val;
             updateHeizlastHinweis();
             evaluateConditionals();
+          } else if (field === 'anschlusszwang') {
+            state.anschlusszwang = (val === 'ja');
+            const bef = $('#feld-befreiung');
+            if (bef) bef.hidden = (val !== 'ja');
+            // Bei "nein" die Befreiung zuruecksetzen (sonst bliebe ein Alt-Wert haengen)
+            if (val !== 'ja') { state.befreiung = false; syncSegButton('befreiung', 'nein'); }
+          } else if (field === 'befreiung') {
+            state.befreiung = (val === 'ja');
           }
         });
       });
