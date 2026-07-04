@@ -10,24 +10,25 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap">
 <style>
 /* ============================================================
-   Technik-Radar — eigenständige, gekapselte Feed-Ansicht.
+   Technik-Radar — eigenständige, gekapselte Feed-Ansicht (HELL).
    Teilt mit der Kern-Site nur die Farb-Tokens (per Wert),
    nicht die Komponenten-CSS. Alles hier ist lokal/scoped.
    ============================================================ */
 :root{
-  color-scheme: dark;
+  color-scheme: light;
   --petrol-dark:#1a3535;
   --petrol:#1a5c5a;
   --petrol-light:#7ab8b5;
   --signal:#CFF77F;
+  --signal-ink:#33501a;   /* dunkler Text auf Signal-Flaeche */
   --tommy:#D81E34;
-  --screen-1:#16302e;
-  --screen-2:#123028;
-  --surface:#20423f;
-  --line:rgba(122,184,181,.18);
-  --ink:#eaf3f0;
-  --ink-2:#a6c3bf;
-  --ink-3:#7fa39e;
+  --screen-1:#edf1ef;
+  --screen-2:#e7ece9;
+  --surface:#ffffff;
+  --line:#dbe3e0;
+  --ink:#1c2b29;          /* Haupttext */
+  --ink-2:#586b67;        /* sekundaer */
+  --ink-3:#8b9a96;        /* muted */
   --serif:'Playfair Display',Georgia,serif;
   --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
@@ -35,7 +36,7 @@
 html,body{margin:0;padding:0}
 body{
   font-family:var(--sans);
-  background:radial-gradient(1200px 800px at 50% -10%,#1d3f3b 0%,#132b29 45%,#0e2321 100%);
+  background:radial-gradient(1200px 800px at 50% -10%,#eef4f2 0%,#e4ece9 45%,#dae5e1 100%);
   min-height:100vh;color:var(--ink);
   display:flex;justify-content:center;align-items:flex-start;
   padding:34px 16px 60px;
@@ -43,7 +44,7 @@ body{
 .device{
   width:400px;max-width:100%;
   background:#0b1a19;border-radius:46px;padding:12px;
-  box-shadow:0 40px 90px rgba(0,0,0,.55),0 0 0 1px rgba(122,184,181,.10),inset 0 0 0 2px #060f0e;
+  box-shadow:0 40px 90px rgba(20,45,42,.28),0 0 0 1px rgba(20,45,42,.06),inset 0 0 0 2px #05100f;
   position:relative;
 }
 .device::before{
@@ -58,108 +59,126 @@ body{
 /* App bar */
 .appbar{
   position:sticky;top:0;z-index:5;backdrop-filter:blur(14px);
-  background:rgba(16,38,36,.82);border-bottom:1px solid var(--line);
+  background:rgba(255,255,255,.88);border-bottom:1px solid var(--line);
   padding:34px 15px 11px;display:flex;align-items:center;gap:11px;
 }
 .appbar .logo{
   width:38px;height:38px;border-radius:12px;flex:0 0 auto;display:grid;place-items:center;
-  background:radial-gradient(circle at 50% 35%,#26514c,#173733);border:1px solid rgba(207,247,127,.4);
+  background:radial-gradient(circle at 50% 35%,#1f4f4a,#173733);border:1px solid rgba(207,247,127,.55);
 }
 .appbar .logo svg{width:22px;height:22px}
 .appbar .t{flex:1;min-width:0}
-.appbar .name{font-weight:800;font-size:15px;letter-spacing:.2px}
+.appbar .name{font-weight:800;font-size:15px;letter-spacing:.2px;color:var(--petrol-dark)}
 .appbar .sub{font-size:11px;color:var(--ink-3);margin-top:1px}
-.appbar .home{font-size:11.5px;color:var(--petrol-light);text-decoration:none;font-weight:600;white-space:nowrap;flex:0 0 auto;opacity:.85}
+.appbar .home{flex:0 0 auto;display:inline-flex;align-items:center;text-decoration:none;opacity:.9}
 .appbar .home:hover{opacity:1}
+.appbar .home svg{display:block}
+/* Hero-Banner (wiederkehrendes Marken-Bild, Motiv 2) */
+.hero{display:block;width:100%;height:auto;border-bottom:1px solid var(--line)}
 /* Pinned follow */
 .pin{
   margin:12px;padding:13px 14px;border-radius:16px;
-  background:linear-gradient(120deg,rgba(207,247,127,.12),rgba(122,184,181,.06));
-  border:1px solid rgba(207,247,127,.28);display:flex;align-items:center;gap:12px;
+  background:linear-gradient(120deg,rgba(207,247,127,.30),rgba(122,184,181,.12));
+  border:1px solid rgba(168,212,90,.55);display:flex;align-items:center;gap:12px;
 }
 .pin .pintxt{flex:1}
-.pin .pintxt b{font-size:13px;display:block;margin-bottom:2px}
+.pin .pintxt b{font-size:13px;display:block;margin-bottom:2px;color:var(--petrol-dark)}
 .pin .pintxt span{font-size:11.5px;color:var(--ink-2);line-height:1.35}
 .pin .follow{
-  flex:0 0 auto;background:var(--signal);color:#16302e;border:none;font-family:var(--sans);
-  font-weight:800;font-size:12.5px;border-radius:999px;padding:9px 15px;cursor:pointer;white-space:nowrap;transition:.15s;
+  flex:0 0 auto;background:var(--tommy);color:#fff;border:none;font-family:var(--sans);
+  font-weight:800;font-size:12.5px;border-radius:999px;padding:9px 16px;cursor:pointer;white-space:nowrap;transition:.15s;
 }
+.pin .follow:hover{filter:brightness(1.06)}
+/* Themen-Filter */
+.filterbar{padding:2px 12px 0;margin-top:2px}
+.filterbar .lead{font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);font-weight:700;margin:0 3px 7px}
+.filterbar .chips{display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.filterbar .chips::-webkit-scrollbar{display:none}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;flex:0 0 auto;background:#eef3f1;color:var(--petrol);
+  border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-family:var(--sans);font-size:12px;
+  font-weight:600;cursor:pointer;transition:.15s;white-space:nowrap;
+}
+.chip svg{width:14px;height:14px}
+.chip:hover{background:#e4ece9}
+.chip.on{background:var(--petrol);color:#fff;border-color:var(--petrol)}
+.filter-empty{font-size:12px;color:var(--ink-3);text-align:center;padding:8px 0 2px}
 /* Ausgabe-Trenner */
-.issue-head{padding:6px 15px 0;margin-top:6px}
+.issue-head{padding:10px 15px 0;margin-top:2px}
 .issue-head .k{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:700}
-.issue-head .ti{font-family:var(--serif);font-size:16px;color:#fff;margin:2px 0 0;line-height:1.25}
+.issue-head .ti{font-family:var(--serif);font-size:16px;color:var(--petrol-dark);margin:2px 0 0;line-height:1.25}
 .feed{padding:2px 12px 20px}
-.post{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:15px 15px 8px;margin:12px 0}
+.post{background:var(--surface);border:1px solid #d3ddd9;border-radius:18px;padding:15px 15px 8px;margin:14px 0;box-shadow:0 1px 3px rgba(20,45,42,.09)}
 .post.signal{
-  background:linear-gradient(180deg,rgba(207,247,127,.10),rgba(32,66,63,.6) 42%);
-  border-color:rgba(207,247,127,.42);box-shadow:0 0 0 1px rgba(207,247,127,.10),0 14px 34px rgba(0,0,0,.28);
+  background:linear-gradient(180deg,rgba(207,247,127,.22),#ffffff 58%);
+  border-color:rgba(168,212,90,.6);box-shadow:0 8px 22px rgba(120,160,60,.10);
 }
 .phead{display:flex;align-items:center;gap:10px;margin-bottom:11px}
-.ava{width:40px;height:40px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;
-  background:radial-gradient(circle at 50% 35%,#2c5a54,#173733);border:1px solid rgba(122,184,181,.35)}
+.ava{width:40px;height:40px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;color:var(--petrol);
+  background:#eef3f1;border:1px solid var(--line)}
 .ava svg{width:22px;height:22px}
-.ava.sig{background:radial-gradient(circle at 50% 35%,#dff89a,#b9e46a);border-color:#e9ffb0}
-.ava.sig svg{color:#1a3d10}
+.ava.sig{background:radial-gradient(circle at 50% 35%,#dff89a,#bfe673);border-color:#bfe673;color:var(--signal-ink)}
 .phead .who{flex:1;min-width:0}
-.phead .who .n{font-weight:700;font-size:13.5px}
+.phead .who .n{font-weight:700;font-size:13.5px;color:var(--petrol-dark)}
 .phead .who .h{font-size:11.5px;color:var(--ink-3);margin-top:1px}
 .rubrik{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;letter-spacing:.06em;
   text-transform:uppercase;padding:4px 9px;border-radius:999px;flex:0 0 auto;
-  background:rgba(122,184,181,.12);color:var(--petrol-light);border:1px solid rgba(122,184,181,.22)}
+  background:#eef3f1;color:var(--petrol);border:1px solid var(--line)}
 .rubrik svg{width:13px;height:13px}
-.rubrik.sig{background:rgba(207,247,127,.16);color:var(--signal);border-color:rgba(207,247,127,.4)}
-.ptitle{font-family:var(--serif);font-size:18px;line-height:1.24;margin:2px 0 8px;color:#fff;font-weight:700}
-.pbody{font-size:13.5px;line-height:1.5;color:var(--ink);margin:0 0 10px}
-.pbody b{color:#fff}
-.mini{font-size:12px;line-height:1.45;color:var(--ink-2);background:rgba(122,184,181,.08);border-radius:10px;padding:8px 10px;margin:0 0 10px}
-.mini b{color:var(--petrol-light)}
-.mini.pruef{background:rgba(245,232,196,.12);border-left:3px solid #d9b64e}
-.mini.pruef b{color:#f0d98a}
-.badge{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;color:var(--signal);
-  border:1px solid rgba(207,247,127,.4);border-radius:999px;padding:3px 8px;margin:0 0 10px}
-.badge .dot{width:6px;height:6px;border-radius:50%;background:var(--signal);box-shadow:0 0 8px var(--signal)}
-/* Erfurt-Brücke — Tommy-Rot-Signatur */
-.bridge{border-left:3px solid var(--tommy);background:linear-gradient(90deg,rgba(216,30,52,.14),rgba(216,30,52,.03));
+.rubrik.sig{background:var(--signal);color:var(--signal-ink);border-color:#bfe673}
+.ptitle{font-family:var(--serif);font-size:18px;line-height:1.24;margin:2px 0 8px;color:var(--petrol-dark);font-weight:700}
+.pbody{font-size:13.5px;line-height:1.52;color:var(--ink);margin:0 0 10px}
+.pbody b{color:var(--petrol-dark)}
+.mini{font-size:12px;line-height:1.45;color:var(--ink-2);background:#eef3f1;border-radius:10px;padding:8px 10px;margin:0 0 10px}
+.mini b{color:var(--petrol)}
+.mini.pruef{background:#fdf3d8;border-left:3px solid #d9a94e}
+.mini.pruef b{color:#9a771c}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:800;color:var(--signal-ink);
+  background:var(--signal);border:none;border-radius:999px;padding:4px 9px;margin:0 0 10px}
+.badge .dot{width:6px;height:6px;border-radius:50%;background:var(--signal-ink)}
+/* Erfurt-Bruecke — Tommy-Rot-Signatur */
+.bridge{border-left:3px solid var(--tommy);background:linear-gradient(90deg,rgba(216,30,52,.09),rgba(216,30,52,.02));
   border-radius:0 12px 12px 0;padding:10px 12px;margin:0 0 11px}
 .bridge .lab{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;letter-spacing:.07em;
-  text-transform:uppercase;color:#ff7183;margin-bottom:5px}
+  text-transform:uppercase;color:var(--tommy);margin-bottom:5px}
 .bridge .lab svg{width:13px;height:13px}
-.bridge p{margin:0;font-size:13px;line-height:1.48;color:#f3dcdf}
-.bridge .ref{margin-top:7px;padding-top:7px;border-top:1px dashed rgba(216,30,52,.32);font-size:12.5px;color:#eccfd3}
-.bridge .ref b{color:#ff9aa6;font-weight:700}
+.bridge p{margin:0;font-size:13px;line-height:1.48;color:#3a2a2c}
+.bridge .ref{margin-top:7px;padding-top:7px;border-top:1px dashed rgba(216,30,52,.28);font-size:12.5px;color:#5b4448}
+.bridge .ref b{color:var(--tommy);font-weight:700}
 .src{font-size:11px;color:var(--ink-3);margin:0 0 4px}
-.src a{color:var(--petrol-light);text-decoration:none;border-bottom:1px solid rgba(122,184,181,.4)}
-.src a:hover{border-bottom-color:var(--petrol-light)}
+.src a{color:var(--petrol);text-decoration:none;border-bottom:1px solid rgba(26,92,90,.35)}
+.src a:hover{border-bottom-color:var(--petrol)}
 /* Reaction-Bar — dezent, ohne erfundene Zahlen, keine echte Datenerfassung */
 .bar{display:flex;align-items:center;gap:4px;border-top:1px solid var(--line);margin-top:6px;padding-top:6px}
-.rx{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:none;border:none;color:var(--ink-2);
+.rx{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:none;border:none;color:var(--ink-3);
   font-family:var(--sans);font-size:12px;font-weight:600;padding:9px 4px;border-radius:10px;cursor:pointer;transition:.15s}
-.rx:hover{background:rgba(122,184,181,.10);color:var(--ink)}
+.rx:hover{background:#eef3f1;color:var(--petrol)}
 .rx svg{width:16px;height:16px}
-.rx.on{color:var(--signal)}
-.note{background:rgba(122,184,181,.06);border:1px dashed var(--line);border-radius:16px;
+.rx.on{color:var(--petrol)}
+.note{background:#f3f7f5;border:1px dashed var(--line);border-radius:16px;
   padding:13px 15px;margin:12px 0;font-size:12.5px;color:var(--ink-2);line-height:1.45}
-.note b{color:var(--petrol-light)}
+.note b{color:var(--petrol)}
 /* CTA */
 .cta{margin:12px 0;padding:18px 16px;border-radius:20px;text-align:center;
-  background:linear-gradient(160deg,#20423f,#16302e);border:1px solid rgba(207,247,127,.3)}
-.cta .qr{width:96px;height:96px;border-radius:14px;background:#fff;margin:0 auto 12px;display:grid;place-items:center}
+  background:linear-gradient(160deg,#f3f9ef,#e9f3ea);border:1px solid rgba(168,212,90,.6)}
+.cta .qr{width:96px;height:96px;border-radius:14px;background:#fff;margin:0 auto 12px;display:grid;place-items:center;border:1px solid var(--line)}
 .cta .qr svg{width:78px;height:78px}
-.cta h3{font-family:var(--serif);font-size:18px;margin:0 0 6px;color:#fff}
+.cta h3{font-family:var(--serif);font-size:18px;margin:0 0 6px;color:var(--petrol-dark)}
 .cta p{font-size:12.5px;color:var(--ink-2);line-height:1.45;margin:0 auto 13px;max-width:30ch}
-.cta .go{display:inline-flex;align-items:center;gap:8px;background:var(--signal);color:#16302e;
+.cta .go{display:inline-flex;align-items:center;gap:8px;background:var(--signal);color:var(--signal-ink);
   font-weight:800;font-size:13.5px;border-radius:999px;padding:11px 20px;text-decoration:none;border:none;cursor:pointer}
+.cta .go:hover{filter:brightness(.96)}
 .cta .go svg{width:18px;height:18px}
 .cta .fine{font-size:10.5px;color:var(--ink-3);margin-top:10px}
 /* Archiv */
 .archiv{margin:16px 12px 0}
 .archiv .h{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:700;margin:0 3px 8px}
 .arow{display:flex;justify-content:space-between;gap:10px;padding:11px 13px;border:1px solid var(--line);
-  border-radius:14px;margin-bottom:8px;background:rgba(122,184,181,.05);font-size:12.5px}
+  border-radius:14px;margin-bottom:8px;background:#f7faf9;font-size:12.5px}
 .arow .k{color:var(--ink-3);font-weight:700;white-space:nowrap}
 .arow .t{color:var(--ink)}
 .foot{text-align:center;font-size:10.5px;color:var(--ink-3);padding:14px 20px 26px;line-height:1.6}
-.foot a{color:var(--petrol-light);text-decoration:none}
+.foot a{color:var(--petrol);text-decoration:none}
 @media(max-width:520px){
   body{padding:0;background:linear-gradient(180deg,var(--screen-1),var(--screen-2));align-items:stretch}
   .device{width:100%;border-radius:0;padding:0;box-shadow:none;background:none}
@@ -178,16 +197,26 @@ body{
         <div class="name">Technik-Radar</div>
         <div class="sub">bundesweit beobachtet, für Erfurt übersetzt</div>
       </div>
-      <a class="home" href="index.html">hausentscheider.de&nbsp;↗</a>
+      <a class="home" href="index.html" aria-label="hausentscheider.de — Startseite">
+        <svg width="106" height="18" viewBox="0 0 130 22" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a3535">haus</text>
+          <text x="42" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a3535">entscheider</text>
+          <line x1="0" y1="18" x2="40" y2="18" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+        </svg>
+      </a>
     </div>
+
+    <img class="hero" src="images/technik-radar-header.jpg" alt="Technik-Radar — Erfurt im Blick" loading="eager">
 
     <div class="pin">
       <div class="pintxt">
         <b>Jeden Freitag, ein Blick.</b>
         <span>Was sich bei Wärmepumpe, Schall und Kosten bewegt — kuratiert, eingeordnet, für Erfurt übersetzt.</span>
       </div>
-      <button class="follow" id="follow-btn">Folgen</button>
+      <button class="follow js-kanal-link-btn" id="follow-btn">Folgen</button>
     </div>
+
+    <div class="filterbar" id="filterbar"></div>
 
     <main id="feed"></main>
     <section id="archiv"></section>
@@ -205,7 +234,7 @@ body{
 /* ===== Zentrale Konstante (aus js/kanal.js) — eine Stelle fuer die Kanal-URL ===== */
 const KANAL_URL = window.KANAL_URL || "#kanal-link-folgt";
 
-/* ===== Icon-Bibliothek (stroke-only, dunkeltauglich) ===== */
+/* ===== Icon-Bibliothek (stroke-only) ===== */
 const IC = {
   bulb:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0 0 12 3Z"/><path d="M9 18h6"/><path d="M10 21h4"/></svg>',
   bulbRay:'<svg viewBox="0 0 24 24" fill="none" stroke="#CFF77F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0 0 12 3Z"/><path d="M9.5 10.5 12 8l2.5 2.5"/></svg>',
@@ -218,6 +247,7 @@ const IC = {
   wa:    '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.6.2-.2.3-.7.8-.8 1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.2-.6-1.5-.9-2-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.3.3-1 .9-1 2.3 0 1.4 1 2.7 1.1 2.9.2.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>'
 };
 const RUBRIK_ICON = { signal:IC.bulb, technik:IC.rotor, schall:IC.wave, kosten:IC.euro };
+const FILTER_ORDER = ["signal","technik","schall","kosten"];
 
 /* ===== Datenmodell — neueste Ausgabe zuerst. Wöchentlich vorne anfügen. ===== */
 const ausgaben = [
@@ -267,7 +297,6 @@ const ausgaben = [
 ];
 
 /* ===== Render ===== */
-function esc(s){return s;}
 function rubrikChip(p){
   const cls = p.icon==="signal" ? "rubrik sig" : "rubrik";
   return '<span class="'+cls+'">'+(RUBRIK_ICON[p.icon]||"")+p.rubrik+'</span>';
@@ -292,7 +321,7 @@ function reactionBar(){
 function renderPost(p){
   if(p.typ==="note") return '<div class="note">'+p.text+'</div>';
   const isSig = p.typ==="signal";
-  let html = '<article class="post'+(isSig?' signal':'')+'">';
+  let html = '<article class="post'+(isSig?' signal':'')+'" data-rubrik="'+(p.icon||'')+'">';
   html += '<div class="phead">';
   html += '<div class="ava'+(isSig?' sig':'')+'">'+(isSig?IC.bulb:RUBRIK_ICON[p.icon]||IC.bulb)+'</div>';
   html += '<div class="who"><div class="n">Hausentscheider</div><div class="h">KW 27 · '+p.rubrik+'</div></div>';
@@ -312,7 +341,7 @@ function ctaCard(){
     '<div class="qr">'+qrPlaceholder()+'</div>'+
     '<h3>Den Radar aufs Handy</h3>'+
     '<p>Einmal pro Woche im WhatsApp-Kanal. Einseitig, ohne Anmeldung, jederzeit kündbar.</p>'+
-    '<a class="go" href="'+KANAL_URL+'" target="_blank" rel="noopener">'+IC.wa+'Kanal in WhatsApp öffnen</a>'+
+    '<a class="go js-kanal-link" href="'+KANAL_URL+'" target="_blank" rel="noopener">'+IC.wa+'Kanal in WhatsApp öffnen</a>'+
     '<div class="fine">Ihre Nummer bleibt für uns und andere unsichtbar. QR-Code folgt mit der Kanal-Freischaltung.</div>'+
   '</div>';
 }
@@ -328,12 +357,45 @@ function qrPlaceholder(){
     '<rect x="72" y="72" width="5" height="5"/><rect x="82" y="82" width="5" height="5"/><rect x="52" y="82" width="5" height="5"/></svg>';
 }
 
+/* ===== Themen-Filter (clientseitig, keine Datenerfassung) ===== */
+const activeFilters = new Set();
+function vorhandeneRubriken(){
+  const present = {};
+  ausgaben.forEach(a=>a.posts.forEach(p=>{ if(p.icon) present[p.icon]=p.rubrik; }));
+  return FILTER_ORDER.filter(k=>present[k]).map(k=>({key:k,label:present[k]}));
+}
+function renderFilter(){
+  const fb=document.getElementById("filterbar");
+  const rubs=vorhandeneRubriken();
+  if(rubs.length<2){ fb.style.display="none"; return; }
+  fb.innerHTML='<div class="lead">Themen wählen — nur diese anzeigen</div>'+
+    '<div class="chips">'+rubs.map(r=>'<button class="chip" data-rubrik="'+r.key+'">'+(RUBRIK_ICON[r.key]||"")+'<span>'+r.label+'</span></button>').join("")+'</div>';
+  fb.querySelectorAll(".chip").forEach(c=>{
+    c.addEventListener("click",()=>{
+      const k=c.getAttribute("data-rubrik");
+      if(activeFilters.has(k)){ activeFilters.delete(k); c.classList.remove("on"); }
+      else { activeFilters.add(k); c.classList.add("on"); }
+      applyFilter();
+    });
+  });
+}
+function applyFilter(){
+  const any=activeFilters.size>0;
+  document.querySelectorAll("#feed .post").forEach(el=>{
+    const r=el.getAttribute("data-rubrik");
+    el.style.display=(!any||activeFilters.has(r))?"":"none";
+  });
+  document.querySelectorAll("#feed .note").forEach(el=>{ el.style.display=any?"none":""; });
+}
+
 (function(){
   document.getElementById("brand-logo").innerHTML = IC.bulbRay;
   const neu = ausgaben[0];
   let feed = '<div class="issue-head"><div class="k">Ausgabe KW '+neu.kw+'/'+neu.jahr+'</div><div class="ti">'+neu.titel+'</div></div>';
   feed += '<div class="feed">'+neu.posts.map(renderPost).join("")+ctaCard()+'</div>';
   document.getElementById("feed").innerHTML = feed;
+
+  renderFilter();
 
   // Archiv (ab zweiter Ausgabe)
   if(ausgaben.length>1){
