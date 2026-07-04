@@ -238,6 +238,11 @@ function berechneFoerderQuote(state, params) {
 function berechneFoerderBetrag(option, input, params) {
   // Status quo Gas und Öl bekommen keine BAFA-Förderung
   if (option === 'gas' || option === 'oel') return 0;
+  // Anschlusszwang-Gebiet ohne Befreiung: nur Fernwärme ist förderfähig.
+  // Jede Ausweich-Option (WP, Hybrid, Pellets) verliert die Förderung, weil die
+  // BEG Maßnahmen ausschließt, zu denen eine gesetzliche Pflicht besteht — die
+  // Pflicht trifft den Netzanschluss, nicht die Alternative.
+  if (input.anschlusszwang && !input.befreiung && option !== 'fw') return 0;
   const investition = berechneInvestition(option, input, params);
   const { quote } = berechneFoerderQuote(input, params);
   const eurCap = _default(params, 'block2_rahmen', 'FoerderDeckelAbs') ?? 21000;
@@ -1142,6 +1147,8 @@ function buildInput(uiState, params) {
       effizienz: fb.effizienz,
       master:    fb.master
     },
+    anschlusszwang: !!uiState.anschlusszwang,
+    befreiung:      !!uiState.befreiung,
     profimodus: !!uiState.profimode,
     overrides: {
       eigenerPreis: profi.eigenerPreis || {},
