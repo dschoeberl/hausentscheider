@@ -331,7 +331,7 @@ function renderWirtschaftlichkeitsTabelle(input, params) {
     { key: 'amortisationVsGas',  label: 'Amortisation vs. Gas',         fmt: 'jahre',  kennzahlTyp: 'kosten',
       tip: 'Nach wie vielen Jahren die Mehr-Investition gegenüber einer Gasheizung durch niedrigere Betriebskosten wieder eingespielt ist.' },
     { key: 'amortisationVsFW',   label: 'Amortisation vs. Fernwärme',   fmt: 'jahre',  kennzahlTyp: 'kosten',
-      tip: 'Nach wie vielen Jahren sich eine Option gegenüber dem Fernwärme-Anschluss rechnet — der zweite zulässige Pfad im Anschlusszwang-Gebiet. „—" heißt: rechnet sich im Betrachtungszeitraum nicht bzw. entfällt für Gas und für die Fernwärme selbst.' }
+      tip: 'Nach wie vielen Jahren sich eine Option gegenüber dem Fernwärme-Anschluss rechnet — der zweite zulässige Pfad im Anschlusszwang-Gebiet. Fernwärme wird nur verglichen, wenn Sie oben eine Fernwärme-Anschluss-Investition eingetragen haben — sonst bleibt diese Zeile leer. „—" heißt also: keine Fernwärme-Investition eingetragen, oder es rechnet sich im Betrachtungszeitraum nicht bzw. entfällt für Gas und für die Fernwärme selbst.' }
   ];
 
   function fmt(wert, format) {
@@ -702,6 +702,8 @@ function renderExcelEditionSektion() {
       const { subject, body } = baueAnalyseNachricht(inp, par);
       window.location.href = 'mailto:dialog@hausentscheider.de?subject='
         + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      // mailto öffnet das E-Mail-Programm; danach zur Bestätigungsseite wechseln.
+      setTimeout(function () { window.location.href = 'danke.html'; }, 800);
     });
   }
   wrap.dataset.gerendert = 'true';

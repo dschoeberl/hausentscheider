@@ -1274,6 +1274,12 @@ function berechneAllDashboardKennzahlen(input, params) {
   const tcoAlle = berechneTCOAlleOptionen(input, params);
   const pellPlausibel = pelletsPlausibel(input, params);
 
+  // Fernwärme ist nur ein gültiger Vergleichsmaßstab, wenn eine Anschluss-
+  // Investition eingetragen wurde. Ohne Eingabe (fw-Invest = 0) wäre die
+  // "Amortisation vs. Fernwärme" ein Vergleich gegen eine kostenlose Fernwärme
+  // — rechnerisch sinnlos. Dann bleibt die Kennzahl null → Tabelle zeigt „—".
+  const fwBeruecksichtigt = berechneInvestition('fw', input, params) > 0;
+
   const result = {};
   for (const opt of optionen) {
     const investMehr = berechneInvestition(opt, input, params);
@@ -1293,7 +1299,9 @@ function berechneAllDashboardKennzahlen(input, params) {
 
     const eurQm = berechneEurProQmMonat(tcoBarwert, input.wohnflaeche, T);
     const amort   = berechneAmortisation(opt, input, params);
-    const amortFW = berechneAmortisation(opt, input, params, 'fw');
+    const amortFW = fwBeruecksichtigt
+      ? berechneAmortisation(opt, input, params, 'fw')
+      : null;
 
     // plausibel: technische Zulässigkeit (nur Pellets kann unplausibel sein).
     //   Steuert die Inline-Editierbarkeit — bleibt für 0-Invest-Optionen true.
