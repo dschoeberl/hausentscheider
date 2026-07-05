@@ -120,6 +120,8 @@
     .btn--secondary { background: transparent; color: var(--petrol); border: 1px solid var(--petrol); }
     .btn--ghost    { background: transparent; color: var(--text-secondary); border: 0.5px solid var(--border); }
     .btn--ghost:hover { border-color: var(--petrol); color: var(--petrol); opacity: 1; }
+    .btn--tommy    { background: var(--tommy-rot); color: #fff; }
+    .btn--tommy:hover { filter: brightness(0.94); opacity: 1; }
     .btn--small    { font-size: 13px; padding: 0.5rem 1rem; }
     .btn:disabled  { opacity: 0.4; cursor: not-allowed; }
 
@@ -1553,7 +1555,8 @@
         </div>
       </details>
 
-      <div class="wizard-actions wizard-actions--end">
+      <div class="wizard-actions">
+        <a href="index.html" class="btn btn--ghost">← Startseite</a>
         <button type="button" class="btn btn--primary" data-wizard-next>Weiter</button>
       </div>
     </div>
@@ -1835,6 +1838,10 @@
        Phase 4 — Ergebnis-Seite (Skelett, Inhalte folgen in C2/C3/C4)
        ========================================================== -->
   <section id="phase-ergebnis" class="phase ergebnis" hidden>
+
+    <div class="section-wrap section-wrap--white" style="padding-top:1.25rem;padding-bottom:0;">
+      <button type="button" id="cta-eingaben-aendern" class="btn btn--tommy">← Eingaben ändern</button>
+    </div>
 
     <!-- 1. Annahmen-Box / 2. Headline / 3. Risiko-Banner / 4. Persona+Cockpit / 5. Zeitraum-Slider -->
     <div class="section-wrap section-wrap--white"><div class="ergebnis-kopf">
@@ -2578,6 +2585,10 @@
       });
 
       // Berechnen → Calculating → Ergebnis
+      // Zurück von der Ergebnis-Seite in den Wizard (Eingaben ändern) — State bleibt erhalten.
+      const ctaAendern = $('#cta-eingaben-aendern');
+      if (ctaAendern) ctaAendern.addEventListener('click', () => gotoPhase('wizard'));
+
       $('#cta-berechnen').addEventListener('click', () => {
         // Guard: ohne mindestens eine Modernisierungs-Investition gibt es nichts
         // zu vergleichen (Optionen ohne Invest werden ausgegraut/aus der Wertung genommen).
