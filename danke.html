@@ -87,6 +87,22 @@
     .btn:hover { opacity: 0.85; text-decoration: none; }
     .btn--petrol  { background: var(--petrol); color: #fff; }
     .btn--outline { background: transparent; color: var(--petrol); border: 0.5px solid var(--petrol); }
+    .btn--whatsapp { background: #25D366; color: #fff; display: inline-flex; align-items: center; gap: 8px; }
+    .btn--whatsapp:hover { opacity: 0.9; }
+    .btn--whatsapp svg { width: 16px; height: 16px; fill: #fff; }
+
+    /* WhatsApp-Kanal-Teaser */
+    .kanal-teaser {
+      margin-top: 2.5rem; padding-top: 2rem;
+      border-top: 0.5px solid var(--border);
+    }
+    .kanal-teaser__eyebrow {
+      display: block; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--petrol); font-weight: 500; margin-bottom: 0.5rem;
+    }
+    .kanal-teaser__text {
+      font-size: 13px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 1.25rem;
+    }
 
     /* FOOTER */
     .footer {
@@ -128,19 +144,32 @@
         </svg>
       </div>
 
-      <span class="card__label">Nachricht erhalten</span>
+      <span class="card__label">Danke</span>
       <h1 class="card__h1">Ich melde mich bei Ihnen.</h1>
       <p class="card__text">
-        Ihre Nachricht ist angekommen. Ich lese sie persönlich —
+        Danke, dass Sie sich melden. Ich lese jede Nachricht persönlich —
         und antworte in der Regel innerhalb weniger Tage.
-        Falls Sie Fragen haben oder noch etwas ergänzen möchten,
-        schreiben Sie direkt an
+        Falls sich gerade Ihr E-Mail-Programm geöffnet hat, senden Sie
+        die Nachricht dort bitte noch ab. Fragen oder Ergänzungen?
+        Schreiben Sie direkt an
         <a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a>.
       </p>
 
       <div class="card__links">
         <a href="index.html" class="btn btn--petrol">Zurück zur Startseite</a>
-        <a href="index.html#objekte" class="btn btn--outline">Objekte ansehen</a>
+      </div>
+
+      <div class="kanal-teaser">
+        <span class="kanal-teaser__eyebrow">Technik-Radar · WhatsApp-Kanal</span>
+        <p class="kanal-teaser__text">
+          Bis ich mich melde: Der Technik-Radar hält Sie freitags auf dem Laufenden —
+          was sich in der Wärmewende wirklich bewegt, belegt und ohne Werbung.
+          Einseitig, ohne Anmeldung, jederzeit kündbar.
+        </p>
+        <a class="btn btn--whatsapp js-kanal-link" href="https://whatsapp.com/channel/0029Vb8h6wX77qVYequg7c0s" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.6.2-.2.3-.7.8-.8 1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.2-.6-1.5-.9-2-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.3.3-1 .9-1 2.3 0 1.4 1 2.7 1.1 2.9.2.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+          Kanal in WhatsApp öffnen
+        </a>
       </div>
 
     </div>
@@ -151,4 +180,15 @@
     <div class="footer__inner">
       <span>
         <a href="index.html">hausentscheider.de</a>
-        &nbsp;·&nbsp; Daniel Schöberl &nbs
+        &nbsp;·&nbsp; Daniel Schöberl &nbsp;·&nbsp; Erfurt / München
+      </span>
+      <span>
+        <a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a>
+      </span>
+    </div>
+  </footer>
+
+  <script src="js/kanal.js"></script>
+
+</body>
+</html>
