@@ -226,6 +226,19 @@
     .hint--warn { background: var(--tommy-rot-bg); color: var(--text-primary); border-left: 3px solid var(--tommy-rot); }
     .hint--warn::before { content: '⚠'; color: var(--tommy-rot); opacity: 1; }
     .hint--warn strong { color: var(--text-primary); }
+    /* Aufklapp-Info Fernwärme-Anschlusszwang — helle Variante des oz-fw-det-Musters */
+    .fw-det { margin-top: 0.75rem; }
+    .fw-det summary { font-size: 13px; font-weight: 500; color: #fff; cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 7px; min-height: 24px; padding: 0.55rem 0.9rem; border: 0.5px solid rgba(255,255,255,0.14); background: var(--petrol-dark); box-shadow: inset 3px 0 0 var(--tommy-rot); border-radius: 0 6px 6px 0; font-family: 'Inter', sans-serif; transition: background 0.2s, border-color 0.2s; }
+    .fw-det summary:hover { background: #24403f; border-color: rgba(255,255,255,0.28); }
+    .fw-det summary::-webkit-details-marker { display: none; }
+    .fw-det summary::before { content: '▸'; font-size: 10px; color: var(--tommy-rot); transition: transform 0.2s; }
+    .fw-det[open] summary::before { transform: rotate(90deg); }
+    .fw-det__body { margin-top: 0.6rem; background: #eaece9; border-left: 3px solid var(--tommy-rot); border-radius: 0 6px 6px 0; padding: 0.85rem 1.1rem; }
+    .fw-det__body p { font-size: 12.5px; color: #2a2a28; line-height: 1.65; margin: 0 0 0.6rem; }
+    .fw-det__body p:last-child { margin-bottom: 0; }
+    .fw-det__body strong { color: #1a1a1a; }
+    .fw-det__body a { color: var(--tommy-rot); font-weight: 500; text-decoration: none; border-bottom: 1px solid rgba(216,30,52,0.35); }
+    .fw-det__body a:hover { border-bottom-color: var(--tommy-rot); }
 
     /* Aktivierungs-Statement: Signal-Gelb-Variante mit Petrol-Dark-Text */
     .hint--signal {
@@ -1473,7 +1486,7 @@
 
       <!-- Konditional: nur sichtbar bei MFH -->
       <div class="wizard-field" id="feld-wohneinheiten" hidden>
-        <label class="wizard-field__label" for="f-wohneinheiten">Wohneinheiten</label>
+        <label class="wizard-field__label" for="f-wohneinheiten">Wohneinheiten <small style="color:var(--text-tertiary);font-weight:400;">(Beispielwert — bitte anpassen)</small></label>
         <input type="number" id="f-wohneinheiten" class="wizard-input" min="2" max="100" step="1" value="14">
       </div>
 
@@ -1508,13 +1521,14 @@
       <div class="wizard-field">
         <span class="wizard-field__label">Liegt Ihr Gebäude im Anschlusszwang-Gebiet?
           <span class="info-tip" tabindex="0" aria-label="Info Anschlusszwang">ⓘ
-            <span class="info-tip__pop">Im Anschlusszwang-Gebiet ist der Fernwärme-Anschluss förderfähig, die Wärmepumpe (und andere Alternativen) nur mit Befreiung. Grund: Die Förderung schließt Maßnahmen aus, zu denen eine gesetzliche Pflicht besteht — die Pflicht trifft den Netzanschluss, nicht die Alternative.<span class="info-tip__src">Quelle: BEG / KfW 458.</span></span>
+            <span class="info-tip__pop">Der Zwang gilt nur, wenn eine betriebsfertige Fernwärmeleitung anliegt und Ihr Grundstück im Satzungsgebiet liegt. Im bloßen KWP-Ausbaugebiet (Fernwärme nur geplant, noch keine Leitung) besteht er heute nicht — dann ist die Wärmepumpe regulär förderfähig. Prüfen über den SWE-Verfügbarkeitscheck (siehe „Mehr dazu" unten).<span class="info-tip__src">Rechtlich in Prüfung · Satzung 3.008 § 5.</span></span>
           </span>
         </span>
         <div class="seg" role="radiogroup" aria-label="Anschlusszwang-Gebiet">
           <button type="button" class="seg__btn seg__btn--active" data-set="anschlusszwang" data-val="nein">Nein</button>
           <button type="button" class="seg__btn seg__btn--warn" data-set="anschlusszwang" data-val="ja">Ja</button>
         </div>
+        <p class="wizard-field__hint">Nur bei bereits <strong>gebauter</strong> Fernwärmeleitung. Ist Fernwärme bei Ihnen nur geplant (KWP-Ausbaugebiet): eher „Nein" — sicher wissen Sie es über den SWE-Verfügbarkeitscheck (siehe „Mehr dazu" unten).</p>
       </div>
 
       <!-- Konditional: nur bei Anschlusszwang = ja -->
@@ -1526,6 +1540,18 @@
         </div>
         <p class="wizard-field__hint">Ohne Befreiung ist im Zwanggebiet nur der Fernwärme-Anschluss förderfähig; mit Befreiung sind auch Wärmepumpe und Hybrid wieder förderfähig.</p>
       </div>
+
+      <!-- Hintergrund Fernwärme-Anschlusszwang — volle Tiefe, eingeklappt -->
+      <details class="fw-det">
+        <summary>Mehr dazu: Anschlusszwang, Befreiung &amp; Adress-Check</summary>
+        <div class="fw-det__body">
+          <p>In Teilen Erfurts (Sanierungsgebiet „Altstadt Erfurt" inkl. „Kartäuser Gebiet" sowie den Fernwärme-Vorranggebieten) gilt nach der <strong>Fernwärmesatzung von 2005 (Stadtrecht 3.008)</strong> ein <strong>Anschluss- und Benutzungszwang</strong> (§ 5): Betroffene Grundstücke müssen an das Fernwärmenetz angeschlossen werden und den gesamten Raumwärmebedarf daraus decken — Gas-, Öl- und Festbrennstoff-Heizungen sind dort nicht zulässig.</p>
+          <p><strong>Wichtig — wann der Zwang greift:</strong> Die Pflicht entsteht erst, wenn eine <strong>betriebsfertige Fernwärmeleitung</strong> Ihr Grundstück erschließt. Ist Fernwärme bei Ihnen nur geplant (KWP-Ausbaugebiet, noch keine Leitung), besteht heute noch <strong>kein</strong> Anschlusszwang — eine Wärmepumpe ist dann regulär förderfähig. <em>(Auslegung nach aktuellem Stand, rechtlich in Prüfung.)</em></p>
+          <p>Eine <strong>Befreiung</strong> (§ 6) ist auf Antrag möglich — u. a. für ausschließlich emissionsfreie oder mit nachwachsenden Rohstoffen betriebene Anlagen bis 30 kW (Letztere nicht im Versorgungsgebiet 1), sonst als Einzelfall. Ob Ihr Gebäude betroffen ist oder befreit werden kann, entscheidet die Stadt Erfurt im Einzelfall.</p>
+          <p>Die Satzung stammt von 2005 und wird im Rahmen der kommunalen Wärmeplanung voraussichtlich angepasst. Mehr Hintergrund im <a href="wegweiser.html#fragen">Wegweiser</a>.</p>
+          <p><a href="https://www.erfurt.de/mam/ef/rathaus/stadtrecht/3/3008.pdf" target="_blank" rel="noopener">Satzung 3.008 (PDF, Stadt Erfurt)</a> &nbsp;·&nbsp; <a href="https://www.erfurt.de/ef/de/rathaus/bservice/leistungen/leistung-1071.htmc" target="_blank" rel="noopener">Gebiet prüfen &amp; Befreiung beantragen</a> &nbsp;·&nbsp; <a href="https://www.swe-energie.de/energie/home/servicewelt/verfuegbarkeitscheck-waerme" target="_blank" rel="noopener">Fernwärme an Ihrer Adresse? (SWE-Check)</a></p>
+        </div>
+      </details>
 
       <div class="wizard-actions wizard-actions--end">
         <button type="button" class="btn btn--primary" data-wizard-next>Weiter</button>
@@ -1542,6 +1568,7 @@
       </div>
 
       <p class="wizard-step__intro">Aktuelle Heizung, Wohnfläche, Heizlast, Verbrauch, Jahreskosten und Ihr aktueller Energiepreis.</p>
+      <p class="wizard-field__hint"><strong>Beispielwerte:</strong> Wohnfläche, Heizlast und Verbrauch sind mit den Zahlen eines Referenzgebäudes vorbelegt — bitte an Ihr Gebäude anpassen. Die Berechnung nutzt genau die Werte, die hier stehen.</p>
 
       <div class="wizard-field">
         <label class="wizard-field__label" for="f-heizung">Aktuelle Heizung</label>
@@ -3242,6 +3269,8 @@
           '— Mehr unter hausentscheider.de/methodik'
         );
         window.location.href = 'mailto:dialog@hausentscheider.de?subject=' + subject + '&body=' + body;
+        // mailto öffnet das E-Mail-Programm; danach zur Bestätigungsseite wechseln.
+        setTimeout(function () { window.location.href = 'danke.html'; }, 800);
       });
     }
 
