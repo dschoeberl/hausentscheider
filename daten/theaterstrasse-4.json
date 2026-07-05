@@ -28,7 +28,7 @@
     "co2_sub": "200,9 g/kWh · Gas · sinkt mit WP −43%",
     "abrechnungsjahr": "2023/2024",
     "abrechnungsquelle": "DOMO-THERM Heizkostenabrechnung",
-    "kontext": "Die Gasheizung läuft seit 1998. Ersatzteile sind teilweise abgekündigt. Das Gebäude liegt im Fernwärmesatzungsgebiet der Stadt Erfurt seit 2006."
+    "kontext": "Die Gasheizung läuft seit 1998. Ersatzteile sind teilweise abgekündigt. Das Gebäude liegt im Fernwärmesatzungsgebiet der Stadt Erfurt seit 2005."
   },
   "kosten_ist": {
     "brennstoff_gas_eur": 7425,
@@ -45,7 +45,7 @@
     "co2_vermieter_eur": 89
   },
   "status": [
-    { "typ": "warn", "text": "Fernwärmesatzung seit 2006 · Anschlusszwang" },
+    { "typ": "warn", "text": "Fernwärmesatzung seit 2005 · Anschlusszwang" },
     { "typ": "ok",   "text": "WP-fähig · Heizlast 62 kW · 2 Außengeräte" },
     { "typ": "warn", "text": "Heizung Bj. 1998 · Ersatzteile abgekündigt" },
     { "typ": "ok",   "text": "2 Angebote für Wärmepumpe eingeholt" },
