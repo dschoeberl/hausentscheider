@@ -343,9 +343,9 @@
     .oz-tl__sum { list-style: none; cursor: pointer; display: grid; grid-template-columns: 18px 1fr auto; gap: 3px 10px; align-items: center; padding: 0.6rem 0.5rem; min-height: 44px; border-radius: 6px; transition: background 0.15s; }
     .oz-tl__sum:hover { background: rgba(26,92,90,0.06); }
     .oz-tl__sum::-webkit-details-marker { display: none; }
-    .oz-tl__dot { grid-column: 1; grid-row: 1; justify-self: start; width: 11px; height: 11px; border-radius: 50%; background: var(--border); }
+    .oz-tl__dot { grid-column: 1; grid-row: 1; justify-self: start; width: 11px; height: 11px; border-radius: 50%; background: var(--petrol); }
     .oz-tl__date { grid-column: 2; grid-row: 1; font-size: 12.5px; font-family: 'Inter', sans-serif; color: var(--petrol); font-weight: 600; }
-    .oz-tl__chev { grid-column: 3; grid-row: 1; justify-self: end; display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; border: 0.5px solid var(--petrol-light); background: rgba(26,92,90,0.06); color: var(--petrol); font-size: 11px; transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s; }
+    .oz-tl__chev { grid-column: 3; grid-row: 1; justify-self: end; display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; border: 0.5px solid var(--petrol); background: rgba(26,92,90,0.12); color: var(--petrol); font-size: 11px; transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s; }
     .oz-tl__sum:hover .oz-tl__chev { background: var(--petrol); border-color: var(--petrol); color: #ffffff; }
     .oz-tl__det[open] .oz-tl__chev { transform: rotate(90deg); }
     .oz-tl__meta-row { grid-column: 2 / -1; grid-row: 2; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -370,7 +370,7 @@
     .oz-pill--planned { background: #eef2f2; color: #3f5454; border: 0.5px solid #c2d0d0; }
     .oz-pill--live    { background: var(--signal); color: #1a3535; border: 0.5px solid #b8e85a; font-weight: 600; }
     .oz-pill--later   { background: var(--bg-light); color: var(--text-tertiary); border: 0.5px solid var(--border); }
-    .oz-tl__docs-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-family: 'Inter', sans-serif; color: var(--petrol); background: rgba(26,92,90,0.08); border: 0.5px solid var(--petrol-light); border-radius: 20px; padding: 2px 9px; font-weight: 600; white-space: nowrap; }
+    .oz-tl__docs-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-family: 'Inter', sans-serif; color: #ffffff; background: var(--tommy-rot); border: 0.5px solid var(--tommy-rot); border-radius: 20px; padding: 2px 9px; font-weight: 600; white-space: nowrap; }
     .oz-tl__docs { display: flex; flex-direction: column; gap: 6px; margin: -0.1rem 0.5rem 0.7rem 36px; }
     .oz-tl__docs a { font-size: 12.5px; font-family: 'Inter', sans-serif; color: var(--petrol); font-weight: 500; }
     .oz-tl__det:not([open]) .oz-tl__docs { display: none; }
@@ -2170,22 +2170,18 @@
 
       let html = '<p class="oz-timeline__head">Zeitstrahl · Referenzobjekt</p>' +
         '<h3 class="oz-timeline__title">Der Entscheidungsweg — Schritt für Schritt belegt</h3>' +
-        '<p class="oz-timeline__lead">Von 1998 bis heute: jeder Schritt mit Datum und Beleg. Der aktuelle, offene Schritt ist hervorgehoben — so verfolgen Sie mit, wie sich die Entscheidung formt.</p>' +
+        '<p class="oz-timeline__lead">Von 1998 bis heute: jeder Schritt mit Datum und Beleg. Tippen Sie einen Punkt an — Ergebnis und Quelle klappen auf.</p>' +
         '<div class="oz-tl-wrap"><div class="oz-tl-scroll"><div class="oz-tl">';
       OBJEKT_001.zeitstrahl.forEach(function(e){
-        const p = pillFor(e.status);
-        const live = e.live === true;
         const docs = Array.isArray(e.dokumente) ? e.dokumente : [];
-        const itemCls = "oz-tl__item oz-tl__item--" + (live ? "live" : p.kind);
         html +=
-          '<div class="' + itemCls + '">' +
-            (live ? '<span class="oz-tl__live-tag">Aktueller Schritt</span>' : '') +
-            '<details class="oz-tl__det"' + (live ? ' open' : '') + '>' +
+          '<div class="oz-tl__item">' +
+            '<details class="oz-tl__det">' +
               '<summary class="oz-tl__sum">' +
                 '<span class="oz-tl__dot"></span>' +
                 '<span class="oz-tl__date">' + e.datum + '</span>' +
                 '<span class="oz-tl__chev">▸</span>' +
-                '<span class="oz-tl__meta-row"><span class="oz-tl__typ">' + e.typ + '</span>' + (p.kind === 'done' ? '' : '<span class="oz-pill ' + p.cls + '">' + p.text + '</span>') + (docs.length ? '<span class="oz-tl__docs-badge">📎 ' + docs.length + ' Dokument' + (docs.length > 1 ? 'e' : '') + '</span>' : '') + '</span>' +
+                '<span class="oz-tl__meta-row"><span class="oz-tl__typ">' + e.typ + '</span>' + (docs.length ? '<span class="oz-tl__docs-badge">📎 ' + docs.length + ' Dokument' + (docs.length > 1 ? 'e' : '') + '</span>' : '') + '</span>' +
                 '<span class="oz-tl__titel">' + e.titel + '</span>' +
               '</summary>' +
               '<p class="oz-tl__ergebnis">' + e.ergebnis + '</p>' +
