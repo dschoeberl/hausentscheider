@@ -47,19 +47,13 @@ Dann im Browser öffnen: <http://localhost:3000/rechner.html>
 - **C3** (Entscheidungs-Radar, Panel 2): noch Stub — kommt im nächsten Block
 - **C4** (Future Readiness Index, Panel 3): noch Stub
 
-## Offen: Verweis auf eigentuemerstimme.de
+## Verweis auf eigentuemerstimme.de
 
-Im Netzwerk-Block der Startseite liegt ein fertiger, **auskommentierter** Verweis auf
-die gemeinnützige Schwester-Initiative:
-
-```
-git grep -n LAUNCH-EIGENTUEMERSTIMME
-```
-
-Erst einkommentieren, wenn `eigentuemerstimme.de` unter eigener Domain live ist **und**
-dort das `noindex` entfernt wurde. Bis dahin läuft die Vereinsseite als unverlinkte
-Vorschau — ein Link von hier würde sie öffentlich machen.
+Im Netzwerk-Block der Startseite steht seit 17.07.2026 ein Verweis auf die
+gemeinnützige Schwester-Initiative (Repo `dschoeberl/eigentuemerstimme`, eigenes
+Netlify-Projekt, eigene Domain).
 
 Die Richtung gilt nur so: **diese Seite darf auf den Verein zeigen, der Verein nie
 zurück.** Ein gemeinnütziger Verein darf kein Gewerbe bewerben (§ 55 AO); umgekehrt
-ist der Verweis unproblematisch.
+ist der Verweis unproblematisch. Auf den Vereinsseiten kommt „hausentscheider"
+deshalb nicht vor — auch nicht als Fließtext. Das bitte so lassen.
