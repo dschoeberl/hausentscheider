@@ -46,3 +46,20 @@ Dann im Browser öffnen: <http://localhost:3000/rechner.html>
   [docs/C2_BlockSpec_v1.md](docs/C2_BlockSpec_v1.md)
 - **C3** (Entscheidungs-Radar, Panel 2): noch Stub — kommt im nächsten Block
 - **C4** (Future Readiness Index, Panel 3): noch Stub
+
+## Offen: Verweis auf eigentuemerstimme.de
+
+Im Netzwerk-Block der Startseite liegt ein fertiger, **auskommentierter** Verweis auf
+die gemeinnützige Schwester-Initiative:
+
+```
+git grep -n LAUNCH-EIGENTUEMERSTIMME
+```
+
+Erst einkommentieren, wenn `eigentuemerstimme.de` unter eigener Domain live ist **und**
+dort das `noindex` entfernt wurde. Bis dahin läuft die Vereinsseite als unverlinkte
+Vorschau — ein Link von hier würde sie öffentlich machen.
+
+Die Richtung gilt nur so: **diese Seite darf auf den Verein zeigen, der Verein nie
+zurück.** Ein gemeinnütziger Verein darf kein Gewerbe bewerben (§ 55 AO); umgekehrt
+ist der Verweis unproblematisch.
