@@ -72,7 +72,7 @@ var GEBAEUDE_DB = {
     entscheidungsstandText: "Die Gasheizung läuft seit 1998. Ersatzteile sind teilweise abgekündigt. Das Gebäude liegt im Fernwärmesatzungsgebiet der Stadt Erfurt seit 2006.",
 
     statusItems: [
-      { typ: "warn", text: "Fernwärmesatzung seit 2006 · Anschlusszwang" },
+      { typ: "warn", text: "Fernwärme-Satzungsgebiet (2005) · Anschlusspflicht in Prüfung" },
       { typ: "ok",   text: "WP-fähig · Heizlast 62 kW · 2 Außengeräte" },
       { typ: "warn", text: "Heizung Bj. 1998 · Ersatzteile abgekündigt" },
       { typ: "ok",   text: "2 Angebote für Wärmepumpe eingeholt" },
