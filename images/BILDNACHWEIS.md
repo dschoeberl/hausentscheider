@@ -5,11 +5,11 @@ Spalten „Werkzeug" und „Datum" werden nachgetragen, wo bekannt — leer lass
 
 | Datei | Herkunft | Werkzeug | Datum | Kennzeichnung gesetzt | Bemerkung |
 |---|---|---|---|---|---|
-| referenzgebaeude-erfurt.png | KI-erzeugt | | | ja | Startseite, Objekt-001-Modul · Overlay mit Zusatz „kein Foto des realen Objekts" |
-| der-entscheider.jpg | KI-erzeugt | | | ja | Startseite, „Der Entscheider" · Overlay mit Zusatz |
-| technik-radar-header.jpg | KI-erzeugt | | | ja | radar.html (figcaption) + Startseite Kanal-Karte (Overlay) |
-| erfurt-panorama.png | KI-erzeugt | | | ja | Startseite, Hero-Hintergrund · Overlay ohne Zusatz |
-| referenzgebaeude.jpg | KI-erzeugt | | | ja | objekte/theaterstrasse-4.html · Overlay mit Zusatz |
+| referenzgebaeude-erfurt.png | KI-erzeugt | | | ja | Startseite, Objekt-001-Modul · sichtbar „KI-generiert", Zusatz „kein Foto des realen Objekts" im alt-Text |
+| der-entscheider.jpg | KI-erzeugt | | | ja | Startseite, „Der Entscheider" · sichtbar „KI-generiert", Zusatz im alt-Text |
+| technik-radar-header.jpg | KI-erzeugt | | | ja | radar.html (figcaption) + Startseite Kanal-Karte (Overlay) · sichtbar „KI-generiert" |
+| erfurt-panorama.png | KI-erzeugt | | | ja | Startseite, Hero-Hintergrund · sichtbar „KI-generiert" |
+| referenzgebaeude.jpg | KI-erzeugt | | | ja | objekte/theaterstrasse-4.html · sichtbar „KI-generiert", Zusatz im alt-Text |
 | efh-erfurt-tiefthal.jpg | Foto | | | nein | objekte/efh-erfurt-tiefthal.html · kein Pflichtfall |
 | daniel-schoeberl.jpg | Foto | | | nein | Porträt · kein Pflichtfall |
 | Motiv 2.png | Altbestand | | | nein | derzeit nicht eingebunden |
