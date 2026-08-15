@@ -1312,40 +1312,42 @@
         <div class="ep-news__accent" aria-hidden="true"></div>
         <div class="ep-news__body">
           <div class="ep-news__tags">
-            <span class="ep-news__pill">Neu · Preisrunde Q3 2026</span>
-            <span class="ep-news__trend">↑ +19 % Arbeitspreis</span>
+            <span class="ep-news__pill">In eigener Sache · 15.08.2026</span>
           </div>
-          <p class="ep-news__title">Fernwärme wird zum 3. Quartal teurer</p>
-          <p class="ep-news__text">SWE hebt den Fernwärme-Arbeitspreis von 11,54 auf 13,77 ct/kWh an (+19 %). Der Effektivpreis auf Gebäudeebene steigt damit von rund 17,5 auf 19,3 ct/kWh.</p>
-          <a class="ep-news__link" href="https://www.swe-energie.de/site/energie/get/documents_E-421602985/energie/documents/Downloads/preisblaetter-und-vertragsbedingungen/waerme/preise_fernwaermeversorgung.pdf" target="_blank" rel="noopener">SWE-Preisblatt Wärme (Stand 1.7.2026) →</a>
+          <p class="ep-news__title">Wir haben zwei Zeilen dieser Tabelle korrigiert</p>
+          <p class="ep-news__text">Beim Juli-Update war nur die Fernwärme aktualisiert worden — Heizöl und Pellets standen unbemerkt noch auf dem Junistand. Beim Nachrechnen zeigte sich zusätzlich, dass die Pellets-Spalte über alle Monate zu niedrig lag. Beides ist jetzt aus den Leitquellen neu hergeleitet und in der Historie sichtbar vermerkt. Der scheinbare Heizöl-Sprung von rund 20 % zwischen Juli und August existierte damit nicht: tatsächlich sind es +0,7 %.</p>
+          <a class="ep-news__link" href="preishistorie.html">Korrekturen und Rechenwege ansehen →</a>
         </div>
       </div>
       <div class="ep-schiene">
         <span class="ep-livedot" aria-hidden="true"></span>
         <span>Preisstand</span><span class="ep-sep">·</span>
-        <span id="ep-stand">Juli 2026</span><span class="ep-sep">·</span>
+        <span id="ep-stand">August 2026</span><span class="ep-sep">·</span>
         <span>wird monatlich aktualisiert</span>
       </div>
       <div class="ep-tafeln" id="ep-tafeln"></div>
       <div class="ep-verlauf"><table id="ep-verlauf-tbl"></table></div>
-      <p class="ep-einheit">Alle Werte in ct/kWh brutto. Fernwärme = Erfurter Effektivpreis auf Gebäudeebene (tarifbasiert, nicht monatsvolatil) — zum 3. Quartal ab Juli auf ~19,3 ct (SWE-Preisblatt 1.7.2026). Quellen übrige Träger: BDEW (Gas), TECSON (Heizöl), Verivox (WP-Strom), DEPI (Pellets).</p>
+      <p class="ep-einheit">Alle Werte in ct/kWh brutto. Vier der fünf sind umgerechnet — Heizöl aus ct/l ÷ 10,0 kWh/l (TECSON, 3.000 l), Pellets aus €/t ÷ 5,0 kWh/kg (DEPI, 6 t), Gas als Mittel aus Neukunden- und Bestandstarif ohne Grundversorgung, WP-Strom als Bandmittel der Anbieterspanne 22–26 ct. Fernwärme = Erfurter Effektivpreis auf Gebäudeebene, quartalsweise statt monatlich — der Q3-Preis von ~19,3 ct gilt bis 30.09.2026 (SWE-Preisblatt 1.7.2026). <a href="preishistorie.html">Alle Quellen, Faktoren und Rechenwege →</a></p>
       <p class="ep-doclink"><a class="ep-cta" href="preishistorie.html">Vollständige Preishistorie mit Marktkontext →</a></p>
     </div>
   </section>
   <script>
-    // Energiepreise — Daten gespiegelt aus daten/preishistorie.json (Quelle der Wahrheit, Stand 2026-06-21).
+    // Energiepreise — Daten gespiegelt aus daten/preishistorie.json (Quelle der Wahrheit, Stand 2026-08-15).
     // Beim Monats-Update: neuesten Monat oben in PH.monate einfügen + PH.aktuell setzen.
+    // Umrechnungsfaktoren und Leitquellen NICHT hier pflegen, sondern im Block
+    // methodik_traeger der JSON — diese Liste ist reine Spiegelung.
     (function(){
       var PH = {
-        aktuell: '2026-07',
+        aktuell: '2026-08',
         monate: [
-          { key:'2026-07', label:'Juli 2026',    gas:10.5, fernwaerme:19.3, heizoel:11.5, wp_strom:25, pellets:7.5 },
-          { key:'2026-06', label:'Juni 2026',    gas:10.5, fernwaerme:17.5, heizoel:11.5, wp_strom:25, pellets:7.6 },
-          { key:'2026-05', label:'Mai 2026',     gas:10.5, fernwaerme:17.5, heizoel:13.5, wp_strom:26, pellets:7.5 },
-          { key:'2026-04', label:'April 2026',   gas:10.5, fernwaerme:17.5, heizoel:15.3, wp_strom:27, pellets:7.5 },
-          { key:'2026-03', label:'März 2026',    gas:10.0, fernwaerme:17.5, heizoel:16.0, wp_strom:28, pellets:7.6 },
-          { key:'2026-02', label:'Februar 2026', gas:9.9,  fernwaerme:17.5, heizoel:10.8, wp_strom:29, pellets:7.7 },
-          { key:'2026-01', label:'Januar 2026',  gas:9.9,  fernwaerme:17.5, heizoel:10.5, wp_strom:30, pellets:7.8 }
+          { key:'2026-08', label:'August 2026',  gas:10.7, fernwaerme:19.3, heizoel:13.8, wp_strom:25, pellets:7.8 },
+          { key:'2026-07', label:'Juli 2026',    gas:10.5, fernwaerme:19.3, heizoel:13.7, wp_strom:25, pellets:7.8 },
+          { key:'2026-06', label:'Juni 2026',    gas:10.5, fernwaerme:17.5, heizoel:11.5, wp_strom:25, pellets:7.5 },
+          { key:'2026-05', label:'Mai 2026',     gas:10.5, fernwaerme:17.5, heizoel:13.5, wp_strom:26, pellets:7.8 },
+          { key:'2026-04', label:'April 2026',   gas:10.5, fernwaerme:17.5, heizoel:15.3, wp_strom:27, pellets:8.1 },
+          { key:'2026-03', label:'März 2026',    gas:10.0, fernwaerme:17.5, heizoel:16.0, wp_strom:28, pellets:8.4 },
+          { key:'2026-02', label:'Februar 2026', gas:9.9,  fernwaerme:17.5, heizoel:10.8, wp_strom:29, pellets:8.5 },
+          { key:'2026-01', label:'Januar 2026',  gas:9.9,  fernwaerme:17.5, heizoel:10.5, wp_strom:30, pellets:8.1 }
         ]
       };
       var TAFELN = [

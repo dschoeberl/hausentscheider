@@ -11,14 +11,25 @@
   3. Preise, Deltas und Kontexttext anpassen.
   4. Auf der Startseite (index.html) das inline PH-Objekt + daten/preishistorie.json pflegen.
   ──────────────────────────────────────────────────────────────────
-  QUELLEN:
-  • Gas / Heizöl / WP-Strom / Pellets — MONATLICH: BDEW, Verivox, TECSON (Heizöl), DEPI (Pellets).
+  MASSGEBLICHE QUELLE für Werte, Faktoren und Belege: daten/preishistorie.json,
+  Block "methodik_traeger". Diese Seite spiegelt nur. Nie hier eine Zahl ändern,
+  ohne sie dort zu ändern.
+
+  Umrechnungsfaktoren (Kurzform):
+  • Heizöl   TECSON ct/l ÷ 10,0 kWh/l          — Bestellmenge 3.000 l, Stichtag um den 14.
+  • Pellets  DEPI €/t ÷ 10 ÷ 5,0 kWh/kg        — 6 t Abnahme, ERSCHEINT ERST UM DEN 16.–18.
+  • Gas      Mittel aus Neukunde und Bestand   — 20.000 kWh/a, OHNE Grundversorgung
+  • WP-Strom Bandmittel der Anbieterspanne     — keine echte Monatsreihe verfügbar
   • Fernwärme (Erfurt) — QUARTALSWEISE, nicht monatlich. SWE Energie Preisblatt:
     https://www.swe-energie.de/site/energie/get/documents_E-421602985/energie/documents/Downloads/preisblaetter-und-vertragsbedingungen/waerme/preise_fernwaermeversorgung.pdf
     (Pfad: swe-energie.de → Servicewelt → Preisblätter & Vertragsbedingungen → Wärme)
-    Stand 1.7.2026: Arbeitspreis Q3 13,77 ct/kWh brutto (Q2 11,54) — +~19 % ab Juli.
-    "17,5 ct/kWh" = Effektivpreis auf Gebäudeebene (Arbeits- + Leistungs- + Mess- + Zertifikatepreis);
-    ab Juli 2026 aus dem Q3-Blatt neu herleiten.
+    Q3 2026 (gültig 1.7.–30.9.): AP 13,768 ct/kWh brutto (Q2 11,538), LP 75,04 EUR/kW*a,
+    Zertifikatepreis 1,929 ct/kWh — Letzterer laut Fußnote UNTER VORBEHALT.
+    "19,3 ct/kWh" = Effektivpreis auf Gebäudeebene (alle Komponenten auf den Jahresverbrauch umgelegt).
+
+  KORRIGIERT AM 15.08.2026: Julizeile Heizöl (11,5 → 13,7) und die komplette
+  Pellets-Spalte Jan–Jul. Details im korrekturen-Block der JSON. Korrekturen werden
+  auf dieser Seite SICHTBAR vermerkt, nie stillschweigend überschrieben.
   ══════════════════════════════════════════════════════════════════
 -->
 <html lang="de">
@@ -115,6 +126,30 @@
       border-top: 1px solid var(--border); padding-top: 0.875rem;
     }
 
+    /* KORREKTUR-VERMERK */
+    .hist-korr-badge { font-size: 9px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 700; background: var(--red); color: var(--white); padding: 2px 8px; border-radius: 2px; }
+    .hist-korr {
+      font-size: 12px; color: var(--text-sub); line-height: 1.65;
+      background: #f6efef; border-left: 3px solid var(--red);
+      padding: 0.625rem 0.875rem; border-radius: 3px; margin-top: 0.875rem;
+    }
+    .hist-korr strong { color: var(--red); }
+
+    /* METHODIK-AUFKLAPPER */
+    .meth { margin-top: 1.75rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
+    .meth details { background: var(--white); border-left: 3px solid var(--petrol); border-radius: 3px; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
+    .meth summary { cursor: pointer; list-style: none; padding: 0.875rem 1.125rem; font-size: 13px; font-weight: 600; color: var(--petrol); }
+    .meth summary::-webkit-details-marker { display: none; }
+    .meth summary::after { content: ' ▾'; color: var(--text-muted); }
+    .meth details[open] summary::after { content: ' ▴'; }
+    .meth__body { background: #eaece9; padding: 1rem 1.125rem 1.125rem; font-size: 12px; color: var(--text-sub); line-height: 1.7; }
+    .meth__body p { margin-bottom: 0.75rem; }
+    .meth__body p:last-child { margin-bottom: 0; }
+    .meth__body dt { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--petrol); font-weight: 600; margin-top: 0.875rem; }
+    .meth__body dd { margin-top: 0.25rem; }
+    .meth__body code { font-size: 11px; background: rgba(0,0,0,0.05); padding: 1px 4px; border-radius: 2px; }
+    .meth__body a { color: var(--petrol); }
+
     /* HINWEIS */
     .hinweis { font-size: 12px; color: var(--text-muted); margin-top: 1.5rem; line-height: 1.7; }
     .hinweis a { color: var(--petrol); }
@@ -163,18 +198,62 @@
 
   <p class="section-eyebrow">Aktueller Stand</p>
 
-  <!-- MONAT: JULI 2026 (Hero) -->
+  <!-- MONAT: AUGUST 2026 (Hero) -->
   <div class="hist-card hist-card--hero hist-card--current">
     <div class="hist-card__top">
-      <span class="hist-card__monat">Juli 2026</span>
+      <span class="hist-card__monat">August 2026</span>
       <span class="hist-badge">Aktuell</span>
+    </div>
+    <div class="hist-preise">
+      <div class="hist-p">
+        <span class="hist-p__lbl">Gas Ø</span>
+        <span class="hist-p__val">10,7</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta up">↑ +0,2 ggü. Juli</span>
+      </div>
+      <div class="hist-p">
+        <span class="hist-p__lbl">Fernwärme Ø</span>
+        <span class="hist-p__val">19,3</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta" style="color:rgba(255,255,255,0.45);">— Q3-Tarif, gilt bis 30.09.</span>
+      </div>
+      <div class="hist-p">
+        <span class="hist-p__lbl">Heizöl Ø</span>
+        <span class="hist-p__val">13,8</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta up">↑ +0,1 ggü. Juli</span>
+      </div>
+      <div class="hist-p">
+        <span class="hist-p__lbl">WP-Strom Ø</span>
+        <span class="hist-p__val">25</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta" style="color:rgba(255,255,255,0.45);">— Spanne 20,7–26</span>
+      </div>
+    </div>
+    <p class="hist-kontext">
+      <strong>Heizöl zieht weiter an — aber nicht sprunghaft:</strong> 138,4 ct/l im Bundesdurchschnitt (TECSON, 14.08.2026, Bestellmenge 3.000 l) ergeben 13,8 ct/kWh. Gegenüber dem korrigierten Juliwert sind das +0,7 %. Die große Bewegung liegt hinter uns, nicht in diesem Monat.
+      <br>Gas ~10,7 ct — Mittel aus Neukundentarif 9,8 und Bestandstarif 11,6 (Stand 15.08.2026); die Grundversorgung liegt bei 13,6 ct und geht in den Tabellenwert nicht ein. BDEW-Anker vom April: 11,10 ct im Einfamilienhaus, 10,87 ct im Mehrfamilienhaus.
+      <br>Fernwärme unverändert 19,3 ct. Das ist eine <em>Tarif</em>aussage, keine Marktbeobachtung: Der Q3-Preis der SWE gilt bis zum 30.09., die nächste Anpassung ist der 01.10.
+      <br>WP-Strom-Tarife weiter ~25 ct, im oberen Bereich der belegten Anbieterspanne 22–26. Günstigster datierter Neukundenschnitt: 20,7 ct (Verivox, 13.07.2026).
+      <br>Pellets 7,8 ct — das ist noch der <strong>Julistand</strong> (DEPI, 388,09 €/t bei 6 t). Der Augustwert erscheint erst um den 18. und wird dann nachgetragen.
+    </p>
+  </div>
+  <!-- /MONAT -->
+
+  <p class="section-eyebrow verlauf-eyebrow">Verlauf</p>
+
+  <!-- MONAT: JULI 2026 -->
+  <div class="hist-card hist-card--current">
+    <div class="hist-card__top">
+      <span class="hist-card__monat">Juli 2026</span>
+      <span class="hist-korr-badge">korrigiert</span>
     </div>
     <div class="hist-preise">
       <div class="hist-p">
         <span class="hist-p__lbl">Gas Ø</span>
         <span class="hist-p__val">10,5</span>
         <span class="hist-p__unit">ct/kWh</span>
-        <span class="hist-p__delta" style="color:rgba(255,255,255,0.45);">— stabil ggü. Juni</span>
+        <span class="hist-p__delta" style="color:var(--text-muted);">— stabil ggü. Juni</span>
       </div>
       <div class="hist-p">
         <span class="hist-p__lbl">Fernwärme Ø</span>
@@ -184,25 +263,32 @@
       </div>
       <div class="hist-p">
         <span class="hist-p__lbl">Heizöl Ø</span>
-        <span class="hist-p__val">11,5</span>
+        <span class="hist-p__val">13,7</span>
         <span class="hist-p__unit">ct/kWh</span>
-        <span class="hist-p__delta" style="color:rgba(255,255,255,0.45);">— stabil ggü. Juni</span>
+        <span class="hist-p__delta up">↑ +2,2 ggü. Juni</span>
       </div>
       <div class="hist-p">
         <span class="hist-p__lbl">WP-Strom Ø</span>
         <span class="hist-p__val">25</span>
         <span class="hist-p__unit">ct/kWh</span>
-        <span class="hist-p__delta" style="color:rgba(255,255,255,0.45);">— stabil ggü. Juni</span>
+        <span class="hist-p__delta" style="color:var(--text-muted);">— stabil ggü. Juni</span>
       </div>
     </div>
     <p class="hist-kontext">
-      <strong>Fernwärme steigt zum 3. Quartal:</strong> Der SWE-Arbeitspreis legt um rund 19 % zu (11,54 → 13,77 ct/kWh brutto), der Effektivpreis auf Gebäudeebene steigt von ~17,5 auf ~19,3 ct/kWh (SWE-Preisblatt, Stand 1.7.2026).
-      <br>Der übrige Markt bleibt stabil: Gas ~10,5 ct (BDEW), Heizöl ~11,5 ct (TECSON), WP-Strom-Tarife ~25 ct (Verivox, §14a ab ~20), Pellets im Sommertief 7,5 ct (DEPI).
+      <strong>Fernwärme steigt zum 3. Quartal:</strong> Der SWE-Arbeitspreis legt um rund 19 % zu (11,538 → 13,768 ct/kWh brutto), der Effektivpreis auf Gebäudeebene steigt von ~17,5 auf ~19,3 ct/kWh (SWE-Preisblatt, Stand 1.7.2026).
+      <br>Heizöl 13,7 ct (TECSON 137,0 ct/l am 14.07.2026), Pellets 7,8 ct (DEPI 388,09 €/t bei 6 t, veröffentlicht 16.07.2026 — plus 3 % gegenüber Juni, das Sommertief war vorbei). Gas ~10,5 ct (Bestand 11,6 / Neukunde 9,2), WP-Strom-Tarife ~25 ct (§14a ab ~20).
+    </p>
+    <p class="hist-korr">
+      <strong>Am 15.08.2026 korrigiert.</strong> Diese Zeile stand zunächst mit Heizöl 11,5 und Pellets 7,5 ct/kWh — beides waren die Juniwerte, einschließlich der Junirohwerte (117 ct/l, 377 €/t). Beim Juli-Update war nur die Fernwärme aktualisiert worden. Belegt sind für Juli: TECSON 137,0 ct/l (14.07.), DEPI 388,09 €/t (16.07.).
+      <br>Folge: Der scheinbare Heizölsprung von Juli auf August um rund 20 % existierte nicht. Er war ein Datenfehler, keine Marktbewegung.
     </p>
   </div>
   <!-- /MONAT -->
 
-  <p class="section-eyebrow verlauf-eyebrow">Verlauf</p>
+  <p class="hist-korr" style="margin-top:0;margin-bottom:0.875rem;">
+    <strong>Ebenfalls am 15.08.2026 korrigiert: die gesamte Pellets-Spalte.</strong> Beim Nachrechnen gegen die DEPI-Monatsmeldungen standen alle sieben Monate zu niedrig — und der Verlauf hatte die falsche Form. Die bisher veröffentlichte Reihe fiel von Januar an fast gleichmäßig ab (7,8 → 7,5); die belegte Reihe hat ihren Höchststand im Februar und ihr Tief im Juni.
+    <br>Neu, jeweils DEPI bei 6 t Abnahme: Januar 8,1 · Februar 8,5 · März 8,4 · April 8,1 · Mai 7,8 · Juni 7,5 · Juli 7,8 ct/kWh. Die Rohwerte in €/t stehen in den Monatstexten unten.
+  </p>
 
   <!-- MONAT: JUNI 2026 -->
   <div class="hist-card">
@@ -236,9 +322,10 @@
       </div>
     </div>
     <p class="hist-kontext">
-      Ölpreise nach dem Frühjahrshoch deutlich gefallen — Heizöl ~110–117 €/100 l (Brent stabil oberhalb 80 USD/Barrel).
-      Wärmepumpen-Tarife weiter günstiger durch reduzierte §14a-Netzentgelte (ab ~20–21 ct/kWh). Pellets leicht höher (DEPI meldet Juni-Anstieg, ~377 €/t).
-      Gas im Verbraucher-Schnitt stabil (~10 ct/kWh, Neukunde ~9,4).
+      Ölpreise nach dem Frühjahrshoch deutlich gefallen — Heizöl ~115 ct/l (TECSON; Brent stabil oberhalb 80 USD/Barrel).
+      Wärmepumpen-Tarife weiter günstiger durch reduzierte §14a-Netzentgelte (ab ~20–21 ct/kWh).
+      Pellets erreichen ihr Jahrestief: 376,77 €/t bei 6 t = 7,54 ct/kWh (DEPI, veröffentlicht 16.06.2026).
+      Gas im Verbraucher-Schnitt stabil (~10,5 ct/kWh, Neukunde ~9,4).
     </p>
   </div>
   <!-- /MONAT -->
@@ -275,7 +362,7 @@
       </div>
     </div>
     <p class="hist-kontext">
-      Heizöl normalisiert sich nach der Iran-Krise (~135 €/100 l). WP-Strom weiter im Abwärtstrend. Pellets stabil bei ~376 €/t.
+      Heizöl normalisiert sich nach der Iran-Krise (~135 ct/l, TECSON). WP-Strom weiter im Abwärtstrend. Pellets sinken weiter: 388,09 €/t bei 6 t = 7,76 ct/kWh (DEPI, veröffentlicht 18.05.2026).
     </p>
   </div>
   <!-- /MONAT -->
@@ -312,8 +399,10 @@
       </div>
     </div>
     <p class="hist-kontext">
-      Heizöl leicht unter dem Märzhoch — erste US-Vermittlungssignale beruhigen den Ölmarkt minimal.
-      WP-Strom erreicht den günstigsten Stand seit Jahren: Netzentgeltreform und neue Wärmepumpen-Tarife entlasten Betreiber deutlich. CO₂-Abgabe steigt auf 65 €/Tonne.
+      Heizöl leicht unter dem Märzhoch (~153 ct/l) — erste US-Vermittlungssignale beruhigen den Ölmarkt minimal.
+      WP-Strom erreicht den günstigsten Stand seit Jahren: Netzentgeltreform und neue Wärmepumpen-Tarife entlasten Betreiber deutlich.
+      Pellets weiter rückläufig: 405,11 €/t bei 6 t = 8,10 ct/kWh (DEPI, veröffentlicht 16.04.2026).
+      CO₂-Abgabe steigt auf 65 €/Tonne — das obere Ende des für 2026 geltenden Korridors von 55 bis 65 €/t.
     </p>
   </div>
   <!-- /MONAT -->
@@ -352,6 +441,10 @@
     <p class="hist-kontext">
       Iran-Krise trifft den Energiemarkt mit voller Wucht: Die Blockade der Straße von Hormus legt rund 20 % des globalen Ölhandels lahm — die IEA spricht von der größten Versorgungsstörung in der Geschichte des Ölmarktes.
       Heizöl erreicht ein Dreijahreshoch (+52 % gegenüber Januar). Gas steigt moderat durch allgemeine Energiepreisinflation.
+      Pellets auf Winterniveau, erste Entspannung: 419,2 €/t bei 6 t = 8,38 ct/kWh (DEPI, −0,8 % gegenüber Februar).
+    </p>
+    <p class="hist-korr">
+      <strong>Prüfvermerk zum Heizölwert.</strong> Die 16,0 ct/kWh entsprechen 160 ct/l. Gegen das TECSON-Quartalsmittel Q1 2026 von 111,7 ct/l lässt sich das nicht rechnen: mit Januar 105 und Februar 108 müsste der März bei rund 122 ct/l liegen. Möglich ist, dass hier eine Tagesspitze während der Hormus-Blockade als Monatswert festgehalten wurde. TECSON veröffentlicht keine Monatsmittel, deshalb bleibt der Wert vorerst stehen — aber als offen markiert statt stillschweigend mitgeführt.
     </p>
   </div>
   <!-- /MONAT -->
@@ -390,6 +483,7 @@
     <p class="hist-kontext">
       Gas- und Strompreise bleiben stabil, Heizölmarkt beginnt leicht nervöser zu werden.
       Ende Februar erste Meldungen über militärische Eskalation im Persischen Golf — Brent-Rohöl noch bei ~72 USD/Barrel, erste Spekulanten kaufen sich ein.
+      Pellets erreichen ihren Jahreshöchststand: 422,73 €/t bei 6 t = 8,45 ct/kWh (DEPI, +4,3 % gegenüber Januar) — Ursache ist die kalte Witterung mit hohem Heizbedarf.
     </p>
   </div>
   <!-- /MONAT -->
@@ -429,14 +523,78 @@
     <p class="hist-kontext">
       Jahresstart mit leichter Entlastung: Die Gasspeicherumlage wird abgeschafft, Netzentgelte sinken erstmals seit Jahren durch staatliche Zuschüsse in Höhe von 6,5 Mrd. €.
       Energiemärkte insgesamt ruhig — günstigste Lage seit der Krise 2022.
+      Pellets auf Winterniveau: 405,33 €/t bei 6 t = 8,11 ct/kWh (DEPI).
     </p>
   </div>
   <!-- /MONAT -->
 
+  <div class="meth">
+    <details>
+      <summary>Wie diese Zahlen entstehen — Quellen, Einheiten, Umrechnung</summary>
+      <div class="meth__body">
+        <p>
+          Die Tabelle zeigt fünf Energieträger in einer gemeinsamen Größe: ct/kWh. Vier davon werden dafür umgerechnet.
+          Wer nachrechnen will, braucht den Faktor. Deshalb steht er hier — je Träger zusammen mit Leitquelle und Tarifbasis.
+          Maßgeblich ist <code>daten/preishistorie.json</code>, Block <code>methodik_traeger</code>; diese Seite gibt ihn wieder.
+        </p>
+
+        <dl>
+          <dt>Heizöl</dt>
+          <dd>
+            <a href="https://www.tecson.de/de/heizoelpreise.html" target="_blank" rel="noopener">TECSON Heizölpreisindex</a>, Bundesdurchschnitt in ct je Liter,
+            Bestellmenge 3.000 l, HEL schwefelarm, inkl. MwSt. Tagespreis als Monats-Snapshot, Stichtag um den 14.
+            <br><strong>Umrechnung: ct/l ÷ 10,0 kWh je Liter</strong> (Heizwert). August 2026: 138,4 ÷ 10,0 = 13,8 ct/kWh.
+            <br>Gegenprobe für den Faktor: Das TECSON-Quartalsmittel Q2 2026 liegt bei 133,8 ct/l; die hier geführten Werte April 153, Mai 135 und Juni 115 ct/l ergeben im Mittel 134,3 — Abweichung 0,4 %.
+          </dd>
+
+          <dt>Pellets</dt>
+          <dd>
+            <a href="https://www.depi.de/pelletpreis-wirtschaftlichkeit/" target="_blank" rel="noopener">Deutsches Pelletinstitut (DEPI)</a>, € je Tonne bei 6 t Abnahme,
+            ENplus A1, Lieferung im Umkreis 50 km, inkl. MwSt.
+            <br><strong>Umrechnung: €/t ÷ 10 = ct/kg, dann ÷ 5,0 kWh je kg.</strong> Juli 2026: 388,09 €/t → 38,81 ct/kg → 7,76 ct/kWh.
+            <br>DEPI veröffentlicht den ct/kWh-Wert selbst; er deckt sich in allen Monaten 2026 mit diesem Faktor.
+            <br><em>Zum Rhythmus:</em> DEPI meldet erst um den 16. bis 18. eines Monats. Wer vorher aktualisiert, hat den Vormonatswert vor sich — er ist dann als solcher gekennzeichnet.
+            <br><em>Nicht verrechenbar:</em> Den vielzitierten Kostenvorteil gegenüber Heizöl (rund 40 %) rechnet DEPI auf eigener Basis, mit etwa 10,6 kWh je Liter. Diese Prozentzahl passt deshalb nicht zu den Heizölwerten dieser Tabelle.
+          </dd>
+
+          <dt>Gas</dt>
+          <dd>
+            Tarifportale für den Monatsstand, <a href="https://www.bdew.de/presse/pressemappen/gaspreis-und-co-2-preis/" target="_blank" rel="noopener">BDEW-Gaspreisanalyse</a> als quartalsweiser Anker. Musterhaushalt 20.000 kWh/a. Keine Umrechnung.
+            <br><strong>Tarifbasis: Mittel aus Neukundentarif und Bestandskundentarif.</strong> August 2026: (9,8 + 11,6) ÷ 2 = 10,7 ct/kWh.
+            <br>Die Grundversorgung geht <em>nicht</em> ein — sie liegt im August bei 13,6 ct/kWh.
+            <br><em>Offen gesagt:</em> Dieser Wert ist ein gebildeter Mischwert, kein von einer Stelle veröffentlichter Preis. Wer bei BDEW nachschlägt, findet einen höheren (April 2026: 11,10 ct im Einfamilienhaus, 10,87 ct im Mehrfamilienhaus) — weil BDEW nach Gebäudetyp trennt und nicht nach Tarifstatus.
+          </dd>
+
+          <dt>Wärmepumpenstrom</dt>
+          <dd>
+            Tarifportale, Wärmepumpen- und Heizstromtarife, Musterhaushalt 7.500 kWh/a. Keine Umrechnung.
+            <br><em>Die schwächste Spalte dieser Tabelle.</em> Für Wärmepumpenstrom gibt es keine monatliche Verbraucher-Durchschnittsreihe. Der Wert bezeichnet das Niveau gängiger WP-Tarife innerhalb der belegten Anbieterspanne von 22 bis 26 ct/kWh — er ist ein Bandmittel, kein gemessener Monatswert. Deshalb steht die Spanne seit August daneben.
+            <br>Günstigster datierter Vergleichswert: 20,7 ct/kWh im Neukundenschnitt (<a href="https://www.verivox.de/heizstrom/waermepumpenstrom-preisentwicklung/" target="_blank" rel="noopener">Verivox</a>, Stand 13.07.2026).
+          </dd>
+
+          <dt>Fernwärme</dt>
+          <dd>
+            <a href="https://www.swe-energie.de/site/energie/get/documents_E-421602985/energie/documents/Downloads/preisblaetter-und-vertragsbedingungen/waerme/preise_fernwaermeversorgung.pdf" target="_blank" rel="noopener">SWE-Preisblatt Fernwärmeversorgung</a>. Der ausgewiesene Wert ist der Erfurter Effektivpreis auf Gebäudeebene: Arbeitspreis, Leistungspreis, Zertifikatepreis, Umlagen und Verrechnungspreis, umgelegt auf den Jahresverbrauch eines Referenz-Mehrfamilienhauses. <strong>Nicht der Arbeitspreis allein.</strong>
+            <br><strong>Quartalsweise, nicht monatlich.</strong> Preisänderungen zum 01.01., 01.04., 01.07. und 01.10. Ein „stabil“ in dieser Spalte ist eine Tarifaussage, keine Marktbeobachtung. Der Q3-Preis gilt bis zum 30.09.2026.
+            <br>Q3 2026 brutto: Arbeitspreis 13,768 ct/kWh (Q2: 11,538), Leistungspreis 75,04 €/kW·a, Zertifikatepreis 1,929 ct/kWh, Umlagen 0,000.
+            <br><em>Zu den viel zitierten 19 %:</em> Die gelten nur für den Arbeitspreis. Der gesamte verbrauchsabhängige Teil — Arbeits- plus Zertifikate- plus Umlagepreis — stieg von 13,717 auf 15,697 ct/kWh, also um 14,4 %. Beide Zahlen sind richtig; sie haben verschiedene Bezugsgrößen.
+            <br><em>Vorbehalt:</em> Der Zertifikatepreis für das 1. bis 3. Quartal 2026 steht laut Fußnote des Preisblatts unter Vorbehalt — SWE hat noch keine Mitteilung über die Menge der kostenlos zugeteilten CO₂-Zertifikate ab 2026 erhalten. Eine rückwirkende Korrektur bis Q1 ist möglich. Der Effektivpreis von 19,3 ct/kWh enthält damit eine vorläufige Komponente.
+          </dd>
+        </dl>
+
+        <p style="margin-top:1rem;">
+          <strong>Umgang mit Fehlern.</strong> Ein einmal veröffentlichter Wert wird nicht stillschweigend überschrieben.
+          Wird er korrigiert, steht der Vermerk in der betroffenen Monatszeile — mit altem Wert, neuem Wert und Beleg.
+          Die Korrekturen vom 15.08.2026 sind oben bei Juli und in der Pellets-Notiz dokumentiert.
+        </p>
+      </div>
+    </details>
+  </div>
+
   <p class="hinweis">
     Alle Angaben sind Durchschnittswerte für Mehrfamilienhaus-Bestandskunden in Deutschland (Erfurt/Thüringen als Referenzregion).
     Fernwärme als Erfurter Effektivpreis auf Gebäudeebene (Stadtwerke Erfurt, tarifbasiert, nicht monatsvolatil).
-    Quellen: BDEW, Verivox, Finanztip, TECSON, TGA-Fachplaner-Barometer · <a href="index.html#energiepreise">Aktuelle Energiepreise</a>
+    Leitquellen: TECSON (Heizöl), DEPI (Pellets), BDEW und Tarifportale (Gas), Verivox (WP-Strom), SWE-Preisblatt (Fernwärme) — Einheiten und Umrechnungsfaktoren siehe Aufklapper oben · <a href="index.html#energiepreise">Aktuelle Energiepreise</a>
   </p>
 
 </div>
