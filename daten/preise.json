@@ -1,8 +1,11 @@
 {
-  "stand": "April 2026",
-  "strom_ct": 27.0,
-  "gas_ct": 10.5,
+  "stand": "August 2026",
+  "_quelle": "Marktwerte (strom_ct, gas_ct) gespiegelt aus daten/preishistorie.json, Monat 2026-08. Beim Monatsupdate hier mitziehen.",
+  "strom_ct": 25.0,
+  "gas_ct": 10.7,
   "fw_ap_ct": 20.0,
   "fw_lp": 39.99,
-  "co2_preis": 55.0
+  "co2_preis": 55.0,
+  "_offen_fw": "fw_ap_ct und fw_lp sind am 15.08.2026 BEWUSST NICHT angefasst worden. Sie werden in den Objektrechnern additiv verrechnet (Verbrauch x AP + Heizlast x LP + Fixkosten) und sind dort mit 'SWE Erfurt: ~20 ct' bzw. 'Aus SWE-Angebot · 62 kW' beschriftet — der Leistungspreis stammt also aus einem objektbezogenen Angebot, nicht aus dem allgemeinen Preisblatt. Keiner der beiden Werte deckt sich mit dem SWE-Preisblatt Q3 2026 (AP 13,768 ct/kWh brutto bzw. 11,570 netto; LP 75,04 EUR/kW*a brutto bzw. 63,06 netto). Bevor hier etwas geaendert wird, muss geklaert sein, ob die Objektrechner mit dem Preisblatt oder mit dem Angebot rechnen sollen — sonst wird ein allgemeiner Arbeitspreis mit einem objektbezogenen Leistungspreis gemischt.",
+  "_offen_co2": "co2_preis 55,0 EUR/t steht bewusst noch. Die Preishistorie nennt fuer April 2026 65 EUR/t. Beide Zahlen sind vertretbar: 55 und 65 sind Unter- und Obergrenze des fuer 2026 geltenden Korridors. Welche Grenze die Objektrechner ansetzen sollen, ist eine Modellentscheidung und keine Datenpflege."
 }
