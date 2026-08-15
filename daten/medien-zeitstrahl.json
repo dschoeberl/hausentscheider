@@ -111,12 +111,25 @@
       "datum": "2026-06-30",
       "datumLabel": "30. Juni",
       "label": "Inkrafttreten KWP + adressgenauer Stadtplan",
-      "berichtet": false
+      "berichtet": false,
+      "tag": "im Korpus nicht aufgegriffen"
     },
     {
-      "datum": "2026-07-01",
-      "datumLabel": "1. Juli",
-      "label": "Gebäudemodernisierungsgesetz (GMG) tritt in Kraft",
+      "datum": "2026-07-10",
+      "datumLabel": "10. Juli",
+      "label": "Bundestag und Bundesrat beschließen das Gebäudemodernisierungsgesetz",
+      "berichtet": true
+    },
+    {
+      "datum": "2026-07-21",
+      "datumLabel": "21. Juli",
+      "label": "Neue BEG-Förderrichtlinien wirksam — förderfähige Kosten und Boni sinken",
+      "berichtet": true
+    },
+    {
+      "datum": "2026-07-29",
+      "datumLabel": "29. Juli",
+      "label": "Gebäudemodernisierungsgesetz (GModG) in Kraft — BGBl. Nr. 226 vom 28.07.",
       "berichtet": false
     }
   ]
