@@ -1,9 +1,11 @@
 {
-  "_hinweis": "Wärmewende im Blick — Zeitstrahl der lokalen Berichterstattung. Neuer Artikel = ein Objekt an 'eintraege' anhängen. 'datum' (ISO) treibt die proportionale Achse, 'datumLabel' ist die Anzeige. Die 'zuletzt ergänzt'-Marke wird automatisch aus dem jüngsten Eintrag abgeleitet — nichts separat pflegen. Töne: zustimmend | sachlich | erklaerend | kritisch. Zusammenfassung und kommentar je 3–5 Sätze, eigene Worte, konkrete Fakten/Zahlen; kurze wörtliche Zitate nur mit Quelle. Eigene, zugespitzte Überschriften — keine Originaltitel oder Volltexte.",
+  "_hinweis": "Wärmewende im Blick — zweispuriger Zeitstrahl. Neuer Artikel = ein Objekt an 'eintraege' anhängen. 'datum' (ISO) treibt die proportionale Achse, 'datumLabel' ist die Anzeige. Die 'zuletzt ergänzt'-Marke wird automatisch aus dem jüngsten Eintrag abgeleitet — nichts separat pflegen. Töne: zustimmend | sachlich | erklaerend | kritisch. Zusammenfassung und kommentar je 3–5 Sätze, eigene Worte, konkrete Fakten/Zahlen; kurze wörtliche Zitate nur mit Quelle. Eigene, zugespitzte Überschriften — keine Originaltitel oder Volltexte.",
+  "_hinweis_spuren": "'ebene': 'rahmen' (Bund/Land, obere Spur) | 'erfurt' (Lokalteil, untere Spur) | 'beide' (Klammer, erscheint in beiden Spuren). Fehlt das Feld, gilt 'erfurt'. 'waermebezug': false nur setzen, wenn ein Erfurt-Eintrag KEINEN Wärmebezug hat — er zählt dann in die Gesamtzahl und in die Ton-Verteilung, aber nicht als Beitrag zur Erfurter Wärmeplanung. Die Funkstille wird je Spur berechnet; 'zeitfenster' liefert den Zusatz zum Lückenlabel (nur Erfurt-Spur), sobald sich eine Lücke mit dem Fenster überschneidet.",
   "eintraege": [
     {
       "datum": "2026-04-30",
       "datumLabel": "30. April",
+      "ebene": "rahmen",
       "headline": "„Auf dem Weg zur grünen Wärme“ – sagt die Tagung",
       "ton": "zustimmend",
       "quelle": "TA · Thüringen",
@@ -14,6 +16,7 @@
     {
       "datum": "2026-05-06",
       "datumLabel": "6. Mai",
+      "ebene": "beide",
       "headline": "Der Bund lockert — am selben Tag legt die Stadt fest",
       "ton": "sachlich",
       "quelle": "TA · Politik & Lokalteil",
@@ -24,6 +27,7 @@
     {
       "datum": "2026-05-06",
       "datumLabel": "6. Mai",
+      "ebene": "erfurt",
       "headline": "„Welche Heizung wohin?“ — der Plan, gut erklärt",
       "ton": "erklaerend",
       "quelle": "TA · Lokalteil",
@@ -34,6 +38,7 @@
     {
       "datum": "2026-05-08",
       "datumLabel": "8. Mai",
+      "ebene": "rahmen",
       "headline": "Das Heizungsgesetz, vom Schornsteinfeger übersetzt",
       "ton": "erklaerend",
       "quelle": "TA · Lokalteil",
@@ -44,6 +49,7 @@
     {
       "datum": "2026-05-11",
       "datumLabel": "11. Mai",
+      "ebene": "rahmen",
       "headline": "„Verbraucher brauchen Klarheit“ — die Zeitung benennt die Lücke selbst",
       "ton": "kritisch",
       "quelle": "TA · Kommentar",
@@ -54,6 +60,7 @@
     {
       "datum": "2026-05-16",
       "datumLabel": "16. Mai",
+      "ebene": "erfurt",
       "headline": "Bauchschmerzen erlaubt — aber bitte beruhigt",
       "ton": "zustimmend",
       "quelle": "TA · Lokalteil",
@@ -64,6 +71,7 @@
     {
       "datum": "2026-06-02",
       "datumLabel": "2. Juni",
+      "ebene": "erfurt",
       "headline": "Steigende Mieten — erzählt ohne die Heizung",
       "ton": "sachlich",
       "quelle": "TA · Lokalteil",
@@ -74,6 +82,7 @@
     {
       "datum": "2026-06-06",
       "datumLabel": "6. Juni",
+      "ebene": "erfurt",
       "headline": "120 km Leitungen: beschlossen. Die grüne Quelle: erhofft.",
       "ton": "zustimmend",
       "quelle": "TA · Lokalteil",
@@ -85,11 +94,112 @@
       "datum": "2026-06-06",
       "datumLabel": "ca. 6. Juni",
       "ca": true,
+      "ebene": "erfurt",
       "headline": "„Eine Wundertüte“ — Gegenrede, aber nur zum Stichtag",
       "ton": "kritisch",
       "quelle": "TA · Kommentar",
       "zusammenfassung": "Anlässlich der städtischen Treibhausgasbilanz titelt die Zeitung „Die Stadt Erfurt verfehlt ihr Klimaziel“: Erfurt senkte die Pro-Kopf-Emissionen 2021–2023 nur um 5,3 %, bundesweit waren es 11,7 %. Der Klimaentscheid kommt zu Wort — das Ziel werde „krachend“ verfehlt — und nennt die Wärmeplanung für jemanden, der jetzt zwischen Fernwärme und Wärmepumpe entscheiden muss, eine „Wundertüte“.",
       "kommentar": "Endlich echte Gegenrede — aber sie erscheint, weil ein offizielles Zahlenwerk den Anlass liefert, nicht als laufende Prüfung. Die Zahlen sind hart: 5,3 % statt 11,7 % Minderung, das Ziel „krachend“ verfehlt. Das Bild der „Wundertüte“ trifft die Eigentümerlage präzise — man entscheidet, ohne zu wissen, was drin ist. Bliebe es bei anlassgetakteter Kritik, fehlt genau das, was Vertrauen schafft: eine kontinuierliche, unabhängige Begleitung mit Nachfragen zu Preisen und Annahmen.",
+      "link": ""
+    },
+    {
+      "datum": "2026-06-16",
+      "datumLabel": "16. Juni",
+      "ebene": "rahmen",
+      "headline": "„Reicht Information statt Förderung?“ — jetzt fragt es die Forschung",
+      "ton": "erklaerend",
+      "quelle": "TA · Wirtschaft",
+      "zusammenfassung": "Die Landesenergieagentur Thega untersucht im Auftrag des Thüringer Energieministeriums gemeinsam mit der Universität Erfurt, ob gezielte Information mehr Photovoltaik aufs Dach bringt als klassische Förderprogramme. Rund 30.000 Hauseigentümer in fünf Regionen werden dafür angeschrieben: Wartburgkreis, Unstrut-Hainich-Kreis, Ilm-Kreis, Landkreis Saalfeld-Rudolstadt und die Stadt Jena. Im Freistaat sind derzeit 131.615 Anlagen installiert, gut 3.400 Megawatt, rund 28 Prozent des Thüringer Stromverbrauchs. Das Projekt läuft bis Ende Januar 2027, Ergebnisse sollen bis Ende März 2027 vorliegen.",
+      "kommentar": "Die Leitfrage des Projekts ist genau die, um die es hier geht: ob Information eine Entscheidung anschiebt, die Geld allein nicht anschiebt. Bemerkenswert ist, wo geforscht wird. Die Landeshauptstadt mit ihren 115.000 Haushalten und einer laufenden Wärmeplanung gehört nicht zu den fünf Regionen. Wer die Antwort im Frühjahr 2027 liest, hat in Erfurt längst entschieden.",
+      "link": ""
+    },
+    {
+      "datum": "2026-06-18",
+      "datumLabel": "18. Juni",
+      "ebene": "rahmen",
+      "headline": "Deutschlands größte Solarthermieanlage deckt zwei Prozent",
+      "ton": "zustimmend",
+      "quelle": "TA · Wirtschaft (dpa)",
+      "zusammenfassung": "In Leipzig geht die größte Solarthermieanlage Deutschlands in Betrieb: 13.200 Kollektoren auf 65.208 Quadratmetern, rund 40 Millionen Euro Baukosten. Sie soll zwei Prozent des Leipziger Fernwärmebedarfs liefern. Die dortigen Stadtwerke wollen bis 2038 klimaneutral heizen; bislang stammt Fernwärme bundesweit ganz überwiegend aus Gas. Der Beitrag nennt rund 60 Solarthermie-Freiflächenanlagen bundesweit und die Schätzung, dass bis 2045 etwa zwei Prozent der deutschen Fernwärme solarthermisch erzeugt werden könnten.",
+      "kommentar": "Die Meldung ist als Erfolg erzählt und liefert nebenbei einen Maßstab. Wenn die größte Anlage des Landes zwei Prozent eines einzigen Netzes deckt, zeigt das, welche Fläche und welches Kapital eine Dekarbonisierung über die Wärmequelle verlangt. Für Erfurt ist das die Rechengröße hinter dem Wort „grüne Fernwärme“: Das hiesige Netz läuft heute zu rund 95 Prozent auf Erdgas. Aus dieser Meldung ist die Zahl mitzunehmen, weniger die Überschrift.",
+      "link": ""
+    },
+    {
+      "datum": "2026-06-26",
+      "datumLabel": "26. Juni",
+      "ebene": "rahmen",
+      "headline": "Fast jeder Zweite in Thüringen weiß nicht, was der Strom kostet",
+      "ton": "sachlich",
+      "quelle": "TA · Titelseite",
+      "zusammenfassung": "45,7 Prozent der Thüringer sind unsicher, ob beim Jahresabschluss eine Nachzahlung fällig wird. Das ist der höchste Wert unter allen Bundesländern, bundesweit sind es 36,3 Prozent. 32 Prozent können nicht abschätzen, wie hoch ihre Stromkosten im laufenden Jahr ausfallen. Klimaschutz nennen rund 13 Prozent als Grund für einen Anbieterwechsel. Die Zahlen stammen aus einer Studie des Ökostromanbieters Ostrom.",
+      "kommentar": "Die Studie kommt von einem Anbieter und ist entsprechend zu lesen. Die Größenordnung passt trotzdem zu allem, was in diesem Zeitstrahl steht. Wer die laufende Stromrechnung nicht einschätzen kann, kann eine Wärmeentscheidung über zwanzig Jahre erst recht nicht einschätzen. Genau hier beginnt die Aufgabe, die weder der Plan noch die Berichterstattung übernimmt.",
+      "link": ""
+    },
+    {
+      "datum": "2026-07-02",
+      "datumLabel": "2. Juli",
+      "ebene": "erfurt",
+      "waermebezug": false,
+      "headline": "Der Lokalteil kann prüfen — hier tut er es",
+      "ton": "kritisch",
+      "quelle": "TA · Lokales",
+      "zusammenfassung": "Der Erfurter Lokalteil recherchiert einen Fall überhöhter Miete eigenständig: Er fragt Fallzahlen bei der Stadt ab, 15 Anzeigen 2024, 137 im Folgejahr, 10 im laufenden Jahr. Er stellt die Auskunft der Verwaltung gegen die Darstellung der Linksfraktion und lässt eine Betroffene ausführlich zu Wort kommen. Der Widerspruch bleibt stehen, statt geglättet zu werden. Zitiert wird die Stadträtin Carolin Held mit dem Satz, die Glaubwürdigkeit von Politik und Stadtverwaltung sinke, wenn ein Bürger einen Missstand anzeigt und nichts unternommen wird.",
+      "kommentar": "Dieses Stück steht hier, obwohl es die Heizung mit keinem Wort erwähnt. Es zeigt, dass die Redaktion die Methode beherrscht, die den Wärme-Beiträgen fehlt: eigene Zahlen holen, die offizielle Auskunft gegenprüfen, den Widerspruch aushalten. Angewandt wird sie auf die Kaltmiete. Die Heizkosten, die über zwanzig Jahre den größeren Hebel haben, bleiben außen vor. Der Engpass liegt damit erkennbar nicht beim Können.",
+      "link": ""
+    },
+    {
+      "datum": "2026-07-10",
+      "datumLabel": "10. Juli",
+      "ebene": "rahmen",
+      "headline": "Über Nacht neue Förderregeln — die Rechnung von gestern gilt nicht mehr",
+      "ton": "sachlich",
+      "quelle": "TA · Wirtschaft",
+      "zusammenfassung": "Die Koalition stellt die Heizungsförderung kurzfristig um; ab dem 21. Juli gelten neue Richtlinien. Die förderfähigen Kosten sinken in einem ersten Schritt um 2.000 auf 28.000 Euro und danach alle sechs Monate um weitere 750 Euro. Der Klimageschwindigkeitsbonus fällt von 20 auf 16 Prozent und verliert mit jedem halben Jahr vier weitere Prozentpunkte. Der Einkommensbonus wird neu gestaffelt; wer eine gültige Bestätigung zum Antrag oder eine technische Projektbeschreibung vorweisen kann, behält Vertrauensschutz. Verbraucherschützer und der Bundesverband Wärmepumpe kritisieren das Tempo; ein Vertreter der Anbieterseite hält die Erwartung, weniger Förderung senke die Gerätepreise, für „naiv“.",
+      "kommentar": "Der Beitrag ist sauber gearbeitet und holt Gegenrede ein. Er steht im Wirtschaftsteil und wurde in Berlin geschrieben. Was fehlt, ist die Übersetzung: Was bedeutet eine halbjährlich sinkende Förderung für ein Gebäude im Erfurter Satzungsgebiet, das ohnehin auf eine Entscheidung zusteuert? Die Degression macht Zeit erstmals messbar teuer. Diese Rechnung führt im Lokalteil niemand.",
+      "link": ""
+    },
+    {
+      "datum": "2026-07-11",
+      "datumLabel": "11. Juli",
+      "ebene": "rahmen",
+      "headline": "Das Heizungsgesetz ist weg — und mit ihm die 65-Prozent-Regel",
+      "ton": "sachlich",
+      "quelle": "TA · Politik (dpa)",
+      "zusammenfassung": "Bundestag und Bundesrat beschließen das Gebäudemodernisierungsgesetz. Paragraf 71 des Gebäudeenergiegesetzes mit der 65-Prozent-Pflicht für erneuerbare Energien entfällt, neue Gas- und Ölheizungen sind wieder zulässig. An seine Stelle treten eine Grüngasquote ab 2028 und eine Stufenfolge für bestehende Heizungen: mindestens 10 Prozent klimafreundliche Brennstoffe ab 2029, 15 Prozent ab 2030, 30 Prozent ab 2035, 60 Prozent ab 2040. Die Deutsche Umwelthilfe hält die Neuregelung verfassungsrechtlich für zweifelhaft und kündigt Klagen an. Verkündet wurde das Gesetz am 28. Juli, in Kraft ist es seit dem 29. Juli.",
+      "kommentar": "Für Eigentümer in Erfurt verschiebt sich damit die Ausgangslage in beide Richtungen. Der gesetzliche Zwang zum Systemwechsel fällt weg. Der wirtschaftliche Druck bleibt: Die Brennstoffquoten steigen, der CO₂-Preis wird ab 2027 am Markt gebildet, und die kommunale Fernwärmesatzung wirkt unabhängig vom Bundesrecht. Wer daraus liest, er könne bleiben, wo er ist, verwechselt Erlaubnis mit Wirtschaftlichkeit. Eine lokale Einordnung dieser Frage steht bis heute aus.",
+      "link": ""
+    },
+    {
+      "datum": "2026-07-17",
+      "datumLabel": "17. Juli",
+      "ebene": "rahmen",
+      "headline": "Wer den Netzausbau bezahlt, entscheidet über den Strompreis",
+      "ton": "sachlich",
+      "quelle": "TA · Politik",
+      "zusammenfassung": "Der Wirtschafts- und Energieminister Sachsen-Anhalts kritisiert, dass die Kosten für Betrieb und Ausbau der Stromnetze lange über regionale Netzentgelte auf die Verbraucher in den Ausbauregionen umgelegt wurden. Seit Anfang 2025 verteilt ein bundesweiter Ausgleichsmechanismus einen Teil der besonders hohen Netzkosten. Genannt wird auch, was ein Windrad einer Gemeinde einbringt: rund 27.000 Euro im Jahr.",
+      "kommentar": "Netzentgelte sind der Teil des Strompreises, der über die Wirtschaftlichkeit einer Wärmepumpe mitentscheidet. Der Beitrag behandelt sie als Verteilungsfrage zwischen Bundesländern. Für Thüringen bleibt die Anschlussfrage offen: Wie entwickeln sich die Netzentgelte hier, wenn der Ausbau stockt und die Zahl der Wärmepumpen zugleich steigt? Der Zusammenhang zwischen Netz und Heizung wird an keiner Stelle hergestellt.",
+      "link": ""
+    },
+    {
+      "datum": "2026-07-22",
+      "datumLabel": "22. Juli",
+      "ebene": "rahmen",
+      "headline": "Die Einspeisevergütung soll fallen — beschlossen ist nichts",
+      "ton": "sachlich",
+      "quelle": "TA · Wirtschaft",
+      "zusammenfassung": "Das Bundeswirtschaftsministerium arbeitet an einer Novelle des Erneuerbare-Energien-Gesetzes. Für neue Dachanlagen soll die Einspeisevergütung entfallen und durch eine befristete Übergangszahlung unterhalb des heutigen Niveaus ersetzt werden, höchstens drei Jahre lang; danach folgt die Direktvermarktung mit einem Bonus von 1,5 Cent je Kilowattstunde in den ersten Jahren. Im ersten Halbjahr 2026 gingen Anlagen mit knapp 7,4 Gigawatt-Peak ans Netz, rund neun Prozent mehr als im Vorjahreszeitraum. Der Bundesverband Solarwirtschaft rechnet mit einem Markteinbruch von mehr als 70 Prozent bei Heimanlagen. Kabinettsbeschluss und parlamentarische Beratung stehen nach der Sommerpause aus.",
+      "kommentar": "Der Beitrag ordnet den Entwurf mit zwei unabhängigen Energieökonomen ein und benennt den offenen Verfahrensstand. Für Erfurt hängt daran die Rechnung, die eine Wärmepumpe erst günstig macht: eigener Solarstrom, direkt verbraucht oder gespeichert. Ändert sich die Vergütung, ändert sich die Amortisation jeder Kombination aus Photovoltaik und Wärmepumpe. Solange nichts beschlossen ist, gehört diese Unsicherheit offen in jede Rechnung.",
+      "link": ""
+    },
+    {
+      "datum": "2026-07-24",
+      "datumLabel": "24. Juli",
+      "ebene": "rahmen",
+      "headline": "Ein einziges neues Windrad im ganzen Halbjahr",
+      "ton": "sachlich",
+      "quelle": "TA · Titelseite (dpa)",
+      "zusammenfassung": "In Thüringen ging im ersten Halbjahr 2026 eine einzige neue Windkraftanlage mit sechs Megawatt in Betrieb — ein Rückgang der neu installierten Leistung um 74,4 Prozent gegenüber dem Vorjahreszeitraum. Unter den Flächenländern liegt der Freistaat gemeinsam mit dem Saarland auf dem letzten Platz. Die neu genehmigte Leistung stieg dagegen um knapp 14 Prozent auf einen Rekordwert von 9,1 Gigawatt. Bundesweit gingen 423 Anlagen mit 2.363 Megawatt ans Netz; in Thüringen stehen insgesamt 862 Windräder.",
+      "kommentar": "Die Meldung steht auf der Titelseite und läuft über die Agentur. Sie berührt eine Annahme, auf der jede Wärmepumpen-Rechnung ruht: dass der Strommix grüner wird und der Emissionsfaktor sinkt. Genehmigt ist viel, gebaut wird wenig. Zwischen diesen beiden Zahlen liegt genau die Zeit, um die es bei einer Systementscheidung geht. Was der Ausbaustau für den Thüringer Strommix der nächsten zehn Jahre bedeutet, bleibt offen.",
       "link": ""
     }
   ],
@@ -131,6 +241,15 @@
       "datumLabel": "29. Juli",
       "label": "Gebäudemodernisierungsgesetz (GModG) in Kraft — BGBl. Nr. 226 vom 28.07.",
       "berichtet": false
+    }
+  ],
+  "zeitfenster": [
+    {
+      "von": "2026-05-04",
+      "bis": "2026-06-03",
+      "label": "öffentliche Auslegung der Wärmeplanung",
+      "kurz": "mitten in der Auslegungsfrist",
+      "quelle": "Stadt Erfurt, Abwägung der eingegangenen Stellungnahmen, Stand 12.06.2026 — Auslegungszeitraum nach § 13 Abs. 4 WPG"
     }
   ]
 }

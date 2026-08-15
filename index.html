@@ -742,43 +742,61 @@
       .wib__lead { font-size: 15px; color: #c4d0ce; line-height: 1.7; max-width: 640px; margin: 0.25rem 0 1.6rem; }
       .wib-loading { font-family: 'Inter', sans-serif; font-size: 13px; color: #8fa09c; }
 
-      /* Horizontale Übersichts-Leiste (Signatur) */
-      .wib-strip { position: relative; height: 60px; margin: 0 0 0.25rem; }
-      .wib-strip__line { position: absolute; left: 0; right: 0; top: 26px; height: 2px; background: rgba(255,255,255,0.18); }
-      .wib-strip__gap { position: absolute; top: 18px; height: 18px; background: repeating-linear-gradient(135deg, rgba(255,255,255,0.10) 0 4px, transparent 4px 8px); border-radius: 2px; }
-      .wib-tick { position: absolute; top: 16px; width: 3px; height: 22px; border-radius: 2px; transform: translateX(-50%); }
+      /* Horizontale Übersichts-Leiste (Signatur) — zwei Spuren */
+      .wib-strip { position: relative; display: grid; grid-template-columns: 92px 1fr; column-gap: 12px; row-gap: 4px; margin: 0 0 0.25rem; }
+      .wib-strip__lbl { grid-column: 1; align-self: center; text-align: right; font-family: 'Inter', sans-serif; line-height: 1.25; }
+      .wib-strip__lbl b { display: block; font-size: 10.5px; letter-spacing: 0.6px; text-transform: uppercase; font-weight: 600; color: #d3dedb; }
+      .wib-strip__lbl small { display: block; font-size: 9.5px; color: #7d8f8b; }
+      .wib-lane { grid-column: 2; position: relative; height: 30px; }
+      .wib-lane__line { position: absolute; left: 0; right: 0; top: 14px; height: 2px; }
+      .wib-lane--rahmen .wib-lane__line { background: var(--petrol-light); opacity: 0.38; }
+      .wib-lane--erfurt .wib-lane__line { background: var(--signal); opacity: 0.26; }
+      .wib-lane__gap { position: absolute; top: 7px; height: 16px; background: repeating-linear-gradient(135deg, rgba(255,255,255,0.11) 0 4px, transparent 4px 8px); border-radius: 2px; }
+      .wib-tick { position: absolute; top: 7px; width: 3px; height: 16px; border-radius: 2px; transform: translateX(-50%); }
       .wib-tick--zustimmend { background: #7ab8b5; }
       .wib-tick--neutral    { background: #b9c2c7; }
-      .wib-tick--kritisch   { top: 20px; width: 12px; height: 12px; border-radius: 50%; background: #1a3535; border: 2.5px solid #e0954a; }
-      .wib-strip__heute { position: absolute; top: 8px; bottom: 18px; width: 1.5px; background: var(--tommy-rot); }
-      .wib-strip__heute::after { content: none; }
-      .wib-strip__fade { position: absolute; top: 0; bottom: 18px; right: 0; background: linear-gradient(to right, rgba(26,53,53,0), #1a3535 78%); pointer-events: none; }
-      .wib-strip__more { position: absolute; top: 22px; right: 0; font-family: 'Inter', sans-serif; font-size: 10px; font-style: italic; color: #8fa09c; }
-      .wib-strip__mon { position: absolute; bottom: 0; transform: translateX(-50%); font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.5px; color: #8fa09c; }
+      .wib-tick--kritisch   { top: 9px; width: 12px; height: 12px; border-radius: 50%; background: #1a3535; border: 2.5px solid #e0954a; }
+      .wib-tick--ohne       { top: 9px; width: 11px; height: 11px; border-radius: 50%; background: #1a3535; border: 2px solid rgba(255,255,255,0.42); }
+      .wib-strip__mons { grid-column: 2; position: relative; height: 13px; }
+      .wib-strip__mon { position: absolute; top: 0; font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.5px; color: #8fa09c; }
+      .wib-strip__ov { position: absolute; left: 104px; right: 0; top: 0; bottom: 13px; pointer-events: none; }
+      .wib-strip__heute { position: absolute; top: 0; bottom: 0; width: 1.5px; background: var(--tommy-rot); }
+      .wib-strip__klammer { position: absolute; top: 14px; height: 34px; width: 1.5px; background: rgba(255,255,255,0.38); transform: translateX(-50%); }
+      .wib-strip__fade { position: absolute; top: 0; bottom: 0; right: 0; background: linear-gradient(to right, rgba(26,53,53,0), #1a3535 78%); }
+      .wib-strip__more { position: absolute; top: 50%; right: 0; transform: translateY(-50%); font-family: 'Inter', sans-serif; font-size: 10px; font-style: italic; color: #8fa09c; }
 
       .wib-tally { font-family: 'Inter', sans-serif; font-size: 12.5px; color: #c4d0ce; margin: 0.6rem 0 0.2rem; }
       .wib-tally b { color: #ffffff; font-weight: 600; }
+      .wib-tally--spur { margin-top: 0.1rem; }
 
-      .wib-legend { display: flex; gap: 1.25rem 1.5rem; flex-wrap: wrap; margin: 0.6rem 0 1.6rem; }
+      .wib-legend { display: flex; gap: 1.25rem 1.5rem; flex-wrap: wrap; margin: 0.6rem 0 0.55rem; }
       .wib-legend__item { display: flex; align-items: flex-start; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 12px; max-width: 230px; }
       .wib-legend__sw { width: 12px; height: 12px; border-radius: 50%; margin-top: 2px; flex-shrink: 0; }
       .wib-legend__sw--ring { background: #1a3535; border: 2.5px solid #e0954a; }
       .wib-legend__name { color: #eef3f1; font-weight: 600; }
       .wib-legend__desc { color: #93a09c; }
+      .wib-legend__note { font-family: 'Inter', sans-serif; font-size: 11.5px; color: #8fa09c; line-height: 1.6; margin: 0 0 1.5rem; }
+      .wib-legend__rail { display: inline-block; width: 3px; height: 10px; border-radius: 2px; vertical-align: -1px; margin: 0 3px; }
 
       /* Vertikale, proportionale Detail-Achse */
       .wib-scroll { max-height: 560px; overflow-y: auto; overscroll-behavior: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; padding: 0.5rem 0.9rem 0.5rem 0; border-top: 2px solid var(--tommy-rot); border-bottom: 2px solid var(--tommy-rot); scrollbar-width: thin; scrollbar-color: var(--tommy-rot) transparent; }
       .wib-scroll::-webkit-scrollbar { width: 8px; }
       .wib-scroll::-webkit-scrollbar-thumb { background: var(--tommy-rot); border-radius: 4px; }
-      .wib-axis { position: relative; }
-      .wib-axis > * { position: relative; padding-left: 1.75rem; }
-      .wib-axis > *::before { content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 2px; background: var(--petrol-light); opacity: 0.32; }
+      .wib-axis { position: relative; --railA: 7px; --railB: 29px; --pad: 3.4rem; }
+      .wib-axis > * { position: relative; padding-left: var(--pad); }
+      .wib-axis > *::before { content: ''; position: absolute; left: var(--railA); top: 0; bottom: 0; width: 2px; background: var(--petrol-light); opacity: 0.32; }
+      .wib-axis > *::after  { content: ''; position: absolute; left: var(--railB); top: 0; bottom: 0; width: 2px; background: var(--signal); opacity: 0.20; }
       .wib-axis > .wib--future::before { background: none; border-left: 2px dashed var(--petrol-light); opacity: 0.45; }
+      .wib-axis > .wib--future::after  { background: none; border-left: 2px dashed var(--signal); opacity: 0.28; }
 
       .wib-item__dot { position: absolute; left: 1px; top: 0.2rem; width: 14px; height: 14px; border-radius: 50%; box-shadow: 0 0 0 4px #1a3535; }
+      .wib-item--sp-erfurt .wib-item__dot { left: calc(var(--railB) - 6px); }
       .wib-item--zustimmend .wib-item__dot { background: #7ab8b5; }
       .wib-item--neutral    .wib-item__dot { background: #b9c2c7; }
       .wib-item--kritisch   .wib-item__dot { background: #1a3535; border: 3px solid #e0954a; }
+      .wib-item--ohne       .wib-item__dot { background: #1a3535; border: 2.5px solid rgba(255,255,255,0.42); }
+      /* Klammer: der einzige Eintrag, der in beiden Spuren steht */
+      .wib-item__klammer { position: absolute; left: -7px; top: calc(0.2rem - 8px); width: 30px; height: 30px; border-radius: 50%; background: conic-gradient(from 180deg, var(--petrol-light) 0 50%, var(--signal) 50% 100%); opacity: 0.75; }
 
       .wib-det summary { list-style: none; cursor: pointer; display: block; padding: 0.1rem 0 0.85rem; }
       .wib-det summary::-webkit-details-marker { display: none; }
@@ -787,6 +805,7 @@
       .wib-item--zustimmend .wib-ton { color: #7ab8b5; background: rgba(122,184,181,0.15); }
       .wib-item--neutral    .wib-ton { color: #cdd4d6; background: rgba(185,194,199,0.20); }
       .wib-item--kritisch   .wib-ton { color: #e0954a; background: rgba(224,149,74,0.14); }
+      .wib-item--ohne .wib-ton--ohne { color: #cfd8d5; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.22); margin-left: 0.35rem; text-transform: none; letter-spacing: 0.4px; }
       .wib-headline { display: block; margin-top: 0.4rem; font-family: 'Playfair Display', Georgia, serif; font-size: 17px; color: #eef3f1; line-height: 1.35; transition: color 0.15s; }
       .wib-det:hover .wib-headline, .wib-det[open] .wib-headline { color: #7ab8b5; }
       .wib-chev { float: right; display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; border: 0.5px solid var(--petrol-light); background: rgba(255,255,255,0.08); color: var(--petrol-light); font-size: 11px; transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s; }
@@ -801,11 +820,24 @@
       .wib-quelle a { color: var(--petrol-light); font-weight: 500; }
 
       .wib-spacer { }
-      .wib-gap { position: absolute; left: 1.75rem; top: 50%; transform: translateY(-50%); font-family: 'Inter', sans-serif; font-size: 11px; color: #9fb0ac; font-style: italic; background: #1a3535; padding: 3px 8px 3px 0; }
-      .wib-gap em { color: var(--petrol-light); font-style: italic; font-weight: 500; }
+      .wib-gapline { padding-top: 0.1rem; padding-bottom: 0.55rem; }
+      .wib-gapline__txt { font-family: 'Inter', sans-serif; font-size: 11px; color: #9fb0ac; font-style: italic; }
+      .wib-gapline__txt b { color: #c8d3d0; font-weight: 600; font-style: normal; }
+      .wib-gapline__txt em { color: var(--petrol-light); font-style: italic; }
+
+      /* Funkstille der Erfurt-Spur: eigenes Element, nicht nur ein Abstand */
+      .wib-luecke { padding-top: 0.35rem; padding-bottom: 0.9rem; }
+      .wib-luecke__band { margin-left: calc(var(--railB) - var(--pad)); background-color: #1e3d3d; background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.055) 0 5px, transparent 5px 10px); border-left: 3px solid rgba(207,247,127,0.5); border-radius: 0 6px 6px 0; padding: 0.75rem 1rem; }
+      .wib-luecke__num { display: block; font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 700; color: #ffffff; line-height: 1.1; }
+      .wib-luecke__txt { display: block; font-family: 'Inter', sans-serif; font-size: 12.5px; color: #c4d0ce; margin-top: 0.15rem; }
+      .wib-luecke__hint { display: block; font-family: 'Inter', sans-serif; font-size: 11px; font-style: italic; color: #9fb0ac; line-height: 1.55; margin-top: 0.4rem; }
+
+      .wib-methode { font-family: 'Inter', sans-serif; font-size: 11.5px; color: #8fa09c; line-height: 1.65; max-width: 780px; margin: 1.3rem 0 0; border-top: 1px solid rgba(255,255,255,0.10); padding-top: 0.85rem; }
+      .wib-methode b { color: #c4d0ce; font-weight: 600; }
 
       .wib-ms { padding-top: 0.25rem; padding-bottom: 0.85rem; }
-      .wib-ms__node { position: absolute; left: 3px; top: 0.4rem; width: 9px; height: 9px; transform: rotate(45deg); background: var(--signal); box-shadow: 0 0 0 3px #1a3535; }
+      /* Meilensteine liegen zwischen den Spuren — auf der Achse, nicht in einer Spur */
+      .wib-ms__node { position: absolute; left: calc((var(--railB) + 7px) / 2 - 4px); top: 0.4rem; width: 9px; height: 9px; transform: rotate(45deg); background: var(--signal); box-shadow: 0 0 0 3px #1a3535; }
       .wib--future .wib-ms__node { background: #1a3535; border: 1.5px solid var(--signal); }
       .wib-ms__date { display: inline-block; font-family: 'Inter', sans-serif; font-size: 11px; color: #1a3535; background: var(--signal); padding: 2px 7px; border-radius: 3px; font-weight: 600; margin-right: 0.5rem; vertical-align: middle; }
       .wib-ms__label { font-family: 'Inter', sans-serif; font-size: 12.5px; color: #93a09c; }
@@ -813,21 +845,30 @@
       .wib-ms__tag--gap { color: #9fb0ac; border-color: rgba(159,176,172,0.45); font-style: italic; }
 
       .wib-heute { padding-top: 0.15rem; padding-bottom: 0.85rem; }
-      .wib-heute__node { position: absolute; left: 3px; top: 0.3rem; width: 9px; height: 9px; border-radius: 50%; background: var(--tommy-rot); box-shadow: 0 0 0 3px #1a3535; }
+      .wib-heute__node { position: absolute; left: calc((var(--railB) + 7px) / 2 - 4px); top: 0.3rem; width: 9px; height: 9px; border-radius: 50%; background: var(--tommy-rot); box-shadow: 0 0 0 3px #1a3535; }
       .wib-heute__txt { display: inline-block; font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: #ffffff; background: var(--tommy-rot); padding: 3px 9px; border-radius: 3px; font-weight: 700; }
 
       .wib-tail { padding-top: 0.15rem; min-height: 44px; }
       .wib-tail__txt { font-family: 'Inter', sans-serif; font-size: 11px; color: #9fb0ac; font-style: italic; }
 
       @media (prefers-reduced-motion: no-preference) {
-        .wib--reveal .wib-item, .wib--reveal .wib-ms, .wib--reveal .wib-heute { opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; }
-        .wib--reveal.is-in .wib-item, .wib--reveal.is-in .wib-ms, .wib--reveal.is-in .wib-heute { opacity: 1; transform: none; }
+        .wib--reveal .wib-item, .wib--reveal .wib-ms, .wib--reveal .wib-heute, .wib--reveal .wib-luecke { opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .wib--reveal.is-in .wib-item, .wib--reveal.is-in .wib-ms, .wib--reveal.is-in .wib-heute, .wib--reveal.is-in .wib-luecke { opacity: 1; transform: none; }
       }
       @media (max-width: 600px) {
         .wib__title { font-size: 22px; }
         .wib-legend__item { max-width: 100%; }
         .wib-headline { font-size: 15.5px; }
         .wib-scroll { max-height: 62vh; }
+        .wib-strip { grid-template-columns: 1fr; row-gap: 2px; }
+        .wib-lane, .wib-strip__mons { grid-column: 1; }
+        .wib-strip__lbl { text-align: left; }
+        .wib-strip__lbl b { font-size: 9.5px; }
+        .wib-strip__lbl small { display: inline; margin-left: 0.35rem; }
+        .wib-strip__ov { left: 0; }
+        .wib-strip__klammer { display: none; }
+        .wib-axis { --railB: 24px; --pad: 2.9rem; }
+        .wib-luecke__num { font-size: 18px; }
       }
     </style>
     <div class="container">
@@ -836,7 +877,7 @@
         <h2 class="wib__title">Wärmewende im Blick</h2>
         <span class="wib__updated" id="wib-updated"></span>
       </div>
-      <p class="wib__lead">Nah dran an dem, was über die Erfurter Wärmewende berichtet wird — wann, von wem, und was fehlt. Laufend ergänzt.</p>
+      <p class="wib__lead">Nah dran an dem, was über die Erfurter Wärmewende berichtet wird — wann, von wem, und was fehlt. Seit Juni verschiebt sich der Rahmen im Wochentakt, während die lokale Übersetzung ausbleibt. Laufend ergänzt.</p>
       <p style="font-family:'Inter',sans-serif;font-size:12.5px;color:#8fa09c;line-height:1.6;margin:-0.9rem 0 0.9rem;">Das hier ist der <strong style="color:#c4d0ce;font-weight:600;">Diskurs</strong> — was berichtet wird. Den <strong style="color:#c4d0ce;font-weight:600;">Plan</strong> selbst zeigen wir aus zwei Blickwinkeln:</p>
       <div class="kwp-duo">
         <a href="kwp-erfurt.html" class="kwp-duo__btn">
@@ -851,6 +892,7 @@
         </a>
       </div>
       <div id="wib-mount"><p class="wib-loading">Zeitstrahl wird geladen …</p></div>
+      <p class="wib-methode"><b>Wie erhoben:</b> Die Einträge bis zum 9. Juni stammen aus einer dokumentierten Stichprobe von 26 Ausschnitten. Für den Zeitraum vom 10. Juni bis 24. Juli wurde jede Ausgabe angesehen und jede Seite auf die Themen Wärmeplanung, Fernwärme, Wärmepumpe, Heizungsrecht, Förderung, Energiepreise und Wohnkosten geprüft. Erfasst sind Print und E-Paper. Rein digital ausgespielte Beiträge sind nicht erfasst.</p>
     </div>
     <script>
       (function () {
@@ -868,6 +910,36 @@
           return { key: 'neutral', cls: 'neutral', label: (t === 'erklaerend' ? 'erklärend' : 'sachlich') };
         }
 
+        /* Spuren: fehlt 'ebene', gilt 'erfurt' — die Datei bleibt abwärtskompatibel */
+        function spur(e) { var v = e.ebene; return (v === 'rahmen' || v === 'beide') ? v : 'erfurt'; }
+        function istRahmen(e) { var s = spur(e); return s === 'rahmen' || s === 'beide'; }
+        function istErfurt(e) { var s = spur(e); return s === 'erfurt' || s === 'beide'; }
+        function istErfurtWaerme(e) { return istErfurt(e) && e.waermebezug !== false; }
+
+        /* Lücken einer Spur, inklusive der noch offenen am Ende des Korpus */
+        function luecken(list, endeISO, minTage) {
+          var out = [];
+          for (var i = 1; i < list.length; i++) {
+            var g = days(list[i].datum, list[i - 1].datum);
+            if (g >= minTage) out.push({ tage: g, von: list[i - 1].datum, bis: list[i].datum, offen: false });
+          }
+          if (list.length) {
+            var letzte = list[list.length - 1].datum, go = days(endeISO, letzte);
+            if (go >= minTage) out.push({ tage: go, von: letzte, bis: endeISO, offen: true });
+          }
+          return out;
+        }
+
+        /* Zusatz zum Lückenlabel kommt aus den Daten, nicht aus dem Code */
+        function fensterHinweis(fenster, von, bis) {
+          for (var i = 0; i < fenster.length; i++) {
+            var f = fenster[i];
+            if (!f.von || !f.bis) continue;
+            if (parse(von) <= parse(f.bis) && parse(bis) >= parse(f.von)) return f.kurz || f.label || '';
+          }
+          return '';
+        }
+
         fetch('daten/medien-zeitstrahl.json', { cache: 'no-cache' })
           .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
           .then(render)
@@ -881,6 +953,7 @@
           var ms = (data.meilensteine || []).slice();
           if (!entries.length) { mount.innerHTML = ''; return; }
 
+          var fenster = data.zeitfenster || [];
           var firstISO = entries[0].datum;
           var lastEntryISO = entries[entries.length - 1].datum;
           var lastEntryLabel = String(entries[entries.length - 1].datumLabel).replace(/^ca\.\s*/, '');
@@ -890,6 +963,9 @@
           entries.forEach(function (e) { tally[toneInfo(e.ton).key]++; });
           document.getElementById('wib-updated').innerHTML = 'zuletzt ergänzt am <b>' + esc(lastEntryLabel) + '</b>';
 
+          var rahmenL = entries.filter(istRahmen);
+          var erfurtL = entries.filter(istErfurtWaerme);
+
           /* Achsen-Spanne der Leiste: erster Eintrag → spätester Meilenstein/heute */
           var endISO = lastEntryISO;
           ms.forEach(function (m) { if (parse(m.datum) > parse(endISO)) endISO = m.datum; });
@@ -897,75 +973,125 @@
           var span = Math.max(1, days(endISO, firstISO));
           function pct(iso) { return Math.max(0, Math.min(100, days(iso, firstISO) / span * 100)); }
 
-          /* Größte Funkstille (Eintrag → Eintrag) generisch ermitteln */
-          var bigGap = null;
-          for (var i = 1; i < entries.length; i++) {
-            var g = days(entries[i].datum, entries[i - 1].datum);
-            if (g >= 12 && (!bigGap || g > bigGap.g)) bigGap = { g: g, from: entries[i - 1].datum, to: entries[i].datum };
+          /* Funkstille je Spur — Bezugsende ist das Korpus-Ende, nicht heute */
+          var erfurtGaps = luecken(erfurtL, lastEntryISO, 12);
+          var erfurtMax = null;
+          erfurtGaps.forEach(function (g) { if (!erfurtMax || g.tage > erfurtMax.tage) erfurtMax = g; });
+          var rahmenMax = null;
+          luecken(rahmenL, lastEntryISO, 21).forEach(function (g) { if (!rahmenMax || g.tage > rahmenMax.tage) rahmenMax = g; });
+          var rahmenGaps = rahmenMax ? [rahmenMax] : [];
+
+          /* --- Horizontale Leiste, zwei Spuren --- */
+          function laneTicks(pred) {
+            var s = '', seen = {};
+            entries.forEach(function (e) {
+              if (!pred(e)) return;
+              var cls = (e.waermebezug === false) ? 'ohne' : toneInfo(e.ton).cls;
+              var base = pct(e.datum), n = seen[e.datum] || 0; seen[e.datum] = n + 1;
+              s += '<span class="wib-tick wib-tick--' + cls + '" style="left:' + (base + n * 0.9) + '%"></span>';
+            });
+            return s;
+          }
+          function laneGaps(list) {
+            return list.map(function (g) {
+              var a = pct(g.von), b = pct(g.bis);
+              return '<span class="wib-lane__gap" style="left:' + a + '%;width:' + Math.max(0, b - a) + '%"></span>';
+            }).join('');
+          }
+          var klammern = entries.filter(function (e) { return spur(e) === 'beide'; })
+            .map(function (e) { return '<span class="wib-strip__klammer" style="left:' + pct(e.datum) + '%"></span>'; }).join('');
+
+          /* Monatsbeschriftung generisch über die Achsenspanne */
+          var months = '', mY = parse(firstISO).getFullYear(), mM = parse(firstISO).getMonth();
+          for (var mi = 0; mi < 60; mi++) {
+            mM++; if (mM > 11) { mM = 0; mY++; }
+            var mIso = mY + '-' + ('0' + (mM + 1)).slice(-2) + '-01';
+            if (parse(mIso) > parse(endISO)) break;
+            var mp = days(mIso, firstISO) / span * 100;
+            if (mp >= 0 && mp < 94) months += '<span class="wib-strip__mon" style="left:' + mp + '%">' + MONTHS[mM] + '</span>';
           }
 
-          /* --- Horizontale Leiste --- */
-          var ticks = '', seen = {};
-          entries.forEach(function (e) {
-            var ti = toneInfo(e.ton), base = pct(e.datum);
-            var n = seen[e.datum] || 0; seen[e.datum] = n + 1;
-            ticks += '<span class="wib-tick wib-tick--' + ti.cls + '" style="left:' + (base + n * 0.9) + '%"></span>';
-          });
-          var gapHtml = '';
-          if (bigGap) { var a = pct(bigGap.from), b = pct(bigGap.to); gapHtml = '<span class="wib-strip__gap" style="left:' + a + '%;width:' + (b - a) + '%"></span>'; }
-          var months = '';
-          [['2026-05-01', 'Mai'], ['2026-06-01', 'Juni'], ['2026-07-01', 'Juli']].forEach(function (m) {
-            var p = days(m[0], firstISO) / span * 100;
-            if (p > 1 && p < 99) months += '<span class="wib-strip__mon" style="left:' + p + '%">' + m[1] + '</span>';
-          });
-          var lastEntryPct = pct(lastEntryISO);
-          var aria = 'Übersicht: ' + entries.length + ' Beiträge zwischen ' + entries[0].datumLabel + ' und ' + lastEntryLabel + ', davon ' + tally.kritisch + ' kritisch. Danach läuft der Zeitstrahl offen weiter.';
+          var aria = 'Zwei Spuren auf einer Zeitachse. Oben der Rahmen: ' + rahmenL.length + ' Beiträge zu Bund und Land. ' +
+            'Unten Erfurt: ' + erfurtL.length + ' Beiträge mit Wärmebezug' +
+            (erfurtMax ? ', mit einer Lücke von ' + erfurtMax.tage + ' Tagen ohne Beitrag zur Erfurter Wärmeplanung' : '') + '.';
           var strip =
             '<div class="wib-strip" role="img" aria-label="' + esc(aria) + '">' +
-              gapHtml +
-              '<div class="wib-strip__line"></div>' +
-              ticks +
-              '<span class="wib-strip__heute" style="left:' + pct(hISO) + '%"></span>' +
-              '<span class="wib-strip__fade" style="left:' + lastEntryPct + '%"></span>' +
-              '<span class="wib-strip__more">läuft weiter →</span>' +
-              months +
+              '<div class="wib-strip__lbl"><b>Der Rahmen</b><small>Bund und Land</small></div>' +
+              '<div class="wib-lane wib-lane--rahmen"><span class="wib-lane__line"></span>' + laneGaps(rahmenGaps) + laneTicks(istRahmen) + '</div>' +
+              '<div class="wib-strip__lbl"><b>Erfurt</b><small>lokal berichtet</small></div>' +
+              '<div class="wib-lane wib-lane--erfurt"><span class="wib-lane__line"></span>' + laneGaps(erfurtGaps) + laneTicks(istErfurt) + '</div>' +
+              '<div class="wib-strip__mons">' + months + '</div>' +
+              '<div class="wib-strip__ov">' + klammern +
+                '<span class="wib-strip__heute" style="left:' + pct(hISO) + '%"></span>' +
+                '<span class="wib-strip__fade" style="left:' + pct(lastEntryISO) + '%"></span>' +
+                '<span class="wib-strip__more">läuft weiter →</span>' +
+              '</div>' +
             '</div>';
 
           var tallyHtml = '<p class="wib-tally"><b>' + entries.length + ' Beiträge</b> · ' +
             tally.zustimmend + ' zustimmend · ' + tally.neutral + ' erklärend/sachlich · ' +
             '<b style="color:#e0954a">' + tally.kritisch + ' kritisch</b></p>';
 
+          /* Zweite Kennzahl: gerechnet ab dem jüngsten Erfurt-Eintrag mit Wärmebezug */
+          if (erfurtL.length) {
+            var anker = erfurtL[erfurtL.length - 1], nachR = 0, nachE = 0;
+            entries.forEach(function (e) {
+              if (parse(e.datum) <= parse(anker.datum)) return;
+              if (istRahmen(e)) nachR++;
+              if (istErfurtWaerme(e)) nachE++;
+            });
+            if (nachR || nachE) {
+              tallyHtml += '<p class="wib-tally wib-tally--spur">Seit dem <b>' +
+                esc(String(anker.datumLabel).replace(/^ca\.\s*/, '')) + '</b>: <b>' + nachR + '</b> ' +
+                (nachR === 1 ? 'Beitrag' : 'Beiträge') + ' zum Rahmen · <b>' + nachE + '</b> zur Erfurter Wärmeplanung</p>';
+            }
+          }
+
           var legendHtml =
             '<div class="wib-legend">' +
               legItem('background:#7ab8b5', '', 'zustimmend', 'übernimmt die offizielle Sicht, ohne sie zu hinterfragen') +
               legItem('background:#b9c2c7', '', 'erklärend · sachlich', 'informiert neutral, hilft verstehen') +
               legItem('', 'wib-legend__sw--ring', 'kritisch', 'hinterfragt, bezieht Position') +
-            '</div>';
+              legItem('background:#1a3535;border:2.5px solid rgba(255,255,255,0.42)', '', 'ohne Wärmebezug', 'zählt mit, ist aber kein Beitrag zur Wärme') +
+            '</div>' +
+            '<p class="wib-legend__note">In der Achse unten: Beiträge zum Rahmen liegen an der linken Schiene' +
+            '<span class="wib-legend__rail" style="background:var(--petrol-light);opacity:0.6"></span>, ' +
+            'Erfurter Beiträge an der rechten<span class="wib-legend__rail" style="background:var(--signal);opacity:0.6"></span>. ' +
+            'Der 6. Mai steht in beiden Spuren und trägt darum einen zweifarbigen Ring.</p>';
 
           /* --- Vertikale, proportionale Achse --- */
           var items = [];
           entries.forEach(function (e) { items.push({ k: 'entry', iso: e.datum, d: e }); });
           ms.forEach(function (m) { items.push({ k: 'ms', iso: m.datum, d: m }); });
+          rahmenGaps.forEach(function (g) {
+            items.push({ k: 'gapline', iso: g.von, d: { text: '<b>' + g.tage + ' Tage</b> ohne Bewegung im Rahmen' } });
+          });
+          erfurtGaps.forEach(function (g) {
+            var hinweis = fensterHinweis(fenster, g.von, g.bis);
+            if (g === erfurtMax) {
+              var ohne = entries.filter(function (e) {
+                return e.waermebezug === false && parse(e.datum) > parse(g.von) && parse(e.datum) <= parse(g.bis);
+              });
+              items.push({ k: 'luecke', iso: g.von, d: { tage: g.tage, hinweis: hinweis, ohne: ohne } });
+            } else {
+              items.push({ k: 'gapline', iso: g.von, d: { text: '<b>' + g.tage + ' Tage</b> ohne Beitrag zur Erfurter Wärmeplanung' + (hinweis ? ' <em>— ' + esc(hinweis) + '</em>' : '') } });
+            }
+          });
           items.push({ k: 'heute', iso: hISO, d: { datumLabel: heuteLabel() } });
-          var ord = { entry: 0, heute: 1, ms: 2 };
+          var ord = { entry: 0, gapline: 1, luecke: 1, heute: 2, ms: 3 };
           items.sort(function (x, y) { var t = parse(x.iso) - parse(y.iso); return t !== 0 ? t : ord[x.k] - ord[y.k]; });
 
-          var PXD = 5, MIN = 16, MAX = 150, html = '', prevISO = null, prevEntryISO = null;
+          var PXD = 5, MIN = 16, MAX = 150, html = '', prevISO = null;
           items.forEach(function (it) {
             var future = parse(it.iso) > parse(lastEntryISO);
             if (prevISO) {
-              var h = Math.max(MIN, Math.min(MAX, days(it.iso, prevISO) * PXD)), gapLabel = '';
-              if (it.k === 'entry' && prevEntryISO === prevISO) {
-                var ge = days(it.iso, prevEntryISO);
-                if (ge >= 12) {
-                  var within = parse(it.iso) <= parse('2026-06-03');
-                  gapLabel = '<span class="wib-gap">' + ge + ' Tage ohne Bericht' + (within ? ' <em>— mitten in der Einspruchsfrist</em>' : '') + '</span>';
-                }
-              }
-              html += '<div class="wib-spacer' + (future ? ' wib--future' : '') + '" style="height:' + h + 'px">' + gapLabel + '</div>';
+              var h = Math.max(MIN, Math.min(MAX, days(it.iso, prevISO) * PXD));
+              html += '<div class="wib-spacer' + (future ? ' wib--future' : '') + '" style="height:' + h + 'px"></div>';
             }
-            if (it.k === 'entry') { html += entryHtml(it.d, future); prevEntryISO = it.iso; }
+            if (it.k === 'entry') { html += entryHtml(it.d, future); }
             else if (it.k === 'ms') { html += msHtml(it.d, future); }
+            else if (it.k === 'gapline') { html += gaplineHtml(it.d, future); }
+            else if (it.k === 'luecke') { html += lueckeHtml(it.d, future); }
             else { html += heuteHtml(it.d); }
             prevISO = it.iso;
           });
@@ -978,7 +1104,7 @@
           var section = document.getElementById('medien-zeitstrahl');
           var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
           if (!reduce && 'IntersectionObserver' in window) {
-            var nodes = mount.querySelectorAll('.wib-item, .wib-ms, .wib-heute');
+            var nodes = mount.querySelectorAll('.wib-item, .wib-ms, .wib-heute, .wib-luecke');
             for (var k = 0; k < nodes.length; k++) nodes[k].style.transitionDelay = Math.min(k * 50, 400) + 'ms';
             section.classList.add('wib--reveal');
             var io = new IntersectionObserver(function (es) {
@@ -996,14 +1122,17 @@
         }
         function entryHtml(e, future) {
           var ti = toneInfo(e.ton);
+          var sp = spur(e), ohne = (e.waermebezug === false);
           var link = e.link ? ' · <a href="' + esc(e.link) + '" target="_blank" rel="noopener">Original ansehen →</a>' : '';
-          return '<div class="wib-item wib-item--' + ti.cls + (future ? ' wib--future' : '') + '">' +
+          return '<div class="wib-item wib-item--' + ti.cls + ' wib-item--sp-' + sp + (ohne ? ' wib-item--ohne' : '') + (future ? ' wib--future' : '') + '">' +
+            (sp === 'beide' ? '<span class="wib-item__klammer" title="steht in beiden Spuren"></span>' : '') +
             '<span class="wib-item__dot"></span>' +
             '<details class="wib-det">' +
               '<summary>' +
                 '<span class="wib-chev">▸</span>' +
                 '<span class="wib-date">' + esc(e.datumLabel) + '</span>' +
                 '<span class="wib-ton">' + esc(ti.label) + '</span>' +
+                (ohne ? '<span class="wib-ton wib-ton--ohne">ohne Wärmebezug</span>' : '') +
                 '<span class="wib-headline">' + esc(e.headline) + '</span>' +
               '</summary>' +
               '<div class="wib-body">' +
@@ -1025,6 +1154,25 @@
         }
         function heuteHtml(h) {
           return '<div class="wib-heute"><span class="wib-heute__node"></span><span class="wib-heute__txt">Heute · ' + esc(h.datumLabel) + '</span></div>';
+        }
+        function gaplineHtml(d, future) {
+          return '<div class="wib-gapline' + (future ? ' wib--future' : '') + '"><span class="wib-gapline__txt">' + d.text + '</span></div>';
+        }
+        function lueckeHtml(d, future) {
+          var hinweis = '';
+          if (d.ohne && d.ohne.length) {
+            hinweis = 'Der Lokalteil hat in dieser Zeit gearbeitet: der Beitrag vom ' +
+              d.ohne.map(function (e) { return String(e.datumLabel).replace(/^ca\.\s*/, ''); }).join(' und ') +
+              ' hat keinen Wärmebezug.';
+          }
+          if (d.hinweis) hinweis = (hinweis ? hinweis + ' ' : '') + '— ' + d.hinweis;
+          return '<div class="wib-luecke' + (future ? ' wib--future' : '') + '">' +
+            '<div class="wib-luecke__band">' +
+              '<span class="wib-luecke__num">' + d.tage + ' Tage</span>' +
+              '<span class="wib-luecke__txt">ohne Beitrag zur Erfurter Wärmeplanung</span>' +
+              (hinweis ? '<span class="wib-luecke__hint">' + esc(hinweis) + '</span>' : '') +
+            '</div>' +
+          '</div>';
         }
       })();
     </script>
