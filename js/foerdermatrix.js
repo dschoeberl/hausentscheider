@@ -207,8 +207,12 @@
     }).join('');
 
     var nettoFW = investFW - zuschuss(investFW, we, heute, satzFW, fs);
-    var lz = laufzeitkosten(r, nettoFW, bestNetto);
     var hk = hoechstkosten(we, heute, fs);
+    // Die Laufzeitrechnung gehört an die Stelle, die auch die Investitionen zeigt,
+    // aus denen sie folgt. Seiten mit abweichenden Investitionswerten verweisen
+    // stattdessen dorthin — lieber ein Link als eine zweite Zahl.
+    var verweis = el.getAttribute('data-laufzeit-verweis');
+    var lz = verweis ? null : laufzeitkosten(r, nettoFW, bestNetto);
 
     var html =
       '<div class="fm__eingaben">' +
@@ -232,8 +236,12 @@
         'die Spalte, die sich nie bewegt. Der günstigere Einstieg entscheidet die Sache nicht: ' +
         (lz
           ? 'Über ' + lz.jahre + ' Jahre liegt die Fernwärme am Referenzobjekt bei rund <b>' + tsd(lz.fw) + '</b>, ' +
-            'die Wärmepumpe bei rund <b>' + tsd(lz.wp) + '</b>.'
-          : 'Über die Laufzeit dreht sich das Bild — siehe den Kostenvergleich über 25 Jahre.') + '</p>' +
+            'die Wärmepumpe bei rund <b>' + tsd(lz.wp) + '</b> — nominal, mit jährlicher Preissteigerung ' +
+            '(Fernwärme +' + Math.round(r.steigerung_pa.fernwaerme * 1000) / 10 + ' %, WP-Strom +' +
+            String(Math.round(r.steigerung_pa.wp_strom * 1000) / 10).replace('.', ',') + ' %; ' +
+            'im Rahmen der SWE-Prognose „Verdopplung bis 2040").'
+          : 'Über die Laufzeit dreht sich das Bild. Den Kostenvergleich über 25 Jahre samt Preisannahmen ' +
+            'zeigt das <a href="' + esc(verweis) + '">Referenzgebäude auf der Startseite</a>.') + '</p>' +
       '<p class="fm__zeile">Förderfähige Höchstkosten bei ' + we + (we === 1 ? ' Wohneinheit' : ' Wohneinheiten') + ': <b>' + eur(hk) + '</b> — ' +
         (investWP <= hk
           ? 'die Investition liegt darunter, die Grenze greift hier nicht.'

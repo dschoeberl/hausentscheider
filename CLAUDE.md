@@ -50,6 +50,18 @@ Schritt für Schritt. Keine neuen Baustellen aufmachen.
    und frag, ob sie mitgezogen werden sollen. Entscheide das nicht
    selbstständig.
 
+9. **Jede Zahl hat genau eine Quelle.** Ein Wert, der an mehr als
+   einer Stelle erscheint, steht in einer Datendatei und wird von
+   dort gelesen — kein Zahlenwert mehr direkt im HTML. Fördersätze
+   und Stichtage in `daten/parameter.json`, Objektwerte in
+   `daten/theaterstrasse-4.json` bzw. `daten/gebaeude.js`.
+   Wo eine Spiegelung technisch nötig ist, gehört ein Kommentar
+   daneben, der die maßgebliche Quelle nennt.
+
+   Zu jeder Zahl gehört ihr Bezug. Zwei verschiedene Bezugsgrößen
+   ergeben zwei richtige Zahlen — dann müssen beide Bezüge dabeistehen,
+   sonst liest sich die eine als Fehler der anderen.
+
 ## Umgang mit strategischen Dokumenten
 
 Das Gesamtkonzept und das Farbsystem sind strategische Referenz.
