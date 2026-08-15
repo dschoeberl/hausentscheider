@@ -528,7 +528,7 @@
   </div>
   <!-- /MONAT -->
 
-  <div class="meth">
+  <div class="meth" id="methodik">
     <details>
       <summary>Wie diese Zahlen entstehen — Quellen, Einheiten, Umrechnung</summary>
       <div class="meth__body">
@@ -598,6 +598,29 @@
   </p>
 
 </div>
+
+<script>
+  // Aufruf mit #methodik (z. B. aus dem Fußtext der Startseite) klappt den
+  // Methodik-Block auf und springt hin — sonst landet man auf einer zugeklappten
+  // Zeile und sieht nicht, dass da etwas ist.
+  (function () {
+    function oeffneMethodik() {
+      if (location.hash !== '#methodik') return;
+      var box = document.getElementById('methodik');
+      if (!box) return;
+      var det = box.querySelector('details');
+      if (det) det.open = true;
+      // 'auto' statt der Seiten-Voreinstellung 'smooth': Der Block liegt ganz
+      // unten, eine Animation über die volle Seitenlänge hilft niemandem.
+      box.scrollIntoView({ behavior: 'auto', block: 'start' });
+    }
+    oeffneMethodik();
+    // Nochmal nach dem Laden: bis dahin sind Bilder und Schriften da, vorher
+    // verschiebt sich das Layout unter dem Sprungziel weg.
+    window.addEventListener('load', oeffneMethodik);
+    window.addEventListener('hashchange', oeffneMethodik);
+  })();
+</script>
 
 <!-- FOOTER -->
 <footer class="footer">
