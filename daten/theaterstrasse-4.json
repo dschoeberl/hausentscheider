@@ -56,7 +56,7 @@
   ],
   "rechner": {
     "wp_invest": 132000,
-    "wp_foerd_pct": 58,
+    "wp_foerd_pct": 30,
     "ruecklage": 55000,
     "gas_invest": 25000,
     "fw_invest": 13650,
@@ -81,7 +81,7 @@
     "preise_ct_brutto": { "gas": 10.2, "fernwaerme": 18.8, "wp_strom": 25 },
     "steigerung_pa": { "gas": 0.03, "fernwaerme": 0.04, "wp_strom": 0.025 },
     "invest_eur": { "fernwaerme": 31500, "wp": 130000 },
-    "wp_foerderung_anteil": 0.35,
+    "wp_foerderung_anteil": 0.30,
     "ist_eur_m2_monat_2025": 1.30
   }
 }

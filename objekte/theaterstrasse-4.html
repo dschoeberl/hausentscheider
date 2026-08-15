@@ -442,6 +442,8 @@
 
     <p data-foerderstand data-pruefvermerk><b>Förderstand 21.07.2026.</b> Die förderfähigen Kosten und der Klimageschwindigkeitsbonus sinken halbjährlich. Für Wärmepumpen sinkt die Grundförderung zum 1. Januar 2027 von 30 auf 15 Prozent. Maßgeblich ist der Tag der Antragstellung, nicht der Tag der Entscheidung. <em>Die Förderangaben auf dieser Seite werden derzeit an der Förderrichtlinie vom 17.07.2026 überprüft.</em></p>
 
+    <div data-foerdermatrix></div>
+
     <!-- DREI KARTEN -->
     <div class="invest-grid" id="invest-grid">
 
@@ -455,7 +457,7 @@
         </div>
         <div style="flex:1;">
           <div class="invest-zeile"><span style="color:var(--text-secondary);">Brutto-Investition</span><span class="invest-val" id="wp-invest">132.000 €</span></div>
-          <div class="invest-zeile"><span style="color:var(--text-secondary);" id="wp-foerd-lbl">BEG-Förderung (58%)</span><span class="invest-val invest-val--gut" id="wp-foerd-val">–77.000 €</span></div>
+          <div class="invest-zeile"><span style="color:var(--text-secondary);" id="wp-foerd-lbl">BEG-Förderung (30%)</span><span class="invest-val invest-val--gut" id="wp-foerd-val">–39.600 €</span></div>
           <div class="invest-zeile invest-zeile--highlight"><span style="color:var(--text-secondary);font-weight:500;">offener Restbetrag</span><span class="invest-val" id="wp-eigenanteil">55.000 €</span></div>
           <div class="invest-zeile" style="flex-direction:column;align-items:flex-start;gap:2px;">
             <div style="display:flex;justify-content:space-between;width:100%;"><span style="color:var(--text-secondary);">Sonderumlage/WE</span><span class="invest-val" id="wp-sonderumlage">0 €</span></div>
@@ -545,7 +547,7 @@
           </p>
           <p>
             ⚡ <strong>Wärmepumpe</strong> hat die höchste Investition, aber die niedrigsten Betriebskosten,
-            58% Bundesförderung und −64% CO₂-Ausstoß. Der entscheidende Hebel ist die JAZ:
+            30% Bundesförderung und −64% CO₂-Ausstoß. Der entscheidende Hebel ist die JAZ:
             je effizienter die Anlage, desto günstiger der effektive Wärmepreis.
           </p>
           <div>
@@ -1211,6 +1213,7 @@
       })
       .catch(() => {}); // Fallback: Standardwerte bleiben
   </script>
+  <script src="../js/foerdermatrix.js"></script>
   <script src="../js/foerderstand.js"></script>
 </body>
 </html>
