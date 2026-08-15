@@ -1529,16 +1529,17 @@
 
       <!-- Anschlusszwang-Gebiet — steuert die Förderfähigkeit je System -->
       <div class="wizard-field">
-        <span class="wizard-field__label">Liegt Ihr Gebäude im Anschlusszwang-Gebiet?
+        <span class="wizard-field__label">Hat Ihre Kommune für Ihr Grundstück den Anschluss ans Wärmenetz entschieden?
           <span class="info-tip" tabindex="0" aria-label="Info Anschlusszwang">ⓘ
-            <span class="info-tip__pop">Der Zwang gilt nur, wenn eine betriebsfertige Fernwärmeleitung anliegt und Ihr Grundstück im Satzungsgebiet liegt. Im bloßen KWP-Ausbaugebiet (Fernwärme nur geplant, noch keine Leitung) besteht er heute nicht — dann ist die Wärmepumpe regulär förderfähig. Prüfen über den SWE-Verfügbarkeitscheck (siehe „Mehr dazu" unten).<span class="info-tip__src">Rechtlich in Prüfung · Satzung 3.008 § 5.</span></span>
+            <span class="info-tip__pop">Die Förderrichtlinie knüpft nicht an die gebaute Leitung an, sondern an die kommunale Entscheidung: Der Förderausschluss greift, „wenn und soweit eine Kommune beziehungsweise die zuständige Stelle eine entsprechende Entscheidung getroffen und transparent gemacht hat". Ist ein Gebiet im Wärmeplan nur als Ausbaugebiet ausgewiesen, ohne angepasste Satzung und ohne Bekanntmachung, ist die Lage ungeklärt.<span class="info-tip__src">BEG EM vom 17.07.2026, Anlage TMA · gleichlautend KfW-Merkblatt 458 · Satzung 3.008 § 5.</span></span>
           </span>
         </span>
-        <div class="seg" role="radiogroup" aria-label="Anschlusszwang-Gebiet">
+        <div class="seg" role="radiogroup" aria-label="Kommunale Entscheidung zum Wärmenetzanschluss">
           <button type="button" class="seg__btn seg__btn--active" data-set="anschlusszwang" data-val="nein">Nein</button>
+          <button type="button" class="seg__btn" data-set="anschlusszwang" data-val="ungeklaert">Ungeklärt</button>
           <button type="button" class="seg__btn seg__btn--warn" data-set="anschlusszwang" data-val="ja">Ja</button>
         </div>
-        <p class="wizard-field__hint">Nur bei bereits <strong>gebauter</strong> Fernwärmeleitung. Ist Fernwärme bei Ihnen nur geplant (KWP-Ausbaugebiet): eher „Nein" — sicher wissen Sie es über den SWE-Verfügbarkeitscheck (siehe „Mehr dazu" unten).</p>
+        <p class="wizard-field__hint"><strong>Nein</strong> — keine kommunale Entscheidung für Ihr Grundstück: Wärmepumpe regulär förderfähig. <strong>Ja</strong> — Entscheidung getroffen und bekannt gemacht: nur der Wärmenetzanschluss ist förderfähig. <strong>Ungeklärt</strong> — Ausbaugebiet ausgewiesen, aber keine wirksame Satzung und keine Bekanntmachung: Dann rechnet die Seite Ihnen nichts vor, sondern lässt Sie die Förderquote selbst setzen.</p>
       </div>
 
       <!-- Konditional: nur bei Anschlusszwang = ja -->
@@ -1959,12 +1960,15 @@
           <p id="stichtag-hinweis" class="stichtag-hinweis" hidden></p>
           <p id="kaeltemittel-hinweis" class="stichtag-hinweis stichtag-hinweis--warn" hidden></p>
 
+          <p id="zwang-ungeklaert-hinweis" class="stichtag-hinweis" hidden>Für Ihr Grundstück ist ungeklärt, ob der Förderausschluss greift. Die Seite entscheidet das nicht — stellen Sie die Quote selbst ein. Die belegten Zustände sind als Rastpunkte markiert. <a href="foerderparadoxon.html">Woran der Ausschluss hängt →</a></p>
+
           <div class="slider-row">
             <label>
               <span><span>Förderquote gesamt</span><output id="out-foerderung">46 %</output></span>
-              <input type="range" id="slider-foerderung" min="0" max="70" step="1" value="46">
+              <input type="range" id="slider-foerderung" min="0" max="70" step="1" value="46" list="foerder-raster">
             </label>
-            <small style="font-size:11px;color:var(--text-tertiary);line-height:1.4;">Spiel mit der Quote — die Toggles unten zeigen, woraus sie sich zusammensetzt.</small>
+            <datalist id="foerder-raster"></datalist>
+            <small style="font-size:11px;color:var(--text-tertiary);line-height:1.4;">Der Regler rastet auf den Quoten ein, die die Richtlinie kennt — Grundförderung allein, mit Klimabonus, mit Einkommensbonus, und null.</small>
           </div>
 
           <div class="foerderung-toggles">
@@ -2122,7 +2126,8 @@
       ruecklageProWEMonat: 0,            // NEU Schritt 3 (nur MFH)
       nutzungsart: 'mischnutzung',
       persona: 'optimierer',
-      anschlusszwang: false,             // Schritt 1 — Zwanggebiet? (Default nein)
+      zwangLage: 'nein',                 // Schritt 1 — nein | ungeklaert | ja (Wortlaut BEG EM)
+      anschlusszwang: false,             // abgeleitet: nur 'ja' loest den Foerderausschluss aus
       befreiung: false,                  // Schritt 1 — Befreiung erwirkt? (nur relevant bei Zwang)
       antragsdatum: null,                // Monat des geplanten Antragseingangs; null = laufender Monat
 
@@ -2667,11 +2672,17 @@
             updateHeizlastHinweis();
             evaluateConditionals();
           } else if (field === 'anschlusszwang') {
+            // Drei Lagen nach dem Wortlaut der Richtlinie. Nur "ja" (Entscheidung
+            // getroffen und transparent gemacht) loest den Foerderausschluss aus.
+            // "ungeklaert" laesst die Sperre entfallen und den Regler wirken —
+            // die Seite behauptet dort nichts, sondern zeigt beide Welten.
+            state.zwangLage = val;
             state.anschlusszwang = (val === 'ja');
             const bef = $('#feld-befreiung');
             if (bef) bef.hidden = (val !== 'ja');
-            // Bei "nein" die Befreiung zuruecksetzen (sonst bliebe ein Alt-Wert haengen)
             if (val !== 'ja') { state.befreiung = false; syncSegButton('befreiung', 'nein'); }
+            const hw = $('#zwang-ungeklaert-hinweis');
+            if (hw) hw.hidden = (val !== 'ungeklaert');
           } else if (field === 'befreiung') {
             state.befreiung = (val === 'ja');
           }
@@ -3197,6 +3208,7 @@
         const lg = $('#lbl-grund'), lk = $('#lbl-klima');
         if (lg) lg.textContent = Math.round(s.grund * 100) + ' %';
         if (lk) lk.textContent = Math.round(s.klima * 100) + ' %';
+        if (typeof zeichneRaster === 'function') zeichneRaster();
       }
       Object.entries(toggles).forEach(([id, meta]) => {
         const el = $('#' + id);
@@ -3208,9 +3220,32 @@
           if (window.HE && window.HE.dispatch) window.HE.dispatch();
         });
       });
+      // Rastpunkte: die Quoten, die die Richtlinie zum gewählten Antragsmonat
+      // kennt. Ein freier Regler würde das Gesetz als Drehknopf darstellen.
+      function rastpunkte() {
+        const s = saetzeZumAntrag();
+        const d = s.deckel * 100;
+        const roh = [0, s.grund, s.grund + s.klima, s.grund + s.eink,
+                     s.grund + s.klima + s.eink].map(x => Math.round(Math.min(x * 100, d)));
+        return [...new Set(roh)].sort((a, b) => a - b);
+      }
+      function zeichneRaster() {
+        const dl = $('#foerder-raster');
+        if (!dl) return;
+        dl.innerHTML = rastpunkte().map(p => '<option value="' + p + '"></option>').join('');
+      }
+      function einrasten(v) {
+        const p = rastpunkte();
+        let beste = p[0];
+        p.forEach(x => { if (Math.abs(x - v) < Math.abs(beste - v)) beste = x; });
+        return Math.abs(beste - v) <= 3 ? beste : v;
+      }
+      zeichneRaster();
+
       // Master-Slider manuelles Override
       $('#slider-foerderung').addEventListener('input', e => {
-        const v = Number(e.target.value);
+        const v = einrasten(Number(e.target.value));
+        e.target.value = String(v);
         $('#out-foerderung').textContent = v + ' %';
         setOverride('schieberegler.foerderung.master', v);
         renderBericht();
