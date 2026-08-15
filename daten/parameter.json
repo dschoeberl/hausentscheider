@@ -2,6 +2,15 @@
   "version": "2.0",
   "stand": "2026-05-02",
   "quelle": "v2.1_neutral_OUTPUT.xlsx",
+  "foerderstand": {
+    "_hinweis": "Zentraler Stand-Hinweis für alle Stellen mit Förderbezug. Wird von js/foerderstand.js in jedes Element mit data-foerderstand geschrieben. Nur hier pflegen — nicht in den Seiten.",
+    "datum": "2026-07-21",
+    "label": "Förderstand 21.07.2026",
+    "text": "Die förderfähigen Kosten und der Klimageschwindigkeitsbonus sinken halbjährlich. Für Wärmepumpen sinkt die Grundförderung zum 1. Januar 2027 von 30 auf 15 Prozent. Maßgeblich ist der Tag der Antragstellung, nicht der Tag der Entscheidung.",
+    "pruefvermerk": "Die Förderangaben auf dieser Seite werden derzeit an der Förderrichtlinie vom 17.07.2026 überprüft.",
+    "quelle": "BEG EM vom 17.07.2026 (BMWE), Nummern 8.3.1, 8.4.1 und 9.2.1; KfW-Merkblatt 458, Stand 07/2026",
+    "beleg": "docs/Primaerquellen_Foerderstand_21-07-2026.md"
+  },
   "tabs": [
     "Start",
     "Parameter",
