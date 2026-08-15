@@ -21,7 +21,7 @@
       "einheit": "ct/kWh",
       "pellets_stand": "Juli 2026 — DEPI veröffentlicht den Augustwert erst um den 18.08.",
       "wp_strom_spanne": [20.7, 26.0],
-      "kontext": "Heizöl zieht weiter an: 138,4 ct/l im Bundesdurchschnitt (TECSON, 14.08.2026, 3.000 l) — das sind 13,8 ct/kWh. Gegenüber dem korrigierten Juliwert ist das nur +0,7 %; die Bewegung des Sommers liegt hinter uns, nicht in diesem Monat. Gas ~10,7 ct (Neukunde 9,8 / Bestand 11,6 / Grundversorgung 13,6, Stand 15.08.2026; BDEW-Anker April 2026: EFH 11,10 / MFH 10,87). Fernwärme unverändert 19,3 ct — der Q3-Tarif der SWE gilt bis 30.09.2026, die nächste Anpassung ist der 01.10.; der enthaltene Zertifikatepreis steht laut Preisblatt noch unter Vorbehalt. WP-Strom-Tarife weiter ~25 ct im oberen Bereich der Anbieterspanne 22–26; günstigster belegter Neukundenschnitt 20,7 ct (Verivox, 13.07.2026). Pellets 7,8 ct — noch der Julistand (DEPI 388,09 €/t bei 6 t), der Augustwert erscheint erst um den 18."
+      "kontext": "Heizöl zieht weiter an: 138,4 ct/l im Bundesdurchschnitt (TECSON, 14.08.2026, 3.000 l) — das sind 13,8 ct/kWh. Gegenüber Juli ist das nur +0,7 %; die Bewegung des Sommers liegt hinter uns, nicht in diesem Monat. Gas ~10,7 ct (Neukunde 9,8 / Bestand 11,6 / Grundversorgung 13,6, Stand 15.08.2026; BDEW-Anker April 2026: EFH 11,10 / MFH 10,87). Fernwärme unverändert 19,3 ct — der Q3-Tarif der SWE gilt bis 30.09.2026, die nächste Anpassung ist der 01.10.; der enthaltene Zertifikatepreis steht laut Preisblatt noch unter Vorbehalt. WP-Strom-Tarife weiter ~25 ct im oberen Bereich der Anbieterspanne 22–26; günstigster belegter Neukundenschnitt 20,7 ct (Verivox, 13.07.2026). Pellets 7,8 ct — noch der Julistand (DEPI 388,09 €/t bei 6 t), der Augustwert erscheint erst um den 18."
     },
     "2026-07": {
       "label": "Juli 2026",
@@ -38,7 +38,7 @@
         "vorher": { "heizoel": 11.5, "pellets": 7.5 },
         "grund": "Beim Juli-Update wurde nur die Fernwärme aktualisiert. Heizöl und Pellets standen unverändert auf dem Junistand — die Julizeile trug sogar Junis Rohwerte (117 ct/l, 377 €/t). Belegt: TECSON weist für den 14.07.2026 137,0 ct/l aus (= 13,7 ct/kWh), DEPI meldete am 16.07.2026 388,09 €/t (= 7,76 ct/kWh)."
       },
-      "kontext": "Fernwärme steigt zum 3. Quartal auf ~19,3 ct/kWh brutto (SWE-Arbeitspreis +19 %, von 11,54 auf 13,77 ct/kWh; Preisblatt Stand 1.7.2026). Heizöl 13,7 ct (TECSON 137,0 ct/l am 14.07.2026), Pellets 7,8 ct (DEPI 388,09 €/t bei 6 t, veröffentlicht 16.07.2026). Gas im Verbraucher-Schnitt ~10,5 ct (Tarifportale: Bestand 11,6 / Neukunde 9,2), WP-Strom-Tarife ~25 ct (Spanne 20–26, §14a ab ~20). — Korrigiert am 15.08.2026: Heizöl und Pellets standen hier zunächst mit den Junizahlen 11,5 bzw. 7,5."
+      "kontext": "Fernwärme steigt zum 3. Quartal auf ~19,3 ct/kWh brutto (SWE-Arbeitspreis +19 %, von 11,54 auf 13,77 ct/kWh; Preisblatt Stand 1.7.2026). Heizöl 13,7 ct (TECSON 137,0 ct/l am 14.07.2026), Pellets 7,8 ct (DEPI 388,09 €/t bei 6 t, veröffentlicht 16.07.2026). Gas im Verbraucher-Schnitt ~10,5 ct (Tarifportale: Bestand 11,6 / Neukunde 9,2), WP-Strom-Tarife ~25 ct (Spanne 20–26, §14a ab ~20)."
     },
     "2026-06": {
       "label": "Juni 2026",

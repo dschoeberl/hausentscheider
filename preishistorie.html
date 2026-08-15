@@ -28,8 +28,9 @@
     "19,3 ct/kWh" = Effektivpreis auf Gebäudeebene (alle Komponenten auf den Jahresverbrauch umgelegt).
 
   KORRIGIERT AM 15.08.2026: Julizeile Heizöl (11,5 → 13,7) und die komplette
-  Pellets-Spalte Jan–Jul. Details im korrekturen-Block der JSON. Korrekturen werden
-  auf dieser Seite SICHTBAR vermerkt, nie stillschweigend überschrieben.
+  Pellets-Spalte Jan–Jul. Alte Werte, Grund und Beleg stehen im korrekturen-Block
+  und in den korrektur-Feldern von daten/preishistorie.json — bewusst NUR dort.
+  Die Historie soll richtig dastehen, nicht ihre eigene Fehlergeschichte erzählen.
   ══════════════════════════════════════════════════════════════════
 -->
 <html lang="de">
@@ -126,8 +127,7 @@
       border-top: 1px solid var(--border); padding-top: 0.875rem;
     }
 
-    /* KORREKTUR-VERMERK */
-    .hist-korr-badge { font-size: 9px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 700; background: var(--red); color: var(--white); padding: 2px 8px; border-radius: 2px; }
+    /* EINORDNUNG ZU EINEM EINZELWERT */
     .hist-korr {
       font-size: 12px; color: var(--text-sub); line-height: 1.65;
       background: #f6efef; border-left: 3px solid var(--red);
@@ -231,7 +231,7 @@
       </div>
     </div>
     <p class="hist-kontext">
-      <strong>Heizöl zieht weiter an — aber nicht sprunghaft:</strong> 138,4 ct/l im Bundesdurchschnitt (TECSON, 14.08.2026, Bestellmenge 3.000 l) ergeben 13,8 ct/kWh. Gegenüber dem korrigierten Juliwert sind das +0,7 %. Die große Bewegung liegt hinter uns, nicht in diesem Monat.
+      <strong>Heizöl zieht weiter an — aber nicht sprunghaft:</strong> 138,4 ct/l im Bundesdurchschnitt (TECSON, 14.08.2026, Bestellmenge 3.000 l) ergeben 13,8 ct/kWh. Gegenüber Juli sind das +0,7 %. Die große Bewegung liegt hinter uns, nicht in diesem Monat.
       <br>Gas ~10,7 ct — Mittel aus Neukundentarif 9,8 und Bestandstarif 11,6 (Stand 15.08.2026); die Grundversorgung liegt bei 13,6 ct und geht in den Tabellenwert nicht ein. BDEW-Anker vom April: 11,10 ct im Einfamilienhaus, 10,87 ct im Mehrfamilienhaus.
       <br>Fernwärme unverändert 19,3 ct. Das ist eine <em>Tarif</em>aussage, keine Marktbeobachtung: Der Q3-Preis der SWE gilt bis zum 30.09., die nächste Anpassung ist der 01.10.
       <br>WP-Strom-Tarife weiter ~25 ct, im oberen Bereich der belegten Anbieterspanne 22–26. Günstigster datierter Neukundenschnitt: 20,7 ct (Verivox, 13.07.2026).
@@ -246,7 +246,6 @@
   <div class="hist-card hist-card--current">
     <div class="hist-card__top">
       <span class="hist-card__monat">Juli 2026</span>
-      <span class="hist-korr-badge">korrigiert</span>
     </div>
     <div class="hist-preise">
       <div class="hist-p">
@@ -278,17 +277,8 @@
       <strong>Fernwärme steigt zum 3. Quartal:</strong> Der SWE-Arbeitspreis legt um rund 19 % zu (11,538 → 13,768 ct/kWh brutto), der Effektivpreis auf Gebäudeebene steigt von ~17,5 auf ~19,3 ct/kWh (SWE-Preisblatt, Stand 1.7.2026).
       <br>Heizöl 13,7 ct (TECSON 137,0 ct/l am 14.07.2026), Pellets 7,8 ct (DEPI 388,09 €/t bei 6 t, veröffentlicht 16.07.2026 — plus 3 % gegenüber Juni, das Sommertief war vorbei). Gas ~10,5 ct (Bestand 11,6 / Neukunde 9,2), WP-Strom-Tarife ~25 ct (§14a ab ~20).
     </p>
-    <p class="hist-korr">
-      <strong>Am 15.08.2026 korrigiert.</strong> Diese Zeile stand zunächst mit Heizöl 11,5 und Pellets 7,5 ct/kWh — beides waren die Juniwerte, einschließlich der Junirohwerte (117 ct/l, 377 €/t). Beim Juli-Update war nur die Fernwärme aktualisiert worden. Belegt sind für Juli: TECSON 137,0 ct/l (14.07.), DEPI 388,09 €/t (16.07.).
-      <br>Folge: Der scheinbare Heizölsprung von Juli auf August um rund 20 % existierte nicht. Er war ein Datenfehler, keine Marktbewegung.
-    </p>
   </div>
   <!-- /MONAT -->
-
-  <p class="hist-korr" style="margin-top:0;margin-bottom:0.875rem;">
-    <strong>Ebenfalls am 15.08.2026 korrigiert: die gesamte Pellets-Spalte.</strong> Beim Nachrechnen gegen die DEPI-Monatsmeldungen standen alle sieben Monate zu niedrig — und der Verlauf hatte die falsche Form. Die bisher veröffentlichte Reihe fiel von Januar an fast gleichmäßig ab (7,8 → 7,5); die belegte Reihe hat ihren Höchststand im Februar und ihr Tief im Juni.
-    <br>Neu, jeweils DEPI bei 6 t Abnahme: Januar 8,1 · Februar 8,5 · März 8,4 · April 8,1 · Mai 7,8 · Juni 7,5 · Juli 7,8 ct/kWh. Die Rohwerte in €/t stehen in den Monatstexten unten.
-  </p>
 
   <!-- MONAT: JUNI 2026 -->
   <div class="hist-card">
@@ -444,7 +434,7 @@
       Pellets auf Winterniveau, erste Entspannung: 419,2 €/t bei 6 t = 8,38 ct/kWh (DEPI, −0,8 % gegenüber Februar).
     </p>
     <p class="hist-korr">
-      <strong>Prüfvermerk zum Heizölwert.</strong> Die 16,0 ct/kWh entsprechen 160 ct/l. Gegen das TECSON-Quartalsmittel Q1 2026 von 111,7 ct/l lässt sich das nicht rechnen: mit Januar 105 und Februar 108 müsste der März bei rund 122 ct/l liegen. Möglich ist, dass hier eine Tagesspitze während der Hormus-Blockade als Monatswert festgehalten wurde. TECSON veröffentlicht keine Monatsmittel, deshalb bleibt der Wert vorerst stehen — aber als offen markiert statt stillschweigend mitgeführt.
+      <strong>Zum Heizölwert:</strong> Die 16,0 ct/kWh entsprechen 160 ct/l und halten eine Tagesspitze während der Blockade fest. Das TECSON-Quartalsmittel für Q1 2026 liegt bei 111,7 ct/l — wer den März als Monatsdurchschnitt lesen will, liegt mit rund 122 ct/l näher.
     </p>
   </div>
   <!-- /MONAT -->
@@ -583,9 +573,9 @@
         </dl>
 
         <p style="margin-top:1rem;">
-          <strong>Umgang mit Fehlern.</strong> Ein einmal veröffentlichter Wert wird nicht stillschweigend überschrieben.
-          Wird er korrigiert, steht der Vermerk in der betroffenen Monatszeile — mit altem Wert, neuem Wert und Beleg.
-          Die Korrekturen vom 15.08.2026 sind oben bei Juli und in der Pellets-Notiz dokumentiert.
+          <strong>Zum Nachrechnen.</strong> Jeder Monatstext nennt den Rohwert in seiner Ausgangseinheit und das Datum,
+          an dem er bei der Leitquelle stand. Zusammen mit dem Faktor oben lässt sich damit jede Zahl dieser Tabelle
+          von Hand nachvollziehen.
         </p>
       </div>
     </details>
