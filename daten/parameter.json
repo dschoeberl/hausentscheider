@@ -11,6 +11,95 @@
     "quelle": "BEG EM vom 17.07.2026 (BMWE), Nummern 8.3.1, 8.4.1 und 9.2.1; KfW-Merkblatt 458, Stand 07/2026",
     "beleg": "docs/Primaerquellen_Foerderstand_21-07-2026.md"
   },
+  "foerdersaetze": {
+    "_hinweis": "Einzige Pflegestelle für Fördersätze. Alle Werte belegt an der Förderrichtlinie BEG EM vom 17.07.2026; Fundstelle je Wert. engine.js liest von hier, block2_rahmen ist nur noch Rückfallebene. Beleg: docs/Primaerquellen_Foerderstand_21-07-2026.md",
+    "stand": "2026-07-21",
+    "massgebliches_datum": {
+      "hinweis": "Für den Zeitpunkt der Antragstellung ist das Datum des Eingangs des Antrags beim Durchführer maßgeblich.",
+      "fundstelle": "BEG EM 9.2.1"
+    },
+    "grundfoerderung": {
+      "label": "Grundförderung Anlagen zur Wärmeerzeugung (Nr. 5.3)",
+      "wert": 0.30,
+      "fundstelle": "BEG EM 8.4.1 Buchstabe c"
+    },
+    "grundfoerderung_wp_ab": {
+      "label": "Grundförderung elektrisch angetriebene Wärmepumpen (Nr. 5.3 Buchstabe c) ab Quartal 1 2027",
+      "ab": "2027-01-01",
+      "wert": 0.15,
+      "fundstelle": "BEG EM 8.4.1 Buchstabe c"
+    },
+    "grundfoerderung_waermenetz": {
+      "label": "Wärmenetzanschluss — unverändert, keine Absenkung",
+      "wert": 0.30,
+      "fundstelle": "BEG EM 8.4.1, Tabelle"
+    },
+    "klimageschwindigkeitsbonus": {
+      "label": "Klimageschwindigkeits-Bonus",
+      "hinweis": "Nur selbstnutzende Eigentümer und nur für die selbstgenutzte Wohneinheit. In Gebäuden mit mehr als einer Wohneinheit nur anteilig.",
+      "fundstelle": "BEG EM 8.4.4",
+      "stufen": [
+        { "ab": "2026-07-21", "wert": 0.16 },
+        { "ab": "2027-02-01", "wert": 0.12 },
+        { "ab": "2027-08-01", "wert": 0.08 },
+        { "ab": "2028-02-01", "wert": 0.04 },
+        { "ab": "2028-08-01", "wert": 0.00 }
+      ]
+    },
+    "einkommensbonus": {
+      "label": "Einkommens-Bonus",
+      "hinweis": "Nur selbstnutzende Eigentümer, nur für die selbstgenutzte Wohneinheit. Bei mindestens einem gemeldeten Kind unter 18 Jahren reduziert sich das anzusetzende Einkommen pauschal und einmalig um 10.000 Euro.",
+      "fundstelle": "BEG EM 8.4.5",
+      "kinderabzug": 10000,
+      "stufen": [
+        { "bis": 30000, "wert": 0.40 },
+        { "bis": 40000, "wert": 0.30 },
+        { "bis": 50000, "wert": 0.10 }
+      ]
+    },
+    "obergrenze": {
+      "label": "Obergrenze des Fördersatzes",
+      "standard": 0.70,
+      "niedrigeinkommen": 0.80,
+      "einkommensgrenze": 30000,
+      "einkommensgrenze_mit_familienzuschlag": 40000,
+      "fundstelle": "BEG EM 8.4.1 Einleitung; KfW-Merkblatt 458, Abschnitt Obergrenze"
+    },
+    "hoechstkosten": {
+      "label": "Höchstgrenze der förderfähigen Ausgaben, gestaffelt nach Wohneinheiten",
+      "hinweis": "Bemessungsgrundlage ist die Anzahl der Wohneinheiten nach Sanierung. Die halbjährliche Absenkung um 750 Euro gilt ausschließlich für die erste Wohneinheit.",
+      "fundstelle": "BEG EM 8.3.1 Buchstabe a",
+      "erste_we": 28000,
+      "we_2_bis_6": 15000,
+      "ab_we_7": 8000,
+      "absenkung_betrag": 750,
+      "erste_we_stufen": [
+        { "ab": "2026-07-21", "wert": 28000 },
+        { "ab": "2027-02-01", "wert": 27250 },
+        { "ab": "2027-08-01", "wert": 26500 },
+        { "ab": "2028-02-01", "wert": 25750 },
+        { "ab": "2028-08-01", "wert": 25000 },
+        { "ab": "2029-02-01", "wert": 24250 },
+        { "ab": "2029-08-01", "wert": 23500 },
+        { "ab": "2030-02-01", "wert": 22750 },
+        { "ab": "2030-08-01", "wert": 22000 }
+      ]
+    },
+    "kaeltemittel_pflicht_ab": {
+      "label": "Natürliches Kältemittel als Fördervoraussetzung",
+      "ab": "2028-01-01",
+      "hinweis": "Ab 1. Januar 2028 werden nur noch Wärmepumpen mit natürlichen Kältemitteln gefördert. Ohne natürliches Kältemittel entfällt die Förderung dann vollständig — das ist keine Absenkung, sondern eine Null.",
+      "fundstelle": "BEG EM Anlage Nummer 3.4.4"
+    },
+    "wertschoepfungsbonus": {
+      "label": "Wertschöpfungs-Bonus",
+      "ab": "2027-01-01",
+      "wert": 0.15,
+      "hinweis": "Für Wärmepumpen mit Ursprung in der Union. Voraussetzungen im Infoblatt zu den förderfähigen Maßnahmen. Bewusst NICHT in der Rechnung — Anspruch im Einzelfall ungeprüft.",
+      "fundstelle": "BEG EM 8.4.6",
+      "in_rechnung": false
+    }
+  },
   "tabs": [
     "Start",
     "Parameter",

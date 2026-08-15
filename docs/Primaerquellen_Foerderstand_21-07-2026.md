@@ -238,7 +238,20 @@ klären.
 
 ## 7 · Offen
 
-- Die Rechenbeispiele der Website sind noch nicht angepasst.
+- **Herleitung der 58 Prozent** in `daten/theaterstrasse-4.json` (`wp_foerd_pct`).
+  Der Wert ist nicht angefasst, aber auch nicht hergeleitet. Ein gewichteter Satz
+  über selbstnutzende und vermietende Eigentümer wäre für vierzehn Wohnungen
+  sachlich richtig — dann muss aber dastehen, wie er zustande kommt. Solange
+  nicht hergeleitet, nicht belastbar.
+- **Hybrid ab Quartal 1 2027.** Die Absenkung auf 15 Prozent gilt der
+  Wärmepumpe (Nr. 5.3 Buchst. c). Bei bivalenten Geräten sind laut Richtlinie
+  „die anteiligen Ausgaben für Wärmepumpen" betroffen. Diese anteilige Bemessung
+  ist im Rechner nicht abgebildet; Hybrid behält dort die 30 Prozent. Das ist zu
+  günstig gerechnet und bewusst offen, weil eine Aufteilungsregel fehlt.
+- **Einkommensbonus als Schalter.** Der Rechner kennt kein Einkommen und rechnet
+  beim Anhaken mit der obersten Stufe (40 Punkte). Der Schalter steht per Default
+  aus. Eine echte Einkommenseingabe wäre die saubere Lösung.
+- Die Rechenbeispiele auf Startseite und Objektprofil sind noch nicht angepasst.
 - Anwaltsfrage, förderrechtlich (nicht WEG): Greift der Förderausschluss der
   BEG EM bereits, wenn ein Grundstück in der kommunalen Wärmeplanung als
   Ausbaugebiet ausgewiesen ist, eine daran angepasste Satzung aber nicht

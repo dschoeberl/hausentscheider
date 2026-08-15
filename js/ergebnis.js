@@ -16,6 +16,8 @@ import {
   berechneAmortisation,
   berechneFoerderQuote,
   berechneFoerderBetrag,
+  foerderStichtagsVergleich,
+  kaeltemittelHinweis,
   berechneInvestition,
   berechneEurProQmMonat,
   berechneVermieterCashflowProJahr,
@@ -626,7 +628,7 @@ function baueAnalyseNachricht(input, params) {
   const tcoAlle = berechneTCOAlleOptionen(input, params);
   const beste   = empf.beste;
   const eqm     = berechneEurProQmMonat(tcoAlle[beste].tco, input.wohnflaeche, input.zeitraum);
-  const fq      = berechneFoerderQuote(input, params).quote;
+  const fq      = berechneFoerderQuote(input, params, beste).quote;
   const typ     = input.gebaeudetyp === 'EFH' ? 'Einfamilienhaus' : 'Mehrfamilienhaus';
   const nf      = n => (n == null ? '—' : Number(n).toLocaleString('de-DE'));
   const preis   = (k, name) => {
@@ -777,6 +779,7 @@ function aktualisiereAllePanels() {
     renderWirtschaftlichkeitsTabelle(input, params);
     renderLeseHilfeBox(input, params);
     renderZukunftsszenarioFeld(input, params);
+    renderStichtagsHinweise(input, params);
     renderExcelEditionSektion();
     renderSondersituationsCTA();
     renderTooltipFromGlossar();
@@ -788,6 +791,43 @@ function aktualisiereAllePanels() {
       console.warn('[ergebnis.js] Re-Render dauerte', Math.round(t1 - t0), 'ms (Ziel < 100 ms)');
     }
   });
+}
+
+/* --------------------------------------------------------------
+   Stichtags-Hinweise: was ein späterer Antrag kostet, und ab 2028
+   die Kältemittel-Voraussetzung. Beides hängt am Antragsmonat.
+   -------------------------------------------------------------- */
+
+function renderStichtagsHinweise(input, params) {
+  const elStichtag = document.getElementById('stichtag-hinweis');
+  const elKaelte   = document.getElementById('kaeltemittel-hinweis');
+
+  if (elStichtag) {
+    // Bezugsoption ist die empfohlene — dort hängt die Entscheidung dran.
+    let option = 'wp';
+    try { option = berechneEmpfehlung(input, params).beste || 'wp'; } catch (e) { /* Fallback wp */ }
+    const v = foerderStichtagsVergleich(option, input, params);
+    if (v && v.differenz > 0) {
+      const d = v.stichtag.split('-');
+      const letzterTag = new Date(Number(d[0]), Number(d[1]) - 1, 0);
+      const bis = String(letzterTag.getDate()).padStart(2, '0') + '.' +
+                  String(letzterTag.getMonth() + 1).padStart(2, '0') + '.' + letzterTag.getFullYear();
+      const ab = d[2] + '.' + d[1] + '.' + d[0];
+      elStichtag.innerHTML =
+        'Antrag bis ' + bis + ': <b>' + formatEuro(v.vorher) + '</b>. ' +
+        'Ab ' + ab + ': <b>' + formatEuro(v.nachher) + '</b>. ' +
+        'Der spätere Antrag kostet <b>' + formatEuro(v.differenz) + '</b>.';
+      elStichtag.hidden = false;
+    } else {
+      elStichtag.hidden = true;
+    }
+  }
+
+  if (elKaelte) {
+    const txt = kaeltemittelHinweis(input, params);
+    if (txt) { elKaelte.textContent = txt; elKaelte.hidden = false; }
+    else { elKaelte.hidden = true; }
+  }
 }
 
 /* --------------------------------------------------------------

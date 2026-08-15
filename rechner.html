@@ -611,6 +611,14 @@
     }
     .foerderung-toggles input[type="checkbox"] { accent-color: var(--petrol); flex-shrink: 0; }
     .foerderung-toggles .info-tip { width: 14px; height: 14px; font-size: 10px; }
+    .stichtag-hinweis {
+      font-family: 'Inter', sans-serif; font-size: 12px; line-height: 1.55;
+      color: var(--text-secondary); background: rgba(26,92,90,0.06);
+      border-left: 3px solid var(--petrol); border-radius: 0 4px 4px 0;
+      padding: 0.55rem 0.75rem; margin: 0.5rem 0 0.9rem;
+    }
+    .stichtag-hinweis b { color: var(--text-primary); font-weight: 600; }
+    .stichtag-hinweis--warn { background: rgba(216,30,52,0.06); border-left-color: var(--tommy-rot, #D81E34); }
     .foerderung-quellen {
       font-size: 11px; color: var(--text-tertiary); line-height: 1.5;
       margin-top: 0.5rem;
@@ -1943,8 +1951,18 @@
           <h3>B — Mögliche Förderung</h3>
           <div class="slider-row">
             <label>
-              <span><span>Förderquote gesamt</span><output id="out-foerderung">50 %</output></span>
-              <input type="range" id="slider-foerderung" min="0" max="70" step="5" value="50">
+              <span><span>Geplanter Antrag</span><output id="out-antragsdatum"></output></span>
+              <input type="month" id="inp-antragsdatum" style="width:100%;padding:0.4rem 0.5rem;font-family:'Inter',sans-serif;font-size:13px;border:1px solid var(--border);border-radius:4px;">
+            </label>
+            <small style="font-size:11px;color:var(--text-tertiary);line-height:1.4;">Maßgeblich ist der Eingang des Antrags, nicht der Tag der Entscheidung (BEG EM 9.2.1). Das Datum steuert alle Degressionen.</small>
+          </div>
+          <p id="stichtag-hinweis" class="stichtag-hinweis" hidden></p>
+          <p id="kaeltemittel-hinweis" class="stichtag-hinweis stichtag-hinweis--warn" hidden></p>
+
+          <div class="slider-row">
+            <label>
+              <span><span>Förderquote gesamt</span><output id="out-foerderung">46 %</output></span>
+              <input type="range" id="slider-foerderung" min="0" max="70" step="1" value="46">
             </label>
             <small style="font-size:11px;color:var(--text-tertiary);line-height:1.4;">Spiel mit der Quote — die Toggles unten zeigen, woraus sie sich zusammensetzt.</small>
           </div>
@@ -1952,43 +1970,36 @@
           <div class="foerderung-toggles">
             <label>
               <input type="checkbox" id="bafa-grund" checked>
-              <span>BAFA-Grundförderung 30 %</span>
+              <span>Grundförderung <b id="lbl-grund">30 %</b></span>
               <span class="info-tip" tabindex="0" aria-label="Info Grundförderung">ⓘ
-                <span class="info-tip__pop">Steht jedem Eigentümer zu, der eine förderfähige Heizung einbaut.<span class="info-tip__src">Quelle: BAFA-Verordnung 2026.</span></span>
+                <span class="info-tip__pop">Steht jedem zu, der eine förderfähige Anlage einbaut. Für Wärmepumpen sinkt sie zum 1. Januar 2027 auf 15 %; der Wärmenetzanschluss bleibt bei 30 %.<span class="info-tip__src">Quelle: BEG EM vom 17.07.2026, Nummer 8.4.1 Buchstabe c.</span></span>
               </span>
             </label>
             <label>
               <input type="checkbox" id="bafa-klima" checked>
-              <span>Klimageschwindigkeitsbonus 20 %</span>
+              <span>Klimageschwindigkeitsbonus <b id="lbl-klima">16 %</b></span>
               <span class="info-tip" tabindex="0" aria-label="Info Klimabonus">ⓘ
-                <span class="info-tip__pop">Für den frühen Tausch funktionierender fossiler Heizungen. Sinkpfad ab 2029.<span class="info-tip__src">Quelle: BAFA / BWP.</span></span>
+                <span class="info-tip__pop">Für den frühen Tausch funktionierender fossiler Heizungen. Sinkt halbjährlich um vier Punkte: 16 % bis 31.01.2027, dann 12, 8, 4 — ab 01.08.2028 entfällt er. Nur für selbstnutzende Eigentümer, im Mehrfamilienhaus nur anteilig.<span class="info-tip__src">Quelle: BEG EM vom 17.07.2026, Nummer 8.4.4.</span></span>
               </span>
             </label>
             <label>
               <input type="checkbox" id="bafa-einkommen">
-              <span>Einkommensbonus 30 %</span>
+              <span>Einkommensbonus <b>bis 40 %</b></span>
               <span class="info-tip" tabindex="0" aria-label="Info Einkommensbonus">ⓘ
-                <span class="info-tip__pop">Nur für Selbstnutzer mit zu versteuerndem Einkommen unter 40.000 €.<span class="info-tip__src">Quelle: BAFA.</span></span>
-              </span>
-            </label>
-            <label>
-              <input type="checkbox" id="bafa-effizienz">
-              <span>Effizienzbonus 5 %</span>
-              <span class="info-tip" tabindex="0" aria-label="Info Effizienzbonus">ⓘ
-                <span class="info-tip__pop">Für besonders effiziente Wärmepumpen.<span class="info-tip__src">Quelle: BAFA.</span></span>
+                <span class="info-tip__pop">Nur für selbstnutzende Eigentümer, gestaffelt nach zu versteuerndem Haushaltsjahreseinkommen: bis 30.000 € 40 Punkte, bis 40.000 € 30 Punkte, bis 50.000 € 10 Punkte. Der Schalter rechnet mit der obersten Stufe.<span class="info-tip__src">Quelle: BEG EM vom 17.07.2026, Nummer 8.4.5.</span></span>
               </span>
             </label>
           </div>
 
           <div class="foerderung-presets">
-            <button type="button" class="preset-btn" data-preset="heute">Heute (Mai 2026)</button>
-            <button type="button" class="preset-btn" data-preset="2029">Klimabonus 2029 −3 Pp</button>
+            <button type="button" class="preset-btn" data-preset="heute">Heute</button>
+            <button type="button" class="preset-btn" data-preset="stichtag">Ab 01.01.2027</button>
             <button type="button" class="preset-btn" data-preset="gestrichen">Förderung gestrichen</button>
           </div>
 
           <p class="foerderung-quellen">
-            Grundlage: BAFA-Förderverordnung Stand Mai 2026.<br>
-            <a href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/effiziente_gebaeude_node.html" target="_blank" rel="noopener">Aktuelle Förderverordnung beim BAFA →</a>
+            Grundlage: Förderrichtlinie BEG Einzelmaßnahmen vom 17.07.2026 (BMWE), gültig ab 21.07.2026.<br>
+            <a href="foerderparadoxon.html">Was die Förderlogik im Zwanggebiet bewirkt →</a>
           </p>
         </div>
 
@@ -2081,10 +2092,6 @@
     // (Altstadt). Außerhalb Erfurts greift die Heuristik nicht.
     const ALTSTADT_PLZ = ['99084'];
 
-    // Sinkpfad-Konstante für Preset-Button "Klimabonus 2029 −3 Pp"
-    // (Memory: project_persona_picker_und_foerderslider.md)
-    const KLIMABONUS_2029 = 0.17;
-
     // Schwelle Pellets-Filter (Spec §11/§4 block4_plausi)
     const PELLETS_HEIZLAST_SCHWELLE = 30; // kW
 
@@ -2117,6 +2124,7 @@
       persona: 'optimierer',
       anschlusszwang: false,             // Schritt 1 — Zwanggebiet? (Default nein)
       befreiung: false,                  // Schritt 1 — Befreiung erwirkt? (nur relevant bei Zwang)
+      antragsdatum: null,                // Monat des geplanten Antragseingangs; null = laufender Monat
 
       // C2 v2.1 — eigene Wohnungsgröße + Bruttoinvestitions-Pflichteingaben
       eigeneWohnflaeche: null,           // optional bei Vermietung (Schritt 1)
@@ -2145,8 +2153,8 @@
           preisFW:  19.3,
           preisWP:  26.0,
           foerderung: {
-            grund: true, klima: true, einkommen: false, effizienz: false,
-            master: 50
+            grund: true, klima: true, einkommen: false,
+            master: 46
           }
         },
         profi: {}
@@ -2218,8 +2226,7 @@
         block2_rahmen: {
           BonusGrund_default: { default: 0.3 },
           BonusKlima_default: { default: 0.2 },
-          BonusEink_default:  { default: 0.3 },
-          BonusEff_default:   { default: 0.05 }
+          BonusEink_default:  { default: 0.3 }
         },
         block5_gebaeudedefaults: {
           EFH: { Wohnflaeche: 140, WE: 1, Verbrauch: 18000, Heizlast: 12, Verkehrswert: 500000, Nutzungsart: 'Selbstnutzung', FWSatzung: 'nein' },
@@ -3128,25 +3135,68 @@
         });
       });
 
-      // Förderung-Toggles + Master + Presets
+      // Förderung-Toggles + Master + Presets.
+      // Die Prozentwerte kommen aus parameter.json.foerdersaetze und hängen am
+      // gewählten Antragsmonat — nicht mehr hart im Code.
       const toggles = {
-        'bafa-grund':     { key: 'grund',     pp: 30 },
-        'bafa-klima':     { key: 'klima',     pp: 20 },
-        'bafa-einkommen': { key: 'einkommen', pp: 30 },
-        'bafa-effizienz': { key: 'effizienz', pp: 5 }
+        'bafa-grund':     { key: 'grund' },
+        'bafa-klima':     { key: 'klima' },
+        'bafa-einkommen': { key: 'einkommen' }
       };
+      // Reine Datenabfrage aus parameter.json.foerdersaetze — die Werte stehen
+      // dort, hier steht nur die Auswahl der Stufe zum gewählten Antragsmonat.
+      function antragISO() {
+        const a = state.antragsdatum;
+        if (typeof a === 'string' && /^\d{4}-\d{2}/.test(a)) return a.slice(0, 7) + '-01';
+        const n = new Date();
+        return n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0') + '-01';
+      }
+      function stufenwert(stufen, iso, fallback) {
+        if (!Array.isArray(stufen) || !stufen.length) return fallback;
+        let w = stufen[0].wert;
+        stufen.forEach(s => { if (iso >= s.ab) w = s.wert; });
+        return w;
+      }
+      function saetzeZumAntrag() {
+        const fs = (config.parameter && config.parameter.foerdersaetze) || {};
+        const iso = antragISO();
+        let grund = (fs.grundfoerderung && fs.grundfoerderung.wert) || 0.30;
+        const wpAb = fs.grundfoerderung_wp_ab;
+        if (wpAb && wpAb.ab && iso >= wpAb.ab) grund = wpAb.wert;
+        const klima = stufenwert((fs.klimageschwindigkeitsbonus || {}).stufen, iso, 0.16);
+        const eink = (fs.einkommensbonus && fs.einkommensbonus.stufen && fs.einkommensbonus.stufen[0])
+          ? fs.einkommensbonus.stufen[0].wert : 0.40;
+        const deckel = (fs.obergrenze && fs.obergrenze.standard) || 0.70;
+        return { grund, klima, eink, deckel };
+      }
+      // Eingabefeld und Anzeige auf den aktuellen Zustand bringen.
+      function syncAntragsdatum() {
+        const el = $('#inp-antragsdatum');
+        if (!el) return;
+        const iso = antragISO().slice(0, 7);
+        el.value = iso;
+        const out = $('#out-antragsdatum');
+        if (out) {
+          const MON = ['Januar','Februar','März','April','Mai','Juni','Juli',
+                       'August','September','Oktober','November','Dezember'];
+          const t = iso.split('-');
+          out.textContent = MON[Number(t[1]) - 1] + ' ' + t[0];
+        }
+      }
       function recomputeMaster() {
         const fb = state.overrides.schieberegler.foerderung;
+        const s = saetzeZumAntrag();
         let sum = 0;
-        if (fb.grund)     sum += 30;
-        if (fb.klima)     sum += 20;
-        if (fb.einkommen) sum += 30;
-        if (fb.effizienz) sum += 5;
-        sum = Math.min(70, sum); // Förderdeckel
+        if (fb.grund)     sum += s.grund * 100;
+        if (fb.klima)     sum += s.klima * 100;
+        if (fb.einkommen) sum += s.eink  * 100;
+        sum = Math.round(Math.min(s.deckel * 100, sum));
         state.overrides.schieberegler.foerderung.master = sum;
         $('#slider-foerderung').value = String(sum);
         $('#out-foerderung').textContent = sum + ' %';
-        console.info('[Förderung] Master neu berechnet aus Toggles =', sum, '%');
+        const lg = $('#lbl-grund'), lk = $('#lbl-klima');
+        if (lg) lg.textContent = Math.round(s.grund * 100) + ' %';
+        if (lk) lk.textContent = Math.round(s.klima * 100) + ' %';
       }
       Object.entries(toggles).forEach(([id, meta]) => {
         const el = $('#' + id);
@@ -3166,50 +3216,49 @@
         renderBericht();
       });
 
+      // Antragsmonat — steuert alle Degressionen
+      const inpAntrag = $('#inp-antragsdatum');
+      if (inpAntrag) {
+        syncAntragsdatum();
+        inpAntrag.addEventListener('change', () => {
+          state.antragsdatum = inpAntrag.value || null;
+          syncAntragsdatum();
+          recomputeMaster();
+          renderBericht();
+          if (window.HE && window.HE.dispatch) window.HE.dispatch();
+        });
+      }
+
       // Preset-Buttons
       $$('.preset-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const p = btn.dataset.preset;
           const fb = state.overrides.schieberegler.foerderung;
           if (p === 'heute') {
-            fb.grund = true; fb.klima = true; fb.einkommen = false; fb.effizienz = false;
-          } else if (p === '2029') {
-            // Klimabonus auf 17 % (Memory-Sinkpfad). Wir senken die Pp-Tabelle
-            // hier nicht explizit, sondern setzen den Master entsprechend
-            // BAFA + Klima_2029 = 30 + 17 = 47 %.
-            fb.grund = true; fb.klima = true; fb.einkommen = false; fb.effizienz = false;
-            const sum = Math.min(70, 30 + Math.round(KLIMABONUS_2029 * 100));
-            state.overrides.schieberegler.foerderung.master = sum;
-            $('#slider-foerderung').value = String(sum);
-            $('#out-foerderung').textContent = sum + ' %';
-            // Toggles synchronisieren
-            $('#bafa-grund').checked = true;
-            $('#bafa-klima').checked = true;
-            $('#bafa-einkommen').checked = false;
-            $('#bafa-effizienz').checked = false;
-            console.info('[Preset 2029] Master =', sum, '% (Klimabonus auf', KLIMABONUS_2029 * 100, '% gesenkt)');
-            renderBericht();
-            if (window.HE && window.HE.dispatch) window.HE.dispatch();
-            return;
+            fb.grund = true; fb.klima = true; fb.einkommen = false;
+            state.antragsdatum = null;              // laufender Monat
+            syncAntragsdatum();
+          } else if (p === 'stichtag') {
+            // Erster Monat nach dem Wärmepumpen-Stichtag: Grundförderung 15 %,
+            // Klimabonus noch auf der Stufe bis 31.01.2027.
+            fb.grund = true; fb.klima = true; fb.einkommen = false;
+            state.antragsdatum = '2027-01';
+            syncAntragsdatum();
           } else if (p === 'gestrichen') {
-            fb.grund = false; fb.klima = false; fb.einkommen = false; fb.effizienz = false;
+            fb.grund = false; fb.klima = false; fb.einkommen = false;
             state.overrides.schieberegler.foerderung.master = 0;
             $('#slider-foerderung').value = '0';
             $('#out-foerderung').textContent = '0 %';
             $('#bafa-grund').checked = false;
             $('#bafa-klima').checked = false;
             $('#bafa-einkommen').checked = false;
-            $('#bafa-effizienz').checked = false;
-            console.info('[Preset gestrichen] Master = 0 %');
             renderBericht();
             if (window.HE && window.HE.dispatch) window.HE.dispatch();
             return;
           }
-          // Heute-Preset: Toggles synchronisieren + Master neu rechnen
           $('#bafa-grund').checked = fb.grund;
           $('#bafa-klima').checked = fb.klima;
           $('#bafa-einkommen').checked = fb.einkommen;
-          $('#bafa-effizienz').checked = fb.effizienz;
           recomputeMaster();
           renderBericht();
           if (window.HE && window.HE.dispatch) window.HE.dispatch();

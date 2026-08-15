@@ -54,11 +54,25 @@ const EXCEL_BEZUG_WOHNFLAECHE = {
   EFH: 140
 };
 
-// Klimabonus-Sinkpfad (Spec §3.5 — JSON hat nur Mai-2026-Wert)
-const KLIMA_SINKPFAD = {
-  '2026': 0.20,
-  '2029': 0.17,
-  '2031': 0.14
+// Rückfallebene, falls parameter.json.foerdersaetze nicht lädt.
+// Belegte Werte: BEG EM vom 17.07.2026, Nummern 8.3.1, 8.4.1, 8.4.4, 8.4.5.
+// Gepflegt wird ausschliesslich parameter.json — hier nur Notlauf.
+const FS_FALLBACK = {
+  grund: 0.30,
+  grundWpAb: { ab: '2027-01-01', wert: 0.15 },
+  klimaStufen: [
+    { ab: '2026-07-21', wert: 0.16 },
+    { ab: '2027-02-01', wert: 0.12 },
+    { ab: '2027-08-01', wert: 0.08 },
+    { ab: '2028-02-01', wert: 0.04 },
+    { ab: '2028-08-01', wert: 0.00 }
+  ],
+  einkommen: 0.40,
+  obergrenze: 0.70,
+  hoechstErsteWe: 28000,
+  hoechstWe2bis6: 15000,
+  hoechstAbWe7: 8000,
+  kaeltemittelAb: '2028-01-01'
 };
 
 // Pellets-Plausibilitäts-Schwelle (Spec §4.5)
@@ -204,25 +218,67 @@ function berechneVerbrauchEffektiv(option, input, params) {
    6) Förderung
    -------------------------------------------------------------- */
 
-function berechneFoerderQuote(state, params) {
-  const f = state.foerderung || {};
-  const grund     = _default(params, 'block2_rahmen', 'BonusGrund_default') ?? 0.30;
-  const klimaBase = _default(params, 'block2_rahmen', 'BonusKlima_default') ?? 0.20;
-  const eink      = _default(params, 'block2_rahmen', 'BonusEink_default')  ?? 0.30;
-  const eff       = _default(params, 'block2_rahmen', 'BonusEff_default')   ?? 0.05;
-  const deckel    = _default(params, 'block2_rahmen', 'FoerderDeckel')      ?? 0.70;
+/* Antragsdatum steuert alle Degressionen. Monatsauflösung: alle Stufen der
+   Richtlinie liegen auf Monatsgrenzen, Tagesgenauigkeit würde eine Präzision
+   suggerieren, die die Eingabe nicht hat. Vorbelegung ist der laufende Monat.
+   Maßgeblich ist laut BEG EM 9.2.1 der Eingang des Antrags beim Durchführer. */
+function antragsdatumISO(input) {
+  const a = input && input.antragsdatum;
+  if (typeof a === 'string' && /^\d{4}-\d{2}/.test(a)) return a.slice(0, 7) + '-01';
+  const n = new Date();
+  return n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0') + '-01';
+}
 
-  const heuteJahr = (new Date()).getFullYear();
-  let klima = klimaBase;
-  let sinkpfadAktiv = false;
-  if (heuteJahr >= 2031) { klima = KLIMA_SINKPFAD['2031']; sinkpfadAktiv = true; }
-  else if (heuteJahr >= 2029) { klima = KLIMA_SINKPFAD['2029']; sinkpfadAktiv = true; }
+/* Wert einer Stufenliste zum Stichtag. Stufen sind ISO-Datumsstrings, der
+   Vergleich ist lexikografisch zulässig. Liegt das Datum vor der ersten Stufe
+   (nur für Anträge vor dem 21.07.2026 möglich), gilt die erste Stufe. */
+function _stufenwert(stufen, iso, fallback) {
+  if (!Array.isArray(stufen) || !stufen.length) return fallback;
+  let wert = stufen[0].wert;
+  for (const s of stufen) { if (iso >= s.ab) wert = s.wert; }
+  return wert;
+}
+
+function _fs(params, ...pfad) { return _p(params, 'foerdersaetze', ...pfad); }
+
+/* Höchstgrenze der förderfähigen Ausgaben, gestaffelt je Wohneinheit
+   (BEG EM 8.3.1 Buchst. a). Nur die erste Wohneinheit sinkt halbjährlich. */
+function foerderfaehigeHoechstkosten(we, iso, params) {
+  const h = _fs(params, 'hoechstkosten') || {};
+  const erste = _stufenwert(h.erste_we_stufen, iso, h.erste_we ?? FS_FALLBACK.hoechstErsteWe);
+  const zwei6 = h.we_2_bis_6 ?? FS_FALLBACK.hoechstWe2bis6;
+  const ab7   = h.ab_we_7    ?? FS_FALLBACK.hoechstAbWe7;
+  const n = Math.max(1, Math.round(Number(we) || 1));
+  return erste + Math.min(Math.max(n - 1, 0), 5) * zwei6 + Math.max(n - 6, 0) * ab7;
+}
+
+/* Grundförderung je Option zum Stichtag. Ab Quartal 1 2027 sinkt sie für
+   elektrisch angetriebene Wärmepumpen (Nr. 5.3 Buchst. c) von 30 auf 15 %,
+   der Wärmenetzanschluss bleibt bei 30 %. Für Hybrid ist die anteilige
+   Bemessung des Wärmepumpen-Anteils nicht modelliert — offener Punkt. */
+function grundfoerderung(option, iso, params) {
+  const basis = (_fs(params, 'grundfoerderung') || {}).wert ?? FS_FALLBACK.grund;
+  if (option !== 'wp') return basis;
+  const ab = _fs(params, 'grundfoerderung_wp_ab') || FS_FALLBACK.grundWpAb;
+  if (ab.ab && iso >= ab.ab) return ab.wert ?? FS_FALLBACK.grundWpAb.wert;
+  return basis;
+}
+
+function berechneFoerderQuote(state, params, option) {
+  const f = state.foerderung || {};
+  const iso = antragsdatumISO(state);
+
+  const grund  = grundfoerderung(option, iso, params);
+  const klima  = _stufenwert((_fs(params, 'klimageschwindigkeitsbonus') || {}).stufen,
+                             iso, FS_FALLBACK.klimaStufen[0].wert);
+  const einkSt = (_fs(params, 'einkommensbonus') || {}).stufen;
+  const eink   = (Array.isArray(einkSt) && einkSt.length) ? einkSt[0].wert : FS_FALLBACK.einkommen;
+  const deckel = (_fs(params, 'obergrenze') || {}).standard ?? FS_FALLBACK.obergrenze;
 
   let quote = 0;
   if (f.grund)     quote += grund;
   if (f.klima)     quote += klima;
   if (f.einkommen) quote += eink;
-  if (f.effizienz) quote += eff;
 
   // Master-Slider als Override, sobald er von der Toggle-Aggregation abweicht
   if (typeof f.master === 'number') {
@@ -232,7 +288,9 @@ function berechneFoerderQuote(state, params) {
 
   const capped = quote >= deckel - 1e-6;
   quote = Math.min(quote, deckel);
-  return { quote, capped, sinkpfadAktiv };
+  // sinkpfadAktiv: der Klimabonus steht nicht mehr auf seinem Ausgangswert
+  const sinkpfadAktiv = klima < FS_FALLBACK.klimaStufen[0].wert - 1e-6;
+  return { quote, capped, sinkpfadAktiv, klima, grund, stichtag: iso };
 }
 
 function berechneFoerderBetrag(option, input, params) {
@@ -242,11 +300,48 @@ function berechneFoerderBetrag(option, input, params) {
   // Jede Ausweich-Option (WP, Hybrid, Pellets) verliert die Förderung, weil die
   // BEG Maßnahmen ausschließt, zu denen eine gesetzliche Pflicht besteht — die
   // Pflicht trifft den Netzanschluss, nicht die Alternative.
+  // Belegt: BEG EM Anlage TMA, gleichlautend KfW-Merkblatt 458.
   if (input.anschlusszwang && !input.befreiung && option !== 'fw') return 0;
   const investition = berechneInvestition(option, input, params);
-  const { quote } = berechneFoerderQuote(input, params);
-  const eurCap = _default(params, 'block2_rahmen', 'FoerderDeckelAbs') ?? 21000;
-  return Math.min(investition * quote, eurCap);
+  const { quote } = berechneFoerderQuote(input, params, option);
+  // Gedeckelt wird die Bemessungsgrundlage, nicht der Auszahlbetrag:
+  // Quote × min(Investition, förderfähige Höchstkosten je Wohneinheit).
+  const iso = antragsdatumISO(input);
+  const maxKosten = foerderfaehigeHoechstkosten(input.we, iso, params);
+  return Math.min(investition, maxKosten) * quote;
+}
+
+/* Nächster Stichtag nach dem gewählten Antragsmonat — über alle Stufenlisten. */
+function naechsterStichtag(iso, params) {
+  const fs = _p(params, 'foerdersaetze') || {};
+  const termine = [];
+  const merke = a => { if (typeof a === 'string' && a > iso) termine.push(a); };
+  merke((fs.grundfoerderung_wp_ab || {}).ab);
+  ((fs.klimageschwindigkeitsbonus || {}).stufen || []).forEach(s => merke(s.ab));
+  ((fs.hoechstkosten || {}).erste_we_stufen || []).forEach(s => merke(s.ab));
+  if (!termine.length) return null;
+  termine.sort();
+  return termine[0];
+}
+
+/* Was ein späterer Antrag kostet: Betrag zum gewählten Monat gegen Betrag
+   ab dem nächsten Stichtag. Gibt null zurück, wenn sich nichts ändert. */
+function foerderStichtagsVergleich(option, input, params) {
+  const iso = antragsdatumISO(input);
+  const stichtag = naechsterStichtag(iso, params);
+  if (!stichtag) return null;
+  const vorher  = berechneFoerderBetrag(option, input, params);
+  const nachher = berechneFoerderBetrag(option, Object.assign({}, input, { antragsdatum: stichtag }), params);
+  if (Math.round(vorher) === Math.round(nachher)) return null;
+  return { stichtag, vorher, nachher, differenz: vorher - nachher };
+}
+
+/* Ab 01.01.2028 werden nur noch Wärmepumpen mit natürlichem Kältemittel
+   gefördert (BEG EM Anlage 3.4.4). Keine Rechenlogik, nur ein Hinweis. */
+function kaeltemittelHinweis(input, params) {
+  const k = _fs(params, 'kaeltemittel_pflicht_ab') || {};
+  const ab = k.ab || FS_FALLBACK.kaeltemittelAb;
+  return antragsdatumISO(input) >= ab ? (k.hinweis || '') : '';
 }
 
 /* --------------------------------------------------------------
@@ -688,7 +783,7 @@ function berechneSensitivitaet(szenario, input, params) {
   const klon = JSON.parse(JSON.stringify(input));
   switch (szenario) {
     case 'bafa-gestrichen':
-      klon.foerderung = { grund: false, klima: false, einkommen: false, effizienz: false, master: 0 };
+      klon.foerderung = { grund: false, klima: false, einkommen: false, master: 0 };
       break;
     case 'co2-schneller':
       klon.overrides = klon.overrides || {};
@@ -975,7 +1070,7 @@ function _testInputMFHDefault(params) {
       fw:  _default(params, 'block1_energiepreise', 'PreisFW'),
       wp:  _default(params, 'block1_energiepreise', 'PreisWP')
     },
-    foerderung: { grund: true, klima: true, einkommen: false, effizienz: false, master: 50 },
+    foerderung: { grund: true, klima: true, einkommen: false, master: 46 },
     overrides: { eigenerPreis: {}, jaz: null, co2Pfad: 'aktuell', verkehrswert: null },
     // C2 v2.1 — Bruttoinvest = Wizard-Default für MFH (Spec §3)
     bruttoInvest: { hybrid: 73000, wp: 126000, fw: 33000, pellets: 63000 },
@@ -1146,9 +1241,10 @@ function buildInput(uiState, params) {
       grund:     fb.grund,
       klima:     fb.klima,
       einkommen: fb.einkommen,
-      effizienz: fb.effizienz,
       master:    fb.master
     },
+    // Monat des geplanten Antragseingangs; steuert alle Degressionen.
+    antragsdatum: uiState.antragsdatum || null,
     anschlusszwang: !!uiState.anschlusszwang,
     befreiung:      !!uiState.befreiung,
     profimodus: !!uiState.profimode,
@@ -1555,7 +1651,7 @@ function berechneZukunftsszenarioAussagen(input, params) {
     wp:  _default(params, 'block1_energiepreise', 'PreisWP')  ?? 25
   };
   // Default-Förderung = Grund + Klima
-  inputDefault.foerderung = { grund: true, klima: true, einkommen: false, effizienz: false, master: 50 };
+  inputDefault.foerderung = { grund: true, klima: true, einkommen: false, master: 46 };
 
   const ist = _kennzahlen(inputDefault, params);
   const neu = _kennzahlen(input, params);
@@ -1673,6 +1769,10 @@ export {
   berechneCashflowAlleOptionen,
   berechneFoerderQuote,
   berechneFoerderBetrag,
+  foerderfaehigeHoechstkosten,
+  foerderStichtagsVergleich,
+  kaeltemittelHinweis,
+  antragsdatumISO,
   berechneInvestition,
   berechneVerbrauchEffektiv,
   berechneVermieterCashflowProJahr,
