@@ -8,7 +8,9 @@
    Kein Fördersatz und kein Stichtag steht in dieser Datei.
    Sätze, Stichtage und Höchstkosten kommen aus
    daten/parameter.json, Block "foerdersaetze".
-   Vorbelegung der Eingaben aus daten/theaterstrasse-4.json, Block "rechner".
+   Vorbelegung der Eingaben aus daten/theaterstrasse-4.json, Block "wirtschaft".
+   Nicht aus Block "rechner" — der gehoert dem Objektprofil-Rechner und fuehrt
+   bewusst andere Investitionswerte (siehe Kommentare in der JSON).
    -------------------------------------------------------------- */
 (function () {
   'use strict';
@@ -169,6 +171,8 @@
     var investWP = zustand.investWP, investFW = zustand.investFW, we = zustand.we;
     var wsBonus  = zustand.wsBonus;
     var wsWert   = (fs.wertschoepfungsbonus || {}).wert || 0.15;
+    // Obergrenze des Gesamtfoerdersatzes, nicht die Grundfoerderung.
+    var maxSatz  = (fs.obergrenze || {}).standard || 0.70;
     var satzFW   = (fs.grundfoerderung_waermenetz || {}).wert || 0.30;
     var vollSatz = (fs.grundfoerderung || {}).wert || 0.30;
 
@@ -182,7 +186,7 @@
     var zeilenHtml = zeilen.map(function (z) {
       var satz = z.satz;
       // Wertschöpfungsbonus wirkt erst ab dem Stichtag und nur, wo überhaupt gefördert wird
-      if (wsBonus && satz > 0 && z.id !== 'a') satz = Math.min(satz + wsWert, vollSatz);
+      if (wsBonus && satz > 0 && z.id !== 'a') satz = Math.min(satz + wsWert, maxSatz);
       var netto = investWP - zuschuss(investWP, we, z.stichtagISO, satz, fs);
       var abw   = netto - bestNetto;
       var istHeute = (!z.ab || heute >= z.ab) && (!z.bis || heute < z.bis);
@@ -329,7 +333,7 @@
       fetch(BASIS + 'daten/theaterstrasse-4.json', { cache: 'no-cache' }).then(function (r) { return r.json(); })
     ]).then(function (res) {
       var daten = { parameter: res[0], objekt: res[1] };
-      var r = daten.objekt.rechner || {};
+      var r = daten.objekt.wirtschaft || {};
       ziele.forEach(function (el) {
         el.__fm = {
           investWP: (r.invest_eur || {}).wp || 130000,
