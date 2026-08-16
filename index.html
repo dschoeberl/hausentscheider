@@ -279,6 +279,10 @@
     .oz-vgl-fill--ist { background: rgba(122,184,181,0.45); }
     .oz-vgl-line__val { font-size: 11.5px; font-weight: 600; color: #fff; font-family: 'Inter', sans-serif; white-space: nowrap; min-width: 64px; text-align: right; }
     .oz-vgl-note { font-size: 11px; color: var(--petrol-light); font-style: italic; font-family: 'Inter', sans-serif; margin: 0.35rem 0 0; line-height: 1.5; }
+    /* Der Grundlink der Seite ist dunkles Petrol und waere hier auf dunklem
+       Grund unlesbar (Kontrast 1,7). */
+    .oz-vgl-note a { color: #cfe6e4; text-decoration: underline; text-underline-offset: 2px; }
+    .oz-vgl-note a:hover, .oz-vgl-note a:focus-visible { color: #ffffff; }
     .oz-vgl-status { display: grid; grid-template-columns: 1fr auto auto; gap: 7px 12px; margin-top: 1.2rem; padding-top: 1rem; border-top: 0.5px solid rgba(122,184,181,0.15); font-family: 'Inter', sans-serif; font-size: 11.5px; align-items: center; }
     .oz-vgl-status__h { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--petrol-light); text-align: right; }
     .oz-vgl-status__lbl { color: rgba(255,255,255,0.72); }
@@ -2363,6 +2367,13 @@
             '</span></div>' +
           '<p class="oz-vgl-note">Der Hauptwert der Wärmepumpe rechnet mit ' + Math.round(WIRTSCHAFT.wp_foerd * 100) + ' % Grundförderung, also mit dem Fall, dass der Förderausschluss im Wärmenetzgebiet hier nicht greift. Ob er greift, ist offen. Greift er, liegt die Wärmepumpe bei rund <strong>' + fmtTsd(WV.ungefoerdert.wp) + '</strong> statt ' + fmtTsd(WV.mit.wp) + '. Gegenüber ' + fmtTsd(WV.mit.fw) + ' Fernwärme ändert das an der Rangfolge nichts. Beide Fälle zeigt die Fördermatrix unten.</p>' +
           '<p class="oz-vgl-note">Ohne Preissteigerung wirkt Fernwärme rund <strong>' + fmtTsd(WV.diffFW) + '</strong> günstiger, als sie über die Laufzeit real wird — genau das ist das Preisrisiko des Anschlusszwangs.</p>' +
+          // Zwei richtige Zahlen mit verschiedenen Bezuegen: ohne diesen Satz
+          // haelt jemand, der beides sieht, eine der beiden fuer falsch.
+          '<p class="oz-vgl-note"><strong>Zur Methodik:</strong> Diese Rechnung summiert nominal über ' + WIRTSCHAFT.n +
+            ' Jahre, also Energiekosten mit jährlicher Preissteigerung plus Investition nach Abzug der Förderung, ' +
+            'ohne Abzinsung und ohne Wartung. Der <a href="rechner.html">Entscheider-Rechner</a> geht anders vor: ' +
+            'Er zinst nach VDI 2067 ab und rechnet Wartung und CO₂ als eigene Posten. Beide Wege sind richtig und ' +
+            'ergeben verschiedene Beträge.</p>' +
           '<p class="oz-vgl-note">Investitionsannahme (konservativ): Wärmepumpe 130.000 € brutto, Fernwärme ~31.500 € brutto. Das günstigere reale WP-Angebot lag bei ~100.000 € — Potenzial nach unten. Was die Förderung daraus macht, steht in der Fördermatrix unten. <strong>Schallschutz:</strong> Nachts gilt der Richtwert 40 dB(A), amtlich bestätigt für ein allgemeines Wohngebiet.</p>' +
           '<details class="oz-fw-det">' +
             '<summary>Fernwärme-Anschluss — was wirklich anfällt</summary>' +
