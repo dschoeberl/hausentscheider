@@ -1504,8 +1504,13 @@
           <p class="oz-vgl-status__fuss">Der Förderausschluss für Einzelheizungen im Wärmenetzgebiet steht in der Richtlinie. Ob er an diesem Gebäude greift, ist nicht entschieden, deshalb zeigt die Fördermatrix beide Fälle.</p>
         </div>
 
-        <p class="oz-cockpit__head">Was die Förderung kostet, wenn man wartet</p>
-        <div data-foerdermatrix data-dunkel></div>
+        <div class="oz-cockpit__rule" style="margin-top:1.6rem;"></div>
+        <p class="oz-cockpit__head">Förderung und Zeitpunkt</p>
+        <p class="oz-vergleich__sub">Diese Tabelle beantwortet eine andere Frage als der Kostenvergleich: Was trägt die Förderung, und was kostet es, damit zu warten?</p>
+        <!-- Verweis statt eigener Laufzeitrechnung: Die 25-Jahres-Zahlen stehen
+             nur im Block "Kosten über 25 Jahre". Sonst koennten die Eingabefelder
+             hier eine zweite, abweichende Zahl fuer dieselbe Aussage erzeugen. -->
+        <div data-foerdermatrix data-dunkel data-laufzeit-verweis="#oz-vgl-gesamt"></div>
         <p data-foerderstand data-dunkel><b>Förderstand 21.07.2026.</b> Die förderfähigen Kosten und der Klimageschwindigkeitsbonus sinken halbjährlich. Für Wärmepumpen sinkt die Grundförderung zum 1. Januar 2027 von 30 auf 15 Prozent. Maßgeblich ist der Tag der Antragstellung, nicht der Tag der Entscheidung.</p>
 
         <div class="oz-ampel">

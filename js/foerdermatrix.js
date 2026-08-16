@@ -18,6 +18,7 @@
   var CSS = [
     '.fm{font-family:"Inter",sans-serif;margin:1.2rem 0 0;color:var(--fm-text);}',
     '.fm__satz{color:var(--fm-text);}',
+    '.fm__vorbelegung{margin:0 0 0.7rem;font-size:11.5px;line-height:1.5;color:var(--fm-lbl);}',
     '.fm__eingaben{display:flex;flex-wrap:wrap;gap:0.75rem 1.1rem;align-items:flex-end;margin:0 0 0.9rem;}',
     '.fm__feld{display:flex;flex-direction:column;gap:3px;}',
     '.fm__feld label{font-size:10.5px;letter-spacing:0.4px;text-transform:uppercase;color:var(--fm-lbl);}',
@@ -236,6 +237,8 @@
     var lz = verweis ? null : laufzeitkosten(r, nettoFW, bestNetto);
 
     var html =
+      '<p class="fm__vorbelegung">Eigene Werte einsetzen: Die Tabelle rechnet mit. ' +
+        'Vorbelegt mit den Werten des Referenzgebäudes.</p>' +
       '<div class="fm__eingaben">' +
         feld('wp', 'Wärmepumpe brutto', investWP) +
         feld('we', 'Wohneinheiten', we) +
@@ -265,8 +268,12 @@
             '(Fernwärme +' + Math.round(r.steigerung_pa.fernwaerme * 1000) / 10 + ' %, WP-Strom +' +
             String(Math.round(r.steigerung_pa.wp_strom * 1000) / 10).replace('.', ',') + ' %; ' +
             'im Rahmen der SWE-Prognose „Verdopplung bis 2040").'
-          : 'Über die Laufzeit dreht sich das Bild. Den Kostenvergleich über 25 Jahre samt Preisannahmen ' +
-            'zeigt das <a href="' + esc(verweis) + '">Referenzgebäude auf der Startseite</a>.') + '</p>' +
+          // Namen statt Ortsangaben: "der Block darüber" wird beim naechsten
+          // Umsortieren still falsch, ein Abschnittsname nicht.
+          : 'Über die Laufzeit dreht sich das Bild. Den Vergleich samt Preisannahmen zeigt ' +
+            (verweis.charAt(0) === '#'
+              ? 'der Abschnitt <a href="' + esc(verweis) + '">Kosten über 25 Jahre</a>.'
+              : 'das <a href="' + esc(verweis) + '">Referenzgebäude auf der Startseite</a>.')) + '</p>' +
       '<p class="fm__zeile">Förderfähige Höchstkosten bei ' + we + (we === 1 ? ' Wohneinheit' : ' Wohneinheiten') + ': <b>' + eur(hk) + '</b> — ' +
         (investWP <= hk
           ? 'die Investition liegt darunter, die Grenze greift hier nicht.'
