@@ -280,6 +280,7 @@
     .oz-vgl-status__lbl { color: rgba(255,255,255,0.72); }
     .oz-vgl-status__v { text-align: right; color: #fff; min-width: 96px; }
     .oz-vgl-status__v--risk { color: var(--tommy-rot); font-weight: 600; }
+    .oz-vgl-status__fuss { grid-column: 1 / -1; margin: 0.35rem 0 0; font-size: 10.5px; line-height: 1.55; color: rgba(255,255,255,0.6); }
     .oz-ampel { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; margin-top: 1.3rem; font-size: 10.5px; color: rgba(255,255,255,0.6); font-family: 'Inter', sans-serif; }
     .oz-ampel span { display: inline-flex; align-items: center; gap: 5px; }
     .oz-ampel i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
@@ -1491,7 +1492,9 @@
         <div class="oz-vgl-status">
           <span class="oz-vgl-status__lbl"></span><span class="oz-vgl-status__h">Fernwärme</span><span class="oz-vgl-status__h">Wärmepumpe</span>
           <span class="oz-vgl-status__lbl">Preisrisiko 25 Jahre</span><span class="oz-vgl-status__v oz-vgl-status__v--risk">hoch</span><span class="oz-vgl-status__v">gering</span>
-          <span class="oz-vgl-status__lbl">Rechtlich</span><span class="oz-vgl-status__v">zulässig</span><span class="oz-vgl-status__v">in Prüfung</span>
+          <span class="oz-vgl-status__lbl">Ortsrecht · Fernwärmesatzung</span><span class="oz-vgl-status__v">zulässig</span><span class="oz-vgl-status__v">Anschlusszwang in Prüfung</span>
+          <span class="oz-vgl-status__lbl">Förderrecht · BEG EM</span><span class="oz-vgl-status__v">Anschluss 30 %</span><span class="oz-vgl-status__v">Ausschluss möglich, offen</span>
+          <p class="oz-vgl-status__fuss">Der Förderausschluss für Einzelheizungen im Wärmenetzgebiet steht in der Richtlinie. Ob er an diesem Gebäude greift, ist nicht entschieden, deshalb zeigt die Fördermatrix beide Fälle.</p>
         </div>
 
         <p class="oz-cockpit__head">Was die Förderung kostet, wenn man wartet</p>
