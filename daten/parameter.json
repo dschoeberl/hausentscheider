@@ -333,48 +333,48 @@
     },
     "WartGas": {
       "label": "Wartung Gas-Brennwert",
-      "default": 0.02,
+      "default": 0.025,
       "min": 0.015,
       "max": 0.035,
       "einheit": "%",
       "quelle": "Q-WART-01",
-      "kommentar": "v2.1 (05.05.2026): an engine.js _wartungsquote angeglichen (vorher 0,025) — engine.js ist führend"
+      "kommentar": "16.08.2026: zurück auf den belegten Wert (Q-WART-01, VDI 2067, Erhebungsdatum im Tab 'Quellen'). Die Angleichung vom 05.05.2026 auf 0,02 hatte keine Herkunft — sie berief sich auf eine Aufgabenliste, die sich selbst 'authoritative' nennt, ohne Grund zu nennen. Die Excel führt."
     },
     "WartHybrid": {
       "label": "Wartung Hybrid",
-      "default": 0.035,
+      "default": 0.03,
       "min": 0.025,
       "max": 0.04,
       "einheit": "%",
       "quelle": "Q-WART-02",
-      "kommentar": "v2.1 (05.05.2026): an engine.js _wartungsquote angeglichen (vorher 0,03) — engine.js ist führend"
+      "kommentar": "16.08.2026: zurück auf den belegten Wert (Q-WART-02, VDI 2067, Erhebungsdatum im Tab 'Quellen'). Die Angleichung vom 05.05.2026 auf 0,035 hatte keine belegte Herkunft. Die Excel führt."
     },
     "WartWP": {
       "label": "Wartung Waermepumpe",
-      "default": 0.015,
+      "default": 0.02,
       "min": 0.01,
       "max": 0.03,
       "einheit": "%",
       "quelle": "Q-WART-03",
-      "kommentar": "v2.1 (05.05.2026): an engine.js _wartungsquote angeglichen (vorher 0,02) — engine.js ist führend"
+      "kommentar": "16.08.2026: zurück auf den belegten Wert (Q-WART-03, VDI 2067, Erhebungsdatum im Tab 'Quellen'). Die Angleichung vom 05.05.2026 auf 0,015 hatte keine belegte Herkunft. Die Excel führt."
     },
     "WartFW": {
       "label": "Wartung Fernwaerme",
-      "default": 0.01,
+      "default": 0.015,
       "min": 0.01,
       "max": 0.02,
       "einheit": "%",
       "quelle": "Q-WART-04",
-      "kommentar": "v2.1 (05.05.2026): an engine.js _wartungsquote angeglichen (vorher 0,015) — engine.js ist führend"
+      "kommentar": "16.08.2026: zurück auf den belegten Wert (Q-WART-04, VDI 2067 und AGFW, Erhebungsdatum im Tab 'Quellen'). Die Angleichung vom 05.05.2026 auf 0,01 hatte keine belegte Herkunft. Die Excel führt."
     },
     "WartPellets": {
       "label": "Wartung Pellets",
-      "default": 0.03,
+      "default": 0.035,
       "min": 0.025,
       "max": 0.045,
       "einheit": "%",
       "quelle": "Q-WART-05",
-      "kommentar": "v2.1 (05.05.2026): an engine.js _wartungsquote angeglichen (vorher 0,035) — engine.js ist führend"
+      "kommentar": "16.08.2026: zurück auf den belegten Wert (Q-WART-05, VDI 2067 und DEPV, Erhebungsdatum im Tab 'Quellen'). Die Angleichung vom 05.05.2026 auf 0,03 hatte keine belegte Herkunft. Die Excel führt."
     },
     "GdWUntergrenze": {
       "label": "GdW-Soll Erhaltungsruecklage Untergrenze",

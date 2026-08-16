@@ -457,13 +457,15 @@ function _wartungsquote(option, params) {
   const ausJson = jsonKey && _default(params, 'block3_technik', jsonKey);
   if (ausJson != null && !isNaN(ausJson)) return Number(ausJson);
 
+  // Notlauf, auf den belegten Werten (Q-WART-01..05, VDI 2067; FW zusaetzlich
+  // AGFW, Pellets DEPV). Stand 16.08.2026 identisch mit parameter.json.
   const map = {
-    gas:     0.020,
-    hybrid:  0.035,
-    wp:      0.015,
-    fw:      0.010,
-    pellets: 0.030,
-    oel:     0.020
+    gas:     0.025,
+    hybrid:  0.030,
+    wp:      0.020,
+    fw:      0.015,
+    pellets: 0.035,
+    oel:     0.025
   };
   return map[option] ?? 0.020;
 }
