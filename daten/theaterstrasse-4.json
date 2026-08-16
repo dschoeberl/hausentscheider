@@ -55,6 +55,7 @@
     { "typ": "open", "text": "Fernwärme-Angebot SWE ausstehend" }
   ],
   "rechner": {
+    "_pflege": "Eingaben des Objektprofil-Rechners (objekte/profil-universal.html). NICHT die Quelle der Startseiten-Referenzkarte — die liest Block 'wirtschaft'. wp_invest 132.000 und fw_invest 13.650 weichen bewusst von wirtschaft.invest_eur (130.000 / 31.500) ab; die Angleichung ist eine offene, eigene Entscheidung und kein Versehen.",
     "wp_invest": 132000,
     "wp_foerd_pct": 30,
     "ruecklage": 55000,
@@ -71,7 +72,7 @@
     "amort_basis_gas_ct": 10.0
   },
   "wirtschaft": {
-    "_pflege": "Single source für den Wirtschaftsvergleich der Startseiten-Referenzkarte (index.html, const WIRTSCHAFT — dorthin gespiegelt). Preis ändern = hier + dort. Fernwärme QUARTALSWEISE (SWE-Preisblatt, vgl. parameter.json PreisFW).",
+    "_pflege": "Alleinige Quelle für den Wirtschaftsvergleich der Startseiten-Referenzkarte. index.html liest diesen Block; die dortige Konstante WIRTSCHAFT_FALLBACK greift nur, wenn der Abruf scheitert. js/foerdermatrix.js liest ihn ebenfalls. Preis nur HIER ändern. Fernwärme QUARTALSWEISE (SWE-Preisblatt, vgl. parameter.json PreisFW). Nicht mit Block 'rechner' verwechseln — der gehört dem Objektprofil-Rechner. wp_foerderung_anteil spiegelt parameter.json.foerdersaetze.grundfoerderung; maßgeblich ist dort.",
     "verbrauch_kwh": 95000,
     "bezugsflaeche_m2": 769.83,
     "we": 14,
