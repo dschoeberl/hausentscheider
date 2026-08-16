@@ -44,6 +44,37 @@
     "co2_mieter_eur": 502,
     "co2_vermieter_eur": 89
   },
+  "ist_2025": {
+    "_pflege": "Einzige Pflegestelle für die Zerlegung der Ist-Zahl auf der Startseite. Quelle: Cockpit v4.8, Tab '15_Gas_Energie_Historie', Zelle B18; Grundlage SWE-Gasabrechnung 02.02.2026 und Heiznebenkosten-Abrechnung 2025. Kaltwasser und Abwasser ausgeschlossen. Summen und €/m²·Monat rechnet die Seite selbst, damit keine abgeleitete Zahl im HTML steht.",
+    "abrechnungsjahr": 2025,
+    "bezugsflaeche_m2": 769.83,
+    "bezugsflaeche_bezeichnung": "Heizkosten-Gesamtfläche (Domotherm), vereinheitlicht am 21.06.2026",
+    "verbrauch_kwh": 94932,
+    "erdgasbezug_eur": 9680.76,
+    "heizbetrieb_eur": {
+      "wartung": 353.49,
+      "geraetemiete": 1040.34,
+      "abrechnungsvorbereitung": 929.75
+    },
+    "co2_netto_eur_kwh": 0.00998,
+    "verbrauchsreihe_kwh": [
+      { "jahr": 2023, "wert": 101240 },
+      { "jahr": 2024, "wert": 97601 },
+      { "jahr": 2025, "wert": 94932 }
+    ],
+    "verbrauchsausweis_2018": {
+      "_quelle": "Verbrauchsausweis für Wohngebäude, ausgestellt 18.04.2018, gültig bis 18.04.2028, Registriernummer TH-2018-001824664, Aussteller DOMO-THERM Messtechnik. Vermerk im Ausweis: 'Es wurde keine Gebäude-/Bestandsaufnahme durchgeführt.'",
+      "bezugsflaeche_m2": 908,
+      "bezugsflaeche_bezeichnung": "Gebäudenutzfläche",
+      "endenergie_kwh_m2a": 124,
+      "primaerenergie_kwh_m2a": 136,
+      "verbrauchsjahre_kwh": [
+        { "jahr": 2015, "wert": 105039 },
+        { "jahr": 2016, "wert": 107770 },
+        { "jahr": 2017, "wert": 104054 }
+      ]
+    }
+  },
   "status": [
     { "typ": "warn", "text": "Fernwärme-Satzungsgebiet (2005) · Anschlusspflicht in Prüfung" },
     { "typ": "ok",   "text": "WP-fähig · Heizlast 62 kW · 2 Außengeräte" },

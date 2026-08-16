@@ -247,6 +247,9 @@
     .oz-map__basis { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.5; margin: 0.95rem 0 0; font-family: 'Inter', sans-serif; }
     .oz-map__basis strong { color: rgba(255,255,255,0.78); font-weight: 600; }
     .oz-map__risk { font-size: 11.5px; color: var(--petrol-light); line-height: 1.55; margin: 0.5rem 0 0; font-family: 'Inter', sans-serif; }
+    .oz-map__grenze { font-size: 11.5px; color: rgba(255,255,255,0.62); line-height: 1.6; margin: 0.6rem 0 0; font-family: 'Inter', sans-serif; }
+    .oz-anchor__ist { font-size: 13px; color: rgba(255,255,255,0.82); line-height: 1.7; margin: 0 0 1.15rem; font-family: 'Inter', sans-serif; }
+    .oz-anchor__ist strong { color: #ffffff; font-weight: 600; }
 
     /* === Performance-Cockpit === */
     .oz-cockpit { background: var(--petrol-dark); padding: 0 1.5rem 1.75rem; }
@@ -2228,7 +2231,10 @@
         };
       }
 
-      function zeichneWirtschaft(WIRTSCHAFT){
+      // DATEN ist die geparste theaterstrasse-4.json oder null (Rueckfallebene).
+      // Fehlt sie, entfallen Zerlegung und Ausweisvergleich; der Balken bleibt
+      // vollstaendig, weil er allein aus WIRTSCHAFT rechnet.
+      function zeichneWirtschaft(WIRTSCHAFT, DATEN){
       const WV = (function(){
         const W = WIRTSCHAFT, v = W.verbrauch_kwh, n = W.n, fl = W.flaeche_m2;
         const e1 = { fw: v * W.preis_ct.fw/100, wp: (v / W.jaz) * W.preis_ct.wp/100, gas: v * W.preis_ct.gas/100 };
@@ -2239,7 +2245,7 @@
         let be = null, cFW = inv.fw, cWP = inv.wp;
         for (let t = 1; t <= n; t++){ cFW += e1.fw * Math.pow(1 + W.steig.fw, t - 1); cWP += e1.wp * Math.pow(1 + W.steig.wp, t - 1); if (be === null && cFW >= cWP) be = t; }
         return { e1, mit, ohne, be, ersparnis: mit.fw - mit.wp, diffFW: mit.fw - ohne.fw,
-                 fwMonat: e1.fw / fl / 12, wpMonat: e1.wp / fl / 12 };
+                 fwMonat: e1.fw / fl / 12, wpMonat: e1.wp / fl / 12, gasMonat: e1.gas / fl / 12 };
       })();
       const fmtTsd = x => Math.round(x / 1000).toLocaleString('de-DE') + '.000 €';
       const fmtEur = x => Math.round(x).toLocaleString('de-DE') + ' €';
@@ -2247,22 +2253,80 @@
       const z = OBJEKT_001.die_eine_zahl;
       const sMin = 0.5, sMax = 2.2;
       function ozPos(v){ return Math.max(4, Math.min(96, (v - sMin) / (sMax - sMin) * 100)).toFixed(1); }
+      const fmtM2 = x => x.toFixed(2).replace('.', ',');
+
+      // Zerlegung der gemessenen Ist-Zahl. Alle Betraege kommen aus
+      // daten/theaterstrasse-4.json, Block "ist_2025"; hier wird nur summiert.
+      const IST = (DATEN && DATEN.ist_2025) || null;
+      let istHtml = '';
+      if (IST) {
+        const hb    = IST.heizbetrieb_eur || {};
+        const hbSum = (hb.wartung || 0) + (hb.geraetemiete || 0) + (hb.abrechnungsvorbereitung || 0);
+        const gesamt = IST.erdgasbezug_eur + hbSum;
+        const proM2 = x => fmtM2(x / IST.bezugsflaeche_m2 / 12);
+        istHtml =
+          '<p class="oz-anchor__ist"><strong>Heute gezahlt: ' + proM2(gesamt) + ' €/m²·Monat.</strong> ' +
+          'Gemessen für ' + IST.abrechnungsjahr + ', Heizung und Warmwasser, Kaltwasser und Abwasser ausgenommen. ' +
+          'Darin stecken zwei Dinge. Der <strong>Erdgasbezug</strong>: ' + IST.verbrauch_kwh.toLocaleString('de-DE') +
+          ' kWh für ' + fmtEur(IST.erdgasbezug_eur) + ', das sind <strong>' + proM2(IST.erdgasbezug_eur) + ' €/m²·Monat</strong>. ' +
+          'Und der <strong>Heizbetrieb</strong>: Wartung ' + fmtEur(hb.wartung) + ', Gerätemiete ' + fmtEur(hb.geraetemiete) +
+          ', Abrechnungsvorbereitung ' + fmtEur(hb.abrechnungsvorbereitung) + ', zusammen ' + fmtEur(hbSum) +
+          ', also <strong>' + proM2(hbSum) + ' €/m²·Monat</strong>. ' +
+          'Summe ' + fmtEur(gesamt) + ' im Jahr auf ' + fmtM2(IST.bezugsflaeche_m2) + ' m².</p>';
+      }
+      const reihe = (IST && Array.isArray(IST.verbrauchsreihe_kwh))
+        ? IST.verbrauchsreihe_kwh.map(r => r.jahr + ': ' + r.wert.toLocaleString('de-DE')).join(', ')
+        : '';
+      const schwankung = reihe
+        ? 'Der Verbrauch schwankt mit dem Wetter (' + reihe + ' kWh), deshalb rechnet die Projektion mit einem ' +
+          'gerundeten Ansatz unterhalb des Dreijahresschnitts. '
+        : '';
+      // Drei Flaechen mit drei Bedeutungen. Jede Zahl nennt ihren Nenner,
+      // sonst liest sich die eine als Fehler der anderen (CLAUDE.md Regel 9).
+      const AUS = IST && IST.verbrauchsausweis_2018;
+      const wohnflaeche = DATEN && DATEN.gebaeude && DATEN.gebaeude.flaeche;
+      const flaechenAbsatz = (IST && AUS && wohnflaeche)
+        ? '<p>Das Haus trägt drei Flächen mit drei Bedeutungen: ' + AUS.bezugsflaeche_m2.toLocaleString('de-DE') +
+          ' m² ' + AUS.bezugsflaeche_bezeichnung + ' im Energieausweis, ' + wohnflaeche.toLocaleString('de-DE') +
+          ' m² Wohnfläche und ' + fmtM2(IST.bezugsflaeche_m2) + ' m² Heizkostenfläche. Die Wärmekosten oben rechnen auf ' +
+          'der Heizkostenfläche, seit 21.06.2026 einheitlich.</p>'
+        : '';
+      const ausweisAbsatz = (IST && AUS)
+        ? '<p>Der Verbrauchsausweis von 2018 weist ' + AUS.endenergie_kwh_m2a + ' kWh/m²·a aus, bezogen auf ' +
+          AUS.bezugsflaeche_m2.toLocaleString('de-DE') + ' m² ' + AUS.bezugsflaeche_bezeichnung + '. Auf dieselbe Fläche ' +
+          'gerechnet liegt der gemessene Verbrauch ' + IST.abrechnungsjahr + ' bei rund ' +
+          Math.round(IST.verbrauch_kwh / AUS.bezugsflaeche_m2) + ' kWh/m²·a. Das Gebäude verbraucht heute weniger als zur ' +
+          'Zeit des Ausweises, der auf den Jahren ' + AUS.verbrauchsjahre_kwh[0].jahr + ' bis ' +
+          AUS.verbrauchsjahre_kwh[AUS.verbrauchsjahre_kwh.length - 1].jahr + ' beruht.</p>'
+        : '';
       anchorEl.innerHTML =
-        '<p class="oz-anchor__lbl">Wärmekosten · €/m²·Monat — heute und die zwei zulässigen Pfade</p>' +
+        istHtml +
+        '<p class="oz-anchor__lbl">Energiekosten · €/m²·Monat — heute und die zwei zulässigen Pfade</p>' +
         '<div class="oz-map">' +
           '<div class="oz-map__bar">' +
             '<span class="oz-map__mark oz-map__mark--wp" style="left:' + ozPos(WV.wpMonat) + '%"><span class="oz-map__lblbox"><span class="oz-map__val">~' + WV.wpMonat.toFixed(2).replace('.', ',') + '</span><span class="oz-map__cap">Wärmepumpe</span></span></span>' +
-            '<span class="oz-map__mark oz-map__mark--gas" style="left:' + ozPos(WIRTSCHAFT.ist_eur_m2_monat) + '%"><span class="oz-map__lblbox"><span class="oz-map__val">' + WIRTSCHAFT.ist_eur_m2_monat.toFixed(2).replace('.', ',') + '</span><span class="oz-map__cap">Gas heute</span></span></span>' +
+            '<span class="oz-map__mark oz-map__mark--gas" style="left:' + ozPos(WV.gasMonat) + '%"><span class="oz-map__lblbox"><span class="oz-map__val">' + fmtM2(WV.gasMonat) + '</span><span class="oz-map__cap">Gas heute</span></span></span>' +
             '<span class="oz-map__mark oz-map__mark--fw" style="left:' + ozPos(WV.fwMonat) + '%"><span class="oz-map__lblbox"><span class="oz-map__val">~' + WV.fwMonat.toFixed(2).replace('.', ',') + '</span><span class="oz-map__cap">Fernwärme <em>steigt ▸</em></span></span></span>' +
           '</div>' +
           '<div class="oz-map__labels"><span>niedrig</span><span>im Schnitt</span><span>erhöht</span></div>' +
         '</div>' +
-        '<p class="oz-map__basis">Basis: 95.000 kWh/Jahr · 769,83 m² · Heizung + Warmwasser, Vollkosten. <strong>Gas</strong> = gemessener Wert (2025); <strong>Fernwärme</strong> und <strong>Wärmepumpe</strong> sind belegte Projektionen zu heutigen Preisen.</p>' +
+        '<p class="oz-map__basis">Basis: rund ' + WIRTSCHAFT.verbrauch_kwh.toLocaleString('de-DE') + ' kWh im Jahr · ' +
+          fmtM2(WIRTSCHAFT.flaeche_m2) + ' m² · Heizung und Warmwasser. ' + schwankung +
+          'Gas ist gemessen, Fernwärme und Wärmepumpe sind zu heutigen Preisen projiziert.</p>' +
+        '<p class="oz-map__grenze">Der Balken zeigt nur den Energieanteil — er ist der Teil, der sich mit der Heizung ändert. ' +
+          'Betriebskosten fallen bei jeder Lösung an, in unterschiedlicher Höhe; belastbar beziffert sind sie hier allein ' +
+          'für die Gasheizung. Das bleibt eine Schieflage zugunsten der Wärmepumpe: Ein Fernwärme-Anschluss braucht weniger ' +
+          'Betrieb als ein Gaskessel, eine Wärmepumpe braucht eigene Wartung. Beides steckt nicht im Balken.</p>' +
         '<p class="oz-map__risk">Fernwärme steigt: Die Stadtwerke prognostizieren bis 2040 eine Verdopplung. Ein Netzanschluss bindet langfristig und ist nur eingeschränkt kündbar; das Preisrisiko tragen am Ende Eigentümer und Mieter.</p>' +
         '<details class="oz-anchor__det">' +
           '<summary>Zusammensetzung &amp; Systemgrenze</summary>' +
-          '<p>davon CO₂ ' + z.davon_co2 + ' · Bezugsfläche ' + z.bezugsflaeche_m2.toLocaleString("de-DE") + ' m² · Abrechnungsjahr ' + z.abrechnungsjahr + ' · Quelle: ' + z.quelle + '</p>' +
+          '<p>davon CO₂ ' + z.davon_co2 + ' €/m²·Monat' +
+            (IST ? ' (' + IST.co2_netto_eur_kwh.toFixed(5).replace('.', ',') + ' €/kWh netto auf ' + IST.verbrauch_kwh.toLocaleString('de-DE') + ' kWh)' : '') +
+            ' · Bezugsfläche ' + z.bezugsflaeche_m2.toLocaleString("de-DE") + ' m² · Abrechnungsjahr ' + z.abrechnungsjahr + ' · Quelle: ' + z.quelle + '</p>' +
           '<p>' + z.systemgrenze + '</p>' +
+          flaechenAbsatz +
+          ausweisAbsatz +
+          '<p>Wo einzelne Wohnungen abweichen, sitzt der Unterschied zwischen Kessel und Wohnungszähler, nicht am Gebäude.</p>' +
         '</details>';
 
       // === Wirtschaftsvergleich: Gesamtkosten (beide Wege) + Jahreskosten ===
@@ -2309,10 +2373,10 @@
       // Die JSON fuehrt. Scheitert der Abruf, zeichnet die Rueckfallebene.
       fetch('daten/theaterstrasse-4.json', { cache: 'no-cache' })
         .then(function(r){ return r.json(); })
-        .then(function(j){ zeichneWirtschaft(wirtschaftAusJson(j && j.wirtschaft)); })
+        .then(function(j){ zeichneWirtschaft(wirtschaftAusJson(j && j.wirtschaft), j); })
         .catch(function(err){
           console.warn('[Objekt 001] Block "wirtschaft" nicht ladbar, Rueckfallebene aktiv:', err);
-          zeichneWirtschaft(WIRTSCHAFT_FALLBACK);
+          zeichneWirtschaft(WIRTSCHAFT_FALLBACK, null);
         });
 
       // === Säule 2: Future Readiness Index ===
