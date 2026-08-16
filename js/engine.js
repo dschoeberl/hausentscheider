@@ -855,10 +855,14 @@ function berechneSensitivitaet(szenario, input, params) {
    14) Empfehlung
    -------------------------------------------------------------- */
 
+/* Zwei Achsen: Lebenszykluskosten und Cashflow. Eine dritte Achse
+   "Foerderquote" ist entfallen — die Foerderung steckt bereits in beiden
+   (sie senkt die Kapital-Annuitaet der TCO und den Finanzierungsbedarf).
+   Massgeblich ist das Verhaeltnis tco : cf; berechneEmpfehlung normiert es. */
 const PERSONA_GEWICHTUNG = {
-  bewahrer:   { tco: 0.60, cf: 0.10, fq: 0.30 },
-  optimierer: { tco: 0.50, cf: 0.30, fq: 0.20 },
-  wechsler:   { tco: 0.20, cf: 0.40, fq: 0.40 }
+  bewahrer:   { tco: 0.60, cf: 0.10 },
+  optimierer: { tco: 0.50, cf: 0.30 },
+  wechsler:   { tco: 0.20, cf: 0.40 }
 };
 
 function _normalize(values) {
@@ -892,21 +896,30 @@ function berechneEmpfehlung(input, params) {
     return true;
   });
 
+  // Die Foerderung wirkt bereits in der TCO: sie senkt die Kapital-Annuitaet
+  // ueber investNetto = investMehr - foerderung, und ueber den geringeren
+  // Finanzierungsbedarf auch den Cashflow. Eine eigene Foerderquoten-Achse
+  // haette denselben Vorteil ein zweites Mal belohnt — im Zwanggebiet
+  // ausgerechnet zugunsten der Option, die ueber die Laufzeit teurer ist.
+  // Die Achse ist deshalb entfallen; ihr Gewicht verteilt sich auf die
+  // beiden verbleibenden im bisherigen Verhaeltnis, damit die Personas
+  // ihren Charakter behalten.
   const tcoArr = aktive.map(o => -tcoAlle[o].tco);  // niedrige TCO besser
   // Cashflow-Achse: Jahr 5 als "stationärer Cashflow", löst den Investitions-
   // Sprung in Jahr 1 auf. Folgeaufgabe Spec §3.6 v1.2: Methodik klarer als
   // "Jährliche Energiekosten heute" formulieren.
   const cf1Arr = aktive.map(o => cfAlle[o].jaehrlich[5]);
-  const fqArr  = aktive.map(o => berechneFoerderBetrag(o, input, params)
-                                 / Math.max(1, berechneInvestition(o, input, params)));
 
   const tcoNorm = _normalize(tcoArr);
   const cfNorm  = _normalize(cf1Arr);
-  const fqNorm  = fqArr.map(v => v / 0.70);
+
+  // Gewichte auf die zwei verbleibenden Achsen normiert.
+  const summe = (w.tco + w.cf) || 1;
+  const gTco = w.tco / summe, gCf = w.cf / summe;
 
   const scores = aktive.map((o, i) => ({
     option: o,
-    score: w.tco * tcoNorm[i] + w.cf * cfNorm[i] + w.fq * fqNorm[i]
+    score: gTco * tcoNorm[i] + gCf * cfNorm[i]
   }));
   scores.sort((a, b) => b.score - a.score);
 
