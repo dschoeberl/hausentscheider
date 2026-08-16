@@ -1987,10 +1987,12 @@
               </span>
             </label>
             <label>
-              <input type="checkbox" id="bafa-einkommen">
-              <span>Einkommensbonus <b>bis 40 %</b></span>
+              <span>Einkommensbonus</span>
+              <select id="bafa-einkommen-stufe" class="wizard-select bafa-select" aria-label="Einkommensstufe für den Einkommensbonus">
+                <option value="0">kein Anspruch</option>
+              </select>
               <span class="info-tip" tabindex="0" aria-label="Info Einkommensbonus">ⓘ
-                <span class="info-tip__pop">Nur für selbstnutzende Eigentümer, gestaffelt nach zu versteuerndem Haushaltsjahreseinkommen: bis 30.000 € 40 Punkte, bis 40.000 € 30 Punkte, bis 50.000 € 10 Punkte. Der Schalter rechnet mit der obersten Stufe.<span class="info-tip__src">Quelle: BEG EM vom 17.07.2026, Nummer 8.4.5.</span></span>
+                <span class="info-tip__pop">Nur für selbstnutzende Eigentümer und nur für die selbstgenutzte Wohneinheit; im Mehrfamilienhaus wird er anteilig angesetzt. Maßgeblich ist das zu versteuernde Haushaltsjahreseinkommen. Bei mindestens einem gemeldeten Kind unter 18 Jahren sinkt das anzusetzende Einkommen einmalig um 10.000 €.<span class="info-tip__src">Quelle: BEG EM vom 17.07.2026, Nummer 8.4.5.</span></span>
               </span>
             </label>
           </div>
@@ -2158,7 +2160,7 @@
           preisFW:  19.3,
           preisWP:  26.0,
           foerderung: {
-            grund: true, klima: true, einkommen: false,
+            grund: true, klima: true, einkommen: 0,
             master: null   // wird beim Start aus den Schaltern gerechnet
           }
         },
@@ -2216,6 +2218,9 @@
       applyDefaultsForType(state.gebaeudetyp, /*force=*/true);
       // UI-Werte für Mai-Stand setzen
       hydrateMarktHinweis();
+      // Die Einkommensstufen stehen erst jetzt zur Verfuegung — die Verdrahtung
+      // laeuft vorher und haette nur die leere Vorgabe im Markup gefunden.
+      if (typeof baueEinkommensstufen === 'function') baueEinkommensstufen();
     }
 
     function fallbackParameter() {
@@ -3121,6 +3126,24 @@
 
     // ----- Schieberegler-Setup (Wirkung auf Panels in C2/C3/C4) -----
 
+    // Der Einkommensbonus ist gestaffelt, kein Ja/Nein. Die Auswahl wird aus
+    // parameter.json.foerdersaetze.einkommensbonus.stufen aufgebaut, damit kein
+    // Satz und keine Einkommensgrenze im Markup steht. Bewusst auf dieser Ebene
+    // und nicht in setupSchieberegler: loadJSON muss sie nachziehen koennen,
+    // sobald die Parameter da sind.
+    function baueEinkommensstufen() {
+      const sel = $('#bafa-einkommen-stufe');
+      if (!sel) return;
+      const fs = (config.parameter && config.parameter.foerdersaetze) || {};
+      const stufen = (fs.einkommensbonus && fs.einkommensbonus.stufen) || [];
+      if (!stufen.length) return;
+      const eur = n => Number(n).toLocaleString('de-DE') + ' €';
+      sel.innerHTML = '<option value="0">kein Anspruch</option>' +
+        stufen.map(s => '<option value="' + s.wert + '">zvE bis ' + eur(s.bis) +
+                        ' — ' + Math.round(s.wert * 100) + ' %</option>').join('');
+      sel.value = String(state.overrides.schieberegler.foerderung.einkommen || 0);
+    }
+
     function setupSchieberegler() {
       // C2 v2.0: Zeitraum-Slider OBEN auf Ergebnis-Seite, fließend 1–30 Jahre.
       const sZ  = $('#slider-zeitraum-oben');
@@ -3151,8 +3174,7 @@
       // gewählten Antragsmonat — nicht mehr hart im Code.
       const toggles = {
         'bafa-grund':     { key: 'grund' },
-        'bafa-klima':     { key: 'klima' },
-        'bafa-einkommen': { key: 'einkommen' }
+        'bafa-klima':     { key: 'klima' }
       };
       // Reine Datenabfrage aus parameter.json.foerdersaetze — die Werte stehen
       // dort, hier steht nur die Auswahl der Stufe zum gewählten Antragsmonat.
@@ -3209,7 +3231,8 @@
         let sum = 0;
         if (fb.grund)     sum += s.grund * 100;
         if (fb.klima)     sum += s.klima * 100 * anteil;
-        if (fb.einkommen) sum += s.eink  * 100 * anteil;
+        // fb.einkommen ist der gewaehlte Satz, nicht mehr ein Ja/Nein.
+        if (fb.einkommen) sum += Number(fb.einkommen) * 100 * anteil;
         sum = Math.round(Math.min(s.deckel * 100, sum));
         state.overrides.schieberegler.foerderung.master = sum;
         $('#slider-foerderung').value = String(sum);
@@ -3229,6 +3252,16 @@
           if (window.HE && window.HE.dispatch) window.HE.dispatch();
         });
       });
+      const einkSel = $('#bafa-einkommen-stufe');
+      if (einkSel) {
+        einkSel.addEventListener('change', () => {
+          state.overrides.schieberegler.foerderung.einkommen = Number(einkSel.value) || 0;
+          recomputeMaster();
+          renderBericht();
+          if (window.HE && window.HE.dispatch) window.HE.dispatch();
+        });
+      }
+      baueEinkommensstufen();
       // Einmal beim Start rechnen. Ohne das stand im Regler der fest
       // eingetragene Startwert, der die Boni noch voll ansetzte — und weil
       // er als Override gilt, haette er die Anteiligkeit still aufgehoben.
@@ -3238,8 +3271,18 @@
       function rastpunkte() {
         const s = saetzeZumAntrag();
         const d = s.deckel * 100;
-        const roh = [0, s.grund, s.grund + s.klima, s.grund + s.eink,
-                     s.grund + s.klima + s.eink].map(x => Math.round(Math.min(x * 100, d)));
+        // Rastpunkte auf der Anteilslogik: die beiden persoenlichen Boni
+        // gelten im Mehrfamilienhaus nur anteilig, also rasten sie auch dort.
+        const we = state.wohneinheiten || 1;
+        const gesamt = state.wohnflaeche || 0;
+        const eigen = (state.eigeneWohnflaeche != null && state.eigeneWohnflaeche > 0)
+                      ? state.eigeneWohnflaeche : null;
+        const anteil = Math.max(0, Math.min(1,
+          (eigen != null && gesamt > 0) ? (eigen / gesamt) : (1 / Math.max(1, we))));
+        const eink = Number(state.overrides.schieberegler.foerderung.einkommen) || s.eink;
+        const k = s.klima * anteil, e = eink * anteil;
+        const roh = [0, s.grund, s.grund + k, s.grund + e,
+                     s.grund + k + e].map(x => Math.round(Math.min(x * 100, d)));
         return [...new Set(roh)].sort((a, b) => a - b);
       }
       function zeichneRaster() {
@@ -3283,30 +3326,30 @@
           const p = btn.dataset.preset;
           const fb = state.overrides.schieberegler.foerderung;
           if (p === 'heute') {
-            fb.grund = true; fb.klima = true; fb.einkommen = false;
+            fb.grund = true; fb.klima = true; fb.einkommen = 0;
             state.antragsdatum = null;              // laufender Monat
             syncAntragsdatum();
           } else if (p === 'stichtag') {
             // Erster Monat nach dem Wärmepumpen-Stichtag: Grundförderung 15 %,
             // Klimabonus noch auf der Stufe bis 31.01.2027.
-            fb.grund = true; fb.klima = true; fb.einkommen = false;
+            fb.grund = true; fb.klima = true; fb.einkommen = 0;
             state.antragsdatum = '2027-01';
             syncAntragsdatum();
           } else if (p === 'gestrichen') {
-            fb.grund = false; fb.klima = false; fb.einkommen = false;
+            fb.grund = false; fb.klima = false; fb.einkommen = 0;
             state.overrides.schieberegler.foerderung.master = 0;
             $('#slider-foerderung').value = '0';
             $('#out-foerderung').textContent = '0 %';
             $('#bafa-grund').checked = false;
             $('#bafa-klima').checked = false;
-            $('#bafa-einkommen').checked = false;
+            $('#bafa-einkommen-stufe').value = '0';
             renderBericht();
             if (window.HE && window.HE.dispatch) window.HE.dispatch();
             return;
           }
           $('#bafa-grund').checked = fb.grund;
           $('#bafa-klima').checked = fb.klima;
-          $('#bafa-einkommen').checked = fb.einkommen;
+          $('#bafa-einkommen-stufe').value = String(fb.einkommen || 0);
           recomputeMaster();
           renderBericht();
           if (window.HE && window.HE.dispatch) window.HE.dispatch();

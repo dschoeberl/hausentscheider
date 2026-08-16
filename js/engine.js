@@ -289,8 +289,11 @@ function berechneFoerderQuote(state, params, option) {
   const grund  = grundfoerderung(option, iso, params);
   const klima  = _stufenwert((_fs(params, 'klimageschwindigkeitsbonus') || {}).stufen,
                              iso, FS_FALLBACK.klimaStufen[0].wert);
+  // f.einkommen traegt den gewaehlten Stufensatz. true bleibt als alter
+  // Aufrufweg zulaessig und bedeutet dann die oberste Stufe.
   const einkSt = (_fs(params, 'einkommensbonus') || {}).stufen;
-  const eink   = (Array.isArray(einkSt) && einkSt.length) ? einkSt[0].wert : FS_FALLBACK.einkommen;
+  const einkTop = (Array.isArray(einkSt) && einkSt.length) ? einkSt[0].wert : FS_FALLBACK.einkommen;
+  const eink   = (typeof f.einkommen === 'number') ? f.einkommen : einkTop;
   const deckel = (_fs(params, 'obergrenze') || {}).standard ?? FS_FALLBACK.obergrenze;
 
   // Grundfoerderung gilt fuer das Gebaeude, die beiden persoenlichen Boni
@@ -806,7 +809,7 @@ function berechneSensitivitaet(szenario, input, params) {
   const klon = JSON.parse(JSON.stringify(input));
   switch (szenario) {
     case 'bafa-gestrichen':
-      klon.foerderung = { grund: false, klima: false, einkommen: false, master: 0 };
+      klon.foerderung = { grund: false, klima: false, einkommen: 0, master: 0 };
       break;
     case 'co2-schneller':
       klon.overrides = klon.overrides || {};
@@ -1096,7 +1099,7 @@ function _testInputMFHDefault(params) {
       fw:  _default(params, 'block1_energiepreise', 'PreisFW'),
       wp:  _default(params, 'block1_energiepreise', 'PreisWP')
     },
-    foerderung: { grund: true, klima: true, einkommen: false, master: null },  // null = kein Override, Quote folgt den Schaltern
+    foerderung: { grund: true, klima: true, einkommen: 0, master: null },  // null = kein Override, Quote folgt den Schaltern
     overrides: { eigenerPreis: {}, jaz: null, co2Pfad: 'aktuell', verkehrswert: null },
     // C2 v2.1 — Bruttoinvest = Wizard-Default für MFH (Spec §3)
     bruttoInvest: { hybrid: 73000, wp: 126000, fw: 33000, pellets: 63000 },
@@ -1677,7 +1680,7 @@ function berechneZukunftsszenarioAussagen(input, params) {
     wp:  _default(params, 'block1_energiepreise', 'PreisWP')  ?? 25
   };
   // Default-Förderung = Grund + Klima
-  inputDefault.foerderung = { grund: true, klima: true, einkommen: false, master: null };
+  inputDefault.foerderung = { grund: true, klima: true, einkommen: 0, master: null };
 
   const ist = _kennzahlen(inputDefault, params);
   const neu = _kennzahlen(input, params);
