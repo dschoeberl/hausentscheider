@@ -264,6 +264,24 @@ function grundfoerderung(option, iso, params) {
   return basis;
 }
 
+/* Anteil der selbstgenutzten Einheit an der Gesamtflaeche.
+   Klimageschwindigkeits- und Einkommensbonus haengen an der selbstgenutzten
+   Wohneinheit, nicht am Gebaeude: "In Gebaeuden mit mehr als einer Wohneinheit
+   nur anteilig" (BEG EM 8.4.4 und 8.4.5, so auch parameter.json).
+   Gleiche Anteilsdefinition wie berechneMieterNebenkostenEffekt:
+   eigeneWohnflaeche / Gesamtflaeche, ersatzweise 1 / Wohneinheiten.
+   Im Einfamilienhaus ist der Anteil 1 — dort aendert sich nichts. */
+function selbstnutzerAnteil(input) {
+  const we = input.we || input.wohneinheiten || 1;
+  const gesamt = input.wohnflaeche || 0;
+  const eigen = (input.eigeneWohnflaeche != null && input.eigeneWohnflaeche > 0)
+                ? input.eigeneWohnflaeche : null;
+  const anteil = (eigen != null && gesamt > 0)
+                 ? (eigen / gesamt)
+                 : (1 / Math.max(1, we));
+  return Math.max(0, Math.min(1, anteil));
+}
+
 function berechneFoerderQuote(state, params, option) {
   const f = state.foerderung || {};
   const iso = antragsdatumISO(state);
@@ -275,10 +293,14 @@ function berechneFoerderQuote(state, params, option) {
   const eink   = (Array.isArray(einkSt) && einkSt.length) ? einkSt[0].wert : FS_FALLBACK.einkommen;
   const deckel = (_fs(params, 'obergrenze') || {}).standard ?? FS_FALLBACK.obergrenze;
 
+  // Grundfoerderung gilt fuer das Gebaeude, die beiden persoenlichen Boni
+  // nur fuer die selbstgenutzte Einheit.
+  const anteil = selbstnutzerAnteil(state);
+
   let quote = 0;
   if (f.grund)     quote += grund;
-  if (f.klima)     quote += klima;
-  if (f.einkommen) quote += eink;
+  if (f.klima)     quote += klima * anteil;
+  if (f.einkommen) quote += eink * anteil;
 
   // Master-Slider als Override, sobald er von der Toggle-Aggregation abweicht
   if (typeof f.master === 'number') {
@@ -290,7 +312,7 @@ function berechneFoerderQuote(state, params, option) {
   quote = Math.min(quote, deckel);
   // sinkpfadAktiv: der Klimabonus steht nicht mehr auf seinem Ausgangswert
   const sinkpfadAktiv = klima < FS_FALLBACK.klimaStufen[0].wert - 1e-6;
-  return { quote, capped, sinkpfadAktiv, klima, grund, stichtag: iso };
+  return { quote, capped, sinkpfadAktiv, klima, grund, anteil, stichtag: iso };
 }
 
 function berechneFoerderBetrag(option, input, params) {
@@ -1074,7 +1096,7 @@ function _testInputMFHDefault(params) {
       fw:  _default(params, 'block1_energiepreise', 'PreisFW'),
       wp:  _default(params, 'block1_energiepreise', 'PreisWP')
     },
-    foerderung: { grund: true, klima: true, einkommen: false, master: 46 },
+    foerderung: { grund: true, klima: true, einkommen: false, master: null },  // null = kein Override, Quote folgt den Schaltern
     overrides: { eigenerPreis: {}, jaz: null, co2Pfad: 'aktuell', verkehrswert: null },
     // C2 v2.1 — Bruttoinvest = Wizard-Default für MFH (Spec §3)
     bruttoInvest: { hybrid: 73000, wp: 126000, fw: 33000, pellets: 63000 },
@@ -1655,7 +1677,7 @@ function berechneZukunftsszenarioAussagen(input, params) {
     wp:  _default(params, 'block1_energiepreise', 'PreisWP')  ?? 25
   };
   // Default-Förderung = Grund + Klima
-  inputDefault.foerderung = { grund: true, klima: true, einkommen: false, master: 46 };
+  inputDefault.foerderung = { grund: true, klima: true, einkommen: false, master: null };
 
   const ist = _kennzahlen(inputDefault, params);
   const neu = _kennzahlen(input, params);

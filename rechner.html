@@ -2159,7 +2159,7 @@
           preisWP:  26.0,
           foerderung: {
             grund: true, klima: true, einkommen: false,
-            master: 46
+            master: null   // wird beim Start aus den Schaltern gerechnet
           }
         },
         profi: {}
@@ -3197,10 +3197,19 @@
       function recomputeMaster() {
         const fb = state.overrides.schieberegler.foerderung;
         const s = saetzeZumAntrag();
+        // Muss der Anteilslogik in engine.js selbstnutzerAnteil() folgen.
+        // Weicht diese Summe von der Engine-Quote ab, gewinnt der Master-Regler
+        // als Override — dann waere die Anteiligkeit still wieder aufgehoben.
+        const we = state.wohneinheiten || 1;
+        const gesamt = state.wohnflaeche || 0;
+        const eigen = (state.eigeneWohnflaeche != null && state.eigeneWohnflaeche > 0)
+                      ? state.eigeneWohnflaeche : null;
+        const anteil = Math.max(0, Math.min(1,
+          (eigen != null && gesamt > 0) ? (eigen / gesamt) : (1 / Math.max(1, we))));
         let sum = 0;
         if (fb.grund)     sum += s.grund * 100;
-        if (fb.klima)     sum += s.klima * 100;
-        if (fb.einkommen) sum += s.eink  * 100;
+        if (fb.klima)     sum += s.klima * 100 * anteil;
+        if (fb.einkommen) sum += s.eink  * 100 * anteil;
         sum = Math.round(Math.min(s.deckel * 100, sum));
         state.overrides.schieberegler.foerderung.master = sum;
         $('#slider-foerderung').value = String(sum);
@@ -3220,6 +3229,10 @@
           if (window.HE && window.HE.dispatch) window.HE.dispatch();
         });
       });
+      // Einmal beim Start rechnen. Ohne das stand im Regler der fest
+      // eingetragene Startwert, der die Boni noch voll ansetzte — und weil
+      // er als Override gilt, haette er die Anteiligkeit still aufgehoben.
+      recomputeMaster();
       // Rastpunkte: die Quoten, die die Richtlinie zum gewählten Antragsmonat
       // kennt. Ein freier Regler würde das Gesetz als Drehknopf darstellen.
       function rastpunkte() {
