@@ -21,7 +21,7 @@ var GEBAEUDE_DB = {
 
     // ── Kopfbereich ─────────────────────────────────────
     titel:            "Mehrfamilienhaus · Altstadt Erfurt",
-    subtitle:         "Altbau 1900 · Saniert 2010 · 14 Wohnungen · 784 m² · WEG · Gas-Heizung",
+    subtitle:         "Altbau 1900 · Saniert 2010 · 14 Wohnungen · 769,83 m² beheizte Fläche · WEG · Gas-Heizung",
     bild:             "referenzgebaeude.jpg",
     bildAlt:          "Mehrfamilienhaus in der Erfurter Altstadt — Gründerzeitbau von 1900",
 
@@ -30,7 +30,12 @@ var GEBAEUDE_DB = {
     baujahr:          1900,
     sanierung:        2010,
     wohnungen:        14,
-    wohnflaeche:      784,           // m²
+    // 784 ist im Cockpit an keiner Stelle als Flaeche belegt, nur als "vorher"
+    // in Tab 15 E12. Belegt sind 908 m2 (Bezugsflaeche Energieausweis),
+    // 922 m2 (Nettogrundflaeche Heizlast) und 769,83 m2 (beheizte Flaeche,
+    // Domotherm). Der Rechner unten teilt weiter durch diesen Wert; die
+    // Umstellung gehoert zu Teil B zusammen mit dem Jahreswechsel.
+    wohnflaeche:      784,           // m²  UNBELEGT — siehe Kommentar
     eigentumsform:    "WEG",
 
     // ── Heizsystem ──────────────────────────────────────

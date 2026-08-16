@@ -4,7 +4,7 @@
     "ort_bezirk": "Erfurt Innenstadt",
     "seit": "2024",
     "name": "Mehrfamilienhaus · Altstadt Erfurt",
-    "sub": "Altbau 1900 · Saniert 2010 · 14 Wohnungen · 784 m² · WEG · Gas-Heizung",
+    "sub": "Altbau 1900 · Saniert 2010 · 14 Wohnungen · 769,83 m² beheizte Fläche · WEG · Gas-Heizung",
     "bild": "referenzgebaeude.jpg",
     "bild_alt": "Mehrfamilienhaus in der Erfurter Altstadt — Gründerzeitbau von 1900",
     "heizung_badge": "Gas-Heizung",
@@ -19,7 +19,7 @@
     "heizlast_kw": 62,
     "heizlast_geschaetzt": false,
     "energieklasse": "D",
-    "energieklasse_sub": "124 kWh/m²a · Altbau 1900",
+    "energieklasse_sub": "124 kWh/m²a · Verbrauchsausweis 2018, bezogen auf 908 m²",
     "heizkosten_mon_text": "1,17",
     "heizkosten_sub": "13,27 €/m²/Jahr · 11.000 € gesamt",
     "verbrauch_kwh_m2": 126,
@@ -31,6 +31,8 @@
     "kontext": "Die Gasheizung läuft seit 1998. Ersatzteile sind teilweise abgekündigt. Das Gebäude liegt im Fernwärmesatzungsgebiet der Stadt Erfurt seit 2005."
   },
   "kosten_ist": {
+    "_pflege": "STAND 2023/2024, nicht 2025. Bezugsfläche 784 m² — eine Fläche, die im Cockpit an keiner Stelle belegt ist. Nicht mit ist_2025 mischen: dort steht der geprüfte Stand 2025 auf 769,83 m² beheizter Fläche. Der Jahreswechsel dieses Blocks ist eine eigene Aufgabe und hängt an der Gasbasis des Objektseiten-Rechners.",
+    "abrechnungsjahr_hinweis": "2023/2024",
     "brennstoff_gas_eur": 7425,
     "heizbetrieb_eur": 1232,
     "warmwasser_eur": 2972,
