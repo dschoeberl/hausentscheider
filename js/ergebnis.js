@@ -99,7 +99,7 @@ const RISIKO_BANNER = {
     punkte: [
       'JAZ ist die zentrale Effizienz-Kennzahl — real gemessen oft unter Hersteller-Wert. Sicherheits-Abschlag von 0,3 sinnvoll',
       'Strom-Sondertarif WP-Strom hängt teilweise vom Gas-Preis ab (Mittellast-Korrelation ~30 %)',
-      'Schallschutz nach TA Lärm im MFH ggf. relevant — Gutachten kann nötig sein'
+      'Schallschutz nach TA Lärm: Der maßgebliche Nachtrichtwert hängt von der Gebietseinstufung des Grundstücks ab und liegt in Wohngebieten deutlich niedriger als in Misch- oder Gewerbegebieten. Die Einstufung vor der Vergabe amtlich klären lassen; ein Schallgutachten kann nötig sein.'
     ],
     cta: 'Profi-Modus aktivieren: JAZ-Override mit Ihrem Datenblatt-Wert minus 0,3 testen.'
   },
