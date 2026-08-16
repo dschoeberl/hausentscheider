@@ -394,7 +394,54 @@ def defined_names_index(wb) -> dict[str, str]:
 # Hauptfunktion
 # ---------------------------------------------------------------------------
 
-def build(xlsx_path: Path, out_dir: Path) -> tuple[Path, Path]:
+def _pruefe_ueberschreiben(ziel: Path, erzeugt: dict, xlsx_name: str) -> list[str]:
+    """Gruende, aus denen 'ziel' nicht ueberschrieben werden darf.
+
+    Zwei Bedingungen, weil eine allein nicht reicht:
+
+    1. Handgepflegte Top-Level-Bloecke, die dieses Skript nicht erzeugt. Sie
+       waeren nach dem Schreiben weg. Betroffen sind heute 'foerdersaetze' und
+       'foerderstand' in parameter.json sowie 'korrekturen' und
+       'methodik_traeger' in preishistorie.json.
+
+    2. Andere Quell-Excel als die, aus der die vorhandene Datei stammt. Das
+       faengt den Fall, den Bedingung 1 nicht sieht: Ruecksetzungen INNERHALB
+       bekannter Bloecke. Ein Lauf mit einem aelteren Stand stellte zum Beispiel
+       PreisGas von 10,2 ct brutto auf 8,57 ct netto zurueck und die fuenf
+       Wartungsquoten auf ihre Werte vor dem Angleich vom 05.05.2026 — ohne
+       dass die Seite sichtbar bricht.
+    """
+    if not ziel.exists():
+        return []
+    try:
+        with ziel.open(encoding="utf-8") as f:
+            vorhanden = json.load(f)
+    except (OSError, ValueError) as err:
+        return [f"{ziel.name}: vorhandene Datei nicht lesbar ({err}). Abbruch aus Vorsicht."]
+    if not isinstance(vorhanden, dict):
+        return [f"{ziel.name}: unerwartete Struktur, kein Objekt. Abbruch aus Vorsicht."]
+
+    gruende: list[str] = []
+
+    verloren = sorted(k for k in vorhanden if k not in erzeugt)
+    if verloren:
+        gruende.append(
+            f"{ziel.name}: {len(verloren)} handgepflegte(r) Block/Bloecke gingen verloren "
+            f"({', '.join(verloren)}). Dieses Skript erzeugt sie nicht."
+        )
+
+    alte_quelle = vorhanden.get("quelle")
+    if alte_quelle and alte_quelle != xlsx_name:
+        gruende.append(
+            f"{ziel.name}: andere Quelle. Vorhanden ist der Stand aus '{alte_quelle}', "
+            f"uebergeben wurde '{xlsx_name}'. Werte koennen innerhalb bekannter Bloecke "
+            f"zurueckgesetzt werden, ohne dass es auffaellt."
+        )
+
+    return gruende
+
+
+def build(xlsx_path: Path, out_dir: Path, datenverlust_in_kauf_nehmen: bool = False) -> tuple[Path, Path]:
     if not xlsx_path.exists():
         sys.exit(f"Excel-Quelle nicht gefunden: {xlsx_path}")
     wb = openpyxl.load_workbook(str(xlsx_path), data_only=True)
@@ -423,6 +470,19 @@ def build(xlsx_path: Path, out_dir: Path) -> tuple[Path, Path]:
     p_param = out_dir / "parameter.json"
     p_preis = out_dir / "preishistorie.json"
 
+    gruende = (_pruefe_ueberschreiben(p_param, parameter, xlsx_path.name)
+               + _pruefe_ueberschreiben(p_preis, preise, xlsx_path.name))
+    if gruende:
+        kopf = "ABBRUCH — Schreiben wuerde gepflegte Daten verlieren:"
+        text = "\n".join("  - " + g for g in gruende)
+        if not datenverlust_in_kauf_nehmen:
+            sys.exit(
+                f"{kopf}\n{text}\n\n"
+                "Nichts geschrieben. Sicherung: daten/_sicherung/.\n"
+                "Wenn das gewollt ist: erneut mit --datenverlust-in-kauf-nehmen aufrufen."
+            )
+        print(f"WARNUNG — uebergangen per --datenverlust-in-kauf-nehmen:\n{text}")
+
     with p_param.open("w", encoding="utf-8") as f:
         json.dump(parameter, f, ensure_ascii=False, indent=2, default=str)
     with p_preis.open("w", encoding="utf-8") as f:
@@ -447,9 +507,16 @@ def main():
         default=Path(__file__).resolve().parent / "daten",
         help="Zielverzeichnis fuer parameter.json + preishistorie.json",
     )
+    parser.add_argument(
+        "--datenverlust-in-kauf-nehmen",
+        action="store_true",
+        help="Schreibt auch dann, wenn handgepflegte Bloecke verloren gehen oder "
+             "die Quell-Excel nicht zu der passt, aus der die vorhandene JSON stammt. "
+             "Nur nach Sicherung und mit Vorher-nachher-Vergleich verwenden.",
+    )
     args = parser.parse_args()
 
-    p_param, p_preis = build(args.xlsx, args.out)
+    p_param, p_preis = build(args.xlsx, args.out, args.datenverlust_in_kauf_nehmen)
     print(f"OK   {p_param}")
     print(f"OK   {p_preis}")
 
@@ -477,8 +544,26 @@ if __name__ == "__main__":
 # Update-Workflow (monatlich):
 #   1. Excel pflegen (Tab Preishistorie - neuen Monat oben einfuegen)
 #   2. python build_json.py
-#   3. git commit -am "Daten Mai 2026" && git push
-#   4. Netlify deployt automatisch
+#   3. git diff daten/ pruefen - vorher/nachher aller Bloecke ansehen
+#   4. git commit -am "Daten Mai 2026" && git push
+#   5. Netlify deployt automatisch
+#
+# ACHTUNG - dieses Skript schreibt parameter.json und preishistorie.json
+# VOLLSTAENDIG neu. Handgepflegte Bloecke, die es nicht erzeugt, waeren weg:
+#   parameter.json      foerdersaetze, foerderstand
+#   preishistorie.json  korrekturen, methodik_traeger
+# Ebenso koennen Werte INNERHALB bekannter Bloecke zurueckfallen, wenn eine
+# aeltere Excel uebergeben wird (z. B. PreisGas 10,2 ct brutto -> 8,57 netto,
+# Wartungsquoten auf den Stand vor dem Angleich vom 05.05.2026).
+#
+# Deshalb bricht _pruefe_ueberschreiben() in beiden Faellen ab und schreibt
+# nichts. Bewusstes Uebergehen: --datenverlust-in-kauf-nehmen, aber nur nach
+# Sicherung (daten/_sicherung/) und mit Vorher-nachher-Vergleich.
+#
+# Stand 16.08.2026: parameter.json nennt als Quelle v2.1_neutral_OUTPUT.xlsx
+# (Stand 2026-05-02). Diese Datei ist im Repo nicht auffindbar; vorhanden ist
+# nur Der_Entscheider_Testsystem_v2.0_neutral.xlsx unter dokumente/untracked/.
+# Ein Lauf damit waere ein Rueckschritt, kein Update.
 #
 # Sicherheitsnetz: Falls Excel korrupt wird (OneDrive-Sync-Problem),
 # die unbeschaedigte Variante als Quelle nutzen oder aus v1.6_Theaterstrasse
