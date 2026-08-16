@@ -29,6 +29,9 @@
     '.fm table{width:100%;border-collapse:collapse;font-size:13px;}',
     '.fm th,.fm td{padding:0.5rem 0.6rem;text-align:left;vertical-align:top;border:1px solid var(--fm-rand);}',
     '.fm thead th{font-size:11px;letter-spacing:0.4px;text-transform:uppercase;color:var(--fm-lbl);font-weight:600;background:var(--fm-kopf);}',
+    '.fm thead th small{display:block;margin-top:3px;font-size:10px;letter-spacing:0;text-transform:none;font-weight:400;line-height:1.4;opacity:0.85;}',
+    '.fm__bed{display:block;margin-top:6px;padding-top:5px;border-top:1px solid var(--fm-rand);font-size:11px;line-height:1.4;color:var(--fm-lbl);}',
+    '.fm__bed b{color:var(--fm-text);font-weight:700;}',
     '.fm tbody th{font-weight:600;color:var(--fm-text);font-size:12.5px;line-height:1.35;background:var(--fm-kopf);}',
     '.fm tbody th small{display:block;font-weight:400;color:var(--fm-lbl);font-size:11px;margin-top:2px;}',
     '.fm__satz{display:block;font-size:19px;font-weight:700;line-height:1.1;}',
@@ -151,10 +154,15 @@
         titel: 'ab ' + deDatum(wpAb.ab),
         sub: 'Grundförderung halbiert',
         satz: wpAb.wert, stichtagISO: wpAb.ab },
+      // Zeile c ist keine reine Zeitstufe: Ab dem Stichtag entscheidet das
+      // Kaeltemittel. Mit natuerlichem Kaeltemittel gilt der dann geltende
+      // Satz weiter, ohne faellt die Foerderung auf null. Deshalb zwei Werte.
       { id: 'c', ab: kalt.ab,
         titel: 'ab ' + deDatum(kalt.ab),
-        sub: 'ohne natürliches Kältemittel',
-        satz: 0, stichtagISO: kalt.ab }
+        sub: 'Kältemittel entscheidet',
+        satz: (kalt.ab >= wpAb.ab ? wpAb.wert : (fs.grundfoerderung || {}).wert),
+        bedingung: { label: 'ohne natürliches Kältemittel', satz: 0 },
+        stichtagISO: kalt.ab }
     ];
   }
 
@@ -191,11 +199,20 @@
       var abw   = netto - bestNetto;
       var istHeute = (!z.ab || heute >= z.ab) && (!z.bis || heute < z.bis);
 
+      // Zweiter Wert, wo die Zeile an eine Anlageneigenschaft geknuepft ist
+      // und nicht nur an ein Datum.
+      var bedHtml = '';
+      if (z.bedingung) {
+        var bNetto = investWP - zuschuss(investWP, we, z.stichtagISO, z.bedingung.satz, fs);
+        bedHtml = '<span class="fm__bed">' + esc(z.bedingung.label) + ': <b>' +
+                  pct(z.bedingung.satz) + '</b> · ' + eur(bNetto) + '</span>';
+      }
       var zelleFrei =
         '<td class="' + klasse(satz, vollSatz) + '">' +
           '<span class="fm__satz">' + pct(satz) + '</span>' +
           '<span class="fm__netto">' + eur(netto) + '</span>' +
           '<span class="fm__abw">' + (abw > 0.5 ? '+' + eur(abw) : '—') + '</span>' +
+          bedHtml +
         '</td>';
       var zelleZwang =
         '<td class="is-null">' +
@@ -222,7 +239,7 @@
       '<div class="fm__eingaben">' +
         feld('wp', 'Wärmepumpe brutto', investWP) +
         feld('we', 'Wohneinheiten', we) +
-        feld('fw', 'Anschluss brutto', investFW) +
+        feld('fw', 'Fernwärme-Anschluss brutto', investFW) +
         '<label class="fm__schalter">' +
           '<input type="checkbox" data-fm-ws' + (wsBonus ? ' checked' : '') + '>' +
           '<span>Wertschöpfungsbonus ' + pct(wsWert) + '<br><small>ab 2027, Anspruch ungeprüft</small></span>' +
@@ -231,13 +248,17 @@
       '<table>' +
         '<thead><tr>' +
           '<th scope="col">Antrag geht ein</th>' +
-          '<th scope="col">Ausschluss greift nicht</th>' +
-          '<th scope="col">Ausschluss greift</th>' +
+          '<th scope="col">Wärmepumpe · Förderung möglich' +
+            '<small>wenn das Wärmenetzgebiet die Förderung nicht sperrt</small></th>' +
+          '<th scope="col">Wärmepumpe · Förderung ausgeschlossen' +
+            '<small>wenn es sie sperrt · rechtlich offen</small></th>' +
         '</tr></thead>' +
         '<tbody>' + zeilenHtml + '</tbody>' +
       '</table>' +
-      '<p class="fm__band"><b>' + eur(nettoFW) + '</b> kostet der Fernwärme-Anschluss in <b>jedem</b> dieser Fälle — ' +
-        'die Spalte, die sich nie bewegt. Der günstigere Einstieg entscheidet die Sache nicht: ' +
+      '<p class="fm__band">' + eur(investFW) + ' brutto minus ' + pct(satzFW) + ' Förderung ergeben <b>' + eur(nettoFW) + '</b>. ' +
+        'So viel kostet der Fernwärme-Anschluss in <b>jedem</b> dieser Fälle: Die Absenkung 2027 und die ' +
+        'Kältemittelpflicht 2028 treffen die Wärmepumpe, nicht den Wärmenetzanschluss. ' +
+        'Der günstigere Einstieg entscheidet die Sache aber nicht: ' +
         (lz
           ? 'Über ' + lz.jahre + ' Jahre liegt die Fernwärme am Referenzobjekt bei rund <b>' + tsd(lz.fw) + '</b>, ' +
             'die Wärmepumpe bei rund <b>' + tsd(lz.wp) + '</b> — nominal, mit jährlicher Preissteigerung ' +
