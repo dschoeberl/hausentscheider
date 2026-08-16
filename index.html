@@ -2242,9 +2242,11 @@
         const sumEsc = (j, e) => e === 0 ? j * n : j * (Math.pow(1 + e, n) - 1) / e;
         const mit  = { fw: sumEsc(e1.fw, W.steig.fw) + inv.fw, wp: sumEsc(e1.wp, W.steig.wp) + inv.wp };
         const ohne = { fw: e1.fw * n + inv.fw, wp: e1.wp * n + inv.wp };
+        // Fall "Ausschluss greift": Waermepumpe ohne Foerderabzug, gleiche Methodik.
+        const ungefoerdert = { wp: sumEsc(e1.wp, W.steig.wp) + W.invest.wp };
         let be = null, cFW = inv.fw, cWP = inv.wp;
         for (let t = 1; t <= n; t++){ cFW += e1.fw * Math.pow(1 + W.steig.fw, t - 1); cWP += e1.wp * Math.pow(1 + W.steig.wp, t - 1); if (be === null && cFW >= cWP) be = t; }
-        return { e1, mit, ohne, be, ersparnis: mit.fw - mit.wp, diffFW: mit.fw - ohne.fw,
+        return { e1, mit, ohne, ungefoerdert, be, ersparnis: mit.fw - mit.wp, diffFW: mit.fw - ohne.fw,
                  fwMonat: e1.fw / fl / 12, wpMonat: e1.wp / fl / 12, gasMonat: e1.gas / fl / 12 };
       })();
       const fmtTsd = x => Math.round(x / 1000).toLocaleString('de-DE') + '.000 €';
@@ -2342,7 +2344,11 @@
             '</div><span class="oz-vgl-line__val">' + fmtTsd(WV.mit.fw) + '<small style="display:block;opacity:.55;font-weight:400;font-size:10px;">ohne Steigerung ' + fmtTsd(WV.ohne.fw) + '</small></span></div>' +
           '<div class="oz-vgl-line"><span class="oz-vgl-line__opt">Wärmepumpe</span>' +
             '<div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:' + wpBreite + '%"></div></div>' +
-            '<span class="oz-vgl-line__val">' + fmtTsd(WV.mit.wp) + '<small style="display:block;opacity:.55;font-weight:400;font-size:10px;">ohne Steigerung ' + fmtTsd(WV.ohne.wp) + '</small></span></div>' +
+            '<span class="oz-vgl-line__val">' + fmtTsd(WV.mit.wp) +
+              '<small style="display:block;opacity:.55;font-weight:400;font-size:10px;">ohne Steigerung ' + fmtTsd(WV.ohne.wp) + '</small>' +
+              '<small style="display:block;opacity:.55;font-weight:400;font-size:10px;">ohne Förderung ' + fmtTsd(WV.ungefoerdert.wp) + '</small>' +
+            '</span></div>' +
+          '<p class="oz-vgl-note">Der Hauptwert der Wärmepumpe rechnet mit ' + Math.round(WIRTSCHAFT.wp_foerd * 100) + ' % Grundförderung, also mit dem Fall, dass der Förderausschluss im Wärmenetzgebiet hier nicht greift. Ob er greift, ist offen. Greift er, liegt die Wärmepumpe bei rund <strong>' + fmtTsd(WV.ungefoerdert.wp) + '</strong> statt ' + fmtTsd(WV.mit.wp) + '. Gegenüber ' + fmtTsd(WV.mit.fw) + ' Fernwärme ändert das an der Rangfolge nichts. Beide Fälle zeigt die Fördermatrix unten.</p>' +
           '<p class="oz-vgl-note">Ohne Preissteigerung wirkt Fernwärme rund <strong>' + fmtTsd(WV.diffFW) + '</strong> günstiger, als sie über die Laufzeit real wird — genau das ist das Preisrisiko des Anschlusszwangs.</p>' +
           '<p class="oz-vgl-note">Investitionsannahme (konservativ): Wärmepumpe 130.000 € brutto, Fernwärme ~31.500 € brutto. Das günstigere reale WP-Angebot lag bei ~100.000 € — Potenzial nach unten. Was die Förderung daraus macht, steht in der Fördermatrix oben. <strong>Schallschutz:</strong> Nachts gilt der Richtwert 40 dB(A), amtlich bestätigt für ein allgemeines Wohngebiet.</p>' +
           '<details class="oz-fw-det">' +
