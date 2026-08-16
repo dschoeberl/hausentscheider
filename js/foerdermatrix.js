@@ -127,8 +127,9 @@
     return Math.min(Number(invest) || 0, hoechstkosten(we, iso, fs)) * satz;
   }
 
-  /* Gesamtkosten über die Laufzeit — gleiche Methodik wie der Entscheider-
-     Rechner: Energiekosten mit jährlicher Steigerung plus Netto-Investition. */
+  /* Kosten über die Laufzeit: nominale Summe der Energiekosten mit jährlicher
+     Steigerung plus Netto-Investition. Nicht die Methodik des Entscheider-
+     Rechners — der zinst nach VDI 2067 ab und zählt Wartung und CO2 mit. */
   function laufzeitkosten(r, nettoFW, nettoWP) {
     var preis = r.preise_ct_brutto, steig = r.steigerung_pa;
     if (!preis || !steig || !r.verbrauch_kwh) return null;

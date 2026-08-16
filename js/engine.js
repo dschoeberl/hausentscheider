@@ -409,17 +409,18 @@ function _co2KostenProJahr(option, input) {
    -------------------------------------------------------------- */
 
 function _wartungsquote(option, params) {
-  // C2 v2.1 (Daniel 05.05.): Wartungs-Quoten heizungs-spezifisch nach
-  // Memory project_excel_reparatur_wartung_modell.md.
-  // ÜBERSCHREIBT die JSON-Defaults aus block3_technik (die werden
-  // im Excel-Patch v2.1 angeglichen — Folgeaufgabe).
-  //
-  // Werte 05.05.2026:
-  //   Gas-BW 2,0 %  (JSON: 2,5 %)
-  //   Hybrid 3,5 %  (JSON: 3,0 %)
-  //   WP     1,5 %  (JSON: 2,0 %)
-  //   FW     1,0 %  (JSON: 1,5 %)
-  //   Pellets 3,0 % (JSON: 3,5 %)
+  // Massgeblich ist parameter.json, block3_technik (Wart*). Der Excel-Patch v2.1
+  // vom 05.05.2026 hat die JSON an diese Werte angeglichen — die Angleichung,
+  // die der frühere Kommentar hier noch als offene Folgeaufgabe führte, ist
+  // erledigt. Beide Staende sind identisch; die Tabelle unten ist nur Notlauf,
+  // falls parameter.json nicht laedt.
+  const jsonKey = {
+    gas: 'WartGas', hybrid: 'WartHybrid', wp: 'WartWP',
+    fw: 'WartFW', pellets: 'WartPellets', oel: 'WartGas'
+  }[option];
+  const ausJson = jsonKey && _default(params, 'block3_technik', jsonKey);
+  if (ausJson != null && !isNaN(ausJson)) return Number(ausJson);
+
   const map = {
     gas:     0.020,
     hybrid:  0.035,
@@ -940,7 +941,7 @@ const methodikInhalte = {
       'Kalkzins 3 % (VDI 2067)',
       'Energiepreis-Steigerung pro Jahr (optionsspezifisch)',
       'Modernisierungs-Mehrinvest gegenüber Status quo Gas',
-      'Förderung gecappt bei 21.000 € absolut'
+      'Gedeckelt wird die Bemessungsgrundlage: förderfähige Höchstkosten je Wohneinheit'
     ],
     quellen: ['Q-VDI-2067', 'Q-BAFA-2026', 'Q-BDEW-2026'],
     steigerung: 'Tiefer rechnen, eigene Sensitivitäten? → Excel-Edition'
@@ -962,13 +963,16 @@ const methodikInhalte = {
   },
   'formel-foerderung': {
     titel: 'Förder-Quote',
-    formel: 'Quote = min(BAFA-Grund + Klima(t) + Eink + Eff, 70 %)\n' +
-            'Betrag = min(Mehrinvest × Quote, 21.000 €)',
+    // Keine Saetze und Stichtage in diesem Text: sie stehen in
+    // parameter.json und werden im Foerderblock live angezeigt.
+    formel: 'Quote = min(Grund + Klima(t) + Einkommen, Obergrenze)\n' +
+            'Betrag = Quote × min(Mehrinvest, förderfähige Höchstkosten)',
     annahmen: [
-      'BAFA-Grundförderung 30 % (Mai 2026)',
-      'Klimabonus 20 % bis 2028, ab 2029 17 %, ab 2031 14 %',
-      'Einkommensbonus nur bei Selbstnutzung & zvE ≤ 40k',
-      'Effizienzbonus nur für besonders effiziente WP',
+      'Grundförderung nach BEG EM; für Wärmepumpen ab 01.01.2027 halbiert, Wärmenetzanschluss unverändert',
+      'Klimageschwindigkeitsbonus sinkt halbjährlich und entfällt ab 01.08.2028 — der aktuelle Satz steht am Schalter',
+      'Klima- und Einkommensbonus gelten nur für selbstnutzende Eigentümer, im Mehrfamilienhaus nur anteilig; der Rechner setzt sie voll an',
+      'Einkommensbonus ist gestaffelt; der Schalter rechnet mit der obersten Stufe',
+      'Gedeckelt wird die Bemessungsgrundlage nach Wohneinheiten, nicht der Auszahlbetrag',
       'Förderung wirkt auf den Modernisierungs-Mehrinvest, nicht auf den Brutto-Wert'
     ],
     quellen: ['Q-BAFA-2026'],

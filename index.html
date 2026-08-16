@@ -2207,8 +2207,11 @@
       // Massgebliche Quelle ist daten/theaterstrasse-4.json, Block "wirtschaft".
       // Bei Preisaenderung DORT pflegen. Diese Konstante ist nur noch
       // Rueckfallebene, falls der Abruf scheitert.
-      // Fernwärme QUARTALSWEISE (SWE-Preisblatt, vgl. parameter.json PreisFW). Methodik = Entscheider-Rechner
-      // (Energiekosten mit jährlicher Preissteigerung über die Laufzeit + Netto-Investition).
+      // Fernwärme QUARTALSWEISE (SWE-Preisblatt, vgl. parameter.json PreisFW).
+      // Methodik NICHT identisch mit dem Entscheider-Rechner: hier nominale Summe
+      // aus Energie mit Preissteigerung plus Netto-Investition, ohne Abzinsung,
+      // ohne Wartung. Der Rechner rechnet nach VDI 2067 mit Kalkzins und zaehlt
+      // Wartung und CO2 als eigene Annuitaeten. Zwei Groessen, nicht eine.
       const WIRTSCHAFT_FALLBACK = {
         verbrauch_kwh: 95000, flaeche_m2: 769.83, n: 25, jaz: 3.8, stand: "Q3 2026",
         preis_ct: { gas: 10.2, fw: 18.8, wp: 25 },     // brutto (FW Effektivpreis bei 95.000 kWh/62 kW, ohne CO2-Vorbehalt; mit = 20,7)
