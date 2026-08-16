@@ -264,14 +264,25 @@ function grundfoerderung(option, iso, params) {
   return basis;
 }
 
-/* Anteil der selbstgenutzten Einheit an der Gesamtflaeche.
-   Klimageschwindigkeits- und Einkommensbonus haengen an der selbstgenutzten
-   Wohneinheit, nicht am Gebaeude: "In Gebaeuden mit mehr als einer Wohneinheit
-   nur anteilig" (BEG EM 8.4.4 und 8.4.5, so auch parameter.json).
-   Gleiche Anteilsdefinition wie berechneMieterNebenkostenEffekt:
-   eigeneWohnflaeche / Gesamtflaeche, ersatzweise 1 / Wohneinheiten.
-   Im Einfamilienhaus ist der Anteil 1 — dort aendert sich nichts. */
-function selbstnutzerAnteil(input) {
+/* Zwei Zwecke, zwei Massstaebe. Ein gemeinsamer Name ("selbstnutzerAnteil")
+   sagte, WER gemeint ist, nicht WONACH gerechnet wird — und las sich deshalb
+   fuer beide Faelle passend. Die Namen unten sagen den Massstab.
+
+   Foerderung: Klimageschwindigkeits- und Einkommensbonus haengen an der
+   selbstgenutzten WOHNEINHEIT. "In Gebaeuden mit mehr als einer Wohneinheit
+   nur anteilig" (BEG EM 8.4.4 und 8.4.5, so auch parameter.json). Die
+   Bewilligungspraxis rechnet je Wohneinheit, nicht nach Flaeche; eine
+   genauere Flaechenrechnung wuerde eine Erwartung erzeugen, die der Antrag
+   nicht einloest. Im Einfamilienhaus ist der Anteil 1. */
+function foerderAnteilWE(input) {
+  const we = input.we || input.wohneinheiten || 1;
+  return Math.max(0, Math.min(1, 1 / Math.max(1, we)));
+}
+
+/* Nebenkosten: nach HeizkostenV wird nach FLAECHE umgelegt, nicht nach
+   Einheiten. Ersatzweise 1 / Wohneinheiten, wenn keine eigene Flaeche
+   eingetragen ist. */
+function umlageAnteilFlaeche(input) {
   const we = input.we || input.wohneinheiten || 1;
   const gesamt = input.wohnflaeche || 0;
   const eigen = (input.eigeneWohnflaeche != null && input.eigeneWohnflaeche > 0)
@@ -298,7 +309,7 @@ function berechneFoerderQuote(state, params, option) {
 
   // Grundfoerderung gilt fuer das Gebaeude, die beiden persoenlichen Boni
   // nur fuer die selbstgenutzte Einheit.
-  const anteil = selbstnutzerAnteil(state);
+  const anteil = foerderAnteilWE(state);
 
   let quote = 0;
   if (f.grund)     quote += grund;
@@ -1632,15 +1643,10 @@ function berechneMieterNebenkostenEffekt(option, input, params) {
   }
   const deltaEnergie = energieGas - energieOption;
 
-  // Wohnflächen-Anteil: eigeneWohnflaeche oder Fallback 1/wohneinheiten
-  const we = input.we || input.wohneinheiten || 1;
-  const wohnflaeche = input.wohnflaeche || 1;
-  const eigeneFl = (input.eigeneWohnflaeche != null && input.eigeneWohnflaeche > 0)
-                   ? input.eigeneWohnflaeche : null;
-  const anteil = eigeneFl != null
-                 ? (eigeneFl / wohnflaeche)
-                 : (1 / Math.max(1, we));
-  const fallbackAnteil = (eigeneFl == null);
+  // Umlage nach Flaeche (HeizkostenV) — nicht der Foerder-Massstab.
+  const anteil = umlageAnteilFlaeche(input);
+  const fallbackAnteil = !(input.eigeneWohnflaeche != null && input.eigeneWohnflaeche > 0
+                           && input.wohnflaeche > 0);
 
   // Effekt: Modernisierung entlastet Mieter um (ΔCO₂ × Mieter-Anteil-CO₂ + ΔEnergie × 1.0) × Wohnflächen-Anteil
   const MIETER_ANTEIL_CO2 = 0.5;

@@ -3219,15 +3219,10 @@
       function recomputeMaster() {
         const fb = state.overrides.schieberegler.foerderung;
         const s = saetzeZumAntrag();
-        // Muss der Anteilslogik in engine.js selbstnutzerAnteil() folgen.
+        // Muss engine.js foerderAnteilWE() folgen: Wohneinheiten, nicht Flaeche.
         // Weicht diese Summe von der Engine-Quote ab, gewinnt der Master-Regler
         // als Override — dann waere die Anteiligkeit still wieder aufgehoben.
-        const we = state.wohneinheiten || 1;
-        const gesamt = state.wohnflaeche || 0;
-        const eigen = (state.eigeneWohnflaeche != null && state.eigeneWohnflaeche > 0)
-                      ? state.eigeneWohnflaeche : null;
-        const anteil = Math.max(0, Math.min(1,
-          (eigen != null && gesamt > 0) ? (eigen / gesamt) : (1 / Math.max(1, we))));
+        const anteil = Math.max(0, Math.min(1, 1 / Math.max(1, state.wohneinheiten || 1)));
         let sum = 0;
         if (fb.grund)     sum += s.grund * 100;
         if (fb.klima)     sum += s.klima * 100 * anteil;
@@ -3273,12 +3268,8 @@
         const d = s.deckel * 100;
         // Rastpunkte auf der Anteilslogik: die beiden persoenlichen Boni
         // gelten im Mehrfamilienhaus nur anteilig, also rasten sie auch dort.
-        const we = state.wohneinheiten || 1;
-        const gesamt = state.wohnflaeche || 0;
-        const eigen = (state.eigeneWohnflaeche != null && state.eigeneWohnflaeche > 0)
-                      ? state.eigeneWohnflaeche : null;
-        const anteil = Math.max(0, Math.min(1,
-          (eigen != null && gesamt > 0) ? (eigen / gesamt) : (1 / Math.max(1, we))));
+        // Massstab wie engine.js foerderAnteilWE(): Wohneinheiten.
+        const anteil = Math.max(0, Math.min(1, 1 / Math.max(1, state.wohneinheiten || 1)));
         const eink = Number(state.overrides.schieberegler.foerderung.einkommen) || s.eink;
         const k = s.klima * anteil, e = eink * anteil;
         const roh = [0, s.grund, s.grund + k, s.grund + e,
