@@ -2191,17 +2191,44 @@
       const tlEl     = document.getElementById("oz-timeline");
       if (!anchorEl || !tlEl) return;
 
-      // === Wirtschaftsvergleich Referenzgebäude — SINGLE SOURCE ===
-      // Gespiegelt in daten/theaterstrasse-4.json ("wirtschaft"). Bei Preisänderung HIER pflegen.
+      // === Wirtschaftsvergleich Referenzgebäude ===
+      // Massgebliche Quelle ist daten/theaterstrasse-4.json, Block "wirtschaft".
+      // Bei Preisaenderung DORT pflegen. Diese Konstante ist nur noch
+      // Rueckfallebene, falls der Abruf scheitert.
       // Fernwärme QUARTALSWEISE (SWE-Preisblatt, vgl. parameter.json PreisFW). Methodik = Entscheider-Rechner
       // (Energiekosten mit jährlicher Preissteigerung über die Laufzeit + Netto-Investition).
-      const WIRTSCHAFT = {
+      const WIRTSCHAFT_FALLBACK = {
         verbrauch_kwh: 95000, flaeche_m2: 769.83, n: 25, jaz: 3.8, stand: "Q3 2026",
         preis_ct: { gas: 10.2, fw: 18.8, wp: 25 },     // brutto (FW Effektivpreis bei 95.000 kWh/62 kW, ohne CO2-Vorbehalt; mit = 20,7)
         steig:    { gas: 0.03, fw: 0.04, wp: 0.025 },   // pro Jahr
-        invest:   { fw: 31500, wp: 130000 }, wp_foerd: 0.30, fw_foerd: 0.30,   // Grundfoerderung BEG EM 17.07.2026 Nr. 8.4.1 Buchst. c; Effizienzbonus entfaellt. Massgebliche Quelle: parameter.json.foerdersaetze - hier gespiegelt, weil WV synchron rechnet. Die Faelle zeigt die Foerdermatrix.
+        invest:   { fw: 31500, wp: 130000 }, wp_foerd: 0.30, fw_foerd: 0.30,   // Grundfoerderung BEG EM 17.07.2026 Nr. 8.4.1 Buchst. c. Massgebliche Quelle: parameter.json.foerdersaetze — von dort noch nicht gelesen, siehe wirtschaftAusJson().
         ist_eur_m2_monat: 1.30                          // gemessen 2025 (Gas, Vollkosten)
       };
+
+      // Bildet den JSON-Block "wirtschaft" auf die Form ab, mit der WV rechnet.
+      // ?? statt ||, damit eine hinterlegte 0 (etwa Preissteigerung) erhalten bleibt.
+      // fw_foerd hat in der JSON keine Entsprechung; massgeblich ist
+      // parameter.json.foerdersaetze.grundfoerderung_waermenetz.
+      function wirtschaftAusJson(w){
+        const F = WIRTSCHAFT_FALLBACK;
+        if (!w) return F;
+        const p = w.preise_ct_brutto || {}, s = w.steigerung_pa || {}, i = w.invest_eur || {};
+        return {
+          verbrauch_kwh: w.verbrauch_kwh ?? F.verbrauch_kwh,
+          flaeche_m2:    w.bezugsflaeche_m2 ?? F.flaeche_m2,
+          n:             w.zeitraum_j ?? F.n,
+          jaz:           w.jaz ?? F.jaz,
+          stand:         w.stand ?? F.stand,
+          preis_ct: { gas: p.gas ?? F.preis_ct.gas, fw: p.fernwaerme ?? F.preis_ct.fw, wp: p.wp_strom ?? F.preis_ct.wp },
+          steig:    { gas: s.gas ?? F.steig.gas,    fw: s.fernwaerme ?? F.steig.fw,    wp: s.wp_strom ?? F.steig.wp },
+          invest:   { fw: i.fernwaerme ?? F.invest.fw, wp: i.wp ?? F.invest.wp },
+          wp_foerd: w.wp_foerderung_anteil ?? F.wp_foerd,
+          fw_foerd: F.fw_foerd,
+          ist_eur_m2_monat: w.ist_eur_m2_monat_2025 ?? F.ist_eur_m2_monat
+        };
+      }
+
+      function zeichneWirtschaft(WIRTSCHAFT){
       const WV = (function(){
         const W = WIRTSCHAFT, v = W.verbrauch_kwh, n = W.n, fl = W.flaeche_m2;
         const e1 = { fw: v * W.preis_ct.fw/100, wp: (v / W.jaz) * W.preis_ct.wp/100, gas: v * W.preis_ct.gas/100 };
@@ -2277,6 +2304,16 @@
           '<div class="oz-vgl-line"><span class="oz-vgl-line__opt">Wärmepumpe</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:' + wpB + '%"></div></div><span class="oz-vgl-line__val">' + fmtEur(WV.e1.wp) + '</span></div>' +
           '<p class="oz-vgl-note">Basis: 95.000 kWh Wärmebedarf/Jahr · brutto Q3 2026: Gas 10,2 / WP-Strom 25 ct/kWh, Fernwärme-Effektivpreis 18,8 ct/kWh (bei 95.000 kWh / 62 kW; mit CO₂-Zertifikat unter Vorbehalt 20,7 ct — <a href="https://www.swe-energie.de/site/energie/get/documents_E-421602985/energie/documents/Downloads/preisblaetter-und-vertragsbedingungen/waerme/preise_fernwaermeversorgung.pdf" target="_blank" rel="noopener">SWE-Preisblatt 1.7.2026</a>) — die Wärmepumpe braucht dafür nur ~⅓ Strom (Umweltwärme).</p>';
       }
+      }
+
+      // Die JSON fuehrt. Scheitert der Abruf, zeichnet die Rueckfallebene.
+      fetch('daten/theaterstrasse-4.json', { cache: 'no-cache' })
+        .then(function(r){ return r.json(); })
+        .then(function(j){ zeichneWirtschaft(wirtschaftAusJson(j && j.wirtschaft)); })
+        .catch(function(err){
+          console.warn('[Objekt 001] Block "wirtschaft" nicht ladbar, Rueckfallebene aktiv:', err);
+          zeichneWirtschaft(WIRTSCHAFT_FALLBACK);
+        });
 
       // === Säule 2: Future Readiness Index ===
       const radarEl = document.getElementById("oz-radar");
