@@ -338,7 +338,13 @@
         var fokus = inp.getAttribute('data-fm-feld');
         render(el, daten);
         var neu = el.querySelector('[data-fm-feld="' + fokus + '"]');
-        if (neu) { neu.focus(); neu.setSelectionRange(neu.value.length, neu.value.length); }
+        // setSelectionRange wirft auf input[type=number] eine InvalidStateError.
+        // Der Aufruf lag hinter render(), die Tabelle stand also schon — aber
+        // jede Tastatureingabe warf eine unbehandelte Ausnahme.
+        if (neu) {
+          neu.focus();
+          try { neu.setSelectionRange(neu.value.length, neu.value.length); } catch (e) { /* type=number kennt keine Selektion */ }
+        }
       });
     });
     var ws = el.querySelector('[data-fm-ws]');
