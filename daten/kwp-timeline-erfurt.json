@@ -1,7 +1,7 @@
 {
   "_hinweis": "KWP-Prozess-Zeitstrahl Erfurt — verfolgt den Plan (nicht den Diskurs; das tut die Medien-Timeline auf der Startseite). Neue Etappe = ein Objekt an 'eintraege' anhängen; 'datum' (ISO) treibt die Achse, 'datumLabel' ist die Anzeige. 'art': meilenstein | etappe | beitrag. 'offen': true markiert die laufende Phase ab dem 30.06.2026 — die Achse läuft sichtbar weiter. 'kommentar' = unabhängige Einordnung (Mehrwert), anerkennend und prüfend, kein Pranger. Quelle der Datierungen: Stellungnahme KWP Erfurt v6 (Schöberl), Anhang C; Pressekonferenz 04.05.2026.",
   "stadt": "Erfurt",
-  "bewertungsstand": "Stand 14.05.2026 · wird nach dem 30.06.2026 fortgeschrieben",
+  "bewertungsstand": "Stand 29.08.2026 · fortgeschrieben nach Abwägung und Replik; nächste Fortschreibung mit der Antwort der Stadt zur Planfortschreibung",
   "eintraege": [
     {
       "datum": "2025-09-23",
@@ -74,6 +74,16 @@
       "link": ""
     },
     {
+      "datum": "2026-06-01",
+      "datumLabel": "Juni 2026",
+      "titel": "Bürger-Kurzfassung der Wärmeplanung erscheint",
+      "art": "etappe",
+      "zusammenfassung": "Die Stadt legt eine elfseitige Kurzfassung für Bürgerinnen und Bürger vor. Der Form nach ist sie laienverständlich — und für die meisten Leserinnen und Leser das einzige Dokument, das sie vom Plan sehen werden.",
+      "kommentar": "An den Kernfragen weicht sie vom Gesamtplan ab: Auf die FAQ-Frage nach den Kosten nennt sie keine Größenordnung.",
+      "offen": false,
+      "link": "dokumente/202606_KWP_Kurzfassung_Buerger.pdf"
+    },
+    {
       "datum": "2026-06-03",
       "datumLabel": "3. Juni 2026",
       "titel": "Ende der öffentlichen Auslegung",
@@ -98,7 +108,7 @@
       "datumLabel": "12. Juni 2026",
       "titel": "Stadt veröffentlicht Abwägung der Stellungnahmen",
       "art": "meilenstein",
-      "zusammenfassung": "Die Stadt veröffentlicht die „Abwägung der eingegangenen Stellungnahmen“ (Stand 12.06.2026): alle 24 Stellungnahmen aus der Auslegung mit der jeweiligen städtischen Abwägung. Ergebnis: 0 berücksichtigt, 3 für die Fortschreibung vorgemerkt, 21 zur Kenntnis genommen. Zugleich geht der adressgenaue SWE-Verfügbarkeitscheck online.",
+      "zusammenfassung": "Die Stadt veröffentlicht die „Abwägung der eingegangenen Stellungnahmen“ (Dokumentdatum 17.06.2026, veröffentlicht am 12.06.2026): alle 24 Stellungnahmen aus der Auslegung mit der jeweiligen städtischen Abwägung. Ergebnis: 0 berücksichtigt, 3 für die Fortschreibung vorgemerkt, 21 zur Kenntnis genommen. Zugleich geht der adressgenaue SWE-Verfügbarkeitscheck online.",
       "kommentar": "Bemerkenswert klar: Keine einzige der 24 Stellungnahmen wurde in den Plan übernommen — und die Stadt hält fest, die Rückfragen hätten „keinen Einfluss auf das Gesamtergebnis“ gehabt. Von den 24 kam nur eine aus Eigentümer-/Mieterperspektive (die Future-Readiness-Bewertung dieser Seite, eingestuft als „vorgemerkt für Fortschreibung“). Damit belegt das amtliche Dokument selbst die Resonanz-Lücke.",
       "offen": false,
       "link": "https://www.erfurt.de/ef/de/leben/oekoumwelt/kommunale_waermeplanung/index.html"
@@ -112,6 +122,36 @@
       "kommentar": "Der Prüfstein für diese Seite: Die Future-Readiness-Bewertung wird nach Veröffentlichung der Endfassung aktualisiert. Hier läuft der Zeitstrahl offen weiter — die Phase ab dem 30.06. ist Teil der Aussage.",
       "offen": true,
       "link": ""
+    },
+    {
+      "datum": "2026-07-02",
+      "datumLabel": "2. Juli 2026",
+      "titel": "Abwägung ausgewertet — 24 Stellungnahmen, keine berücksichtigt",
+      "art": "beitrag",
+      "zusammenfassung": "Die 128-seitige Abwägung wird vollständig ausgewertet und alle 24 Eingaben werden nebeneinandergelegt. Ergebnis: Keine wurde berücksichtigt, drei sind für die Fortschreibung vorgemerkt, einundzwanzig zur Kenntnis genommen. Die drei Vorgemerkten sind die drei unabhängigen, inhaltlich argumentierenden Eingaben — ein Bürger, der Klimaentscheid Erfurt und der BUND. Alle Behörden, Netzbetreiber und Nachbarkommunen landen in „zur Kenntnis genommen“, und keine ihrer Eingaben befasst sich mit der Substanz des Plans.",
+      "kommentar": "Die Konsultation hat den Plan an keiner Stelle verändert. Was substanziell war, wurde nicht eingearbeitet, sondern in eine spätere Runde verschoben.",
+      "offen": false,
+      "link": "dokumente/260702_Analyse_Wer-sagt-was_OEFFENTLICH.pdf"
+    },
+    {
+      "datum": "2026-07-09",
+      "datumLabel": "9. Juli 2026",
+      "titel": "Replik zur Abwägung eingereicht",
+      "art": "beitrag",
+      "zusammenfassung": "Öffentliche Antwort auf die Abwägung, mit der die Stadt die Eingabe Nr. 2 als „vorgemerkt für Fortschreibung“ beschieden hat. Anerkannt wird, was seit der Auslegung besser geworden ist: der Plan ist vollständig digital verfügbar, der adressbezogene Verfügbarkeitscheck ist online, die Bürger-Kurzfassung liegt vor. Drei Punkte bleiben offen — eine gebietsbezogene Kostenspanne fehlt; für die Prüfgebiete gibt es keinen verbindlichen Auflösungszeitpunkt und keine Übergangsempfehlung für Eigentümer, die vorher entscheiden müssen; Wasserstoff ist als Perspektive benannt, ohne dass belastbare Mengen- und Preisdaten vorliegen.",
+      "kommentar": "Die Antwort der Stadt zur Fortschreibung steht aus.",
+      "offen": true,
+      "link": "dokumente/260709_Replik_Abwaegung_KWP_Erfurt_OEFFENTLICH.pdf"
+    },
+    {
+      "datum": "2026-07-20",
+      "datumLabel": "20. Juli 2026",
+      "titel": "Analyse zur Rolle der Hausverwaltungen veröffentlicht",
+      "art": "beitrag",
+      "zusammenfassung": "Die Analyse dreht die Blickrichtung um: nicht auf die Zahlen des Zielsystems, sondern auf die Frage, wer im Verfahren gehört wurde. Zwischen kommunaler Planung und der Entscheidung im einzelnen Haus steht ein professioneller Akteur — die Hausverwaltung, die die Gebäudedaten führt, die Versammlung einberuft und die Beschlussvorlage vorbereitet. Im Verfahren kommt sie kaum vor. Anknüpfungspunkt ist Abwägungspunkt 26: Die Anfragen der Stadt an Mieterbund und Hausverwaltungs-Dachverbände blieben nach eigener Angabe „weitgehend ohne Resonanz“.",
+      "kommentar": "Der Befund stammt aus dem amtlichen Dokument selbst — die Stadt hält dort fest, dass die Eigentümer- und Verwalterseite im Verfahren unbesetzt blieb. Eine erneute Anfrage allein dürfte das nicht ändern.",
+      "offen": false,
+      "link": "dokumente/260720_Analyse_Hausverwaltung_fehlende-Stimme_OEFFENTLICH.pdf"
     },
     {
       "datum": "2026-07-29",
