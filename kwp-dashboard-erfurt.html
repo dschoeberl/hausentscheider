@@ -185,6 +185,19 @@
       h1 { font-size: 25px; }
       #kwp-timeline { max-height: 62vh; }
     }
+
+    /* Belegblock — Dokumente zu den Zahlen dieser Seite */
+    .db-beleg { list-style: none; margin: 0; padding: 0; border-top: 0.5px solid var(--border); }
+    .db-beleg__item { display: flex; gap: 1rem; padding: 0.9rem 0; border-bottom: 0.5px solid var(--border); align-items: baseline; }
+    .db-beleg__herk { flex: 0 0 124px; font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-tertiary); }
+    .db-beleg__herk--stadt { color: var(--gov-blau); }
+    .db-beleg__titel { font-size: 14px; color: var(--text-primary); font-weight: 500; }
+    .db-beleg__titel:hover { color: var(--petrol); }
+    .db-beleg__quelle { font-size: 11px; color: var(--text-tertiary); line-height: 1.6; margin-top: 3px; max-width: 68ch; }
+    @media (max-width: 680px) {
+      .db-beleg__item { flex-direction: column; gap: 0.2rem; }
+      .db-beleg__herk { flex: none; }
+    }
   </style>
 </head>
 <body>
@@ -237,12 +250,12 @@
     <div class="container">
       <span class="label">Status-Dashboard · Erfurt</span>
       <h1>Wärmewende Erfurt — im Überblick</h1>
-      <p class="db-sub">Stand Juni 2026 · unabhängiges Tracking der kommunalen Wärmeplanung</p>
+      <p class="db-sub">Stand August 2026 · unabhängiges Tracking der kommunalen Wärmeplanung</p>
       <div class="db-kpis">
         <div class="db-kpi"><b>2045</b><span>klimaneutral · EE 30/80&nbsp;%</span></div>
         <div class="db-kpi"><b>17</b><span>Maßnahmen · 6 Säulen</span></div>
         <div class="db-kpi"><b class="sig">~1,5&nbsp;Mrd&nbsp;€</b><span>Investition · unaufgeteilt</span></div>
-        <div class="db-kpi"><b>0 / 24</b><span>Stellungnahmen übernommen</span></div>
+        <div class="db-kpi"><b>0 / 24</b><span>Stellungnahmen übernommen</span><span style="display:block;margin-top:0.3rem;font-size:10.5px;line-height:1.5;color:var(--petrol-light);opacity:0.85;"><a href="#belege" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">Abwägung der Stadt</a>, Kategorien „berücksichtigt / vorgemerkt / zur Kenntnis genommen“</span></div>
       </div>
     </div>
   </section>
@@ -361,6 +374,65 @@
       <h2 style="margin-bottom:0.6rem;">23 Forderungen — die Bauanleitung</h2>
       <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;max-width:680px;margin-bottom:1.5rem;">Die 17 Kritikpunkte oben benennen, <strong style="color:var(--text-primary);font-weight:500;">was fehlt</strong>. Diese 23 Forderungen sagen, <strong style="color:var(--text-primary);font-weight:500;">was zu tun ist</strong> — kein Vorwurf, sondern eine Bauanleitung, gestaffelt nach Frist: <strong style="color:var(--tommy-rot);">sofort</strong>, <strong style="color:var(--frist-gelb);">strukturell</strong>, <strong style="color:var(--gov-blau);">Governance</strong>.</p>
       <div id="kwp-forderungen"><p style="color:var(--text-tertiary);font-size:13px;">Forderungen werden geladen …</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="belege" aria-label="Belege">
+    <div class="container">
+      <span class="label" style="margin-bottom:0.6rem;">Belege</span>
+      <h2 style="margin-bottom:0.6rem;">Die Dokumente hinter den Zahlen</h2>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;max-width:680px;margin-bottom:1.5rem;">Jede Zahl auf dieser Seite steht in einem Dokument. Die amtlichen Fassungen liegen hier als unveränderte Kopie — damit sie auffindbar bleiben, auch wenn die Stadt ihre Seiten umstellt.</p>
+      <ul class="db-beleg">
+        <li class="db-beleg__item">
+          <span class="db-beleg__herk">Hausentscheider</span>
+          <div>
+            <a class="db-beleg__titel" href="dokumente/260702_Analyse_Wer-sagt-was_OEFFENTLICH.pdf" target="_blank" rel="noopener">Wer sagt was — und was wird daraus? Alle 24 Stellungnahmen im Überblick</a>
+            <div class="db-beleg__quelle">Eigene Auswertung der städtischen Abwägung · Juli 2026 · PDF, 6 Seiten. Beleg für die Kachel „0 / 24“.</div>
+          </div>
+        </li>
+        <li class="db-beleg__item">
+          <span class="db-beleg__herk">Hausentscheider</span>
+          <div>
+            <a class="db-beleg__titel" href="dokumente/260514_Stellungnahme_KWP_Erfurt_v6.pdf" target="_blank" rel="noopener">Stellungnahme zur öffentlichen Auslegung, 14.05.2026</a>
+            <div class="db-beleg__quelle">Eingereichte Stellungnahme aus Eigentümer- und Forschungsperspektive · PDF.</div>
+          </div>
+        </li>
+        <li class="db-beleg__item">
+          <span class="db-beleg__herk">Hausentscheider</span>
+          <div>
+            <a class="db-beleg__titel" href="dokumente/260709_Replik_Abwaegung_KWP_Erfurt_OEFFENTLICH.pdf" target="_blank" rel="noopener">Replik zur Abwägung, 09.07.2026</a>
+            <div class="db-beleg__quelle">Öffentliche Antwort auf die städtische Abwägung · PDF, 8 Seiten.</div>
+          </div>
+        </li>
+        <li class="db-beleg__item">
+          <span class="db-beleg__herk db-beleg__herk--stadt">Stadt Erfurt</span>
+          <div>
+            <a class="db-beleg__titel" href="dokumente/20260612_Abwaegung_Stellungnahmen.pdf" target="_blank" rel="noopener">Abwägung der eingegangenen Stellungnahmen, 17.06.2026</a>
+            <div class="db-beleg__quelle">Herausgeber: Landeshauptstadt Erfurt, Stabsstelle Kommunale Wärmeplanung. Dokumentdatum 17.06.2026, veröffentlicht am 12.06.2026 auf erfurt.de/waermeplanung, abgerufen am 30.06.2026. Unveränderte Kopie der amtlichen Fassung.</div>
+          </div>
+        </li>
+        <li class="db-beleg__item">
+          <span class="db-beleg__herk db-beleg__herk--stadt">Stadt Erfurt</span>
+          <div>
+            <a class="db-beleg__titel" href="dokumente/202606_KWP_Kurzfassung_Buerger.pdf" target="_blank" rel="noopener">Kurzfassung für Bürgerinnen und Bürger, Juni 2026</a>
+            <div class="db-beleg__quelle">Herausgeber: Landeshauptstadt Erfurt, Stabsstelle Kommunale Wärmeplanung. Stand Juni 2026, veröffentlicht auf erfurt.de/waermeplanung, abgerufen am 09.07.2026. Unveränderte Kopie der amtlichen Fassung.</div>
+          </div>
+        </li>
+        <li class="db-beleg__item">
+          <span class="db-beleg__herk">Hausentscheider</span>
+          <div>
+            <a class="db-beleg__titel" href="dokumente/260720_Analyse_Hausverwaltung_fehlende-Stimme_OEFFENTLICH.pdf" target="_blank" rel="noopener">Die fehlende Stimme im System — die Hausverwaltung in der Wärmewende</a>
+            <div class="db-beleg__quelle">Eigene Analyse · Juli 2026 · PDF, 8 Seiten.</div>
+          </div>
+        </li>
+        <li class="db-beleg__item">
+          <span class="db-beleg__herk db-beleg__herk--stadt">Stadt Erfurt</span>
+          <div>
+            <a class="db-beleg__titel" href="https://www.erfurt.de/waermeplanung" target="_blank" rel="noopener">Kommunale Wärmeplanung Erfurt — Gesamtbericht, 502 Seiten</a>
+            <div class="db-beleg__quelle">Herausgeber: Landeshauptstadt Erfurt. Wegen des Umfangs (rund 22 MB) hier nicht gespiegelt — abrufbar über die Übersichtsseite der Stadt.</div>
+          </div>
+        </li>
+      </ul>
     </div>
   </section>
 
