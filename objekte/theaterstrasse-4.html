@@ -239,7 +239,7 @@
       </div>
       <div class="st">
         <svg class="st-icon st-ok" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 10.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        WP-fähig · Heizlast 62 kW · 2 Außengeräte
+        WP-fähig · Heizlast 46 kW · Gerätezahl in Prüfung
       </div>
       <div class="st">
         <svg class="st-icon st-warn" viewBox="0 0 20 20" fill="none"><path d="M10 3L18 17H2L10 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 8v4M10 14v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -384,7 +384,7 @@
             <input type="number" id="inp-fw-lp" value="39.99" min="10" max="100" step="0.5"
               style="width:100%;font-size:14px;font-weight:500;padding:0.4rem 0.6rem;border:0.5px solid var(--border);border-radius:4px;font-family:'Inter',sans-serif;color:var(--text-primary);"
               oninput="calcInvest()">
-            <span style="font-size:10px;color:var(--text-tertiary);">Aus SWE-Angebot · 62 kW</span>
+            <span style="font-size:10px;color:var(--text-tertiary);">Anschlussleistung 46 kW</span>
           </div>
           <div>
             <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">Fixkosten/Jahr (€)</label>
@@ -406,10 +406,10 @@
             <p style="font-size:10px;color:var(--text-tertiary);margin-top:4px;">Monatsprofil: Jan–Apr + Okt–Dez = 100% · Mai–Sep = Sommerwert · realistische Jahresschätzung</p>
           </div>
         </div>
-        <!-- Heizlast -->
+        <!-- Heizlast — Startwert spiegelt daten/gebaeude.js rechnerDefaults.fwHeizlast; dort pflegen. -->
         <div style="margin-top:0.375rem;">
           <label style="font-size:11px;color:var(--text-secondary);display:block;margin-bottom:4px;">Heizlast (kW)</label>
-          <input type="number" id="inp-fw-heizlast" value="62" min="10" max="200" step="1"
+          <input type="number" id="inp-fw-heizlast" value="46" min="10" max="200" step="1"
             style="width:100%;max-width:160px;font-size:14px;font-weight:500;padding:0.4rem 0.6rem;border:0.5px solid var(--border);border-radius:4px;font-family:'Inter',sans-serif;color:var(--text-primary);"
             oninput="calcInvest()">
           <span style="font-size:10px;color:var(--text-tertiary);">Anschlussleistung für Leistungspreis</span>
@@ -580,7 +580,7 @@
           <p>
             Fernwärme hat zwei Preiskomponenten: den <strong>Arbeitspreis</strong> (ct/kWh, variabel)
             und den <strong>Leistungspreis</strong> (€/kW/Jahr, fix). Der Leistungspreis fällt das ganze Jahr
-            für die volle Anschlussleistung an — bei 62 kW und 39,99 €/kW sind das ~2.479 € allein für die
+            für die volle Anschlussleistung an — bei 46 kW und 39,99 €/kW sind das ~1.840 € allein für die
             Bereitstellung.
           </p>
           <p>

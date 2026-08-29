@@ -41,7 +41,7 @@ var GEBAEUDE_DB = {
     // ── Heizsystem ──────────────────────────────────────
     heizsystem:       "Gas-Heizung",
     heizanlageBaujahr: 1998,
-    heizlastKw:       62,
+    heizlastKw:       46,
 
     // ── Energiekennwerte ────────────────────────────────
     energieklasse:           "D",
@@ -78,7 +78,7 @@ var GEBAEUDE_DB = {
 
     statusItems: [
       { typ: "warn", text: "Fernwärme-Satzungsgebiet (2005) · Anschlusspflicht in Prüfung" },
-      { typ: "ok",   text: "WP-fähig · Heizlast 62 kW · 2 Außengeräte" },
+      { typ: "ok",   text: "WP-fähig · Heizlast 46 kW · Gerätezahl in Prüfung" },
       { typ: "warn", text: "Heizung Bj. 1998 · Ersatzteile abgekündigt" },
       { typ: "ok",   text: "2 Angebote für Wärmepumpe eingeholt" },
       { typ: "ok",   text: "Energiecheck Verbraucherzentrale Nov. 2024" },
@@ -109,7 +109,7 @@ var GEBAEUDE_DB = {
       fwLp:        39.99,     // €/kW/Jahr
       fwFix:       200,       // €/Jahr
       fwSommer:    20,        // % Sommerleistung
-      fwHeizlast:  62,        // kW
+      fwHeizlast:  46,        // kW
       co2Preis:    55         // €/t
     }
 
