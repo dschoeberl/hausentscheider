@@ -211,6 +211,17 @@
     .oz-fw-det__body p { font-size: 12px; color: #2a2a28; line-height: 1.65; margin: 0 0 0.6rem; }
     .oz-fw-det__body p:last-child { margin-bottom: 0; }
     .oz-fw-det__body strong { color: #1a1a1a; }
+    .oz-fw-det__body h4 { font-size: 12.5px; font-weight: 600; color: #1a1a1a; margin: 1.1rem 0 0.5rem; font-family: 'Inter', sans-serif; }
+    .oz-fw-det__body h4:first-child { margin-top: 0; }
+    .oz-fw-det__drei { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 0.7rem; }
+    .oz-fw-det__zahl { flex: 1 1 150px; background: rgba(26,26,26,0.045); border-left: 2px solid rgba(26,26,26,0.2); border-radius: 0 4px 4px 0; padding: 0.5rem 0.7rem; }
+    .oz-fw-det__zahl b { display: block; font-size: 15px; font-weight: 600; color: #1a1a1a; font-family: 'Inter', sans-serif; margin-bottom: 2px; }
+    .oz-fw-det__zahl span { font-size: 11px; color: #55564f; line-height: 1.45; display: block; }
+    .oz-fw-det__tbl { overflow-x: auto; margin: 0 0 0.7rem; }
+    .oz-fw-det__tbl table { border-collapse: collapse; width: 100%; min-width: 430px; font-size: 11.5px; }
+    .oz-fw-det__tbl th, .oz-fw-det__tbl td { text-align: left; padding: 0.4rem 0.6rem; border-bottom: 0.5px solid rgba(26,26,26,0.14); vertical-align: top; color: #2a2a28; line-height: 1.5; }
+    .oz-fw-det__tbl th { font-weight: 600; color: #1a1a1a; }
+    .oz-fw-det__tbl td:first-child { color: #55564f; }
     .oz-fw-det__body a { color: var(--tommy-rot); font-weight: 500; text-decoration: none; border-bottom: 1px solid rgba(216,30,52,0.35); }
     .oz-fw-det__body a:hover { border-bottom-color: var(--tommy-rot); }
     .oz-anchor__ziel { margin-top: 1.1rem; padding-top: 0.9rem; border-top: 0.5px solid rgba(122,184,181,0.2); font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.6; }
@@ -1478,6 +1489,51 @@
           </div>
         </div>
 
+
+        <!-- Dokumentationsbaustein: Herkunft der Heizlast. Die Zahlen stammen aus den
+             beiden Heizlastberechnungen vom 30.03. und 03.08.2026; Leistungspreis
+             75,04 €/kW·a aus dem SWE-Preisblatt Q3 2026 (nicht 39,99 €/kW — das ist
+             der Satz des einmaligen Baukostenzuschusses). -->
+        <details class="oz-fw-det" style="margin-bottom:1.5rem;">
+          <summary>Eine Zahl, drei Fassungen — wie die Heizlast dieses Gebäudes zustande kam</summary>
+          <div class="oz-fw-det__body">
+            <p>Die Norm-Heizlast ist die Größe, auf die jedes Heizungsangebot ausgelegt wird. Sie bestimmt, wie groß eine Wärmepumpe ausfällt und wie viele Außeneinheiten sie braucht — und sie bestimmt den Leistungspreis, den ein Fernwärmeanschluss jährlich kostet. Wer sie nicht kennt, kann Angebote nicht vergleichen.</p>
+            <p>In diesem Gebäude sind der Gemeinschaft drei verschiedene Werte begegnet.</p>
+            <div class="oz-fw-det__drei">
+              <div class="oz-fw-det__zahl"><b>58.885 Watt</b><span>Berechnung nach DIN EN 12831 vom 30. März 2026</span></div>
+              <div class="oz-fw-det__zahl"><b>62 Kilowatt</b><span>Wert, den beide fachlichen Einschätzungen zur Eigentümerversammlung ihren Bewertungen zugrunde legten — 5 Prozent über der Berechnung und in keiner Unterlage hergeleitet</span></div>
+              <div class="oz-fw-det__zahl"><b>46.026 Watt</b><span>aktualisierte Berechnung vom 3. August 2026, selbes Büro, selbe Person, selbe Software · zugänglich seit dem 27. August</span></div>
+            </div>
+            <p>Auf der Versammlung am 13. Juli wurde protokolliert, dass Korrekturen und Ergänzungen in die Heizlastberechnung eingearbeitet und zur Verfügung gestellt werden. Welche, stand nicht dabei. Am Ende waren es 22 Prozent gegenüber der berechneten und 26 Prozent gegenüber der zugrunde gelegten Zahl.</p>
+
+            <h4>Was sich zwischen den beiden Berechnungen geändert hat</h4>
+            <p>Die Gebäudegeometrie ist in beiden Fassungen identisch: gleiche Grundfläche, gleiche Hüllfläche, gleiche Nettogrundfläche. Es wurde nichts neu aufgemessen. Vier Eingangsgrößen wurden anders angesetzt.</p>
+            <div class="oz-fw-det__tbl">
+              <table>
+                <thead><tr><th></th><th>März 2026</th><th>August 2026</th></tr></thead>
+                <tbody>
+                  <tr><td>Fenster</td><td>Holzfenster, einfach verglast · U 5,0</td><td>Kunststofffenster, Isolierverglasung · U 1,9</td></tr>
+                  <tr><td>Dach</td><td>Holzkonstruktion · U 1,4</td><td>massive Konstruktion mit 5 cm Dämmung · U 0,21</td></tr>
+                  <tr><td>Lüftungswärmeverluste</td><td>0 Watt</td><td>5.882 Watt</td></tr>
+                  <tr><td>Raumnutzung Erdgeschoss</td><td>sechsmal Verkaufsraum, zweimal Werkstatt</td><td>keine gewerblichen Nutzungen</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Das Gebäude wurde 2010 energetisch saniert. Dokumentiert ist das im Sachstandsbericht desselben Ingenieurbüros aus dem Jahr 2023.</p>
+            <p>Ohne vorliegende Bauteilnachweise mit ungünstigen Katalogwerten zu rechnen, ist bei Heizlastberechnungen nicht ungewöhnlich — wenn es gekennzeichnet wird und wenn es in eine Richtung konsequent ist. Hier war weder das eine noch das andere der Fall: Die Annahmen sind in der Berechnung nicht als Annahmen ausgewiesen, sie wurden nicht gegen den eigenen Bericht von 2023 gehalten, und die Lüftungswärmeverluste standen zugleich bei null. <strong>Unsere Bewertung, als solche gekennzeichnet:</strong> Eine Berechnung mit diesen Eigenschaften ist als Grundlage einer Systementscheidung über 20 bis 30 Jahre nicht belastbar. Auf diese Zahl wird jedes Angebot ausgelegt.</p>
+            <p>Hinzu kommt eine Beobachtung, die über die Heizlast hinausgeht. Zwei Eingangsgrößen trugen die fachliche Empfehlung gegen die Wärmepumpe: der Schallrichtwert, angesetzt mit 35 dB(A) statt der behördlich bestätigten 40, und die Heizlast, angesetzt mit 62 statt der berechneten 58,9 Kilowatt. Beide liegen am für die Wärmepumpe ungünstigsten Ende der jeweils bekannten Spanne. Beide sind überprüfbar. Die Überprüfung gehört vor die Entscheidung, nicht danach.</p>
+
+            <h4>Es gibt eine vierte Zahl</h4>
+            <p>Die Anschlussleistung ist dieselbe Größe wie die Heizlast — sie bestimmt bei der Fernwärme, was der Leistungspreis jährlich kostet. In der Bewertung der Wärmepumpe wurde sie mit 62 Kilowatt angesetzt. In der Kostenaufstellung zur Fernwärme, acht Wochen später, mit 40. Beim geltenden Leistungspreis von 75,04 €/kW·a sind das 4.652 gegenüber 3.002 Euro im Jahr, über eine Anlagengeneration rund 41.000 Euro Unterschied. Hergeleitet ist keiner der beiden Werte, und keiner entspricht einer Berechnung. Das unabhängige Zweitgutachten hat für beide Varianten mit derselben Zahl gerechnet.</p>
+
+            <h4>Warum das nicht symmetrisch wirkt</h4>
+            <p>Eine zu hoch angesetzte Heizlast verteuert jede Option. Bei der Fernwärme wirkt sie über den Leistungspreis: rund 1.200 Euro pro Jahr Unterschied zwischen 62 und 46 Kilowatt. Bei der Wärmepumpe wirkt sie zusätzlich auf die Zahl der Außeneinheiten — und damit auf den Schallschutz, der in diesem Verfahren zwei Jahre lang das entscheidende Gegenargument war.</p>
+            <p>Der Vollständigkeit halber: Auch das Zweitgutachten, das die Wärmepumpe empfiehlt, hat mit 62 Kilowatt gerechnet, also mit dem für die Wärmepumpe ungünstigeren Wert. Es standen sich hier nicht zwei Lager mit je passenden Zahlen gegenüber. Es galt eine Zahl für alle, die niemand hergeleitet hat.</p>
+
+            <h4>Was eine Gemeinschaft daraus mitnehmen kann</h4>
+            <p>Die Norm-Heizlast ist keine Formalie, sondern die Grundlage jedes Angebots. Sie steht auf Blatt G2 jeder Berechnung nach DIN EN 12831. Es lohnt sich, zwei Dinge zu prüfen: ob die angesetzten Bauteilwerte zum tatsächlichen Sanierungsstand des Gebäudes passen, und ob die Lüftungswärmeverluste enthalten sind. Beides steht in derselben Berechnung, die ohnehin beauftragt wird.</p>
+          </div>
+        </details>
         <div class="oz-recht">
           <span class="oz-recht__flag">Ausschluss</span>
           <span>Eine neue <strong>Gas- oder Hybridanlage</strong> ist hier rechtlich nicht zulässig (§ 5 Fernwärmesatzung, amtlich bestätigt). Die Entscheidung steht zwischen <strong>Fernwärme</strong> und <strong>reiner Wärmepumpe</strong>.</span>
