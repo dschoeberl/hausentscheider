@@ -2284,7 +2284,7 @@
       // Wartung und CO2 als eigene Annuitaeten. Zwei Groessen, nicht eine.
       const WIRTSCHAFT_FALLBACK = {
         verbrauch_kwh: 95000, flaeche_m2: 769.83, n: 25, jaz: 3.8, stand: "Q3 2026",
-        preis_ct: { gas: 10.2, fw: 18.8, wp: 25 },     // brutto (FW Effektivpreis bei 95.000 kWh/62 kW, ohne CO2-Vorbehalt; mit = 20,7)
+        preis_ct: { gas: 10.2, fw: 17.6, wp: 25 },     // brutto (FW Effektivpreis bei 95.000 kWh/46 kW, ohne CO2-Vorbehalt; mit = 19,5)
         steig:    { gas: 0.03, fw: 0.04, wp: 0.025 },   // pro Jahr
         invest:   { fw: 31500, wp: 130000 }, wp_foerd: 0.30, fw_foerd: 0.30,   // Grundfoerderung BEG EM 17.07.2026 Nr. 8.4.1 Buchst. c. Massgebliche Quelle: parameter.json.foerdersaetze — von dort noch nicht gelesen, siehe wirtschaftAusJson().
         ist_eur_m2_monat: 1.30                          // gemessen 2025 (Gas, Vollkosten)
@@ -2440,16 +2440,16 @@
             'ohne Abzinsung und ohne Wartung. Der <a href="rechner.html">Entscheider-Rechner</a> geht anders vor: ' +
             'Er zinst nach VDI 2067 ab und rechnet Wartung und CO₂ als eigene Posten. Beide Wege sind richtig und ' +
             'ergeben verschiedene Beträge.</p>' +
-          '<p class="oz-vgl-note">Investitionsannahme (konservativ): Wärmepumpe 130.000 € brutto, Fernwärme ~31.500 € brutto. Das günstigere reale WP-Angebot lag bei ~100.000 € — Potenzial nach unten. Was die Förderung daraus macht, steht in der Fördermatrix unten. <strong>Schallschutz:</strong> Nachts gilt der Richtwert 40 dB(A), amtlich bestätigt für ein allgemeines Wohngebiet.</p>' +
+          '<p class="oz-vgl-note">Investitionsannahme (konservativ): Wärmepumpe 130.000 € brutto, Fernwärme ~31.500 € brutto. Das günstigere reale WP-Angebot lag bei ~100.000 € — Potenzial nach unten. <strong>Stand 29.08.2026:</strong> Die Investitionsannahme Wärmepumpe beruht noch auf der alten Heizlast, also auf der Dreierkaskade; ein Angebot auf Basis 46 kW ist seit dem 28.08.2026 angefragt, die Antwort steht aus. Die niedrigere Heizlast senkt die Fernwärmekosten sofort, die Wärmepumpen-Investition erst mit diesem Angebot. Was die Förderung daraus macht, steht in der Fördermatrix unten. <strong>Schallschutz:</strong> Nachts gilt der Richtwert 40 dB(A), amtlich bestätigt für ein allgemeines Wohngebiet.</p>' +
           '<details class="oz-fw-det">' +
             '<summary>Fernwärme-Anschluss — was wirklich anfällt</summary>' +
             '<div class="oz-fw-det__body">' +
               '<p>Der niedrige „Anschlusspreis" ist nur ein Teil. Ein Fernwärme-Anschluss besteht aus zwei Blöcken:</p>' +
-              '<p><strong>Block A — SWE-Anschluss</strong> (belegt, SWE-Schreiben 18.03.2026): Baukostenzuschuss ca. 2.480 € (39,99 €/kW × 62 kW) + Hausanschlusskostenbeitrag 8.982 € = <strong>ca. 11.500 € netto</strong>. Enthalten: Anschlussleitung bis ins Gebäude und Fernwärme-Grundstation („SWE Comfort").</p>' +
+              '<p><strong>Block A — SWE-Anschluss</strong> (belegt, SWE-Schreiben 18.03.2026): Baukostenzuschuss ca. 1.840 € (39,99 €/kW × 46 kW) + Hausanschlusskostenbeitrag 8.982 € = <strong>ca. 10.800 € netto</strong>. Enthalten: Anschlussleitung bis ins Gebäude und Fernwärme-Grundstation („SWE Comfort").</p>' +
               '<p><strong>Block B — bauliche Maßnahmen im Gebäude</strong> (Heizkreise, Pumpen, Mischer, Warmwasserbereitung, Anbindung der Heizzentrale): <strong>ca. 15.000–25.000 € netto</strong> — Erfahrungswert, von der SWE nicht beziffert.</p>' +
-              '<p><strong>Gesamtinvestition Fernwärme realistisch ca. 26.500–36.500 € netto</strong>, verbindlich erst mit dem konkreten SWE-Angebot. Der scheinbare Investitionsvorteil gegenüber der Wärmepumpe schrumpft damit deutlich — über 25 Jahre kehrt sich das Bild ohnehin um.</p>' +
+              '<p><strong>Gesamtinvestition Fernwärme realistisch ca. 25.800–35.800 € netto</strong>, verbindlich erst mit dem konkreten SWE-Angebot. Der scheinbare Investitionsvorteil gegenüber der Wärmepumpe schrumpft damit deutlich — über 25 Jahre kehrt sich das Bild ohnehin um.</p>' +
               '<p><strong>Förderung:</strong> 30 % auf den Anschluss — auch im Zwanggebiet und trotz gasbasiertem Netz. Die Fälle zeigt die Fördermatrix unten. <a href="foerderparadoxon.html">Hintergrund: Das Förderparadoxon →</a></p>' +
-              '<p>Hinweis: konservativ mit 62 kW gerechnet; bei den dokumentierten 58,9 kW fiele der Baukostenzuschuss etwas niedriger aus.</p>' +
+              '<p>Hinweis: gerechnet mit der aktualisierten Heizlast von 46 kW (Berechnung 03.08.2026). Die Kostenaufstellung des beauftragten Ingenieurbüros vom 29.07.2026 setzt abweichend 40 kW an, ohne diesen Wert herzuleiten.</p>' +
               '<p><strong>Rechtlicher Hintergrund:</strong> <a href="https://www.erfurt.de/mam/ef/rathaus/stadtrecht/3/3008.pdf" target="_blank" rel="noopener">Fernwärmesatzung Erfurt (3.008) →</a> &nbsp;·&nbsp; <a href="https://www.erfurt.de/ef/de/rathaus/bservice/leistungen/leistung-1071.htmc" target="_blank" rel="noopener">Anschlusszwang &amp; Befreiung prüfen →</a></p>' +
             '</div>' +
           '</details>' +
@@ -2462,7 +2462,7 @@
           '<span class="oz-vgl-row__lbl">Jahreskosten heute · Energie</span>' +
           '<div class="oz-vgl-line"><span class="oz-vgl-line__opt">Fernwärme</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:100%"></div></div><span class="oz-vgl-line__val">' + fmtEur(WV.e1.fw) + '</span></div>' +
           '<div class="oz-vgl-line"><span class="oz-vgl-line__opt">Wärmepumpe</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:' + wpB + '%"></div></div><span class="oz-vgl-line__val">' + fmtEur(WV.e1.wp) + '</span></div>' +
-          '<p class="oz-vgl-note">Basis: 95.000 kWh Wärmebedarf/Jahr · brutto Q3 2026: Gas 10,2 / WP-Strom 25 ct/kWh, Fernwärme-Effektivpreis 18,8 ct/kWh (bei 95.000 kWh / 62 kW; mit CO₂-Zertifikat unter Vorbehalt 20,7 ct — <a href="https://www.swe-energie.de/site/energie/get/documents_E-421602985/energie/documents/Downloads/preisblaetter-und-vertragsbedingungen/waerme/preise_fernwaermeversorgung.pdf" target="_blank" rel="noopener">SWE-Preisblatt 1.7.2026</a>) — die Wärmepumpe braucht dafür nur ~⅓ Strom (Umweltwärme).</p>' +
+          '<p class="oz-vgl-note">Basis: 95.000 kWh Wärmebedarf/Jahr · brutto Q3 2026: Gas 10,2 / WP-Strom 25 ct/kWh, Fernwärme-Effektivpreis 17,6 ct/kWh (Effektivpreis auf Gebäudeebene, SWE-Preisblatt Q3 2026, bei 95.000 kWh Jahresbedarf und 46 kW Anschlussleistung; mit CO₂-Zertifikat unter Vorbehalt 19,5 ct — <a href="https://www.swe-energie.de/site/energie/get/documents_E-421602985/energie/documents/Downloads/preisblaetter-und-vertragsbedingungen/waerme/preise_fernwaermeversorgung.pdf" target="_blank" rel="noopener">SWE-Preisblatt 1.7.2026</a>) — die Wärmepumpe braucht dafür nur ~⅓ Strom (Umweltwärme).</p>' +
           '<p class="oz-vgl-note">Über die Laufzeit bleibt es nicht bei diesen Beträgen: In der Rechnung steigt der ' +
             'Fernwärmepreis um ' + prz(WIRTSCHAFT.steig.fw) + ' pro Jahr, der Wärmepumpenstrom um ' + prz(WIRTSCHAFT.steig.wp) + '. ' +
             'Auf ' + WIRTSCHAFT.n + ' Jahre hochgerechnet und um die Investition nach Abzug der Förderung ergänzt, ergibt das ' +

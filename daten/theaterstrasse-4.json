@@ -105,14 +105,14 @@
     "amort_basis_gas_ct": 10.0
   },
   "wirtschaft": {
-    "_pflege": "Alleinige Quelle für den Wirtschaftsvergleich der Startseiten-Referenzkarte. index.html liest diesen Block; die dortige Konstante WIRTSCHAFT_FALLBACK greift nur, wenn der Abruf scheitert. js/foerdermatrix.js liest ihn ebenfalls. Preis nur HIER ändern. Fernwärme QUARTALSWEISE (SWE-Preisblatt, vgl. parameter.json PreisFW). Nicht mit Block 'rechner' verwechseln — der gehört dem Objektprofil-Rechner. wp_foerderung_anteil spiegelt parameter.json.foerdersaetze.grundfoerderung; maßgeblich ist dort.",
+    "_pflege": "Alleinige Quelle für den Wirtschaftsvergleich der Startseiten-Referenzkarte. index.html liest diesen Block; die dortige Konstante WIRTSCHAFT_FALLBACK greift nur, wenn der Abruf scheitert. js/foerdermatrix.js liest ihn ebenfalls. Preis nur HIER ändern. Fernwärme QUARTALSWEISE (SWE-Preisblatt, vgl. parameter.json PreisFW). Nicht mit Block 'rechner' verwechseln — der gehört dem Objektprofil-Rechner. wp_foerderung_anteil spiegelt parameter.json.foerdersaetze.grundfoerderung; maßgeblich ist dort. Herleitung fernwaerme 17,6 ct (Stand 29.08.2026): 95.000 kWh × 13,768 ct = 13.079,60 € Arbeitspreis + 46,026 kW × 75,04 €/kW·a = 3.453,79 € Leistungspreis + 146,02 € Verrechnungspreis = 16.679,41 € / 95.000 kWh = 17,557 ct. Mit CO2-Zertifikat unter Vorbehalt 19,5 ct. Der Leistungspreis ist 75,04 €/kW·a aus dem SWE-Preisblatt — NICHT die 39,99 €/kW aus fw_lp_eur_kw im Block rechner, das ist der Satz des einmaligen Baukostenzuschusses.",
     "verbrauch_kwh": 95000,
     "bezugsflaeche_m2": 769.83,
     "we": 14,
     "zeitraum_j": 25,
     "jaz": 3.8,
     "stand": "Q3 2026",
-    "preise_ct_brutto": { "gas": 10.2, "fernwaerme": 18.8, "wp_strom": 25 },
+    "preise_ct_brutto": { "gas": 10.2, "fernwaerme": 17.6, "wp_strom": 25 },
     "steigerung_pa": { "gas": 0.03, "fernwaerme": 0.04, "wp_strom": 0.025 },
     "invest_eur": { "fernwaerme": 31500, "wp": 130000 },
     "wp_foerderung_anteil": 0.30,
