@@ -1,7 +1,9 @@
 {
-  "_hinweis": "KWP-Prozess-Zeitstrahl Erfurt — verfolgt den Plan (nicht den Diskurs; das tut die Medien-Timeline auf der Startseite). Neue Etappe = ein Objekt an 'eintraege' anhängen; 'datum' (ISO) treibt die Achse, 'datumLabel' ist die Anzeige. 'art': meilenstein | etappe | beitrag. 'offen': true markiert die laufende Phase ab dem 30.06.2026 — die Achse läuft sichtbar weiter. 'kommentar' = unabhängige Einordnung (Mehrwert), anerkennend und prüfend, kein Pranger. Quelle der Datierungen: Stellungnahme KWP Erfurt v6 (Schöberl), Anhang C; Pressekonferenz 04.05.2026.",
+  "_hinweis": "KWP-Prozess-Zeitstrahl Erfurt — verfolgt den Plan (nicht den Diskurs; das tut die Medien-Timeline auf der Startseite). Neue Etappe = ein Objekt an 'eintraege' anhängen; 'datum' (ISO) treibt die Achse, 'datumLabel' ist die Anzeige. 'art': meilenstein | etappe | beitrag. 'offen': true markiert die laufende Phase ab dem 30.06.2026 — die Achse läuft sichtbar weiter. 'kommentar' = unabhängige Einordnung (Mehrwert), anerkennend und prüfend, kein Pranger. 'letzteEtappe' und 'ausblick' füllen die Zeile über dem Zeitstrahl — bei jedem Nachtrag von Hand mitpflegen, unabhängig von 'offen'. Quelle der Datierungen: Stellungnahme KWP Erfurt v6 (Schöberl), Anhang C; Pressekonferenz 04.05.2026.",
   "stadt": "Erfurt",
   "bewertungsstand": "Stand 29.08.2026 · fortgeschrieben nach Abwägung und Replik; nächste Fortschreibung mit der Antwort der Stadt zur Planfortschreibung",
+  "letzteEtappe": "3. September 2026",
+  "ausblick": "die Fortschreibung ist angekündigt, ohne Termin.",
   "eintraege": [
     {
       "datum": "2025-09-23",
@@ -172,6 +174,26 @@
       "kommentar": "Die Fernwärme ist das Rückgrat des Wärmeplans — ein Preissprung dieser Größe in einem einzigen Quartal unterstreicht das im Plan selbst benannte Preisrisiko. Für anschlusszwang-gebundene Gebäude ist dieser Pfad real spürbar, nicht abstrakt.",
       "offen": true,
       "link": ""
+    },
+    {
+      "datum": "2026-08-20",
+      "datumLabel": "20. August 2026",
+      "titel": "Stadtverwaltung nimmt schriftlich zur Kritik am Wärmeplan Stellung",
+      "art": "etappe",
+      "zusammenfassung": "Auf Bitte des Ausschusses für Stadtentwicklung, Bau, Umwelt, Klimaschutz und Verkehr (Festlegung vom 23. Juli, Drucksache 1663/26) nimmt die Stadtverwaltung schriftlich zu Kritikpunkten Stellung, die der Klimaentscheid Erfurt in Stellungnahme und Replik zum Wärmeplan erhoben hat. Vorlauf war ein Erörterungstermin von Stadtverwaltung, Stadtwerken und Klimaentscheid am 19. August. Drei Aussagen der Verwaltung sind für Eigentümer unmittelbar relevant. Erstens: Der Wärmeplan ist nach WPG und ThürWPGAG rechtlich unverbindlich, er liegt im übertragenen Wirkungskreis. Zweitens: Der adressbezogene Verfügbarkeitscheck liefert einen Anhaltspunkt — die Entscheidung obliegt dem Eigentümer. Drittens: Vollkostenberechnungen enthält der Plan in der Fassung 2026 nicht; sie sollen mit der Fortschreibung folgen, zusammen mit einem Umstellungskonzept der Stadtwerke zur Wasserstofffrage.",
+      "kommentar": "Damit steht amtlich, was diese Seite seit Mai benennt: Der Plan sagt, was die Stadt vorhat. Was eine Variante über die Laufzeit kostet, sagt er nicht. Die Ankündigung, Vollkosten in der Fortschreibung nachzuliefern, ist der erste Bewegungspunkt in der Sache von Kritikpunkt 1 — ein Termin dafür ist nicht genannt. Beides bezieht sich auf den Wärmeplan. Die Fernwärmesatzung mit dem Anschluss- und Benutzungszwang ist ein eigenes Regelwerk und wird davon nicht berührt.",
+      "offen": true,
+      "link": "https://buergerinfo.erfurt.de/vo0050.asp?__kvonr=66326"
+    },
+    {
+      "datum": "2026-09-03",
+      "datumLabel": "3. September 2026",
+      "titel": "Ausschuss behandelt die Stellungnahme — ohne Beschluss",
+      "art": "etappe",
+      "zusammenfassung": "Der Ausschuss für Stadtentwicklung, Bau, Umwelt, Klimaschutz und Verkehr behandelt die Vorlage am 3. September öffentlich unter TOP 8.5. Die Vorlage ist als Festlegung durch Gremien eingestellt, nicht als Beschlussvorlage: kein Stadtratsbeschluss, keine Satzung, keine Gebietsfestlegung. Die Niederschrift der Sitzung liegt noch nicht vor.",
+      "kommentar": "Der Vorgang ist im Verfahren angekommen, ohne dass daraus eine Pflicht entsteht. Für Eigentümer, die in den nächsten Monaten entscheiden müssen, ändert sich damit nichts — die Rechnung bleibt bei ihnen, und sie braucht drei Größen, die der Plan nicht liefert: Heizlast, Vorlauftemperatur und die Vollkosten jeder Option.",
+      "offen": false,
+      "link": "https://buergerinfo.erfurt.de/vo0050.asp?__kvonr=66326"
     },
     {
       "datum": "2027-01-01",

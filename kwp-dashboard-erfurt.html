@@ -250,7 +250,7 @@
     <div class="container">
       <span class="label">Status-Dashboard · Erfurt</span>
       <h1>Wärmewende Erfurt — im Überblick</h1>
-      <p class="db-sub">Stand August 2026 · unabhängiges Tracking der kommunalen Wärmeplanung</p>
+      <p class="db-sub">Stand September 2026 · unabhängiges Tracking der kommunalen Wärmeplanung</p>
       <div class="db-kpis">
         <div class="db-kpi"><b>2045</b><span>klimaneutral · EE 30/80&nbsp;%</span></div>
         <div class="db-kpi"><b>17</b><span>Maßnahmen · 6 Säulen</span></div>
@@ -536,8 +536,9 @@
         var lu = erfasst.length ? erfasst[erfasst.length - 1] : entries[entries.length - 1];
         var luEl = document.getElementById('kwp-tl-updated');
         if (luEl && lu){
-          var txt = 'Letzte erfasste Etappe: <b style="color:var(--petrol);font-weight:600;">' + esc(lu.datumLabel) + '</b>';
-          if (offene.length) txt += ' — Folgeetappen ab ' + esc(offene[0].datumLabel) + ' sind angekündigt.';
+          var txt = 'Letzte erfasste Etappe: <b style="color:var(--petrol);font-weight:600;">' + esc(data.letzteEtappe || lu.datumLabel) + '</b>';
+          if (data.ausblick) txt += ' — ' + esc(data.ausblick);
+          else if (offene.length) txt += ' — Folgeetappen ab ' + esc(offene[0].datumLabel) + ' sind angekündigt.';
           luEl.innerHTML = txt;
         }
         var firstFutureISO = null;
