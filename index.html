@@ -1481,7 +1481,7 @@
           <div class="oz-kpi">
             <span class="oz-kpi__val">64.745 €</span>
             <span class="oz-kpi__lbl">Erhaltungsrücklage</span>
-            <span class="oz-kpi__ref">7,65 €/m²·a — unter Fachempfehlung Altbau (~17 €/m²·a)</span>
+            <span class="oz-kpi__ref">6,61 €/m²·a Wohnfläche — unter Fachempfehlung Altbau (~17 €/m²·a)</span>
           </div>
           <div class="oz-kpi oz-kpi--risk">
             <span class="oz-kpi__flag">steigt&nbsp;▲</span>
@@ -2291,8 +2291,11 @@
       // ohne Wartung. Der Rechner rechnet nach VDI 2067 mit Kalkzins und zaehlt
       // Wartung und CO2 als eigene Annuitaeten. Zwei Groessen, nicht eine.
       const WIRTSCHAFT_FALLBACK = {
-        verbrauch_kwh: 95000, flaeche_m2: 769.83, n: 25, jaz: 3.8, stand: "Q3 2026",
-        preis_ct: { gas: 10.2, fw: 17.6, wp: 25 },     // brutto (FW Effektivpreis bei 95.000 kWh/46 kW, ohne CO2-Vorbehalt; mit = 19,5)
+        waerme_kwh: 77000, waerme_kwh_band: [69000, 85000],   // FW und WP: Waermeabgabe Erzeuger 2025 (Cockpit Tab 02a Nr. 12)
+        verbrauch_kwh: 95000,                           // nur Gas: Gaseinsatz, gerundet
+        flaeche_m2: 769.83, n: 25, jaz: 3.6, stand: "Q4 2026",
+        preis_ct: { gas: 10.2, fw: 18.9, wp: 25 },     // brutto (FW Effektivpreis Q4 2026 bei 77.000 kWh/46 kW, ohne CO2-Zertifikat)
+        fw_mit_co2_ct: 20.7,                            // FW Effektivpreis mit CO2-Zertifikat
         steig:    { gas: 0.03, fw: 0.04, wp: 0.025 },   // pro Jahr
         invest:   { fw: 31500, wp: 130000 }, wp_foerd: 0.30, fw_foerd: 0.30,   // Grundfoerderung BEG EM 17.08.2026 Nr. 8.4.1 Buchst. c. Massgebliche Quelle: parameter.json.foerdersaetze — von dort noch nicht gelesen, siehe wirtschaftAusJson().
         ist_eur_m2_monat: 1.30                          // gemessen 2025 (Gas, Vollkosten)
@@ -2307,12 +2310,15 @@
         if (!w) return F;
         const p = w.preise_ct_brutto || {}, s = w.steigerung_pa || {}, i = w.invest_eur || {};
         return {
+          waerme_kwh:    w.waerme_kwh ?? F.waerme_kwh,
+          waerme_kwh_band: w.waerme_kwh_band ?? F.waerme_kwh_band,
           verbrauch_kwh: w.verbrauch_kwh ?? F.verbrauch_kwh,
           flaeche_m2:    w.bezugsflaeche_m2 ?? F.flaeche_m2,
           n:             w.zeitraum_j ?? F.n,
           jaz:           w.jaz ?? F.jaz,
           stand:         w.stand ?? F.stand,
           preis_ct: { gas: p.gas ?? F.preis_ct.gas, fw: p.fernwaerme ?? F.preis_ct.fw, wp: p.wp_strom ?? F.preis_ct.wp },
+          fw_mit_co2_ct: w.fernwaerme_mit_co2_ct ?? F.fw_mit_co2_ct,
           steig:    { gas: s.gas ?? F.steig.gas,    fw: s.fernwaerme ?? F.steig.fw,    wp: s.wp_strom ?? F.steig.wp },
           invest:   { fw: i.fernwaerme ?? F.invest.fw, wp: i.wp ?? F.invest.wp },
           wp_foerd: w.wp_foerderung_anteil ?? F.wp_foerd,
@@ -2326,8 +2332,9 @@
       // vollstaendig, weil er allein aus WIRTSCHAFT rechnet.
       function zeichneWirtschaft(WIRTSCHAFT, DATEN){
       const WV = (function(){
-        const W = WIRTSCHAFT, v = W.verbrauch_kwh, n = W.n, fl = W.flaeche_m2;
-        const e1 = { fw: v * W.preis_ct.fw/100, wp: (v / W.jaz) * W.preis_ct.wp/100, gas: v * W.preis_ct.gas/100 };
+        // Zwei Mengen: FW und WP auf die Waermeabgabe, Gas auf den Gaseinsatz.
+        const W = WIRTSCHAFT, q = W.waerme_kwh, v = W.verbrauch_kwh, n = W.n, fl = W.flaeche_m2;
+        const e1 = { fw: q * W.preis_ct.fw/100, wp: (q / W.jaz) * W.preis_ct.wp/100, gas: v * W.preis_ct.gas/100 };
         const inv = { fw: Math.round(W.invest.fw * (1 - W.fw_foerd)), wp: Math.round(W.invest.wp * (1 - W.wp_foerd)) };
         const sumEsc = (j, e) => e === 0 ? j * n : j * (Math.pow(1 + e, n) - 1) / e;
         const mit  = { fw: sumEsc(e1.fw, W.steig.fw) + inv.fw, wp: sumEsc(e1.wp, W.steig.wp) + inv.wp };
@@ -2346,6 +2353,7 @@
       const sMin = 0.5, sMax = 2.2;
       function ozPos(v){ return Math.max(4, Math.min(96, (v - sMin) / (sMax - sMin) * 100)).toFixed(1); }
       const fmtM2 = x => x.toFixed(2).replace('.', ',');
+      const ct    = x => String(x).replace('.', ',');
       const prz   = x => (x * 100).toLocaleString('de-DE') + ' %';
 
       // Zerlegung der gemessenen Ist-Zahl. Alle Betraege kommen aus
@@ -2371,9 +2379,14 @@
         ? IST.verbrauchsreihe_kwh.map(r => r.jahr + ': ' + r.wert.toLocaleString('de-DE')).join(', ')
         : '';
       const schwankung = reihe
-        ? 'Der Verbrauch schwankt mit dem Wetter (' + reihe + ' kWh), deshalb rechnet die Projektion mit einem ' +
-          'gerundeten Ansatz unterhalb des Dreijahresschnitts. '
+        ? 'Der Gasverbrauch schwankt mit dem Wetter (' + reihe + ' kWh). Die Wärmemenge ist deshalb als Bandbreite belegt (' +
+          WIRTSCHAFT.waerme_kwh_band[0].toLocaleString('de-DE') + ' bis ' + WIRTSCHAFT.waerme_kwh_band[1].toLocaleString('de-DE') +
+          ' kWh); die Projektion rechnet mit rund ' + WIRTSCHAFT.waerme_kwh.toLocaleString('de-DE') + ' kWh. '
         : '';
+      // Gaseinsatz: gemessen aus ist_2025, sonst der gerundete Ansatz aus "wirtschaft".
+      const gaseinsatz = IST
+        ? IST.verbrauch_kwh.toLocaleString('de-DE') + ' kWh Gaseinsatz ' + IST.abrechnungsjahr
+        : 'rund ' + WIRTSCHAFT.verbrauch_kwh.toLocaleString('de-DE') + ' kWh Gaseinsatz';
       // Drei Flaechen mit drei Bedeutungen. Jede Zahl nennt ihren Nenner,
       // sonst liest sich die eine als Fehler der anderen (CLAUDE.md Regel 9).
       const AUS = IST && IST.verbrauchsausweis_2018;
@@ -2403,7 +2416,8 @@
           '</div>' +
           '<div class="oz-map__labels"><span>niedrig</span><span>im Schnitt</span><span>erhöht</span></div>' +
         '</div>' +
-        '<p class="oz-map__basis">Basis: rund ' + WIRTSCHAFT.verbrauch_kwh.toLocaleString('de-DE') + ' kWh im Jahr · ' +
+        '<p class="oz-map__basis">Basis: rund ' + WIRTSCHAFT.waerme_kwh.toLocaleString('de-DE') + ' kWh Wärme im Jahr, die Wärmeabgabe ' +
+          'des heutigen Kessels (' + gaseinsatz + ' bei einem Nutzungsgrad von 0,80 bis 0,83) · ' +
           fmtM2(WIRTSCHAFT.flaeche_m2) + ' m² · Heizung und Warmwasser. ' + schwankung +
           'Gas ist gemessen, Fernwärme und Wärmepumpe sind zu heutigen Preisen projiziert.</p>' +
         '<p class="oz-map__grenze">Der Balken zeigt nur den Energieanteil — er ist der Teil, der sich mit der Heizung ändert. ' +
@@ -2439,7 +2453,7 @@
               '<small style="display:block;opacity:.55;font-weight:400;font-size:10px;">ohne Steigerung ' + fmtTsd(WV.ohne.wp) + '</small>' +
               '<small style="display:block;opacity:.55;font-weight:400;font-size:10px;">ohne Förderung ' + fmtTsd(WV.ungefoerdert.wp) + '</small>' +
             '</span></div>' +
-          '<p class="oz-vgl-note">Der Hauptwert der Wärmepumpe rechnet mit ' + Math.round(WIRTSCHAFT.wp_foerd * 100) + ' % Grundförderung, also mit dem Fall, dass der Förderausschluss im Wärmenetzgebiet hier nicht greift. Ob er greift, ist offen. Greift er, liegt die Wärmepumpe bei rund <strong>' + fmtTsd(WV.ungefoerdert.wp) + '</strong> statt ' + fmtTsd(WV.mit.wp) + '. Gegenüber ' + fmtTsd(WV.mit.fw) + ' Fernwärme ändert das an der Rangfolge nichts. Beide Fälle zeigt die Fördermatrix unten.</p>' +
+          '<p class="oz-vgl-note">Der Hauptwert der Wärmepumpe rechnet mit ' + Math.round(WIRTSCHAFT.wp_foerd * 100) + ' % Grundförderung, also mit dem Fall, dass der Förderausschluss bei kommunaler Anschlussentscheidung hier nicht greift. Ob er greift, ist offen. Greift er, liegt die Wärmepumpe bei rund <strong>' + fmtTsd(WV.ungefoerdert.wp) + '</strong> statt ' + fmtTsd(WV.mit.wp) + '. Gegenüber ' + fmtTsd(WV.mit.fw) + ' Fernwärme ändert das an der Rangfolge nichts. Beide Fälle zeigt die Fördermatrix unten. Bei einem Antrag ab dem ersten Quartal 2027 setzen die 30 % den Bonus für Geräte mit Ursprung in der EU voraus, dessen Einzelheiten noch nicht veröffentlicht sind.</p>' +
           '<p class="oz-vgl-note">Ohne Preissteigerung wirkt Fernwärme rund <strong>' + fmtTsd(WV.diffFW) + '</strong> günstiger, als sie über die Laufzeit real wird — genau das ist das Preisrisiko des Anschlusszwangs.</p>' +
           // Zwei richtige Zahlen mit verschiedenen Bezuegen: ohne diesen Satz
           // haelt jemand, der beides sieht, eine der beiden fuer falsch.
@@ -2448,7 +2462,7 @@
             'ohne Abzinsung und ohne Wartung. Der <a href="rechner.html">Entscheider-Rechner</a> geht anders vor: ' +
             'Er zinst nach VDI 2067 ab und rechnet Wartung und CO₂ als eigene Posten. Beide Wege sind richtig und ' +
             'ergeben verschiedene Beträge.</p>' +
-          '<p class="oz-vgl-note">Investitionsannahme (konservativ): Wärmepumpe 130.000 € brutto, Fernwärme ~31.500 € brutto. Das günstigere reale WP-Angebot lag bei ~100.000 € — Potenzial nach unten. <strong>Stand 10.10.2026:</strong> Die Investitionsannahme Wärmepumpe beruht auf einem Angebot mit drei Außeneinheiten. Die niedrigere Heizlast senkt die Fernwärmekosten sofort. Was die Förderung daraus macht, steht in der Fördermatrix unten. <strong>Schallschutz:</strong> Nachts gilt der Richtwert 40 dB(A), amtlich bestätigt für ein allgemeines Wohngebiet.</p>' +
+          '<p class="oz-vgl-note">Investitionsannahme: Wärmepumpe 130.000 € brutto (vorsichtig angesetzt), Fernwärme ab 31.500 € brutto; mit dem nicht bezifferten baulichen Teil bis rund 42.600 €. Das günstigere reale WP-Angebot lag bei ~100.000 € — Potenzial nach unten. <strong>Stand 10.10.2026:</strong> Die Investitionsannahme Wärmepumpe beruht auf einem Angebot mit drei Außeneinheiten. Die niedrigere Heizlast senkt die Fernwärmekosten sofort. Was die Förderung daraus macht, steht in der Fördermatrix unten. <strong>Schallschutz:</strong> Nachts gilt der Richtwert 40 dB(A), amtlich bestätigt für ein allgemeines Wohngebiet.</p>' +
           '<details class="oz-fw-det">' +
             '<summary>Fernwärme-Anschluss — was wirklich anfällt</summary>' +
             '<div class="oz-fw-det__body">' +
@@ -2469,7 +2483,12 @@
           '<span class="oz-vgl-row__lbl">Jahreskosten heute · Energie</span>' +
           '<div class="oz-vgl-line"><span class="oz-vgl-line__opt">Fernwärme</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:100%"></div></div><span class="oz-vgl-line__val">' + fmtEur(WV.e1.fw) + '</span></div>' +
           '<div class="oz-vgl-line"><span class="oz-vgl-line__opt">Wärmepumpe</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:' + wpB + '%"></div></div><span class="oz-vgl-line__val">' + fmtEur(WV.e1.wp) + '</span></div>' +
-          '<p class="oz-vgl-note">Basis: 95.000 kWh Wärmebedarf/Jahr · brutto Q3 2026: Gas 10,2 / WP-Strom 25 ct/kWh, Fernwärme-Effektivpreis 17,6 ct/kWh (Effektivpreis auf Gebäudeebene, SWE-Preisblatt Q3 2026, bei 95.000 kWh Jahresbedarf und 46 kW Anschlussleistung; mit CO₂-Zertifikat unter Vorbehalt 19,5 ct — <a href="dokumente/260701_SWE-Preisblatt-Fernwaerme_Q3-2026.pdf" target="_blank" rel="noopener">SWE-Preisblatt 1.7.2026</a>) — die Wärmepumpe braucht dafür nur ~⅓ Strom (Umweltwärme).</p>' +
+          // Link auf das Preisblatt bleibt fest; mit dem Quartal wechseln (Quelle der Werte: Block "wirtschaft").
+          '<p class="oz-vgl-note">Basis: ' + WIRTSCHAFT.waerme_kwh.toLocaleString('de-DE') + ' kWh Wärme/Jahr · Preisstand ' + WIRTSCHAFT.stand +
+            ', brutto: Fernwärme-Effektivpreis ' + ct(WIRTSCHAFT.preis_ct.fw) + ' ct/kWh (Effektivpreis auf Gebäudeebene bei ' +
+            WIRTSCHAFT.waerme_kwh.toLocaleString('de-DE') + ' kWh und 46 kW Anschlussleistung; mit CO₂-Zertifikat ' + ct(WIRTSCHAFT.fw_mit_co2_ct) +
+            ' ct — <a href="dokumente/261001_SWE-Preisblatt-Fernwaerme_Q4-2026.pdf" target="_blank" rel="noopener">SWE-Preisblatt 1.10.2026</a>), WP-Strom ' +
+            ct(WIRTSCHAFT.preis_ct.wp) + ' ct/kWh; Gas ' + ct(WIRTSCHAFT.preis_ct.gas) + ' ct/kWh (gemessen 2025) — die Wärmepumpe braucht dafür nur gut ein Viertel Strom (Umweltwärme).</p>' +
           '<p class="oz-vgl-note">Über die Laufzeit bleibt es nicht bei diesen Beträgen: In der Rechnung steigt der ' +
             'Fernwärmepreis um ' + prz(WIRTSCHAFT.steig.fw) + ' pro Jahr, der Wärmepumpenstrom um ' + prz(WIRTSCHAFT.steig.wp) + '. ' +
             'Auf ' + WIRTSCHAFT.n + ' Jahre hochgerechnet und um die Investition nach Abzug der Förderung ergänzt, ergibt das ' +

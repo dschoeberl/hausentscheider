@@ -132,8 +132,8 @@
      Rechners — der zinst nach VDI 2067 ab und zählt Wartung und CO2 mit. */
   function laufzeitkosten(r, nettoFW, nettoWP) {
     var preis = r.preise_ct_brutto, steig = r.steigerung_pa;
-    if (!preis || !steig || !r.verbrauch_kwh) return null;
-    var v = r.verbrauch_kwh, n = r.zeitraum_j || 25;
+    if (!preis || !steig || !(r.waerme_kwh || r.verbrauch_kwh)) return null;
+    var v = r.waerme_kwh || r.verbrauch_kwh, n = r.zeitraum_j || 25;   // Waermeabgabe, nicht Gaseinsatz (wie index.html)
     var eFW = v * (preis.fernwaerme / 100);
     var eWP = (v / (r.jaz || 3.8)) * (preis.wp_strom / 100);
     var sum = function (j, e) { return e === 0 ? j * n : j * (Math.pow(1 + e, n) - 1) / e; };
@@ -253,9 +253,9 @@
         '<thead><tr>' +
           '<th scope="col">Antrag geht ein</th>' +
           '<th scope="col">Wärmepumpe · Förderung möglich' +
-            '<small>wenn das Wärmenetzgebiet die Förderung nicht sperrt</small></th>' +
+            '<small>wenn die Satzung die Förderung nicht sperrt</small></th>' +
           '<th scope="col">Wärmepumpe · Förderung ausgeschlossen' +
-            '<small>wenn es sie sperrt · rechtlich offen</small></th>' +
+            '<small>wenn die Satzung sie sperrt · rechtlich offen</small></th>' +
         '</tr></thead>' +
         '<tbody>' + zeilenHtml + '</tbody>' +
       '</table>' +
