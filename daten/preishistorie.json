@@ -272,7 +272,7 @@
     "6. Neue Zeile oben einfügen, aktuell/stand/aktueller_monat mitziehen, alte Werte als Historie behalten.",
     "7. Kontext-Text: IMMER den Rohwert und das Belegdatum mitführen (z. B. 'TECSON 138,4 ct/l am 14.08.2026'). Der Rohwert ist die Herleitung, die die Kachel selbst nicht zeigen kann.",
     "8. Wird ein bereits veröffentlichter Wert korrigiert: nicht stillschweigend überschreiben. korrektur-Block in der Monatszeile setzen, Eintrag in korrekturen ergänzen, Vermerk im Kontexttext.",
-    "9. Spiegelstellen nachziehen: index.html (inline PH-Objekt, ep-stand, Banner, Fußtext), preishistorie.html (Karten), rechner.html (Markt-Schnitt-Zeile)."
+    "9. Spiegelstellen nachziehen: index.html (inline PH-Objekt, ep-stand, Banner, Fußtext), preishistorie.html (Karten), daten/preise.json (gas_ct, strom_ct, stand). NICHT mehr rechner.html: Der Rechner liest Regler-Startwerte (Gas, Fernwärme, WP-Strom), Markt-Schnitt-Zeile und Preisstand seit 10.10.2026 selbst aus dieser Datei (aktueller_monat). Pellets rechnet er noch mit dem Modellwert aus parameter.json."
   ],
   "quelle": "v2.1_neutral_OUTPUT.xlsx"
 }
