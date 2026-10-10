@@ -21,14 +21,19 @@
   • Gas      Mittel aus Neukunde und Bestand   — 20.000 kWh/a, OHNE Grundversorgung
   • WP-Strom Bandmittel der Anbieterspanne     — keine echte Monatsreihe verfügbar
   • Fernwärme (Erfurt) — QUARTALSWEISE, nicht monatlich. SWE Energie Preisblatt:
-    https://www.swe-energie.de/site/energie/get/documents_E-421602985/energie/documents/Downloads/preisblaetter-und-vertragsbedingungen/waerme/preise_fernwaermeversorgung.pdf
+    https://www.swe-energie.de/site/energie/get/documents_E1834749126/energie/documents/Downloads/preisblaetter-und-vertragsbedingungen/waerme/preise_fernwaermeversorgung.pdf
     (Pfad: swe-energie.de → Servicewelt → Preisblätter & Vertragsbedingungen → Wärme)
-    Q3 2026 (gültig 1.7.–30.9.): AP 13,768 ct/kWh brutto (Q2 11,538), LP 75,04 EUR/kW*a,
-    Zertifikatepreis 1,929 ct/kWh — Letzterer laut Fußnote UNTER VORBEHALT.
-    "19,3 ct/kWh" = Effektivpreis auf Gebäudeebene (alle Komponenten auf den Jahresverbrauch umgelegt).
+    ACHTUNG: Die SWE-URL liefert immer die AKTUELLE Fassung. Jede Quartalsfassung als
+    Archivkopie unter dokumente/ ablegen (JJMMTT_SWE-Preisblatt-Fernwaerme_Qn-JJJJ.pdf)
+    und Links mit Stand-Datum darauf setzen.
+    Q4 2026 (gültig 1.10.–31.12.): AP 14,309 ct/kWh brutto (Q3 13,768), LP 75,24 EUR/kW*a,
+    Zertifikatepreis 1,779 ct/kWh (Q3 1,929). Neue Fußnote: Zertifikatepreise Q1–Q3 ohne die
+    kostenlos zugewiesenen CO2-Zertifikate ausgewiesen; Q4 ohne Sternchen.
+    "19,7 ct/kWh" = Effektivpreis auf Gebäudeebene (alle Komponenten auf den Jahresverbrauch umgelegt).
 
   KORRIGIERT AM 15.08.2026: Julizeile Heizöl (11,5 → 13,7) und die komplette
-  Pellets-Spalte Jan–Jul. Alte Werte, Grund und Beleg stehen im korrekturen-Block
+  Pellets-Spalte Jan–Jul. KORRIGIERT AM 10.10.2026: Pellets August (7,8 → 8,6).
+  Alte Werte, Grund und Beleg stehen im korrekturen-Block
   und in den korrektur-Feldern von daten/preishistorie.json — bewusst NUR dort.
   Die Historie soll richtig dastehen, nicht ihre eigene Fehlergeschichte erzählen.
   ══════════════════════════════════════════════════════════════════
@@ -198,11 +203,95 @@
 
   <p class="section-eyebrow">Aktueller Stand</p>
 
-  <!-- MONAT: AUGUST 2026 (Hero) -->
+  <!-- MONAT: OKTOBER 2026 (Hero) -->
   <div class="hist-card hist-card--hero hist-card--current">
     <div class="hist-card__top">
-      <span class="hist-card__monat">August 2026</span>
+      <span class="hist-card__monat">Oktober 2026</span>
       <span class="hist-badge">Aktuell</span>
+    </div>
+    <div class="hist-preise">
+      <div class="hist-p">
+        <span class="hist-p__lbl">Gas Ø</span>
+        <span class="hist-p__val">12,0</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta" style="color:rgba(255,255,255,0.45);">— Portalstand 10.10.</span>
+      </div>
+      <div class="hist-p">
+        <span class="hist-p__lbl">Fernwärme Ø</span>
+        <span class="hist-p__val">19,7</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta up">↑ +0,4 ggü. Sept. · Q4-Tarif</span>
+      </div>
+      <div class="hist-p">
+        <span class="hist-p__lbl">Heizöl Ø</span>
+        <span class="hist-p__val">17,6</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta up">↑ +0,8 ggü. Sept. · vorläufig</span>
+      </div>
+      <div class="hist-p">
+        <span class="hist-p__lbl">WP-Strom Ø</span>
+        <span class="hist-p__val">25</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta" style="color:rgba(255,255,255,0.45);">— Spanne 20,7–26</span>
+      </div>
+    </div>
+    <p class="hist-kontext">
+      <strong>Heizöl auf dem höchsten Stand dieser Tabelle:</strong> 176,0 ct/l im Bundesdurchschnitt (TECSON, 10.10.2026, Bestellmenge 3.000 l) ergeben 17,6 ct/kWh. Der Wert ist <strong>vorläufig</strong> — der Stichtagswert um den 14. folgt. Treiber laut Marktberichten: wenige Schiffe in der Straße von Hormus, Brent um 104 US-Dollar (HeizOel24, 08.10.2026).
+      <br>Gas ~12,0 ct — Neukundentarif 12,2, Bestandstarif 11,8, Grundversorgung 13,6 (1-Gasvergleich, Stand 10.10.2026). Das ist noch der Septemberwert der Monatstabelle; ein eigener Oktoberwert liegt nicht vor. Neukunden zahlen damit mehr als Bestandskunden. BDEW-Anker vom August: 11,93 ct im Einfamilienhaus, 11,17 ct im Mehrfamilienhaus (Jahresmittel 2026 bis dato).
+      <br>Fernwärme ~19,7 ct, neues Quartal: Arbeitspreis 14,309 ct/kWh brutto (+3,9 %), Zertifikatepreis 1,779 ct (−7,8 %), Leistungspreis 75,24 €/kW·a (<a href="dokumente/261001_SWE-Preisblatt-Fernwaerme_Q4-2026.pdf" target="_blank" rel="noopener" style="color:inherit;">SWE-Preisblatt, Stand 1.10.2026</a>). Der Q4-Preis gilt bis 31.12.2026.
+      <br>WP-Strom ~25 ct, für Oktober nicht neu belegt. Die Untergrenze der Spanne bestätigt sich: günstigster Neukundentarif 20,66 ct (Verivox, Jahreswert 2026).
+      <br>Pellets 9,1 ct — das ist noch der <strong>Septemberstand</strong> (DEPI, 454,21 €/t bei 6 t). Der Oktoberwert erscheint um den 18. und wird dann nachgetragen.
+    </p>
+  </div>
+  <!-- /MONAT -->
+
+  <p class="section-eyebrow verlauf-eyebrow">Verlauf</p>
+
+  <!-- MONAT: SEPTEMBER 2026 -->
+  <div class="hist-card">
+    <div class="hist-card__top">
+      <span class="hist-card__monat">September 2026</span>
+    </div>
+    <div class="hist-preise">
+      <div class="hist-p">
+        <span class="hist-p__lbl">Gas Ø</span>
+        <span class="hist-p__val">12,0</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta up">↑ +1,3 ggü. August</span>
+      </div>
+      <div class="hist-p">
+        <span class="hist-p__lbl">Fernwärme Ø</span>
+        <span class="hist-p__val">19,3</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta" style="color:var(--text-muted);">— Q3-Tarif, galt bis 30.09.</span>
+      </div>
+      <div class="hist-p">
+        <span class="hist-p__lbl">Heizöl Ø</span>
+        <span class="hist-p__val">16,8</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta up">↑ +3,0 ggü. August</span>
+      </div>
+      <div class="hist-p">
+        <span class="hist-p__lbl">WP-Strom Ø</span>
+        <span class="hist-p__val">25</span>
+        <span class="hist-p__unit">ct/kWh</span>
+        <span class="hist-p__delta" style="color:var(--text-muted);">— Spanne 20,7–26</span>
+      </div>
+    </div>
+    <p class="hist-kontext">
+      <strong>Heizöl springt um gut ein Fünftel:</strong> 168,30 €/100 l am 14.09.2026 ergeben 16,8 ct/kWh (fastenergy-Marktbericht; ein TECSON-Wert für den Stichtag liegt nicht vor, TECSON nennt für Mitte September 163–173 ct/l). Auslöser waren Drohnenangriffe auf die saudische Ost-West-Pipeline, die Hormus umgeht, und erneuter Beschuss in der Meerenge; Brent stand am 14.09. bei 106,37 US-Dollar.
+      <br>Pellets steigen kräftig: 454,21 €/t bei 6 t (DEPI, 16.09.2026) ergeben 9,1 ct/kWh, +6,2 % gegenüber August.
+      <br>Gas ~12,0 ct — Neukundentarif 12,2, Bestandstarif 11,8 (Monatswert September, 1-Gasvergleich).
+      <br>Fernwärme unverändert 19,3 ct. Das ist eine <em>Tarif</em>aussage: Der Q3-Preis der SWE galt bis zum 30.09.
+      <br>WP-Strom ~25 ct, nicht neu belegt.
+    </p>
+  </div>
+  <!-- /MONAT -->
+
+  <!-- MONAT: AUGUST 2026 -->
+  <div class="hist-card">
+    <div class="hist-card__top">
+      <span class="hist-card__monat">August 2026</span>
     </div>
     <div class="hist-preise">
       <div class="hist-p">
@@ -215,7 +304,7 @@
         <span class="hist-p__lbl">Fernwärme Ø</span>
         <span class="hist-p__val">19,3</span>
         <span class="hist-p__unit">ct/kWh</span>
-        <span class="hist-p__delta" style="color:rgba(255,255,255,0.45);">— Q3-Tarif, gilt bis 30.09.</span>
+        <span class="hist-p__delta" style="color:var(--text-muted);">— Q3-Tarif, galt bis 30.09.</span>
       </div>
       <div class="hist-p">
         <span class="hist-p__lbl">Heizöl Ø</span>
@@ -227,7 +316,7 @@
         <span class="hist-p__lbl">WP-Strom Ø</span>
         <span class="hist-p__val">25</span>
         <span class="hist-p__unit">ct/kWh</span>
-        <span class="hist-p__delta" style="color:rgba(255,255,255,0.45);">— Spanne 20,7–26</span>
+        <span class="hist-p__delta" style="color:var(--text-muted);">— Spanne 20,7–26</span>
       </div>
     </div>
     <p class="hist-kontext">
@@ -235,12 +324,10 @@
       <br>Gas ~10,7 ct — Mittel aus Neukundentarif 9,8 und Bestandstarif 11,6 (Stand 15.08.2026); die Grundversorgung liegt bei 13,6 ct und geht in den Tabellenwert nicht ein. BDEW-Anker vom April: 11,10 ct im Einfamilienhaus, 10,87 ct im Mehrfamilienhaus.
       <br>Fernwärme unverändert 19,3 ct. Das ist eine <em>Tarif</em>aussage, keine Marktbeobachtung: Der Q3-Preis der SWE gilt bis zum 30.09., die nächste Anpassung ist der 01.10.
       <br>WP-Strom-Tarife weiter ~25 ct, im oberen Bereich der belegten Anbieterspanne 22–26. Günstigster datierter Neukundenschnitt: 20,7 ct (Verivox, 13.07.2026).
-      <br>Pellets 7,8 ct — das ist noch der <strong>Julistand</strong> (DEPI, 388,09 €/t bei 6 t). Der Augustwert erscheint erst um den 18. und wird dann nachgetragen.
+      <br>Pellets 8,6 ct (DEPI, 427,72 €/t bei 6 t, veröffentlicht 18.08.2026). <em>Korrigiert am 10.10.2026:</em> Hier stand bis dahin 7,8 ct — der Julistand, weil der Augustwert beim Update am 15.08. noch nicht erschienen war und danach nicht nachgetragen wurde.
     </p>
   </div>
   <!-- /MONAT -->
-
-  <p class="section-eyebrow verlauf-eyebrow">Verlauf</p>
 
   <!-- MONAT: JULI 2026 -->
   <div class="hist-card hist-card--current">
@@ -533,7 +620,7 @@
           <dd>
             <a href="https://www.tecson.de/de/heizoelpreise.html" target="_blank" rel="noopener">TECSON Heizölpreisindex</a>, Bundesdurchschnitt in ct je Liter,
             Bestellmenge 3.000 l, HEL schwefelarm, inkl. MwSt. Tagespreis als Monats-Snapshot, Stichtag um den 14.
-            <br><strong>Umrechnung: ct/l ÷ 10,0 kWh je Liter</strong> (Heizwert). August 2026: 138,4 ÷ 10,0 = 13,8 ct/kWh.
+            <br><strong>Umrechnung: ct/l ÷ 10,0 kWh je Liter</strong> (Heizwert). Oktober 2026 (vorläufig): 176,0 ÷ 10,0 = 17,6 ct/kWh.
             <br>Gegenprobe für den Faktor: Das TECSON-Quartalsmittel Q2 2026 liegt bei 133,8 ct/l; die hier geführten Werte April 153, Mai 135 und Juni 115 ct/l ergeben im Mittel 134,3 — Abweichung 0,4 %.
           </dd>
 
@@ -541,7 +628,7 @@
           <dd>
             <a href="https://www.depi.de/pelletpreis-wirtschaftlichkeit/" target="_blank" rel="noopener">Deutsches Pelletinstitut (DEPI)</a>, € je Tonne bei 6 t Abnahme,
             ENplus A1, Lieferung im Umkreis 50 km, inkl. MwSt.
-            <br><strong>Umrechnung: €/t ÷ 10 = ct/kg, dann ÷ 5,0 kWh je kg.</strong> Juli 2026: 388,09 €/t → 38,81 ct/kg → 7,76 ct/kWh.
+            <br><strong>Umrechnung: €/t ÷ 10 = ct/kg, dann ÷ 5,0 kWh je kg.</strong> September 2026: 454,21 €/t → 45,42 ct/kg → 9,08 ct/kWh.
             <br>DEPI veröffentlicht den ct/kWh-Wert selbst; er deckt sich in allen Monaten 2026 mit diesem Faktor.
             <br><em>Zum Rhythmus:</em> DEPI meldet erst um den 16. bis 18. eines Monats. Wer vorher aktualisiert, hat den Vormonatswert vor sich — er ist dann als solcher gekennzeichnet.
             <br><em>Nicht verrechenbar:</em> Den vielzitierten Kostenvorteil gegenüber Heizöl (rund 40 %) rechnet DEPI auf eigener Basis, mit etwa 10,6 kWh je Liter. Diese Prozentzahl passt deshalb nicht zu den Heizölwerten dieser Tabelle.
@@ -550,9 +637,9 @@
           <dt>Gas</dt>
           <dd>
             Tarifportale für den Monatsstand, <a href="https://www.bdew.de/presse/pressemappen/gaspreis-und-co-2-preis/" target="_blank" rel="noopener">BDEW-Gaspreisanalyse</a> als quartalsweiser Anker. Musterhaushalt 20.000 kWh/a. Keine Umrechnung.
-            <br><strong>Tarifbasis: Mittel aus Neukundentarif und Bestandskundentarif.</strong> August 2026: (9,8 + 11,6) ÷ 2 = 10,7 ct/kWh.
-            <br>Die Grundversorgung geht <em>nicht</em> ein — sie liegt im August bei 13,6 ct/kWh.
-            <br><em>Offen gesagt:</em> Dieser Wert ist ein gebildeter Mischwert, kein von einer Stelle veröffentlichter Preis. Wer bei BDEW nachschlägt, findet einen höheren (April 2026: 11,10 ct im Einfamilienhaus, 10,87 ct im Mehrfamilienhaus) — weil BDEW nach Gebäudetyp trennt und nicht nach Tarifstatus.
+            <br><strong>Tarifbasis: Mittel aus Neukundentarif und Bestandskundentarif.</strong> September 2026: (12,2 + 11,8) ÷ 2 = 12,0 ct/kWh.
+            <br>Die Grundversorgung geht <em>nicht</em> ein — sie liegt im Oktober bei 13,6 ct/kWh.
+            <br><em>Offen gesagt:</em> Dieser Wert ist ein gebildeter Mischwert, kein von einer Stelle veröffentlichter Preis. Wer bei BDEW nachschlägt, findet einen anderen (August 2026: 11,93 ct im Einfamilienhaus, 11,17 ct im Mehrfamilienhaus, Jahresmittel 2026 bis dato) — weil BDEW nach Gebäudetyp trennt und nicht nach Tarifstatus.
           </dd>
 
           <dt>Wärmepumpenstrom</dt>
@@ -564,11 +651,14 @@
 
           <dt>Fernwärme</dt>
           <dd>
-            <a href="https://www.swe-energie.de/site/energie/get/documents_E-421602985/energie/documents/Downloads/preisblaetter-und-vertragsbedingungen/waerme/preise_fernwaermeversorgung.pdf" target="_blank" rel="noopener">SWE-Preisblatt Fernwärmeversorgung</a>. Der ausgewiesene Wert ist der Erfurter Effektivpreis auf Gebäudeebene: Arbeitspreis, Leistungspreis, Zertifikatepreis, Umlagen und Verrechnungspreis, umgelegt auf den Jahresverbrauch eines Referenz-Mehrfamilienhauses. <strong>Nicht der Arbeitspreis allein.</strong>
-            <br><strong>Quartalsweise, nicht monatlich.</strong> Preisänderungen zum 01.01., 01.04., 01.07. und 01.10. Ein „stabil“ in dieser Spalte ist eine Tarifaussage, keine Marktbeobachtung. Der Q3-Preis gilt bis zum 30.09.2026.
-            <br>Q3 2026 brutto: Arbeitspreis 13,768 ct/kWh (Q2: 11,538), Leistungspreis 75,04 €/kW·a, Zertifikatepreis 1,929 ct/kWh, Umlagen 0,000.
-            <br><em>Zu den viel zitierten 19 %:</em> Die gelten nur für den Arbeitspreis. Der gesamte verbrauchsabhängige Teil — Arbeits- plus Zertifikate- plus Umlagepreis — stieg von 13,717 auf 15,697 ct/kWh, also um 14,4 %. Beide Zahlen sind richtig; sie haben verschiedene Bezugsgrößen.
-            <br><em>Vorbehalt:</em> Der Zertifikatepreis für das 1. bis 3. Quartal 2026 steht laut Fußnote des Preisblatts unter Vorbehalt — SWE hat noch keine Mitteilung über die Menge der kostenlos zugeteilten CO₂-Zertifikate ab 2026 erhalten. Eine rückwirkende Korrektur bis Q1 ist möglich. Der Effektivpreis von 19,3 ct/kWh enthält damit eine vorläufige Komponente.
+            <a href="https://www.swe-energie.de/site/energie/get/documents_E1834749126/energie/documents/Downloads/preisblaetter-und-vertragsbedingungen/waerme/preise_fernwaermeversorgung.pdf" target="_blank" rel="noopener">SWE-Preisblatt Fernwärmeversorgung</a> (bei der SWE immer nur die aktuelle Fassung). Der ausgewiesene Wert ist der Erfurter Effektivpreis auf Gebäudeebene: Arbeitspreis, Leistungspreis, Zertifikatepreis, Umlagen und Verrechnungspreis, umgelegt auf den Jahresverbrauch eines Referenz-Mehrfamilienhauses. <strong>Nicht der Arbeitspreis allein.</strong>
+            <br><strong>Quartalsweise, nicht monatlich.</strong> Preisänderungen zum 01.01., 01.04., 01.07. und 01.10. Ein „stabil“ in dieser Spalte ist eine Tarifaussage, keine Marktbeobachtung. Der Q4-Preis gilt bis zum 31.12.2026.
+            <br>Q4 2026 brutto: Arbeitspreis 14,309 ct/kWh (Q3: 13,768), Leistungspreis 75,24 €/kW·a (Q3: 75,04), Zertifikatepreis 1,779 ct/kWh (Q3: 1,929), Umlagen 0,000. Verbrauchsabhängig gesamt +2,5 % (15,697 → 16,088 ct/kWh), Arbeitspreis allein +3,9 %.
+            <br><em>Zu den viel zitierten 19 % (Q3):</em> Die gelten nur für den Arbeitspreis zum 1.7.2026. Der gesamte verbrauchsabhängige Teil — Arbeits- plus Zertifikate- plus Umlagepreis — stieg damals von 13,717 auf 15,697 ct/kWh, also um 14,4 %. Beide Zahlen sind richtig; sie haben verschiedene Bezugsgrößen.
+            <br><em>Fußnote zum Zertifikatepreis:</em> Seit dem Preisblatt vom 1.10.2026 steht dort, dass die Zertifikatepreise für das 1. bis 3. Quartal ohne Berücksichtigung der kostenlos zugewiesenen CO₂-Zertifikate ausgewiesen worden sind. Der Q4-Wert trägt kein Sternchen. Ob und wie die SWE die Vorquartale korrigiert, sagt das Preisblatt nicht. Bis zum 30.09. lautete die Fußnote noch: Zertifikatepreise Q1–Q3 unter Vorbehalt, weil die Mitteilung über die kostenlos zugeteilte Menge fehlte.
+            <br><em>Archiv der Preisblätter:</em> Die SWE stellt unter ihrem Link immer nur die aktuelle Fassung bereit. Die Fassungen, auf die sich diese Seite bezieht, liegen deshalb hier:
+            <a href="dokumente/261001_SWE-Preisblatt-Fernwaerme_Q4-2026.pdf" target="_blank" rel="noopener">Q4 2026 (Stand 1.10.2026, PDF)</a> ·
+            <a href="dokumente/260701_SWE-Preisblatt-Fernwaerme_Q3-2026.pdf" target="_blank" rel="noopener">Q3 2026 (Stand 1.7.2026, mit Q2-Vergleich, PDF)</a>.
           </dd>
         </dl>
 
