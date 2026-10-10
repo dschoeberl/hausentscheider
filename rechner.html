@@ -238,6 +238,7 @@
     .fw-det__body { margin-top: 0.6rem; background: #eaece9; border-left: 3px solid var(--tommy-rot); border-radius: 0 6px 6px 0; padding: 0.85rem 1.1rem; }
     .fw-det__body p { font-size: 12.5px; color: #2a2a28; line-height: 1.65; margin: 0 0 0.6rem; }
     .fw-det__body p:last-child { margin-bottom: 0; }
+    .fw-det__body [data-traeger] p:last-child { margin-bottom: 0.6rem; }
     .fw-det__body strong { color: #1a1a1a; }
     .fw-det__body a { color: var(--tommy-rot); font-weight: 500; text-decoration: none; border-bottom: 1px solid rgba(216,30,52,0.35); }
     .fw-det__body a:hover { border-bottom-color: var(--tommy-rot); }
@@ -1659,6 +1660,37 @@
           <span>Markt-Schnitt aktuell: <span id="markt-schnitt">—</span> (Stand <span class="js-preisstand">—</span>)</span>
           <a href="/preishistorie.html" target="_blank" rel="noopener" style="color:var(--petrol);font-size:11px;">Preisentwicklung →</a>
         </p>
+        <!-- Hilfe zum eigenen Preis — Inhalt wechselt mit dem Energieträger (updatePreisHilfe) -->
+        <details class="fw-det" id="preis-hilfe">
+          <summary>Wo finde ich meinen Preis – und wie rechne ich ihn richtig?</summary>
+          <div class="fw-det__body">
+            <p><strong>Die Regel:</strong> Gesamtbetrag der Energierechnung brutto ÷ verbrauchte kWh = Ihr Preis in ct/kWh. Grund-, Leistungs- und Messpreise gehören dazu, sonst ist der Preis zu niedrig. Wartung, Schornsteinfeger und Abrechnungsdienst gehören <em>nicht</em> dazu – die rechnet der Rechner gesondert.</p>
+            <div data-traeger="gas">
+              <p><strong>Wo:</strong> Jahresabrechnung Ihres Gasversorgers. Im Mehrfamilienhaus die Gasrechnung des Gebäudes, nicht Ihr Wohnungsanteil aus der Heizkostenabrechnung.</p>
+              <p><strong>Beispiel:</strong> 20.000 kWh × 10,8 ct Arbeitspreis = 2.160 € + Grundpreis 180 € = 2.340 € brutto. 2.340 € ÷ 20.000 kWh = <strong>11,7 ct/kWh</strong>.</p>
+              <p><strong>Typischer Fehler:</strong> Kubikmeter statt kWh. Die Abrechnung rechnet m³ in kWh um (1 m³ ≈ 10 kWh) – nehmen Sie den kWh-Wert.</p>
+            </div>
+            <div data-traeger="fw">
+              <p><strong>Wo:</strong> Jahresabrechnung des Fernwärmeversorgers für das Gebäude. Sie listet Arbeitspreis, Zertifikatepreis, Leistungspreis und Messpreis getrennt auf.</p>
+              <p><strong>Beispiel</strong> (gerundete Tarifwerte): 80.000 kWh × 14,3 ct Arbeitspreis = 11.440 € + 80.000 kWh × 1,8 ct Zertifikatepreis = 1.440 € + 50 kW × 75 € Leistungspreis = 3.750 € + Messpreis 73 € = 16.703 € brutto. 16.703 € ÷ 80.000 kWh = <strong>rund 20,9 ct/kWh</strong>.</p>
+              <p><strong>Typischer Fehler:</strong> nur den Arbeitspreis eintragen. Im Beispiel wären das 14,3 statt 20,9 ct – rund ein Drittel zu wenig.</p>
+            </div>
+            <div data-traeger="wp">
+              <p><strong>Wo:</strong> Stromrechnung Ihres Wärmepumpentarifs (eigener Zähler). Haushaltsstrom zählt nicht.</p>
+              <p><strong>Beispiel:</strong> 6.000 kWh × 24 ct Arbeitspreis = 1.440 € + Grundpreis 120 € = 1.560 € brutto. 1.560 € ÷ 6.000 kWh = <strong>26,0 ct/kWh</strong>.</p>
+            </div>
+            <div data-traeger="oel">
+              <p><strong>Wo:</strong> Rechnung der letzten Heizöllieferung.</p>
+              <p><strong>Umrechnung:</strong> Preis in ct je Liter ÷ 10 = ct/kWh. Beispiel: 170 ct/l ÷ 10 = <strong>17,0 ct/kWh</strong>.</p>
+            </div>
+            <div data-traeger="pellets">
+              <p><strong>Wo:</strong> Rechnung der letzten Pelletlieferung.</p>
+              <p><strong>Umrechnung:</strong> Preis in € je Tonne ÷ 50 = ct/kWh. Beispiel: 450 €/t ÷ 50 = <strong>9,0 ct/kWh</strong>.</p>
+            </div>
+            <p>Immer brutto, also inklusive Mehrwertsteuer. Zum Vergleich: die <a href="/preishistorie.html" target="_blank" rel="noopener">Preisentwicklung</a> mit Quellen und Rechenwegen.</p>
+            <p id="preis-hilfe-eigen" hidden><strong>Aus Ihren Angaben:</strong> Jahreskosten ÷ Verbrauch = <strong id="preis-hilfe-wert">—</strong>. Das stimmt nur, wenn Ihre Jahreskosten reine Energiekosten sind. <button type="button" id="preis-hilfe-uebernehmen" style="margin-left:0.3rem;font:inherit;font-size:12px;font-weight:500;color:#fff;background:var(--petrol-dark);border:0;border-radius:4px;padding:0.2rem 0.6rem;cursor:pointer;">Übernehmen</button></p>
+          </div>
+        </details>
         <div class="hint hint--warn" id="plausi-energiepreis" hidden>
           Vergleich Markt-Schnitt: Ihr Vertrag liegt <strong id="plausi-energiepreis-diff">— %</strong> über/unter Markt-Schnitt.
         </div>
@@ -2846,6 +2878,21 @@
         hint.textContent = '(' + (map[state.heizung] || 'in ct/kWh') + ')';
       });
 
+      // Hilfe zum eigenen Preis: Abschnitt je Energieträger + Wert aus Angaben
+      ['#f-heizung', '#f-jahreskosten', '#f-verbrauch', '#f-verbrauch-leer'].forEach(sel => {
+        const el = $(sel);
+        if (el) { el.addEventListener('input', updatePreisHilfe); el.addEventListener('change', updatePreisHilfe); }
+      });
+      const phBtn = $('#preis-hilfe-uebernehmen');
+      if (phBtn) phBtn.addEventListener('click', () => {
+        const v = berechnePreisAusAngaben();
+        const inp = $('#f-eigener-preis');
+        if (v == null || !inp) return;
+        inp.value = v.toFixed(1);
+        inp.dispatchEvent(new Event('input'));
+      });
+      updatePreisHilfe();
+
       // Letzte Sanierung (Jahr, optional)
       const lsInp = $('#f-letzte-sanierung');
       if (lsInp) lsInp.addEventListener('input', e => {
@@ -2906,6 +2953,28 @@
           if (out) out.textContent = fmtEuro(v);
         });
       });
+    }
+
+    // Hilfe zum eigenen Preis (Schritt 2)
+    function berechnePreisAusAngaben() {
+      const jk = state.jahreskostenIst;
+      const v  = state.verbrauchUnknown ? null : state.verbrauch;
+      if (!jk || !v) return null;
+      return Math.round((jk / v) * 1000) / 10;  // € / kWh → ct/kWh, 1 Nachkomma
+    }
+    function updatePreisHilfe() {
+      const box = $('#preis-hilfe');
+      if (!box) return;
+      const traeger = { 'gas-bw': 'gas', 'gas-nt': 'gas', 'fw': 'fw', 'wp': 'wp',
+                        'oel': 'oel', 'pellets': 'pellets' }[state.heizung];
+      $$('[data-traeger]', box).forEach(el => {
+        el.hidden = traeger ? el.dataset.traeger !== traeger : false;
+      });
+      const v = berechnePreisAusAngaben();
+      const eigen = $('#preis-hilfe-eigen');
+      if (eigen) eigen.hidden = v == null;
+      const out = $('#preis-hilfe-wert');
+      if (out && v != null) out.textContent = fmtPreis(v);
     }
 
     // C2 v2.0 — Wizard-Plausibilitätschecks
