@@ -283,7 +283,7 @@
         'Abweichung jeweils gegenüber der besten Lage.</p>' +
       details(fs) +
       '<p class="fm__quelle">Grundlage: Richtlinie für die Bundesförderung für effiziente Gebäude — ' +
-        'Einzelmaßnahmen (BMWE), Fassung vom 17.07.2026, wirksam ab 21.07.2026, sowie das Merkblatt zum ' +
+        'Einzelmaßnahmen (BMWE), Fassung vom 17.08.2026, wirksam ab 21.07.2026, sowie das Merkblatt zum ' +
         'KfW-Programm 458. Fördersätze und Höchstkosten am Originaltext geprüft. ' +
         'Keine Förder- oder Rechtsberatung.</p>';
 

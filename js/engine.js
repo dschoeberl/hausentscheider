@@ -55,7 +55,7 @@ const EXCEL_BEZUG_WOHNFLAECHE = {
 };
 
 // Rückfallebene, falls parameter.json.foerdersaetze nicht lädt.
-// Belegte Werte: BEG EM vom 17.07.2026, Nummern 8.3.1, 8.4.1, 8.4.4, 8.4.5.
+// Belegte Werte: BEG EM vom 17.08.2026, Nummern 8.3.1, 8.4.1, 8.4.4, 8.4.5.
 // Gepflegt wird ausschliesslich parameter.json — hier nur Notlauf.
 const FS_FALLBACK = {
   grund: 0.30,

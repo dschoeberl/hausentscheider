@@ -98,7 +98,7 @@ var GEBAEUDE_DB = {
     // ── Rechner-Defaults (Startwerte für Eingabefelder) ─
     rechnerDefaults: {
       wpInvest:    132000,
-      wpFoerd:     30,        // % — Grundförderung BEG EM 17.07.2026 Nr. 8.4.1 Buchst. c.
+      wpFoerd:     30,        // % — Grundförderung BEG EM 17.08.2026 Nr. 8.4.1 Buchst. c.
                               // Die 58 % waren nicht hergeleitet. Alle Fälle zeigt die Fördermatrix;
                               // massgebliche Quelle ist parameter.json.foerdersaetze.
       ruecklage:   55000,
