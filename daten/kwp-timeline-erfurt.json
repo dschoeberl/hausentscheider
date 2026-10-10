@@ -206,6 +206,16 @@
       "link": "https://buergerinfo.erfurt.de/vo0050.asp?__kvonr=66326"
     },
     {
+      "datum": "2026-10-01",
+      "datumLabel": "1. Oktober 2026",
+      "titel": "Fernwärme-Preisblatt Q4 2026 (SWE)",
+      "art": "beitrag",
+      "zusammenfassung": "Zum 1. Oktober steigt der Arbeitspreis der SWE auf 14,309 ct/kWh brutto (+3,9 %), der Zertifikatepreis sinkt auf 1,779 ct/kWh (−7,8 %), der Leistungspreis liegt bei 75,24 €/kW·a. Für ein Gebäude bedeutet das rund 2 % höhere Fernwärmekosten — weit weniger als der Sprung zum 1. Juli. Neu im Preisblatt: Die Zertifikatepreise für das erste bis dritte Quartal wurden ohne die kostenlos zugeteilten CO₂-Zertifikate ausgewiesen.",
+      "kommentar": "Offen bleibt, ob die SWE die Zertifikatepreise der ersten drei Quartale nachträglich korrigiert.",
+      "offen": true,
+      "link": "dokumente/261001_SWE-Preisblatt-Fernwaerme_Q4-2026.pdf"
+    },
+    {
       "datum": "2027-01-01",
       "datumLabel": "ab 2027",
       "titel": "M16-Plattform im Vollbetrieb (angekündigt)",
