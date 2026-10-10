@@ -30,12 +30,12 @@ var GEBAEUDE_DB = {
     baujahr:          1900,
     sanierung:        2010,
     wohnungen:        14,
-    // 784 ist im Cockpit an keiner Stelle als Flaeche belegt, nur als "vorher"
-    // in Tab 15 E12. Belegt sind 908 m2 (Bezugsflaeche Energieausweis),
-    // 922 m2 (Nettogrundflaeche Heizlast) und 769,83 m2 (beheizte Flaeche,
-    // Domotherm). Der Rechner unten teilt weiter durch diesen Wert; die
-    // Umstellung gehoert zu Teil B zusammen mit dem Jahreswechsel.
-    wohnflaeche:      784,           // m²  UNBELEGT — siehe Kommentar
+    // Bezugsflaeche Heizkostenabrechnung 2025 (Domotherm), zugleich Wohnflaeche;
+    // einheitliche Rechengroesse nach Cockpit Tab 02a Nr. 3 (Festlegung 10.10.2026).
+    // Die 784 m2 waren nicht belegt. 908 m2 = Gebaeudenutzflaeche Energieausweis
+    // (nach § 19 EnEV aus der Wohnflaeche hochgerechnet), 922 m2 = Nettogrund-
+    // flaeche Heizlast; beide keine Rechengroesse. Spiegelt theaterstrasse-4.json gebaeude.flaeche.
+    wohnflaeche:      769.83,        // m²  siehe Kommentar
     eigentumsform:    "WEG",
 
     // ── Heizsystem ──────────────────────────────────────

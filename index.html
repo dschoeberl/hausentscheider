@@ -1481,7 +1481,7 @@
           <div class="oz-kpi">
             <span class="oz-kpi__val">64.745 €</span>
             <span class="oz-kpi__lbl">Erhaltungsrücklage</span>
-            <span class="oz-kpi__ref">6,61 €/m²·a Wohnfläche — unter Fachempfehlung Altbau (~17 €/m²·a)</span>
+            <span class="oz-kpi__ref">7,79 €/m²·a — unter Fachempfehlung Altbau (~17 €/m²·a)</span>
           </div>
           <div class="oz-kpi oz-kpi--risk">
             <span class="oz-kpi__flag">steigt&nbsp;▲</span>
@@ -2390,11 +2390,13 @@
       // Drei Flaechen mit drei Bedeutungen. Jede Zahl nennt ihren Nenner,
       // sonst liest sich die eine als Fehler der anderen (CLAUDE.md Regel 9).
       const AUS = IST && IST.verbrauchsausweis_2018;
-      const wohnflaeche = DATEN && DATEN.gebaeude && DATEN.gebaeude.flaeche;
-      const flaechenAbsatz = (IST && AUS && wohnflaeche)
-        ? '<p>Das Haus trägt drei Flächen mit drei Bedeutungen: ' + AUS.bezugsflaeche_m2.toLocaleString('de-DE') +
-          ' m² ' + AUS.bezugsflaeche_bezeichnung + ' im Energieausweis, ' + wohnflaeche.toLocaleString('de-DE') +
-          ' m² Wohnfläche und ' + fmtM2(IST.bezugsflaeche_m2) + ' m² Heizkostenfläche. Die Wärmekosten oben rechnen auf ' +
+      // 769,83 m² ist zugleich Wohnflaeche (gebaeude.flaeche), Festlegung 10.10.2026.
+      const ngf = DATEN && DATEN.gebaeude && DATEN.gebaeude.nettogrundflaeche_heizlast_m2;
+      const flaechenAbsatz = (IST && AUS && ngf)
+        ? '<p>Das Haus trägt drei Flächen mit drei Bedeutungen: ' + fmtM2(IST.bezugsflaeche_m2) +
+          ' m² Bezugsfläche der Heizkostenabrechnung (Wohnfläche); ' + AUS.bezugsflaeche_m2.toLocaleString('de-DE') +
+          ' m² ' + AUS.bezugsflaeche_bezeichnung + ' laut Energieausweis 2018, nach § 19 EnEV aus der Wohnfläche hochgerechnet; ' +
+          ngf.toLocaleString('de-DE') + ' m² Nettogrundfläche der Heizlastberechnung. Die Wärmekosten oben rechnen auf ' +
           'der Heizkostenfläche, seit 21.06.2026 einheitlich.</p>'
         : '';
       const ausweisAbsatz = (IST && AUS)

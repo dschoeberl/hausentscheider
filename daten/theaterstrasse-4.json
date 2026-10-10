@@ -13,7 +13,9 @@
     "referenz": true
   },
   "gebaeude": {
-    "flaeche": 784,
+    "_pflege": "flaeche = Bezugsfläche Heizkostenabrechnung 2025 (Domotherm), zugleich Wohnfläche; einheitliche Rechengröße nach Cockpit Tab 02a Nr. 3 (Festlegung 10.10.2026). Die 784 m² waren nicht belegt. nettogrundflaeche_heizlast_m2 = Nettogrundfläche der Heizlastberechnung (Tab 02a), keine Rechengröße für Flächenbezüge.",
+    "flaeche": 769.83,
+    "nettogrundflaeche_heizlast_m2": 922,
     "we": 14,
     "waermebedarf_kwh": 101240,
     "heizlast_kw": 46,
