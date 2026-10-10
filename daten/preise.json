@@ -1,8 +1,8 @@
 {
-  "stand": "August 2026",
-  "_quelle": "Marktwerte (strom_ct, gas_ct) gespiegelt aus daten/preishistorie.json, Monat 2026-08. Beim Monatsupdate hier mitziehen.",
+  "stand": "Oktober 2026",
+  "_quelle": "Marktwerte (strom_ct, gas_ct) gespiegelt aus daten/preishistorie.json, Monat 2026-10. Beim Monatsupdate hier mitziehen.",
   "strom_ct": 25.0,
-  "gas_ct": 10.7,
+  "gas_ct": 12.0,
   "fw_ap_ct": 20.0,
   "fw_lp": 39.99,
   "co2_preis": 55.0,
