@@ -26,8 +26,8 @@
     "heizkosten_sub": "13,27 €/m²/Jahr · 11.000 € gesamt",
     "verbrauch_kwh_m2": 126,
     "verbrauch_sub": "101.240 kWh/Jahr gesamt",
-    "co2_kg": 17706,
-    "co2_sub": "200,9 g/kWh · Gas · sinkt mit WP −43%",
+    "co2_kg": 17230,
+    "co2_sub": "181,5 g/kWh (Brennwert) · Gas · sinkt mit WP um gut die Hälfte",
     "abrechnungsjahr": "2023/2024",
     "abrechnungsquelle": "DOMO-THERM Heizkostenabrechnung",
     "kontext": "Die Gasheizung läuft seit 1998. Ersatzteile sind teilweise abgekündigt. Das Gebäude liegt im Fernwärmesatzungsgebiet der Stadt Erfurt seit 2005."
@@ -105,6 +105,11 @@
     "fw_lp_hint": "Anschlussleistung 46 kW",
     "fw_fix_hint": "Messpreis + Zähler",
     "amort_basis_gas_ct": 10.0
+  },
+  "co2": {
+    "_pflege": "Einzige Quelle für die CO2-Zeile der Startseiten-Referenzkarte (Cockpit Tab 02a Nr. 43–45, Stand 10.10.2026). Die Seite rechnet kg/m²·a selbst: Gas = ist_2025.verbrauch_kwh × gas, Fernwärme = wirtschaft.waerme_kwh × fernwaerme, Wärmepumpe = wirtschaft.waerme_kwh ÷ wirtschaft.jaz × strom, jeweils ÷ ist_2025.bezugsflaeche_m2. Kontrollwerte: Gas 22,4 · Fernwärme 22,8 · Wärmepumpe 9,6 kg/m²·a (WP rund −57 % gegenüber Gas). Gasfaktor bezogen auf den Brennwert wie in der Gasabrechnung, rückgerechnet aus 0,00998 €/kWh CO2-Kosten bei 55 €/t; 0,201 gilt je kWh Heizwert und passt nicht zu den abgerechneten kWh. Fernwärme 0,228 ist der Erfurter Wert, NICHT die 0,242 aus js/engine.js (allgemeiner Wert).",
+    "faktoren_kg_kwh": { "gas": 0.1815, "fernwaerme": 0.228, "strom": 0.344 },
+    "quellen": { "gas": "Gasabrechnung 2025", "fernwaerme": "Umweltamt Erfurt 16.02.2026", "strom": "Umweltbundesamt 2025" }
   },
   "wirtschaft": {
     "_pflege": "Alleinige Quelle für den Wirtschaftsvergleich der Startseiten-Referenzkarte. index.html liest diesen Block; die dortige Konstante WIRTSCHAFT_FALLBACK greift nur, wenn der Abruf scheitert. js/foerdermatrix.js liest ihn ebenfalls. Preis nur HIER ändern. Fernwärme QUARTALSWEISE (SWE-Preisblatt, vgl. parameter.json PreisFW). Nicht mit Block 'rechner' verwechseln — der gehört dem Objektprofil-Rechner. wp_foerderung_anteil spiegelt parameter.json.foerdersaetze.grundfoerderung; maßgeblich ist dort. Mengenbasis (Cockpit Tab 02a Nr. 12, festgelegt 21.09.2026): Fernwärme und Wärmepumpe rechnen mit waerme_kwh (Wärmeabgabe des Erzeugers 2025, Bandbreite waerme_kwh_band), Gas mit verbrauch_kwh (Gaseinsatz, gerundet; gemessen ist_2025.verbrauch_kwh). jaz 3,6 nach Tab 02a Nr. 29 (Zweitgutachten 3,35, externe Gegenrechnung rund 3,6). Herleitung fernwaerme 18,9 ct (SWE-Preisblatt Stand 01.10.2026, Q4 2026, brutto, ohne CO2-Zertifikat): 77.000 kWh × 14,309 ct = 11.018 € Arbeitspreis + 46 kW × 75,24 €/kW·a = 3.461 € Leistungspreis + 73,02 € Verrechnungspreis (Stufe bis 50 kW) = 14.552 € / 77.000 kWh = 18,9 ct. Mit CO2-Zertifikat (1,779 ct) 15.922 € = 20,7 ct (fernwaerme_mit_co2_ct). Die Q4-Fußnote des Preisblatts weist darauf hin, dass die Zertifikatepreise Q1 bis Q3 ohne Anrechnung der kostenlos zugeteilten Zertifikate ausgewiesen sind. Der Leistungspreis ist 75,04 €/kW·a aus dem SWE-Preisblatt — NICHT die 39,99 €/kW aus fw_lp_eur_kw im Block rechner, das ist der Satz des einmaligen Baukostenzuschusses.",

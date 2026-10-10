@@ -1471,7 +1471,7 @@
             <span class="oz-kpi__flag">Risiko</span>
             <span class="oz-kpi__val">1998</span>
             <span class="oz-kpi__lbl">Gaskessel · 72 kW</span>
-            <span class="oz-kpi__ref">27 Jahre — über übliche Lebensdauer (~20–25 J.) · Ersatzteile abgekündigt</span>
+            <span class="oz-kpi__ref">28 Jahre — über übliche Lebensdauer (~20–25 J.) · Ersatzteile abgekündigt</span>
           </div>
           <div class="oz-kpi">
             <span class="oz-kpi__val">46 kW</span>
@@ -1550,13 +1550,8 @@
 
         <div class="oz-vgl-row" id="oz-vgl-gesamt"></div>
 
-        <div class="oz-vgl-row">
-          <span class="oz-vgl-row__lbl">CO₂ · kg pro m²·Jahr</span>
-          <div class="oz-vgl-line"><span class="oz-vgl-line__opt">Gas (heute)</span><div class="oz-vgl-track"><div class="oz-vgl-fill oz-vgl-fill--ist" style="width:75%"></div></div><span class="oz-vgl-line__val">19,5</span></div>
-          <div class="oz-vgl-line"><span class="oz-vgl-line__opt">Fernwärme</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:100%"></div></div><span class="oz-vgl-line__val">26,0</span></div>
-          <div class="oz-vgl-line"><span class="oz-vgl-line__opt">Wärmepumpe</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:43%"></div></div><span class="oz-vgl-line__val">11,2</span></div>
-          <p class="oz-vgl-note">Überraschend, aber belegt: Erfurter Fernwärme liegt über dem heutigen Gas — das Netz ist ~95 % gasbasiert.</p>
-        </div>
+        <!-- CO2-Zeile: rechnet aus daten/theaterstrasse-4.json, Block "co2". -->
+        <div class="oz-vgl-row" id="oz-vgl-co2"></div>
 
         <div class="oz-vgl-status">
           <span class="oz-vgl-status__lbl"></span><span class="oz-vgl-status__h">Fernwärme</span><span class="oz-vgl-status__h">Wärmepumpe</span>
@@ -2232,7 +2227,7 @@
           felder: [
             { nr: 1,  feld: "Nachhaltigkeitsintelligenz",   ist: 2,
               skala1: "fossil, hohe Emissionen", skala5: "klimaneutral, sehr niedrige Emissionen",
-              befund: "Die Wärme stammt heute aus fossilem Gas; auch die Fernwärme ist im Netz überwiegend gasbasiert und liegt beim CO₂-Faktor heute über Gas. Eine Wärmepumpe senkt die Emissionen aktuell um rund 43 % — und mit einem grüner werdenden Strommix weiter." },
+              befund: "Die Wärme stammt heute aus fossilem Gas; auch die Fernwärme ist im Netz überwiegend gasbasiert und liegt beim CO₂-Faktor heute über Gas. Eine Wärmepumpe senkt die Emissionen aktuell um gut die Hälfte — und mit einem grüner werdenden Strommix weiter." },
             { nr: 2,  feld: "Ressourcenbewusstsein",         ist: 3,
               skala1: "keine Rücklagen, kein Plan", skala5: "solide Rücklage, gezielter Mitteleinsatz",
               befund: "Eine solide Erhaltungsrücklage ist vorhanden. Bislang sind Mittel vor allem in wiederholte Analysen geflossen; ein Umsetzungsbeschluss steht noch aus." },
@@ -2477,6 +2472,26 @@
             '</div>' +
           '</details>' +
           '';
+      }
+      // === CO2 · kg pro m²·Jahr — Faktoren aus Block "co2", Mengen wie im Kostenvergleich ===
+      const co2El = document.getElementById("oz-vgl-co2");
+      const C = DATEN && DATEN.co2;
+      if (co2El && C && IST) {
+        const f = C.faktoren_kg_kwh, qu = C.quellen;
+        const kg = {
+          gas: IST.verbrauch_kwh * f.gas / IST.bezugsflaeche_m2,
+          fw:  WIRTSCHAFT.waerme_kwh * f.fernwaerme / IST.bezugsflaeche_m2,
+          wp:  WIRTSCHAFT.waerme_kwh / WIRTSCHAFT.jaz * f.strom / IST.bezugsflaeche_m2
+        };
+        const max = Math.max(kg.gas, kg.fw, kg.wp);
+        const zeile = (opt, wert, ist) => '<div class="oz-vgl-line"><span class="oz-vgl-line__opt">' + opt + '</span><div class="oz-vgl-track"><div class="oz-vgl-fill' +
+          (ist ? ' oz-vgl-fill--ist' : '') + '" style="width:' + Math.round(wert / max * 100) + '%"></div></div><span class="oz-vgl-line__val">' +
+          wert.toFixed(1).replace('.', ',') + '</span></div>';
+        co2El.innerHTML =
+          '<span class="oz-vgl-row__lbl">CO₂ · kg pro m²·Jahr</span>' +
+          zeile('Gas (heute)', kg.gas, true) + zeile('Fernwärme', kg.fw) + zeile('Wärmepumpe', kg.wp) +
+          '<p class="oz-vgl-note">Überraschend, aber belegt: Die Erfurter Fernwärme ist heute nicht klimafreundlicher als die eigene Gasheizung, sie liegt sogar leicht darüber. Das Netz ist zu rund 95 % gasbasiert.</p>' +
+          '<p class="oz-vgl-note">Quellen: ' + qu.fernwaerme + ' (Fernwärme), ' + qu.gas + ' (Gas), ' + qu.strom + ' (Strom).</p>';
       }
       const jahresEl = document.getElementById("oz-vgl-jahres");
       if (jahresEl) {
