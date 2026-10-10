@@ -749,6 +749,235 @@
     </div>
   </div>
 
+  <!-- AKTUELLE ENERGIEPREISE -->
+  <section class="energiepreise" id="energiepreise" aria-label="Aktuelle Energiepreise">
+    <style>
+      .energiepreise { background: var(--bg-light); padding: 3.5rem 0 3rem; border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); }
+      .energiepreise__titel { font-size: 26px; margin-bottom: 0.875rem; }
+      .energiepreise__titel::after { content: ''; display: block; width: 48px; height: 2px; background: var(--petrol); margin-top: 0.625rem; border-radius: 1px; }
+      .energiepreise__intro { font-size: 14px; color: var(--text-secondary); max-width: 560px; line-height: 1.7; margin-bottom: 1.25rem; }
+      .ep-schiene { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; font-size: 13px; color: var(--text-primary); font-weight: 500; margin-bottom: 1rem; }
+      .ep-livedot { width: 7px; height: 7px; border-radius: 50%; background: var(--petrol-light); flex-shrink: 0; animation: ep-blink 2s ease-in-out infinite; }
+      @keyframes ep-blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+      .ep-sep { color: var(--border); }
+      .ep-tafeln { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.75rem; margin-bottom: 1.25rem; }
+      .ep-tafel { background: var(--petrol-dark); border-radius: 6px; padding: 0.875rem 1rem 0.75rem; transition: transform .15s ease, box-shadow .15s ease; }
+      .ep-tafel:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26,53,53,0.22); }
+      .ep-tafel__lbl { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--signal); margin-bottom: 0.4rem; font-weight: 600; }
+      .ep-tafel__preis-row { display: flex; align-items: baseline; gap: 5px; margin-bottom: 6px; }
+      .ep-tafel__preis { font-family: 'Inter', sans-serif; font-size: 30px; font-weight: 600; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
+      .ep-tafel__unit { font-size: 12px; color: rgba(255,255,255,0.5); }
+      .ep-tafel__sub { font-size: 11px; color: rgba(255,255,255,0.65); line-height: 1.4; }
+      .ep-tafel__trend { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; margin-top: 5px; }
+      .ep-tafel__trend--up { color: #f0b870; }
+      .ep-tafel__trend--down { color: #90d4a8; }
+      .ep-tafel__trend--stabil { color: rgba(255,255,255,0.4); font-weight: 400; font-style: italic; }
+      .ep-verlauf { overflow-x: auto; margin-bottom: 1rem; -webkit-overflow-scrolling: touch; }
+      .ep-verlauf table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 480px; font-variant-numeric: tabular-nums; }
+      .ep-verlauf th, .ep-verlauf td { padding: 0.45rem 0.7rem; text-align: right; border-bottom: 0.5px solid var(--border); white-space: nowrap; }
+      .ep-verlauf th:first-child, .ep-verlauf td:first-child { text-align: left; }
+      .ep-verlauf thead th { color: var(--petrol-dark); font-weight: 600; font-size: 11px; letter-spacing: 0.5px; }
+      .ep-verlauf tbody td { color: var(--text-secondary); }
+      .ep-verlauf tbody td:first-child { color: var(--text-primary); font-weight: 500; }
+      .ep-verlauf tr.is-current td { background: rgba(207,247,127,0.18); color: var(--text-primary); font-weight: 600; }
+      .ep-einheit { font-size: 11px; color: var(--text-secondary); margin-bottom: 1rem; }
+      .ep-doclink { margin-top: 0.25rem; }
+      .ep-cta { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--tommy-rot); color: #fff; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; padding: 0.6rem 1.15rem; border-radius: 999px; transition: background .15s ease, transform .15s ease, box-shadow .15s ease; }
+      .ep-cta:hover { background: #b3192c; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(216,30,52,0.28); text-decoration: none; }
+      .ep-news { display: flex; background: #fff; border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 1.25rem; }
+      .ep-news__accent { width: 4px; background: var(--petrol); flex-shrink: 0; }
+      .ep-news__body { padding: 1rem 1.15rem; }
+      .ep-news__tags { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 0.6rem; }
+      .ep-news__pill { display: inline-flex; align-items: center; background: var(--petrol); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; font-family: 'Inter', sans-serif; }
+      .ep-news__trend { display: inline-flex; align-items: center; gap: 3px; background: var(--tommy-rot); color: #fff; font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; font-family: 'Inter', sans-serif; }
+      .ep-news__title { font-family: 'Playfair Display', Georgia, serif; font-size: 17px; color: var(--text-primary); margin-bottom: 0.35rem; }
+      .ep-news__text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.7rem; }
+      .ep-news__link { font-size: 13px; font-weight: 500; color: var(--petrol); font-family: 'Inter', sans-serif; }
+      @media (max-width: 768px) { .ep-tafeln { grid-template-columns: 1fr 1fr; } .energiepreise__titel { font-size: 22px; } }
+    </style>
+    <div class="container">
+      <span class="label" style="margin-bottom:0.5rem;display:block;">Aktuelle Energiepreise</span>
+      <h2 class="energiepreise__titel">Wo stehen die Energiepreise gerade?</h2>
+      <p class="energiepreise__intro">Energiepreise schwanken — und welche Heizung sich langfristig rechnet, hängt genau davon ab. Hier die aktuellen Verbraucher-Durchschnittspreise je Energieträger, vergleichbar gemacht in der gemeinsamen Größe ct/kWh (Fernwärme als Erfurter Effektivpreis). Monatlich aktualisiert.</p>
+      <div class="ep-news">
+        <div class="ep-news__accent" aria-hidden="true"></div>
+        <div class="ep-news__body">
+          <div class="ep-news__tags">
+            <span class="ep-news__pill">Fernwärme Erfurt · Q4 2026</span>
+          </div>
+          <p class="ep-news__title">Fernwärme zum 1. Oktober: moderate Anpassung — und eine neue Fußnote</p>
+          <p class="ep-news__text">Die SWE hat ihre Fernwärmepreise zum 1. Oktober angepasst: Arbeitspreis 14,309 ct/kWh brutto (+3,9 %), Zertifikatepreis 1,779 ct (−7,8 %), Leistungspreis 75,24 €/kW·a. Am Referenzgebäude steigt der Effektivpreis damit um rund 2 % auf ~19,7 ct/kWh — deutlich weniger als der Sprung im Juli. Geändert hat sich auch die Fußnote: Die Zertifikatepreise für das erste bis dritte Quartal wurden laut Preisblatt ohne die kostenlos zugeteilten CO₂-Zertifikate ausgewiesen. Was das für bereits abgerechnete Quartale bedeutet, sagt der Versorger nicht. Der Q4-Preis gilt bis 31. Dezember.</p>
+          <a class="ep-news__link" href="dokumente/261001_SWE-Preisblatt-Fernwaerme_Q4-2026.pdf" target="_blank" rel="noopener">SWE-Preisblatt Wärme (Stand 1.10.2026) →</a>
+        </div>
+      </div>
+      <div class="ep-schiene">
+        <span class="ep-livedot" aria-hidden="true"></span>
+        <span>Preisstand</span><span class="ep-sep">·</span>
+        <span id="ep-stand">Oktober 2026</span><span class="ep-sep">·</span>
+        <span>wird monatlich aktualisiert</span>
+      </div>
+      <div class="ep-tafeln" id="ep-tafeln"></div>
+      <div class="ep-verlauf"><table id="ep-verlauf-tbl"></table></div>
+      <p class="ep-einheit">Alle Werte in ct/kWh brutto. Vier der fünf sind umgerechnet — Heizöl aus ct/l ÷ 10,0 kWh/l (TECSON, 3.000 l), Pellets aus €/t ÷ 5,0 kWh/kg (DEPI, 6 t), Gas als Mittel aus Neukunden- und Bestandstarif ohne Grundversorgung, WP-Strom als Bandmittel der Anbieterspanne 22–26 ct. Fernwärme = Erfurter Effektivpreis auf Gebäudeebene, quartalsweise statt monatlich — der Q4-Preis von ~19,7 ct gilt bis 31.12.2026 (SWE-Preisblatt 1.10.2026). Im Oktober sind zwei Werte noch nicht endgültig: Heizöl ist vorläufig (TECSON 10.10., Stichtag um den 14.), Pellets zeigen noch den Septemberstand (DEPI meldet um den 18.). <a href="https://hausentscheider.de/preishistorie#methodik">Alle Quellen, Faktoren und Rechenwege →</a></p>
+      <p class="ep-doclink"><a class="ep-cta" href="https://hausentscheider.de/preishistorie">Vollständige Preishistorie mit Marktkontext →</a></p>
+    </div>
+  </section>
+  <script>
+    // Energiepreise — Daten gespiegelt aus daten/preishistorie.json (Quelle der Wahrheit, Stand 2026-10-10).
+    // Beim Monats-Update: neuesten Monat oben in PH.monate einfügen + PH.aktuell setzen.
+    // Umrechnungsfaktoren und Leitquellen NICHT hier pflegen, sondern im Block
+    // methodik_traeger der JSON — diese Liste ist reine Spiegelung.
+    (function(){
+      var PH = {
+        aktuell: '2026-10',
+        monate: [
+          { key:'2026-10', label:'Oktober 2026', gas:12.0, fernwaerme:19.7, heizoel:17.6, wp_strom:25, pellets:9.1 },
+          { key:'2026-09', label:'September 2026', gas:12.0, fernwaerme:19.3, heizoel:16.8, wp_strom:25, pellets:9.1 },
+          { key:'2026-08', label:'August 2026',  gas:10.7, fernwaerme:19.3, heizoel:13.8, wp_strom:25, pellets:8.6 },
+          { key:'2026-07', label:'Juli 2026',    gas:10.5, fernwaerme:19.3, heizoel:13.7, wp_strom:25, pellets:7.8 },
+          { key:'2026-06', label:'Juni 2026',    gas:10.5, fernwaerme:17.5, heizoel:11.5, wp_strom:25, pellets:7.5 },
+          { key:'2026-05', label:'Mai 2026',     gas:10.5, fernwaerme:17.5, heizoel:13.5, wp_strom:26, pellets:7.8 },
+          { key:'2026-04', label:'April 2026',   gas:10.5, fernwaerme:17.5, heizoel:15.3, wp_strom:27, pellets:8.1 },
+          { key:'2026-03', label:'März 2026',    gas:10.0, fernwaerme:17.5, heizoel:16.0, wp_strom:28, pellets:8.4 },
+          { key:'2026-02', label:'Februar 2026', gas:9.9,  fernwaerme:17.5, heizoel:10.8, wp_strom:29, pellets:8.5 },
+          { key:'2026-01', label:'Januar 2026',  gas:9.9,  fernwaerme:17.5, heizoel:10.5, wp_strom:30, pellets:8.1 }
+        ]
+      };
+      var TAFELN = [
+        { key:'gas',        lbl:'Gas Ø',           sub:'Verbraucher-Schnitt' },
+        { key:'fernwaerme', lbl:'Fernwärme Ø',     sub:'Erfurt-Effektivpreis' },
+        { key:'heizoel',    lbl:'Heizöl Ø',        sub:'Verbraucher-Schnitt' },
+        { key:'wp_strom',   lbl:'Wärmestrom WP Ø', sub:'Wärmepumpen-Tarif' }
+      ];
+      var COLS = [
+        { k:'gas', h:'Gas' }, { k:'fernwaerme', h:'Fernwärme' }, { k:'heizoel', h:'Heizöl' },
+        { k:'wp_strom', h:'WP-Strom' }, { k:'pellets', h:'Pellets' }
+      ];
+      function fmt(v){ return (Math.round(v*10)/10).toString().replace('.', ','); }
+
+      var standEl = document.getElementById('ep-stand');
+      var tafelnEl = document.getElementById('ep-tafeln');
+      var tblEl = document.getElementById('ep-verlauf-tbl');
+      if (!tafelnEl || !tblEl) return;
+
+      var idx = 0;
+      for (var i = 0; i < PH.monate.length; i++) { if (PH.monate[i].key === PH.aktuell) { idx = i; break; } }
+      var cur = PH.monate[idx];
+      var prev = PH.monate[idx + 1] || null;
+      if (standEl) standEl.textContent = cur.label;
+
+      // Tafeln (aktueller Monat + Trend ggü. Vormonat)
+      tafelnEl.innerHTML = TAFELN.map(function(t){
+        var trend = '';
+        if (prev) {
+          var d = cur[t.key] - prev[t.key];
+          var prevKurz = prev.label.split(' ')[0];
+          var dir = Math.abs(d) < 0.05 ? 'stabil' : (d > 0 ? 'up' : 'down');
+          var txt = dir === 'stabil'
+            ? 'stabil ggü. ' + prevKurz
+            : (d > 0 ? '+' : '−') + fmt(Math.abs(d)) + ' ggü. ' + prevKurz;
+          trend = '<div class="ep-tafel__trend ep-tafel__trend--' + dir + '">' + txt + '</div>';
+        }
+        return '<div class="ep-tafel">'
+          + '<div class="ep-tafel__lbl">' + t.lbl + '</div>'
+          + '<div class="ep-tafel__preis-row"><span class="ep-tafel__preis">' + fmt(cur[t.key]) + '</span><span class="ep-tafel__unit">ct/kWh</span></div>'
+          + '<div class="ep-tafel__sub">' + t.sub + '</div>'
+          + trend
+          + '</div>';
+      }).join('');
+
+      // Verlaufs-Tabelle
+      var head = '<thead><tr><th>Monat</th>' + COLS.map(function(c){ return '<th>' + c.h + '</th>'; }).join('') + '</tr></thead>';
+      var body = '<tbody>' + PH.monate.map(function(m){
+        return '<tr' + (m.key === PH.aktuell ? ' class="is-current"' : '') + '>'
+          + '<td>' + m.label + '</td>'
+          + COLS.map(function(c){ return '<td>' + fmt(m[c.k]) + '</td>'; }).join('')
+          + '</tr>';
+      }).join('') + '</tbody>';
+      tblEl.innerHTML = head + body;
+    })();
+  </script>
+
+  <!-- TECHNIK-RADAR · WHATSAPP-KANAL (Baustein A) -->
+  <section class="kanal" id="technik-radar-kanal" aria-label="Technik-Radar — WhatsApp-Kanal">
+    <style>
+      .kanal { background: #ffffff; padding: 3.25rem 0 3rem; }
+      .kanal__card { display: grid; grid-template-columns: 288px 1fr; border-radius: 18px; overflow: hidden; box-shadow: 0 20px 55px rgba(20,45,42,0.20); border: 1px solid rgba(20,45,42,0.08); }
+      .kanal__aside { position: relative; background: linear-gradient(180deg, rgba(16,48,46,0.84) 0%, rgba(16,48,46,0.93) 100%), url('images/technik-radar-header.jpg') 58% 42% / cover no-repeat #16302e; color: #eaf3f0; padding: 2.25rem 1.75rem 2rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.85rem; }
+      .kanal__avatar { position: relative; width: 108px; height: 108px; margin-top: 0.25rem; }
+      .kanal__avatar img { width: 108px; height: 108px; border-radius: 50%; display: block; box-shadow: 0 6px 18px rgba(0,0,0,0.35); }
+      .kanal__avatar::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; pointer-events: none; box-shadow: 0 0 0 0 rgba(216,30,52,0.55); animation: kanalPulse 2.2s ease-out infinite; }
+      @keyframes kanalPulse { 0% { box-shadow: 0 0 0 0 rgba(216,30,52,0.55); } 70% { box-shadow: 0 0 0 14px rgba(216,30,52,0); } 100% { box-shadow: 0 0 0 0 rgba(216,30,52,0); } }
+      @media (prefers-reduced-motion: reduce) { .kanal__avatar::after { animation: none; box-shadow: 0 0 0 3px rgba(216,30,52,0.4); } }
+      .kanal__wa { position: absolute; right: 2px; bottom: 2px; width: 34px; height: 34px; border-radius: 50%; background: #25D366; display: grid; place-items: center; border: 3px solid #16302e; }
+      .kanal__wa svg { width: 20px; height: 20px; fill: #fff; }
+      .kanal__name { font-family: 'Playfair Display', Georgia, serif; font-size: 21px; color: #ffffff; margin: 0.35rem 0 0; }
+      .kanal__sub { font-size: 12px; color: var(--petrol-light); margin: 0.15rem 0 0; letter-spacing: 0.3px; }
+      .kanal__cta { display: inline-flex; align-items: center; gap: 8px; background: var(--signal); color: var(--petrol-dark); font-family: 'Inter', sans-serif; font-weight: 700; font-size: 13.5px; padding: 0.72rem 1.35rem; border-radius: 999px; text-decoration: none; margin-top: auto; transition: filter 0.2s; }
+      .kanal__cta:hover { filter: brightness(0.96); text-decoration: none; }
+      .kanal__cta svg { width: 18px; height: 18px; fill: var(--petrol-dark); }
+      .kanal__note { font-size: 10.5px; color: rgba(234,243,240,0.55); margin: 0.15rem 0 0; }
+      .kanal__qr { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; margin-top: 0.5rem; }
+      .kanal__qr img { width: 84px; height: 84px; display: block; background: #fff; border-radius: 12px; padding: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.28); }
+      .kanal__qrcap { font-size: 11px; color: rgba(234,243,240,0.7); letter-spacing: 0.2px; }
+      .kanal__body { padding: 2.1rem 2.1rem; }
+      .kanal__eyebrow { display: inline-block; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--petrol); font-weight: 600; font-family: 'Inter', sans-serif; margin-bottom: 0.5rem; }
+      .kanal__title { font-family: 'Playfair Display', Georgia, serif; font-size: 25px; font-weight: 400; color: #1a1a1a; line-height: 1.25; margin: 0 0 0.7rem; }
+      .kanal__intro { font-size: 14px; color: var(--text-secondary); line-height: 1.65; margin: 0 0 0.9rem; }
+      .kanal__list { list-style: none; margin: 0 0 1rem; padding: 0; display: grid; gap: 0.45rem; }
+      .kanal__list li { position: relative; padding-left: 1.4rem; font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+      .kanal__list li::before { content: ''; position: absolute; left: 0; top: 0.5em; width: 7px; height: 7px; border-radius: 50%; background: var(--petrol); }
+      .kanal__list a { color: var(--petrol); text-decoration: none; border-bottom: 1px solid rgba(26,92,90,0.35); }
+      .kanal__list a:hover { border-bottom-color: var(--petrol); }
+      .kanal__synergie { font-size: 13px; color: #1a3535; line-height: 1.55; background: var(--bg-light); border-left: 3px solid var(--tommy-rot); border-radius: 0 6px 6px 0; padding: 0.7rem 0.95rem; margin: 0 0 0.9rem; }
+      .kanal__wunsch { font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin: 0 0 0.9rem; }
+      .kanal__wunsch a { color: var(--tommy-rot); text-decoration: none; border-bottom: 1px solid rgba(216,30,52,0.35); font-weight: 500; }
+      .kanal__wunsch a:hover { border-bottom-color: var(--tommy-rot); }
+      .kanal__ds { font-size: 11px; color: var(--text-tertiary); line-height: 1.5; margin: 0; }
+      @media (max-width: 720px) {
+        .kanal__card { grid-template-columns: 1fr; }
+        .kanal__body { padding: 1.75rem 1.5rem; }
+      }
+    </style>
+    <div class="container">
+      <div class="kanal__card">
+        <aside class="kanal__aside">
+          <span class="bildnachweis bildnachweis--overlay" style="top:.45rem;bottom:auto;">Bild: KI-generiert</span>
+          <div class="kanal__avatar">
+            <img src="images/technik-radar-avatar.svg" alt="Technik-Radar — Kanal-Logo" width="108" height="108">
+            <span class="kanal__wa" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.6.2-.2.3-.7.8-.8 1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.2-.6-1.5-.9-2-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.3.3-1 .9-1 2.3 0 1.4 1 2.7 1.1 2.9.2.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg></span>
+          </div>
+          <div>
+            <p class="kanal__name">Technik-Radar</p>
+            <p class="kanal__sub">WhatsApp-Kanal · jeden Freitag</p>
+          </div>
+          <a class="kanal__cta js-kanal-link" href="#kanal-link-folgt" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.6.2-.2.3-.7.8-.8 1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.2-.6-1.5-.9-2-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.3.3-1 .9-1 2.3 0 1.4 1 2.7 1.1 2.9.2.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+            Kanal in WhatsApp öffnen
+          </a>
+          <div class="kanal__qr">
+            <img src="images/technik-radar-qr-logo.png" alt="QR-Code zum Technik-Radar-WhatsApp-Kanal" width="84" height="84">
+            <span class="kanal__qrcap">Oder mit dem Handy scannen</span>
+          </div>
+          <p class="kanal__note">Einseitig · ohne Anmeldung · jederzeit kündbar</p>
+        </aside>
+        <div class="kanal__body">
+          <span class="kanal__eyebrow">Technik-Radar · WhatsApp-Kanal</span>
+          <h2 class="kanal__title">Die Wärmewende — einmal pro Woche, auf den Punkt.</h2>
+          <p class="kanal__intro">Ihre Heizungsentscheidung gilt zwei Jahrzehnte — der Boden darunter aber bewegt sich: neue Technik, neue Gesetze, neue Förderung, lokale Entwicklungen in Erfurt. Wir behalten das für Sie im Blick und melden jeden Freitag, was Ihre Entscheidung wirklich berührt — belegt, eingeordnet, ohne Werbung.</p>
+          <ul class="kanal__list">
+            <li>Ein kurzer Wochenüberblick statt Dauerrauschen — nur, was eine Gebäudeentscheidung wirklich verschiebt.</li>
+            <li>Klare Einordnung statt Herstellerversprechen — belegt, nicht behauptet, und mit Blick auf das, was vor Ort oft fehlt.</li>
+            <li>Einen „Prüfbedarf"-Hinweis, wenn eine bisher getroffene Annahme neu bewertet werden sollte.</li>
+          </ul>
+          <p class="kanal__synergie">Der Kanal ist die schnelle Spur, hausentscheider.de das Nachschlagewerk: auf dem Handy die Kurzfassung, auf der Website die Herleitung, die Quellen und der Entscheider-Rechner, mit dem Sie es auf Ihr eigenes Gebäude beziehen.</p>
+          <p class="kanal__wunsch">Welches Thema wünschen Sie sich im Kanal? Schreiben Sie an <a href="mailto:dialog@hausentscheider.de?subject=Technik-Radar%20%E2%80%93%20Themenvorschlag">dialog@hausentscheider.de</a> — wir nehmen Ihre Anregung auf.</p>
+          <p class="kanal__ds">Einseitiger Kanal: Sie empfangen, ohne selbst zu senden. Ihre Nummer bleibt für uns und andere Mitglieder unsichtbar. Jederzeit ohne Angabe von Gründen kündbar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- WÄRMEWENDE IM BLICK · Medien-Zeitstrahl -->
   <section class="wib" id="medien-zeitstrahl" aria-label="Wärmewende im Blick — Medien-Zeitstrahl">
     <style>
@@ -1197,235 +1426,6 @@
       })();
     </script>
   </section>
-
-  <!-- TECHNIK-RADAR · WHATSAPP-KANAL (Baustein A) -->
-  <section class="kanal" id="technik-radar-kanal" aria-label="Technik-Radar — WhatsApp-Kanal">
-    <style>
-      .kanal { background: #ffffff; padding: 3.25rem 0 3rem; }
-      .kanal__card { display: grid; grid-template-columns: 288px 1fr; border-radius: 18px; overflow: hidden; box-shadow: 0 20px 55px rgba(20,45,42,0.20); border: 1px solid rgba(20,45,42,0.08); }
-      .kanal__aside { position: relative; background: linear-gradient(180deg, rgba(16,48,46,0.84) 0%, rgba(16,48,46,0.93) 100%), url('images/technik-radar-header.jpg') 58% 42% / cover no-repeat #16302e; color: #eaf3f0; padding: 2.25rem 1.75rem 2rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.85rem; }
-      .kanal__avatar { position: relative; width: 108px; height: 108px; margin-top: 0.25rem; }
-      .kanal__avatar img { width: 108px; height: 108px; border-radius: 50%; display: block; box-shadow: 0 6px 18px rgba(0,0,0,0.35); }
-      .kanal__avatar::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; pointer-events: none; box-shadow: 0 0 0 0 rgba(216,30,52,0.55); animation: kanalPulse 2.2s ease-out infinite; }
-      @keyframes kanalPulse { 0% { box-shadow: 0 0 0 0 rgba(216,30,52,0.55); } 70% { box-shadow: 0 0 0 14px rgba(216,30,52,0); } 100% { box-shadow: 0 0 0 0 rgba(216,30,52,0); } }
-      @media (prefers-reduced-motion: reduce) { .kanal__avatar::after { animation: none; box-shadow: 0 0 0 3px rgba(216,30,52,0.4); } }
-      .kanal__wa { position: absolute; right: 2px; bottom: 2px; width: 34px; height: 34px; border-radius: 50%; background: #25D366; display: grid; place-items: center; border: 3px solid #16302e; }
-      .kanal__wa svg { width: 20px; height: 20px; fill: #fff; }
-      .kanal__name { font-family: 'Playfair Display', Georgia, serif; font-size: 21px; color: #ffffff; margin: 0.35rem 0 0; }
-      .kanal__sub { font-size: 12px; color: var(--petrol-light); margin: 0.15rem 0 0; letter-spacing: 0.3px; }
-      .kanal__cta { display: inline-flex; align-items: center; gap: 8px; background: var(--signal); color: var(--petrol-dark); font-family: 'Inter', sans-serif; font-weight: 700; font-size: 13.5px; padding: 0.72rem 1.35rem; border-radius: 999px; text-decoration: none; margin-top: auto; transition: filter 0.2s; }
-      .kanal__cta:hover { filter: brightness(0.96); text-decoration: none; }
-      .kanal__cta svg { width: 18px; height: 18px; fill: var(--petrol-dark); }
-      .kanal__note { font-size: 10.5px; color: rgba(234,243,240,0.55); margin: 0.15rem 0 0; }
-      .kanal__qr { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; margin-top: 0.5rem; }
-      .kanal__qr img { width: 84px; height: 84px; display: block; background: #fff; border-radius: 12px; padding: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.28); }
-      .kanal__qrcap { font-size: 11px; color: rgba(234,243,240,0.7); letter-spacing: 0.2px; }
-      .kanal__body { padding: 2.1rem 2.1rem; }
-      .kanal__eyebrow { display: inline-block; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--petrol); font-weight: 600; font-family: 'Inter', sans-serif; margin-bottom: 0.5rem; }
-      .kanal__title { font-family: 'Playfair Display', Georgia, serif; font-size: 25px; font-weight: 400; color: #1a1a1a; line-height: 1.25; margin: 0 0 0.7rem; }
-      .kanal__intro { font-size: 14px; color: var(--text-secondary); line-height: 1.65; margin: 0 0 0.9rem; }
-      .kanal__list { list-style: none; margin: 0 0 1rem; padding: 0; display: grid; gap: 0.45rem; }
-      .kanal__list li { position: relative; padding-left: 1.4rem; font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
-      .kanal__list li::before { content: ''; position: absolute; left: 0; top: 0.5em; width: 7px; height: 7px; border-radius: 50%; background: var(--petrol); }
-      .kanal__list a { color: var(--petrol); text-decoration: none; border-bottom: 1px solid rgba(26,92,90,0.35); }
-      .kanal__list a:hover { border-bottom-color: var(--petrol); }
-      .kanal__synergie { font-size: 13px; color: #1a3535; line-height: 1.55; background: var(--bg-light); border-left: 3px solid var(--tommy-rot); border-radius: 0 6px 6px 0; padding: 0.7rem 0.95rem; margin: 0 0 0.9rem; }
-      .kanal__wunsch { font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin: 0 0 0.9rem; }
-      .kanal__wunsch a { color: var(--tommy-rot); text-decoration: none; border-bottom: 1px solid rgba(216,30,52,0.35); font-weight: 500; }
-      .kanal__wunsch a:hover { border-bottom-color: var(--tommy-rot); }
-      .kanal__ds { font-size: 11px; color: var(--text-tertiary); line-height: 1.5; margin: 0; }
-      @media (max-width: 720px) {
-        .kanal__card { grid-template-columns: 1fr; }
-        .kanal__body { padding: 1.75rem 1.5rem; }
-      }
-    </style>
-    <div class="container">
-      <div class="kanal__card">
-        <aside class="kanal__aside">
-          <span class="bildnachweis bildnachweis--overlay" style="top:.45rem;bottom:auto;">Bild: KI-generiert</span>
-          <div class="kanal__avatar">
-            <img src="images/technik-radar-avatar.svg" alt="Technik-Radar — Kanal-Logo" width="108" height="108">
-            <span class="kanal__wa" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.6.2-.2.3-.7.8-.8 1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.2-.6-1.5-.9-2-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.3.3-1 .9-1 2.3 0 1.4 1 2.7 1.1 2.9.2.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg></span>
-          </div>
-          <div>
-            <p class="kanal__name">Technik-Radar</p>
-            <p class="kanal__sub">WhatsApp-Kanal · jeden Freitag</p>
-          </div>
-          <a class="kanal__cta js-kanal-link" href="#kanal-link-folgt" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.6.2-.2.3-.7.8-.8 1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.2-.6-1.5-.9-2-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.3.3-1 .9-1 2.3 0 1.4 1 2.7 1.1 2.9.2.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
-            Kanal in WhatsApp öffnen
-          </a>
-          <div class="kanal__qr">
-            <img src="images/technik-radar-qr-logo.png" alt="QR-Code zum Technik-Radar-WhatsApp-Kanal" width="84" height="84">
-            <span class="kanal__qrcap">Oder mit dem Handy scannen</span>
-          </div>
-          <p class="kanal__note">Einseitig · ohne Anmeldung · jederzeit kündbar</p>
-        </aside>
-        <div class="kanal__body">
-          <span class="kanal__eyebrow">Technik-Radar · WhatsApp-Kanal</span>
-          <h2 class="kanal__title">Die Wärmewende — einmal pro Woche, auf den Punkt.</h2>
-          <p class="kanal__intro">Ihre Heizungsentscheidung gilt zwei Jahrzehnte — der Boden darunter aber bewegt sich: neue Technik, neue Gesetze, neue Förderung, lokale Entwicklungen in Erfurt. Wir behalten das für Sie im Blick und melden jeden Freitag, was Ihre Entscheidung wirklich berührt — belegt, eingeordnet, ohne Werbung.</p>
-          <ul class="kanal__list">
-            <li>Ein kurzer Wochenüberblick statt Dauerrauschen — nur, was eine Gebäudeentscheidung wirklich verschiebt.</li>
-            <li>Klare Einordnung statt Herstellerversprechen — belegt, nicht behauptet, und mit Blick auf das, was vor Ort oft fehlt.</li>
-            <li>Einen „Prüfbedarf"-Hinweis, wenn eine bisher getroffene Annahme neu bewertet werden sollte.</li>
-          </ul>
-          <p class="kanal__synergie">Der Kanal ist die schnelle Spur, hausentscheider.de das Nachschlagewerk: auf dem Handy die Kurzfassung, auf der Website die Herleitung, die Quellen und der Entscheider-Rechner, mit dem Sie es auf Ihr eigenes Gebäude beziehen.</p>
-          <p class="kanal__wunsch">Welches Thema wünschen Sie sich im Kanal? Schreiben Sie an <a href="mailto:dialog@hausentscheider.de?subject=Technik-Radar%20%E2%80%93%20Themenvorschlag">dialog@hausentscheider.de</a> — wir nehmen Ihre Anregung auf.</p>
-          <p class="kanal__ds">Einseitiger Kanal: Sie empfangen, ohne selbst zu senden. Ihre Nummer bleibt für uns und andere Mitglieder unsichtbar. Jederzeit ohne Angabe von Gründen kündbar.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- AKTUELLE ENERGIEPREISE -->
-  <section class="energiepreise" id="energiepreise" aria-label="Aktuelle Energiepreise">
-    <style>
-      .energiepreise { background: var(--bg-light); padding: 3.5rem 0 3rem; border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); }
-      .energiepreise__titel { font-size: 26px; margin-bottom: 0.875rem; }
-      .energiepreise__titel::after { content: ''; display: block; width: 48px; height: 2px; background: var(--petrol); margin-top: 0.625rem; border-radius: 1px; }
-      .energiepreise__intro { font-size: 14px; color: var(--text-secondary); max-width: 560px; line-height: 1.7; margin-bottom: 1.25rem; }
-      .ep-schiene { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; font-size: 13px; color: var(--text-primary); font-weight: 500; margin-bottom: 1rem; }
-      .ep-livedot { width: 7px; height: 7px; border-radius: 50%; background: var(--petrol-light); flex-shrink: 0; animation: ep-blink 2s ease-in-out infinite; }
-      @keyframes ep-blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
-      .ep-sep { color: var(--border); }
-      .ep-tafeln { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.75rem; margin-bottom: 1.25rem; }
-      .ep-tafel { background: var(--petrol-dark); border-radius: 6px; padding: 0.875rem 1rem 0.75rem; transition: transform .15s ease, box-shadow .15s ease; }
-      .ep-tafel:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26,53,53,0.22); }
-      .ep-tafel__lbl { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--signal); margin-bottom: 0.4rem; font-weight: 600; }
-      .ep-tafel__preis-row { display: flex; align-items: baseline; gap: 5px; margin-bottom: 6px; }
-      .ep-tafel__preis { font-family: 'Inter', sans-serif; font-size: 30px; font-weight: 600; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
-      .ep-tafel__unit { font-size: 12px; color: rgba(255,255,255,0.5); }
-      .ep-tafel__sub { font-size: 11px; color: rgba(255,255,255,0.65); line-height: 1.4; }
-      .ep-tafel__trend { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; margin-top: 5px; }
-      .ep-tafel__trend--up { color: #f0b870; }
-      .ep-tafel__trend--down { color: #90d4a8; }
-      .ep-tafel__trend--stabil { color: rgba(255,255,255,0.4); font-weight: 400; font-style: italic; }
-      .ep-verlauf { overflow-x: auto; margin-bottom: 1rem; -webkit-overflow-scrolling: touch; }
-      .ep-verlauf table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 480px; font-variant-numeric: tabular-nums; }
-      .ep-verlauf th, .ep-verlauf td { padding: 0.45rem 0.7rem; text-align: right; border-bottom: 0.5px solid var(--border); white-space: nowrap; }
-      .ep-verlauf th:first-child, .ep-verlauf td:first-child { text-align: left; }
-      .ep-verlauf thead th { color: var(--petrol-dark); font-weight: 600; font-size: 11px; letter-spacing: 0.5px; }
-      .ep-verlauf tbody td { color: var(--text-secondary); }
-      .ep-verlauf tbody td:first-child { color: var(--text-primary); font-weight: 500; }
-      .ep-verlauf tr.is-current td { background: rgba(207,247,127,0.18); color: var(--text-primary); font-weight: 600; }
-      .ep-einheit { font-size: 11px; color: var(--text-secondary); margin-bottom: 1rem; }
-      .ep-doclink { margin-top: 0.25rem; }
-      .ep-cta { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--tommy-rot); color: #fff; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; padding: 0.6rem 1.15rem; border-radius: 999px; transition: background .15s ease, transform .15s ease, box-shadow .15s ease; }
-      .ep-cta:hover { background: #b3192c; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(216,30,52,0.28); text-decoration: none; }
-      .ep-news { display: flex; background: #fff; border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 1.25rem; }
-      .ep-news__accent { width: 4px; background: var(--petrol); flex-shrink: 0; }
-      .ep-news__body { padding: 1rem 1.15rem; }
-      .ep-news__tags { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 0.6rem; }
-      .ep-news__pill { display: inline-flex; align-items: center; background: var(--petrol); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; font-family: 'Inter', sans-serif; }
-      .ep-news__trend { display: inline-flex; align-items: center; gap: 3px; background: var(--tommy-rot); color: #fff; font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; font-family: 'Inter', sans-serif; }
-      .ep-news__title { font-family: 'Playfair Display', Georgia, serif; font-size: 17px; color: var(--text-primary); margin-bottom: 0.35rem; }
-      .ep-news__text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.7rem; }
-      .ep-news__link { font-size: 13px; font-weight: 500; color: var(--petrol); font-family: 'Inter', sans-serif; }
-      @media (max-width: 768px) { .ep-tafeln { grid-template-columns: 1fr 1fr; } .energiepreise__titel { font-size: 22px; } }
-    </style>
-    <div class="container">
-      <span class="label" style="margin-bottom:0.5rem;display:block;">Aktuelle Energiepreise</span>
-      <h2 class="energiepreise__titel">Wo stehen die Energiepreise gerade?</h2>
-      <p class="energiepreise__intro">Energiepreise schwanken — und welche Heizung sich langfristig rechnet, hängt genau davon ab. Hier die aktuellen Verbraucher-Durchschnittspreise je Energieträger, vergleichbar gemacht in der gemeinsamen Größe ct/kWh (Fernwärme als Erfurter Effektivpreis). Monatlich aktualisiert.</p>
-      <div class="ep-news">
-        <div class="ep-news__accent" aria-hidden="true"></div>
-        <div class="ep-news__body">
-          <div class="ep-news__tags">
-            <span class="ep-news__pill">Fernwärme Erfurt · Q4 2026</span>
-          </div>
-          <p class="ep-news__title">Fernwärme zum 1. Oktober: moderate Anpassung — und eine neue Fußnote</p>
-          <p class="ep-news__text">Die SWE hat ihre Fernwärmepreise zum 1. Oktober angepasst: Arbeitspreis 14,309 ct/kWh brutto (+3,9 %), Zertifikatepreis 1,779 ct (−7,8 %), Leistungspreis 75,24 €/kW·a. Am Referenzgebäude steigt der Effektivpreis damit um rund 2 % auf ~19,7 ct/kWh — deutlich weniger als der Sprung im Juli. Geändert hat sich auch die Fußnote: Die Zertifikatepreise für das erste bis dritte Quartal wurden laut Preisblatt ohne die kostenlos zugeteilten CO₂-Zertifikate ausgewiesen. Was das für bereits abgerechnete Quartale bedeutet, sagt der Versorger nicht. Der Q4-Preis gilt bis 31. Dezember.</p>
-          <a class="ep-news__link" href="dokumente/261001_SWE-Preisblatt-Fernwaerme_Q4-2026.pdf" target="_blank" rel="noopener">SWE-Preisblatt Wärme (Stand 1.10.2026) →</a>
-        </div>
-      </div>
-      <div class="ep-schiene">
-        <span class="ep-livedot" aria-hidden="true"></span>
-        <span>Preisstand</span><span class="ep-sep">·</span>
-        <span id="ep-stand">Oktober 2026</span><span class="ep-sep">·</span>
-        <span>wird monatlich aktualisiert</span>
-      </div>
-      <div class="ep-tafeln" id="ep-tafeln"></div>
-      <div class="ep-verlauf"><table id="ep-verlauf-tbl"></table></div>
-      <p class="ep-einheit">Alle Werte in ct/kWh brutto. Vier der fünf sind umgerechnet — Heizöl aus ct/l ÷ 10,0 kWh/l (TECSON, 3.000 l), Pellets aus €/t ÷ 5,0 kWh/kg (DEPI, 6 t), Gas als Mittel aus Neukunden- und Bestandstarif ohne Grundversorgung, WP-Strom als Bandmittel der Anbieterspanne 22–26 ct. Fernwärme = Erfurter Effektivpreis auf Gebäudeebene, quartalsweise statt monatlich — der Q4-Preis von ~19,7 ct gilt bis 31.12.2026 (SWE-Preisblatt 1.10.2026). Im Oktober sind zwei Werte noch nicht endgültig: Heizöl ist vorläufig (TECSON 10.10., Stichtag um den 14.), Pellets zeigen noch den Septemberstand (DEPI meldet um den 18.). <a href="https://hausentscheider.de/preishistorie#methodik">Alle Quellen, Faktoren und Rechenwege →</a></p>
-      <p class="ep-doclink"><a class="ep-cta" href="https://hausentscheider.de/preishistorie">Vollständige Preishistorie mit Marktkontext →</a></p>
-    </div>
-  </section>
-  <script>
-    // Energiepreise — Daten gespiegelt aus daten/preishistorie.json (Quelle der Wahrheit, Stand 2026-10-10).
-    // Beim Monats-Update: neuesten Monat oben in PH.monate einfügen + PH.aktuell setzen.
-    // Umrechnungsfaktoren und Leitquellen NICHT hier pflegen, sondern im Block
-    // methodik_traeger der JSON — diese Liste ist reine Spiegelung.
-    (function(){
-      var PH = {
-        aktuell: '2026-10',
-        monate: [
-          { key:'2026-10', label:'Oktober 2026', gas:12.0, fernwaerme:19.7, heizoel:17.6, wp_strom:25, pellets:9.1 },
-          { key:'2026-09', label:'September 2026', gas:12.0, fernwaerme:19.3, heizoel:16.8, wp_strom:25, pellets:9.1 },
-          { key:'2026-08', label:'August 2026',  gas:10.7, fernwaerme:19.3, heizoel:13.8, wp_strom:25, pellets:8.6 },
-          { key:'2026-07', label:'Juli 2026',    gas:10.5, fernwaerme:19.3, heizoel:13.7, wp_strom:25, pellets:7.8 },
-          { key:'2026-06', label:'Juni 2026',    gas:10.5, fernwaerme:17.5, heizoel:11.5, wp_strom:25, pellets:7.5 },
-          { key:'2026-05', label:'Mai 2026',     gas:10.5, fernwaerme:17.5, heizoel:13.5, wp_strom:26, pellets:7.8 },
-          { key:'2026-04', label:'April 2026',   gas:10.5, fernwaerme:17.5, heizoel:15.3, wp_strom:27, pellets:8.1 },
-          { key:'2026-03', label:'März 2026',    gas:10.0, fernwaerme:17.5, heizoel:16.0, wp_strom:28, pellets:8.4 },
-          { key:'2026-02', label:'Februar 2026', gas:9.9,  fernwaerme:17.5, heizoel:10.8, wp_strom:29, pellets:8.5 },
-          { key:'2026-01', label:'Januar 2026',  gas:9.9,  fernwaerme:17.5, heizoel:10.5, wp_strom:30, pellets:8.1 }
-        ]
-      };
-      var TAFELN = [
-        { key:'gas',        lbl:'Gas Ø',           sub:'Verbraucher-Schnitt' },
-        { key:'fernwaerme', lbl:'Fernwärme Ø',     sub:'Erfurt-Effektivpreis' },
-        { key:'heizoel',    lbl:'Heizöl Ø',        sub:'Verbraucher-Schnitt' },
-        { key:'wp_strom',   lbl:'Wärmestrom WP Ø', sub:'Wärmepumpen-Tarif' }
-      ];
-      var COLS = [
-        { k:'gas', h:'Gas' }, { k:'fernwaerme', h:'Fernwärme' }, { k:'heizoel', h:'Heizöl' },
-        { k:'wp_strom', h:'WP-Strom' }, { k:'pellets', h:'Pellets' }
-      ];
-      function fmt(v){ return (Math.round(v*10)/10).toString().replace('.', ','); }
-
-      var standEl = document.getElementById('ep-stand');
-      var tafelnEl = document.getElementById('ep-tafeln');
-      var tblEl = document.getElementById('ep-verlauf-tbl');
-      if (!tafelnEl || !tblEl) return;
-
-      var idx = 0;
-      for (var i = 0; i < PH.monate.length; i++) { if (PH.monate[i].key === PH.aktuell) { idx = i; break; } }
-      var cur = PH.monate[idx];
-      var prev = PH.monate[idx + 1] || null;
-      if (standEl) standEl.textContent = cur.label;
-
-      // Tafeln (aktueller Monat + Trend ggü. Vormonat)
-      tafelnEl.innerHTML = TAFELN.map(function(t){
-        var trend = '';
-        if (prev) {
-          var d = cur[t.key] - prev[t.key];
-          var prevKurz = prev.label.split(' ')[0];
-          var dir = Math.abs(d) < 0.05 ? 'stabil' : (d > 0 ? 'up' : 'down');
-          var txt = dir === 'stabil'
-            ? 'stabil ggü. ' + prevKurz
-            : (d > 0 ? '+' : '−') + fmt(Math.abs(d)) + ' ggü. ' + prevKurz;
-          trend = '<div class="ep-tafel__trend ep-tafel__trend--' + dir + '">' + txt + '</div>';
-        }
-        return '<div class="ep-tafel">'
-          + '<div class="ep-tafel__lbl">' + t.lbl + '</div>'
-          + '<div class="ep-tafel__preis-row"><span class="ep-tafel__preis">' + fmt(cur[t.key]) + '</span><span class="ep-tafel__unit">ct/kWh</span></div>'
-          + '<div class="ep-tafel__sub">' + t.sub + '</div>'
-          + trend
-          + '</div>';
-      }).join('');
-
-      // Verlaufs-Tabelle
-      var head = '<thead><tr><th>Monat</th>' + COLS.map(function(c){ return '<th>' + c.h + '</th>'; }).join('') + '</tr></thead>';
-      var body = '<tbody>' + PH.monate.map(function(m){
-        return '<tr' + (m.key === PH.aktuell ? ' class="is-current"' : '') + '>'
-          + '<td>' + m.label + '</td>'
-          + COLS.map(function(c){ return '<td>' + fmt(m[c.k]) + '</td>'; }).join('')
-          + '</tr>';
-      }).join('') + '</tbody>';
-      tblEl.innerHTML = head + body;
-    })();
-  </script>
 
   <!-- OBJEKTE -->
   <section class="objekte-section container" id="objekte">
