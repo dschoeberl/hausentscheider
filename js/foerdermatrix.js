@@ -63,6 +63,10 @@
     '--fm-kopf:rgba(255,255,255,0.05);--fm-feld-bg:rgba(255,255,255,0.08);',
     '--fm-gruen:rgba(122,184,181,0.18);--fm-ocker:rgba(224,149,74,0.20);--fm-rot:rgba(216,30,52,0.20);',
     '--fm-band:rgba(255,255,255,0.06);}',
+    /* Grundlink der Seite ist dunkles Petrol, auf dunklem Grund unlesbar;
+       Farbe wie .oz-vgl-note a in index.html */
+    '.fm[data-dunkel] a{color:#cfe6e4;text-decoration:underline;text-underline-offset:2px;}',
+    '.fm[data-dunkel] a:hover,.fm[data-dunkel] a:focus-visible{color:#fff;}',
     '@media(max-width:600px){',
     '.fm th,.fm td{padding:0.4rem 0.4rem;}',
     '.fm table{font-size:11.5px;}',
