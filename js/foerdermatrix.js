@@ -314,7 +314,8 @@
           '(R290, R600a, R1270, R717, R718, R744). Kein Abschlag, sondern ein Ausschluss.</dd>' +
         '<dt>Der Ausschluss</dt><dd>Er hängt nicht an einer gebauten Leitung, sondern an einer kommunalen ' +
           'Entscheidung, die getroffen und transparent gemacht wurde. Ob die Ausweisung als Ausbaugebiet das ' +
-          'erfüllt, ist ungeklärt und anwaltlich in Prüfung.</dd>' +
+          'erfüllt, ist ungeklärt und anwaltlich in Prüfung. Eine Befreiung vom Anschlusszwang hebt ihn nach ' +
+          'Angaben des Bundesverbands Wärmepumpe auf; ob sie schon beim Förderantrag vorliegen muss, ist offen.</dd>' +
         '<dt>Boni</dt><dd>Klimageschwindigkeits- und Einkommensbonus hängen an einzelnen selbstnutzenden ' +
           'Eigentümern, nicht am Gebäude. Der Klimageschwindigkeitsbonus läuft bis August 2028 aus.</dd>' +
         '<dt>Höchstkosten</dt><dd>' + eur(h.erste_we || 28000) + ' für die erste Wohneinheit, je ' +

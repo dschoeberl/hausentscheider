@@ -83,13 +83,13 @@ var GEBAEUDE_DB = {
       { typ: "ok",   text: "2 Angebote für Wärmepumpe eingeholt" },
       { typ: "ok",   text: "Energiecheck Verbraucherzentrale Nov. 2024" },
       { typ: "ok",   text: "Investitionsplan erstellt · Nov. 2025" },
-      { typ: "open", text: "Befreiungsantrag Umweltamt in Vorbereitung" },
+      { typ: "open", text: "Befreiungsantrag bei Entscheidung für die Wärmepumpe (27.01.2027)" },
       { typ: "open", text: "Fernwärme-Angebot SWE ausstehend" }
     ],
 
     naechsteSchritte: [
       { aktiv: true,  text: "Heizlastberechnung — Voraussetzung für finales Angebot, Förderantrag und Fernwärme-Vergleich. Ingenieur beauftragt." },
-      { aktiv: true,  text: "Befreiungsantrag — §6 Abs. 3 Fernwärmesatzung. Reine Wärmepumpe qualifiziert, Hybridlösung nicht. Antrag in Vorbereitung." },
+      { aktiv: true,  text: "Befreiungsantrag — § 6 Abs. 1 Fernwärmesatzung. Reine Wärmepumpe qualifiziert, ohne Leistungsgrenze; Hybridlösung mit Gaskessel nicht. Antrag, wenn sich die Gemeinschaft am 27.01.2027 für die Wärmepumpe entscheidet (Auskunft Umweltamt, 13.10.2026)." },
       { aktiv: false, text: "Fernwärme-Angebot einholen — Effektiven Jahrespreis inkl. Leistungspreis klären. Anschlussdauer schriftlich bestätigen lassen." },
       { aktiv: false, text: "Wirtschaftlichkeitsvergleich auf 25 Jahre — Alle drei Optionen auf Basis finaler Heizlastberechnung gegenüberstellen. Betriebskosten, CO₂-Entwicklung, Förderung." },
       { aktiv: false, text: "Eigentümerversammlung — Finanzierungsplan aus Erhaltungsrücklage abstimmen. Gemeinsame WEG-Entscheidung treffen." }
