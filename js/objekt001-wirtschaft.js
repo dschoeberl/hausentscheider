@@ -184,7 +184,7 @@
           'Gas ist gemessen, Fernwärme und Wärmepumpe sind zu heutigen Preisen projiziert.</p>' +
         '<p class="oz-map__grenze">Der Balken zeigt nur den Energieanteil — er ist der Teil, der sich mit der Heizung ändert. ' +
           'Betriebskosten fallen bei jeder Lösung an, in unterschiedlicher Höhe; belastbar beziffert sind sie hier allein ' +
-          'für die Gasheizung. Das bleibt eine Schieflage zugunsten der Wärmepumpe: Ein Fernwärme-Anschluss braucht weniger ' +
+          'für die Gasheizung. Das begünstigt in diesem Balken die Wärmepumpe: Ein Fernwärme-Anschluss braucht weniger ' +
           'Betrieb als ein Gaskessel, eine Wärmepumpe braucht eigene Wartung. Beides steckt nicht im Balken.</p>' +
         (kurz ? '' : '<p class="oz-map__risk">Fernwärme steigt: Die Stadtwerke prognostizieren bis 2040 eine Verdopplung. Ein Netzanschluss bindet langfristig und ist nur eingeschränkt kündbar; das Preisrisiko tragen am Ende Eigentümer und Mieter.</p>' +
         '<details class="oz-anchor__det">' +
