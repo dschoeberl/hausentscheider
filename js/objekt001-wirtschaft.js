@@ -226,12 +226,12 @@
             'ergeben verschiedene Beträge.</p>' +
           '<p class="oz-vgl-note">Investitionsannahme: Wärmepumpe 130.000 € brutto (vorsichtig angesetzt), Fernwärme ab 31.500 € brutto; mit dem nicht bezifferten baulichen Teil bis rund 42.600 €. Das günstigere reale WP-Angebot lag bei ~100.000 € — Potenzial nach unten. <strong>Stand 10.10.2026:</strong> Die Investitionsannahme Wärmepumpe beruht auf einem Angebot mit drei Außeneinheiten. Die niedrigere Heizlast senkt die Fernwärmekosten sofort. Was die Förderung daraus macht, steht in der Fördermatrix unten. <strong>Schallschutz:</strong> Nachts gilt der Richtwert 40 dB(A), amtlich bestätigt für ein allgemeines Wohngebiet.</p>' +
           '<details class="oz-fw-det">' +
-            '<summary>Fernwärme-Anschluss — was wirklich anfällt</summary>' +
+            '<summary>Fernwärme-Anschluss: die Kostenblöcke</summary>' +
             '<div class="oz-fw-det__body">' +
               '<p>Der niedrige „Anschlusspreis" ist nur ein Teil. Ein Fernwärme-Anschluss besteht aus zwei Blöcken:</p>' +
               '<p><strong>Block A — SWE-Anschluss</strong> (belegt, SWE-Schreiben 18.03.2026): Baukostenzuschuss ca. 1.840 € (39,99 €/kW × 46 kW) + Hausanschlusskostenbeitrag 8.982 € = <strong>ca. 10.800 € netto</strong>. Enthalten: Anschlussleitung bis ins Gebäude und Fernwärme-Grundstation („SWE Comfort").</p>' +
               '<p><strong>Block B — bauliche Maßnahmen im Gebäude</strong> (Heizkreise, Pumpen, Mischer, Warmwasserbereitung, Anbindung der Heizzentrale): <strong>ca. 15.000–25.000 € netto</strong> — Erfahrungswert, von der SWE nicht beziffert.</p>' +
-              '<p><strong>Gesamtinvestition Fernwärme realistisch ca. 25.800–35.800 € netto</strong>, verbindlich erst mit dem konkreten SWE-Angebot. Der scheinbare Investitionsvorteil gegenüber der Wärmepumpe schrumpft damit deutlich — über 25 Jahre kehrt sich das Bild ohnehin um.</p>' +
+              '<p><strong>Gesamtinvestition Fernwärme realistisch ca. 25.800–35.800 € netto</strong>, verbindlich erst mit dem konkreten SWE-Angebot. Der Investitionsvorteil gegenüber der Wärmepumpe wird damit kleiner; über 25 Jahre liegt die Wärmepumpe in dieser Rechnung günstiger.</p>' +
               '<p><strong>Förderung:</strong> 30 % auf den Anschluss — auch im Zwanggebiet und trotz gasbasiertem Netz. Die Fälle zeigt die Fördermatrix unten. <a href="' + BASIS + 'foerderparadoxon.html">Hintergrund: Das Förderparadoxon →</a></p>' +
               '<p><strong>Rechtlicher Hintergrund:</strong> <a href="https://www.erfurt.de/mam/ef/rathaus/stadtrecht/3/3008.pdf" target="_blank" rel="noopener">Fernwärmesatzung Erfurt (3.008) →</a> &nbsp;·&nbsp; <a href="https://www.erfurt.de/ef/de/rathaus/bservice/leistungen/leistung-1071.htmc" target="_blank" rel="noopener">Anschlusszwang &amp; Befreiung prüfen →</a></p>' +
             '</div>' +

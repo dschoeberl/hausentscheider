@@ -31,7 +31,7 @@
       "titel": "Pressekonferenz & Beginn der öffentlichen Auslegung",
       "art": "meilenstein",
       "zusammenfassung": "Stadt und SWE stellen die zentralen Ergebnisse von Zielszenario und Umsetzungsstrategie vor; die öffentliche Auslegung mit Frist für Stellungnahmen beginnt (bis 03.06.). Drei Risikokategorien werden offen benannt.",
-      "kommentar": "Die ehrliche Risiko-Benennung und die Methodik der Prüfgebiete verdienen Anerkennung. Zugleich enthielt die offizielle Seite zum Auslegungsbeginn an zwei Stellen Platzhalter statt der eigentlichen Inhalte — Konsultationszeit, die in der ersten Woche verloren ging.",
+      "kommentar": "Die ehrliche Risiko-Benennung und die Methodik der Prüfgebiete verdienen Anerkennung. Zugleich enthielt die offizielle Seite zum Auslegungsbeginn an zwei Stellen Platzhalter statt der eigentlichen Inhalte.",
       "offen": false,
       "link": ""
     },
@@ -81,7 +81,7 @@
       "titel": "Bürger-Kurzfassung der Wärmeplanung erscheint",
       "art": "etappe",
       "zusammenfassung": "Die Stadt legt eine elfseitige Kurzfassung für Bürgerinnen und Bürger vor. Der Form nach ist sie laienverständlich — und für die meisten Leserinnen und Leser das einzige Dokument, das sie vom Plan sehen werden.",
-      "kommentar": "An den Kernfragen weicht sie vom Gesamtplan ab: Auf die FAQ-Frage nach den Kosten nennt sie keine Größenordnung.",
+      "kommentar": "Auf die FAQ-Frage nach den Kosten nennt sie keine Größenordnung.",
       "offen": false,
       "link": "dokumente/202606_KWP_Kurzfassung_Buerger.pdf"
     },
@@ -130,7 +130,7 @@
       "datumLabel": "2. Juli 2026",
       "titel": "Abwägung ausgewertet — 24 Stellungnahmen, keine berücksichtigt",
       "art": "beitrag",
-      "zusammenfassung": "Die 128-seitige Abwägung wird vollständig ausgewertet und alle 24 Eingaben werden nebeneinandergelegt. Ergebnis: Keine wurde berücksichtigt, drei sind für die Fortschreibung vorgemerkt, einundzwanzig zur Kenntnis genommen. Die drei Vorgemerkten sind die drei unabhängigen, inhaltlich argumentierenden Eingaben — ein Bürger, der Klimaentscheid Erfurt und der BUND. Alle Behörden, Netzbetreiber und Nachbarkommunen landen in „zur Kenntnis genommen“, und keine ihrer Eingaben befasst sich mit der Substanz des Plans.",
+      "zusammenfassung": "Die 128-seitige Abwägung wird vollständig ausgewertet und alle 24 Eingaben werden nebeneinandergelegt. Ergebnis: Keine wurde berücksichtigt, drei sind für die Fortschreibung vorgemerkt, einundzwanzig zur Kenntnis genommen. Vorgemerkt sind die Eingaben eines Bürgers, des Klimaentscheids Erfurt und des BUND. Die Eingaben von Behörden, Netzbetreibern und Nachbarkommunen sind zur Kenntnis genommen; sie befassen sich nicht ausführlich mit dem Inhalt des Plans.",
       "kommentar": "Die Konsultation hat den Plan an keiner Stelle verändert. Was substanziell war, wurde nicht eingearbeitet, sondern in eine spätere Runde verschoben.",
       "offen": false,
       "link": "dokumente/260702_Analyse_Wer-sagt-was_OEFFENTLICH.pdf"
@@ -191,7 +191,7 @@
       "titel": "Stadtverwaltung nimmt schriftlich zur Kritik am Wärmeplan Stellung",
       "art": "etappe",
       "zusammenfassung": "Auf Bitte des Ausschusses für Stadtentwicklung, Bau, Umwelt, Klimaschutz und Verkehr (Festlegung vom 23. Juli, Drucksache 1663/26) nimmt die Stadtverwaltung schriftlich zu Kritikpunkten Stellung, die der Klimaentscheid Erfurt in Stellungnahme und Replik zum Wärmeplan erhoben hat. Vorlauf war ein Erörterungstermin von Stadtverwaltung, Stadtwerken und Klimaentscheid am 19. August. Drei Aussagen der Verwaltung sind für Eigentümer unmittelbar relevant. Erstens: Der Wärmeplan ist nach WPG und ThürWPGAG rechtlich unverbindlich, er liegt im übertragenen Wirkungskreis. Zweitens: Der adressbezogene Verfügbarkeitscheck liefert einen Anhaltspunkt — die Entscheidung obliegt dem Eigentümer. Drittens: Vollkostenberechnungen enthält der Plan in der Fassung 2026 nicht; sie sollen mit der Fortschreibung folgen, zusammen mit einem Umstellungskonzept der Stadtwerke zur Wasserstofffrage.",
-      "kommentar": "Damit steht amtlich, was diese Seite seit Mai benennt: Der Plan sagt, was die Stadt vorhat. Was eine Variante über die Laufzeit kostet, sagt er nicht. Die Ankündigung, Vollkosten in der Fortschreibung nachzuliefern, ist der erste Bewegungspunkt in der Sache von Kritikpunkt 1 — ein Termin dafür ist nicht genannt. Beides bezieht sich auf den Wärmeplan. Die Fernwärmesatzung mit dem Anschluss- und Benutzungszwang ist ein eigenes Regelwerk und wird davon nicht berührt.",
+      "kommentar": "Der Plan beschreibt, was die Stadt vorhat. Vollkosten je Variante enthält er nicht. Die Ankündigung, sie in der Fortschreibung nachzuliefern, greift Kritikpunkt 1 auf; ein Termin ist nicht genannt. Beides bezieht sich auf den Wärmeplan. Die Fernwärmesatzung mit dem Anschluss- und Benutzungszwang ist ein eigenes Regelwerk und wird davon nicht berührt.",
       "offen": true,
       "link": "https://buergerinfo.erfurt.de/vo0050.asp?__kvonr=66326"
     },
@@ -221,7 +221,7 @@
       "titel": "M16-Plattform im Vollbetrieb (angekündigt)",
       "art": "etappe",
       "zusammenfassung": "Die adressbezogene Informationsplattform (M16) soll laut Plan ab 2027 im Vollbetrieb laufen — straßenscharfe Information zu den geeigneten Wärmeversorgungsoptionen.",
-      "kommentar": "Genau in diese Leerstelle stößt unabhängiges Monitoring: Bis die Stadt ihr eigenes Dashboard hat, macht diese Seite den Stand sichtbar und prüfbar.",
+      "kommentar": "Bis die Stadt ihr eigenes Dashboard hat, macht diese Seite den Stand sichtbar und prüfbar.",
       "offen": true,
       "link": ""
     }
