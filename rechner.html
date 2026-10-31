@@ -3221,18 +3221,13 @@
       const sb = state.overrides.schieberegler;
       const fb = sb.foerderung;
       const we = state.wohneinheiten || (state.gebaeudetyp === 'MFH' ? 14 : 1);
-      const beste = '{beste Option folgt in der nächsten Ausbaustufe}';
 
       const txt =
         'Eingabe-Stand Mai 2026: Für ein <strong>' + escapeHtml(state.gebaeudetyp) + '</strong> in <strong>' +
         escapeHtml((state.plz + ' ' + state.ort).trim() || '—') + '</strong> mit <strong>' +
         fmtInt(state.wohnflaeche) + ' m²</strong> und <strong>' + we +
-        ' Wohneinheiten</strong> ist die <strong>' + beste + '</strong> über <strong>' +
-        sb.zeitraum + ' Jahre</strong> Betrachtung wirtschaftlich die Option mit der niedrigsten Total-Cost. ' +
-        'Bei aktuell <strong>' + fb.master + ' % BAFA-Förderung</strong> beträgt die Belastung ' +
-        '<strong>{€/m²·Monat folgt in der nächsten Ausbaustufe}</strong>. ' +
-        'Würde der Klimageschwindigkeitsbonus 2029 wie geplant um 3 Pp sinken, läge die Belastung bei ' +
-        '<strong>{€/m²·Monat 2029 folgt in der nächsten Ausbaustufe}</strong>. ' +
+        ' Wohneinheiten</strong>, Betrachtung über <strong>' +
+        sb.zeitraum + ' Jahre</strong>, bei aktuell <strong>' + fb.master + ' % BAFA-Förderung</strong>. ' +
         'Datenbasis: BAFA-Förderverordnung, AGFW-Median, BDEW-Heizkostenmonitor, Stand 1.5.2026. ' +
         'Methodik unter hausentscheider.de/methodik.';
 
