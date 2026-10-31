@@ -169,7 +169,7 @@
       const kurz = anchorEl.hasAttribute('data-kurz');
       anchorEl.innerHTML =
         (kurz ? '' : istHtml) +
-        '<p class="oz-anchor__lbl">Energiekosten · €/m²·Monat — heute und die zwei zulässigen Pfade</p>' +
+        '<p class="oz-anchor__lbl">Energiekosten · €/m²·Monat — heute und die zwei möglichen Pfade</p>' +
         '<div class="oz-map">' +
           '<div class="oz-map__bar">' +
             '<span class="oz-map__mark oz-map__mark--wp" style="left:' + ozPos(WV.wpMonat) + '%"><span class="oz-map__lblbox"><span class="oz-map__val">~' + WV.wpMonat.toFixed(2).replace('.', ',') + '</span><span class="oz-map__cap">Wärmepumpe</span></span></span>' +
