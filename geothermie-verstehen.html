@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geothermie verstehen | Hausentscheider</title>
+<meta name="description" content="Wie Erdwärme erschlossen wird, was in Erfurt untersucht wird und welche Fragen offen sind. Mit Zeitleiste, Einordnung für Eigentümer und Quellen.">
+<meta name="robots" content="index,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --petrol:#1a5c5a; --petrol-light:#7ab8b5; --petrol-dark:#1a3535;
+    --signal:#CFF77F; --signal-dark:#a8d45a; --tommy:#D81E34;
+    --wp-tint:#E0F0EE; --wp-text:#1A4F4D; --fw-tint:#F5EDE0; --fw-text:#6B4C28;
+    --border:#e0dedd; --bg:#f5f4f2; --white:#fff;
+    --t1:#1a1a1a; --t2:#5a5956; --t3:#8a8680;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--white);color:var(--t1);font-family:'Inter',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:760px;margin:0 auto;padding:2.4rem 1.4rem 4rem;}
+  h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:500;line-height:1.22;color:var(--t1);}
+  .eyebrow{font-size:11px;letter-spacing:2.2px;text-transform:uppercase;color:var(--petrol);font-weight:600;margin:0 0 .5rem;}
+  h1{font-size:clamp(1.8rem,4.5vw,2.6rem);margin:0 0 .6rem;}
+  .lede{font-size:1.08rem;color:var(--t2);margin:0 0 1.4rem;}
+  .rule{height:3px;width:64px;background:var(--signal-dark);border:none;margin:0 0 1.6rem;}
+  .byline{font-size:12.5px;color:var(--t3);margin:0 0 2rem;letter-spacing:.2px;}
+
+  h2{font-size:1.35rem;margin:2.4rem 0 .3rem;}
+  h2 .num{color:var(--petrol);font-size:1rem;font-weight:600;margin-right:.5rem;}
+  .sechead{border-bottom:2px solid var(--petrol);padding-bottom:.4rem;margin-bottom:.9rem;}
+  p{margin:0 0 1rem;}
+  strong{color:var(--t1);}
+  .src{margin-top:2.4rem;font-size:11.5px;color:var(--t3);line-height:1.55;border-top:1px solid var(--border);padding-top:.9rem;}
+  /* Schlanker Website-Kopf + Footer (an bestehende Unterseiten angeglichen) */
+  .site-head{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:.5px solid var(--border);}
+  .site-head__inner{max-width:760px;margin:0 auto;padding:0 1.4rem;height:56px;display:flex;align-items:center;justify-content:space-between;}
+  .site-head__logo{text-decoration:none;display:inline-flex;align-items:center;}
+  .site-head__logo:hover{opacity:.85;}
+  .site-head__links{display:flex;gap:1.4rem;align-items:center;}
+  .site-head__links a{font-size:13px;color:var(--t2);text-decoration:none;transition:color .2s;}
+  .site-head__links a:hover{color:var(--petrol);}
+  .site-foot{border-top:.5px solid var(--border);padding:1.5rem 0;margin-top:1.5rem;}
+  .site-foot__inner{max-width:760px;margin:0 auto;padding:0 1.4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
+  .site-foot__left,.site-foot__right{font-size:12px;color:var(--t3);}
+  .site-foot a{color:var(--t3);text-decoration:none;}
+  .site-foot a:hover{color:var(--petrol);}
+  @media(max-width:560px){.site-head__links{gap:1rem;} .site-head__links a{font-size:12px;} .site-foot__inner{flex-direction:column;align-items:flex-start;}}
+
+  /* Zeitleiste und Liste */
+  .ge-tabelle{overflow-x:auto;margin:.6rem 0 1.2rem;}
+  .ge-tabelle table{border-collapse:collapse;width:100%;font-size:14px;}
+  .ge-tabelle th,.ge-tabelle td{text-align:left;vertical-align:top;padding:.55rem .7rem;border-bottom:1px solid var(--border);line-height:1.5;}
+  .ge-tabelle thead th{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--petrol);font-weight:600;border-bottom:2px solid var(--petrol);}
+  .ge-tabelle tbody th{font-weight:600;white-space:nowrap;color:var(--t1);}
+  .ge-tabelle td{color:var(--t2);}
+  @media(max-width:560px){.ge-tabelle tbody th{white-space:normal;width:32%;}}
+  .ge-liste{margin:.4rem 0 1rem;padding-left:1.2rem;}
+  .ge-liste li{margin-bottom:.5rem;}
+  .src a{color:var(--t3);text-decoration:underline;text-underline-offset:2px;}
+  .src a:hover{color:var(--petrol);}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="site-head__inner">
+    <a href="index.html" class="site-head__logo" aria-label="hausentscheider — Startseite">
+      <svg width="180" height="28" viewBox="0 0 180 28" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">haus</text>
+        <text x="58" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">entscheider</text>
+        <line x1="0" y1="26" x2="56" y2="26" stroke="#1a5c5a" stroke-width="2" stroke-linecap="square"/>
+      </svg>
+    </a>
+    <nav class="site-head__links" aria-label="Navigation">
+      <a href="index.html">Startseite</a>
+      <a href="wegweiser.html">Wegweiser</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap">
+
+  <p class="eyebrow">Wissen · Stand 31. Oktober 2026</p>
+  <h1>Geothermie verstehen</h1>
+  <p class="lede">Die Erfurter Fernwärme kommt heute zu rund 95 Prozent aus Erdgas. Bis 2045 soll die Tiefengeothermie mit rund 43 Prozent ihr größter Baustein werden. Für Eigentümer ist das kein Technikthema am Rand: Woher die Wärme im Netz kommt, bestimmt, wie sich Preis und Klimabilanz der Fernwärme entwickeln.</p>
+
+  <h2>Wie Erdwärme erschlossen wird</h2>
+  <p>Bis etwa 400 Meter Tiefe spricht man von oberflächennaher Geothermie. Erdwärmesonden liefern dort Wärme für eine Wärmepumpe am einzelnen Haus. Darunter beginnt die Tiefengeothermie. Sie ist in der Regel ein Fall für Wärmenetze.</p>
+  <p>In der Tiefe gibt es zwei Wege. Hydrothermale Anlagen fördern heißes Thermalwasser aus durchlässigen Gesteinsschichten und leiten es nach der Wärmeübergabe zurück. Petrothermale Anlagen nutzen die Wärme, die im dichten Gestein steckt. Dafür werden entweder künstliche Fließwege im Gestein geschaffen, durch die Wasser gepresst wird, oder ein geschlossenes System gebaut: Eine Flüssigkeit läuft in Rohren durch tiefe Bohrungen und nimmt die Wärme auf, ohne mit dem Gestein oder dem Tiefenwasser in Kontakt zu kommen. Zu den geschlossenen Systemen zählen die tiefe Erdwärmesonde und Mehrlochsysteme, die mehrere Bohrungen in der Tiefe verbinden.</p>
+
+  <h2>Was in Erfurt untersucht wird</h2>
+  <div class="ge-tabelle">
+    <table>
+      <thead><tr><th scope="col">Wann</th><th scope="col">Was</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Juni 2024</th><td>Die Stadtwerke gründen die SWE Geothermie GmbH. Genannt werden eine Probebohrung ab 2027 und rund 40 Mio. € allein für diese Bohrung.</td></tr>
+        <tr><th scope="row">Februar bis Juni 2026</th><td>3D-Seismik auf 136 km² mit rund 19.000 Messfühlern. Kosten rund 5,8 Mio. €, davon 2,4 Mio. € Bundesförderung.</td></tr>
+        <tr><th scope="row">bis 31. August 2027</th><td>Auswertung der Messdaten.</td></tr>
+        <tr><th scope="row">frühestens 2028</th><td>Mögliche Erkundungsbohrung. Ob und wo gebohrt wird, entscheiden die Stadtwerke nach der Auswertung.</td></tr>
+        <tr><th scope="row">2045</th><td>Zielbild: rund 43 Prozent der Fernwärme aus Tiefengeothermie.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Ziel ist das Granitgestein unter dem Thüringer Becken. Der Untergrund dort gilt als kaum erkundet. Als Fernziel haben die Stadtwerke ein petrothermales System im geschlossenen Kreislauf beschrieben. Sie gehen nach eigenen Angaben schrittweise vor: erst messen, dann über Bohrungen entscheiden. Für das Gesamtprojekt wird ein Investitionsvolumen von rund einer halben Milliarde Euro genannt. Eine Finanzierungszusage für Bohrung und Anlage findet sich in den durchgesehenen Quellen nicht.</p>
+
+  <h2>Was andere Projekte zeigen</h2>
+  <p>Das bekannteste Projekt mit einem geschlossenen System in Deutschland liegt in Geretsried bei München. Der erste von vier geplanten Kreisläufen läuft dort nach technischen Problemen. Im Oktober 2026 hat der Betreiber Eavor die Bohranlagen abgezogen; der örtliche Wärmeversorger ist vom Liefervertrag zurückgetreten, weil der zweite Kreislauf ohne Termin ist. In Hannover wurde ein zweites Eavor-Projekt im selben Monat abgesagt. Ein Vertrag zwischen den Erfurter Stadtwerken und Eavor ist in den durchgesehenen Quellen nicht belegt.</p>
+
+  <h2>Chancen, Grenzen, offene Fragen</h2>
+  <ul class="ge-liste">
+    <li>Chance: Tiefengeothermie liefert Wärme unabhängig von Wetter und Tageszeit, aus dem eigenen Untergrund.</li>
+    <li>Grenze: Bis die erste Wärme fließt, vergehen Jahre. Die Kosten sind hoch, und ob das Gestein hält, was es verspricht, zeigt erst eine Bohrung.</li>
+    <li>Offen: Was trägt die Fernwärme, wenn die Geothermie später oder kleiner kommt? Die Stadtwerke haben auch Szenarien ohne Tiefengeothermie gerechnet; veröffentlicht sind ihre Namen, keine Kosten und keine Preise.</li>
+  </ul>
+
+  <h2>Was das für Ihre Entscheidung heißt</h2>
+  <p>An Anschlusszwang, Befreiung und Förderung ändert sich dadurch nichts. Bis 2030 hängt der erneuerbare Anteil im Netz an anderen Anlagen, vor allem an der geplanten Großwärmepumpe am Klärwerk Kühnhausen. Die Geothermie kann frühestens in den 2030er-Jahren beitragen. Wer heute über einen Fernwärmeanschluss entscheidet, entscheidet also über einen Preis, dessen Zusammensetzung nach 2030 noch offen ist.</p>
+  <p>Weiterlesen: <a href="wegweiser.html#fragen">Wegweiser, Frage 10</a> · <a href="kwp-dashboard-erfurt.html">Status-Dashboard Wärmeplanung</a> · <a href="foerderparadoxon.html">Das Förderparadoxon</a></p>
+
+  <p class="src">Begriffe: <a href="https://www.lgrb-bw.de/sites/default/files/download_pool/definition_tiefe_geothermie.pdf" target="_blank" rel="noopener">Personenkreis Tiefe Geothermie, Definition tiefe Geothermie (2007, LGRB Baden-Württemberg)</a>; <a href="https://www.geothermie.de/fileadmin/user_upload/Bibliothek/Downloads/Forschungbedarf_2023.pdf" target="_blank" rel="noopener">Bundesverband Geothermie, Stand der Forschung und Forschungsbedarf (2023)</a>. Erfurt: <a href="dokumente/SWE_Energiejournal.pdf" target="_blank" rel="noopener">SWE Energiejournal 2026</a> (Wärmemix 2045, Großwärmepumpe Kühnhausen); SWE, Vortrag Erfurter Klimakonferenz 12.03.2025 (Szenarien); <a href="https://op.europa.eu/en/web/public-procurement/procurement-details/-/procurement/1af8ee69-5b71-41df-82e8-780971e20cb5" target="_blank" rel="noopener">EU-Ausschreibungen der SWE Energie GmbH 2024</a> (Systemansatz) und <a href="https://ted.europa.eu/cs/notice/632506-2026/pdf" target="_blank" rel="noopener">TED 632506-2026</a> (Auswertung bis 31.08.2027); <a href="https://tu-freiberg.de/en/news/3d-images-unexplored-underground-tubaf-supports-geothermal-project-erfurt" target="_blank" rel="noopener">TU Bergakademie Freiberg zum Projekt „SeismikEFfizienz"</a>; <a href="https://www.ingenieur.de/fachmedien/vdi-energie-umwelt/energie-vdi-energie-umwelt/energieversorgung/daten-aus-der-tiefe-befeuern-die-waermewende/" target="_blank" rel="noopener">VDI-Fachmedien, 05.01.2026</a>; ZfK <a href="https://www.zfk.de/unternehmen/nachrichten/gesellschaft-fuer-tiefen-geothermie-in-erfurt-vor-gruendung" target="_blank" rel="noopener">2024</a>/<a href="https://www.zfk.de/energie/waerme/waerme-aus-der-tiefe-seismik-messungen-beginnen-in-erfurt" target="_blank" rel="noopener">2025</a>. Geretsried und Hannover: <a href="https://www.zfk.de/energie/waerme/geothermie-geretsried-loop-waermevertrage-kuendigung-eavor" target="_blank" rel="noopener">ZfK, Oktober 2026</a>; <a href="https://www.ingenieur.de/?p=31630" target="_blank" rel="noopener">ingenieur.de, 28.10.2026</a>; <a href="https://www.solarserver.de/2026/10/22/enercity-blaest-tiefengeothermie-projekt-in-hannover-ab/" target="_blank" rel="noopener">solarserver.de, 22.10.2026</a>. Der Gasanteil der Erfurter Fernwärme (~95 %) beruht auf den vorliegenden Angaben zum Erfurter Netz. Bewertung: eigene Einordnung, hausentscheider.</p>
+</div>
+
+<footer class="site-foot">
+  <div class="site-foot__inner">
+    <div class="site-foot__left">
+      <a href="index.html" style="text-decoration:none;display:inline-flex;align-items:center;vertical-align:middle;">
+        <svg width="130" height="20" viewBox="0 0 130 20" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <text x="0" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">haus</text>
+          <text x="42" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">entscheider</text>
+          <line x1="0" y1="18" x2="40" y2="18" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+        </svg>
+      </a>
+      &nbsp;·&nbsp;Daniel Schöberl&nbsp;·&nbsp;Erfurt / München
+    </div>
+    <div class="site-foot__right">
+      <a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a>
+      &nbsp;·&nbsp;
+      <a href="index.html#impressum">Impressum</a>
+      &nbsp;·&nbsp;
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
