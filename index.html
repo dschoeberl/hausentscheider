@@ -132,16 +132,32 @@
     .btn--signal:hover { opacity: 0.9; text-decoration: none; }
     .btn--whatsapp { background: #25D366; color: white; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; padding: 0.6rem 1.25rem; }
 
-    /* ZWEI-WEGE-CTA · Future-Readiness-Bewertung + Status-Dashboard (gleichwertiges Paar) */
-    .kwp-duo { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 0 0 1.7rem; }
-    .kwp-duo__btn { flex: 1 1 250px; display: flex; align-items: center; gap: 0.7rem; background: var(--petrol); color: #fff; border: 1px solid rgba(255,255,255,0.14); border-radius: 6px; padding: 0.8rem 1rem; text-decoration: none; transition: opacity 0.2s; }
-    .kwp-duo__btn:hover { opacity: 0.9; text-decoration: none; }
-    .kwp-duo__ic { flex-shrink: 0; }
-    .kwp-duo__txt { display: flex; flex-direction: column; line-height: 1.25; }
-    .kwp-duo__txt b { font-size: 13.5px; font-weight: 600; display: flex; align-items: center; gap: 7px; }
-    .kwp-duo__txt small { font-size: 11.5px; opacity: 0.85; font-weight: 400; }
-    .kwp-duo__arrow { margin-left: auto; font-size: 16px; opacity: 0.9; padding-left: 0.4rem; }
-    .kwp-duo__live { width: 7px; height: 7px; border-radius: 50%; background: var(--signal, #CFF77F); box-shadow: 0 0 0 3px rgba(207,247,127,0.22); flex-shrink: 0; }
+    /* WÄRMEPLANUNG ERFURT · drei Fragen zum Plan */
+    .wpe { background: var(--petrol-dark); padding: 3rem 0 3.25rem; }
+    .wpe__eyebrow { display: block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol-light); font-family: 'Inter', sans-serif; margin-bottom: 0.5rem; }
+    .wpe__titel { color: #ffffff; font-size: 24px; margin: 0 0 1.5rem; }
+    .wpe__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .wpe-karte { display: flex; flex-direction: column; min-width: 0; padding: 1.2rem 1.25rem 1.1rem; background: rgba(255,255,255,0.05); border: 0.5px solid rgba(122,184,181,0.3); border-radius: var(--radius); color: #ffffff; text-decoration: none; font-family: 'Inter', sans-serif; transition: background 0.2s, border-color 0.2s; }
+    .wpe-karte:hover, .wpe-karte:focus-visible { background: rgba(255,255,255,0.1); border-color: var(--signal); text-decoration: none; }
+    .wpe-karte:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+    .wpe-karte__frage { font-size: 14px; font-weight: 500; color: #ffffff; margin-bottom: 0.8rem; }
+    .wpe-karte__wert { font-family: 'Playfair Display', Georgia, serif; font-size: 44px; line-height: 1.05; color: var(--signal); }
+    .wpe-karte__wert small { font-size: 20px; color: var(--petrol-light); }
+    .wpe-karte__wert--lang { font-size: 25px; line-height: 1.75; }
+    .wpe-karte__bezug { font-size: 12.5px; line-height: 1.45; color: #c8e0df; margin-top: 0.4rem; }
+    .wpe-karte__bild { display: flex; min-height: 26px; margin-top: 0.8rem; }
+    .wpe-punkte { flex-wrap: wrap; align-items: center; gap: 4px; }
+    .wpe-punkte i { width: 8px; height: 8px; border-radius: 50%; background: var(--petrol-light); }
+    .wpe-punkte i.is-offen { background: transparent; box-shadow: inset 0 0 0 1px rgba(122,184,181,0.7); }
+    .wpe-balken { align-items: flex-end; gap: 3px; height: 26px; }
+    .wpe-balken i { flex: 1 1 0; max-width: 16px; background: var(--petrol-light); border-radius: 1px 1px 0 0; }
+    .wpe-karte__text { font-size: 12px; line-height: 1.5; color: rgba(255,255,255,0.65); margin-top: 0.7rem; }
+    .wpe-karte__link { margin-top: auto; padding-top: 0.9rem; font-size: 13px; font-weight: 500; color: var(--signal); }
+    @media (max-width: 800px) {
+      .wpe__grid { grid-template-columns: 1fr; }
+      .wpe__titel { font-size: 21px; }
+    }
+
     .btn--tommy    { background: var(--tommy-rot); color: #ffffff; }
 
     /* DREI KERNAUSSAGEN */
@@ -688,6 +704,41 @@
     </div>
   </div>
 
+  <!-- WÄRMEPLANUNG ERFURT · drei Fragen zum Plan. Werte liest das Skript aus daten/kwp-timeline-erfurt.json,
+       daten/kwp-fri-erfurt.json und daten/medien-zeitstrahl.json; der Text hier ist nur Rückfallebene. -->
+  <section class="wpe" id="waermeplanung" aria-label="Wärmeplanung Erfurt">
+    <span id="medien-zeitstrahl"></span>
+    <div class="container">
+      <span class="wpe__eyebrow">Wärmeplanung Erfurt</span>
+      <h2 class="wpe__titel">Der Plan, seine Bewertung und was darüber berichtet wird.</h2>
+      <div class="wpe__grid">
+        <a class="wpe-karte" href="kwp-dashboard-erfurt.html">
+          <span class="wpe-karte__frage">Wo steht der Plan?</span>
+          <span class="wpe-karte__wert wpe-karte__wert--lang" id="wpe-etappe">3. September 2026</span>
+          <span class="wpe-karte__bezug">letzte Verfahrensetappe</span>
+          <span class="wpe-karte__bild wpe-punkte" id="wpe-punkte" aria-hidden="true"></span>
+          <span class="wpe-karte__text" id="wpe-ausblick">Die Fortschreibung ist angekündigt, ohne Termin.</span>
+          <span class="wpe-karte__link">Status-Dashboard →</span>
+        </a>
+        <a class="wpe-karte" href="kwp-erfurt.html">
+          <span class="wpe-karte__frage">Wie zukunftsfähig ist er?</span>
+          <span class="wpe-karte__wert"><span id="wpe-fri">2,6</span> <small>von <span id="wpe-fri-max">5</span></small></span>
+          <span class="wpe-karte__bezug">Durchschnitt über <span id="wpe-fri-n">11</span> Kompetenzfelder</span>
+          <span class="wpe-karte__bild wpe-balken" id="wpe-balken" aria-hidden="true"></span>
+          <span class="wpe-karte__text" id="wpe-fri-stand">Wärmeplan Stand 26.03.2026 · Bewertung 14.05.2026</span>
+          <span class="wpe-karte__link">Future-Readiness-Bewertung →</span>
+        </a>
+        <a class="wpe-karte" href="medienresonanz-erfurt.html">
+          <span class="wpe-karte__frage">Was wird berichtet?</span>
+          <span class="wpe-karte__wert"><span id="wpe-rahmen">8</span> <small>:</small> <span id="wpe-erfurt">0</span></span>
+          <span class="wpe-karte__bezug">Beiträge zu Bund und Land : zur Erfurter Wärmeplanung</span>
+          <span class="wpe-karte__text" id="wpe-medien-stand">Thüringer Allgemeine, jede Ausgabe vom 10. Juni bis 24. Juli 2026</span>
+          <span class="wpe-karte__link">Medienresonanz →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- AKTUELLE ENERGIEPREISE -->
   <section class="energiepreise" id="energiepreise" aria-label="Aktuelle Energiepreise">
     <style>
@@ -914,30 +965,6 @@
           <p class="kanal__ds">Einseitiger Kanal: Sie empfangen, ohne selbst zu senden. Ihre Nummer bleibt für uns und andere Mitglieder unsichtbar. Jederzeit ohne Angabe von Gründen kündbar.</p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- WÄRMEPLANUNG ERFURT · drei Wege zum Plan. Die Medienresonanz steht auf medienresonanz-erfurt.html. -->
-  <section class="section container" id="waermeplanung" aria-label="Wärmeplanung Erfurt">
-    <span id="medien-zeitstrahl"></span>
-    <span class="label" style="margin-bottom:0.5rem;">Wärmeplanung Erfurt</span>
-    <h2 style="font-size:22px;margin:0 0 1.1rem;">Der Plan, seine Bewertung und was darüber berichtet wird.</h2>
-    <div class="kwp-duo" style="margin-bottom:0;">
-      <a href="kwp-dashboard-erfurt.html" class="kwp-duo__btn">
-        <svg class="kwp-duo__ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 12 7 12 10 5 14 19 17 12 21 12"/></svg>
-        <span class="kwp-duo__txt"><b>Wo steht der Plan? <span class="kwp-duo__live" title="laufend aktuell"></span></b><small>Status-Dashboard</small></span>
-        <span class="kwp-duo__arrow">→</span>
-      </a>
-      <a href="kwp-erfurt.html" class="kwp-duo__btn">
-        <svg class="kwp-duo__ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.6"/></svg>
-        <span class="kwp-duo__txt"><b>Wie zukunftsfähig ist er?</b><small>Future-Readiness-Bewertung</small></span>
-        <span class="kwp-duo__arrow">→</span>
-      </a>
-      <a href="medienresonanz-erfurt.html" class="kwp-duo__btn">
-        <svg class="kwp-duo__ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 9h3v8a2 2 0 0 1-2 2h-1"/><path d="M8 9h5M8 13h5"/></svg>
-        <span class="kwp-duo__txt"><b>Was wird berichtet?</b><small>Medienresonanz</small></span>
-        <span class="kwp-duo__arrow">→</span>
-      </a>
     </div>
   </section>
 
@@ -1515,6 +1542,44 @@
 
       knopfAnzeigen();
       if (auto) balkenStarten(START_MS);
+    })();
+  </script>
+  <script>
+    // Block Wärmeplanung Erfurt: Kennzahlen aus den Datendateien; scheitert ein Abruf, bleibt der Text im HTML.
+    (function() {
+      function holen(pfad) {
+        return fetch(pfad, { cache: 'no-cache' }).then(function(r) { if (!r.ok) throw new Error(pfad); return r.json(); });
+      }
+      function setzen(id, text) { var el = document.getElementById(id); if (el) el.textContent = text; }
+      function fehler(err) { console.warn('[Wärmeplanung Erfurt] Rückfallebene aktiv:', err); }
+
+      holen('daten/kwp-timeline-erfurt.json').then(function(d) {
+        if (d.letzteEtappe) setzen('wpe-etappe', d.letzteEtappe);
+        if (d.ausblick) setzen('wpe-ausblick', d.ausblick.charAt(0).toUpperCase() + d.ausblick.slice(1));
+        document.getElementById('wpe-punkte').innerHTML = (d.eintraege || []).map(function(e) {
+          return '<i' + (new Date(e.datum + 'T00:00:00') > new Date() ? ' class="is-offen"' : '') + '></i>';
+        }).join('');
+      }).catch(fehler);
+
+      holen('daten/kwp-fri-erfurt.json').then(function(d) {
+        var f = d.felder || [], max = d.skala_max || 5;
+        var schnitt = f.reduce(function(s, x) { return s + x.ist; }, 0) / f.length;
+        setzen('wpe-fri', schnitt.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }));
+        setzen('wpe-fri-max', max);
+        setzen('wpe-fri-n', f.length);
+        if (d.bewertungsstand) setzen('wpe-fri-stand', d.bewertungsstand);
+        document.getElementById('wpe-balken').innerHTML = f.map(function(x) {
+          return '<i style="height:' + Math.round(x.ist / max * 100) + '%"></i>';
+        }).join('');
+      }).catch(fehler);
+
+      holen('daten/medien-zeitstrahl.json').then(function(d) {
+        var E = d.erhebung;
+        var fenster = (d.eintraege || []).filter(function(e) { return e.datum >= E.vollstaendig_ab && e.datum <= E.erfasst_bis; });
+        setzen('wpe-rahmen', fenster.filter(function(e) { return e.ebene === 'rahmen' || e.ebene === 'beide'; }).length);
+        setzen('wpe-erfurt', fenster.filter(function(e) { return e.ebene !== 'rahmen' && e.waermebezug !== false; }).length);
+        setzen('wpe-medien-stand', E.medium + ', jede Ausgabe vom ' + E.vollstaendig_ab_label + ' bis ' + E.erfasst_bis_label);
+      }).catch(fehler);
     })();
   </script>
   <script src="js/objekt001-wirtschaft.js"></script>
