@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medienresonanz Erfurt | Hausentscheider</title>
+<meta name="description" content="Was die Lokalpresse über die Erfurter Wärmeplanung berichtet und was nicht: eine fortlaufende Durchsicht mit Terminen, Beiträgen und Einordnung.">
+<meta name="robots" content="index,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --petrol:#1a5c5a; --petrol-light:#7ab8b5; --petrol-dark:#1a3535;
+    --signal:#CFF77F; --signal-dark:#a8d45a; --tommy:#D81E34;
+    --wp-tint:#E0F0EE; --wp-text:#1A4F4D; --fw-tint:#F5EDE0; --fw-text:#6B4C28;
+    --border:#e0dedd; --bg:#f5f4f2; --white:#fff;
+    --t1:#1a1a1a; --t2:#5a5956; --t3:#8a8680;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--white);color:var(--t1);font-family:'Inter',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:760px;margin:0 auto;padding:2.4rem 1.4rem 4rem;}
+  h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:500;line-height:1.22;color:var(--t1);}
+  .eyebrow{font-size:11px;letter-spacing:2.2px;text-transform:uppercase;color:var(--petrol);font-weight:600;margin:0 0 .5rem;}
+  h1{font-size:clamp(1.8rem,4.5vw,2.6rem);margin:0 0 .6rem;}
+  .lede{font-size:1.08rem;color:var(--t2);margin:0 0 1.4rem;}
+  .rule{height:3px;width:64px;background:var(--signal-dark);border:none;margin:0 0 1.6rem;}
+  .byline{font-size:12.5px;color:var(--t3);margin:0 0 2rem;letter-spacing:.2px;}
+
+  h2{font-size:1.35rem;margin:2.4rem 0 .3rem;}
+  h2 .num{color:var(--petrol);font-size:1rem;font-weight:600;margin-right:.5rem;}
+  .sechead{border-bottom:2px solid var(--petrol);padding-bottom:.4rem;margin-bottom:.9rem;}
+  p{margin:0 0 1rem;}
+  strong{color:var(--t1);}
+  .src{margin-top:2.4rem;font-size:11.5px;color:var(--t3);line-height:1.55;border-top:1px solid var(--border);padding-top:.9rem;}
+  /* Schlanker Website-Kopf + Footer (an bestehende Unterseiten angeglichen) */
+  .site-head{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:.5px solid var(--border);}
+  .site-head__inner{max-width:760px;margin:0 auto;padding:0 1.4rem;height:56px;display:flex;align-items:center;justify-content:space-between;}
+  .site-head__logo{text-decoration:none;display:inline-flex;align-items:center;}
+  .site-head__logo:hover{opacity:.85;}
+  .site-head__links{display:flex;gap:1.4rem;align-items:center;}
+  .site-head__links a{font-size:13px;color:var(--t2);text-decoration:none;transition:color .2s;}
+  .site-head__links a:hover{color:var(--petrol);}
+  .site-foot{border-top:.5px solid var(--border);padding:1.5rem 0;margin-top:1.5rem;}
+  .site-foot__inner{max-width:760px;margin:0 auto;padding:0 1.4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
+  .site-foot__left,.site-foot__right{font-size:12px;color:var(--t3);}
+  .site-foot a{color:var(--t3);text-decoration:none;}
+  .site-foot a:hover{color:var(--petrol);}
+  @media(max-width:560px){.site-head__links{gap:1rem;} .site-head__links a{font-size:12px;} .site-foot__inner{flex-direction:column;align-items:flex-start;}}
+
+  /* Medienresonanz */
+  h1{font-size:clamp(1.55rem,3.6vw,2.1rem);}
+  .mr-bezug{font-size:13.5px;color:var(--t2);margin:1.4rem 0 .6rem;}
+  .mr-zahlen{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;margin:0 0 1rem;}
+  .mr-zahl{border:1px solid var(--border);border-radius:8px;background:var(--bg);padding:.95rem 1.1rem;}
+  .mr-zahl b{display:block;font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:500;line-height:1.05;color:var(--petrol);margin-bottom:.25rem;}
+  .mr-zahl span{font-size:13px;color:var(--t2);line-height:1.35;display:block;}
+  .mr-zahl--akzent{background:var(--fw-tint);border-color:#e2d3bb;}
+  .mr-zahl--akzent b{color:var(--fw-text);}
+  .mr-termine{border-top:1px solid var(--border);margin:.6rem 0 0;}
+  .mr-termin{display:grid;grid-template-columns:66px 1fr auto;gap:.2rem .8rem;align-items:baseline;padding:.6rem 0;border-bottom:1px solid var(--border);font-size:14px;}
+  .mr-termin__datum{color:var(--t3);font-size:13px;}
+  .mr-termin__status{font-size:12.5px;font-weight:500;white-space:nowrap;}
+  .mr-termin__status--ja{color:var(--petrol);}
+  .mr-termin__status--nein{color:var(--fw-text);}
+  .mr-termin__status--offen{color:var(--t3);font-weight:400;}
+  @media(max-width:560px){.mr-termin{grid-template-columns:66px 1fr;} .mr-termin__status{grid-column:2;white-space:normal;}}
+  .mr-liste{margin:.6rem 0 0;border-top:1px solid var(--border);}
+  .mr-beitrag{border-bottom:1px solid var(--border);}
+  .mr-beitrag summary{list-style:none;cursor:pointer;padding:.7rem 1.6rem .7rem 0;position:relative;}
+  .mr-beitrag summary::-webkit-details-marker{display:none;}
+  .mr-beitrag summary::after{content:'▸';position:absolute;right:.2rem;top:.8rem;color:var(--petrol);font-size:12px;transition:transform .2s;}
+  .mr-beitrag[open] summary::after{transform:rotate(90deg);}
+  .mr-beitrag summary:focus-visible{outline:2px solid var(--petrol);outline-offset:2px;}
+  .mr-beitrag__meta{display:block;font-size:12px;color:var(--t3);margin-bottom:.1rem;}
+  .mr-beitrag__titel{display:block;font-size:14.5px;font-weight:500;color:var(--t1);line-height:1.4;}
+  .mr-beitrag p{font-size:14px;color:var(--t2);line-height:1.6;margin:0 0 .6rem;}
+  .mr-beitrag__einordnung{background:var(--bg);border-left:3px solid var(--petrol);padding:.55rem .8rem;}
+  .mr-beitrag__einordnung b{color:var(--t1);font-weight:600;}
+  p.mr-beitrag__quelle{font-size:12px;color:var(--t3);margin-bottom:.9rem;}
+  .src b{font-weight:600;}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="site-head__inner">
+    <a href="index.html" class="site-head__logo" aria-label="hausentscheider — Startseite">
+      <svg width="180" height="28" viewBox="0 0 180 28" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">haus</text>
+        <text x="58" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">entscheider</text>
+        <line x1="0" y1="26" x2="56" y2="26" stroke="#1a5c5a" stroke-width="2" stroke-linecap="square"/>
+      </svg>
+    </a>
+    <nav class="site-head__links" aria-label="Navigation">
+      <a href="index.html">Startseite</a>
+      <a href="wegweiser.html">Wegweiser</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap">
+
+  <p class="eyebrow">Wärmewende im Blick · Medienresonanz Erfurt</p>
+  <h1 id="mr-kern">Der Wärmeplan trat am 30. Juni in Kraft. Im Erfurter Lokalteil stand dazu bis zum 24. Juli kein Beitrag.</h1>
+  <p class="lede" id="mr-stand">Erfasst bis 24. Juli 2026, die nächste Durchsicht folgt.</p>
+
+  <!-- Inhalte kommen aus daten/medien-zeitstrahl.json; neue Beiträge nur dort eintragen. -->
+  <p class="mr-bezug" id="mr-bezug">Lädt …</p>
+  <div class="mr-zahlen" id="mr-zahlen"></div>
+
+  <h2>Was Eigentümer an den wichtigen Terminen erfahren konnten</h2>
+  <div class="mr-termine" id="mr-termine"></div>
+
+  <h2>Warum das für Ihre Entscheidung zählt</h2>
+  <p>Wer sich über die Lokalzeitung informiert, erfährt viel über Bundesrecht und Förderung und wenig darüber, was der Erfurter Plan für das eigene Gebäude heißt. Den Plan selbst zeigen zwei eigene Seiten: das <a href="kwp-dashboard-erfurt.html">Status-Dashboard</a> mit dem aktuellen Stand und die <a href="kwp-erfurt.html">Future-Readiness-Bewertung</a>. Wo Ihr Gebäude steht, prüft der <a href="wegweiser.html#fragen">Wegweiser</a>.</p>
+
+  <h2>Alle erfassten Beiträge</h2>
+  <div class="mr-liste" id="mr-liste"></div>
+
+  <p class="src" id="mr-methode"></p>
+</div>
+
+<footer class="site-foot">
+  <div class="site-foot__inner">
+    <div class="site-foot__left">
+      <a href="index.html" style="text-decoration:none;display:inline-flex;align-items:center;vertical-align:middle;">
+        <svg width="130" height="20" viewBox="0 0 130 20" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <text x="0" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">haus</text>
+          <text x="42" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">entscheider</text>
+          <line x1="0" y1="18" x2="40" y2="18" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+        </svg>
+      </a>
+      &nbsp;·&nbsp;Daniel Schöberl&nbsp;·&nbsp;Erfurt / München
+    </div>
+    <div class="site-foot__right">
+      <a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a>
+      &nbsp;·&nbsp;
+      <a href="index.html#impressum">Impressum</a>
+      &nbsp;·&nbsp;
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+<script>
+  (function () {
+    function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+    function spur(e) { return (e.ebene === 'rahmen' || e.ebene === 'beide') ? e.ebene : 'erfurt'; }
+    function istRahmen(e) { return spur(e) !== 'erfurt'; }
+    function istErfurtWaerme(e) { return spur(e) !== 'rahmen' && e.waermebezug !== false; }
+    function setzen(id, html) { document.getElementById(id).innerHTML = html; }
+
+    fetch('daten/medien-zeitstrahl.json', { cache: 'no-cache' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (d) {
+        var E = d.erhebung, eintraege = d.eintraege || [];
+        setzen('mr-kern', esc(E.kernaussage));
+        setzen('mr-stand', 'Erfasst bis ' + esc(E.erfasst_bis_label) + ', die nächste Durchsicht folgt.');
+        setzen('mr-bezug', esc(E.medium) + ', jede Ausgabe vom ' + esc(E.vollstaendig_ab_label) + ' bis ' + esc(E.erfasst_bis_label) + ' geprüft:');
+
+        var fenster = eintraege.filter(function (e) { return e.datum >= E.vollstaendig_ab && e.datum <= E.erfasst_bis; });
+        var nRahmen = fenster.filter(istRahmen).length, nErfurt = fenster.filter(istErfurtWaerme).length;
+        setzen('mr-zahlen',
+          '<div class="mr-zahl"><b>' + nRahmen + '</b><span>Beiträge zu Bund und Land</span></div>' +
+          '<div class="mr-zahl' + (nErfurt === 0 ? ' mr-zahl--akzent' : '') + '"><b>' + nErfurt + '</b><span>Beiträge zur Erfurter Wärmeplanung</span></div>');
+
+        setzen('mr-termine', (d.meilensteine || []).map(function (m) {
+          var offen = m.datum > E.erfasst_bis;
+          var text = offen ? 'noch nicht erfasst' : (m.tag || (m.berichtet ? 'berichtet' : 'nicht aufgegriffen'));
+          var cls = offen ? 'offen' : (m.berichtet ? 'ja' : 'nein');
+          return '<div class="mr-termin"><span class="mr-termin__datum">' + esc(m.datumLabel) + '</span>' +
+            '<span class="mr-termin__was">' + esc(m.label) + '</span>' +
+            '<span class="mr-termin__status mr-termin__status--' + cls + '">' + esc(text) + '</span></div>';
+        }).join(''));
+
+        var neueste = eintraege.slice().sort(function (a, b) { return a.datum < b.datum ? 1 : (a.datum > b.datum ? -1 : 0); });
+        var SPUR = { rahmen: 'Bund und Land', erfurt: 'Erfurt', beide: 'Bund und Erfurt' };
+        setzen('mr-liste', neueste.map(function (e) {
+          var ort = (e.waermebezug === false) ? 'Erfurt, ohne Wärmebezug' : SPUR[spur(e)];
+          var link = e.link ? ' · <a href="' + esc(e.link) + '" target="_blank" rel="noopener">Original ansehen</a>' : '';
+          return '<details class="mr-beitrag"><summary><span class="mr-beitrag__meta">' + esc(e.datumLabel) + ' · ' + esc(ort) + '</span>' +
+            '<span class="mr-beitrag__titel">' + esc(e.headline) + '</span></summary>' +
+            '<p>' + esc(e.zusammenfassung) + '</p>' +
+            '<p class="mr-beitrag__einordnung"><b>Einordnung:</b> ' + esc(e.kommentar) + '</p>' +
+            '<p class="mr-beitrag__quelle">' + esc(e.quelle) + link + '</p></details>';
+        }).join(''));
+
+        setzen('mr-methode', '<b>Wie erhoben:</b> ' + esc(E.methode) + ' Überschriften und Einordnungen sind eigene Formulierungen von hausentscheider, die Bewertung ist als solche gekennzeichnet.');
+      })
+      .catch(function (err) {
+        console.error('[Medienresonanz] Daten konnten nicht geladen werden:', err);
+        setzen('mr-bezug', 'Die Übersicht wird gerade aktualisiert.');
+      });
+  })();
+</script>
+</body>
+</html>

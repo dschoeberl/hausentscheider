@@ -1,6 +1,16 @@
 {
   "_hinweis": "Wärmewende im Blick — zweispuriger Zeitstrahl. Neuer Artikel = ein Objekt an 'eintraege' anhängen. 'datum' (ISO) treibt die proportionale Achse, 'datumLabel' ist die Anzeige. Die 'zuletzt ergänzt'-Marke wird automatisch aus dem jüngsten Eintrag abgeleitet — nichts separat pflegen. Töne: zustimmend | sachlich | erklaerend | kritisch. Zusammenfassung und kommentar je 3–5 Sätze, eigene Worte, konkrete Fakten/Zahlen; kurze wörtliche Zitate nur mit Quelle. Eigene, zugespitzte Überschriften — keine Originaltitel oder Volltexte.",
   "_hinweis_spuren": "'ebene': 'rahmen' (Bund/Land, obere Spur) | 'erfurt' (Lokalteil, untere Spur) | 'beide' (Klammer, erscheint in beiden Spuren). Fehlt das Feld, gilt 'erfurt'. 'waermebezug': false nur setzen, wenn ein Erfurt-Eintrag KEINEN Wärmebezug hat — er zählt dann in die Gesamtzahl und in die Ton-Verteilung, aber nicht als Beitrag zur Erfurter Wärmeplanung. Die Funkstille wird je Spur berechnet; 'zeitfenster' liefert den Zusatz zum Lückenlabel (nur Erfurt-Spur), sobald sich eine Lücke mit dem Fenster überschneidet.",
+  "_hinweis_erhebung": "Nach jeder Durchsicht pflegen: 'erfasst_bis' auf die letzte durchgesehene Ausgabe setzen und 'kernaussage' prüfen, sie ist Überschrift von medienresonanz-erfurt.html. Die Zähler rechnet die Seite aus den Einträgen von 'vollstaendig_ab' bis 'erfasst_bis'. Die Erhebung läuft fort; nie als abgeschlossen darstellen.",
+  "erhebung": {
+    "erfasst_bis": "2026-07-24",
+    "erfasst_bis_label": "24. Juli 2026",
+    "vollstaendig_ab": "2026-06-10",
+    "vollstaendig_ab_label": "10. Juni",
+    "medium": "Thüringer Allgemeine",
+    "kernaussage": "Der Wärmeplan trat am 30. Juni in Kraft. Im Erfurter Lokalteil stand dazu bis zum 24. Juli kein Beitrag.",
+    "methode": "Die Einträge bis zum 9. Juni stammen aus einer dokumentierten Stichprobe von 26 Ausschnitten. Für den Zeitraum vom 10. Juni bis 24. Juli wurde jede Ausgabe angesehen und jede Seite auf die Themen Wärmeplanung, Fernwärme, Wärmepumpe, Heizungsrecht, Förderung, Energiepreise und Wohnkosten geprüft. Erfasst sind Print und E-Paper. Rein digital ausgespielte Beiträge sind nicht erfasst."
+  },
   "eintraege": [
     {
       "datum": "2026-04-30",
@@ -222,7 +232,7 @@
       "datumLabel": "30. Juni",
       "label": "Inkrafttreten KWP + adressgenauer Stadtplan",
       "berichtet": false,
-      "tag": "im Korpus nicht aufgegriffen"
+      "tag": "nicht aufgegriffen"
     },
     {
       "datum": "2026-07-10",
