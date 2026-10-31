@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Das Gebäude verstehen | Hausentscheider</title>
+<meta name="description" content="Heizlast, Jahreswärme, Warmwasser und Vorlauftemperatur: Eine Schnittzeichnung zeigt am Referenzgebäude, welche Kennzahlen über die Kosten einer neuen Heizung entscheiden.">
+<meta name="robots" content="index,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --petrol:#1a5c5a; --petrol-light:#7ab8b5; --petrol-dark:#1a3535;
+    --signal:#CFF77F; --signal-dark:#a8d45a; --tommy:#D81E34;
+    --wp-tint:#E0F0EE; --wp-text:#1A4F4D; --fw-tint:#F5EDE0; --fw-text:#6B4C28;
+    --border:#e0dedd; --bg:#f5f4f2; --white:#fff;
+    --t1:#1a1a1a; --t2:#5a5956; --t3:#8a8680;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--white);color:var(--t1);font-family:'Inter',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:760px;margin:0 auto;padding:2.4rem 1.4rem 4rem;}
+  h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:500;line-height:1.22;color:var(--t1);}
+  .eyebrow{font-size:11px;letter-spacing:2.2px;text-transform:uppercase;color:var(--petrol);font-weight:600;margin:0 0 .5rem;}
+  h1{font-size:clamp(1.8rem,4.5vw,2.6rem);margin:0 0 .6rem;}
+  .lede{font-size:1.08rem;color:var(--t2);margin:0 0 1.4rem;}
+  .rule{height:3px;width:64px;background:var(--signal-dark);border:none;margin:0 0 1.6rem;}
+  .byline{font-size:12.5px;color:var(--t3);margin:0 0 2rem;letter-spacing:.2px;}
+
+  h2{font-size:1.35rem;margin:2.4rem 0 .3rem;}
+  h2 .num{color:var(--petrol);font-size:1rem;font-weight:600;margin-right:.5rem;}
+  .sechead{border-bottom:2px solid var(--petrol);padding-bottom:.4rem;margin-bottom:.9rem;}
+  p{margin:0 0 1rem;}
+  strong{color:var(--t1);}
+  .src{margin-top:2.4rem;font-size:11.5px;color:var(--t3);line-height:1.55;border-top:1px solid var(--border);padding-top:.9rem;}
+  /* Schlanker Website-Kopf + Footer (an bestehende Unterseiten angeglichen) */
+  .site-head{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:.5px solid var(--border);}
+  .site-head__inner{max-width:760px;margin:0 auto;padding:0 1.4rem;height:56px;display:flex;align-items:center;justify-content:space-between;}
+  .site-head__logo{text-decoration:none;display:inline-flex;align-items:center;}
+  .site-head__logo:hover{opacity:.85;}
+  .site-head__links{display:flex;gap:1.4rem;align-items:center;}
+  .site-head__links a{font-size:13px;color:var(--t2);text-decoration:none;transition:color .2s;}
+  .site-head__links a:hover{color:var(--petrol);}
+  .site-foot{border-top:.5px solid var(--border);padding:1.5rem 0;margin-top:1.5rem;}
+  .site-foot__inner{max-width:760px;margin:0 auto;padding:0 1.4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
+  .site-foot__left,.site-foot__right{font-size:12px;color:var(--t3);}
+  .site-foot a{color:var(--t3);text-decoration:none;}
+  .site-foot a:hover{color:var(--petrol);}
+  @media(max-width:560px){.site-head__links{gap:1rem;} .site-head__links a{font-size:12px;} .site-foot__inner{flex-direction:column;align-items:flex-start;}}
+
+  /* Schnittzeichnung mit Markern */
+  .gv-planwrap{position:relative;margin:1.8rem 0 0;}
+  .gv-plan{position:relative;margin:0;background:#F5F3F0;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+  .gv-plan img{display:block;width:100%;height:auto;}
+  .gv-bildnachweis{position:absolute;right:.5rem;bottom:.45rem;z-index:2;padding:.1rem .38rem;border-radius:3px;font-size:.62rem;background:rgba(10,25,24,.66);color:rgba(255,255,255,.88);}
+  .gv-marker{position:absolute;left:var(--x);top:var(--y);z-index:3;display:flex;align-items:center;justify-content:center;width:30px;height:30px;transform:translate(-50%,-50%);border-radius:50%;border:2px solid #fff;background:var(--petrol-dark);color:#fff;font-size:13px;font-weight:500;text-decoration:none;box-shadow:0 1px 4px rgba(0,0,0,.35);}
+  .gv-marker:hover,.gv-marker:focus-visible{background:var(--signal);color:var(--petrol-dark);outline:none;}
+  .gv-marker--annahme{background:var(--tommy);}
+  .gv-tags{display:flex;flex-wrap:wrap;gap:.4rem .9rem;margin:.6rem 0 0;font-size:12px;color:var(--t2);}
+  .gv-tag{white-space:nowrap;}
+  @media(min-width:681px){
+    .gv-tags{margin:0;}
+    .gv-tag{position:absolute;left:var(--x);top:var(--y);z-index:2;transform:translate(-50%,-50%);padding:.1rem .45rem;border-radius:3px;font-size:11.5px;background:rgba(255,255,255,.88);color:var(--t1);}
+  }
+
+  /* Karten je Marker */
+  .gv-karten{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;margin:1.2rem 0 0;}
+  @media(max-width:560px){.gv-karten{grid-template-columns:1fr;}}
+  .gv-karte{border:1px solid var(--border);border-radius:8px;padding:.95rem 1.05rem;background:var(--bg);scroll-margin-top:72px;}
+  .gv-karte:target{border-color:var(--petrol);box-shadow:0 0 0 2px var(--petrol);}
+  .gv-karte__kopf{display:flex;align-items:center;gap:.5rem;margin:0 0 .35rem;}
+  .gv-karte__nr{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;flex-shrink:0;border-radius:50%;background:var(--petrol-dark);color:#fff;font-size:11px;font-weight:500;}
+  .gv-karte--annahme .gv-karte__nr{background:var(--tommy);}
+  .gv-karte__val{font-family:'Playfair Display',serif;font-size:1.55rem;line-height:1.1;color:var(--petrol);}
+  .gv-karte--annahme .gv-karte__val{color:var(--tommy);}
+  .gv-karte h3{font-family:'Inter',system-ui,sans-serif;font-size:13.5px;font-weight:600;margin:0 0 .3rem;}
+  .gv-karte p{font-size:13.5px;color:var(--t2);line-height:1.55;margin:0 0 .55rem;}
+  .gv-karte__fuss{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.3rem .7rem;border-top:1px solid var(--border);padding-top:.45rem;font-size:11.5px;color:var(--t3);line-height:1.4;}
+  .gv-status{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;font-weight:600;color:var(--petrol);}
+  .gv-status--annahme{color:var(--tommy);}
+
+  .gv-fragen{margin:2.4rem 0 0;background:var(--bg);border-left:5px solid var(--petrol);border-radius:6px;padding:1.1rem 1.3rem;}
+  .gv-fragen h2{margin-top:0;}
+  .gv-fragen ol{margin:.5rem 0 1rem;padding-left:1.2rem;font-size:14.5px;color:var(--t2);}
+  .gv-fragen li{margin-bottom:.45rem;}
+  .gv-fragen p{margin:0;font-size:14.5px;color:var(--t2);}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="site-head__inner">
+    <a href="index.html" class="site-head__logo" aria-label="hausentscheider — Startseite">
+      <svg width="180" height="28" viewBox="0 0 180 28" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">haus</text>
+        <text x="58" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">entscheider</text>
+        <line x1="0" y1="26" x2="56" y2="26" stroke="#1a5c5a" stroke-width="2" stroke-linecap="square"/>
+      </svg>
+    </a>
+    <nav class="site-head__links" aria-label="Navigation">
+      <a href="index.html">Startseite</a>
+      <a href="wegweiser.html">Wegweiser</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap">
+
+  <p class="eyebrow">Grundlagen · am Beispiel eines Erfurter Altbaus</p>
+  <h1>Das Gebäude verstehen</h1>
+  <p class="lede">Fünf Größen entscheiden, was eine neue Heizung kostet. In Unterlagen und Versammlungen werden sie regelmäßig verwechselt. Die Zeichnung zeigt, wo sie im Haus sitzen. Die Beispielwerte stammen aus dem Referenzgebäude, einem Mehrfamilienhaus von <span data-wert="kennzahlen_2025.baujahr" data-jahr>1900</span> mit <span data-wert="gebaeude.we">14</span> Wohnungen.</p>
+  <p>Eine Faustregel hilft: Kilowatt sagen, wie weit der Hahn aufgedreht ist. Kilowattstunden sagen, wie viel Wasser im Jahr durchläuft.</p>
+
+  <!-- Werte lesen aus daten/theaterstrasse-4.json; der Text im HTML ist nur Rückfallebene. -->
+  <div class="gv-planwrap">
+  <figure class="gv-plan">
+    <img src="images/aktuell/schnitt.webp" width="1672" height="941" alt="Schnittzeichnung eines Mehrfamilienhauses mit Heizungskeller, Steigleitungen, Hausanschluss zur Straße und Wärmepumpen im Hof, KI-generiert, kein Plan des realen Objekts">
+    <span class="gv-bildnachweis">Bild: KI-generiert</span>
+    <a class="gv-marker" href="#groesse-1" style="--x:31%;--y:40%;" aria-label="1: Heizlast">1</a>
+    <a class="gv-marker" href="#groesse-2" style="--x:50.5%;--y:85%;" aria-label="2: Wärme im Jahr">2</a>
+    <a class="gv-marker" href="#groesse-3" style="--x:59.5%;--y:80%;" aria-label="3: davon Warmwasser">3</a>
+    <a class="gv-marker" href="#groesse-4" style="--x:54.5%;--y:33%;" aria-label="4: je Wohnung und Jahr">4</a>
+    <a class="gv-marker gv-marker--annahme" href="#groesse-5" style="--x:50%;--y:57%;" aria-label="5: Vorlauftemperatur, Annahme">5</a>
+  </figure>
+  <div class="gv-tags">
+    <span class="gv-tag" style="--x:15%;--y:32%;"><span data-wert="ist_2025.bezugsflaeche_m2" data-dez="2">769,83</span> m² beheizte Fläche</span>
+    <span class="gv-tag" style="--x:15%;--y:39%;"><span data-wert="gebaeude.we">14</span> Wohnungen</span>
+    <span class="gv-tag" style="--x:41%;--y:95%;">Gaskessel, <span data-wert="kennzahlen_2025.kessel_kw">72</span> kW</span>
+  </div>
+  </div>
+
+  <div class="gv-karten">
+    <article class="gv-karte" id="groesse-1">
+      <p class="gv-karte__kopf"><span class="gv-karte__nr">1</span><span class="gv-karte__val"><span data-wert="gebaeude.heizlast_kw" data-dez="1">46,0</span> kW</span></p>
+      <h3>Heizlast</h3>
+      <p>Leistung am kältesten Auslegungstag (<span data-wert="kennzahlen_2025.auslegung_aussentemperatur_c" data-dez="1">−11,9</span> °C). Bestimmt die Größe des Erzeugers, nicht die Jahresmenge. Berechnung vom 03.08.2026.</p>
+      <div class="gv-karte__fuss"><span>Quelle: Heizlastberechnung vom 03.08.2026</span><span class="gv-status">berechnet</span></div>
+    </article>
+    <article class="gv-karte" id="groesse-2">
+      <p class="gv-karte__kopf"><span class="gv-karte__nr">2</span><span class="gv-karte__val"><span data-wert="wirtschaft.waerme_kwh">77.000</span> kWh</span></p>
+      <h3>Wärme im Jahr</h3>
+      <p>Was im Haus ankommt: Gaseinsatz abzüglich Kesselverlust. Gaseinsatz 2025 (<span data-wert="ist_2025.verbrauch_kwh">94.932</span> kWh) × Nutzungsgrad 0,80 bis 0,83 ergibt <span id="gv-spanne">75.900 bis 78.800</span> kWh. Für Vergleiche wird mit einer Bandbreite von <span data-wert="wirtschaft.waerme_kwh_band.0">69.000</span> bis <span data-wert="wirtschaft.waerme_kwh_band.1">85.000</span> kWh gerechnet.</p>
+      <div class="gv-karte__fuss"><span>Quelle: Gasabrechnung vom 02.02.2026</span><span class="gv-status">berechnet</span></div>
+    </article>
+    <article class="gv-karte" id="groesse-3">
+      <p class="gv-karte__kopf"><span class="gv-karte__nr">3</span><span class="gv-karte__val"><span data-wert="kennzahlen_2025.warmwasser_kwh">33.289</span> kWh</span></p>
+      <h3>davon Warmwasser</h3>
+      <p><span id="gv-ww-anteil">43</span> Prozent der Wärme, ganzjährig. Ein eigener Lastfall bei jeder Auslegung.</p>
+      <div class="gv-karte__fuss"><span>Quelle: Heizkostenabrechnung 2025</span><span class="gv-status">belegt</span></div>
+    </article>
+    <article class="gv-karte" id="groesse-4">
+      <p class="gv-karte__kopf"><span class="gv-karte__nr">4</span><span class="gv-karte__val"><span id="gv-je-we">5.500</span> kWh</span></p>
+      <h3>je Wohnung und Jahr</h3>
+      <p>Wärme auf <span data-wert="gebaeude.we">14</span> Einheiten verteilt. Je m² beheizter Fläche (<span data-wert="ist_2025.bezugsflaeche_m2" data-dez="2">769,83</span> m²) rund <span id="gv-je-m2">100</span> kWh; der Gaseinsatz liegt auf derselben Fläche bei <span id="gv-gas-m2">123,3</span> kWh je m². Der Verbrauchsausweis von 2018 nennt <span data-wert="ist_2025.verbrauchsausweis_2018.endenergie_kwh_m2a">124</span> kWh je m², bezogen auf <span data-wert="ist_2025.verbrauchsausweis_2018.bezugsflaeche_m2">908</span> m² Gebäudenutzfläche.</p>
+      <div class="gv-karte__fuss"><span>Quelle: Gasabrechnung vom 02.02.2026, Energieausweis vom 18.04.2018</span><span class="gv-status">berechnet</span></div>
+    </article>
+    <article class="gv-karte gv-karte--annahme" id="groesse-5">
+      <p class="gv-karte__kopf"><span class="gv-karte__nr">5</span><span class="gv-karte__val"><span data-wert="kennzahlen_2025.vorlauf_c">55</span> °C ?</span></p>
+      <h3>Vorlauftemperatur</h3>
+      <p>Nie gemessen. Der Wert stammt aus einem Angebot. Er entscheidet über Arbeitszahl und Gerätezahl einer Wärmepumpe.</p>
+      <div class="gv-karte__fuss"><span>Quelle: Angebot, keine Messung</span><span class="gv-status gv-status--annahme">Annahme</span></div>
+    </article>
+  </div>
+
+  <h2>Wo die Kosten entstehen</h2>
+  <p>Bei der Fernwärme endet der Anschluss an der Übergabestation im Keller. Bis dorthin berechnet der Versorger einen Hausanschluss und einen Baukostenzuschuss je Kilowatt. Rohre, Pumpen und Warmwasserbereitung dahinter trägt die Gemeinschaft selbst. Laufend kommen ein Arbeitspreis je Kilowattstunde, ein Leistungspreis je bestelltem Kilowatt und ein Verrechnungspreis hinzu. Die Heizlast wirkt hier also jedes Jahr auf die Rechnung.</p>
+  <p>Bei der Wärmepumpe liegt fast alles in der Investition: Geräte, Fundament, Schallschutz, Anbindung, gegebenenfalls ein stärkerer Stromanschluss. Laufend zählt der Strom. Wie viel davon nötig ist, entscheidet die Jahresarbeitszahl, und die hängt an der Vorlauftemperatur.</p>
+  <p>Was das am Referenzgebäude in Euro bedeutet, steht auf der <a href="objekte/objekt-001.html">Seite zum Referenzobjekt</a>.</p>
+
+  <section class="gv-fragen">
+    <h2>Fragen für Ihr eigenes Haus</h2>
+    <ol>
+      <li>Ist die Heizlast berechnet oder geschätzt, und passen die angesetzten Bauteilwerte zum Sanierungsstand?</li>
+      <li>Sind die Lüftungswärmeverluste in der Berechnung enthalten?</li>
+      <li>Welche Vorlauftemperatur braucht das Haus an kalten Tagen, und ist das gemessen?</li>
+      <li>Wie viel Wärme geht ins Warmwasser?</li>
+      <li>Mit welcher Leistung wird ein Fernwärmeanschluss bestellt, und woher stammt dieser Wert?</li>
+    </ol>
+    <p>Laufende Anlagen ansehen und Betreiber fragen kann man am <a href="https://offenerheizungskeller.de/besucher/" target="_blank" rel="noopener">Tag des offenen Heizungskellers</a>.</p>
+  </section>
+
+  <p class="src">Werte des Referenzgebäudes, Stand 18.10.2026: Heizlastberechnung vom 03.08.2026, Gasabrechnung vom 02.02.2026, Heizkostenabrechnung 2025, Energieausweis vom 18.04.2018. Als Annahme gekennzeichnete Werte beruhen nicht auf Messung. Die Werte gelten für dieses Gebäude und lassen sich über die Fläche nur der Größenordnung nach auf andere Häuser übertragen.</p>
+</div>
+
+<footer class="site-foot">
+  <div class="site-foot__inner">
+    <div class="site-foot__left">
+      <a href="index.html" style="text-decoration:none;display:inline-flex;align-items:center;vertical-align:middle;">
+        <svg width="130" height="20" viewBox="0 0 130 20" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <text x="0" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">haus</text>
+          <text x="42" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">entscheider</text>
+          <line x1="0" y1="18" x2="40" y2="18" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+        </svg>
+      </a>
+      &nbsp;·&nbsp;Daniel Schöberl&nbsp;·&nbsp;Erfurt / München
+    </div>
+    <div class="site-foot__right">
+      <a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a>
+      &nbsp;·&nbsp;
+      <a href="index.html#impressum">Impressum</a>
+      &nbsp;·&nbsp;
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+<script>
+  // Kennwerte aus der Objektdatei; der Text im HTML bleibt stehen, wenn der Abruf scheitert.
+  (function () {
+    function setzen(id, text) { var el = document.getElementById(id); if (el) el.textContent = text; }
+    function zahl(v, dez) { return v.toLocaleString('de-DE', { minimumFractionDigits: dez || 0, maximumFractionDigits: dez || 0 }); }
+    fetch('daten/theaterstrasse-4.json', { cache: 'no-cache' })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        document.querySelectorAll('[data-wert]').forEach(function (el) {
+          var v = el.dataset.wert.split('.').reduce(function (o, k) { return o == null ? o : o[k]; }, j);
+          if (typeof v !== 'number') return;
+          var dez = Number(el.dataset.dez || 0);
+          el.textContent = v.toLocaleString('de-DE', { minimumFractionDigits: dez, maximumFractionDigits: dez, useGrouping: !('jahr' in el.dataset) }).replace('-', '−');
+        });
+        var waerme = j.wirtschaft.waerme_kwh, gas = j.ist_2025.verbrauch_kwh, fl = j.ist_2025.bezugsflaeche_m2;
+        var nutzung = j.kennzahlen_2025.nutzungsgrad_band;
+        setzen('gv-spanne', zahl(Math.round(gas * nutzung[0] / 100) * 100) + ' bis ' + zahl(Math.round(gas * nutzung[1] / 100) * 100));
+        setzen('gv-ww-anteil', zahl(Math.round(j.kennzahlen_2025.warmwasser_kwh / waerme * 100)));
+        setzen('gv-je-we', zahl(Math.round(waerme / j.gebaeude.we)));
+        setzen('gv-je-m2', zahl(Math.round(waerme / fl)));
+        setzen('gv-gas-m2', zahl(gas / fl, 1));
+      })
+      .catch(function (err) { console.warn('[Gebäude verstehen] Kennwerte nicht ladbar, Rückfallebene aktiv:', err); });
+  })();
+</script>
+</body>
+</html>

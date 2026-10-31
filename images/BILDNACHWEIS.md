@@ -9,7 +9,7 @@ Spalten „Werkzeug" und „Datum" werden nachgetragen, wo bekannt — leer lass
 | der-entscheider.jpg | KI-erzeugt | | | ja | Startseite, „Der Entscheider" · sichtbar „Bild: KI-generiert", Zusatz im alt-Text |
 | technik-radar-header.jpg | KI-erzeugt | | | ja | radar.html (figcaption) + Startseite Kanal-Karte (Overlay) · sichtbar „Bild: KI-generiert" |
 | erfurt-panorama.png | KI-erzeugt | | | ja | Startseite, Hero-Hintergrund · sichtbar „Bild: KI-generiert" |
-| aktuell/schnitt.webp | KI-erzeugt | | 31.10.2026 | ja | Startseite, Objekt-001-Kurzfassung · sichtbar „Bild: KI-generiert", Zusatz „kein Plan des realen Objekts" im alt-Text · PNG-Original nicht im Repo |
+| aktuell/schnitt.webp | KI-erzeugt | | 31.10.2026 | ja | Startseite, Objekt-001-Kurzfassung + gebaeude-verstehen.html · sichtbar „Bild: KI-generiert", Zusatz „kein Plan des realen Objekts" im alt-Text · PNG-Original nicht im Repo |
 | referenzgebaeude.jpg | KI-erzeugt | | | ja | objekte/theaterstrasse-4.html · sichtbar „Bild: KI-generiert", Zusatz im alt-Text |
 | efh-erfurt-tiefthal.jpg | Foto | | | nein | objekte/efh-erfurt-tiefthal.html · kein Pflichtfall |
 | daniel-schoeberl.jpg | Foto | | | nein | Porträt · kein Pflichtfall |
