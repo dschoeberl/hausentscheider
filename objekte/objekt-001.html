@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Objekt 001 · Mehrfamilienhaus, Erfurt Altstadt | Hausentscheider</title>
+  <meta name="description" content="Objektprofil Referenzobjekt Erfurt Altstadt: WEG, 14 Wohnungen, Altbau 1900. Entscheidungsstand Heizungserneuerung mit Zahlen, Unterlagen und offenen Punkten.">
+  <meta name="robots" content="index,follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 16px; font-weight: 400; line-height: 1.7;
+      color: #1a1a1a; background: #ffffff; overflow-x: hidden;
+    }
+    :root {
+      --petrol:        #1a5c5a;
+      --petrol-light:  #7ab8b5;
+      --petrol-dark:   #1a3535;
+      --signal:        #CFF77F;
+      --signal-dark:   #a8d45a;
+      --tommy-rot:     #D81E34;
+      --context-blue:  #7e9696;
+      --stone-gray:    #8a8680;
+      --border:        #e0dedd;
+      --bg-light:      #f5f4f2;
+      --text-primary:  #1a1a1a;
+      --text-secondary:#5a5956;
+      --text-tertiary: #8a8680;
+      --white:         #ffffff;
+      --max-width:     900px;
+      --radius:        8px;
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; font-weight: 400; line-height: 1.3; color: var(--text-primary); }
+    h1 { font-size: 32px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 18px; }
+    p { margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
+    a { color: var(--petrol); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol); font-family: 'Inter', sans-serif; display: block; }
+    .label--muted { color: var(--text-tertiary); }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; overflow-x: hidden; }
+    /* KI-Kennzeichnung (Art. 50 KI-VO) */
+    .bildfigur { margin: 0; }
+    .bildnachweis { display: block; margin-top: .4rem; font-size: .72rem; line-height: 1.3; letter-spacing: .01em; color: rgba(20,45,42,.72); }
+    .bildnachweis--overlay { position: absolute; right: .5rem; bottom: .45rem; z-index: 2; margin: 0; max-width: calc(100% - 1rem); padding: .1rem .38rem; border-radius: 3px; font-size: .62rem; letter-spacing: 0; background: rgba(10,25,24,.66); color: rgba(255,255,255,.88); }
+    @media (max-width: 640px) { .bildnachweis--overlay { right: .5rem; bottom: .5rem; } }
+    .btn { display: inline-block; padding: 0.6rem 1.5rem; font-family: 'Inter', sans-serif; font-size: 13px; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; text-decoration: none; border: none; }
+    .btn:hover { opacity: 0.85; text-decoration: none; }
+    .btn--primary  { background: var(--petrol); color: white; }
+    .btn--signal   { background: var(--signal); color: var(--petrol-dark); font-weight: 500; border: none; white-space: nowrap; flex-shrink: 0; }
+    .btn--signal:hover { opacity: 0.9; text-decoration: none; }
+
+    /* OBJEKTE */
+    .objekte-section { margin-top: 1rem; padding: 3rem 0; border-bottom: 0.5px solid var(--border); }
+    .objekte-intro { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.5rem; }
+
+    /* Objekt 001 Karte */
+    .objekt001 { border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.25rem; }
+    .objekt001__header { background: var(--petrol-dark); padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: flex-start; gap: 1.25rem; flex-wrap: wrap; }
+    .objekt001__header > div:first-child { flex: 1 1 260px; min-width: 0; }
+    .objekt001__nr { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol-light); font-family: 'Inter', sans-serif; margin-bottom: 5px; }
+    .objekt001__name { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; font-weight: 400; color: #ffffff; margin-bottom: 3px; }
+    .objekt001__sub { font-size: 12px; color: #7ab8b5; }
+
+    /* Gebäudebild im Header */
+    .objekt001__media { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+    .objekt001__img { position: relative; width: 220px; aspect-ratio: 3 / 2; border-radius: 6px; overflow: hidden; flex-shrink: 0; }
+    .objekt001__img img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+
+    /* === Objekt 001 · Live-Modul (P1) === */
+    .oz-eklasse { display: inline-block; margin-top: 0.6rem; font-size: 11px; font-family: 'Inter', sans-serif; color: #7ab8b5; border: 0.5px solid rgba(122,184,181,0.45); border-radius: 4px; padding: 3px 10px; letter-spacing: 0.3px; white-space: nowrap; }
+    .oz-eklasse__q { display: block; margin-top: 5px; font-size: 11px; font-family: 'Inter', sans-serif; color: rgba(255,255,255,0.55); line-height: 1.5; }
+
+    /* (a) Die eine Zahl */
+    .oz-anchor { background: var(--petrol-dark); padding: 1.75rem 1.5rem; }
+    .oz-anchor__lbl { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--petrol-light); font-family: 'Inter', sans-serif; margin-bottom: 0.5rem; }
+    .oz-anchor__num { font-family: 'Playfair Display', Georgia, serif; font-size: 64px; line-height: 1; font-weight: 400; color: var(--signal); }
+    .oz-anchor__unit { font-size: 17px; color: #a8d45a; margin-left: 8px; font-family: 'Inter', sans-serif; }
+    .oz-anchor__det { margin-top: 1.1rem; }
+    .oz-anchor__det summary { font-size: 12px; color: var(--petrol-light); cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 6px; min-height: 24px; font-family: 'Inter', sans-serif; }
+    .oz-anchor__det summary::-webkit-details-marker { display: none; }
+    .oz-anchor__det summary::before { content: '▸'; font-size: 10px; transition: transform 0.2s; }
+    .oz-anchor__det[open] summary::before { transform: rotate(90deg); }
+    .oz-anchor__det p { font-size: 12px; color: rgba(255,255,255,0.72); line-height: 1.65; margin: 0.6rem 0 0; }
+    .oz-fw-det { margin-top: 1.1rem; }
+    .oz-fw-det summary { font-size: 12.5px; font-weight: 500; color: #fff; cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 7px; min-height: 24px; padding: 0.5rem 0.9rem; border: 0.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.07); box-shadow: inset 3px 0 0 var(--tommy-rot); border-radius: 0 6px 6px 0; font-family: 'Inter', sans-serif; transition: background 0.2s, border-color 0.2s; }
+    .oz-fw-det summary:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.32); }
+    .oz-fw-det summary::-webkit-details-marker { display: none; }
+    .oz-fw-det summary::before { content: '▸'; font-size: 10px; color: var(--tommy-rot); transition: transform 0.2s; }
+    .oz-fw-det[open] summary::before { transform: rotate(90deg); }
+    .oz-fw-det__body { margin-top: 0.6rem; background: #eaece9; border-left: 3px solid var(--tommy-rot); border-radius: 0 6px 6px 0; padding: 0.85rem 1.1rem; }
+    .oz-fw-det__body p { font-size: 12px; color: #2a2a28; line-height: 1.65; margin: 0 0 0.6rem; }
+    .oz-fw-det__body p:last-child { margin-bottom: 0; }
+    .oz-fw-det__body strong { color: #1a1a1a; }
+    .oz-fw-det__body h4 { font-size: 12.5px; font-weight: 600; color: #1a1a1a; margin: 1.1rem 0 0.5rem; font-family: 'Inter', sans-serif; }
+    .oz-fw-det__body h4:first-child { margin-top: 0; }
+    .oz-fw-det__drei { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 0.7rem; }
+    .oz-fw-det__zahl { flex: 1 1 150px; background: rgba(26,26,26,0.045); border-left: 2px solid rgba(26,26,26,0.2); border-radius: 0 4px 4px 0; padding: 0.5rem 0.7rem; }
+    .oz-fw-det__zahl b { display: block; font-size: 15px; font-weight: 600; color: #1a1a1a; font-family: 'Inter', sans-serif; margin-bottom: 2px; }
+    .oz-fw-det__zahl span { font-size: 11px; color: #55564f; line-height: 1.45; display: block; }
+    .oz-fw-det__tbl { overflow-x: auto; margin: 0 0 0.7rem; }
+    .oz-fw-det__tbl table { border-collapse: collapse; width: 100%; min-width: 430px; font-size: 11.5px; }
+    .oz-fw-det__tbl th, .oz-fw-det__tbl td { text-align: left; padding: 0.4rem 0.6rem; border-bottom: 0.5px solid rgba(26,26,26,0.14); vertical-align: top; color: #2a2a28; line-height: 1.5; }
+    .oz-fw-det__tbl th { font-weight: 600; color: #1a1a1a; }
+    .oz-fw-det__tbl td:first-child { color: #55564f; }
+    .oz-fw-det__body a { color: var(--tommy-rot); font-weight: 500; text-decoration: none; border-bottom: 1px solid rgba(216,30,52,0.35); }
+    .oz-fw-det__body a:hover { border-bottom-color: var(--tommy-rot); }
+    .oz-anchor__ziel { margin-top: 1.1rem; padding-top: 0.9rem; border-top: 0.5px solid rgba(122,184,181,0.2); font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+    .oz-anchor__ziel strong { color: #a8d45a; font-weight: 500; }
+    /* Pastell-Einordnungs-Skala für die eine Zahl */
+    .oz-skala { margin: 1.3rem 0 0.2rem; }
+    .oz-skala__bar { position: relative; height: 8px; border-radius: 5px; margin-top: 1rem;
+      background: linear-gradient(to right, #74bf86 0%, #cfe8d0 26%, #f4e6b0 52%, #f1c6b0 76%, #df8079 100%); }
+    .oz-skala__marker { position: absolute; top: -7px; bottom: -7px; width: 3px; background: var(--petrol-dark);
+      transform: translateX(-50%); border-radius: 2px; box-shadow: 0 0 0 1.5px #ffffff; }
+    .oz-skala__marker::after { content: ''; position: absolute; left: 50%; top: 50%; width: 9px; height: 9px;
+      background: var(--petrol-dark); border: 1.5px solid #ffffff; border-radius: 50%; transform: translate(-50%, -50%); }
+    .oz-skala__marker-lbl { position: absolute; bottom: calc(100% + 5px); left: 50%; transform: translateX(-50%);
+      font-size: 10px; font-weight: 600; color: #ffffff; white-space: nowrap; background: rgba(0,0,0,0.32);
+      padding: 1px 6px; border-radius: 3px; font-family: 'Inter', sans-serif; }
+    .oz-skala__labels { display: flex; justify-content: space-between; font-size: 10px;
+      color: rgba(255,255,255,0.7); margin-top: 0.45rem; font-family: 'Inter', sans-serif; }
+    .oz-skala__cap { font-size: 11.5px; color: rgba(255,255,255,0.72); line-height: 1.55; margin: 0.55rem 0 0; }
+    .oz-skala__cap strong { color: var(--signal); }
+
+    /* === Wärmekosten-Landkarte === */
+    .oz-map { margin: 0.4rem 0 0.2rem; }
+    .oz-map__bar { position: relative; height: 8px; border-radius: 5px; margin-top: 3.5rem;
+      background: linear-gradient(to right, #74bf86 0%, #cfe8d0 26%, #f4e6b0 52%, #f1c6b0 76%, #df8079 100%); }
+    .oz-map__mark { position: absolute; top: -6px; bottom: -6px; width: 2.5px; transform: translateX(-50%); border-radius: 2px; background: var(--petrol-dark); box-shadow: 0 0 0 1.5px rgba(255,255,255,0.45); }
+    .oz-map__mark::after { content: ''; position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; border-radius: 50%; transform: translate(-50%,-50%); background: var(--petrol-dark); border: 1.5px solid rgba(255,255,255,0.55); }
+    .oz-map__mark--gas { box-shadow: 0 0 0 1.5px #fff; }
+    .oz-map__mark--gas::after { background: var(--signal); border-color: #fff; width: 10px; height: 10px; }
+    .oz-map__lblbox { position: absolute; bottom: calc(100% + 9px); left: 50%; transform: translateX(-50%); text-align: center; white-space: nowrap; }
+    .oz-map__val { display: block; font-family: 'Playfair Display', Georgia, serif; font-size: 19px; color: rgba(255,255,255,0.82); line-height: 1; }
+    .oz-map__mark--gas .oz-map__val { color: var(--signal); font-size: 23px; }
+    .oz-map__cap { display: block; font-size: 9px; letter-spacing: 0.4px; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-top: 3px; font-family: 'Inter', sans-serif; }
+    .oz-map__cap em { color: var(--tommy-rot); font-style: normal; font-weight: 700; }
+    .oz-map__labels { display: flex; justify-content: space-between; font-size: 10px; color: rgba(255,255,255,0.6); margin-top: 0.5rem; font-family: 'Inter', sans-serif; }
+    .oz-map__basis { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.5; margin: 0.95rem 0 0; font-family: 'Inter', sans-serif; }
+    .oz-map__basis strong { color: rgba(255,255,255,0.78); font-weight: 600; }
+    .oz-map__risk { font-size: 11.5px; color: var(--petrol-light); line-height: 1.55; margin: 0.5rem 0 0; font-family: 'Inter', sans-serif; }
+    .oz-map__grenze { font-size: 11.5px; color: rgba(255,255,255,0.62); line-height: 1.6; margin: 0.6rem 0 0; font-family: 'Inter', sans-serif; }
+    .oz-anchor__ist { font-size: 13px; color: rgba(255,255,255,0.82); line-height: 1.7; margin: 0 0 1.15rem; font-family: 'Inter', sans-serif; }
+    .oz-anchor__ist strong { color: #ffffff; font-weight: 600; }
+
+    /* === Performance-Cockpit === */
+    .oz-cockpit { background: var(--petrol-dark); padding: 0 1.5rem 1.75rem; }
+    .oz-cockpit__rule { height: 0.5px; background: rgba(122,184,181,0.18); margin: 0 0 1.4rem; }
+    .oz-cockpit__head { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--petrol-light); font-family: 'Inter', sans-serif; margin: 0 0 0.9rem; }
+    .oz-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 1.4rem; }
+    .oz-kpi { position: relative; background: rgba(255,255,255,0.04); border: 0.5px solid rgba(122,184,181,0.18); border-radius: 8px; padding: 0.85rem 0.85rem; }
+    .oz-kpi__val { display: block; font-family: 'Playfair Display', Georgia, serif; font-size: 21px; color: #fff; line-height: 1.1; }
+    .oz-kpi__lbl { display: block; font-size: 10.5px; color: rgba(255,255,255,0.6); font-family: 'Inter', sans-serif; line-height: 1.4; margin-top: 0.35rem; }
+    .oz-kpi--risk { border-color: rgba(216,30,52,0.45); }
+    .oz-kpi__ref { display: block; font-size: 10px; color: rgba(255,255,255,0.5); font-family: 'Inter', sans-serif; line-height: 1.4; margin-top: 0.45rem; padding-top: 0.4rem; border-top: 0.5px solid rgba(122,184,181,0.15); }
+    .oz-kpi__flag { position: absolute; top: 0.6rem; right: 0.65rem; font-size: 8.5px; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 700; color: #fff; background: var(--tommy-rot); border-radius: 3px; padding: 1px 6px; font-family: 'Inter', sans-serif; }
+    .oz-recht { display: flex; align-items: center; gap: 0.7rem; background: rgba(216,30,52,0.10); border-left: 3px solid var(--tommy-rot); border-radius: 0 6px 6px 0; padding: 0.7rem 0.9rem; margin-bottom: 1.5rem; font-size: 12.5px; color: rgba(255,255,255,0.85); line-height: 1.5; font-family: 'Inter', sans-serif; }
+    .oz-recht strong { color: #fff; font-weight: 600; }
+    .oz-recht__flag { flex-shrink: 0; font-size: 8.5px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; color: #fff; background: var(--tommy-rot); border-radius: 3px; padding: 3px 7px; font-family: 'Inter', sans-serif; }
+    .oz-vergleich__sub { font-size: 11.5px; color: rgba(255,255,255,0.6); font-family: 'Inter', sans-serif; margin: 0 0 1.1rem; }
+    .oz-vgl-row { margin-bottom: 1.05rem; }
+    .oz-vgl-row__lbl { display: block; font-size: 11.5px; color: #fff; font-weight: 600; font-family: 'Inter', sans-serif; margin-bottom: 0.45rem; }
+    .oz-vgl-line { display: grid; grid-template-columns: 92px 1fr auto; align-items: center; gap: 9px; margin: 0.28rem 0; }
+    .oz-vgl-line__opt { font-size: 11px; color: rgba(255,255,255,0.72); font-family: 'Inter', sans-serif; }
+    .oz-vgl-track { position: relative; height: 20px; background: rgba(255,255,255,0.05); border-radius: 4px; }
+    .oz-vgl-line--mark { margin-top: 1.7rem; }
+    .oz-vgl-mark { position: absolute; top: -4px; bottom: -4px; width: 2px; background: #ffffff; transform: translateX(-50%); border-radius: 2px; z-index: 2; }
+    .oz-vgl-mark__lbl { position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); font-size: 8.5px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--signal); white-space: nowrap; font-family: 'Inter', sans-serif; font-weight: 700; }
+    .oz-vgl-fill { height: 100%; background: var(--petrol-light); border-radius: 4px; }
+    .oz-vgl-fill--ist { background: rgba(122,184,181,0.45); }
+    .oz-vgl-line__val { font-size: 11.5px; font-weight: 600; color: #fff; font-family: 'Inter', sans-serif; white-space: nowrap; min-width: 64px; text-align: right; }
+    .oz-vgl-note { font-size: 11px; color: var(--petrol-light); font-style: italic; font-family: 'Inter', sans-serif; margin: 0.35rem 0 0; line-height: 1.5; }
+    /* Der Grundlink der Seite ist dunkles Petrol und waere hier auf dunklem
+       Grund unlesbar (Kontrast 1,7). */
+    .oz-vgl-note a { color: #cfe6e4; text-decoration: underline; text-underline-offset: 2px; }
+    .oz-vgl-note a:hover, .oz-vgl-note a:focus-visible { color: #ffffff; }
+    .oz-vgl-status { display: grid; grid-template-columns: 1fr auto auto; gap: 7px 12px; margin-top: 1.2rem; padding-top: 1rem; border-top: 0.5px solid rgba(122,184,181,0.15); font-family: 'Inter', sans-serif; font-size: 11.5px; align-items: center; }
+    .oz-vgl-status__h { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--petrol-light); text-align: right; }
+    .oz-vgl-status__lbl { color: rgba(255,255,255,0.72); }
+    .oz-vgl-status__v { text-align: right; color: #fff; min-width: 96px; }
+    .oz-vgl-status__v--risk { color: var(--tommy-rot); font-weight: 600; }
+    .oz-vgl-status__fuss { grid-column: 1 / -1; margin: 0.35rem 0 0; font-size: 10.5px; line-height: 1.55; color: rgba(255,255,255,0.6); }
+    .oz-ampel { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; margin-top: 1.3rem; font-size: 10.5px; color: rgba(255,255,255,0.6); font-family: 'Inter', sans-serif; }
+    .oz-ampel span { display: inline-flex; align-items: center; gap: 5px; }
+    .oz-ampel i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+    .oz-ampel i.is-belegt { background: var(--petrol-light); }
+    .oz-ampel i.is-offen { background: var(--context-blue); }
+    .oz-ampel i.is-aus { background: var(--tommy-rot); }
+    @media (max-width: 680px) {
+      .oz-kpis { grid-template-columns: 1fr 1fr; }
+      .oz-cockpit { padding: 0 1.25rem 1.5rem; }
+      .oz-vgl-line { grid-template-columns: 78px 1fr auto; gap: 7px; }
+    }
+
+    /* (a2) Future Readiness Index */
+    .oz-radar { background: var(--petrol-dark); padding: 1.5rem 1.5rem 1.75rem; border-top: 0.5px solid rgba(122,184,181,0.15); }
+    .oz-radar__lbl { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--petrol-light); font-family: 'Inter', sans-serif; margin-bottom: 0.2rem; }
+    .oz-radar__title { font-family: 'Playfair Display', Georgia, serif; font-size: 17px; color: #ffffff; font-weight: 400; margin-bottom: 0.3rem; line-height: 1.3; }
+    .oz-radar__intro { font-size: 13px; color: rgba(255,255,255,0.78); line-height: 1.6; margin-bottom: 0.6rem; }
+    .oz-radar__framing { font-size: 12.5px; color: var(--petrol-light); font-style: italic; line-height: 1.5; margin-bottom: 1rem; }
+    .oz-radar__chart { display: block; width: 100%; max-width: 440px; height: auto; margin: 0 auto 0.5rem; }
+    .oz-radar__haus { width: 56px; height: auto; display: block; margin: 0 0 0.5rem; }
+    .oz-radar__haus path, .oz-radar__haus rect { stroke: var(--petrol-light); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .oz-radar__haus-arc { stroke-width: 1 !important; opacity: 0.55; }
+    .oz-radar__skala { display: block; font-size: 11px; color: var(--petrol-light); margin: 0.2rem 0; }
+    .oz-radar__grid { fill: none; stroke: rgba(122,184,181,0.22); stroke-width: 1; }
+    .oz-radar__soll { fill: none; stroke: var(--context-blue); stroke-width: 1.5; }
+    .oz-radar__axis { stroke: rgba(122,184,181,0.18); stroke-width: 1; }
+    .oz-radar__ist { fill: rgba(207,247,127,0.30); stroke: var(--signal); stroke-width: 2; stroke-linejoin: round; }
+    .oz-radar__pt { fill: var(--signal); }
+    .oz-radar__pt--krit { fill: var(--tommy-rot); stroke: none; }
+    .oz-radar__marker { cursor: pointer; }
+    .oz-radar__marker:focus { outline: none; }
+    .oz-radar__num { fill: var(--petrol); stroke: var(--petrol-dark); stroke-width: 1.5; transition: fill 0.15s; }
+    .oz-radar__num--krit { fill: var(--tommy-rot); }
+    .oz-radar__marker.is-active .oz-radar__num { fill: var(--signal); stroke: #ffffff; }
+    .oz-radar__numtext { fill: #ffffff; font-size: 11px; font-family: 'Inter', sans-serif; font-weight: 600; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+    .oz-radar__numtext--krit { fill: #1a3535; }
+    .oz-radar__marker.is-active .oz-radar__numtext { fill: #1a3535; }
+    .oz-radar__readout { min-height: 3.4em; background: rgba(126,150,150,0.15); border-left: 2px solid var(--context-blue); border-radius: 0 6px 6px 0; padding: 0.6rem 0.8rem; margin: 0.25rem 0 1rem; font-size: 12.5px; color: rgba(255,255,255,0.85); line-height: 1.55; }
+    .oz-radar__readout strong { color: var(--signal); font-weight: 500; }
+    .oz-radar__legend { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+    .oz-fr-item { display: flex; align-items: center; gap: 7px; width: 100%; text-align: left; background: transparent; border: 0.5px solid rgba(122,184,181,0.25); border-radius: 6px; padding: 7px 9px; min-height: 44px; cursor: pointer; color: rgba(255,255,255,0.82); font-family: 'Inter', sans-serif; font-size: 11px; line-height: 1.3; transition: background 0.15s, border-color 0.15s; }
+    .oz-fr-item:hover, .oz-fr-item.is-active { background: rgba(207,247,127,0.10); border-color: var(--signal); }
+    .oz-fr-item__nr { flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%; background: var(--petrol); color: #ffffff; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; }
+    .oz-fr-item--krit .oz-fr-item__nr { background: var(--tommy-rot); color: #ffffff; }
+    .oz-fr-item--krit { border-color: rgba(216,30,52,0.4); }
+    .oz-fr-item__feld { flex: 1; }
+    .oz-fr-item__ist { flex-shrink: 0; font-weight: 600; color: var(--petrol-light); }
+    .oz-fr-item--krit .oz-fr-item__ist { color: var(--tommy-rot); }
+    .oz-radar__doclink { margin: 1rem 0 0; }
+    .oz-radar__doclink a { font-size: 12.5px; color: var(--signal); font-family: 'Inter', sans-serif; font-weight: 500; }
+    .oz-radar__doclink a:hover { text-decoration: underline; }
+
+    /* (b) Live-Zeitstrahl */
+    .oz-timeline { background: #ffffff; padding: 1.35rem 1.5rem 1.25rem; border-bottom: 0.5px solid var(--border); }
+    .oz-timeline__head { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--petrol); font-weight: 600; font-family: 'Inter', sans-serif; margin-bottom: 0.4rem; }
+    .oz-timeline__title { font-family: 'Playfair Display', Georgia, serif; font-size: 19px; font-weight: 400; color: var(--text-primary); margin: 0 0 0.4rem; line-height: 1.3; }
+    .oz-timeline__lead { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin: 0 0 1.1rem; max-width: 580px; }
+    .oz-tl-wrap { position: relative; }
+    .oz-tl-scroll { max-height: 560px; overflow-y: auto; overscroll-behavior: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; padding: 0.25rem 0.9rem; background: #f0eeea; border-top: 2px solid var(--petrol); border-bottom: 2px solid var(--petrol); scrollbar-width: thin; scrollbar-color: var(--petrol-light) transparent; }
+    .oz-tl-scroll::-webkit-scrollbar { width: 8px; }
+    .oz-tl-scroll::-webkit-scrollbar-track { background: transparent; }
+    .oz-tl-scroll::-webkit-scrollbar-thumb { background: var(--petrol-light); border-radius: 4px; }
+    .oz-tl__item { margin: 0; }
+    .oz-tl__item:not(.oz-tl__item--live) + .oz-tl__item:not(.oz-tl__item--live) { border-top: 0.5px solid var(--border); }
+    .oz-tl__det { width: 100%; }
+    .oz-tl__sum { list-style: none; cursor: pointer; display: grid; grid-template-columns: 18px 1fr auto; gap: 3px 10px; align-items: center; padding: 0.6rem 0.5rem; min-height: 44px; border-radius: 6px; transition: background 0.15s; }
+    .oz-tl__sum:hover { background: rgba(26,92,90,0.06); }
+    .oz-tl__sum::-webkit-details-marker { display: none; }
+    .oz-tl__dot { grid-column: 1; grid-row: 1; justify-self: start; width: 11px; height: 11px; border-radius: 50%; background: var(--petrol); }
+    .oz-tl__date { grid-column: 2; grid-row: 1; font-size: 12.5px; font-family: 'Inter', sans-serif; color: var(--petrol); font-weight: 600; }
+    .oz-tl__chev { grid-column: 3; grid-row: 1; justify-self: end; display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; border: 0.5px solid var(--petrol); background: rgba(26,92,90,0.12); color: var(--petrol); font-size: 11px; transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s; }
+    .oz-tl__sum:hover .oz-tl__chev { background: var(--petrol); border-color: var(--petrol); color: #ffffff; }
+    .oz-tl__det[open] .oz-tl__chev { transform: rotate(90deg); }
+    .oz-tl__meta-row { grid-column: 2 / -1; grid-row: 2; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .oz-tl__typ { font-size: 9px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--petrol); font-family: 'Inter', sans-serif; font-weight: 600; }
+    .oz-tl__titel { grid-column: 2 / -1; grid-row: 3; font-size: 13.5px; color: var(--text-primary); line-height: 1.45; }
+    .oz-tl__ergebnis { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; margin: 0.3rem 0.5rem 0.7rem 36px; background: #ffffff; border-left: 3px solid var(--petrol); border-radius: 0 6px 6px 0; padding: 0.6rem 0.85rem; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+    .oz-tl__det:not([open]) .oz-tl__ergebnis { display: none; }
+    .oz-tl__item--done .oz-tl__dot { background: var(--petrol); }
+    .oz-tl__item--planned .oz-tl__dot { background: var(--context-blue); }
+    .oz-tl__item--later .oz-tl__dot { background: var(--border); }
+
+    /* (c) Aktueller Schritt (live) */
+    .oz-tl__item--live { background: rgba(207,247,127,0.12); border: 1px solid rgba(207,247,127,0.75); border-radius: 8px; margin: 0.6rem 0; padding: 0.5rem 0.8rem; }
+    .oz-tl__item--live .oz-tl__dot { background: var(--signal); }
+    .oz-tl__item--live .oz-tl__titel { font-weight: 600; }
+    .oz-tl__item--live .oz-tl__ergebnis { color: var(--text-primary); background: transparent; border-left: none; box-shadow: none; padding: 0; margin: 0.15rem 0 0.2rem 28px; }
+    .oz-tl__live-tag { display: inline-block; margin: 0.1rem 0 0.4rem; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: #1a3535; background: var(--signal); border-radius: 3px; padding: 2px 8px; font-weight: 700; font-family: 'Inter', sans-serif; }
+
+    /* Status-Pills */
+    .oz-pill { display: inline-block; font-size: 11px; font-family: 'Inter', sans-serif; padding: 2px 9px; border-radius: 20px; white-space: nowrap; }
+    .oz-pill--done    { background: #e0f0ee; color: #1a4f4d; border: 0.5px solid #8ec8c4; }
+    .oz-pill--planned { background: #eef2f2; color: #3f5454; border: 0.5px solid #c2d0d0; }
+    .oz-pill--live    { background: var(--signal); color: #1a3535; border: 0.5px solid #b8e85a; font-weight: 600; }
+    .oz-pill--later   { background: var(--bg-light); color: var(--text-tertiary); border: 0.5px solid var(--border); }
+    .oz-tl__docs-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-family: 'Inter', sans-serif; color: #ffffff; background: var(--tommy-rot); border: 0.5px solid var(--tommy-rot); border-radius: 20px; padding: 2px 9px; font-weight: 600; white-space: nowrap; }
+    .oz-tl__docs { display: flex; flex-direction: column; gap: 6px; margin: -0.1rem 0.5rem 0.7rem 36px; }
+    .oz-tl__docs a { font-size: 12.5px; font-family: 'Inter', sans-serif; color: var(--petrol); font-weight: 500; }
+    .oz-tl__det:not([open]) .oz-tl__docs { display: none; }
+
+    /* Einladungs-Slot */
+    .objekt-slot { border: none; border-radius: var(--radius); padding: 1.5rem; display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.25rem; flex-wrap: wrap; background: var(--context-blue); }
+    .objekt-slot__plus { width: 32px; height: 32px; border-radius: 50%; background: var(--signal); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--petrol-dark); flex-shrink: 0; font-weight: 500; line-height: 1; }
+    .objekt-slot__body { flex: 1; min-width: 180px; }
+    .objekt-slot__title { font-size: 14px; font-weight: 500; color: #ffffff; margin-bottom: 3px; }
+    .objekt-slot__sub { font-size: 12px; color: rgba(255,255,255,0.88); line-height: 1.55; }
+
+    /* Seitenkopf und Quellen */
+    .seitenkopf { padding-top: 2.4rem; }
+    .eyebrow { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--petrol); font-weight: 500; margin-bottom: 0.5rem; }
+    .lede { font-size: 16px; color: var(--text-secondary); max-width: 680px; margin: 0.6rem 0 0; }
+    .src { margin: 1.5rem auto 2.4rem; font-size: 11.5px; color: var(--text-tertiary); line-height: 1.55; border-top: 1px solid var(--border); padding-top: 0.9rem; }
+  .site-head{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:.5px solid var(--border);}
+  .site-head__inner{max-width:var(--max-width);margin:0 auto;padding:0 1.4rem;height:56px;display:flex;align-items:center;justify-content:space-between;}
+  .site-head__logo{text-decoration:none;display:inline-flex;align-items:center;}
+  .site-head__logo:hover{opacity:.85;}
+  .site-head__links{display:flex;gap:1.4rem;align-items:center;}
+  .site-head__links a{font-size:13px;color:var(--text-secondary);text-decoration:none;transition:color .2s;}
+  .site-head__links a:hover{color:var(--petrol);}
+  .site-foot{border-top:.5px solid var(--border);padding:1.5rem 0;margin-top:1.5rem;}
+  .site-foot__inner{max-width:var(--max-width);margin:0 auto;padding:0 1.4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
+  .site-foot__left,.site-foot__right{font-size:12px;color:var(--text-tertiary);}
+  .site-foot a{color:var(--text-tertiary);text-decoration:none;}
+  .site-foot a:hover{color:var(--petrol);}
+  @media(max-width:560px){.site-head__links{gap:1rem;} .site-head__links a{font-size:12px;} .site-foot__inner{flex-direction:column;align-items:flex-start;}}
+
+    @media (max-width: 680px) {
+      h1                      { font-size: 22px; }
+      .objekt001__media       { width: 100%; justify-content: center; margin-top: 0.5rem; }
+      .objekt001__img         { width: 100%; max-width: 320px; }
+      .oz-anchor              { padding: 1.5rem 1.25rem; }
+      .oz-radar               { padding: 1.5rem 1.25rem 1.75rem; }
+      .oz-radar__legend       { grid-template-columns: 1fr; }
+      .oz-timeline            { padding: 1.25rem 1.25rem 1rem; }
+      .oz-tl-scroll           { max-height: 62vh; }
+      .objekt-slot            { flex-direction: column; align-items: flex-start; }
+      .container              { padding: 0 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+<header class="site-head">
+  <div class="site-head__inner">
+    <a href="../index.html" class="site-head__logo" aria-label="hausentscheider — Startseite">
+      <svg width="180" height="28" viewBox="0 0 180 28" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">haus</text>
+        <text x="58" y="22" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#1a1a1a">entscheider</text>
+        <line x1="0" y1="26" x2="56" y2="26" stroke="#1a5c5a" stroke-width="2" stroke-linecap="square"/>
+      </svg>
+    </a>
+    <nav class="site-head__links" aria-label="Navigation">
+      <a href="../index.html">Startseite</a>
+      <a href="../wegweiser.html">Wegweiser</a>
+    </nav>
+  </div>
+</header>
+
+  <div class="container seitenkopf">
+    <p class="eyebrow">Praxis · Referenzgebäude</p>
+    <h1>Objekt 001 · Mehrfamilienhaus, Erfurt Altstadt</h1>
+    <p class="lede">Ein Mehrfamilienhaus von 1900 mit 14 Wohnungen steht vor der Entscheidung über seine Heizung. Hier ist der Weg dorthin dokumentiert, mit den Zahlen, den Unterlagen und den offenen Punkten. Die Werte sind belegt oder als Annahme gekennzeichnet.</p>
+  </div>
+
+  <section class="objekte-section container" id="objekte">
+    <div class="objekte-intro">
+      <div>
+        <span class="label" style="margin-bottom:0.5rem;">Erstes Referenzgebäude</span>
+        <h2 style="font-size:22px;margin:0;">Forschung, angewandt auf ein echtes Gebäude.</h2>
+      </div>
+    </div>
+    <p style="font-size:14px;color:var(--text-secondary);max-width:620px;margin-bottom:1rem;line-height:1.7;">
+      Den Future-Readiness-Rahmen aus unserer Forschung haben wir zuerst auf die Stadt Erfurt —
+      zur kommunalen Wärmeplanung — angewandt; hier erstmals auf ein einzelnes Gebäude. Drei Dinge auf einen Blick:
+      die belegte Wärmekosten-Kennzahl von heute, ein Radar der Zukunftsfähigkeit über elf
+      Kompetenzfelder und der laufende Entscheidungsweg. Einordnung statt Empfehlung.
+    </p>
+
+    <!-- Objekt 001 -->
+    <div class="objekt001">
+      <div class="objekt001__header">
+        <div>
+          <p class="objekt001__nr">Objekt 001 · Erfurt Innenstadt · Dokumentiert seit 2024</p>
+          <p class="objekt001__name">Mehrfamilienhaus · Altstadt Erfurt</p>
+          <p class="objekt001__sub">Altbau 1900 · Saniert 2010 · 14 Wohnungen · 769,83 m² beheizte Fläche · WEG · Gas-Heizung</p>
+          <span class="oz-eklasse">Energieklasse D · 124 kWh/m²a</span>
+          <span class="oz-eklasse__q">Verbrauchsausweis 2018, bezogen auf 908 m²</span>
+        </div>
+        <div class="objekt001__media">
+          <div class="objekt001__img">
+            <img src="../images/referenzgebaeude-erfurt.png" alt="Symbolbild eines Gründerzeit-Mehrfamilienhauses in der Erfurter Altstadt, KI-generiert — kein Foto des realen Objekts">
+            <span class="bildnachweis bildnachweis--overlay">Bild: KI-generiert</span>
+          </div>
+        </div>
+      </div>
+      <!-- (a) Die eine Zahl -->
+      <div class="oz-anchor" id="oz-anchor"></div>
+
+      <!-- (a1) Performance-Cockpit -->
+      <div class="oz-cockpit" id="oz-cockpit">
+        <div class="oz-cockpit__rule"></div>
+        <p class="oz-cockpit__head">Performance · auf einen Blick</p>
+        <div class="oz-kpis">
+          <div class="oz-kpi oz-kpi--risk">
+            <span class="oz-kpi__flag">Risiko</span>
+            <span class="oz-kpi__val">1998</span>
+            <span class="oz-kpi__lbl">Gaskessel · 72 kW</span>
+            <span class="oz-kpi__ref">28 Jahre — über übliche Lebensdauer (~20–25 J.) · Ersatzteile abgekündigt</span>
+          </div>
+          <div class="oz-kpi">
+            <span class="oz-kpi__val">46 kW</span>
+            <span class="oz-kpi__lbl">Heizlast (inkl. Lüftung)</span>
+            <span class="oz-kpi__ref">Berechnung 03.08.2026 · Kessel mit 72 kW deutlich überdimensioniert · wärmepumpenfähig ✓</span>
+          </div>
+          <div class="oz-kpi">
+            <span class="oz-kpi__val">64.745 €</span>
+            <span class="oz-kpi__lbl">Erhaltungsrücklage</span>
+            <span class="oz-kpi__ref">7,79 €/m²·a — unter Fachempfehlung Altbau (~17 €/m²·a)</span>
+          </div>
+          <div class="oz-kpi oz-kpi--risk">
+            <span class="oz-kpi__flag">steigt&nbsp;▲</span>
+            <span class="oz-kpi__val">+103 %</span>
+            <span class="oz-kpi__lbl">Gas-Vollkosten seit 2019</span>
+            <span class="oz-kpi__ref">5,03 → 10,20 ct/kWh · vom Verbrauchs- zum Marktsystem</span>
+          </div>
+        </div>
+
+
+        <!-- Dokumentationsbaustein: Herkunft der Heizlast. Die Zahlen stammen aus den
+             beiden Heizlastberechnungen vom 30.03. und 03.08.2026; Leistungspreis
+             75,04 €/kW·a aus dem SWE-Preisblatt Q3 2026 (nicht 39,99 €/kW — das ist
+             der Satz des einmaligen Baukostenzuschusses). -->
+        <details class="oz-fw-det" style="margin-bottom:1.5rem;">
+          <summary>Eine Zahl, drei Fassungen — wie die Heizlast dieses Gebäudes zustande kam</summary>
+          <div class="oz-fw-det__body">
+            <p>Die Norm-Heizlast ist die Größe, auf die jedes Heizungsangebot ausgelegt wird. Sie bestimmt, wie groß eine Wärmepumpe ausfällt und wie viele Außeneinheiten sie braucht — und sie bestimmt den Leistungspreis, den ein Fernwärmeanschluss jährlich kostet. Wer sie nicht kennt, kann Angebote nicht vergleichen.</p>
+            <p>In diesem Gebäude sind der Gemeinschaft drei verschiedene Werte begegnet.</p>
+            <div class="oz-fw-det__drei">
+              <div class="oz-fw-det__zahl"><b>58.885 Watt</b><span>Berechnung nach DIN EN 12831 vom 30. März 2026</span></div>
+              <div class="oz-fw-det__zahl"><b>62 Kilowatt</b><span>Wert, den beide fachlichen Einschätzungen zur Eigentümerversammlung ihren Bewertungen zugrunde legten — 5 Prozent über der Berechnung und in keiner Unterlage hergeleitet</span></div>
+              <div class="oz-fw-det__zahl"><b>46.026 Watt</b><span>aktualisierte Berechnung vom 3. August 2026, selbes Büro, selbe Person, selbe Software · zugänglich seit dem 27. August</span></div>
+            </div>
+            <p>Auf der Versammlung am 13. Juli wurde protokolliert, dass Korrekturen und Ergänzungen in die Heizlastberechnung eingearbeitet und zur Verfügung gestellt werden. Welche, stand nicht dabei. Am Ende waren es 22 Prozent gegenüber der berechneten und 26 Prozent gegenüber der zugrunde gelegten Zahl.</p>
+
+            <h4>Was sich zwischen den beiden Berechnungen geändert hat</h4>
+            <p>Die Gebäudegeometrie ist in beiden Fassungen identisch: gleiche Grundfläche, gleiche Hüllfläche, gleiche Nettogrundfläche. Es wurde nichts neu aufgemessen. Vier Eingangsgrößen wurden anders angesetzt.</p>
+            <div class="oz-fw-det__tbl">
+              <table>
+                <thead><tr><th></th><th>März 2026</th><th>August 2026</th></tr></thead>
+                <tbody>
+                  <tr><td>Fenster</td><td>Holzfenster, einfach verglast · U 5,0</td><td>Kunststofffenster, Isolierverglasung · U 1,9</td></tr>
+                  <tr><td>Dach</td><td>Holzkonstruktion · U 1,4</td><td>massive Konstruktion mit 5 cm Dämmung · U 0,21</td></tr>
+                  <tr><td>Lüftungswärmeverluste</td><td>0 Watt</td><td>5.882 Watt</td></tr>
+                  <tr><td>Raumnutzung Erdgeschoss</td><td>sechsmal Verkaufsraum, zweimal Werkstatt</td><td>keine gewerblichen Nutzungen</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Das Gebäude wurde 2010 energetisch saniert. Dokumentiert ist das im Sachstandsbericht desselben Ingenieurbüros aus dem Jahr 2023.</p>
+            <p>Ohne vorliegende Bauteilnachweise mit ungünstigen Katalogwerten zu rechnen, ist bei Heizlastberechnungen nicht ungewöhnlich — wenn es gekennzeichnet wird und wenn es in eine Richtung konsequent ist. Hier war weder das eine noch das andere der Fall: Die Annahmen sind in der Berechnung nicht als Annahmen ausgewiesen, sie wurden nicht gegen den eigenen Bericht von 2023 gehalten, und die Lüftungswärmeverluste standen zugleich bei null. <strong>Unsere Bewertung, als solche gekennzeichnet:</strong> Eine Berechnung mit diesen Eigenschaften ist als Grundlage einer Systementscheidung über 20 bis 30 Jahre nicht belastbar. Auf diese Zahl wird jedes Angebot ausgelegt.</p>
+            <p>Hinzu kommt eine Beobachtung, die über die Heizlast hinausgeht. Zwei Eingangsgrößen trugen die fachliche Empfehlung gegen die Wärmepumpe: der Schallrichtwert, angesetzt mit 35 dB(A) statt der behördlich bestätigten 40, und die Heizlast, angesetzt mit 62 statt der berechneten 58,9 Kilowatt. Beide liegen am für die Wärmepumpe ungünstigsten Ende der jeweils bekannten Spanne. Beide sind überprüfbar. Die Überprüfung gehört vor die Entscheidung, nicht danach.</p>
+
+            <h4>Es gibt eine vierte Zahl</h4>
+            <p>Die Anschlussleistung ist dieselbe Größe wie die Heizlast — sie bestimmt bei der Fernwärme, was der Leistungspreis jährlich kostet. In der Bewertung der Wärmepumpe wurde sie mit 62 Kilowatt angesetzt. In der Kostenaufstellung zur Fernwärme, acht Wochen später, mit 40. Beim Leistungspreis des dritten Quartals 2026 von 75,04 €/kW·a sind das 4.652 gegenüber 3.002 Euro im Jahr, über eine Anlagengeneration rund 41.000 Euro Unterschied. Hergeleitet ist keiner der beiden Werte, und keiner entspricht einer Berechnung. Das unabhängige Zweitgutachten hat für beide Varianten mit derselben Zahl gerechnet.</p>
+
+            <h4>Warum das nicht symmetrisch wirkt</h4>
+            <p>Eine zu hoch angesetzte Heizlast verteuert jede Option. Bei der Fernwärme wirkt sie über den Leistungspreis: rund 1.200 Euro pro Jahr Unterschied zwischen 62 und 46 Kilowatt. Bei der Wärmepumpe wirkt sie zusätzlich auf die Zahl der Außeneinheiten — und damit auf den Schallschutz, der in diesem Verfahren zwei Jahre lang das entscheidende Gegenargument war.</p>
+            <p>Der Vollständigkeit halber: Auch das Zweitgutachten, das die Wärmepumpe empfiehlt, hat mit 62 Kilowatt gerechnet, also mit dem für die Wärmepumpe ungünstigeren Wert. Es standen sich hier nicht zwei Lager mit je passenden Zahlen gegenüber. Es galt eine Zahl für alle, die niemand hergeleitet hat.</p>
+
+            <h4>Was eine Gemeinschaft daraus mitnehmen kann</h4>
+            <p>Die Norm-Heizlast ist keine Formalie, sondern die Grundlage jedes Angebots. Sie steht auf Blatt G2 jeder Berechnung nach DIN EN 12831. Es lohnt sich, zwei Dinge zu prüfen: ob die angesetzten Bauteilwerte zum tatsächlichen Sanierungsstand des Gebäudes passen, und ob die Lüftungswärmeverluste enthalten sind. Beides steht in derselben Berechnung, die ohnehin beauftragt wird.</p>
+          </div>
+        </details>
+        <div class="oz-recht">
+          <span class="oz-recht__flag">Ausschluss</span>
+          <span>Eine neue <strong>Gas- oder Hybridanlage</strong> ist hier rechtlich nicht zulässig (§ 5 Fernwärmesatzung, amtlich bestätigt). Die Entscheidung steht zwischen <strong>Fernwärme</strong> und <strong>reiner Wärmepumpe</strong>.</span>
+        </div>
+
+        <p class="oz-cockpit__head">Die zwei zulässigen Optionen</p>
+        <p class="oz-vergleich__sub">Belegte Werte aus der Entscheidungsgrundlage — neutral, ohne Empfehlung.</p>
+
+        <!-- Reihenfolge: erst die Jahreskosten, dann die Hochrechnung daraus.
+             Das Ergebnis stand vorher vor seinen Zutaten. -->
+        <div class="oz-vgl-row" id="oz-vgl-jahres"></div>
+
+        <div class="oz-vgl-row" id="oz-vgl-gesamt"></div>
+
+        <!-- CO2-Zeile: rechnet aus daten/theaterstrasse-4.json, Block "co2". -->
+        <div class="oz-vgl-row" id="oz-vgl-co2"></div>
+
+        <div class="oz-vgl-status">
+          <span class="oz-vgl-status__lbl"></span><span class="oz-vgl-status__h">Fernwärme</span><span class="oz-vgl-status__h">Wärmepumpe</span>
+          <span class="oz-vgl-status__lbl">Preisrisiko 25 Jahre</span><span class="oz-vgl-status__v oz-vgl-status__v--risk">hoch</span><span class="oz-vgl-status__v">gering</span>
+          <span class="oz-vgl-status__lbl">Ortsrecht · Fernwärmesatzung</span><span class="oz-vgl-status__v">zulässig</span><span class="oz-vgl-status__v">zulässig mit Befreiung</span>
+          <span class="oz-vgl-status__lbl">Förderrecht · BEG EM</span><span class="oz-vgl-status__v">Anschluss 30 %</span><span class="oz-vgl-status__v">nur mit Befreiung</span>
+          <p class="oz-vgl-status__fuss">Der Förderausschluss für Einzelheizungen bei kommunaler Anschlussentscheidung steht in der Richtlinie; ab Veröffentlichung des Infoblatts gilt er auch bei verbindlicher Anschlusszusage des Versorgers. Eine Befreiung vom Anschlusszwang hebt ihn nach Angaben des Bundesverbands Wärmepumpe auf. Ob sie schon beim Förderantrag vorliegen muss, ist offen; deshalb zeigt die Fördermatrix beide Fälle.</p>
+        </div>
+
+        <div class="oz-cockpit__rule" style="margin-top:1.6rem;"></div>
+        <p class="oz-cockpit__head">Förderung und Zeitpunkt</p>
+        <p class="oz-vergleich__sub">Diese Tabelle beantwortet eine andere Frage als der Kostenvergleich: Was trägt die Förderung, und was kostet es, damit zu warten?</p>
+        <!-- Verweis statt eigener Laufzeitrechnung: Die 25-Jahres-Zahlen stehen
+             nur im Block "Kosten über 25 Jahre". Sonst koennten die Eingabefelder
+             hier eine zweite, abweichende Zahl fuer dieselbe Aussage erzeugen. -->
+        <div data-foerdermatrix data-dunkel data-laufzeit-verweis="#oz-vgl-gesamt"></div>
+        <p data-foerderstand data-dunkel><b>Förderstand 24.09.2026.</b> Der Klimageschwindigkeits-Bonus und die Höchstgrenze der förderfähigen Ausgaben für die erste Wohneinheit sinken halbjährlich, erstmals zum 1. Februar 2027. Für Wärmepumpen sinkt die Grundförderung ab dem ersten Quartal 2027 von 30 auf 15 Prozent; im Gegenzug kommt ein Wertschöpfungs-Bonus für Geräte mit Ursprung in der Union hinzu. Die Voraussetzungen sind gesondert geregelt; ob ein Gerät sie erfüllt, ist im Einzelfall zu prüfen. Maßgeblich ist der Tag der Antragstellung, nicht der Tag der Entscheidung. Eine Wärmepumpe oder andere Einzelheizung wird nicht gefördert, wenn das Grundstück aufgrund einer kommunalen Entscheidung, etwa einer Satzung mit Anschluss- und Benutzungszwang, an ein Wärmenetz angeschlossen werden soll; gefördert wird dann nur der Netzanschluss. Eine Befreiung vom Anschlusszwang hebt den Ausschluss nach Angaben des Bundesverbands Wärmepumpe auf.</p>
+
+        <div class="oz-ampel">
+          <span><i class="is-belegt"></i>belegt</span>
+          <span><i class="is-offen"></i>vor Vergabe offen</span>
+          <span><i class="is-aus"></i>rechtlicher Ausschluss</span>
+        </div>
+      </div>
+
+      <!-- (a2) Future Readiness Index -->
+      <div class="oz-radar" id="oz-radar"></div>
+
+      <!-- (b) Live-Zeitstrahl · (c) aktueller Schritt -->
+      <div class="oz-timeline" id="oz-timeline"></div>
+    </div>
+
+    <!-- Slot -->
+    <div class="objekt-slot">
+      <div class="objekt-slot__body">
+        <p class="objekt-slot__title">Wie zukunftsfähig ist Ihr Gebäude?</p>
+        <p class="objekt-slot__sub">Sie haben gerade ein echtes Gebäude offen auf dem Tisch gesehen — Wärmekosten, Future Readiness, Entscheidungsweg. Genau diese Analyse und die Begleitung dahinter gibt es auch für Ihr Gebäude.</p>
+      </div>
+      <a href="../index.html#begleitung" class="btn btn--signal">Zur Begleitung →</a>
+    </div>
+  </section>
+
+  <div class="container">
+    <p class="src">Werte des Referenzgebäudes: Gas-Jahresabrechnungen 2019 bis 2025, Heiznebenkosten-Abrechnung 2025, Heizlastberechnungen vom 30.03. und 03.08.2026, Verbrauchsausweis vom 18.04.2018, SWE-Preisblatt Stand 01.10.2026, schriftliche Auskünfte der Stadt Erfurt. Die Fundstelle steht jeweils beim Wert oder im Zeitstrahl. Bewertungen sind als solche gekennzeichnet.</p>
+  </div>
+
+<footer class="site-foot">
+  <div class="site-foot__inner">
+    <div class="site-foot__left">
+      <a href="../index.html" style="text-decoration:none;display:inline-flex;align-items:center;vertical-align:middle;">
+        <svg width="130" height="20" viewBox="0 0 130 20" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <text x="0" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">haus</text>
+          <text x="42" y="15" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#1a1a1a">entscheider</text>
+          <line x1="0" y1="18" x2="40" y2="18" stroke="#1a5c5a" stroke-width="1.5" stroke-linecap="square"/>
+        </svg>
+      </a>
+      &nbsp;·&nbsp;Daniel Schöberl&nbsp;·&nbsp;Erfurt / München
+    </div>
+    <div class="site-foot__right">
+      <a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a>
+      &nbsp;·&nbsp;
+      <a href="../index.html#impressum">Impressum</a>
+      &nbsp;·&nbsp;
+      <a href="../datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+  <script>
+    (function(){
+      // Eingebettetes Datenobjekt (Muster analog GEBAEUDE_DB der Profilseite).
+      // daten/theaterstrasse-4.json bleibt der dokumentierte Stand; Konsolidierung
+      // Cockpit -> build_json.py -> Seite ist ein spaeterer, separater Schritt.
+      const OBJEKT_001 = {
+        zeitstrahl: [
+          { datum: "1998", typ: "Bestand", titel: "Einbau des heutigen Gaskessels", status: "erledigt",
+            ergebnis: "Der Gaskessel (72 kW) war von Beginn an großzügig dimensioniert. Gemessen an der Norm-Heizlast von 46 kW, die für den 2010 sanierten Zustand nach DIN EN 12831 berechnet ist, ist er es heute umso mehr. Nach über 25 Betriebsjahren ist er am Ende seiner Lebensdauer." },
+          { datum: "2005", typ: "Recht", titel: "Fernwärmesatzung der Stadt (Beschluss 2005)", status: "erledigt",
+            ergebnis: "Das Gebäude liegt im Geltungsbereich der Erfurter Fernwärmesatzung (Beschluss vom 7. Juni 2005). Welche Befreiung für eine Wärmepumpe greift, hat das Umweltamt im Oktober 2026 geklärt (siehe 13.10.2026)." },
+          { datum: "2019 → 2025", typ: "Energie & Preis", titel: "Gaskosten +81 %", status: "erledigt",
+            ergebnis: "Die jährlichen Gaskosten stiegen von 2019 bis 2025 um rund 81 %. Der Vollkostenpreis je kWh legte 2019–2024 um 56 % zu (5,03 → 7,84 ct) — das Gebäude wandelt sich vom Verbrauchs- zum Marktsystem." },
+          { datum: "Dez. 2022", typ: "Markt & Klima", titel: "Wärmenetzstrategie 2040 des Versorgers", status: "erledigt",
+            ergebnis: "Die regionale Fernwärme ist heute zu rund 95 % gasbasiert; die Strategie des Versorgers prognostiziert eine Preisverdoppelung bis 2040. Geothermie ist noch ohne Probebohrung." },
+          { datum: "Juli 2023", typ: "Technik", titel: "Sachstandsanalyse Heizung", status: "erledigt",
+            ergebnis: "Ein Ingenieurbüro dokumentierte gutachterlich: Ersatzteile sind abgekündigt, die Anlage ist überdimensioniert, eine kurzfristige Erneuerung wird empfohlen. Die Frage der Fernwärmesatzung rückte erst später in den Blick." },
+          { datum: "Sept. 2024", typ: "Wärmeplanung", titel: "Start der kommunalen Wärmeplanung", status: "erledigt",
+            ergebnis: "Die Stadt beginnt offiziell die kommunale Wärmeplanung (Fertigstellung Mitte 2026 angekündigt). Der Plan ist rechtlich unverbindlich." },
+          { datum: "2024 → 2025", typ: "Energie", titel: "Gasverbrauch gesunken", status: "erledigt",
+            ergebnis: "Der Jahresverbrauch sank von 97.601 auf 94.932 kWh." },
+          { datum: "16.02.2026", typ: "Recht & Klima", titel: "Behördliche Auskunft zur Fernwärmesatzung", status: "erledigt",
+            ergebnis: "Das zuständige Umweltamt teilt schriftlich mit, dass eine etwaige Anschlusspflicht unabhängig von der kommunalen Wärmeplanung zu beurteilen ist. Die Frage der Befreiung hat das Amt im Oktober 2026 beantwortet (siehe 13.10.2026). Zugleich liegt der Fernwärme-CO₂-Faktor (0,228 kg/kWh) über dem von Gas (0,201)." },
+          { datum: "14.05.2026", typ: "Wärmeplanung", titel: "Stellungnahme zur Wärmeplanung eingereicht", status: "erledigt",
+            ergebnis: "Die Eigentümerperspektive wurde formell in die kommunale Wärmeplanung eingebracht." },
+          { datum: "21.06.2026", typ: "Recht & Kosten", titel: "Anschlusskonditionen Fernwärme angefragt", status: "angefragt — Antwort offen", live: true,
+            ergebnis: "Beim Versorger werden die Konditionen eines Fernwärme-Anschlusses ermittelt (Anschlusskosten, Vorlaufzeit). Die Wärmepumpe bleibt die zu rechnende Variante." },
+          { datum: "21.06.2026", typ: "Recht & Technik", titel: "Anfrage an Behörde zur Gebietseinstufung", status: "erledigt",
+            ergebnis: "Die bauplanungsrechtliche Auskunft der Stadt Erfurt liegt vor: Das Grundstück liegt im Innenbereich (§ 34 BauGB); die nähere Umgebung entspricht einem allgemeinen Wohngebiet (§ 4 BauNVO) — daraus folgt der Schallrichtwert 40 dB(A) nachts (TA Lärm). Zugleich liegt das Gebäude im Sanierungsgebiet \"Altstadt\" (§ 144 BauGB) mit Erhaltungssatzung (§ 172 BauGB) und Ortsgestaltungssatzung; bauliche Änderungen an Gebäude und Fassade — etwa eine Wärmepumpen-Außenaufstellung — sind damit genehmigungspflichtig. Quelle: Stadtverwaltung Erfurt, Amt 61.03, Zeichen GB 61-035/26, 13.07.2026.",
+            dokumente: [
+              { titel: "Bauplanungsrechtliche Auskunft — Gebietseinstufung (anonymisiert)", href: "../dokumente/referenzobjekt-etv2026-bauamt-gebietseinstufung-anonym.pdf" }
+            ] },
+          { datum: "30.06.2026", typ: "Wärmeplanung", titel: "KWP-Endfassung in Kraft", status: "erledigt",
+            ergebnis: "Die Endfassung der kommunalen Wärmeplanung ist in Kraft. Am 20. August hat die Stadtverwaltung schriftlich dargelegt, was sie für Eigentümer bedeutet: Der Plan ist rechtlich unverbindlich, der Verfügbarkeitscheck liefert einen Anhaltspunkt, und die Entscheidung obliegt dem Eigentümer. Vollkostenberechnungen enthält die Fassung 2026 nicht; sie sollen mit der Fortschreibung folgen. Quelle: Stadt Erfurt, Drucksache 1663/26, im Ausschuss am 3. September zur Kenntnis genommen." },
+          { datum: "01.07.2026", typ: "Energie & Preis", titel: "Fernwärme-Preissprung (SWE Q3 2026)", status: "erledigt",
+            ergebnis: "Das SWE-Preisblatt Wärme weist ab 1.7. einen Arbeitspreis von 13,77 ct/kWh brutto aus (Vorquartal 11,54) — +19,3 % in einem Quartal. Hinzu kommt der jahresbezogene Leistungspreis (75,04 €/kW·a); der effektive Wärmepreis je Gebäude liegt damit höher und hängt vom Verbrauch ab — je weniger Verbrauch, desto höher der ct/kWh-Wert. Der CO₂-Zertifikatepreis (~1,9 ct/kWh) steht laut Preisblatt unter Vorbehalt. Das bestätigt das Preisrisiko eines Fernwärme-Anschlusses — Fernwärme wird teurer, nicht günstiger." },
+          { datum: "13.07.2026", typ: "Entscheidung", titel: "Eigentümerversammlung 2026", status: "erledigt",
+            ergebnis: "Die Heizungsentscheidung wurde auf eine außerordentliche Wärme-Eigentümerversammlung am 27.01.2027 vertagt. Zugleich wurde beschlossen, vier Unterlagen nachzuliefern: eine Kostenschätzung zur Fernwärmestation, eine Verbrauchsdarstellung 2023–2025, einen Umsetzungszeitrahmen und die überarbeitete Heizlastberechnung. Von diesen vier lag Ende August eine vollständig und eine teilweise vor; bis Mitte Oktober ist nichts hinzugekommen. Was es bedeutet, wenn zwei fachliche Einschätzungen zu gegensätzlichen Empfehlungen kommen, ordnet der Kommentar ein: <a href=\"../dokumente/Kommentar-Zwei_Fachmeinungen_Eine_Entscheidung.pdf\" target=\"_blank\" rel=\"noopener\">Zwei Fachmeinungen, eine Entscheidung →</a>" },
+          { datum: "13.07.2026", typ: "Fachgutachten", titel: "Fachgutachten zur Wärmeversorgung", status: "erledigt",
+            ergebnis: "Der Eigentümergemeinschaft lagen zwei fachliche Einschätzungen vor, die zu gegensätzlichen Empfehlungen kommen. Hausentscheider stellt beide anonymisiert nebeneinander und misst die Aussagen an belegbaren Quellen — damit sich alle auf gesicherter Grundlage ein eigenes Bild machen können.",
+            dokumente: [
+              { titel: "Fachtechnische Stellungnahme (Fernwärme)", href: "../dokumente/referenzobjekt-etv2026-fachtechnische-stellungnahme-anonym.pdf" },
+              { titel: "Zweitgutachten (Wärmepumpe als Vorzugsvariante)", href: "../dokumente/referenzobjekt-etv2026-zweitgutachten-anonym.pdf" },
+              { titel: "Quellen-Einordnung: Zwei Einschätzungen, eine Quellenlage", href: "../dokumente/referenzobjekt-etv2026-quellenabgleich.pdf" }
+            ] },
+          { datum: "15.07.2026", typ: "Recht & Technik", titel: "Verfügbarkeitscheck Fernwärme (SWE)", status: "erledigt",
+            ergebnis: "Der offizielle Verfügbarkeitscheck der Stadtwerke weist für die Adresse aus: Ausbaugebiet Wärmenetz, regulärer Anschluss voraussichtlich bis 2040, Vorab-Anbindung wird geprüft. Sechs Tage später liest sich die Aussage desselben Versorgers gegenüber dem beauftragten Ingenieurbüro anders. <a href=\"https://www.swe-energie.de/energie/home/servicewelt/verfuegbarkeitscheck-waerme\" target=\"_blank\" rel=\"noopener\">Verfügbarkeitscheck Wärme →</a>" },
+          { datum: "21.07.2026", typ: "Recht & Technik", titel: "Netzbau in der eigenen Straße — die Gemeinschaft erfährt es fünf Wochen später", status: "erledigt",
+            ergebnis: "Die Gemeinschaft hat das Ingenieurbüro im Februar 2026 beauftragt. Zu seinen Aufgaben gehörte, die Kosten einer Umstellung von Gaskessel auf Fernwärme abzuschätzen. Die erste dokumentierte Anfrage an den Versorger datiert vom 20. Juli 2026 — fünf Monate später, und eine Woche nach der Versammlung, auf der über genau diese Frage entschieden werden sollte. Das Büro bittet darin um einen Besprechungstermin und nennt als Grund seinen Auftrag.<br><br>Am 21. Juli antwortet ein Projektmanager des Versorgers: Eine Erschließung sei möglich, man bereite derzeit den Anschluss der Nachbargebäude vor, im Zuge dieser Baumaßnahme sei die Anbindung des Gebäudes problemlos möglich. Acht Tage später heißt es, in den nächsten drei Monaten würden zwei Objekte in der Umgebung angeschlossen, weshalb der Baukostenzuschuss günstig ausfalle.<br><br>Fünf Tage vor der ersten Nachricht hatte der Verfügbarkeitscheck desselben Versorgers für dieselbe Adresse „voraussichtlich bis 2040“ ausgewiesen. Das ist kein Widerspruch von damals: Der Check weist diesen Wert bis heute (Stand 13. September 2026) aus, während in der Straße gebaut wird. Die SWE hat die Angabe im Oktober erklärt: „voraussichtlich bis 2040“ bezeichne den Zeitraum ihrer Ausbau- und Akquiseaktivitäten im Gebiet, nicht den frühesten Anschluss. Die Anzeige werde nicht geändert.<br><br>Die Eigentümergemeinschaft hat diese Korrespondenz am 27. August erhalten. Eine eigene Mitteilung über den bevorstehenden Anschluss der Nachbargebäude hat sie nie bekommen — sie erfuhr davon aus weitergeleitetem Schriftverkehr zwischen Versorger und Ingenieurbüro, fünf Wochen nach dessen Entstehen. Wochen, in denen sie weiter mit dem Jahr 2040 rechnete.<br><br>Für die Entscheidung ist der Zeitpunkt erheblich, weil mit der betriebsfertigen Leitung die Frist für einen Befreiungsantrag beginnt (§ 6 Abs. 4 der Satzung). Von Amts wegen wird er in der Regel nicht mitgeteilt; die Gemeinschaft muss ihn bei der SWE erfragen." },
+          { datum: "21.07.2026", typ: "Recht & Förderung", titel: "Förderreform: Ausschluss knüpft an kommunale Entscheidung", status: "erledigt",
+            ergebnis: "Seit der neuen Förderrichtlinie (BEG EM vom 17. August 2026, wirksam ab 21. Juli) wird eine Wärmepumpe nicht gefördert, wenn das Grundstück aufgrund einer kommunalen Entscheidung an ein Wärmenetz angeschlossen werden soll, etwa durch eine Satzung mit Anschluss- und Benutzungszwang. Gefördert wird dann nur der Netzanschluss. Der Ausschluss greift nur, wenn und soweit die Kommune die Entscheidung getroffen und transparent gemacht hat. Eine bereits verlegte Leitung nennt das KfW-Merkblatt 458 (Stand 09/2026) nicht als Voraussetzung; ob der Ausschluss greift, bevor die Leitung betriebsfertig ist, regelt es nicht ausdrücklich. Den Anschlusszwang selbst knüpft die Erfurter Satzung an die betriebsfertige Leitung (§ 5 Abs. 1).<br><br>Einen zweiten Auslöser sieht die Richtlinie vor: die rechtsverbindliche Erklärung eines Versorgers, das Grundstück innerhalb von drei Jahren anzuschließen. Er gilt erst, wenn die Einzelheiten im Infoblatt veröffentlicht sind.<br><br>Nach Angaben des Bundesverbands Wärmepumpe greift der Ausschluss nicht, wenn eine Befreiung oder Ausnahme besteht. Die Befreiung ist beim Umwelt- und Naturschutzamt zu beantragen. Offen ist, ob sie schon bei der Antragstellung für die Förderung vorliegen muss.<a href=\"https://www.kfw.de/PDF/Download-Center/F%C3%B6rderprogramme-(Inlandsf%C3%B6rderung)/PDF-Dokumente/6000005131_M_458.pdf\" target=\"_blank\" rel=\"noopener\">KfW-Merkblatt 458 →</a> · <a href=\"https://www.waermepumpe.de/presse/news/details/beg-neues-infoblatt-konkretisiert-foerderregeln/\" target=\"_blank\" rel=\"noopener\">Bundesverband Wärmepumpe, 22.09.2026 →</a>" },
+          { datum: "29.07.2026", typ: "Recht", titel: "Gebäudemodernisierungsgesetz (GModG) in Kraft", status: "erledigt",
+            ergebnis: "Verkündet am 28.07.2026 (BGBl. Nr. 226), in Kraft seit 29.07.2026. Die starre 65-%-Pflicht für erneuerbare Energien entfällt; ein fertiger kommunaler Wärmeplan verpflichtet nicht mehr zu einem bestimmten Heizsystem. Ebenfalls entfallen ist die Beratungspflicht vor dem Einbau fossiler Heizungen (§§ 71, 71b–72 GEG)." },
+          { datum: "29.07.2026", typ: "Recht & Kosten", titel: "Erste Fernwärme-Kostenaufstellung — gerechnet mit 40 kW Anschlussleistung", status: "erledigt",
+            ergebnis: "Das beauftragte Ingenieurbüro übermittelt der Verwaltung die erste Kostenaufstellung zur Fernwärme: einmalige Anschlussgebühr rund 8.900 € netto, Baukostenzuschuss rund 1.600 € netto, dazu eine Jahresrechnung aus Arbeitspreis (110.000 kWh × 13,768 ct), Leistungspreis (40 kW × 75,04 €/kW·a = 3.001,60 €), Zertifikatspreis (110.000 kWh × 1,92 ct) und Messeinrichtung — zusammen 20.331,42 € im Jahr oder 18,5 ct je Kilowattstunde. Die Anschlussleistung ist damit an zwei Stellen mit 40 kW angesetzt: direkt im Leistungspreis und rechnerisch im Baukostenzuschuss (40 kW × 39,99 €/kW = 1.599,60 €). Keine der drei bekannten Heizlastzahlen ergibt diesen Wert — weder die berechneten 58,9 kW noch die in den Fachunterlagen angesetzten 62 kW noch die aktualisierten 46,0 kW. Eine Herleitung ist nicht angegeben. Auch der Jahresverbrauch von 110.000 kWh liegt über den abgerechneten 94.932 kWh des Jahres 2025. Wir halten diese Zahlen hier fest, weil sie die Grundlage der bisher einzigen Fernwärme-Kostenangabe sind. Bemerkenswert ist der Effektivpreis: 18,5 ct je Kilowattstunde — er bestätigt die Größenordnung, mit der dieses Portal die Fernwärme auf Gebäudeebene seit April rechnet, und liegt deutlich über dem Arbeitspreis, der öffentlich kommuniziert wird. Die Investitionskosten für Heizungsverteilung und Warmwassererzeugung wurden für „Ende nächster Woche“ angekündigt; sie liegen einen Monat später nicht vor." },
+          { datum: "03.08.2026", typ: "Technik", titel: "Aktualisierte Heizlastberechnung: 46.026 Watt", status: "erledigt",
+            ergebnis: "Das beauftragte Ingenieurbüro legt eine aktualisierte Heizlastberechnung nach DIN EN 12831 vor: 46.026 Watt gegenüber 58.885 Watt in der Erstfassung vom März. Gleicher Ersteller, gleiche Software, unveränderte Gebäudegeometrie. Anders angesetzt wurden die Fenster, das Dach, die zuvor mit null geführten Lüftungswärmeverluste und die Raumnutzungen im Erdgeschoss. Die beiden fachlichen Einschätzungen, die der Versammlung am 13. Juli vorlagen, hatten beide mit 62 Kilowatt gerechnet — einem Wert, der in keiner der Berechnungen steht und nirgends hergeleitet ist. Auf der Versammlung war protokolliert worden, dass Korrekturen eingearbeitet und zur Verfügung gestellt werden; welche, stand nicht dabei. Zugänglich wurde die Berechnung am 27. August. Die Einzelheiten stehen im Block „Eine Zahl, drei Fassungen“." },
+          { datum: "24.08.2026", typ: "Recht & Technik", titel: "Erste behördliche Schallprognose — Richtwerte knapp eingehalten", status: "erledigt",
+            ergebnis: "Die untere Immissionsschutzbehörde legt die erste behördliche Berechnung zum Schallschutz vor. Maßgeblich sind für ein allgemeines Wohngebiet 55 dB(A) tags und 40 dB(A) nachts nach TA Lärm, einzuhalten an der nächstgelegenen schutzbedürftigen Bebauung. Das Ergebnis: Die geplanten Geräte unterschreiten diese Werte knapp — tags bei maximaler Heizleistung, nachts im reduzierten Betrieb (Silent-Modus 70 Prozent nach Datenblatt).<br><br>Das ist ein Wendepunkt in diesem Verfahren. Der Schallschutz war über zwei Jahre das zentrale Gegenargument gegen die Wärmepumpe — bewertet allerdings ohne behördliche Prognose und am strengeren Richtwert eines reinen Wohngebiets, während die amtliche Gebietseinstufung auf allgemeines Wohngebiet lautet. Jetzt liegt die Prognose vor, und sie schließt die Wärmepumpe nicht aus.<br><br>Knapp bleibt allerdings knapp. Reflexionen sind in der Berechnung nicht berücksichtigt, weil sie beim aktuellen Planungsstand nicht abschätzbar sind; bei der vorliegenden baulichen Situation sind Mehrfachreflexionen nicht auszuschließen, und kommt es dazu, würden die Richtwerte tags wie nachts überschritten. Die Behörde hält außerdem fest, dass es auch bei eingehaltenen Richtwerten zu Beschwerden kommen kann — insbesondere über tieffrequente Geräusche oder störende Einzeltöne. Empfohlen wird deshalb eine Einhausung. Die Berechnung geht von drei Außeneinheiten aus.<br><br>Für die Geräteauswahl verweist die Behörde auf den Leitfaden des Bayerischen Landesamtes für Umwelt zu tieffrequenten Geräuschen bei Luftwärmepumpen. Daraus ergeben sich Kriterien, die vor die Vergabe gehören und nicht danach: Schallleistungspegel unter 50 dB(A), langsam laufende Ventilatoren, keine auffälligen Einzeltöne, körperschallentkoppelte Aufstellung, Anlage auf der den Nachbarn abgewandten Gebäudeseite, Kapselung und Schallschirme. Die Bund/Länder-Arbeitsgemeinschaft für Immissionsschutz stellt dafür eine Berechnungshilfe bereit. Wer eine Wärmepumpe plant, kann diese Prüfung selbst anstoßen: Die überschlägige Berechnung der unteren Immissionsschutzbehörde ist eine Auskunft, die man erfragen kann, bevor man ein Gerät auswählt." },
+          { datum: "24.09.2026", typ: "Recht", titel: "EuGH: Dreijahreslösung bei Fernwärme-Preisklauseln gefallen", status: "erledigt",
+            ergebnis: "Ist die Preisänderungsklausel eines Fernwärmevertrags unwirksam, galt bisher eine Regel des Bundesgerichtshofs: Wer einer Preiserhöhung nicht innerhalb von drei Jahren nach der Jahresabrechnung widersprach, konnte sie später nicht mehr angreifen. Der Europäische Gerichtshof hält diese Regel gegenüber Verbrauchern für unvereinbar mit dem EU-Recht zu missbräuchlichen Vertragsklauseln. Eine unwirksame Klausel darf der Versorger auch nicht einseitig für die Zukunft ersetzen (Rs. C-900/24, auf Vorlage des Kammergerichts Berlin). Für einen Fernwärmevertrag mit langer Bindung wird die Preisänderungsklausel damit zu einem Prüfpunkt vor der Unterschrift. Ob eine Eigentümergemeinschaft dabei als Verbraucherin gilt, ist eine eigene Rechtsfrage." },
+          { datum: "01.10.2026", typ: "Energie & Preis", titel: "Fernwärme Q4 2026: moderate Anpassung, neue Fußnote", status: "erledigt",
+            ergebnis: "Zum 1. Oktober steigt der Arbeitspreis der SWE auf 14,309 ct/kWh brutto (+3,9 %), der Zertifikatepreis sinkt auf 1,779 ct/kWh (−7,8 %), der Leistungspreis liegt bei 75,24 €/kW·a. Für das Gebäude bedeutet das rund 2 % höhere Fernwärmekosten — weit weniger als der Sprung zum 1. Juli. Neu im Preisblatt: Die Zertifikatepreise für das erste bis dritte Quartal wurden ohne die kostenlos zugeteilten CO₂-Zertifikate ausgewiesen. Ob der Versorger die Vorquartale korrigiert, sagt das Preisblatt nicht. <a href=\"../dokumente/261001_SWE-Preisblatt-Fernwaerme_Q4-2026.pdf\" target=\"_blank\" rel=\"noopener\">SWE-Preisblatt, Stand 1.10.2026 →</a>" },
+          { datum: "13.10.2026", typ: "Recht", titel: "Befreiung geklärt: Wärmepumpe ohne Leistungsgrenze", status: "erledigt",
+            ergebnis: "Das Umwelt- und Naturschutzamt bestätigt schriftlich: Anlagen, die vor Ort emissionsfrei arbeiten, sind nach § 6 Abs. 1 der Fernwärmesatzung vom Anschluss- und Benutzungszwang zu befreien. Eine Leistungsgrenze gibt es nicht; die 30 kW der Satzung betreffen Anlagen mit nachwachsenden Rohstoffen. Bei der Wärmepumpe prüft das Amt den Schall. Entscheidet sich die Gemeinschaft am 27. Januar 2027 für die Wärmepumpe, stellt sie danach den Antrag. Wählt sie die Fernwärme, entscheidet das Amt, ob für die bestehende Gasheizung bis zum Hausanschluss eine Befreiung nötig ist. Offen bleibt der Schallnachweis." },
+          { datum: "27.01.2027", typ: "Entscheidung", titel: "Außerordentliche Eigentümerversammlung zur Wärmeversorgung", status: "geplant",
+            ergebnis: "Auf dieser Versammlung soll die Gemeinschaft über die künftige Wärmeversorgung des Gebäudes entscheiden." },
+          { datum: "2026–2028", typ: "Recht", titel: "Fernwärmesatzung modernisiert", status: "mittelfristig",
+            ergebnis: "Erwartet wird eine Neuregelung der Anschluss- und Befreiungsbestimmungen der Fernwärmesatzung." },
+          { datum: "2030–2036", typ: "Sanierung", titel: "Geplante energetische Sanierungen", status: "langfristig",
+            ergebnis: "Dach, Fenster und Keller werden schrittweise energetisch saniert." }
+        ],
+        future_readiness: {
+          skala_max: 5,
+          soll: 5,
+          framing: "Der Radar ist kein Urteil, sondern eine Landkarte.",
+          felder: [
+            { nr: 1,  feld: "Nachhaltigkeitsintelligenz",   ist: 2,
+              skala1: "fossil, hohe Emissionen", skala5: "klimaneutral, sehr niedrige Emissionen",
+              befund: "Die Wärme stammt heute aus fossilem Gas; auch die Fernwärme ist im Netz überwiegend gasbasiert und liegt beim CO₂-Faktor heute über Gas. Eine Wärmepumpe senkt die Emissionen aktuell um gut die Hälfte — und mit einem grüner werdenden Strommix weiter." },
+            { nr: 2,  feld: "Ressourcenbewusstsein",         ist: 3,
+              skala1: "keine Rücklagen, kein Plan", skala5: "solide Rücklage, gezielter Mitteleinsatz",
+              befund: "Eine solide Erhaltungsrücklage ist vorhanden. Bislang sind Mittel vor allem in wiederholte Analysen geflossen; ein Umsetzungsbeschluss steht noch aus." },
+            { nr: 3,  feld: "Anpassungsfähigkeit",           ist: 2,
+              skala1: "Rechts- und Marktlage unbeachtet", skala5: "frühzeitig angepasst, vorausschauend",
+              befund: "Der rechtliche Rahmen (Fernwärmesatzung) rückte erst spät in den Blick; die Einarbeitung steht noch am Anfang. Viele Schritte hängen an Fachleuten, die zuerst beauftragt werden müssen. Erschwerend wirkt die lange Bindung: Eine Systementscheidung legt das Gebäude für 20–30 Jahre fest — vorausschauendes Handeln gewinnt damit an Gewicht." },
+            { nr: 4,  feld: "Resilienz",                     ist: 1, krit: true,
+              skala1: "akut ausfallgefährdet", skala5: "robust, unabhängig, beschlussfähig",
+              befund: "Der Gaskessel ist 28 Jahre alt, Ersatzteile sind abgekündigt — ein Ausfall ist jederzeit möglich, ein Systembeschluss steht aus." },
+            { nr: 5,  feld: "Soziale Gestaltungskraft",      ist: 2,
+              skala1: "keine Abstimmung, Stillstand", skala5: "transparente, handlungsfähige Gemeinschaft",
+              befund: "Seit 2025 besteht wieder ein Beirat; einen direkten Austausch zwischen den Eigentümern gab es zuvor kaum. Die Kommunikation ist damit angelegt, aber noch nicht formalisiert und mündete bislang in keinen Beschluss. Gerade bei den anstehenden Veränderungen wäre ein früher, direkter Austausch hilfreich." },
+            { nr: 6,  feld: "Projekt-/Umsetzungskompetenz",  ist: 2, krit: true,
+              skala1: "kein Fortschritt trotz Dringlichkeit", skala5: "klare Beschlüsse, zügige Umsetzung",
+              befund: "Der Handlungsdruck besteht seit Jahren, ein Variantenbeschluss steht weiterhin aus. Die nötige Datengrundlage musste erst aufwendig aufgebaut werden. Hilfreich wäre, Eingeleitetes verbindlich umzusetzen, den Fortschritt nachzuverfolgen und auf belastbare Gebäudedaten zurückgreifen zu können." },
+            { nr: 7,  feld: "Digital & Daten",               ist: 2,
+              skala1: "keine Daten, kein Monitoring", skala5: "belegte Daten, laufendes Monitoring",
+              befund: "Ein laufendes Monitoring fehlt; die Datengrundlage ist teils noch unbelegt. Eigentümerversammlungen finden nur einmal jährlich statt — Einblick besteht meist in die eigene Wohnung, kaum in gebäudeweite Daten." },
+            { nr: 8,  feld: "Innovationskraft",              ist: 1,
+              skala1: "nur Status quo", skala5: "neue Lösungen aktiv umgesetzt",
+              befund: "Wärmepumpe, PV und ein Sanierungspfad sind analysiert, aber nicht beschlossen — bislang bleibt es beim Status quo. In der Diskussion wird die Fernwärme bevorzugt; beim Wärmepumpen-Pfad gilt der Schallschutz als offener Prüfpunkt." },
+            { nr: 9,  feld: "Wirtschaftliche Tragfähigkeit", ist: 2,
+              skala1: "teuerste Lösung über die Laufzeit", skala5: "klar günstigste, tragfähige Lösung",
+              befund: "Über 25 Jahre ist die Wärmepumpe die klar günstigste Lösung; priorisiert oder beschlossen ist sie bislang nicht. Es fehlen ein Sanierungsfahrplan und eine Entscheidungsgrundlage für die Heizung auf Basis der Lebenszykluskosten (TCO) — nicht allein der Investitionskosten." },
+            { nr: 10, feld: "Netzwerk/Unabhängigkeit",       ist: 2,
+              skala1: "abhängig von einer Quelle", skala5: "unabhängig, mehrere Perspektiven",
+              befund: "Ein unabhängiges Zweitgutachten steht noch aus; das Beratungsnetzwerk stützt sich auf wenige Akteure. Ein übergreifender, dokumentierter Austausch würde solche Entscheidungen, ihr Tempo und die langfristige Vorbereitung erleichtern." },
+            { nr: 11, feld: "Integrität/Transparenz",        ist: 2, krit: true,
+              skala1: "intransparent, unbelegt", skala5: "belegt, nachvollziehbar, auf Augenhöhe",
+              befund: "Der Entscheidungsprozess gewinnt durch mehr Belege und Austausch auf Augenhöhe — Belege, die nicht erst einmal jährlich zur Eigentümerversammlung vorliegen, sondern früh genug, um fachliche Gutachten in Ruhe zu prüfen und zu diskutieren." }
+          ]
+        }
+      };
+
+      function pillFor(status){
+        if (/angefragt/i.test(status))     return { cls: "oz-pill--live",    text: "angefragt — offen", kind: "live" };
+        if (/laufend/i.test(status))       return { cls: "oz-pill--live",    text: "laufend",           kind: "live" };
+        if (/erledigt/i.test(status))      return { cls: "oz-pill--done",    text: "erledigt",          kind: "done" };
+        if (/geplant/i.test(status))       return { cls: "oz-pill--planned", text: "geplant",           kind: "planned" };
+        if (/mittelfristig/i.test(status)) return { cls: "oz-pill--later",   text: "mittelfristig",     kind: "later" };
+        if (/langfristig/i.test(status))   return { cls: "oz-pill--later",   text: "langfristig",       kind: "later" };
+        return { cls: "oz-pill--planned", text: status, kind: "planned" };
+      }
+
+      const tlEl = document.getElementById("oz-timeline");
+      if (!tlEl) return;
+
+      // === Säule 2: Future Readiness Index ===
+      const radarEl = document.getElementById("oz-radar");
+      if (radarEl) {
+        const FR = OBJEKT_001.future_readiness;
+        const felder = FR.felder, n = felder.length, maxV = FR.skala_max;
+        const S = 320, cx = S / 2, cy = S / 2, R = 116, labelR = R + 20;
+        function pt(i, r){ const a = -Math.PI / 2 + i * 2 * Math.PI / n; return [ +(cx + r * Math.cos(a)).toFixed(1), +(cy + r * Math.sin(a)).toFixed(1) ]; }
+        function ring(r){ return felder.map(function(f, i){ return pt(i, r).join(","); }).join(" "); }
+
+        let svg = '<svg class="oz-radar__chart" viewBox="0 0 ' + S + ' ' + S + '" role="img" aria-label="Future Readiness Index: 11 Kompetenzfelder, Ist gegen Soll (5)">';
+        for (var v = 1; v <= maxV; v++){ svg += '<polygon class="' + (v === maxV ? "oz-radar__soll" : "oz-radar__grid") + '" points="' + ring(R * v / maxV) + '"/>'; }
+        felder.forEach(function(f, i){ var p = pt(i, R); svg += '<line class="oz-radar__axis" x1="' + cx + '" y1="' + cy + '" x2="' + p[0] + '" y2="' + p[1] + '"/>'; });
+        svg += '<polygon class="oz-radar__ist" points="' + felder.map(function(f, i){ return pt(i, R * f.ist / maxV).join(","); }).join(" ") + '"/>';
+        felder.forEach(function(f, i){ var p = pt(i, R * f.ist / maxV); svg += '<circle class="oz-radar__pt' + (f.krit ? ' oz-radar__pt--krit' : '') + '" cx="' + p[0] + '" cy="' + p[1] + '" r="5"/>'; });
+        felder.forEach(function(f, i){ var p = pt(i, labelR); svg += '<g class="oz-radar__marker" data-nr="' + f.nr + '" tabindex="0" role="button" aria-label="' + f.feld + ', Ist ' + f.ist + ' von ' + maxV + '">' +
+          '<circle class="oz-radar__num' + (f.krit ? ' oz-radar__num--krit' : '') + '" cx="' + p[0] + '" cy="' + p[1] + '" r="12"/>' +
+          '<text class="oz-radar__numtext" x="' + p[0] + '" y="' + p[1] + '">' + f.nr + '</text></g>'; });
+        svg += '</svg>';
+
+        let legend = '<div class="oz-radar__legend">';
+        felder.forEach(function(f){ legend += '<button type="button" class="oz-fr-item' + (f.krit ? ' oz-fr-item--krit' : '') + '" data-nr="' + f.nr + '">' +
+          '<span class="oz-fr-item__nr">' + f.nr + '</span>' +
+          '<span class="oz-fr-item__feld">' + f.feld + '</span>' +
+          '<span class="oz-fr-item__ist">' + f.ist + '/' + maxV + '</span></button>'; });
+        legend += '</div>';
+
+        radarEl.innerHTML =
+          '<svg class="oz-radar__haus" viewBox="0 0 72 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+            '<path class="oz-radar__haus-arc" d="M12 48 A24 24 0 0 1 60 48"/>' +
+            '<path class="oz-radar__haus-arc" d="M20 48 A16 16 0 0 1 52 48"/>' +
+            '<path d="M22 32 L36 20 L50 32"/>' +
+            '<path d="M25 29 V48 H47 V29"/>' +
+            '<rect x="33" y="39" width="6" height="9"/>' +
+          '</svg>' +
+          '<p class="oz-radar__lbl">Future Readiness Index · Forschung × Gebäude</p>' +
+          '<p class="oz-radar__title">Future Readiness Index — 11 Kompetenzfelder, Ist gegen Soll</p>' +
+          '<p class="oz-radar__intro">Future Readiness misst Zukunftsfähigkeit nicht als eine Zahl, sondern als Kompass aus elf Kompetenzfeldern — von Nachhaltigkeit über Resilienz bis Transparenz. Der Radar zeigt den heutigen Stand (Ist, gefüllte Fläche) gegen das zukunftsfähige Ziel (Soll, äußerer Ring). Der gemeinsame Vergleichswert über alle Gebäudetypen sind die Wärmekosten in €/m²·Monat; der Radar ergänzt sie um das ganzheitliche Bild der Zukunftsfähigkeit.</p>' +
+          '<p class="oz-radar__framing">' + FR.framing + '</p>' +
+          svg +
+          '<p class="oz-radar__readout" id="oz-radar-readout">Tippen Sie ein Feld für den Kurzbefund. Außenring = zukunftsfähig (5), gefüllte Fläche = heute.</p>' +
+          legend;
+        // "Vollständige Analyse"-Link vorerst entfernt (29.06.2026): Die öffentliche
+        // Gebäude-Future-Readiness-Fassung (v2.4, Stand 22.06.) rechnet Fernwärme noch mit
+        // 17,5 ct / 444k nominal — die Karte fuehrt jetzt 17,6 ct (Q3, 46 kW) mit Steigerung als
+        // Leitwert. Link wird wieder gesetzt, sobald ein deckungsgleiches v2.5-PDF vorliegt.
+
+        const readout = document.getElementById("oz-radar-readout");
+        function selectField(nr){
+          const f = felder.find(function(x){ return x.nr === Number(nr); });
+          if (!f) return;
+          readout.innerHTML = '<strong>' + f.nr + ' · ' + f.feld + ' — Ist ' + f.ist + '/' + maxV + '</strong>'
+            + '<br><span class="oz-radar__skala">1 = ' + f.skala1 + '  ·  5 = ' + f.skala5 + '</span>'
+            + '<br>' + f.befund;
+          radarEl.querySelectorAll(".oz-fr-item").forEach(function(b){ b.classList.toggle("is-active", b.dataset.nr === String(nr)); });
+          radarEl.querySelectorAll(".oz-radar__marker").forEach(function(g){ g.classList.toggle("is-active", g.dataset.nr === String(nr)); });
+        }
+        radarEl.addEventListener("click", function(e){ const el = e.target.closest("[data-nr]"); if (el) selectField(el.dataset.nr); });
+        radarEl.addEventListener("keydown", function(e){ if (e.key === "Enter" || e.key === " "){ const el = e.target.closest(".oz-radar__marker[data-nr]"); if (el){ e.preventDefault(); selectField(el.dataset.nr); } } });
+      }
+
+      let html = '<p class="oz-timeline__head">Zeitstrahl · Referenzobjekt</p>' +
+        '<h3 class="oz-timeline__title">Der Entscheidungsweg — Schritt für Schritt belegt</h3>' +
+        '<p class="oz-timeline__lead">Von 1998 bis heute: jeder Schritt mit Datum und Beleg. Tippen Sie einen Punkt an — Ergebnis und Quelle klappen auf.</p>' +
+        '<div class="oz-tl-wrap"><div class="oz-tl-scroll"><div class="oz-tl">';
+      OBJEKT_001.zeitstrahl.forEach(function(e){
+        const docs = Array.isArray(e.dokumente) ? e.dokumente : [];
+        html +=
+          '<div class="oz-tl__item">' +
+            '<details class="oz-tl__det">' +
+              '<summary class="oz-tl__sum">' +
+                '<span class="oz-tl__dot"></span>' +
+                '<span class="oz-tl__date">' + e.datum + '</span>' +
+                '<span class="oz-tl__chev">▸</span>' +
+                '<span class="oz-tl__meta-row"><span class="oz-tl__typ">' + e.typ + '</span>' + (docs.length ? '<span class="oz-tl__docs-badge">📎 ' + docs.length + ' Dokument' + (docs.length > 1 ? 'e' : '') + '</span>' : '') + '</span>' +
+                '<span class="oz-tl__titel">' + e.titel + '</span>' +
+              '</summary>' +
+              '<p class="oz-tl__ergebnis">' + e.ergebnis + '</p>' +
+              (docs.length ? '<div class="oz-tl__docs">' + docs.map(function(d){ return '<a href="' + d.href + '" target="_blank" rel="noopener">' + d.titel + ' →</a>'; }).join('') + '</div>' : '') +
+            '</details>' +
+          '</div>';
+      });
+      html += '</div></div></div>';
+      tlEl.innerHTML = html;
+    })();
+  </script>
+  <script src="../js/objekt001-wirtschaft.js"></script>
+  <script src="../js/foerdermatrix.js"></script>
+  <script src="../js/foerderstand.js"></script>
+</body>
+</html>
