@@ -3223,13 +3223,11 @@
       const we = state.wohneinheiten || (state.gebaeudetyp === 'MFH' ? 14 : 1);
 
       const txt =
-        'Eingabe-Stand Mai 2026: Für ein <strong>' + escapeHtml(state.gebaeudetyp) + '</strong> in <strong>' +
+        'Für ein <strong>' + escapeHtml(state.gebaeudetyp) + '</strong> in <strong>' +
         escapeHtml((state.plz + ' ' + state.ort).trim() || '—') + '</strong> mit <strong>' +
         fmtInt(state.wohnflaeche) + ' m²</strong> und <strong>' + we +
         ' Wohneinheiten</strong>, Betrachtung über <strong>' +
-        sb.zeitraum + ' Jahre</strong>, bei aktuell <strong>' + fb.master + ' % BAFA-Förderung</strong>. ' +
-        'Datenbasis: BAFA-Förderverordnung, AGFW-Median, BDEW-Heizkostenmonitor, Stand 1.5.2026. ' +
-        'Methodik unter hausentscheider.de/methodik.';
+        sb.zeitraum + ' Jahre</strong>, bei aktuell <strong>' + fb.master + ' % BAFA-Förderung</strong>.';
 
       body.innerHTML = txt;
     }
@@ -3520,7 +3518,7 @@
         const body = encodeURIComponent(
           berichtText + '\n\n' +
           'Anbei meine Eingabewerte und drei Sichten. Ich freue mich auf Ihre fundierte Einschätzung.\n\n' +
-          '— Mehr unter hausentscheider.de/methodik'
+          '— Mehr unter hausentscheider.de'
         );
         window.location.href = 'mailto:dialog@hausentscheider.de?subject=' + subject + '&body=' + body;
         // mailto öffnet das E-Mail-Programm; danach zur Bestätigungsseite wechseln.
