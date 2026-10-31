@@ -126,10 +126,15 @@
       const reihe = (IST && Array.isArray(IST.verbrauchsreihe_kwh))
         ? IST.verbrauchsreihe_kwh.map(r => r.jahr + ': ' + r.wert.toLocaleString('de-DE')).join(', ')
         : '';
-      const schwankung = reihe
-        ? 'Der Gasverbrauch schwankt mit dem Wetter (' + reihe + ' kWh). Die Wärmemenge ist deshalb als Bandbreite belegt (' +
-          WIRTSCHAFT.waerme_kwh_band[0].toLocaleString('de-DE') + ' bis ' + WIRTSCHAFT.waerme_kwh_band[1].toLocaleString('de-DE') +
-          ' kWh); die Projektion rechnet mit rund ' + WIRTSCHAFT.waerme_kwh.toLocaleString('de-DE') + ' kWh. '
+      // Zwei Spannen mit zwei Bezuegen: gerechnet aus dem Gaseinsatz 2025 und
+      // die breitere Bandbreite fuer Vergleiche, die auch das Wetter abdeckt.
+      const nutzung = DATEN && DATEN.kennzahlen_2025 && DATEN.kennzahlen_2025.nutzungsgrad_band;
+      const reiheJahre = reihe ? IST.verbrauchsreihe_kwh : [];
+      const schwankung = (reihe && nutzung)
+        ? 'Der Gasverbrauch schwankt mit dem Wetter (' + reiheJahre[0].jahr + ' bis ' + reiheJahre[reiheJahre.length - 1].jahr + '). ' +
+          'Gaseinsatz ' + IST.abrechnungsjahr + ' × Nutzungsgrad ' + nutzung[0].toFixed(2).replace('.', ',') + ' bis ' + nutzung[1].toFixed(2).replace('.', ',') + ' ergibt ' +
+          (Math.round(IST.verbrauch_kwh * nutzung[0] / 100) * 100).toLocaleString('de-DE') + ' bis ' + (Math.round(IST.verbrauch_kwh * nutzung[1] / 100) * 100).toLocaleString('de-DE') +
+          ' kWh. Für Vergleiche wird mit einer Bandbreite von ' + WIRTSCHAFT.waerme_kwh_band[0].toLocaleString('de-DE') + ' bis ' + WIRTSCHAFT.waerme_kwh_band[1].toLocaleString('de-DE') + ' kWh gerechnet. '
         : '';
       // Gaseinsatz: gemessen aus ist_2025, sonst der gerundete Ansatz aus "wirtschaft".
       const gaseinsatz = IST
@@ -266,10 +271,26 @@
       }
       }
 
+      // Elemente mit data-wert="block.feld" lesen ihren Wert aus der JSON. Der Text
+      // im HTML ist nur Rueckfallebene. data-jahr: ohne Tausenderpunkt, data-dez: Nachkommastellen.
+      function werteEinsetzen(j){
+        document.querySelectorAll('[data-wert]').forEach(function(el){
+          const v = el.dataset.wert.split('.').reduce(function(o, k){ return o == null ? o : o[k]; }, j);
+          if (typeof v === 'string') { el.textContent = v; return; }
+          if (typeof v !== 'number') return;
+          const dez = Number(el.dataset.dez || 0);
+          el.textContent = v.toLocaleString('de-DE', { minimumFractionDigits: dez, maximumFractionDigits: dez, useGrouping: !('jahr' in el.dataset) });
+        });
+        const gv = j && j.kennzahlen_2025 && j.kennzahlen_2025.gas_vollkosten_ct;
+        if (gv) document.querySelectorAll('[data-gas-plus]').forEach(function(el){
+          el.textContent = '+' + Math.round((gv.j2025 / gv.j2019 - 1) * 100) + ' %';
+        });
+      }
+
       // Die JSON fuehrt. Scheitert der Abruf, zeichnet die Rueckfallebene.
       fetch(BASIS + 'daten/theaterstrasse-4.json', { cache: 'no-cache' })
         .then(function(r){ return r.json(); })
-        .then(function(j){ zeichneWirtschaft(wirtschaftAusJson(j && j.wirtschaft), j); })
+        .then(function(j){ werteEinsetzen(j); zeichneWirtschaft(wirtschaftAusJson(j && j.wirtschaft), j); })
         .catch(function(err){
           console.warn('[Objekt 001] Block "wirtschaft" nicht ladbar, Rueckfallebene aktiv:', err);
           zeichneWirtschaft(WIRTSCHAFT_FALLBACK, null);

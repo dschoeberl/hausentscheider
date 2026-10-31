@@ -348,7 +348,7 @@
   <div class="container seitenkopf">
     <p class="eyebrow">Praxis · Referenzgebäude</p>
     <h1>Objekt 001 · Mehrfamilienhaus, Erfurt Altstadt</h1>
-    <p class="lede">Ein Mehrfamilienhaus von 1900 mit 14 Wohnungen steht vor der Entscheidung über seine Heizung. Hier ist der Weg dorthin dokumentiert, mit den Zahlen, den Unterlagen und den offenen Punkten. Die Werte sind belegt oder als Annahme gekennzeichnet.</p>
+    <p class="lede">Ein Mehrfamilienhaus von <span data-wert="kennzahlen_2025.baujahr" data-jahr>1900</span> mit <span data-wert="gebaeude.we">14</span> Wohnungen steht vor der Entscheidung über seine Heizung. Hier ist der Weg dorthin dokumentiert, mit den Zahlen, den Unterlagen und den offenen Punkten. Die Werte sind belegt oder als Annahme gekennzeichnet.</p>
   </div>
 
   <section class="objekte-section container" id="objekte">
@@ -359,8 +359,8 @@
       </div>
     </div>
     <p style="font-size:14px;color:var(--text-secondary);max-width:620px;margin-bottom:1rem;line-height:1.7;">
-      Den Future-Readiness-Rahmen aus unserer Forschung haben wir zuerst auf die Stadt Erfurt —
-      zur kommunalen Wärmeplanung — angewandt; hier erstmals auf ein einzelnes Gebäude. Drei Dinge auf einen Blick:
+      Der Future-Readiness-Rahmen aus der Forschung wurde zuerst auf die Stadt Erfurt und ihre
+      kommunale Wärmeplanung angewandt, hier erstmals auf ein einzelnes Gebäude. Drei Dinge auf einen Blick:
       die belegte Wärmekosten-Kennzahl von heute, ein Radar der Zukunftsfähigkeit über elf
       Kompetenzfelder und der laufende Entscheidungsweg. Einordnung statt Empfehlung.
     </p>
@@ -371,7 +371,7 @@
         <div>
           <p class="objekt001__nr">Objekt 001 · Erfurt Innenstadt · Dokumentiert seit 2024</p>
           <p class="objekt001__name">Mehrfamilienhaus · Altstadt Erfurt</p>
-          <p class="objekt001__sub">Altbau 1900 · Saniert 2010 · 14 Wohnungen · 769,83 m² beheizte Fläche · WEG · Gas-Heizung</p>
+          <p class="objekt001__sub" data-wert="meta.sub">Altbau 1900 · Saniert 2010 · 14 Wohnungen · 769,83 m² beheizte Fläche · WEG · Gas-Heizung</p>
           <span class="oz-eklasse">Energieklasse D · 124 kWh/m²a</span>
           <span class="oz-eklasse__q">Verbrauchsausweis 2018, bezogen auf 908 m²</span>
         </div>
@@ -392,30 +392,32 @@
         <div class="oz-kpis">
           <div class="oz-kpi oz-kpi--risk">
             <span class="oz-kpi__flag">Risiko</span>
-            <span class="oz-kpi__val">1998</span>
-            <span class="oz-kpi__lbl">Gaskessel · 72 kW</span>
+            <span class="oz-kpi__val" data-wert="kennzahlen_2025.kessel_baujahr" data-jahr>1998</span>
+            <span class="oz-kpi__lbl">Gaskessel · <span data-wert="kennzahlen_2025.kessel_kw">72</span> kW</span>
             <span class="oz-kpi__ref">28 Jahre — über übliche Lebensdauer (~20–25 J.) · Ersatzteile abgekündigt</span>
           </div>
           <div class="oz-kpi">
-            <span class="oz-kpi__val">46 kW</span>
+            <span class="oz-kpi__val"><span data-wert="gebaeude.heizlast_kw">46</span> kW</span>
             <span class="oz-kpi__lbl">Heizlast (inkl. Lüftung)</span>
-            <span class="oz-kpi__ref">Berechnung 03.08.2026 · Kessel mit 72 kW deutlich überdimensioniert · wärmepumpenfähig ✓</span>
+            <span class="oz-kpi__ref">Berechnung 03.08.2026 · Kessel mit <span data-wert="kennzahlen_2025.kessel_kw">72</span> kW deutlich überdimensioniert · wärmepumpenfähig ✓</span>
           </div>
           <div class="oz-kpi">
-            <span class="oz-kpi__val">64.745 €</span>
+            <span class="oz-kpi__val"><span data-wert="kennzahlen_2025.ruecklage_eur">64.745</span> €</span>
             <span class="oz-kpi__lbl">Erhaltungsrücklage</span>
-            <span class="oz-kpi__ref">7,79 €/m²·a — unter Fachempfehlung Altbau (~17 €/m²·a)</span>
+            <span class="oz-kpi__ref"><span data-wert="kennzahlen_2025.ruecklage_eur_m2_a" data-dez="2">7,79</span> €/m²·a — unter Fachempfehlung Altbau (~17 €/m²·a)</span>
           </div>
           <div class="oz-kpi oz-kpi--risk">
             <span class="oz-kpi__flag">steigt&nbsp;▲</span>
-            <span class="oz-kpi__val">+103 %</span>
-            <span class="oz-kpi__lbl">Gas-Vollkosten seit 2019</span>
-            <span class="oz-kpi__ref">5,03 → 10,20 ct/kWh · vom Verbrauchs- zum Marktsystem</span>
+            <span class="oz-kpi__val" data-gas-plus>+103 %</span>
+            <span class="oz-kpi__lbl">Gas-Vollkosten je kWh seit 2019</span>
+            <span class="oz-kpi__ref"><span data-wert="kennzahlen_2025.gas_vollkosten_ct.j2019" data-dez="2">5,03</span> → <span data-wert="kennzahlen_2025.gas_vollkosten_ct.j2025" data-dez="2">10,20</span> ct/kWh · vom Verbrauchs- zum Marktsystem</span>
           </div>
         </div>
 
 
-        <!-- Dokumentationsbaustein: Herkunft der Heizlast. Die Zahlen stammen aus den
+        <!-- Die Heizlast-Fassungen im Fließtext spiegeln daten/theaterstrasse-4.json,
+             Block "kennzahlen_2025"; dort ist die maßgebliche Quelle.
+             Dokumentationsbaustein: Herkunft der Heizlast. Die Zahlen stammen aus den
              beiden Heizlastberechnungen vom 30.03. und 03.08.2026; Leistungspreis
              75,04 €/kW·a aus dem SWE-Preisblatt Q3 2026 (nicht 39,99 €/kW — das ist
              der Satz des einmaligen Baukostenzuschusses). -->
@@ -445,7 +447,7 @@
               </table>
             </div>
             <p>Das Gebäude wurde 2010 energetisch saniert. Dokumentiert ist das im Sachstandsbericht desselben Ingenieurbüros aus dem Jahr 2023.</p>
-            <p>Ohne vorliegende Bauteilnachweise mit ungünstigen Katalogwerten zu rechnen, ist bei Heizlastberechnungen nicht ungewöhnlich — wenn es gekennzeichnet wird und wenn es in eine Richtung konsequent ist. Hier war weder das eine noch das andere der Fall: Die Annahmen sind in der Berechnung nicht als Annahmen ausgewiesen, sie wurden nicht gegen den eigenen Bericht von 2023 gehalten, und die Lüftungswärmeverluste standen zugleich bei null. <strong>Unsere Bewertung, als solche gekennzeichnet:</strong> Eine Berechnung mit diesen Eigenschaften ist als Grundlage einer Systementscheidung über 20 bis 30 Jahre nicht belastbar. Auf diese Zahl wird jedes Angebot ausgelegt.</p>
+            <p>Ohne vorliegende Bauteilnachweise mit ungünstigen Katalogwerten zu rechnen, ist bei Heizlastberechnungen nicht ungewöhnlich — wenn es gekennzeichnet wird und wenn es in eine Richtung konsequent ist. Hier war weder das eine noch das andere der Fall: Die Annahmen sind in der Berechnung nicht als Annahmen ausgewiesen, sie wurden nicht gegen den eigenen Bericht von 2023 gehalten, und die Lüftungswärmeverluste standen zugleich bei null. <strong>Bewertung von hausentscheider, als solche gekennzeichnet:</strong> Eine Berechnung mit diesen Eigenschaften ist als Grundlage einer Systementscheidung über 20 bis 30 Jahre nicht belastbar. Auf diese Zahl wird jedes Angebot ausgelegt.</p>
             <p>Hinzu kommt eine Beobachtung, die über die Heizlast hinausgeht. Zwei Eingangsgrößen trugen die fachliche Empfehlung gegen die Wärmepumpe: der Schallrichtwert, angesetzt mit 35 dB(A) statt der behördlich bestätigten 40, und die Heizlast, angesetzt mit 62 statt der berechneten 58,9 Kilowatt. Beide liegen am für die Wärmepumpe ungünstigsten Ende der jeweils bekannten Spanne. Beide sind überprüfbar. Die Überprüfung gehört vor die Entscheidung, nicht danach.</p>
 
             <h4>Es gibt eine vierte Zahl</h4>
@@ -481,7 +483,7 @@
           <span class="oz-vgl-status__lbl">Preisrisiko 25 Jahre</span><span class="oz-vgl-status__v oz-vgl-status__v--risk">hoch</span><span class="oz-vgl-status__v">gering</span>
           <span class="oz-vgl-status__lbl">Ortsrecht · Fernwärmesatzung</span><span class="oz-vgl-status__v">zulässig</span><span class="oz-vgl-status__v">zulässig mit Befreiung</span>
           <span class="oz-vgl-status__lbl">Förderrecht · BEG EM</span><span class="oz-vgl-status__v">Anschluss 30 %</span><span class="oz-vgl-status__v">nur mit Befreiung</span>
-          <p class="oz-vgl-status__fuss">Der Förderausschluss für Einzelheizungen bei kommunaler Anschlussentscheidung steht in der Richtlinie; ab Veröffentlichung des Infoblatts gilt er auch bei verbindlicher Anschlusszusage des Versorgers. Eine Befreiung vom Anschlusszwang hebt ihn nach Angaben des Bundesverbands Wärmepumpe auf. Ob sie schon beim Förderantrag vorliegen muss, ist offen; deshalb zeigt die Fördermatrix beide Fälle.</p>
+          <p class="oz-vgl-status__fuss">Zum Förderausschluss siehe „Förderung und Zeitpunkt" unten. Die Fördermatrix zeigt beide Fälle.</p>
         </div>
 
         <div class="oz-cockpit__rule" style="margin-top:1.6rem;"></div>
@@ -491,7 +493,7 @@
              nur im Block "Kosten über 25 Jahre". Sonst koennten die Eingabefelder
              hier eine zweite, abweichende Zahl fuer dieselbe Aussage erzeugen. -->
         <div data-foerdermatrix data-dunkel data-laufzeit-verweis="#oz-vgl-gesamt"></div>
-        <p data-foerderstand data-dunkel><b>Förderstand 24.09.2026.</b> Der Klimageschwindigkeits-Bonus und die Höchstgrenze der förderfähigen Ausgaben für die erste Wohneinheit sinken halbjährlich, erstmals zum 1. Februar 2027. Für Wärmepumpen sinkt die Grundförderung ab dem ersten Quartal 2027 von 30 auf 15 Prozent; im Gegenzug kommt ein Wertschöpfungs-Bonus für Geräte mit Ursprung in der Union hinzu. Die Voraussetzungen sind gesondert geregelt; ob ein Gerät sie erfüllt, ist im Einzelfall zu prüfen. Maßgeblich ist der Tag der Antragstellung, nicht der Tag der Entscheidung. Eine Wärmepumpe oder andere Einzelheizung wird nicht gefördert, wenn das Grundstück aufgrund einer kommunalen Entscheidung, etwa einer Satzung mit Anschluss- und Benutzungszwang, an ein Wärmenetz angeschlossen werden soll; gefördert wird dann nur der Netzanschluss. Eine Befreiung vom Anschlusszwang hebt den Ausschluss nach Angaben des Bundesverbands Wärmepumpe auf.</p>
+        <p data-foerderstand data-dunkel><b>Förderstand 24.09.2026.</b> Der Klimageschwindigkeits-Bonus und die Höchstgrenze der förderfähigen Ausgaben für die erste Wohneinheit sinken halbjährlich, erstmals zum 1. Februar 2027. Für Wärmepumpen sinkt die Grundförderung ab dem ersten Quartal 2027 von 30 auf 15 Prozent; im Gegenzug kommt ein Wertschöpfungs-Bonus für Geräte mit Ursprung in der Union hinzu. Die Voraussetzungen sind gesondert geregelt; ob ein Gerät sie erfüllt, ist im Einzelfall zu prüfen. Maßgeblich ist der Tag der Antragstellung, nicht der Tag der Entscheidung. Eine Wärmepumpe oder andere Einzelheizung wird nicht gefördert, wenn das Grundstück aufgrund einer kommunalen Entscheidung, etwa einer Satzung mit Anschluss- und Benutzungszwang, an ein Wärmenetz angeschlossen werden soll; gefördert wird dann nur der Netzanschluss. Ab Veröffentlichung des Infoblatts gilt der Ausschluss auch bei verbindlicher Anschlusszusage des Versorgers. Eine Befreiung vom Anschlusszwang hebt den Ausschluss nach Angaben des Bundesverbands Wärmepumpe auf. Ob die Befreiung schon beim Förderantrag vorliegen muss, ist offen.</p>
 
         <div class="oz-ampel">
           <span><i class="is-belegt"></i>belegt</span>
@@ -565,7 +567,7 @@
           { datum: "2024 → 2025", typ: "Energie", titel: "Gasverbrauch gesunken", status: "erledigt",
             ergebnis: "Der Jahresverbrauch sank von 97.601 auf 94.932 kWh." },
           { datum: "16.02.2026", typ: "Recht & Klima", titel: "Behördliche Auskunft zur Fernwärmesatzung", status: "erledigt",
-            ergebnis: "Das zuständige Umweltamt teilt schriftlich mit, dass eine etwaige Anschlusspflicht unabhängig von der kommunalen Wärmeplanung zu beurteilen ist. Die Frage der Befreiung hat das Amt im Oktober 2026 beantwortet (siehe 13.10.2026). Zugleich liegt der Fernwärme-CO₂-Faktor (0,228 kg/kWh) über dem von Gas (0,201)." },
+            ergebnis: "Das zuständige Umweltamt teilt schriftlich mit, dass eine etwaige Anschlusspflicht unabhängig von der kommunalen Wärmeplanung zu beurteilen ist. Die Frage der Befreiung hat das Amt im Oktober 2026 beantwortet (siehe 13.10.2026). Zugleich liegt der Fernwärme-CO₂-Faktor (0,228 kg/kWh) über dem von Gas (0,1815 kg/kWh Brennwert, entspricht 0,201 Heizwert)." },
           { datum: "14.05.2026", typ: "Wärmeplanung", titel: "Stellungnahme zur Wärmeplanung eingereicht", status: "erledigt",
             ergebnis: "Die Eigentümerperspektive wurde formell in die kommunale Wärmeplanung eingebracht." },
           { datum: "21.06.2026", typ: "Recht & Kosten", titel: "Anschlusskonditionen Fernwärme angefragt", status: "angefragt — Antwort offen", live: true,
@@ -597,7 +599,7 @@
           { datum: "29.07.2026", typ: "Recht", titel: "Gebäudemodernisierungsgesetz (GModG) in Kraft", status: "erledigt",
             ergebnis: "Verkündet am 28.07.2026 (BGBl. Nr. 226), in Kraft seit 29.07.2026. Die starre 65-%-Pflicht für erneuerbare Energien entfällt; ein fertiger kommunaler Wärmeplan verpflichtet nicht mehr zu einem bestimmten Heizsystem. Ebenfalls entfallen ist die Beratungspflicht vor dem Einbau fossiler Heizungen (§§ 71, 71b–72 GEG)." },
           { datum: "29.07.2026", typ: "Recht & Kosten", titel: "Erste Fernwärme-Kostenaufstellung — gerechnet mit 40 kW Anschlussleistung", status: "erledigt",
-            ergebnis: "Das beauftragte Ingenieurbüro übermittelt der Verwaltung die erste Kostenaufstellung zur Fernwärme: einmalige Anschlussgebühr rund 8.900 € netto, Baukostenzuschuss rund 1.600 € netto, dazu eine Jahresrechnung aus Arbeitspreis (110.000 kWh × 13,768 ct), Leistungspreis (40 kW × 75,04 €/kW·a = 3.001,60 €), Zertifikatspreis (110.000 kWh × 1,92 ct) und Messeinrichtung — zusammen 20.331,42 € im Jahr oder 18,5 ct je Kilowattstunde. Die Anschlussleistung ist damit an zwei Stellen mit 40 kW angesetzt: direkt im Leistungspreis und rechnerisch im Baukostenzuschuss (40 kW × 39,99 €/kW = 1.599,60 €). Keine der drei bekannten Heizlastzahlen ergibt diesen Wert — weder die berechneten 58,9 kW noch die in den Fachunterlagen angesetzten 62 kW noch die aktualisierten 46,0 kW. Eine Herleitung ist nicht angegeben. Auch der Jahresverbrauch von 110.000 kWh liegt über den abgerechneten 94.932 kWh des Jahres 2025. Wir halten diese Zahlen hier fest, weil sie die Grundlage der bisher einzigen Fernwärme-Kostenangabe sind. Bemerkenswert ist der Effektivpreis: 18,5 ct je Kilowattstunde — er bestätigt die Größenordnung, mit der dieses Portal die Fernwärme auf Gebäudeebene seit April rechnet, und liegt deutlich über dem Arbeitspreis, der öffentlich kommuniziert wird. Die Investitionskosten für Heizungsverteilung und Warmwassererzeugung wurden für „Ende nächster Woche“ angekündigt; sie liegen einen Monat später nicht vor." },
+            ergebnis: "Das beauftragte Ingenieurbüro übermittelt der Verwaltung die erste Kostenaufstellung zur Fernwärme: einmalige Anschlussgebühr rund 8.900 € netto, Baukostenzuschuss rund 1.600 € netto, dazu eine Jahresrechnung aus Arbeitspreis (110.000 kWh × 13,768 ct), Leistungspreis (40 kW × 75,04 €/kW·a = 3.001,60 €), Zertifikatspreis (110.000 kWh × 1,92 ct) und Messeinrichtung — zusammen 20.331,42 € im Jahr oder 18,5 ct je Kilowattstunde. Die Anschlussleistung ist damit an zwei Stellen mit 40 kW angesetzt: direkt im Leistungspreis und rechnerisch im Baukostenzuschuss (40 kW × 39,99 €/kW = 1.599,60 €). Keine der drei bekannten Heizlastzahlen ergibt diesen Wert — weder die berechneten 58,9 kW noch die in den Fachunterlagen angesetzten 62 kW noch die aktualisierten 46,0 kW. Eine Herleitung ist nicht angegeben. Auch der Jahresverbrauch von 110.000 kWh liegt über den abgerechneten 94.932 kWh des Jahres 2025. Die Zahlen stehen hier, weil sie die Grundlage der bisher einzigen Fernwärme-Kostenangabe sind. Bemerkenswert ist der Effektivpreis: 18,5 ct je Kilowattstunde — er bestätigt die Größenordnung, mit der dieses Portal die Fernwärme auf Gebäudeebene seit April rechnet, und liegt deutlich über dem Arbeitspreis, der öffentlich kommuniziert wird. Die Investitionskosten für Heizungsverteilung und Warmwassererzeugung wurden für „Ende nächster Woche“ angekündigt; sie liegen einen Monat später nicht vor." },
           { datum: "03.08.2026", typ: "Technik", titel: "Aktualisierte Heizlastberechnung: 46.026 Watt", status: "erledigt",
             ergebnis: "Das beauftragte Ingenieurbüro legt eine aktualisierte Heizlastberechnung nach DIN EN 12831 vor: 46.026 Watt gegenüber 58.885 Watt in der Erstfassung vom März. Gleicher Ersteller, gleiche Software, unveränderte Gebäudegeometrie. Anders angesetzt wurden die Fenster, das Dach, die zuvor mit null geführten Lüftungswärmeverluste und die Raumnutzungen im Erdgeschoss. Die beiden fachlichen Einschätzungen, die der Versammlung am 13. Juli vorlagen, hatten beide mit 62 Kilowatt gerechnet — einem Wert, der in keiner der Berechnungen steht und nirgends hergeleitet ist. Auf der Versammlung war protokolliert worden, dass Korrekturen eingearbeitet und zur Verfügung gestellt werden; welche, stand nicht dabei. Zugänglich wurde die Berechnung am 27. August. Die Einzelheiten stehen im Block „Eine Zahl, drei Fassungen“." },
           { datum: "24.08.2026", typ: "Recht & Technik", titel: "Erste behördliche Schallprognose — Richtwerte knapp eingehalten", status: "erledigt",
@@ -649,7 +651,7 @@
               befund: "Über 25 Jahre ist die Wärmepumpe die klar günstigste Lösung; priorisiert oder beschlossen ist sie bislang nicht. Es fehlen ein Sanierungsfahrplan und eine Entscheidungsgrundlage für die Heizung auf Basis der Lebenszykluskosten (TCO) — nicht allein der Investitionskosten." },
             { nr: 10, feld: "Netzwerk/Unabhängigkeit",       ist: 2,
               skala1: "abhängig von einer Quelle", skala5: "unabhängig, mehrere Perspektiven",
-              befund: "Ein unabhängiges Zweitgutachten steht noch aus; das Beratungsnetzwerk stützt sich auf wenige Akteure. Ein übergreifender, dokumentierter Austausch würde solche Entscheidungen, ihr Tempo und die langfristige Vorbereitung erleichtern." },
+              befund: "Ein unabhängiges Zweitgutachten liegt seit dem 13.07.2026 vor; das Beratungsnetzwerk stützt sich auf wenige Akteure. Ein übergreifender, dokumentierter Austausch würde solche Entscheidungen, ihr Tempo und die langfristige Vorbereitung erleichtern." },
             { nr: 11, feld: "Integrität/Transparenz",        ist: 2, krit: true,
               skala1: "intransparent, unbelegt", skala5: "belegt, nachvollziehbar, auf Augenhöhe",
               befund: "Der Entscheidungsprozess gewinnt durch mehr Belege und Austausch auf Augenhöhe — Belege, die nicht erst einmal jährlich zur Eigentümerversammlung vorliegen, sondern früh genug, um fachliche Gutachten in Ruhe zu prüfen und zu diskutieren." }

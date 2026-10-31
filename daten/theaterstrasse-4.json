@@ -111,6 +111,20 @@
     "faktoren_kg_kwh": { "gas": 0.1815, "fernwaerme": 0.228, "strom": 0.344 },
     "quellen": { "gas": "Gasabrechnung 2025", "fernwaerme": "Umweltamt Erfurt 16.02.2026", "strom": "Umweltbundesamt 2025" }
   },
+  "kennzahlen_2025": {
+    "_pflege": "Kennwerte Referenzgebäude, Stand 18.10.2026, übergeben mit Briefing vom 31.10.2026. Einzige Pflegestelle für diese Werte; objekte/objekt-001.html und die Startseite lesen sie von hier. Heizlast 46 kW steht in gebaeude.heizlast_kw, Gaseinsatz in ist_2025.verbrauch_kwh, Fläche in ist_2025.bezugsflaeche_m2. heizlast_fassungen_kw: Berechnung März 2026, in den Unterlagen zur Versammlung angesetzter Wert (nicht hergeleitet), Berechnung August 2026. ruecklage_eur bestätigt am 31.10.2026; die 55.000 € in rechner.ruecklage gehören zur alten Objektseite. vorlauf_c ist eine Annahme aus einem Angebot, nie gemessen.",
+    "baujahr": 1900,
+    "kessel_baujahr": 1998,
+    "kessel_kw": 72,
+    "heizlast_fassungen_kw": { "berechnung_maerz_2026": 58.885, "angesetzt_versammlung": 62, "berechnung_august_2026": 46.026 },
+    "auslegung_aussentemperatur_c": -11.9,
+    "warmwasser_kwh": 33289,
+    "vorlauf_c": 55,
+    "nutzungsgrad_band": [0.80, 0.83],
+    "ruecklage_eur": 64745,
+    "ruecklage_eur_m2_a": 7.79,
+    "gas_vollkosten_ct": { "j2019": 5.03, "j2025": 10.20 }
+  },
   "wirtschaft": {
     "_pflege": "Alleinige Quelle für den Wirtschaftsvergleich der Startseiten-Referenzkarte. index.html liest diesen Block; die dortige Konstante WIRTSCHAFT_FALLBACK greift nur, wenn der Abruf scheitert. js/foerdermatrix.js liest ihn ebenfalls. Preis nur HIER ändern. Fernwärme QUARTALSWEISE (SWE-Preisblatt, vgl. parameter.json PreisFW). Nicht mit Block 'rechner' verwechseln — der gehört dem Objektprofil-Rechner. wp_foerderung_anteil spiegelt parameter.json.foerdersaetze.grundfoerderung; maßgeblich ist dort. Mengenbasis (Cockpit Tab 02a Nr. 12, festgelegt 21.09.2026): Fernwärme und Wärmepumpe rechnen mit waerme_kwh (Wärmeabgabe des Erzeugers 2025, Bandbreite waerme_kwh_band), Gas mit verbrauch_kwh (Gaseinsatz, gerundet; gemessen ist_2025.verbrauch_kwh). jaz 3,6 nach Tab 02a Nr. 29 (Zweitgutachten 3,35, externe Gegenrechnung rund 3,6). Herleitung fernwaerme 18,9 ct (SWE-Preisblatt Stand 01.10.2026, Q4 2026, brutto, ohne CO2-Zertifikat): 77.000 kWh × 14,309 ct = 11.018 € Arbeitspreis + 46 kW × 75,24 €/kW·a = 3.461 € Leistungspreis + 73,02 € Verrechnungspreis (Stufe bis 50 kW) = 14.552 € / 77.000 kWh = 18,9 ct. Mit CO2-Zertifikat (1,779 ct) 15.922 € = 20,7 ct (fernwaerme_mit_co2_ct). Die Q4-Fußnote des Preisblatts weist darauf hin, dass die Zertifikatepreise Q1 bis Q3 ohne Anrechnung der kostenlos zugeteilten Zertifikate ausgewiesen sind. Der Leistungspreis ist 75,04 €/kW·a aus dem SWE-Preisblatt — NICHT die 39,99 €/kW aus fw_lp_eur_kw im Block rechner, das ist der Satz des einmaligen Baukostenzuschusses.",
     "waerme_kwh": 77000,
