@@ -6,7 +6,7 @@
     {
       "ebene": "sofort",
       "farbe": "rot",
-      "frist": "bis 03.06.2026",
+      "frist": "bis 03.06.2026 · abgelaufen",
       "titel": "Sofort umsetzbar",
       "intro": "Innerhalb weniger Tage umsetzbar — sie heilen die Verfahrensmängel und stellen den Anspruch auf Informationszugang her.",
       "forderungen": [
@@ -20,7 +20,7 @@
     {
       "ebene": "strukturell",
       "farbe": "gelb",
-      "frist": "Endfassung 30.06.2026",
+      "frist": "Endfassung 30.06.2026 · abgelaufen",
       "titel": "Strukturell",
       "intro": "Sie betreffen den Inhalt des Plans selbst und schließen die strukturellen Lücken aus Kapitel 4 und 5.",
       "forderungen": [
