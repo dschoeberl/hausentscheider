@@ -165,8 +165,10 @@
           'Zeit des Ausweises, der auf den Jahren ' + AUS.verbrauchsjahre_kwh[0].jahr + ' bis ' +
           AUS.verbrauchsjahre_kwh[AUS.verbrauchsjahre_kwh.length - 1].jahr + ' beruht.</p>'
         : '';
+      // Die Kurzfassung auf der Startseite (data-kurz) zeigt nur Balken, Basis und Grenze des Balkens.
+      const kurz = anchorEl.hasAttribute('data-kurz');
       anchorEl.innerHTML =
-        istHtml +
+        (kurz ? '' : istHtml) +
         '<p class="oz-anchor__lbl">Energiekosten · €/m²·Monat — heute und die zwei zulässigen Pfade</p>' +
         '<div class="oz-map">' +
           '<div class="oz-map__bar">' +
@@ -184,7 +186,7 @@
           'Betriebskosten fallen bei jeder Lösung an, in unterschiedlicher Höhe; belastbar beziffert sind sie hier allein ' +
           'für die Gasheizung. Das bleibt eine Schieflage zugunsten der Wärmepumpe: Ein Fernwärme-Anschluss braucht weniger ' +
           'Betrieb als ein Gaskessel, eine Wärmepumpe braucht eigene Wartung. Beides steckt nicht im Balken.</p>' +
-        '<p class="oz-map__risk">Fernwärme steigt: Die Stadtwerke prognostizieren bis 2040 eine Verdopplung. Ein Netzanschluss bindet langfristig und ist nur eingeschränkt kündbar; das Preisrisiko tragen am Ende Eigentümer und Mieter.</p>' +
+        (kurz ? '' : '<p class="oz-map__risk">Fernwärme steigt: Die Stadtwerke prognostizieren bis 2040 eine Verdopplung. Ein Netzanschluss bindet langfristig und ist nur eingeschränkt kündbar; das Preisrisiko tragen am Ende Eigentümer und Mieter.</p>' +
         '<details class="oz-anchor__det">' +
           '<summary>Zusammensetzung &amp; Systemgrenze</summary>' +
           '<p>davon CO₂ ' + z.davon_co2 + ' €/m²·Monat' +
@@ -194,7 +196,7 @@
           flaechenAbsatz +
           ausweisAbsatz +
           '<p>Wo einzelne Wohnungen abweichen, sitzt der Unterschied zwischen Kessel und Wohnungszähler, nicht am Gebäude.</p>' +
-        '</details>';
+        '</details>');
 
       // === Wirtschaftsvergleich: Gesamtkosten (beide Wege) + Jahreskosten ===
       const gesamtEl = document.getElementById("oz-vgl-gesamt");
