@@ -43,7 +43,7 @@
         verbrauch_kwh: 95000,                           // nur Gas: Gaseinsatz, gerundet
         flaeche_m2: 769.83, n: 25, jaz: 3.6, stand: "Q4 2026",
         preis_ct: { gas: 10.2, fw: 18.9, wp: 25 },     // brutto (FW Effektivpreis Q4 2026 bei 77.000 kWh/46 kW, ohne CO2-Zertifikat)
-        fw_mit_co2_ct: 20.7,                            // FW Effektivpreis mit CO2-Zertifikat
+        fw_posten: { arbeitspreis_ct: 14.309, leistungspreis_eur_kw_a: 75.24, leistung_kw: 46, verrechnungspreis_eur_a: 73.02, zertifikat_ct: 1.779 },   // SWE-Preisblatt Q4 2026, brutto
         steig:    { gas: 0.03, fw: 0.04, wp: 0.025 },   // pro Jahr
         invest:   { fw: 31500, wp: 130000 }, wp_foerd: 0.30, fw_foerd: 0.30,   // Grundfoerderung BEG EM 17.08.2026 Nr. 8.4.1 Buchst. c. Massgebliche Quelle: parameter.json.foerdersaetze — von dort noch nicht gelesen, siehe wirtschaftAusJson().
         ist_eur_m2_monat: 1.30                          // gemessen 2025 (Gas, Vollkosten)
@@ -66,7 +66,7 @@
           jaz:           w.jaz ?? F.jaz,
           stand:         w.stand ?? F.stand,
           preis_ct: { gas: p.gas ?? F.preis_ct.gas, fw: p.fernwaerme ?? F.preis_ct.fw, wp: p.wp_strom ?? F.preis_ct.wp },
-          fw_mit_co2_ct: w.fernwaerme_mit_co2_ct ?? F.fw_mit_co2_ct,
+          fw_posten: w.fernwaerme_posten ?? F.fw_posten,
           steig:    { gas: s.gas ?? F.steig.gas,    fw: s.fernwaerme ?? F.steig.fw,    wp: s.wp_strom ?? F.steig.wp },
           invest:   { fw: i.fernwaerme ?? F.invest.fw, wp: i.wp ?? F.invest.wp },
           wp_foerd: w.wp_foerderung_anteil ?? F.wp_foerd,
@@ -82,7 +82,11 @@
       const WV = (function(){
         // Zwei Mengen: FW und WP auf die Waermeabgabe, Gas auf den Gaseinsatz.
         const W = WIRTSCHAFT, q = W.waerme_kwh, v = W.verbrauch_kwh, n = W.n, fl = W.flaeche_m2;
-        const e1 = { fw: q * W.preis_ct.fw/100, wp: (q / W.jaz) * W.preis_ct.wp/100, gas: v * W.preis_ct.gas/100 };
+        // Fernwaerme aus den Einzelposten, nicht aus dem gerundeten Cent-Wert.
+        // Hauptwert mit CO2-Zertifikat (Konvention seit 31.10.2026), ohne Zertifikat daneben.
+        const P = W.fw_posten;
+        const fwOhne = q * P.arbeitspreis_ct/100 + P.leistung_kw * P.leistungspreis_eur_kw_a + P.verrechnungspreis_eur_a;
+        const e1 = { fw: fwOhne + q * P.zertifikat_ct/100, wp: (q / W.jaz) * W.preis_ct.wp/100, gas: v * W.preis_ct.gas/100 };
         const inv = { fw: Math.round(W.invest.fw * (1 - W.fw_foerd)), wp: Math.round(W.invest.wp * (1 - W.wp_foerd)) };
         const sumEsc = (j, e) => e === 0 ? j * n : j * (Math.pow(1 + e, n) - 1) / e;
         const mit  = { fw: sumEsc(e1.fw, W.steig.fw) + inv.fw, wp: sumEsc(e1.wp, W.steig.wp) + inv.wp };
@@ -92,7 +96,8 @@
         let be = null, cFW = inv.fw, cWP = inv.wp;
         for (let t = 1; t <= n; t++){ cFW += e1.fw * Math.pow(1 + W.steig.fw, t - 1); cWP += e1.wp * Math.pow(1 + W.steig.wp, t - 1); if (be === null && cFW >= cWP) be = t; }
         return { e1, mit, ohne, ungefoerdert, be, ersparnis: mit.fw - mit.wp, diffFW: mit.fw - ohne.fw,
-                 fwMonat: e1.fw / fl / 12, wpMonat: e1.wp / fl / 12, gasMonat: e1.gas / fl / 12 };
+                 fwMonat: e1.fw / fl / 12, wpMonat: e1.wp / fl / 12, gasMonat: e1.gas / fl / 12,
+                 fwOhne, fwOhneMonat: fwOhne / fl / 12, fwCt: Math.round(e1.fw / q * 1000) / 10, fwOhneCt: Math.round(fwOhne / q * 1000) / 10 };
       })();
       const fmtTsd = x => Math.round(x / 1000).toLocaleString('de-DE') + '.000 €';
       const fmtEur = x => Math.round(x).toLocaleString('de-DE') + ' €';
@@ -167,7 +172,7 @@
           '<div class="oz-map__bar">' +
             '<span class="oz-map__mark oz-map__mark--wp" style="left:' + ozPos(WV.wpMonat) + '%"><span class="oz-map__lblbox"><span class="oz-map__val">~' + WV.wpMonat.toFixed(2).replace('.', ',') + '</span><span class="oz-map__cap">Wärmepumpe</span></span></span>' +
             '<span class="oz-map__mark oz-map__mark--gas" style="left:' + ozPos(WV.gasMonat) + '%"><span class="oz-map__lblbox"><span class="oz-map__val">' + fmtM2(WV.gasMonat) + '</span><span class="oz-map__cap">Gas heute</span></span></span>' +
-            '<span class="oz-map__mark oz-map__mark--fw" style="left:' + ozPos(WV.fwMonat) + '%"><span class="oz-map__lblbox"><span class="oz-map__val">~' + WV.fwMonat.toFixed(2).replace('.', ',') + '</span><span class="oz-map__cap">Fernwärme <em>steigt ▸</em></span></span></span>' +
+            '<span class="oz-map__mark oz-map__mark--fw" style="left:' + ozPos(WV.fwMonat) + '%"><span class="oz-map__lblbox"><span class="oz-map__val">~' + WV.fwMonat.toFixed(2).replace('.', ',') + '</span><span class="oz-map__cap">Fernwärme <em>steigt ▸</em></span><span class="oz-map__cap">ohne Zertifikat ' + fmtM2(WV.fwOhneMonat) + '</span></span></span>' +
           '</div>' +
           '<div class="oz-map__labels"><span>niedrig</span><span>im Schnitt</span><span>erhöht</span></div>' +
         '</div>' +
@@ -256,13 +261,13 @@
         const wpB = Math.round(WV.e1.wp / WV.e1.fw * 100);
         jahresEl.innerHTML =
           '<span class="oz-vgl-row__lbl">Jahreskosten heute · Energie</span>' +
-          '<div class="oz-vgl-line"><span class="oz-vgl-line__opt">Fernwärme</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:100%"></div></div><span class="oz-vgl-line__val">' + fmtEur(WV.e1.fw) + '</span></div>' +
+          '<div class="oz-vgl-line"><span class="oz-vgl-line__opt">Fernwärme</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:100%"></div></div><span class="oz-vgl-line__val">' + fmtEur(WV.e1.fw) + '<small style="display:block;opacity:.55;font-weight:400;font-size:10px;">ohne Zertifikat ' + fmtEur(WV.fwOhne) + '</small></span></div>' +
           '<div class="oz-vgl-line"><span class="oz-vgl-line__opt">Wärmepumpe</span><div class="oz-vgl-track"><div class="oz-vgl-fill" style="width:' + wpB + '%"></div></div><span class="oz-vgl-line__val">' + fmtEur(WV.e1.wp) + '</span></div>' +
           // Link auf das Preisblatt bleibt fest; mit dem Quartal wechseln (Quelle der Werte: Block "wirtschaft").
           '<p class="oz-vgl-note">Basis: ' + WIRTSCHAFT.waerme_kwh.toLocaleString('de-DE') + ' kWh Wärme/Jahr · Preisstand ' + WIRTSCHAFT.stand +
-            ', brutto: Fernwärme-Effektivpreis ' + ct(WIRTSCHAFT.preis_ct.fw) + ' ct/kWh (Effektivpreis auf Gebäudeebene bei ' +
-            WIRTSCHAFT.waerme_kwh.toLocaleString('de-DE') + ' kWh und 46 kW Anschlussleistung; mit CO₂-Zertifikat ' + ct(WIRTSCHAFT.fw_mit_co2_ct) +
-            ' ct — <a href="' + BASIS + 'dokumente/261001_SWE-Preisblatt-Fernwaerme_Q4-2026.pdf" target="_blank" rel="noopener">SWE-Preisblatt 1.10.2026</a>), WP-Strom ' +
+            ', brutto: Fernwärme-Effektivpreis ' + ct(WV.fwCt) + ' ct/kWh (ohne CO₂-Zertifikat ' + ct(WV.fwOhneCt) + ' ct; Effektivpreis auf Gebäudeebene bei ' +
+            WIRTSCHAFT.waerme_kwh.toLocaleString('de-DE') + ' kWh und ' + WIRTSCHAFT.fw_posten.leistung_kw + ' kW Anschlussleistung' +
+            ' — <a href="' + BASIS + 'dokumente/261001_SWE-Preisblatt-Fernwaerme_Q4-2026.pdf" target="_blank" rel="noopener">SWE-Preisblatt 1.10.2026</a>), WP-Strom ' +
             ct(WIRTSCHAFT.preis_ct.wp) + ' ct/kWh; Gas ' + ct(WIRTSCHAFT.preis_ct.gas) + ' ct/kWh (gemessen 2025) — die Wärmepumpe braucht dafür nur gut ein Viertel Strom (Umweltwärme).</p>' +
           '<p class="oz-vgl-note">Über die Laufzeit bleibt es nicht bei diesen Beträgen: In der Rechnung steigt der ' +
             'Fernwärmepreis um ' + prz(WIRTSCHAFT.steig.fw) + ' pro Jahr, der Wärmepumpenstrom um ' + prz(WIRTSCHAFT.steig.wp) + '. ' +
