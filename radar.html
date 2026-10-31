@@ -199,7 +199,7 @@ body{
 .bw.pos b{color:#4e7d1f}
 .bw.neg{background:rgba(216,30,52,.08);border-color:rgba(216,30,52,.3);color:#8a3a44}
 .bw.neg b{color:var(--tommy)}
-/* "Was nicht gesagt wird" */
+/* "Wenig beachtet" */
 .post.wng{background:#f3f7f5;border:1px dashed #c3d0cc;box-shadow:none}
 .post.wng .wng-lab{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin-bottom:8px}
 .post.wng .wng-lab svg{width:14px;height:14px}
@@ -257,7 +257,7 @@ body{
     <div class="pin">
       <div class="pintxt">
         <b>Die Wärmewende — entlang Ihrer Entscheidung.</b>
-        <span>Wöchentlich und belegt: was sich bei Wärmepumpe, Fernwärme und Gas bewegt — und was vor Ort gern übersehen wird.</span>
+        <span>Wöchentlich und belegt: was sich bei Wärmepumpe, Fernwärme und Gas bewegt — und was das für Erfurt bedeutet.</span>
       </div>
       <button class="follow js-kanal-link-btn" id="follow-btn">Kanal in WhatsApp öffnen</button>
     </div>
@@ -304,7 +304,7 @@ const EBENEN = {
   optionen:{label:"Die Optionen", sub:"Wärmepumpe, Fernwärme, Gas. Was sich für Ihre Wahl bewegt.", icon:IC.rotor},
   rahmen:{label:"Der Rahmen", sub:"Gesetze, Förderung, Wärmeplanung. Was Ihre Annahmen verschiebt.", icon:IC.paragraf},
   erfurt:{label:"Erfurt konkret", sub:"Stadt, Stadtwerke, lokale Entwicklungen. Plus übertragbare Beispiele von außerhalb.", icon:IC.pin},
-  wng:{label:"Was nicht gesagt wird", sub:"Die Lücke — faktenbasiert benannt.", icon:IC.gap}
+  wng:{label:"Wenig beachtet", sub:"Die Lücke — faktenbasiert benannt.", icon:IC.gap}
 };
 const EBENEN_ORDER = ["optionen","rahmen","erfurt","wng"];
 const OPTION_ICON = { waermepumpe:IC.rotor, fernwaerme:IC.fernwaerme, gas:IC.gas, solarthermie:IC.solar, geothermie:IC.geo, eisspeicher:IC.geo, "pv-solarthermie":IC.solar };
@@ -324,8 +324,7 @@ const ausgaben = [
       body:'Seit Januar 2026 wird eine Luft-Wärmepumpe nur noch gefördert, wenn ihr Außengerät <b>deutlich leiser</b> ist als bisher verlangt — und der Markt zieht mit. Zusammen mit durchdachter Aufstellung sinkt der nach außen hörbare Schall zusätzlich.',
       einordnung:'Schallangaben sind nur mit Kontext vergleichbar: Schallleistungspegel ≠ Schalldruckpegel, dazu Messabstand, Tag-/Nachtbetrieb und Betriebsmodus. Ein einzelner Dezibel-Wert ist noch kein Gebäude-Urteil.',
       bridge:{
-        fuerErfurt:'In der dichten Gründerzeit-Innenstadt war Schall bisher das teuerste Gegenargument gegen die Wärmepumpe — der Grund für kalkulierte Schallschutzwände.',
-        referenz:'Genau dort, an unserem anonymisierten Erfurter Referenzgebäude, war die Schallfrage in enger Innenstadtlage der Knackpunkt. Die Annahme „teure Schallschutzwand ist alternativlos" gehört jetzt neu gerechnet.'
+        fuerErfurt:'In der dichten Gründerzeit-Innenstadt war Schall bisher das teuerste Gegenargument gegen die Wärmepumpe — der Grund für kalkulierte Schallschutzwände. In Innenstadtlagen lohnt es sich, die Kosten für den Schallschutz mit aktuellen Gerätewerten neu zu rechnen.'
       },
       quellen:[{t:"BWP",u:"https://www.waermepumpe.de/presse/news/details/beg-foerderung-2026-neue-schallanforderungen-fuer-waermepumpen/"},{t:"Zukunft Altbau",u:"https://www.zukunftaltbau.de/presse/presseinformationen/waermepumpen-werden-immer-leiser-markt-erfuellt-strengere-foerderanforderungen/"}]
     },
@@ -398,10 +397,10 @@ const ausgaben = [
       einordnung:'Für Erfurt bisher eher im Konjunktiv: interessante Referenz, noch kein lokaler Beschluss. Als Prüfrichtung im Blick behalten.',
       quellen:[{t:"ingenieur.de — Lübeck kalte Nahwärme",u:"https://www.ingenieur.de/technik/fachbereiche/bau/23000-bohrmeter-fuer-ein-kaltes-waermenetz-warum-luebeck-so-tief-geht/"},{t:"Stadt Trier — Energiequartier",u:"https://www.trier.de/energiequartier"}]
     },
-    /* ---- Ebene: Was nicht gesagt wird ---- */
+    /* ---- Ebene: Wenig beachtet ---- */
     {
       typ:"wasnichtgesagt", ebene:"wng",
-      titel:"Die Schieflage der lokalen Resonanz",
+      titel:"Die Gewichtung der lokalen Debatte",
       body:'Die lokale Debatte gewichtet <b>Fernwärme und Gas</b> stark; die <b>Wärmepumpe</b> bleibt in ihren Vorteilen unterbelichtet, <b>Geothermie</b> meist im Konjunktiv. Dabei sieht die Studienlage (siehe oben) Wärmepumpe und Fernwärme meist günstiger als eine neue Gasheizung. Wir machen diese Lücke sichtbar — mit Zahlen und Quellen, nicht mit Meinung.',
       einordnung:'Belegt statt behauptet: Es geht nicht darum, eine Technik zu bewerben, sondern eine dokumentierte Gewichtung sichtbar zu machen. Einordnung, keine Empfehlung.',
       quellen:[{t:"Hausentscheider — Abwägungs-Analyse zur Erfurter Wärmeplanung",u:"dokumente/260702_Analyse_Wer-sagt-was_OEFFENTLICH.pdf"}]
@@ -498,7 +497,7 @@ function renderPost(p){
   if(p.typ==="note") return '<div class="note">'+p.text+'</div>';
   if(p.typ==="wasnichtgesagt"){
     let h='<article class="post wng" data-ebene="wng">';
-    h+='<div class="wng-lab">'+IC.gap+'Was nicht gesagt wird</div>';
+    h+='<div class="wng-lab">'+IC.gap+'Wenig beachtet</div>';
     h+='<h2 class="ptitle">'+p.titel+'</h2>';
     h+='<p class="pbody">'+p.body+'</p>';
     if(p.einordnung) h+='<div class="mini"><b>Einordnung:</b> '+p.einordnung+'</div>';
