@@ -203,6 +203,7 @@
       },
       "einheit_quelle": "Arbeitspreis in ct/kWh + Leistungspreis in €/kW·a + Zertifikatepreis in ct/kWh + Umlagen + Verrechnungspreis je Messgerät",
       "tarifbasis": "Erfurter Effektivpreis auf Gebäudeebene — alle Komponenten auf den Jahresverbrauch eines Referenz-Mehrfamilienhauses umgelegt. NICHT der Arbeitspreis allein.",
+      "mengenbasis_seit_q3_2026": "Reihe mit CO2-Zertifikat bei 97.601 kWh (Gaseinsatz 2024) und 46 kW, rückgerechnet am 31.10.2026: Q4 = 97.601 kWh × 14,309 ct + 46 kW × 75,24 € + 73,02 € + 97.601 kWh × 1,779 ct = 19.236 € = 19,7 ct (ohne Zertifikat 17,9 ct); Q3 analog 19,3 ct. Bewusst nicht auf die 20,7 ct des Kostenvergleichs umgestellt: Der Kostenvergleich (theaterstrasse-4.json, Block wirtschaft) rechnet auf 77.000 kWh Wärmeabgabe. Eine Umstellung allein im Oktober täuschte einen Sprung von rund 7 % statt rund 2 % vor. Beide Bezüge stehen auf der Seite dabei. Der Wert 17,5 ct bis Juni hat eine eigene Herleitung.",
       "rhythmus": "quartalsweise. Preisänderungen zum 01.01., 01.04., 01.07. und 01.10. — NICHT monatsvolatil. Ein 'stabil' in dieser Spalte ist eine Tarifaussage, keine Marktbeobachtung.",
       "preisblatt_q3_2026": {
         "gueltig": "01.07.2026 bis 30.09.2026, nächste Anpassung 01.10.2026",
