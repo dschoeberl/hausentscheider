@@ -405,12 +405,26 @@
     .begleitung-box__liste li { margin: 0.4rem 0; }
     .begleitung-box__liste strong { color: #ffffff; }
     .begleitung-box .btn--signal { margin-top: 0.75rem; }
-    .begleitung-box__weitergabe { margin: 1.25rem 0 0.5rem; padding: 1.1rem 1.25rem; background: rgba(255,255,255,0.06); border: 0.5px solid rgba(122,184,181,0.3); border-radius: 6px; }
-    .begleitung-box__weitergabe h3 { color: #ffffff; font-size: 17px; margin: 0 0 0.6rem; }
-    .begleitung-box__weitergabe ul { margin: 0 0 0.7rem; padding-left: 1.2rem; color: #c8e0df; font-size: 14px; line-height: 1.6; }
-    .begleitung-box__weitergabe li { margin: 0.35rem 0; }
-    .begleitung-box__weitergabe p { font-size: 13px; margin: 0; }
-    .begleitung-box__weitergabe a { color: #ffffff; text-decoration: underline; text-underline-offset: 2px; }
+    .vw__kopf { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem; align-items: center; }
+    .vw__grafik { display: block; width: 100%; height: auto; }
+    .vw__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 1.75rem; }
+    .vw-karte { display: flex; flex-direction: column; min-width: 0; padding: 1rem 1rem 0.9rem; background: rgba(255,255,255,0.04); border: 0.5px solid rgba(122,184,181,0.28); border-radius: var(--radius); text-decoration: none; font-family: 'Inter', sans-serif; transition: background 0.2s, border-color 0.2s; }
+    .vw-karte:hover, .vw-karte:focus-visible { background: rgba(255,255,255,0.08); border-color: rgba(207,247,127,0.6); text-decoration: none; }
+    .vw-karte:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+    .vw-karte svg { width: 34px; height: 34px; display: block; margin-bottom: 0.7rem; }
+    .vw-karte__titel { font-size: 14px; font-weight: 500; color: #ffffff; margin-bottom: 0.3rem; }
+    .vw-karte__text { font-size: 12.5px; line-height: 1.5; color: #b9cfcc; margin-bottom: 0.8rem; }
+    .vw-karte__link { margin-top: auto; font-size: 12.5px; font-weight: 500; color: var(--signal); }
+    .vw__fuss { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.8rem 1.5rem; margin-top: 1.25rem; padding-top: 1rem; border-top: 0.5px solid rgba(122,184,181,0.2); }
+    .begleitung-box .vw__fuss p { font-size: 12.5px; line-height: 1.55; color: #9fbab6; margin: 0; max-width: 600px; }
+    .vw__fuss a:not(.btn) { color: #ffffff; text-decoration: underline; text-underline-offset: 2px; }
+    .begleitung-box .vw__fuss .btn--signal { margin-top: 0; }
+    @media (max-width: 800px) {
+      .vw__kopf { grid-template-columns: 1fr; gap: 1.25rem; }
+      .vw__grafik { max-width: 420px; }
+      .vw__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 480px) { .vw__grid { grid-template-columns: 1fr; } }
     .form { display: flex; flex-direction: column; gap: 0.75rem; max-width: 420px; }
     .form input, .form textarea { font-family: 'Inter', sans-serif; font-size: 14px; padding: 0.6rem 0.875rem; border: 0.5px solid var(--border); border-radius: 4px; background: var(--white); color: var(--text-primary); outline: none; transition: border-color 0.2s; width: 100%; }
     .form input:focus, .form textarea:focus { border-color: var(--petrol); }
@@ -1280,26 +1294,62 @@
     <p class="partner__offen">Weitere Partner · in Gespräch</p>
   </section>
 
-  <!-- BEGLEITUNG / SERVICE — Einlösung von „Die Lücke" -->
+  <!-- FÜR EIGENTÜMER, WEGS UND HAUSVERWALTUNGEN — Einlösung von „Die Lücke" -->
   <section class="section container" id="verwaltungen" aria-label="Für Eigentümergemeinschaften und Hausverwaltungen">
     <span id="begleitung"></span>
     <div class="begleitung-box">
-      <span class="begleitung-box__eyebrow">Begleitung · Erfurt</span>
-      <h2 class="begleitung-box__titel">Für Eigentümergemeinschaften und Hausverwaltungen</h2>
-      <p>Die kommunale Wärmeplanung bringt Fragen in jede Eigentümergemeinschaft, die über die laufende Verwaltung hinausgehen. Welche Heizung ist am eigenen Gebäude zulässig? Was kostet sie über 25 Jahre? Welche Fristen gelten für Förderung und Befreiung?</p>
-      <p>hausentscheider bereitet diese Fragen für Eigentümer verständlich und belegt auf. Hausverwaltungen können die Seite an ihre Eigentümer weitergeben, als gemeinsame Grundlage vor der Versammlung. Wenn es konkret wird, begleitet hausentscheider Gemeinschaft und Verwaltung gemeinsam: Zahlen einordnen, Unterlagen prüfen, die Versammlung vorbereiten.</p>
-      <p>Die Informationen auf dieser Seite sind frei zugänglich. Die Begleitung ist eine Leistung auf Anfrage.</p>
-      <div class="begleitung-box__weitergabe">
-        <h3>So können Sie die Seite an Ihre Eigentümer weitergeben</h3>
-        <ul>
-          <li><a href="wegweiser.html">Wegweiser</a>: 25 Fragen zur Heizungsentscheidung in Erfurt, jede als belegt oder offen markiert.</li>
-          <li><a href="kwp-dashboard-erfurt.html">Wärmeplanung Erfurt</a>: Stand des Plans, Forderungen und Dokumente auf einen Blick.</li>
-          <li><a href="gebaeude-verstehen.html">Das Gebäude verstehen</a>: die Kennzahlen, auf die jedes Angebot ausgelegt wird.</li>
-          <li><a href="objekte/objekt-001.html">Referenzobjekt</a>: eine Entscheidung in einer Erfurter Eigentümergemeinschaft, offen dokumentiert.</li>
-        </ul>
-        <p>Frei zugänglich, ohne Anmeldung, ohne Cookies und ohne Tracking. Quellen und Stand sind angegeben. Fragen und Hinweise an <a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a>. Begleitung für einzelne Gemeinschaften ist eine Leistung auf Anfrage.</p>
+      <div class="vw__kopf">
+        <div>
+          <span class="begleitung-box__eyebrow">Begleitung · Erfurt</span>
+          <h2 class="begleitung-box__titel">Für Eigentümergemeinschaften und Hausverwaltungen</h2>
+          <p>Welche Heizung ist am eigenen Gebäude zulässig, was kostet sie über 25 Jahre, welche Fristen gelten für Förderung und Befreiung? hausentscheider bereitet diese Fragen belegt auf, als gemeinsame Grundlage für alle am Tisch.</p>
+          <p>Wenn es konkret wird, begleitet hausentscheider Gemeinschaft und Verwaltung gemeinsam: Zahlen einordnen, Unterlagen prüfen, die Versammlung vorbereiten.</p>
+        </div>
+        <svg class="vw__grafik" viewBox="0 -12 300 222" role="img" aria-label="Eigentümer, WEGs und Hausverwaltungen arbeiten mit einer gemeinsamen Grundlage" font-family="Inter, sans-serif">
+          <g stroke="#7ab8b5" stroke-opacity="0.45" stroke-width="1" fill="none" stroke-dasharray="3 3"><path d="M62 58 Q110 76 136 110"/><path d="M150 54 V102"/><path d="M238 58 Q190 76 164 110"/></g>
+          <g transform="translate(150 146)">
+            <path d="M-38 34 V-2 L0 -30 L38 -2 V34 Z" fill="#112626" stroke="#CFF77F" stroke-width="1.6" stroke-linejoin="round"/>
+            <g fill="none" stroke="#7ab8b5" stroke-width="1"><rect x="-26" y="2" width="12" height="10"/><rect x="14" y="2" width="12" height="10"/><rect x="-26" y="18" width="12" height="10"/><rect x="14" y="18" width="12" height="10"/><path d="M-6 34 V18 H6 V34"/></g>
+            <path d="M-62 40 H62" stroke="#CFF77F" stroke-width="2.5" stroke-linecap="round"/>
+            <text x="0" y="57" text-anchor="middle" font-size="10" fill="#CFF77F">gemeinsame Grundlage</text>
+          </g>
+          <g transform="translate(46 40)"><circle r="22" fill="#112626" stroke="#7ab8b5" stroke-width="1"/><g fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"><circle cx="0" cy="-5" r="5"/><path d="M-9 10 a9 8 0 0 1 18 0"/></g><text x="0" y="37" text-anchor="middle" font-size="10" fill="#c8e0df">Eigentümer</text></g>
+          <g transform="translate(150 30)"><circle r="22" fill="#112626" stroke="#7ab8b5" stroke-width="1"/><g fill="none" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round"><circle cx="-6" cy="-4" r="3.5"/><circle cx="6" cy="-4" r="3.5"/><circle cx="0" cy="-8" r="3.5"/><path d="M-12 9 a6 6 0 0 1 12 0 M0 9 a6 6 0 0 1 12 0"/></g><text x="0" y="-30" text-anchor="middle" font-size="10" fill="#c8e0df">WEGs</text></g>
+          <g transform="translate(254 40)"><circle r="22" fill="#112626" stroke="#7ab8b5" stroke-width="1"/><g fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"><rect x="-9" y="-10" width="18" height="20"/><path d="M-5 -5 H-1 M3 -5 H5 M-5 0 H-1 M3 0 H5 M-2 10 V5 H2 V10"/></g><text x="0" y="37" text-anchor="middle" font-size="10" fill="#c8e0df">Hausverwaltungen</text></g>
+        </svg>
       </div>
-      <a href="#kontakt" class="btn btn--signal">Zum Kontakt →</a>
+
+      <div class="vw__grid">
+        <a class="vw-karte" href="wegweiser.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#CFF77F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M12 5h7l2 2.5-2 2.5h-7M12 12H5l-2 2.5 2 2.5h7"/></svg>
+          <span class="vw-karte__titel">Wegweiser</span>
+          <span class="vw-karte__text">25 Fragen zur Heizungsentscheidung in Erfurt, jede als belegt oder offen markiert.</span>
+          <span class="vw-karte__link">Öffnen →</span>
+        </a>
+        <a class="vw-karte" href="kwp-dashboard-erfurt.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#CFF77F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z M9 4v14 M15 6v14"/></svg>
+          <span class="vw-karte__titel">Wärmeplanung Erfurt</span>
+          <span class="vw-karte__text">Stand des Plans, Forderungen und Dokumente auf einen Blick.</span>
+          <span class="vw-karte__link">Öffnen →</span>
+        </a>
+        <a class="vw-karte" href="gebaeude-verstehen.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#CFF77F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11L12 4l8 7v9H4z M8 20v-5h8v5 M12 9v6"/><circle cx="12" cy="11" r="1"/></svg>
+          <span class="vw-karte__titel">Das Gebäude verstehen</span>
+          <span class="vw-karte__text">Die Kennzahlen, auf die jedes Angebot ausgelegt wird.</span>
+          <span class="vw-karte__link">Öffnen →</span>
+        </a>
+        <a class="vw-karte" href="objekte/objekt-001.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#CFF77F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z M15 3v4h4 M9 12h7 M9 15h7 M9 18h4"/></svg>
+          <span class="vw-karte__titel">Referenzobjekt</span>
+          <span class="vw-karte__text">Eine Entscheidung in einer Erfurter Eigentümergemeinschaft, offen dokumentiert.</span>
+          <span class="vw-karte__link">Öffnen →</span>
+        </a>
+      </div>
+
+      <div class="vw__fuss">
+        <p>Frei zugänglich, ohne Anmeldung, ohne Cookies und ohne Tracking. Quellen und Stand sind angegeben. Fragen und Hinweise an <a href="mailto:dialog@hausentscheider.de">dialog@hausentscheider.de</a>. Begleitung für einzelne Gemeinschaften ist eine Leistung auf Anfrage.</p>
+        <a href="#kontakt" class="btn btn--signal">Zum Kontakt →</a>
+      </div>
     </div>
   </section>
 
