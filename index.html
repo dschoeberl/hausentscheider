@@ -924,7 +924,7 @@
             </g>
             <g transform="translate(166 24)" font-family="Inter, sans-serif" fill="#CFF77F" text-anchor="middle"><circle r="17" fill="#1a3535" stroke="#CFF77F" stroke-width="1.2"/><circle r="13.5" fill="none" stroke="#CFF77F" stroke-width="0.5" stroke-opacity="0.6"/><text id="wpe-monat-von" y="-1" font-size="8">Jun</text><text id="wpe-monat-bis" y="8" font-size="8">Jul</text></g>
           </svg>
-          <span class="wpe-karte__text" id="wpe-medien-stand">Lokalpresse, jede Ausgabe vom 10.06. bis 24.07.2026 gesichtet. Nächste Durchsicht folgt.</span>
+          <span class="wpe-karte__text" id="wpe-medien-stand">Lokalpresse, jede Ausgabe vom 10.06. bis 24.07.2026 gesichtet.</span>
           <span class="wpe-karte__link">Medienresonanz →</span>
         </a>
       </div>
@@ -1000,7 +1000,7 @@
       </div>
       <div class="ep-tafeln" id="ep-tafeln"></div>
       <div class="ep-verlauf"><table id="ep-verlauf-tbl"></table></div>
-      <p class="ep-einheit">Alle Werte in ct/kWh brutto. Vier der fünf sind umgerechnet — Heizöl aus ct/l ÷ 10,0 kWh/l (TECSON, 3.000 l), Pellets aus €/t ÷ 5,0 kWh/kg (DEPI, 6 t), Gas als Mittel aus Neukunden- und Bestandstarif ohne Grundversorgung, WP-Strom als Bandmittel der Anbieterspanne 22–26 ct. Fernwärme = Erfurter Effektivpreis auf Gebäudeebene, quartalsweise statt monatlich — der Q4-Preis von ~19,7 ct gilt bis 31.12.2026 (SWE-Preisblatt 1.10.2026). Im Oktober sind zwei Werte noch nicht endgültig: Heizöl ist vorläufig (TECSON 10.10., Stichtag um den 14.), Pellets zeigen noch den Septemberstand (DEPI meldet um den 18.). Fernwärme: Effektivpreis mit CO₂-Zertifikat, in der Monatsreihe seit Juli 2026 bei 97.601 kWh Gaseinsatz 2024 und 46 kW (Oktober ohne Zertifikat 17,9 ct). Auf die 77.000 kWh Wärmeabgabe des <a href="objekte/objekt-001.html">Referenzgebäudes</a> gerechnet sind es 20,7 ct (ohne Zertifikat 18,9 ct). <a href="https://hausentscheider.de/preishistorie#methodik">Alle Quellen, Faktoren und Rechenwege →</a></p>
+      <p class="ep-einheit">Alle Werte in ct/kWh brutto. Vier der fünf sind umgerechnet — Heizöl aus ct/l ÷ 10,0 kWh/l (TECSON, 3.000 l), Pellets aus €/t ÷ 5,0 kWh/kg (DEPI, 6 t), Gas als Mittel aus Neukunden- und Bestandstarif ohne Grundversorgung, WP-Strom als Bandmittel der Anbieterspanne 22–26 ct. Fernwärme = Erfurter Effektivpreis auf Gebäudeebene, quartalsweise statt monatlich — der Q4-Preis von ~19,7 ct gilt bis 31.12.2026 (SWE-Preisblatt 1.10.2026). Fernwärme: Effektivpreis mit CO₂-Zertifikat, in der Monatsreihe seit Juli 2026 bei 97.601 kWh Gaseinsatz 2024 und 46 kW (Oktober ohne Zertifikat 17,9 ct). Auf die 77.000 kWh Wärmeabgabe des <a href="objekte/objekt-001.html">Referenzgebäudes</a> gerechnet sind es 20,7 ct (ohne Zertifikat 18,9 ct). <a href="https://hausentscheider.de/preishistorie#methodik">Alle Quellen, Faktoren und Rechenwege →</a></p>
       <p class="ep-doclink"><a class="ep-cta" href="https://hausentscheider.de/preishistorie">Vollständige Preishistorie mit Marktkontext →</a></p>
     </div>
   </section>
@@ -1843,7 +1843,7 @@
         setzen('wpe-monat-von', MONATE[Number(E.vollstaendig_ab.split('-')[1]) - 1]);
         setzen('wpe-monat-bis', MONATE[Number(E.erfasst_bis.split('-')[1]) - 1]);
         setzen('wpe-medien-stand', 'Lokalpresse, jede Ausgabe vom ' + tm(E.vollstaendig_ab) + ' bis ' + tm(E.erfasst_bis) +
-          E.erfasst_bis.split('-')[0] + ' gesichtet. Nächste Durchsicht folgt.');
+          E.erfasst_bis.split('-')[0] + ' gesichtet.');
       }).catch(fehler);
     })();
   </script>
