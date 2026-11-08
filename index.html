@@ -117,12 +117,13 @@
     .massstaebe-raster { display: grid; grid-template-columns: minmax(0, 58fr) minmax(0, 42fr); gap: 2.5rem; align-items: center; }
     .massstaebe-grafik { margin: 0; }
     .massstaebe-grafik svg { display: block; width: 100%; max-width: 420px; height: auto; margin: 0 auto; }
-    .massstaebe-grafik .g-rahmen { fill: none; stroke: var(--petrol-dark); stroke-width: 2; }
-    .massstaebe-grafik .g-kreis { fill: var(--petrol); fill-opacity: 0.07; stroke: var(--petrol); stroke-width: 1.5; }
+    .massstaebe-grafik .g-karte { fill: var(--petrol-dark); }
+    .massstaebe-grafik .g-kreis { fill: none; stroke: var(--petrol-light); stroke-width: 1.4; }
     .massstaebe-grafik .g-mitte { fill: var(--signal); }
-    .massstaebe-grafik .g-dunkel { fill: var(--petrol-dark); }
-    .massstaebe-grafik text { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; text-anchor: middle; dominant-baseline: central; fill: var(--petrol-dark); }
-    .massstaebe-grafik .g-hell { fill: #ffffff; font-size: 16px; }
+    .massstaebe-grafik .g-punkt { fill: var(--petrol-dark); }
+    .massstaebe-grafik .g-linie { stroke: var(--petrol-light); stroke-width: 0.6; opacity: 0.5; }
+    .massstaebe-grafik text { font-family: 'Inter', sans-serif; font-size: 14px; letter-spacing: 2px; text-anchor: middle; dominant-baseline: central; fill: #a8d4d2; }
+    .massstaebe-grafik .g-signal { fill: var(--signal); }
     @media (min-width: 900px) { .massstab__satz { display: none; } }
     @media (max-width: 899px) { .massstaebe-raster { display: block; } .massstaebe-grafik { display: none; } }
     @media (max-width: 599px) { .massstab__satz { display: none; } .massstab__begriff { font-size: 22px; } }
@@ -652,22 +653,22 @@
           <p class="buehne__klein">Das Wärmeplanungsgesetz nennt als Ziel unter anderem eine kosteneffiziente, bezahlbare, resiliente und treibhausgasneutrale Wärmeversorgung bis 2045 (<a href="https://www.gesetze-im-internet.de/wpg/__1.html" target="_blank" rel="noopener">§ 1 WPG</a>).</p>
           </div>
           <figure class="massstaebe-grafik" aria-hidden="true">
-            <svg viewBox="0 0 400 386" xmlns="http://www.w3.org/2000/svg" focusable="false">
+            <svg viewBox="0 0 400 440" xmlns="http://www.w3.org/2000/svg" focusable="false">
               <defs>
-                <clipPath id="ms-k1"><circle cx="200" cy="150" r="88"/></clipPath>
-                <clipPath id="ms-k2"><circle cx="152" cy="234" r="88"/></clipPath>
+                <clipPath id="ms-k1"><circle cx="200" cy="165" r="95"/></clipPath>
+                <clipPath id="ms-k2"><circle cx="148" cy="255" r="95"/></clipPath>
               </defs>
-              <rect class="g-rahmen" x="8" y="8" width="384" height="360" rx="18"/>
-              <circle class="g-kreis" cx="200" cy="150" r="88"/>
-              <circle class="g-kreis" cx="152" cy="234" r="88"/>
-              <circle class="g-kreis" cx="248" cy="234" r="88"/>
-              <g clip-path="url(#ms-k1)"><g clip-path="url(#ms-k2)"><circle class="g-mitte" cx="248" cy="234" r="88"/></g></g>
-              <circle class="g-dunkel" cx="200" cy="206" r="3.5"/>
-              <text x="200" y="38">Zukunftsfähig</text>
-              <text x="120" y="344">Wirtschaftlich</text>
-              <text x="280" y="344">Bezahlbar</text>
-              <rect class="g-dunkel" x="110" y="354" width="180" height="28" rx="4"/>
-              <text class="g-hell" x="200" y="368">Entscheidungsfähig</text>
+              <rect class="g-karte" x="0" y="0" width="400" height="440" rx="16"/>
+              <circle class="g-kreis" cx="200" cy="165" r="95"/>
+              <circle class="g-kreis" cx="148" cy="255" r="95"/>
+              <circle class="g-kreis" cx="252" cy="255" r="95"/>
+              <g clip-path="url(#ms-k1)"><g clip-path="url(#ms-k2)"><circle class="g-mitte" cx="252" cy="255" r="95"/></g></g>
+              <circle class="g-punkt" cx="200" cy="225" r="3.5"/>
+              <text x="200" y="42">ZUKUNFTSFÄHIG</text>
+              <text x="128" y="376">WIRTSCHAFTLICH</text>
+              <text x="294" y="376">BEZAHLBAR</text>
+              <line class="g-linie" x1="30" y1="398" x2="370" y2="398"/>
+              <text class="g-signal" x="200" y="420">ENTSCHEIDUNGSFÄHIG</text>
             </svg>
           </figure>
         </div>
