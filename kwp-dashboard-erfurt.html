@@ -129,9 +129,13 @@
     .kwp-tl-det summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: center; }
     .kwp-tl-det summary::-webkit-details-marker { display: none; }
     .kwp-tl-date { grid-column: 1; font-size: 12px; font-family: 'Inter', sans-serif; color: var(--petrol); font-weight: 600; }
-    .kwp-tl-chev { grid-column: 2; grid-row: 1 / span 2; justify-self: end; align-self: center; display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; border: 0.5px solid var(--petrol-light); background: rgba(26,92,90,0.06); color: var(--petrol); font-size: 11px; transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s; }
+    .kwp-tl-chev { grid-column: 2; grid-row: 1 / span 2; justify-self: end; align-self: center; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--petrol-light); background: rgba(26,92,90,0.06); color: var(--petrol); font-size: 12px; transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s; }
     .kwp-tl-det summary:hover .kwp-tl-chev { background: var(--petrol); border-color: var(--petrol); color: #ffffff; }
-    .kwp-tl-det[open] .kwp-tl-chev { transform: rotate(90deg); }
+    .kwp-tl-det[open] .kwp-tl-chev { transform: rotate(90deg); background: var(--petrol); border-color: var(--petrol); color: #ffffff; }
+    /* Aufgeklappter Eintrag (Muster: Medienresonanz) */
+    .kwp-tl-det { border-radius: 6px; transition: background 0.2s; }
+    .kwp-tl-det[open] { background: #f8f8f6; margin: -0.5rem -0.6rem; padding: 0.5rem 0.6rem; }
+    .kwp-tl-det[open] .kwp-tl-titel { color: var(--petrol); }
     .kwp-tl-titel { grid-column: 1; font-size: 14px; color: var(--text-primary); line-height: 1.4; }
     .kwp-tl-badge { display: inline-block; font-size: 8.5px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; font-family: 'Inter', sans-serif; border-radius: 3px; padding: 1px 6px; margin-bottom: 4px; }
     .kwp-tl-badge--meilenstein { background: var(--signal); color: var(--petrol-dark); }
@@ -140,7 +144,7 @@
     .kwp-tl-body { margin: 0.4rem 0 0; }
     .kwp-tl-det:not([open]) .kwp-tl-body { display: none; }
     .kwp-tl-zus { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.5rem; }
-    .kwp-tl-kom { font-size: 12.5px; color: var(--text-primary); line-height: 1.6; background: #ffffff; border-left: 3px solid var(--petrol); border-radius: 0 6px 6px 0; padding: 0.6rem 0.85rem; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+    .kwp-tl-kom { font-size: 12.5px; color: var(--text-primary); line-height: 1.6; background: #eaece9; border-left: 3px solid var(--tommy-rot); border-radius: 0 6px 6px 0; padding: 0.75rem 1rem; }
     .kwp-tl-kom-lbl { display: block; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--petrol); font-weight: 700; margin-bottom: 2px; font-family: 'Inter', sans-serif; }
     .kwp-tl-item--offen .kwp-tl-titel { color: var(--petrol); }
     .kwp-tl-heute { position: relative; padding-bottom: 1.1rem; }
@@ -558,7 +562,7 @@
           var art = e.art || 'etappe';
           var cls = 'kwp-tl-item kwp-tl-item--'+art + (e.offen ? ' kwp-tl-item--offen' : '');
           html += '<div class="'+cls+'"><span class="kwp-tl-item__dot"></span>' +
-            '<details class="kwp-tl-det"'+(e.offen?' open':'')+'>' +
+            '<details class="kwp-tl-det">' +
               '<summary>' +
                 '<span class="kwp-tl-date">'+esc(e.datumLabel)+'</span>' +
                 '<span class="kwp-tl-chev">▸</span>' +
@@ -566,7 +570,7 @@
               '</summary>' +
               '<div class="kwp-tl-body">' +
                 '<p class="kwp-tl-zus">'+esc(e.zusammenfassung)+'</p>' +
-                (e.kommentar ? '<p class="kwp-tl-kom"><span class="kwp-tl-kom-lbl">Einordnung</span>'+esc(e.kommentar)+'</p>' : '') +
+                (e.kommentar ? '<p class="kwp-tl-kom"><span class="kwp-tl-kom-lbl">Einordnung hausentscheider</span>'+esc(e.kommentar)+'</p>' : '') +
                 (e.link ? '<p style="margin-top:0.5rem;"><a href="'+esc(e.link)+'" target="_blank" rel="noopener" style="font-size:12px;">Quelle ansehen →</a></p>' : '') +
               '</div>' +
             '</details></div>';
