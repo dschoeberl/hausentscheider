@@ -96,6 +96,38 @@
   .mr-beitrag__einordnung b{color:var(--t1);font-weight:600;}
   p.mr-beitrag__quelle{font-size:12px;color:var(--t3);margin-bottom:.9rem;}
   .src b{font-weight:600;}
+
+  /* Dunkler Kopf (Muster: dunkle Abschnitte der Startseite) */
+  .mr-kopf{background:var(--petrol-dark);border-top:6px solid var(--tommy);}
+  .mr-kopf__inner{max-width:760px;margin:0 auto;padding:2.2rem 1.4rem 2.2rem;}
+  .mr-kopf .eyebrow{color:var(--petrol-light);margin-bottom:.8rem;}
+  .mr-kopf h1{color:var(--white);}
+  .mr-kopf .lede{color:#c4d0ce;}
+  .mr-kopf .mr-bezug{color:#9fb0ac;}
+  .mr-kopf .mr-zahl{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);}
+  .mr-kopf .mr-zahl b{color:var(--petrol-light);}
+  .mr-kopf .mr-zahl span{color:#c4d0ce;}
+  .mr-kopf .mr-zahl--akzent{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);box-shadow:inset 4px 0 0 var(--tommy);}
+  .mr-kopf .mr-zahl--akzent b{color:var(--white);}
+  .mr-kopf + .wrap{padding-top:.4rem;}
+
+  /* Termin-Plaketten */
+  .mr-termin__status{justify-self:start;font-size:11.5px;line-height:1.35;padding:.18rem .55rem;border-radius:4px;white-space:normal;max-width:200px;}
+  .mr-termin__status--ja{background:var(--wp-tint);color:var(--wp-text);}
+  .mr-termin__status--nein{color:var(--tommy);border:1px solid rgba(216,30,52,.5);background:var(--white);}
+  .mr-termin__status--offen{color:var(--t3);border:1px dashed #cfccc6;}
+
+  /* Aufgeklappter Beitrag */
+  .mr-beitrag{padding-right:.6rem;transition:background .2s;}
+  .mr-beitrag[open]{background:#f8f8f6;border-left-width:6px;padding-left:calc(.8rem - 2px);}
+  .mr-beitrag[open] .mr-beitrag__titel{color:var(--petrol);}
+  .mr-beitrag[open] summary::after{background:var(--petrol);border-color:var(--petrol);color:var(--white);}
+
+  /* Bericht und Einordnung getrennt (Muster oz-fw-det) */
+  .mr-label{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;color:var(--t3);margin:.1rem 0 .3rem;}
+  .mr-beitrag .mr-beitrag__einordnung{background:#eaece9;border-left:3px solid var(--tommy);border-radius:0 6px 6px 0;padding:.75rem 1rem;margin:0 0 .7rem;}
+  .mr-beitrag__einordnung .mr-label{color:var(--petrol);}
+  .mr-beitrag .mr-beitrag__einordnung p{color:var(--t1);margin:0;}
 </style>
 </head>
 <body>
@@ -114,8 +146,8 @@
     </nav>
   </div>
 </header>
-<div class="wrap">
-
+<section class="mr-kopf">
+  <div class="mr-kopf__inner">
   <p class="eyebrow">Wärmewende im Blick · Medienresonanz Erfurt</p>
   <!-- Rückfallebene: maßgeblich ist daten/medien-zeitstrahl.json (erhebung.kernaussage, erfasst_bis_label); das Skript überschreibt diesen Text. -->
   <h1 id="mr-kern">Der Wärmeplan gilt seit dem 30. Juni. Bis zum 16. Oktober stand im Erfurter Lokalteil kein Beitrag dazu.</h1>
@@ -124,6 +156,9 @@
   <!-- Inhalte kommen aus daten/medien-zeitstrahl.json; neue Beiträge nur dort eintragen. -->
   <p class="mr-bezug" id="mr-bezug">Lädt …</p>
   <div class="mr-zahlen" id="mr-zahlen"></div>
+  </div>
+</section>
+<div class="wrap">
 
   <h2>Was Eigentümer an den wichtigen Terminen erfahren konnten</h2>
   <div class="mr-termine" id="mr-termine"></div>
@@ -237,8 +272,8 @@
           var link = e.link ? ' · <a href="' + esc(e.link) + '" target="_blank" rel="noopener">Original ansehen</a>' : '';
           html += '<details class="mr-beitrag mr-beitrag--' + cls + '" data-spur="' + s + '" data-monat="' + m + '" data-themen="' + esc((e.themen || []).join(' ')) + '"><summary><span class="mr-beitrag__meta">' + esc(e.datumLabel) + ' ' + tags + '</span>' +
             '<span class="mr-beitrag__titel">' + esc(e.headline) + '</span></summary>' +
-            '<p>' + esc(e.zusammenfassung) + '</p>' +
-            '<p class="mr-beitrag__einordnung"><b>Einordnung:</b> ' + esc(e.kommentar) + '</p>' +
+            '<span class="mr-label">Im Artikel</span><p>' + esc(e.zusammenfassung) + '</p>' +
+            '<div class="mr-beitrag__einordnung"><span class="mr-label">Einordnung hausentscheider</span><p>' + esc(e.kommentar) + '</p></div>' +
             '<p class="mr-beitrag__quelle">' + esc(e.quelle) + link + '</p></details>';
         });
         html += '<p class="mr-leer" id="mr-leer" hidden></p>';
