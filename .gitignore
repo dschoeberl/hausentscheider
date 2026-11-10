@@ -12,3 +12,6 @@ dokumente/*Cockpit*
 dokumente/*Theaterstr*
 dokumente/*Theaterstra*
 dokumente/*WEG101*
+
+# Interne Arbeitsdateien (Briefings, Pressescans) — nie veröffentlichen
+_intern/
