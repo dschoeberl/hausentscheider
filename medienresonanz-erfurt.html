@@ -63,15 +63,28 @@
   .mr-termin__status--nein{color:var(--fw-text);}
   .mr-termin__status--offen{color:var(--t3);font-weight:400;}
   @media(max-width:560px){.mr-termin{grid-template-columns:66px 1fr;} .mr-termin__status{grid-column:2;white-space:normal;}}
-  .mr-liste{margin:.6rem 0 0;border-top:1px solid var(--border);}
-  .mr-beitrag{border-bottom:1px solid var(--border);}
-  .mr-beitrag summary{list-style:none;cursor:pointer;padding:.7rem 1.6rem .7rem 0;position:relative;}
+  .mr-filter{display:flex;flex-wrap:wrap;gap:.5rem;margin:.8rem 0 .4rem;}
+  .mr-filter button{font:inherit;font-size:13.5px;padding:.45rem .95rem;min-height:40px;border-radius:999px;border:1px solid var(--border);background:var(--white);color:var(--t2);cursor:pointer;}
+  .mr-filter button:hover{border-color:var(--petrol);color:var(--petrol);}
+  .mr-filter button[aria-pressed="true"]{background:var(--petrol);border-color:var(--petrol);color:var(--white);}
+  .mr-filter button:focus-visible{outline:2px solid var(--petrol);outline-offset:2px;}
+  .mr-monat{font-family:'Inter',system-ui,sans-serif;font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:var(--petrol);font-weight:600;margin:1.4rem 0 .3rem;padding-bottom:.3rem;border-bottom:1px solid var(--border);}
+  .mr-liste{margin:.6rem 0 0;}
+  .mr-beitrag{border-bottom:1px solid var(--border);border-left:4px solid var(--petrol-light);padding-left:.8rem;}
+  .mr-beitrag--erfurt{border-left-color:#d9bf94;}
+  .mr-beitrag--ohne{border-left-color:#d4d1cc;}
+  .mr-beitrag summary{list-style:none;cursor:pointer;padding:.8rem 2.6rem .8rem 0;position:relative;}
   .mr-beitrag summary::-webkit-details-marker{display:none;}
-  .mr-beitrag summary::after{content:'▸';position:absolute;right:.2rem;top:.8rem;color:var(--petrol);font-size:12px;transition:transform .2s;}
+  .mr-beitrag summary::after{content:'▸';position:absolute;right:.2rem;top:50%;margin-top:-14px;width:28px;height:28px;border-radius:50%;border:1px solid var(--petrol-light);display:flex;align-items:center;justify-content:center;color:var(--petrol);font-size:12px;transition:transform .2s,background .2s;}
+  .mr-beitrag summary:hover::after{background:var(--wp-tint);}
   .mr-beitrag[open] summary::after{transform:rotate(90deg);}
   .mr-beitrag summary:focus-visible{outline:2px solid var(--petrol);outline-offset:2px;}
-  .mr-beitrag__meta{display:block;font-size:12px;color:var(--t3);margin-bottom:.1rem;}
-  .mr-beitrag__titel{display:block;font-size:14.5px;font-weight:500;color:var(--t1);line-height:1.4;}
+  .mr-beitrag__meta{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem;font-size:12px;color:var(--t3);margin-bottom:.3rem;}
+  .mr-tag{display:inline-block;font-size:11.5px;font-weight:500;line-height:1.3;padding:.15rem .5rem;border-radius:4px;}
+  .mr-tag--rahmen{background:var(--wp-tint);color:var(--wp-text);}
+  .mr-tag--erfurt{background:var(--fw-tint);color:var(--fw-text);}
+  .mr-tag--ohne{background:none;color:var(--t2);border:1px solid #cfccc6;}
+  .mr-beitrag__titel{display:block;font-size:15.5px;font-weight:500;color:var(--t1);line-height:1.4;}
   .mr-beitrag p{font-size:14px;color:var(--t2);line-height:1.6;margin:0 0 .6rem;}
   .mr-beitrag__einordnung{background:var(--bg);border-left:3px solid var(--petrol);padding:.55rem .8rem;}
   .mr-beitrag__einordnung b{color:var(--t1);font-weight:600;}
@@ -118,6 +131,11 @@
   <p>Wer sich über die Lokalzeitung informiert, erfährt viel über Bundesrecht und Förderung und wenig darüber, was der Erfurter Plan für das eigene Gebäude heißt. Den Plan selbst zeigen zwei eigene Seiten: das <a href="kwp-dashboard-erfurt.html">Status-Dashboard</a> mit dem aktuellen Stand und die <a href="kwp-erfurt.html">Future-Readiness-Bewertung</a>. Wo Ihr Gebäude steht, prüft der <a href="wegweiser.html#fragen">Wegweiser</a>.</p>
 
   <h2>Alle erfassten Beiträge</h2>
+  <div class="mr-filter" id="mr-filter" role="group" aria-label="Beiträge filtern" hidden>
+    <button type="button" data-f="alle" aria-pressed="true">Alle</button>
+    <button type="button" data-f="rahmen" aria-pressed="false">Bund und Land</button>
+    <button type="button" data-f="erfurt" aria-pressed="false">Erfurt</button>
+  </div>
   <div class="mr-liste" id="mr-liste"></div>
 
   <p class="src" id="mr-methode"></p>
@@ -185,16 +203,45 @@
         }
 
         var neueste = eintraege.slice().sort(function (a, b) { return a.datum < b.datum ? 1 : (a.datum > b.datum ? -1 : 0); });
-        var SPUR = { rahmen: 'Bund und Land', erfurt: 'Erfurt', beide: 'Bund und Erfurt' };
-        setzen('mr-liste', neueste.map(function (e) {
-          var ort = (e.waermebezug === false) ? 'Erfurt, ohne Bezug zur Wärmeplanung' : SPUR[spur(e)];
+        var MONATE = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+        var TAG_R = '<span class="mr-tag mr-tag--rahmen">Bund und Land</span>';
+        var TAG_E = '<span class="mr-tag mr-tag--erfurt">Erfurt</span>';
+        var TAG_O = '<span class="mr-tag mr-tag--ohne">Erfurt, ohne Bezug zur Wärmeplanung</span>';
+        var html = '', monat = '';
+        neueste.forEach(function (e) {
+          var m = e.datum.slice(0, 7);
+          if (m !== monat) {
+            monat = m;
+            html += '<h3 class="mr-monat" data-monat="' + m + '">' + MONATE[+m.slice(5, 7) - 1] + ' ' + m.slice(0, 4) + '</h3>';
+          }
+          var s = spur(e), ohne = e.waermebezug === false;
+          var cls = ohne ? 'ohne' : (s === 'rahmen' ? 'rahmen' : 'erfurt');
+          var tags = ohne ? TAG_O : (s === 'beide' ? TAG_R + TAG_E : (s === 'rahmen' ? TAG_R : TAG_E));
           var link = e.link ? ' · <a href="' + esc(e.link) + '" target="_blank" rel="noopener">Original ansehen</a>' : '';
-          return '<details class="mr-beitrag"><summary><span class="mr-beitrag__meta">' + esc(e.datumLabel) + ' · ' + esc(ort) + '</span>' +
+          html += '<details class="mr-beitrag mr-beitrag--' + cls + '" data-spur="' + s + '" data-monat="' + m + '"><summary><span class="mr-beitrag__meta">' + esc(e.datumLabel) + ' ' + tags + '</span>' +
             '<span class="mr-beitrag__titel">' + esc(e.headline) + '</span></summary>' +
             '<p>' + esc(e.zusammenfassung) + '</p>' +
             '<p class="mr-beitrag__einordnung"><b>Einordnung:</b> ' + esc(e.kommentar) + '</p>' +
             '<p class="mr-beitrag__quelle">' + esc(e.quelle) + link + '</p></details>';
-        }).join(''));
+        });
+        setzen('mr-liste', html);
+
+        var filter = document.getElementById('mr-filter'), liste = document.getElementById('mr-liste');
+        filter.hidden = false;
+        filter.addEventListener('click', function (ev) {
+          var btn = ev.target.closest('button');
+          if (!btn) return;
+          var f = btn.getAttribute('data-f');
+          Array.prototype.forEach.call(filter.querySelectorAll('button'), function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+          var sichtbar = {};
+          Array.prototype.forEach.call(liste.querySelectorAll('.mr-beitrag'), function (el) {
+            var s = el.getAttribute('data-spur');
+            var zeigen = f === 'alle' || s === 'beide' || s === f;
+            el.hidden = !zeigen;
+            if (zeigen) sichtbar[el.getAttribute('data-monat')] = true;
+          });
+          Array.prototype.forEach.call(liste.querySelectorAll('.mr-monat'), function (h) { h.hidden = !sichtbar[h.getAttribute('data-monat')]; });
+        });
 
         setzen('mr-methode', '<b>Wie erhoben:</b> ' + esc(E.methode) + ' Überschriften und Einordnungen sind eigene Formulierungen von hausentscheider, die Bewertung ist als solche gekennzeichnet.');
       })
