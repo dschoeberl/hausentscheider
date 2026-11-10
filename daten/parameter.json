@@ -4,11 +4,11 @@
   "quelle": "v2.1_neutral_OUTPUT.xlsx",
   "foerderstand": {
     "_hinweis": "Zentraler Stand-Hinweis für alle Stellen mit Förderbezug. Wird von js/foerderstand.js in jedes Element mit data-foerderstand geschrieben. Nur hier pflegen — nicht in den Seiten.",
-    "datum": "2026-10-10",
-    "label": "Förderstand 10.10.2026",
-    "text": "Der Klimageschwindigkeits-Bonus und die Höchstgrenze der förderfähigen Ausgaben für die erste Wohneinheit sinken halbjährlich, erstmals zum 1. Februar 2027. Für Wärmepumpen sinkt die Grundförderung ab dem ersten Quartal 2027 von 30 auf 15 Prozent; im Gegenzug kommt ein Wertschöpfungs-Bonus für Geräte mit Ursprung in der Union hinzu. Die Voraussetzungen sind gesondert geregelt; ob ein Gerät sie erfüllt, ist im Einzelfall zu prüfen. Maßgeblich ist der Tag der Antragstellung, nicht der Tag der Entscheidung. Eine Wärmepumpe oder andere Einzelheizung wird nicht gefördert, wenn das Grundstück aufgrund einer kommunalen Entscheidung, etwa einer Satzung mit Anschluss- und Benutzungszwang, an ein Wärmenetz angeschlossen werden soll; gefördert wird dann nur der Netzanschluss. Ab Veröffentlichung des Infoblatts gilt der Ausschluss auch bei verbindlicher Anschlusszusage des Versorgers. Eine Befreiung vom Anschlusszwang hebt den Ausschluss nach Angaben des Bundesverbands Wärmepumpe auf. Ob die Befreiung schon beim Förderantrag vorliegen muss, ist offen.",
-    "pruefvermerk": "Die Förderangaben sind an der Förderrichtlinie vom 17.08.2026 geprüft (Stand 10.10.2026).",
-    "quelle": "BEG EM vom 17.08.2026 (BAnz AT 27.08.2026 B1), Nummern 8.3.1, 8.4.1 und 9.2.1; KfW-Merkblatt 458, Stand 09/2026, gültig ab 24.09.2026",
+    "datum": "2026-11-10",
+    "label": "Förderstand 10.11.2026",
+    "text": "Der Klimageschwindigkeits-Bonus und die Höchstgrenze der förderfähigen Ausgaben für die erste Wohneinheit sinken halbjährlich, erstmals zum 1. Februar 2027. Für Wärmepumpen sinkt die Grundförderung ab dem ersten Quartal 2027 von 30 auf 15 Prozent; im Gegenzug kommt ein Wertschöpfungs-Bonus für Geräte mit Ursprung in der Union hinzu. Die Einzelheiten sind noch nicht veröffentlicht; die KfW kündigt sie für das erste Quartal 2027 an. Ob ein Gerät die Voraussetzungen erfüllt, ist im Einzelfall zu prüfen. Maßgeblich ist der Tag der Antragstellung, nicht der Tag der Entscheidung. Eine Wärmepumpe oder andere Einzelheizung wird nicht gefördert, wenn das Grundstück aufgrund einer kommunalen Entscheidung, etwa einer Satzung mit Anschluss- und Benutzungszwang, an ein Wärmenetz angeschlossen werden soll; gefördert wird dann nur der Netzanschluss. Künftig soll der Ausschluss auch greifen, wenn ein Wärmeversorger rechtsverbindlich erklärt, das Grundstück innerhalb von drei Jahren anzuschließen. Das gilt erst, wenn die KfW die Einzelheiten veröffentlicht hat; im Infoblatt vom November 2026 stehen sie noch nicht. Eine Befreiung vom Anschlusszwang hebt den Ausschluss auf; so steht es inzwischen auch im Infoblatt der KfW. Ob die Befreiung schon beim Förderantrag vorliegen muss, ist offen.",
+    "pruefvermerk": "Die Förderangaben sind an der Förderrichtlinie vom 17.08.2026 geprüft (Stand 10.11.2026).",
+    "quelle": "BEG EM vom 17.08.2026 (BAnz AT 27.08.2026 B1), Nummern 8.3.1, 8.4.1 und 9.2.1; KfW-Merkblatt 458, Stand 09/2026, gültig ab 24.09.2026; KfW-Infoblatt Förderfähige Maßnahmen und Leistungen, Version 11.1, gültig ab 01.11.2026, Nummern 1.8 und 4.1.8",
     "beleg": "docs/Primaerquellen_Foerderstand_21-07-2026.md"
   },
   "foerdersaetze": {
@@ -95,7 +95,7 @@
       "label": "Wertschöpfungs-Bonus",
       "ab": "2027-01-01",
       "wert": 0.15,
-      "hinweis": "Für Wärmepumpen mit Ursprung in der Union. Voraussetzungen im Infoblatt zu den förderfähigen Maßnahmen. Bewusst NICHT in der Rechnung — Anspruch im Einzelfall ungeprüft.",
+      "hinweis": "Für Wärmepumpen mit Ursprung in der Union. Einzelheiten noch nicht veröffentlicht; die KfW kündigt sie für das 1. Quartal 2027 an (Infoblatt zu den förderfähigen Maßnahmen, Nr. 1.8, Stand 11/2026). Bewusst NICHT in der Rechnung — Anspruch im Einzelfall ungeprüft.",
       "fundstelle": "BEG EM 8.4.6",
       "in_rechnung": false
     }
