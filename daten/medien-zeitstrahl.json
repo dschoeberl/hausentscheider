@@ -382,6 +382,13 @@
       "tag": "nicht aufgegriffen"
     },
     {
+      "datum": "2026-07-01",
+      "datumLabel": "1. Juli",
+      "label": "Neues Fernwärme-Preisblatt der Stadtwerke: Arbeitspreis steigt deutlich (3. Quartal)",
+      "berichtet": false,
+      "_quelle": "Inhalt: daten/kwp-timeline-erfurt.json, Eintrag 2026-07-01 (maßgeblich). Nicht berichtet: Masterfassung Medienanalyse v3.0, Abschnitt B3 (Korpus II)."
+    },
+    {
       "datum": "2026-07-10",
       "datumLabel": "10. Juli",
       "label": "Bundestag und Bundesrat beschließen das Gebäudemodernisierungsgesetz",
@@ -397,7 +404,36 @@
       "datum": "2026-07-29",
       "datumLabel": "29. Juli",
       "label": "Gebäudemodernisierungsgesetz (GModG) in Kraft — BGBl. Nr. 226 vom 28.07.",
-      "berichtet": false
+      "berichtet": false,
+      "tag": "Inkrafttreten nicht gemeldet, Regeln am 5. September erklärt"
+    },
+    {
+      "datum": "2026-08-20",
+      "datumLabel": "20. August",
+      "label": "Stadtverwaltung nimmt schriftlich zur Kritik am Wärmeplan Stellung",
+      "berichtet": false,
+      "_quelle": "daten/kwp-timeline-erfurt.json, Eintrag 2026-08-20 (maßgeblich)"
+    },
+    {
+      "datum": "2026-09-03",
+      "datumLabel": "3. September",
+      "label": "Ausschuss des Stadtrats nimmt die Stellungnahme zur Kenntnis",
+      "berichtet": false,
+      "_quelle": "daten/kwp-timeline-erfurt.json, Eintrag 2026-09-03 (maßgeblich)"
+    },
+    {
+      "datum": "2026-09-10",
+      "datumLabel": "10. September",
+      "label": "Landtag: Regierungserklärung zum geplanten Thüringer Energiegesetz",
+      "berichtet": true,
+      "_quelle": "Thüringer Landtag, Plenarprotokoll der 53. Sitzung vom 10.09.2026 (Arbeitsfassung), Regierungserklärung des Ministers für Umwelt, Energie, Naturschutz und Forsten"
+    },
+    {
+      "datum": "2026-10-01",
+      "datumLabel": "1. Oktober",
+      "label": "Neues Fernwärme-Preisblatt der Stadtwerke (4. Quartal)",
+      "berichtet": false,
+      "_quelle": "daten/kwp-timeline-erfurt.json, Eintrag 2026-10-01 (maßgeblich)"
     }
   ],
   "zeitfenster": [
