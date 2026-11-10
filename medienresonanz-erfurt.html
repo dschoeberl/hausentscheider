@@ -109,6 +109,11 @@
   <h2>Was Eigentümer an den wichtigen Terminen erfahren konnten</h2>
   <div class="mr-termine" id="mr-termine"></div>
 
+  <section id="mr-bilanz" hidden>
+    <h2 id="mr-bilanz-titel"></h2>
+    <div id="mr-bilanz-text"></div>
+  </section>
+
   <h2>Warum das für Ihre Entscheidung zählt</h2>
   <p>Wer sich über die Lokalzeitung informiert, erfährt viel über Bundesrecht und Förderung und wenig darüber, was der Erfurter Plan für das eigene Gebäude heißt. Den Plan selbst zeigen zwei eigene Seiten: das <a href="kwp-dashboard-erfurt.html">Status-Dashboard</a> mit dem aktuellen Stand und die <a href="kwp-erfurt.html">Future-Readiness-Bewertung</a>. Wo Ihr Gebäude steht, prüft der <a href="wegweiser.html#fragen">Wegweiser</a>.</p>
 
@@ -169,6 +174,15 @@
             '<span class="mr-termin__was">' + esc(m.label) + '</span>' +
             '<span class="mr-termin__status mr-termin__status--' + cls + '">' + esc(text) + '</span></div>';
         }).join(''));
+
+        var B = d.bilanz;
+        if (B && B.punkte) {
+          setzen('mr-bilanz-titel', esc(B.titel));
+          setzen('mr-bilanz-text', '<p class="mr-bezug">Stand: ' + esc(E.erfasst_bis_label) + '</p>' +
+            '<p>' + esc(B.einleitung) + '</p>' +
+            B.punkte.map(function (p) { return '<p><b>' + esc(p.titel) + '</b> ' + esc(p.text) + '</p>'; }).join(''));
+          document.getElementById('mr-bilanz').hidden = false;
+        }
 
         var neueste = eintraege.slice().sort(function (a, b) { return a.datum < b.datum ? 1 : (a.datum > b.datum ? -1 : 0); });
         var SPUR = { rahmen: 'Bund und Land', erfurt: 'Erfurt', beide: 'Bund und Erfurt' };
