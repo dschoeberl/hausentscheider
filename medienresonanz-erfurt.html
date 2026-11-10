@@ -172,7 +172,7 @@
         var neueste = eintraege.slice().sort(function (a, b) { return a.datum < b.datum ? 1 : (a.datum > b.datum ? -1 : 0); });
         var SPUR = { rahmen: 'Bund und Land', erfurt: 'Erfurt', beide: 'Bund und Erfurt' };
         setzen('mr-liste', neueste.map(function (e) {
-          var ort = (e.waermebezug === false) ? 'Erfurt, ohne Wärmebezug' : SPUR[spur(e)];
+          var ort = (e.waermebezug === false) ? 'Erfurt, ohne Bezug zur Wärmeplanung' : SPUR[spur(e)];
           var link = e.link ? ' · <a href="' + esc(e.link) + '" target="_blank" rel="noopener">Original ansehen</a>' : '';
           return '<details class="mr-beitrag"><summary><span class="mr-beitrag__meta">' + esc(e.datumLabel) + ' · ' + esc(ort) + '</span>' +
             '<span class="mr-beitrag__titel">' + esc(e.headline) + '</span></summary>' +

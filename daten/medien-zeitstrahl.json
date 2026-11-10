@@ -1,15 +1,15 @@
 {
   "_hinweis": "Wärmewende im Blick — zweispuriger Zeitstrahl. Neuer Artikel = ein Objekt an 'eintraege' anhängen. 'datum' (ISO) treibt die proportionale Achse, 'datumLabel' ist die Anzeige. Die 'zuletzt ergänzt'-Marke wird automatisch aus dem jüngsten Eintrag abgeleitet — nichts separat pflegen. Töne: zustimmend | sachlich | erklaerend | kritisch. Zusammenfassung und kommentar je 3–5 Sätze, eigene Worte, konkrete Fakten/Zahlen; kurze wörtliche Zitate nur mit Quelle. Eigene, zugespitzte Überschriften — keine Originaltitel oder Volltexte.",
-  "_hinweis_spuren": "'ebene': 'rahmen' (Bund/Land, obere Spur) | 'erfurt' (Lokalteil, untere Spur) | 'beide' (Klammer, erscheint in beiden Spuren). Fehlt das Feld, gilt 'erfurt'. 'waermebezug': false nur setzen, wenn ein Erfurt-Eintrag KEINEN Wärmebezug hat — er zählt dann in die Gesamtzahl und in die Ton-Verteilung, aber nicht als Beitrag zur Erfurter Wärmeplanung. Die Funkstille wird je Spur berechnet; 'zeitfenster' liefert den Zusatz zum Lückenlabel (nur Erfurt-Spur), sobald sich eine Lücke mit dem Fenster überschneidet.",
+  "_hinweis_spuren": "'ebene': 'rahmen' (Bund/Land, obere Spur) | 'erfurt' (Lokalteil, untere Spur) | 'beide' (Klammer, erscheint in beiden Spuren). Fehlt das Feld, gilt 'erfurt'. 'waermebezug' meint den Bezug zur Wärmeplanung: false setzen, wenn ein Erfurt-Eintrag KEINEN Bezug zur Wärmeplanung hat, auch wenn er von Heizung handelt — er zählt dann in die Gesamtzahl und in die Ton-Verteilung, aber nicht als Beitrag zur Erfurter Wärmeplanung.",
   "_hinweis_erhebung": "Nach jeder Durchsicht pflegen: 'erfasst_bis' auf die letzte durchgesehene Ausgabe setzen und 'kernaussage' prüfen, sie ist Überschrift von medienresonanz-erfurt.html. Die Zähler rechnet die Seite aus den Einträgen von 'vollstaendig_ab' bis 'erfasst_bis'. Die Erhebung läuft fort; nie als abgeschlossen darstellen.",
   "erhebung": {
-    "erfasst_bis": "2026-07-24",
-    "erfasst_bis_label": "24. Juli 2026",
+    "erfasst_bis": "2026-10-16",
+    "erfasst_bis_label": "16. Oktober 2026",
     "vollstaendig_ab": "2026-06-10",
     "vollstaendig_ab_label": "10. Juni",
     "medium": "Thüringer Allgemeine",
-    "kernaussage": "Der Wärmeplan trat am 30. Juni in Kraft. Im Erfurter Lokalteil stand dazu bis zum 24. Juli kein Beitrag.",
-    "methode": "Die Einträge bis zum 9. Juni stammen aus einer dokumentierten Stichprobe von 26 Ausschnitten. Für den Zeitraum vom 10. Juni bis 24. Juli wurde jede Ausgabe angesehen und jede Seite auf die Themen Wärmeplanung, Fernwärme, Wärmepumpe, Heizungsrecht, Förderung, Energiepreise und Wohnkosten geprüft. Erfasst sind Print und E-Paper. Rein digital ausgespielte Beiträge sind nicht erfasst."
+    "kernaussage": "Der Wärmeplan gilt seit dem 30. Juni. Bis zum 16. Oktober stand im Erfurter Lokalteil kein Beitrag dazu.",
+    "methode": "Die Einträge bis zum 9. Juni stammen aus einer dokumentierten Stichprobe von 26 Ausschnitten. Für den Zeitraum vom 10. Juni bis 16. Oktober wurde jede Ausgabe angesehen und jede Seite auf die Themen Wärmeplanung, Fernwärme, Wärmepumpe, Heizungsrecht, Förderung, Energiepreise und Wohnkosten geprüft. Erfasst sind Print und E-Paper. Rein digital ausgespielte Beiträge sind nicht erfasst. hausentscheider hat sich mit einer eigenen Stellungnahme und einer Replik an der Beteiligung zum Wärmeplan beteiligt und steht mit dem Klimaentscheid Erfurt im fachlichen Austausch."
   },
   "eintraege": [
     {
@@ -210,6 +210,153 @@
       "quelle": "TA · Titelseite (dpa)",
       "zusammenfassung": "In Thüringen ging im ersten Halbjahr 2026 eine einzige neue Windkraftanlage mit sechs Megawatt in Betrieb — ein Rückgang der neu installierten Leistung um 74,4 Prozent gegenüber dem Vorjahreszeitraum. Unter den Flächenländern liegt der Freistaat gemeinsam mit dem Saarland auf dem letzten Platz. Die neu genehmigte Leistung stieg dagegen um knapp 14 Prozent auf einen Rekordwert von 9,1 Gigawatt. Bundesweit gingen 423 Anlagen mit 2.363 Megawatt ans Netz; in Thüringen stehen insgesamt 862 Windräder.",
       "kommentar": "Die Meldung steht auf der Titelseite und läuft über die Agentur. Sie berührt eine Annahme, auf der jede Wärmepumpen-Rechnung ruht: dass der Strommix grüner wird und der Emissionsfaktor sinkt. Genehmigt ist viel, gebaut wird wenig. Zwischen diesen beiden Zahlen liegt genau die Zeit, um die es bei einer Systementscheidung geht. Was der Ausbaustau für den Thüringer Strommix der nächsten zehn Jahre bedeutet, bleibt offen.",
+      "link": ""
+    },
+    {
+      "datum": "2026-08-12",
+      "datumLabel": "12. August",
+      "ebene": "rahmen",
+      "headline": "Pellets werden teurer — ein Forscher des Öko-Instituts rät zur Wärmepumpe",
+      "ton": "erklaerend",
+      "quelle": "TA · Wirtschaft",
+      "zusammenfassung": "Holzpellets sind nach Angaben der Verbraucherzentrale Baden-Württemberg binnen eines Jahres um rund 40 Prozent teurer geworden. Der Beitrag fragt, ob Pellets ökologisch und wirtschaftlich noch sinnvoll sind. Ein Wissenschaftler des Öko-Instituts rät, eine vorhandene Pelletheizung weiter zu nutzen, aber keine neue anzuschaffen, sondern eher eine Wärmepumpe. Für den Ersatz einer alten Öl- oder Gasheizung durch eine Pelletanlage nennt der Beitrag einen Zuschuss von 30 bis 70 Prozent.",
+      "kommentar": "Ein Beitrag im Service-Modus: Er vergleicht zwei Wege und lässt eine unabhängige Fachstimme zu Wort kommen. Für Erfurt fehlt ein Schritt. Wer in einem Gebiet liegt, das der Wärmeplan für Fernwärme vorsieht, steht vor einer anderen Wahl als Pellet oder Wärmepumpe. Welche Gebiete das sind, zeigt der adressgenaue Stadtplan der Stadt; im Beitrag kommt er nicht vor, weil der Beitrag bundesweit geschrieben ist.",
+      "link": ""
+    },
+    {
+      "datum": "2026-08-13",
+      "datumLabel": "13. August",
+      "ebene": "rahmen",
+      "headline": "Der Minister nennt das Bundesgesetz hinderlich — in einer Geschichte über Kompost",
+      "ton": "sachlich",
+      "quelle": "TA · Thüringen",
+      "zusammenfassung": "In Ohrdruf liefert die Umweltwärme einer Kompostieranlage die Quelle für eine Wärmepumpe; der Gasverbrauch des Betriebsstandorts sinkt nach Angaben der Stadtverwaltung um rund 85 Prozent. Beim Termin nennt Landesminister Tilo Kummer die Förderung des Landes für die kommunale Wärmeplanung, zehn Millionen Euro im Jahr. Das neue Heizungsrecht des Bundes bezeichnet er für die laufenden Planungen der Kommunen als nicht hilfreich.",
+      "kommentar": "Es ist die deutlichste Aussage eines Amtsträgers im gesamten Korpus zu einem Konflikt, der jede Kommune betrifft: Der Bund lockert die Regeln für neue Heizungen, während die Kommunen ihre Wärmepläne aufstellen und umsetzen. Was das für Erfurt heißt, dessen Plan seit dem 30. Juni gilt, ist nicht Gegenstand des Beitrags. Die Aussage läuft auf einer Landesseite mit, als Teil eines Ortstermins. Die Übersetzung nach Erfurt bleibt offen.",
+      "link": ""
+    },
+    {
+      "datum": "2026-08-21",
+      "datumLabel": "21. August",
+      "ebene": "rahmen",
+      "headline": "Wasserstoff fürs Erfurter Heizkraftwerk — angekündigt, noch ohne Termin",
+      "ton": "sachlich",
+      "quelle": "TA · Titelseite",
+      "zusammenfassung": "Auf der Titelseite meldet die Teag ihren Gasspeicher erst zu gut einem Drittel gefüllt. Im selben Beitrag nennt die Teag 2035 als realistischen Zeithorizont, den Speicher Kirchheilingen auf Wasserstoff umzustellen. In einem gemeinsamen Projekt wollen Thüringer Unternehmen dort Wasserstoff erzeugen und per Leitung unter anderem zum Heizkraftwerk Erfurt bringen. Es ist im Erhebungszeitraum der einzige Beitrag, der die Erfurter Fernwärme mit einer künftigen Energiequelle verbindet.",
+      "kommentar": "Der Bezug zu Erfurt kommt hier vom Landesversorger, nicht aus dem Lokalteil und nicht von der Stadt. Für die Leitung nach Erfurt nennt der Beitrag keinen Termin; die Jahreszahl 2035 betrifft die Umstellung des Speichers. Für ein Gebäude, das an der Fernwärme hängt oder angeschlossen werden soll, ist die Frage, woraus diese Wärme ab wann kommt, die eigentliche Planungsgröße. Die Wasserstofffrage soll nach Angaben der Stadtverwaltung vom August mit der Fortschreibung des Wärmeplans und einem Umstellungskonzept der Stadtwerke beantwortet werden; einen Termin nennt sie nicht.",
+      "link": ""
+    },
+    {
+      "datum": "2026-08-31",
+      "datumLabel": "31. August",
+      "ebene": "rahmen",
+      "headline": "Strom so teuer wie in keinem G20-Land — der Kommentar fordert mehr Ausbau",
+      "ton": "kritisch",
+      "quelle": "TA · Wirtschaft und Kommentar",
+      "zusammenfassung": "Nach einer Auswertung des Vergleichsportals Verivox zahlen Haushalte in Deutschland 35,6 Cent je Kilowattstunde Strom, mehr als in jedem anderen G20-Staat; über 60 Prozent davon entfallen auf Steuern, Umlagen, Abgaben und Netzentgelte. Auf der Kommentarseite hält der Wirtschaftskorrespondent der Bundesregierung vor, die versprochene Entlastung zurückgenommen zu haben und den Ausbau von Wind und Sonne zu bremsen. Mehr Angebot sei der beste Weg zu sinkenden Preisen.",
+      "kommentar": "Für die Wärmepumpe ist der Strompreis, was der Gaspreis für den Kessel ist: der größte laufende Posten. Die Zeitung liefert die Zahl und bezieht dazu erkennbar Position. Für eine Rechnung über zwanzig Jahre zählt allerdings weniger der Durchschnittspreis als der Tarif, den ein Haushalt tatsächlich bekommt, etwa ein Wärmepumpentarif, und die Entwicklung der Netzentgelte in der Region. Beides ist nicht Thema des Beitrags.",
+      "link": ""
+    },
+    {
+      "datum": "2026-09-05",
+      "datumLabel": "5. September",
+      "ebene": "rahmen",
+      "headline": "Acht Wochen nach dem Beschluss: das neue Heizungsrecht, für Eigentümer erklärt",
+      "ton": "erklaerend",
+      "quelle": "TA · IMTEST (Ratgeberformat der Funke-Mediengruppe)",
+      "_quelle_zahlen": "Spiegelung aus daten/parameter.json (maßgeblich): 22.400 € = obergrenze.niedrigeinkommen 0,80 × hoechstkosten.erste_we 28.000 €; 30.000 € = obergrenze.einkommensgrenze; 15 Prozent ab 2027 = grundfoerderung_wp_ab. Bei Änderung dort hier nachziehen.",
+      "zusammenfassung": "Der Ratgeber erklärt, was nach dem Gebäudemodernisierungsgesetz beim Heizungstausch gilt. Neue Gas- und Ölheizungen sind wieder erlaubt, die 65-Prozent-Vorgabe gilt in der bisherigen Form nicht mehr; ab 2029 steigt der vorgeschriebene Anteil klimafreundlicher Brennstoffe schrittweise auf 60 Prozent im Jahr 2040, für bestehende Heizungen ist ab 2028 eine Grüngasquote vorgesehen. Vermieter, die eine neue fossile Heizung einbauen, sollen sich künftig an den Heizkosten beteiligen. Die Förderung beziffert der Beitrag auf bis zu 22.400 Euro; dieser Höchstwert gilt nach den Förderregeln für selbstnutzende Eigentümer mit einem Haushaltseinkommen bis 30.000 Euro.",
+      "kommentar": "Es ist der erste Beitrag im Korpus, der das neue Recht vollständig aus der Sicht eines Eigentümers durchgeht, und er rät ausdrücklich, auf die Betriebskosten über die Lebensdauer zu schauen. Als Fachstimme tritt ein Mitarbeiter eines Heizungsherstellers auf, Produkte werden mit Namen genannt; das gehört zur Einordnung der Quelle. Fernwärme erscheint als eine Option unter mehreren. Dass die Grundförderung für Wärmepumpen nach den geltenden Regeln ab 2027 auf 15 Prozent sinkt, erwähnt der Beitrag nicht. Dass in Erfurt eine Fernwärmesatzung mit Anschluss- und Benutzungszwang gilt und die Förderung einer Einzelheizung entfallen kann, wenn ein Anschluss kommunal vorgesehen ist, kann ein bundesweiter Ratgeber nicht beantworten.",
+      "link": ""
+    },
+    {
+      "datum": "2026-09-11",
+      "datumLabel": "11. September",
+      "ebene": "rahmen",
+      "headline": "Ein Energiegesetz für Thüringen — und das Klimagesetz soll entfallen",
+      "ton": "sachlich",
+      "quelle": "TA · Thüringen",
+      "zusammenfassung": "Im Landtag stellt der Energieminister in einer Regierungserklärung das geplante Energieermöglichungsgesetz vor. Es soll die Stromversorgung krisenfester machen, den Ausbau erneuerbarer Energien voranbringen und Kommunen stärker an den Erträgen beteiligen; die Abgabe für Windräder soll laut Kabinettsentwurf vom August von 0,2 auf 0,3 Cent je Kilowattstunde steigen. Zugleich soll das Thüringer Klimagesetz entfallen. Die Opposition widerspricht von zwei Seiten: Die Linke lehnt die Abschaffung des Klimagesetzes ab, die AfD fordert, Bezahlbarkeit an die erste Stelle zu setzen.",
+      "kommentar": "Der Beitrag bildet Regierung und Opposition ab und nennt den Verfahrensstand. Der Beitrag spricht von einer Beratung im Landtag; eingebracht ist der Entwurf noch nicht, zuvor ist eine Anhörung vorgesehen. Wärme kommt darin vor allem als Strom- und Versorgungsfrage vor; ob das Gesetz die kommunale Wärmeplanung berührt, wird nicht thematisiert. Für Erfurter Eigentümer bleibt der Landesrahmen damit ein Hintergrundthema.",
+      "link": ""
+    },
+    {
+      "datum": "2026-09-18",
+      "datumLabel": "18. September",
+      "ebene": "erfurt",
+      "waermebezug": false,
+      "headline": "Erst die Bestandsaufnahme, dann die Kosten — das gilt auch für das Rathaus",
+      "ton": "kritisch",
+      "quelle": "TA · Lokales",
+      "zusammenfassung": "Auf eine Anfrage aus dem Stadtrat räumt der Oberbürgermeister einen erkennbaren Instandsetzungs- und Modernisierungsbedarf im historischen Rathaus ein: Gebäudehülle mit Dach und Entwässerung, Teile der Haustechnik, Elektro, Sanitär und Brandschutz. Kurzfristig haben Gefahrenabwehr und akute Schäden Vorrang. Mittelfristig soll der Zustand gewerkeübergreifend bewertet werden; erst danach will die Stadt über Kosten und Umsetzung entscheiden. Der Lokalteil stützt sich auf die schriftliche Antwort und benennt die Mängel konkret.",
+      "kommentar": "Der Beitrag handelt nicht von der Heizung, aber er beschreibt den Weg, den jede Eigentümergemeinschaft vor einer Wärmeentscheidung geht: erst den Bestand kennen, dann die Kosten, dann die Reihenfolge. Die Stadt steht als Gebäudeeigentümerin vor derselben Aufgabe wie die Eigentümer, für die sie den Wärmeplan aufgestellt hat. Wie schon im Juli zeigt der Text, dass der Lokalteil mit Anfrage und Antwort prüfend arbeitet. Zum Wärmeplan ist im Erhebungszeitraum keine vergleichbare Recherche erschienen.",
+      "link": ""
+    },
+    {
+      "datum": "2026-09-22",
+      "datumLabel": "22. September",
+      "ebene": "rahmen",
+      "headline": "Wer von Gas auf Wärmepumpe wechselt, bekommt eine Rechnung fürs Abklemmen — nicht immer zu Recht",
+      "ton": "erklaerend",
+      "quelle": "TA · Verbrauchertipp der Verbraucherzentrale Thüringen",
+      "zusammenfassung": "Eine Juristin der Verbraucherzentrale Thüringen beantwortet eine Leserfrage: Darf der Netzbetreiber für die Stilllegung eines Gasanschlusses mehrere hundert Euro verlangen? Sie verweist auf ein Urteil des Oberlandesgerichts Oldenburg, nach dem eine Pauschale nicht ohne Weiteres zulässig ist; die Revision liegt beim Bundesgerichtshof. Sie rät, Leistung und Rechtsgrundlage zu erfragen, zwischen Stilllegung und Rückbau zu unterscheiden und gegebenenfalls zu widersprechen.",
+      "kommentar": "Ein kurzer, unabhängiger und sofort nutzbarer Beitrag. Er zeigt, dass der Rückzug aus dem Gasnetz bei den Lesern zuerst als Rechnung ankommt. Wer heute umstellt, sollte die Stilllegungskosten in die Rechnung aufnehmen, solange der Bundesgerichtshof nicht entschieden hat. Welche Rolle das Gasnetz in Erfurt künftig spielt, ist eine Frage des Wärmeplans; sie liegt außerhalb dessen, was ein Verbrauchertipp leisten kann.",
+      "link": ""
+    },
+    {
+      "datum": "2026-09-23",
+      "datumLabel": "23. September",
+      "ebene": "rahmen",
+      "headline": "Die Heizkosten je Heizart stehen in der Zeitung — Fernwärme am teuersten",
+      "ton": "sachlich",
+      "quelle": "TA · Wirtschaft",
+      "zusammenfassung": "Der Heizspiegel der Beratungsgesellschaft co2online rechnet die erwarteten Jahreskosten 2026 für eine 70-Quadratmeter-Wohnung im Mehrfamilienhaus durch: Fernwärme 1.310 Euro, Heizöl 1.275 Euro, Erdgas 1.120 Euro, Holzpellets 870 Euro, Wärmepumpe 735 Euro. Für Heizöl und Pellets erwarten die Fachleute deutliche Anstiege, für Gas einen leichten Rückgang, der sich mit Verzögerung umkehren könnte. Langfristig sehen sie die Wärmepumpe dauerhaft am günstigsten.",
+      "kommentar": "Das ist die Größe, die für eine Entscheidung zählt, und sie steht hier erstmals im Korpus für alle Heizarten nebeneinander. Umgerechnet ergibt das zwischen rund 0,88 Euro (Wärmepumpe) und 1,56 Euro (Fernwärme) je Quadratmeter und Monat; die Umrechnung stammt von hausentscheider. Es sind bundesweite Modellwerte. Für Erfurt, wo die Fernwärme das Rückgrat des Wärmeplans ist, wären die öffentlichen Preisblätter der Stadtwerke der naheliegende Abgleich; sie änderten sich zum 1. Juli und zum 1. Oktober. Diesen Abgleich enthält der Beitrag nicht.",
+      "link": ""
+    },
+    {
+      "datum": "2026-09-28",
+      "datumLabel": "28. September",
+      "ebene": "erfurt",
+      "waermebezug": false,
+      "headline": "Erfurts letzter Kohlehändler — und seine rund 300 Kunden",
+      "ton": "sachlich",
+      "quelle": "TA · Lokales",
+      "zusammenfassung": "Der Lokalteil porträtiert einen Familienbetrieb im Erfurter Norden, der seit fast hundert Jahren Briketts liefert. Nach Angaben des Inhabers beliefert er noch rund 300 Kunden in Erfurt und Umgebung; zu DDR-Zeiten waren es 3.500. Dem Betrieb droht die Räumung seines Hofs. Am 16. Oktober folgt ein zweiter Beitrag mit der Sicht der Grundstückseigentümer und dem Hinweis auf einen Gütetermin am Landgericht.",
+      "kommentar": "Ein Porträt, das seinen Zweck erfüllt. Nebenbei zeigt es, dass in Erfurt und Umgebung noch mit Kohle geheizt wird, in Gebäuden, deren Eigentümer früher oder später vor einer Wärmeentscheidung stehen. Für diese Gebäude ist die Frage nach dem künftigen Weg besonders drängend, und sie ist eine Frage des Wärmeplans. Im Lokalteil erscheint die Heizung hier als Lebensgeschichte, nicht als Teil einer Planung.",
+      "link": ""
+    },
+    {
+      "datum": "2026-10-01",
+      "datumLabel": "1. Oktober",
+      "ebene": "rahmen",
+      "headline": "Die Gasspeicher werden gefüllt — die Rechnung kommt bei den Mietern an",
+      "ton": "sachlich",
+      "quelle": "TA · Wirtschaft",
+      "zusammenfassung": "Die Bundeswirtschaftsministerin weist den staatseigenen Konzern SEFE an, bis Mitte Dezember zusätzlich Gas einzuspeichern; die deutschen Speicher sind zu knapp 58 Prozent gefüllt. Neukunden zahlen laut Verivox im Schnitt 12,59 Cent je Kilowattstunde, so viel wie zuletzt im Januar 2023. Der Energieverband BDEW begrüßt den Schritt, die Grünen sprechen von verspätetem Handeln und fordern eine Abwrackprämie für alte fossile Heizungen. Der Mieterbund weist darauf hin, dass Mieter die Preise oft erst mit der Nebenkostenabrechnung erfahren.",
+      "kommentar": "Der Beitrag verbindet Versorgungssicherheit, Preis und die Lage der Mieter und lässt mehrere Seiten zu Wort kommen. Für vermietende Eigentümer ist der Hinweis des Mieterbunds der wichtigste: Die Heizkosten erreichen die Mieter mit einem Jahr Verzug, über die Heizung entscheidet der Eigentümer. Diese Verbindung von Wärme und Wohnkosten taucht im Korpus selten auf. Eine Erfurter Zahl, etwa zu den Gastarifen der Stadtwerke, enthält der Beitrag nicht.",
+      "link": ""
+    },
+    {
+      "datum": "2026-10-06",
+      "datumLabel": "6. Oktober",
+      "ebene": "rahmen",
+      "headline": "Keine feste Vergütung mehr für neue Dachanlagen — jetzt berät der Bundestag",
+      "ton": "erklaerend",
+      "quelle": "TA · Wirtschaft",
+      "zusammenfassung": "Der Bundestag verhandelt den Entwurf des neuen Erneuerbare-Energien-Gesetzes. Neue kleine Dachanlagen sollen nach einer dreijährigen Übergangszeit mit gut fünf Cent je Kilowattstunde keine feste Einspeisevergütung mehr erhalten; der Strom wäre dann selbst zu verbrauchen, zu speichern oder zu vermarkten. Fachleute sind uneins: Das Wuppertal Institut erwartet für viele kleine Anlagen keinen wirtschaftlichen Betrieb mehr, das RWI hält Dachanlagen in vielen Fällen weiter für lohnend. Die Ministerin begründet die Reform mit Kosten der Energiewende für den Bundeshaushalt von 36 Milliarden Euro im Jahr.",
+      "kommentar": "Der Beitrag setzt die Linie vom Juli fort, stellt zwei Fachstimmen gegeneinander und benennt den offenen Ausgang der Beratung. Für Eigentümer hängt daran die Rechnung für Photovoltaik und Wärmepumpe im Verbund, denn eigener Solarstrom macht die Wärmepumpe günstiger. Bis zum Beschluss bleibt diese Unsicherheit Teil jeder Rechnung.",
+      "link": ""
+    },
+    {
+      "datum": "2026-10-15",
+      "datumLabel": "15. Oktober",
+      "ebene": "erfurt",
+      "waermebezug": false,
+      "headline": "Kalte Wohnungen mitten in Erfurt — die Stadtwerke bieten Gas an, die Stadt verweist auf Privatrecht",
+      "ton": "kritisch",
+      "quelle": "TA · Lokales",
+      "zusammenfassung": "In zwei Mietshäusern in der Hans-Sailer-Straße ist die Gasversorgung eingestellt, weil der Vermieter, eine Berliner Immobiliengesellschaft, die Nebenkosten der Mieter nicht an den Versorger weitergegeben hat. Die Bewohner sind ohne Heizung und Warmwasser. Die Stadtwerke sichern schriftlich zu, die Häuser wieder zu versorgen, sobald die Leitungen im Haus geprüft sind; die Kosten der Prüfung wollen Stadträte der Linken übernehmen. Der Oberbürgermeister verweist auf einen privaten Konflikt zwischen Vermieter und Mietern.",
+      "kommentar": "Es ist der erste Beitrag im Erfurter Lokalteil des Korpus, in dem die Stadtwerke als Wärmeversorger auftreten, und er handelt von einer Notlage, nicht vom Plan. Der Text recherchiert vor Ort, benennt die Beteiligten und stellt einen Vorschlag zur Diskussion, wie die Stadt eingreifen könnte. Für Eigentümer zeigt der Fall eine Seite der Wärmefrage, die selten vorkommt: Die Heizung ist nicht nur Technik und Preis, sondern auch eine Pflicht gegenüber den Bewohnern.",
       "link": ""
     }
   ],
