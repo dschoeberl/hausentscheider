@@ -86,7 +86,7 @@ const RISIKO_BANNER = {
   hybrid: {
     titel: 'Hybrid: behalte diese Risiken im Blick',
     punkte: [
-      'CO₂-Preis steigt ab 2027 (EU-ETS2) — wir rechnen statisch 105 €/t, real eher 130–200 €/t bis 2035',
+      'CO₂-Preis: 2027 voraussichtlich noch national 55–65 €/t, ab 2028 EU-ETS2 — wir rechnen statisch 105 €/t, real eher 130–200 €/t bis 2035',
       'Grüngasquote ab 2029 (10 %) macht Gas pro kWh teurer',
       'Stranded-Asset-Risiko: kommunale Wärmeplanung könnte Gasnetz Innenstadt vor 2040 stilllegen',
       'Bei H₂-Umstellung des Gasnetzes: H₂-fähige Brenner als Folge-Investition',
