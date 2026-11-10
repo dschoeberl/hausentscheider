@@ -68,6 +68,12 @@
   .mr-filter button:hover{border-color:var(--petrol);color:var(--petrol);}
   .mr-filter button[aria-pressed="true"]{background:var(--petrol);border-color:var(--petrol);color:var(--white);}
   .mr-filter button:focus-visible{outline:2px solid var(--petrol);outline-offset:2px;}
+  .mr-filter--thema{align-items:center;margin-top:.2rem;}
+  .mr-filter--thema button{font-size:13px;min-height:36px;padding:.35rem .8rem;}
+  .mr-filter--thema button[aria-pressed="true"]{background:var(--wp-tint);border-color:var(--petrol);color:var(--wp-text);}
+  .mr-filter__lbl{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3);font-weight:600;margin-right:.2rem;}
+  .mr-treffer{font-size:13px;color:var(--t2);margin:.5rem 0 0;}
+  .mr-leer{background:var(--bg);border-left:3px solid var(--fw-text);padding:.8rem 1rem;font-size:14px;color:var(--t1);margin:1rem 0 0;}
   .mr-monat{font-family:'Inter',system-ui,sans-serif;font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:var(--petrol);font-weight:600;margin:1.4rem 0 .3rem;padding-bottom:.3rem;border-bottom:1px solid var(--border);}
   .mr-liste{margin:.6rem 0 0;}
   .mr-beitrag{border-bottom:1px solid var(--border);border-left:4px solid var(--petrol-light);padding-left:.8rem;}
@@ -131,10 +137,21 @@
   <p>Wer sich über die Lokalzeitung informiert, erfährt viel über Bundesrecht und Förderung und wenig darüber, was der Erfurter Plan für das eigene Gebäude heißt. Den Plan selbst zeigen zwei eigene Seiten: das <a href="kwp-dashboard-erfurt.html">Status-Dashboard</a> mit dem aktuellen Stand und die <a href="kwp-erfurt.html">Future-Readiness-Bewertung</a>. Wo Ihr Gebäude steht, prüft der <a href="wegweiser.html#fragen">Wegweiser</a>.</p>
 
   <h2>Alle erfassten Beiträge</h2>
-  <div class="mr-filter" id="mr-filter" role="group" aria-label="Beiträge filtern" hidden>
-    <button type="button" data-f="alle" aria-pressed="true">Alle</button>
-    <button type="button" data-f="rahmen" aria-pressed="false">Bund und Land</button>
-    <button type="button" data-f="erfurt" aria-pressed="false">Erfurt</button>
+  <div id="mr-filter" hidden>
+    <div class="mr-filter" data-gruppe="ebene" role="group" aria-label="Nach Ebene filtern">
+      <button type="button" data-f="alle" aria-pressed="true">Alle</button>
+      <button type="button" data-f="rahmen" aria-pressed="false">Bund und Land</button>
+      <button type="button" data-f="erfurt" aria-pressed="false">Erfurt</button>
+    </div>
+    <div class="mr-filter mr-filter--thema" data-gruppe="thema" role="group" aria-label="Nach Thema filtern">
+      <span class="mr-filter__lbl">Thema</span>
+      <button type="button" data-f="alle" aria-pressed="true">Alle</button>
+      <button type="button" data-f="fernwaerme" aria-pressed="false">Fernwärme</button>
+      <button type="button" data-f="waermepumpe" aria-pressed="false">Wärmepumpe</button>
+      <button type="button" data-f="foerderung" aria-pressed="false">Förderung</button>
+      <button type="button" data-f="heizungsrecht" aria-pressed="false">Heizungsrecht</button>
+    </div>
+    <p class="mr-treffer" id="mr-treffer" aria-live="polite"></p>
   </div>
   <div class="mr-liste" id="mr-liste"></div>
 
@@ -176,9 +193,9 @@
         var E = d.erhebung, eintraege = d.eintraege || [];
         setzen('mr-kern', esc(E.kernaussage));
         setzen('mr-stand', 'Erfasst bis ' + esc(E.erfasst_bis_label) + ', die nächste Durchsicht folgt.');
-        setzen('mr-bezug', esc(E.medium) + ', jede Ausgabe vom ' + esc(E.vollstaendig_ab_label) + ' bis ' + esc(E.erfasst_bis_label) + ' geprüft:');
+        setzen('mr-bezug', esc(E.medium) + ', jede Ausgabe vom ' + esc(E.vollstaendig_ab_label) + ' bis ' + esc(E.erfasst_bis_label) + ' geprüft. Seit dem Inkrafttreten des Wärmeplans am ' + esc(E.zaehlung_ab_label) + ':');
 
-        var fenster = eintraege.filter(function (e) { return e.datum >= E.vollstaendig_ab && e.datum <= E.erfasst_bis; });
+        var fenster = eintraege.filter(function (e) { return e.datum >= E.zaehlung_ab && e.datum <= E.erfasst_bis; });
         var nRahmen = fenster.filter(istRahmen).length, nErfurt = fenster.filter(istErfurtWaerme).length;
         setzen('mr-zahlen',
           '<div class="mr-zahl"><b>' + nRahmen + '</b><span>Beiträge zu Bund und Land</span></div>' +
@@ -218,29 +235,46 @@
           var cls = ohne ? 'ohne' : (s === 'rahmen' ? 'rahmen' : 'erfurt');
           var tags = ohne ? TAG_O : (s === 'beide' ? TAG_R + TAG_E : (s === 'rahmen' ? TAG_R : TAG_E));
           var link = e.link ? ' · <a href="' + esc(e.link) + '" target="_blank" rel="noopener">Original ansehen</a>' : '';
-          html += '<details class="mr-beitrag mr-beitrag--' + cls + '" data-spur="' + s + '" data-monat="' + m + '"><summary><span class="mr-beitrag__meta">' + esc(e.datumLabel) + ' ' + tags + '</span>' +
+          html += '<details class="mr-beitrag mr-beitrag--' + cls + '" data-spur="' + s + '" data-monat="' + m + '" data-themen="' + esc((e.themen || []).join(' ')) + '"><summary><span class="mr-beitrag__meta">' + esc(e.datumLabel) + ' ' + tags + '</span>' +
             '<span class="mr-beitrag__titel">' + esc(e.headline) + '</span></summary>' +
             '<p>' + esc(e.zusammenfassung) + '</p>' +
             '<p class="mr-beitrag__einordnung"><b>Einordnung:</b> ' + esc(e.kommentar) + '</p>' +
             '<p class="mr-beitrag__quelle">' + esc(e.quelle) + link + '</p></details>';
         });
+        html += '<p class="mr-leer" id="mr-leer" hidden></p>';
         setzen('mr-liste', html);
 
         var filter = document.getElementById('mr-filter'), liste = document.getElementById('mr-liste');
+        var wahl = { ebene: 'alle', thema: 'alle' };
+        var ZEITRAUM = esc(E.vollstaendig_ab_label) + ' bis ' + esc(E.erfasst_bis_label);
+        function anwenden() {
+          var sichtbar = {}, n = 0;
+          Array.prototype.forEach.call(liste.querySelectorAll('.mr-beitrag'), function (el) {
+            var s = el.getAttribute('data-spur'), th = ' ' + el.getAttribute('data-themen') + ' ';
+            var zeigen = (wahl.ebene === 'alle' || s === 'beide' || s === wahl.ebene) &&
+              (wahl.thema === 'alle' || th.indexOf(' ' + wahl.thema + ' ') !== -1);
+            el.hidden = !zeigen;
+            if (zeigen) { sichtbar[el.getAttribute('data-monat')] = true; n++; }
+          });
+          Array.prototype.forEach.call(liste.querySelectorAll('.mr-monat'), function (h) { h.hidden = !sichtbar[h.getAttribute('data-monat')]; });
+          var leer = document.getElementById('mr-leer');
+          leer.hidden = n > 0;
+          if (n === 0) {
+            var t = filter.querySelector('[data-gruppe="thema"] [aria-pressed="true"]').textContent;
+            var wo = wahl.ebene === 'erfurt' ? 'im Erfurter Lokalteil' : (wahl.ebene === 'rahmen' ? 'zu Bund und Land' : '');
+            leer.innerHTML = 'Zu ' + esc(t) + ' ist ' + (wo ? wo + ' ' : '') + 'im gesichteten Zeitraum (' + ZEITRAUM + ') kein Beitrag erschienen.';
+          }
+          setzen('mr-treffer', (n === 1 ? '1 Beitrag' : n + ' Beiträge') + ', jede Ausgabe vom ' + ZEITRAUM + ' gesichtet');
+        }
         filter.hidden = false;
+        anwenden();
         filter.addEventListener('click', function (ev) {
           var btn = ev.target.closest('button');
           if (!btn) return;
-          var f = btn.getAttribute('data-f');
-          Array.prototype.forEach.call(filter.querySelectorAll('button'), function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
-          var sichtbar = {};
-          Array.prototype.forEach.call(liste.querySelectorAll('.mr-beitrag'), function (el) {
-            var s = el.getAttribute('data-spur');
-            var zeigen = f === 'alle' || s === 'beide' || s === f;
-            el.hidden = !zeigen;
-            if (zeigen) sichtbar[el.getAttribute('data-monat')] = true;
-          });
-          Array.prototype.forEach.call(liste.querySelectorAll('.mr-monat'), function (h) { h.hidden = !sichtbar[h.getAttribute('data-monat')]; });
+          var gruppe = btn.parentNode;
+          Array.prototype.forEach.call(gruppe.querySelectorAll('button'), function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+          wahl[gruppe.getAttribute('data-gruppe')] = btn.getAttribute('data-f');
+          anwenden();
         });
 
         setzen('mr-methode', '<b>Wie erhoben:</b> ' + esc(E.methode) + ' Überschriften und Einordnungen sind eigene Formulierungen von hausentscheider, die Bewertung ist als solche gekennzeichnet.');
