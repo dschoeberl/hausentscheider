@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "stand": "2026-10-10",
+  "stand": "2026-11-11",
   "aktueller_monat": "2026-10",
   "spalten_einheit": {
     "gas": "ct/kWh brutto Verbraucher-Durchschnitt",
@@ -15,28 +15,32 @@
       "aktuell": true,
       "gas": 12.0,
       "fernwaerme": 19.7,
-      "heizoel": 17.6,
+      "heizoel": 17.7,
       "wp_strom": 25,
-      "pellets": 9.1,
+      "pellets": 9.3,
       "einheit": "ct/kWh",
-      "heizoel_stand": "vorläufig — TECSON 176,0 ct/l am 10.10.2026; der Stichtagswert um den 14.10. folgt",
-      "pellets_stand": "September 2026 — DEPI veröffentlicht den Oktoberwert erst um den 16.–18.10.",
-      "gas_stand": "Portalstand 10.10.2026 — entspricht dem Septemberwert der Monatstabelle (1-Gasvergleich); ein eigener Oktoberwert liegt noch nicht vor",
+      "gas_stand": "Tagesstand 1-Gasvergleich am 10.10.2026 (Block 'Das kostet die Kilowattstunde Gas heute') — Erfassungsregel siehe methodik_traeger.gas.erfassung",
+      "nachgetragen": "11.11.2026: Heizöl-Stichtagswert TECSON 14.10. ersetzt den vorläufigen Wert vom 10.10. (176,0 ct/l = 17,6); DEPI-Oktoberwert ersetzt den Septemberstand 9,1. Beide waren auf der Seite als vorläufig gekennzeichnet.",
       "wp_strom_spanne": [20.7, 26.0],
-      "kontext": "Heizöl 17,6 ct/kWh, vorläufig: 176,0 ct/l im Bundesdurchschnitt (TECSON, 10.10.2026, 3.000 l), der Stichtagswert um den 14. folgt. Treiber laut Marktberichten: wenige Schiffe in der Straße von Hormus, Brent um 104 US-Dollar (HeizOel24, 08.10.2026). Gas ~12,0 ct (Neukunde 12,2 / Bestand 11,8 / Grundversorgung 13,6, 1-Gasvergleich, Stand 10.10.2026; noch kein eigener Oktoberwert). Neukundentarife liegen damit über den Bestandstarifen. Fernwärme ~19,7 ct, neues Quartal: Arbeitspreis 14,309 ct/kWh brutto (+3,9 %), Zertifikatepreis 1,779 ct (−7,8 %), Leistungspreis 75,24 €/kW·a (SWE-Preisblatt, Stand 1.10.2026). WP-Strom ~25 ct, nicht neu belegt; die Untergrenze der Spanne bestätigt sich (günstigster Neukundentarif 20,66 ct, Verivox 2026). Pellets 9,1 ct — noch der Septemberstand, der Oktoberwert erscheint um den 18."
+      "kontext": "Heizöl 17,7 ct/kWh: 177,0 ct/l im Bundesdurchschnitt (TECSON, 14.10.2026, 3.000 l). Treiber laut Marktberichten: wenige Schiffe in der Straße von Hormus, Brent um 104 US-Dollar (HeizOel24, 08.10.2026). Gas ~12,0 ct (Neukunde 12,2 / Bestand 11,8 / Grundversorgung 13,6, Tagesstand 1-Gasvergleich am 10.10.2026). Neukundentarife liegen damit über den Bestandstarifen. Fernwärme ~19,7 ct, neues Quartal: Arbeitspreis 14,309 ct/kWh brutto (+3,9 %), Zertifikatepreis 1,779 ct (−7,8 %), Leistungspreis 75,24 €/kW·a (SWE-Preisblatt, Stand 1.10.2026). WP-Strom ~25 ct, nicht neu belegt; die Untergrenze der Spanne bestätigt sich (günstigster Neukundentarif 20,66 ct, Verivox 2026). Pellets 9,3 ct: 464,61 €/t bei 6 t (DEPI, 16.10.2026), +2,3 % zum Vormonat."
     },
     "2026-09": {
       "label": "September 2026",
       "aktuell": false,
       "gas": 12.0,
       "fernwaerme": 19.3,
-      "heizoel": 16.8,
+      "heizoel": 16.9,
       "wp_strom": 25,
       "pellets": 9.1,
       "einheit": "ct/kWh",
-      "heizoel_stand": "fastenergy-Marktbericht 14.09.2026 (168,30 €/100 l) — ein TECSON-Wert für den Stichtag liegt nicht vor; TECSON nennt für Mitte September 163–173 ct/l",
+      "korrektur": {
+        "datum": "2026-11-11",
+        "betrifft": ["heizoel"],
+        "vorher": { "heizoel": 16.8 },
+        "grund": "Der Septemberwert stammte aus der Ersatzquelle fastenergy (168,30 €/100 l am 14.09.2026), weil für den Stichtag kein TECSON-Wert vorlag. TECSON weist für den 14.09.2026 inzwischen 168,8 ct/l aus, also 16,9 ct/kWh. Die Leitquelle ersetzt die Ersatzquelle."
+      },
       "wp_strom_spanne": [20.7, 26.0],
-      "kontext": "Heizöl springt um gut ein Fünftel: 168,30 €/100 l am 14.09.2026, also 16,8 ct/kWh (fastenergy-Marktbericht; TECSON nennt für Mitte September 163–173 ct/l). Auslöser waren Drohnenangriffe auf die saudische Ost-West-Pipeline, die Hormus umgeht, und erneuter Beschuss in der Meerenge; Brent 106,37 US-Dollar am 14.09. (fastenergy). Pellets steigen kräftig: 454,21 €/t bei 6 t (DEPI, 16.09.2026), also 9,1 ct/kWh, +6,2 % zum Vormonat. Gas ~12,0 ct (Neukunde 12,2 / Bestand 11,8, Monatswert September, 1-Gasvergleich). Fernwärme unverändert 19,3 ct — Tarifaussage, der Q3-Preis der SWE galt bis 30.09. WP-Strom ~25 ct, nicht neu belegt."
+      "kontext": "Heizöl springt um gut ein Fünftel: 168,8 ct/l am 14.09.2026, also 16,9 ct/kWh (TECSON, 3.000 l). Korrigiert am 11.11.2026: Zuvor stand hier 16,8 ct/kWh aus dem fastenergy-Marktbericht (168,30 €/100 l), weil TECSON den Stichtagswert damals nicht auswies. Auslöser waren Drohnenangriffe auf die saudische Ost-West-Pipeline, die Hormus umgeht, und erneuter Beschuss in der Meerenge; Brent 106,37 US-Dollar am 14.09. (fastenergy). Pellets steigen kräftig: 454,21 €/t bei 6 t (DEPI, 16.09.2026), also 9,1 ct/kWh, +6,2 % zum Vormonat. Gas ~12,0 ct (Neukunde 12,2 / Bestand 11,8, Monatswert September, 1-Gasvergleich). Fernwärme unverändert 19,3 ct — Tarifaussage, der Q3-Preis der SWE galt bis 30.09. WP-Strom ~25 ct, nicht neu belegt."
     },
     "2026-08": {
       "label": "August 2026",
@@ -157,7 +161,7 @@
       "umrechnungsfaktor": "10,0 kWh je Liter (Heizwert HEL)",
       "rechenweg": "ct/l ÷ 10,0 = ct/kWh",
       "faktor_belegt_durch": "Gegenprobe am TECSON-Quartalsmittel Q2 2026 (133,8 ct/l): die Zeilen April 153, Mai 135, Juni 115 ct/l ergeben im Mittel 134,3 — Abweichung 0,4 %.",
-      "erfassung": "Tagespreis als Monats-Snapshot, Stichtag um den 14.",
+      "erfassung": "Tagespreis als Monats-Snapshot, Stichtag um den 14. Fehlt der TECSON-Wert für den Stichtag, ist eine Ersatzquelle zulässig (mit Vermerk); liefert TECSON den Wert nach, wird er als Korrektur eingetragen. Tageswerte des laufenden Jahres stehen im TECSON-Chart (Reihe des Jahres).",
       "rhythmus": "tagesaktuell"
     },
     "pellets": {
@@ -176,9 +180,10 @@
       "url": "https://www.bdew.de/presse/pressemappen/gaspreis-und-co-2-preis/",
       "einheit_quelle": "ct/kWh brutto — keine Umrechnung",
       "tarifbasis": "Musterhaushalt 20.000 kWh/a. Der Tabellenwert ist das MITTEL aus Neukundentarif und Bestandskundentarif. Die Grundversorgung geht NICHT ein, sie liegt deutlich darüber (August 2026: 13,6 ct/kWh).",
-      "rechenweg": "(Neukunde + Bestand) ÷ 2. Beispiel September 2026: (12,2 + 11,8) ÷ 2 = 12,0 ct/kWh.",
+      "rechenweg": "(Neukunde + Bestand) ÷ 2. Beispiel Oktober 2026: (12,2 + 11,8) ÷ 2 = 12,0 ct/kWh.",
       "anker": "BDEW-Gaspreisanalyse August 2026 (24.08.2026) — Einfamilienhaus 11,93 ct/kWh, Mehrfamilienhaus 11,17 ct/kWh (Jahresmittel 2026 bis dato). Vorheriger Anker April 2026: EFH 11,10 / MFH 10,87.",
-      "portalwert": "Bei 1-Gasvergleich nicht den Tagesstand, sondern die Zeile der Monatstabelle verwenden: Der 'Stand'-Wert oben auf der Seite ist der Wert des Vormonats, bis die Tabelle fortgeschrieben ist (am 10.10.2026 geprüft). Musterverbrauch dort 18.000 kWh.",
+      "erfassung": "Seit 11.11.2026: Tagesstand am Erfassungstag aus dem Block 'Das kostet die Kilowattstunde Gas heute' bei 1-Gasvergleich (Neukunde, Bestand, Grundversorgung), mit Datum im Feld gas_stand. Einmal erfasst, bleibt der Wert stehen — wie bei Heizöl ein Snapshot. Musterverbrauch dort 18.000 kWh.",
+      "portalwert": "Die Monatstabelle von 1-Gasvergleich ist KEIN Anker mehr: Sie wird mit Verzug fortgeschrieben (am 11.11.2026 endete sie noch mit September) und rückwirkend überarbeitet (September Neukunde dort jetzt 14,0 statt 12,2 am 10.10.; August 10,1 / 11,2 statt 9,8 / 11,6). Solche Überarbeitungen werden nicht in unsere Reihe übernommen — sie zeigt, was am Erfassungstag galt.",
       "achtung": "Der Tabellenwert ist ein gebildeter Mischwert, kein von einer Stelle veröffentlichter Preis. Wer bei BDEW nachschlägt, findet einen anderen — höheren — Wert, weil BDEW nach Gebäudetyp und nicht nach Tarifstatus trennt.",
       "rhythmus": "Portale laufend, BDEW quartalsweise"
     },
@@ -248,6 +253,16 @@
         "pellets": { "2026-08": [7.8, 8.6] }
       },
       "folge": "Gegen den korrigierten Augustwert beträgt der Anstieg zum September +6,2 % (8,6 → 9,1), nicht +17 %."
+    },
+    {
+      "datum": "2026-11-11",
+      "anlass": "Nachtrag Oktober — die für 14.10. und 18.10. vorgesehenen Nachträge waren nicht erfolgt",
+      "befund": "Heizöl Oktober stand vorläufig auf dem Wert vom 10.10. (176,0 ct/l), Pellets Oktober auf dem Septemberstand. Beim Nachziehen zeigte sich: TECSON weist inzwischen auch den Stichtagswert 14.09. aus (168,8 ct/l), der September stammte aus der Ersatzquelle fastenergy.",
+      "geaendert": {
+        "heizoel": { "2026-09": [16.8, 16.9], "2026-10": [17.6, 17.7] },
+        "pellets": { "2026-10": [9.1, 9.3] }
+      },
+      "folge": "Heizöl Oktober gegenüber September +0,8 ct/kWh (16,9 → 17,7), wie zuvor ausgewiesen. Gas Oktober bleibt 12,0: Der Tagesstand vom 10.10. ist eine Oktoberbeobachtung; seit diesem Tag gilt die Erfassungsregel in methodik_traeger.gas.erfassung."
     }
   ],
   "methodik": [
@@ -265,7 +280,9 @@
   "update_workflow": [
     "Update-Workflow monatlich — Leitquellen und Faktoren stehen in methodik_traeger:",
     "0. GRUNDREGEL: Jeder Wert wird neu aus seiner Leitquelle geholt. Keine Zeile wird aus dem Vormonat kopiert. Wenn ein Träger sich nicht geändert hat, wird das mit Datum belegt — nicht angenommen. (Genau das ging im Juli 2026 schief, siehe korrekturen.)",
-    "1. Gas: Tarifportale für Neukunde und Bestand, Mittel bilden; BDEW-Gaspreisanalyse als Quartalsanker gegenprüfen.",
+    "0a. STICHTAGSREGEL: Erfasst wird, was die Quelle am Erfassungstag zeigt, mit Datum. Danach bleibt der Wert stehen; spätere Überarbeitungen eines Portals werden nicht übernommen.",
+    "0b. LEITQUELLE VOR ERSATZQUELLE: Eine Ersatzquelle nur, wenn die Leitquelle für den Stichtag keinen Wert hat (mit Vermerk). Liefert die Leitquelle nach, wird ersetzt — als Korrektur (Schritt 8). Ein Vermerk 'vorläufig' wird spätestens beim nächsten Monatsupdate aufgelöst. Am einfachsten: Update erst ab dem 18., dann liegen TECSON (14.) und DEPI (16.–18.) vor.",
+    "1. Gas: Tagesstand bei 1-Gasvergleich (Neukunde und Bestand, Mittel bilden), Datum in gas_stand — nicht die Monatstabelle, siehe methodik_traeger.gas.portalwert. BDEW-Gaspreisanalyse als Quartalsanker gegenprüfen.",
     "2. TECSON Heizölpreisindex aufnehmen (Tagespreis als Monats-Snapshot, Stichtag um den 14.) — ct/l ÷ 10,0.",
     "3. DEPI Pelletspreis (€/t bei 6 t → ÷ 10 ÷ 5,0 = ct/kWh). ACHTUNG: erscheint erst um den 16.–18. Wer vorher aktualisiert, trägt den Vormonatswert ein und MUSS das kenntlich machen (Feld pellets_stand).",
     "4. WP-Strom: Spanne prüfen, nicht nur einen Punktwert. Feld wp_strom_spanne mitführen.",
